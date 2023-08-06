@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="37" id="KGk-i7-Jjw" customClass="ProfileTVCellLine" customModule="Health" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="37"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="37"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Iuz-uZ-xMy">
+                        <rect key="frame" x="0.0" y="10" width="320" height="17"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ebb-XE-O6T">
+                                <rect key="frame" x="50" y="8" width="220" height="1"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="1" id="axg-sZ-SAx"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="ebb-XE-O6T" secondAttribute="trailing" constant="50" id="GGn-W7-nYm"/>
+                            <constraint firstItem="ebb-XE-O6T" firstAttribute="centerY" secondItem="Iuz-uZ-xMy" secondAttribute="centerY" id="M2h-nK-9GJ"/>
+                            <constraint firstAttribute="height" constant="17" id="X6T-Ez-8Hq"/>
+                            <constraint firstItem="ebb-XE-O6T" firstAttribute="leading" secondItem="Iuz-uZ-xMy" secondAttribute="leading" constant="50" id="qwp-Oh-tdm"/>
+                            <constraint firstItem="ebb-XE-O6T" firstAttribute="centerX" secondItem="Iuz-uZ-xMy" secondAttribute="centerX" id="zRv-cM-K2f"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="Iuz-uZ-xMy" secondAttribute="trailing" id="5rp-tj-TU7"/>
+                    <constraint firstAttribute="bottom" secondItem="Iuz-uZ-xMy" secondAttribute="bottom" constant="10" id="EgJ-K9-ae5"/>
+                    <constraint firstItem="Iuz-uZ-xMy" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="nri-de-rxA"/>
+                    <constraint firstItem="Iuz-uZ-xMy" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="yvE-7K-SGw"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <point key="canvasLocation" x="-88.549618320610676" y="1.7605633802816902"/>
+        </tableViewCell>
+    </objects>
+</document>
