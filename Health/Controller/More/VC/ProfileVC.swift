@@ -128,6 +128,11 @@ extension ProfileVC : UITableViewDataSource , UITableViewDelegate {
             
         } else if indexPath.row == 3 {
             
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let vc = storyboard.instantiateViewController(withIdentifier: "MedicationScheduleVC") as! MedicationScheduleVC
+            vc.modalPresentationStyle = .fullScreen
+            self.present(vc, animated: false, completion: nil)
+            
         } else if indexPath.row == 4 {
             
         } else if indexPath.row == 5 {
@@ -140,6 +145,7 @@ extension ProfileVC : UITableViewDataSource , UITableViewDelegate {
             self.present(vc, animated: false, completion: nil)
             
         } else if indexPath.row == 7 {
+            
             
         } else if indexPath.row == 8 {
             

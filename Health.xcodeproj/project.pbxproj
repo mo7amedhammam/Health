@@ -72,6 +72,12 @@
 		BBC7B4722A72CC840079355E /* HealthTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBC7B4712A72CC840079355E /* HealthTests.swift */; };
 		BBC7B47C2A72CC840079355E /* HealthUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBC7B47B2A72CC840079355E /* HealthUITests.swift */; };
 		BBC7B47E2A72CC840079355E /* HealthUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBC7B47D2A72CC840079355E /* HealthUITestsLaunchTests.swift */; };
+		BBE3CC742A7FFFF8004B0D9A /* MedicationScheduleVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE3CC732A7FFFF8004B0D9A /* MedicationScheduleVC.swift */; };
+		BBE3CC772A80000E004B0D9A /* MedicationScheduleTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE3CC752A80000E004B0D9A /* MedicationScheduleTVCell.swift */; };
+		BBE3CC782A80000E004B0D9A /* MedicationScheduleTVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BBE3CC762A80000E004B0D9A /* MedicationScheduleTVCell.xib */; };
+		BBE3CC7B2A80010B004B0D9A /* MedicationScheduleDetailsTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE3CC792A80010B004B0D9A /* MedicationScheduleDetailsTVCell.swift */; };
+		BBE3CC7C2A80010B004B0D9A /* MedicationScheduleDetailsTVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BBE3CC7A2A80010B004B0D9A /* MedicationScheduleDetailsTVCell.xib */; };
+		BBE3CC7E2A80011E004B0D9A /* MedicationScheduleDetailsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE3CC7D2A80011E004B0D9A /* MedicationScheduleDetailsVC.swift */; };
 		BF4248823B37C802E7C933CF /* Pods_HealthTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65CCB737364DA0B08042A29D /* Pods_HealthTests.framework */; };
 		D8F01CB9807BCED647F0DF67 /* Pods_Health_HealthUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D4F58DCAA0D2C4B6098F3C6 /* Pods_Health_HealthUITests.framework */; };
 /* End PBXBuildFile section */
@@ -170,6 +176,12 @@
 		BBC7B4772A72CC840079355E /* HealthUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HealthUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BBC7B47B2A72CC840079355E /* HealthUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthUITests.swift; sourceTree = "<group>"; };
 		BBC7B47D2A72CC840079355E /* HealthUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		BBE3CC732A7FFFF8004B0D9A /* MedicationScheduleVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedicationScheduleVC.swift; sourceTree = "<group>"; };
+		BBE3CC752A80000E004B0D9A /* MedicationScheduleTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedicationScheduleTVCell.swift; sourceTree = "<group>"; };
+		BBE3CC762A80000E004B0D9A /* MedicationScheduleTVCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MedicationScheduleTVCell.xib; sourceTree = "<group>"; };
+		BBE3CC792A80010B004B0D9A /* MedicationScheduleDetailsTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedicationScheduleDetailsTVCell.swift; sourceTree = "<group>"; };
+		BBE3CC7A2A80010B004B0D9A /* MedicationScheduleDetailsTVCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MedicationScheduleDetailsTVCell.xib; sourceTree = "<group>"; };
+		BBE3CC7D2A80011E004B0D9A /* MedicationScheduleDetailsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedicationScheduleDetailsVC.swift; sourceTree = "<group>"; };
 		F37B91FD984B0C39EEA6833D /* Pods-Health-HealthUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Health-HealthUITests.release.xcconfig"; path = "Target Support Files/Pods-Health-HealthUITests/Pods-Health-HealthUITests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -377,6 +389,7 @@
 		BBBDFFF32A730F8C00F066DF /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				BBE3CC702A7FFFB1004B0D9A /* Medication Schedule */,
 				BB1B2FFF2A7EA8A9001677FD /* XIb Views */,
 				BB1B2FF02A7E9B1B001677FD /* InBody */,
 				BB14DAE02A7AF95D00389B96 /* Middle View Controller */,
@@ -464,6 +477,35 @@
 				BBC7B47D2A72CC840079355E /* HealthUITestsLaunchTests.swift */,
 			);
 			path = HealthUITests;
+			sourceTree = "<group>";
+		};
+		BBE3CC702A7FFFB1004B0D9A /* Medication Schedule */ = {
+			isa = PBXGroup;
+			children = (
+				BBE3CC722A7FFFD4004B0D9A /* TVCell */,
+				BBE3CC712A7FFFC8004B0D9A /* VC */,
+			);
+			path = "Medication Schedule";
+			sourceTree = "<group>";
+		};
+		BBE3CC712A7FFFC8004B0D9A /* VC */ = {
+			isa = PBXGroup;
+			children = (
+				BBE3CC732A7FFFF8004B0D9A /* MedicationScheduleVC.swift */,
+				BBE3CC7D2A80011E004B0D9A /* MedicationScheduleDetailsVC.swift */,
+			);
+			path = VC;
+			sourceTree = "<group>";
+		};
+		BBE3CC722A7FFFD4004B0D9A /* TVCell */ = {
+			isa = PBXGroup;
+			children = (
+				BBE3CC752A80000E004B0D9A /* MedicationScheduleTVCell.swift */,
+				BBE3CC762A80000E004B0D9A /* MedicationScheduleTVCell.xib */,
+				BBE3CC792A80010B004B0D9A /* MedicationScheduleDetailsTVCell.swift */,
+				BBE3CC7A2A80010B004B0D9A /* MedicationScheduleDetailsTVCell.xib */,
+			);
+			path = TVCell;
 			sourceTree = "<group>";
 		};
 		ECFB6316F9014F7BB09F9E88 /* Frameworks */ = {
@@ -588,6 +630,7 @@
 				BB1B2FF82A7E9B5E001677FD /* INBodyTVCell.xib in Resources */,
 				BBBD00382A731B5E00F066DF /* SplashScreenTVCell1.xib in Resources */,
 				BBC7B4672A72CC840079355E /* LaunchScreen.storyboard in Resources */,
+				BBE3CC782A80000E004B0D9A /* MedicationScheduleTVCell.xib in Resources */,
 				BBBD002B2A73145200F066DF /* LamaSans-Medium.ttf in Resources */,
 				BBBD00302A73148600F066DF /* LamaSans-Regular.ttf in Resources */,
 				BB14DAEC2A7B041C00389B96 /* ProfileTVCellHeader.xib in Resources */,
@@ -602,6 +645,7 @@
 				BBBD003C2A731B6C00F066DF /* SplashScreenTVCell2.xib in Resources */,
 				BBC7B4622A72CC820079355E /* Main.storyboard in Resources */,
 				BB14DAF02A7B043500389B96 /* ProfileTVCellMiddle.xib in Resources */,
+				BBE3CC7C2A80010B004B0D9A /* MedicationScheduleDetailsTVCell.xib in Resources */,
 				BBBD002C2A73145200F066DF /* LamaSans-Light.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -754,6 +798,7 @@
 				BB1B2FF72A7E9B5E001677FD /* INBodyTVCell.swift in Sources */,
 				BBBD00152A73101700F066DF /* ProgressHud.swift in Sources */,
 				BB48F8A12A747D020051F12C /* ChangePasswordVC.swift in Sources */,
+				BBE3CC742A7FFFF8004B0D9A /* MedicationScheduleVC.swift in Sources */,
 				BBBD000C2A73101700F066DF /* EXTAlert.swift in Sources */,
 				BBBD00242A7311AF00F066DF /* SignUp.swift in Sources */,
 				BBBD00372A731B5E00F066DF /* SplashScreenTVCell1.swift in Sources */,
@@ -763,13 +808,16 @@
 				BBBD00122A73101700F066DF /* UITableView+Extensions.swift in Sources */,
 				BBBD00102A73101700F066DF /* CheckConnection.swift in Sources */,
 				BB30E6132A7859FE0045569D /* HTBC.swift in Sources */,
+				BBE3CC772A80000E004B0D9A /* MedicationScheduleTVCell.swift in Sources */,
 				BBBD001B2A73101700F066DF /* FullImageVC.swift in Sources */,
 				BBBD000A2A73101700F066DF /* EXTEnternet.swift in Sources */,
 				BB14DAEF2A7B043500389B96 /* ProfileTVCellMiddle.swift in Sources */,
+				BBE3CC7E2A80011E004B0D9A /* MedicationScheduleDetailsVC.swift in Sources */,
 				BBBD000E2A73101700F066DF /* ImageViewer.swift in Sources */,
 				BBBD00182A73101700F066DF /* CardView.swift in Sources */,
 				BB14DAF72A7B047400389B96 /* ProfileTVCellLine.swift in Sources */,
 				BBBD00142A73101700F066DF /* AES.swift in Sources */,
+				BBE3CC7B2A80010B004B0D9A /* MedicationScheduleDetailsTVCell.swift in Sources */,
 				BB14DAF32A7B044500389B96 /* ProfileTVCellLogout.swift in Sources */,
 				BBBD00342A731B3300F066DF /* SplashScreenVC.swift in Sources */,
 				BBBD00212A73119500F066DF /* LoginVC.swift in Sources */,
