@@ -31,6 +31,7 @@ class SplashScreenVC: UIViewController {
         CollectionSplash.reloadData()
     }
     
+    
 }
 
 
@@ -39,7 +40,7 @@ extension SplashScreenVC : UICollectionViewDataSource , UICollectionViewDelegate
     
     func SkipSplash() {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc = storyboard.instantiateViewController(withIdentifier: "OtpVC") as! OtpVC
+        let vc = storyboard.instantiateViewController(withIdentifier: "HTBC") as! HTBC
         vc.modalPresentationStyle = .fullScreen
         self.present(vc, animated: false, completion: nil)
     }
