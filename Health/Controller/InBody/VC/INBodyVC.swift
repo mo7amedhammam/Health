@@ -29,15 +29,10 @@ class INBodyVC: UIViewController {
     @IBAction func BUNotification(_ sender: Any) {
         
     }
-    
   
     @IBAction func BUAddNewMeasure(_ sender: Any) {
         
     }
-    
-    
-    
-    
 
 }
 

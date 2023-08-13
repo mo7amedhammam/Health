@@ -63,4 +63,13 @@ extension MeasurementsVC : UICollectionViewDataSource , UICollectionViewDelegate
         //here your custom value for spacing
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "MeasurementsDetailsVC") as! MeasurementsDetailsVC
+        vc.modalPresentationStyle = .fullScreen
+        self.present(vc, animated: false, completion: nil)
+        
+    }
+    
 }
