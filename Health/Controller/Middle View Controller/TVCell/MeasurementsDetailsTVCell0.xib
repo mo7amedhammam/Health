@@ -120,6 +120,9 @@
                                                         <rect key="frame" x="0.0" y="0.0" width="250" height="60"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                        <connections>
+                                                            <action selector="BUAddMeasurement:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="dTq-Ex-XeA"/>
+                                                        </connections>
                                                     </button>
                                                 </subviews>
                                                 <color key="backgroundColor" name="main"/>
@@ -335,6 +338,9 @@
                                                 <real key="value" value="25"/>
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <action selector="BUSearch:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="lNO-LO-JIQ"/>
+                                        </connections>
                                     </button>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3fl-U5-bda">
                                         <rect key="frame" x="0.0" y="470" width="300" height="50"/>
@@ -361,8 +367,11 @@
                                                                 <color key="value" name="main"/>
                                                             </userDefinedRuntimeAttribute>
                                                         </userDefinedRuntimeAttributes>
+                                                        <connections>
+                                                            <action selector="BUTearMonthDay:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="81T-0F-O5Q"/>
+                                                        </connections>
                                                     </button>
-                                                    <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pD4-1c-uQQ">
+                                                    <button opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pD4-1c-uQQ">
                                                         <rect key="frame" x="105" y="0.0" width="90" height="50"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <fontDescription key="fontDescription" name="LamaSans-Medium" family="Lama Sans" pointSize="13"/>
@@ -381,8 +390,11 @@
                                                                 <color key="value" name="main"/>
                                                             </userDefinedRuntimeAttribute>
                                                         </userDefinedRuntimeAttributes>
+                                                        <connections>
+                                                            <action selector="BUTearMonthDay:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="9or-qE-2Sp"/>
+                                                        </connections>
                                                     </button>
-                                                    <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mfQ-FB-9s2">
+                                                    <button opaque="NO" clipsSubviews="YES" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mfQ-FB-9s2">
                                                         <rect key="frame" x="210" y="0.0" width="90" height="50"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <fontDescription key="fontDescription" name="LamaSans-Medium" family="Lama Sans" pointSize="13"/>
@@ -401,6 +413,9 @@
                                                                 <color key="value" name="main"/>
                                                             </userDefinedRuntimeAttribute>
                                                         </userDefinedRuntimeAttributes>
+                                                        <connections>
+                                                            <action selector="BUTearMonthDay:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="fLw-Z1-gmA"/>
+                                                        </connections>
                                                     </button>
                                                 </subviews>
                                             </stackView>
@@ -436,6 +451,9 @@
                                                 <color key="value" name="main"/>
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <action selector="BUAllMeasurement:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="gDU-18-12v"/>
+                                        </connections>
                                     </button>
                                     <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nax-S4-Q4F">
                                         <rect key="frame" x="0.0" y="610" width="300" height="150"/>
@@ -641,6 +659,13 @@
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <connections>
+                <outlet property="LaDateFrom" destination="Ii7-Rg-Ew7" id="wpO-Bd-CCm"/>
+                <outlet property="LaDateTo" destination="ZYb-wk-6Gu" id="nyR-30-kN7"/>
+                <outlet property="LaNaturalFrom" destination="WOg-c5-b5z" id="acu-hm-rAV"/>
+                <outlet property="LaNaturalTo" destination="Jgx-Rx-kQl" id="MrE-MB-MwT"/>
+                <outlet property="LaNum" destination="ah1-TU-llv" id="HLj-km-Swd"/>
+            </connections>
             <point key="canvasLocation" x="-24.427480916030532" y="374.29577464788736"/>
         </tableViewCell>
     </objects>
@@ -649,10 +674,10 @@
         <image name="plus" catalog="system" width="128" height="113"/>
         <image name="workout-data" width="332" height="332"/>
         <namedColor name="06AD2B">
-            <color red="0.023529411764705882" green="0.67843137254901964" blue="0.16862745098039217" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.024000000208616257" green="0.67799997329711914" blue="0.16899999976158142" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="EE2E3A">
-            <color red="0.93333333333333335" green="0.1803921568627451" blue="0.22745098039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.93300002813339233" green="0.18000000715255737" blue="0.22699999809265137" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="bg">
             <color red="0.96100002527236938" green="0.96100002527236938" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

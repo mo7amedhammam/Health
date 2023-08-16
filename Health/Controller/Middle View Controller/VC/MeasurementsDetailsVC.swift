@@ -11,6 +11,17 @@ class MeasurementsDetailsVC: UIViewController {
     
     @IBOutlet weak var TVScreen: UITableView!
     
+    
+    @IBOutlet weak var ViewAddMeasurement: UIView!
+    @IBOutlet weak var TFNumMeasure: UITextField!
+    @IBOutlet weak var TFDate: UITextField!
+    @IBOutlet weak var TVDescription: TextViewWithPlaceholder!
+    
+    @IBOutlet weak var ViewSelectDate: UIView!
+    
+    @IBOutlet weak var PickerDate: UIDatePicker!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -20,6 +31,10 @@ class MeasurementsDetailsVC: UIViewController {
         TVScreen.registerCellNib(cellClass: MeasurementsDetailsTVCell.self)
         TVScreen.registerCellNib(cellClass: MeasurementsDetailsTVCell0.self)
         TVScreen.reloadData()
+        
+        ViewSelectDate.isHidden     = true
+        ViewAddMeasurement.isHidden = true
+
     }
     
     
@@ -33,10 +48,45 @@ class MeasurementsDetailsVC: UIViewController {
     }
     
     
+    
+    @IBAction func BUSelectDate(_ sender: Any) {
+        ViewSelectDate.isHidden = false
+    }
+    @IBAction func BUCancelSelectDate(_ sender: Any) {
+        ViewSelectDate.isHidden = true
+    }
+    
+    @IBAction func BUConfirmAdd(_ sender: Any) {
+        ViewAddMeasurement.isHidden = true
+    }
+        
+    @IBAction func BUCancelAdd(_ sender: Any) {
+        ViewAddMeasurement.isHidden = true
+    }
+    
+    
 }
 
 
-extension MeasurementsDetailsVC : UITableViewDataSource , UITableViewDelegate {
+extension MeasurementsDetailsVC : UITableViewDataSource , UITableViewDelegate , MeasurementsDetailsTVCell0_Protocoal {
+    
+    
+    func AllMeasurement() {
+        
+    }
+    
+    func TearMonthDay(tag: Int) {
+        
+    }
+    
+    func Search() {
+        
+    }
+    
+    func AddMeasurement() {
+        ViewAddMeasurement.isHidden = false
+    }
+    
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 10 + 1
@@ -47,6 +97,8 @@ extension MeasurementsDetailsVC : UITableViewDataSource , UITableViewDelegate {
         if indexPath.row == 0 {
             
             let cell = tableView.dequeueReusableCell(withIdentifier: "MeasurementsDetailsTVCell0", for: indexPath) as! MeasurementsDetailsTVCell0
+            
+            cell.delegate = self
             
             return cell
             

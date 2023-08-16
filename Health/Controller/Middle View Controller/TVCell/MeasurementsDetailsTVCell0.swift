@@ -9,6 +9,16 @@ import UIKit
 
 class MeasurementsDetailsTVCell0: UITableViewCell {
 
+    @IBOutlet weak var LaNum: UILabel!
+    
+    @IBOutlet weak var LaDateFrom: UILabel!
+    @IBOutlet weak var LaDateTo: UILabel!
+    
+    @IBOutlet weak var LaNaturalFrom: UILabel!
+    @IBOutlet weak var LaNaturalTo: UILabel!
+    
+    var delegate : MeasurementsDetailsTVCell0_Protocoal!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -20,4 +30,32 @@ class MeasurementsDetailsTVCell0: UITableViewCell {
         // Configure the view for the selected state
     }
     
+    
+    @IBAction func BUAddMeasurement(_ sender: Any) {
+        delegate.AddMeasurement()
+    }
+    
+    @IBAction func BUSearch(_ sender: Any) {
+        delegate.Search()
+    }
+    
+    @IBAction func BUTearMonthDay(_ sender: UIButton) {
+        delegate.TearMonthDay(tag: sender.tag)
+    }
+    
+    
+    @IBAction func BUAllMeasurement(_ sender: Any) {
+        delegate.AllMeasurement()
+    }
+    
+}
+
+protocol MeasurementsDetailsTVCell0_Protocoal {
+    
+    func AllMeasurement ()
+    func TearMonthDay (tag : Int)
+    func Search ()
+    func AddMeasurement ()
+
+
 }
