@@ -48,6 +48,15 @@ class MeasurementsDetailsTVCell0: UITableViewCell {
         delegate.AllMeasurement()
     }
     
+    
+    @IBAction func BUToDate(_ sender: Any) {
+        delegate.FromDateToDate(select: "to" , LaDateFrom : LaDateFrom)
+    }
+    
+    @IBAction func BUFromDate(_ sender: Any) {
+        delegate.FromDateToDate(select: "from" , LaDateFrom : LaDateFrom)
+    }
+    
 }
 
 protocol MeasurementsDetailsTVCell0_Protocoal {
@@ -56,6 +65,6 @@ protocol MeasurementsDetailsTVCell0_Protocoal {
     func TearMonthDay (tag : Int)
     func Search ()
     func AddMeasurement ()
-
+    func FromDateToDate (select : String , LaDateFrom : UILabel)
 
 }

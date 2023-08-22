@@ -9,6 +9,12 @@ import UIKit
 
 class MedicationScheduleTVCell: UITableViewCell {
 
+    @IBOutlet weak var LaTitle: UILabel!
+    @IBOutlet weak var LaNum: UILabel!
+    @IBOutlet weak var LaStartDate: UILabel!
+    @IBOutlet weak var LaEndDate: UILabel!
+    @IBOutlet weak var LaTimeNext: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

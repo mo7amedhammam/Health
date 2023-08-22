@@ -18,6 +18,9 @@
 		BB14DAF42A7B044500389B96 /* ProfileTVCellLogout.xib in Resources */ = {isa = PBXBuildFile; fileRef = BB14DAF22A7B044500389B96 /* ProfileTVCellLogout.xib */; };
 		BB14DAF72A7B047400389B96 /* ProfileTVCellLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB14DAF52A7B047400389B96 /* ProfileTVCellLine.swift */; };
 		BB14DAF82A7B047400389B96 /* ProfileTVCellLine.xib in Resources */ = {isa = PBXBuildFile; fileRef = BB14DAF62A7B047400389B96 /* ProfileTVCellLine.xib */; };
+		BB1AEAA02A955B450078683A /* NotificationTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB1AEA9E2A955B450078683A /* NotificationTVCell.swift */; };
+		BB1AEAA12A955B450078683A /* NotificationTVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BB1AEA9F2A955B450078683A /* NotificationTVCell.xib */; };
+		BB1AEAA32A955B710078683A /* NotificationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB1AEAA22A955B710078683A /* NotificationVC.swift */; };
 		BB1B2FF42A7E9B44001677FD /* INBodyVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB1B2FF32A7E9B44001677FD /* INBodyVC.swift */; };
 		BB1B2FF72A7E9B5E001677FD /* INBodyTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB1B2FF52A7E9B5E001677FD /* INBodyTVCell.swift */; };
 		BB1B2FF82A7E9B5E001677FD /* INBodyTVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BB1B2FF62A7E9B5E001677FD /* INBodyTVCell.xib */; };
@@ -125,6 +128,9 @@
 		BB14DAF22A7B044500389B96 /* ProfileTVCellLogout.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProfileTVCellLogout.xib; sourceTree = "<group>"; };
 		BB14DAF52A7B047400389B96 /* ProfileTVCellLine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTVCellLine.swift; sourceTree = "<group>"; };
 		BB14DAF62A7B047400389B96 /* ProfileTVCellLine.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProfileTVCellLine.xib; sourceTree = "<group>"; };
+		BB1AEA9E2A955B450078683A /* NotificationTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationTVCell.swift; sourceTree = "<group>"; };
+		BB1AEA9F2A955B450078683A /* NotificationTVCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NotificationTVCell.xib; sourceTree = "<group>"; };
+		BB1AEAA22A955B710078683A /* NotificationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationVC.swift; sourceTree = "<group>"; };
 		BB1B2FF32A7E9B44001677FD /* INBodyVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = INBodyVC.swift; sourceTree = "<group>"; };
 		BB1B2FF52A7E9B5E001677FD /* INBodyTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = INBodyTVCell.swift; sourceTree = "<group>"; };
 		BB1B2FF62A7E9B5E001677FD /* INBodyTVCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = INBodyTVCell.xib; sourceTree = "<group>"; };
@@ -291,6 +297,32 @@
 			path = TVCell;
 			sourceTree = "<group>";
 		};
+		BB1AEA992A955AED0078683A /* Notification */ = {
+			isa = PBXGroup;
+			children = (
+				BB1AEA9B2A955B0C0078683A /* TVCell */,
+				BB1AEA9A2A955B050078683A /* VC */,
+			);
+			path = Notification;
+			sourceTree = "<group>";
+		};
+		BB1AEA9A2A955B050078683A /* VC */ = {
+			isa = PBXGroup;
+			children = (
+				BB1AEAA22A955B710078683A /* NotificationVC.swift */,
+			);
+			path = VC;
+			sourceTree = "<group>";
+		};
+		BB1AEA9B2A955B0C0078683A /* TVCell */ = {
+			isa = PBXGroup;
+			children = (
+				BB1AEA9E2A955B450078683A /* NotificationTVCell.swift */,
+				BB1AEA9F2A955B450078683A /* NotificationTVCell.xib */,
+			);
+			path = TVCell;
+			sourceTree = "<group>";
+		};
 		BB1B2FF02A7E9B1B001677FD /* InBody */ = {
 			isa = PBXGroup;
 			children = (
@@ -431,6 +463,7 @@
 				BBE3CC702A7FFFB1004B0D9A /* Medication Schedule */,
 				BB1B2FF02A7E9B1B001677FD /* InBody */,
 				BB14DAE02A7AF95D00389B96 /* Middle View Controller */,
+				BB1AEA992A955AED0078683A /* Notification */,
 				BB14DAE42A7B027E00389B96 /* More */,
 				BBBD001D2A73116200F066DF /* Auth */,
 			);
@@ -672,6 +705,7 @@
 				BBBD00302A73148600F066DF /* LamaSans-Regular.ttf in Resources */,
 				BB14DAEC2A7B041C00389B96 /* ProfileTVCellHeader.xib in Resources */,
 				BB6E07F02A896B2700689769 /* MeasurementsDetailsTVCell0.xib in Resources */,
+				BB1AEAA12A955B450078683A /* NotificationTVCell.xib in Resources */,
 				BB14DAF42A7B044500389B96 /* ProfileTVCellLogout.xib in Resources */,
 				BB1B2FFC2A7EA364001677FD /* INBodyDetailsTVCell.xib in Resources */,
 				BB5116D32A829B4900CF5D11 /* MeasurementsCVCell.xib in Resources */,
@@ -817,6 +851,7 @@
 				BB1B30052A7EB1B7001677FD /* XibViews.swift in Sources */,
 				BB14DAEB2A7B041C00389B96 /* ProfileTVCellHeader.swift in Sources */,
 				BB1B2FFE2A7EA379001677FD /* INBodyDetailsVC.swift in Sources */,
+				BB1AEAA32A955B710078683A /* NotificationVC.swift in Sources */,
 				BBBD001C2A73101700F066DF /* Shared.swift in Sources */,
 				BB14DAE32A7AFA0700389B96 /* MeasurementsVC.swift in Sources */,
 				BBBD003B2A731B6C00F066DF /* SplashScreenTVCell2.swift in Sources */,
@@ -856,6 +891,7 @@
 				BBE3CC7E2A80011E004B0D9A /* MedicationScheduleDetailsVC.swift in Sources */,
 				BBBD000E2A73101700F066DF /* ImageViewer.swift in Sources */,
 				BBBD00182A73101700F066DF /* CardView.swift in Sources */,
+				BB1AEAA02A955B450078683A /* NotificationTVCell.swift in Sources */,
 				BB14DAF72A7B047400389B96 /* ProfileTVCellLine.swift in Sources */,
 				BB5116CD2A829AC900CF5D11 /* MeasurementsDetailsTVCell.swift in Sources */,
 				BB6E07EF2A896B2700689769 /* MeasurementsDetailsTVCell0.swift in Sources */,

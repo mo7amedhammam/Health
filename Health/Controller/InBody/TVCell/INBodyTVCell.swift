@@ -9,6 +9,13 @@ import UIKit
 
 class INBodyTVCell: UITableViewCell {
 
+    @IBOutlet weak var LaTitle: UILabel!
+    
+    @IBOutlet weak var IVPhoto: UIImageView!
+    @IBOutlet weak var LaDate: UILabel!
+    
+    @IBOutlet weak var LaDescription: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
