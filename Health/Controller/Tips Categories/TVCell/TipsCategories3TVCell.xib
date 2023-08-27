@@ -33,13 +33,13 @@
                                 <rect key="frame" x="10" y="10" width="270" height="92"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="j8q-TO-qDH">
-                                        <rect key="frame" x="0.0" y="0.0" width="168" height="92"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="180" height="92"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="giO-fe-nYN">
-                                                <rect key="frame" x="0.0" y="0.0" width="168" height="92"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="180" height="92"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10 نصائح لتحسين صحة القلب" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nSj-rf-3Pi">
-                                                        <rect key="frame" x="0.0" y="0.0" width="168" height="25"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="180" height="25"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="25" id="ZsH-Oi-4P0"/>
                                                         </constraints>
@@ -48,31 +48,31 @@
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tWO-93-NPM">
-                                                        <rect key="frame" x="0.0" y="30" width="168" height="37"/>
+                                                        <rect key="frame" x="0.0" y="30" width="180" height="37"/>
                                                         <subviews>
-                                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="Vc4-Db-sef">
-                                                                <rect key="frame" x="0.0" y="0.0" width="168" height="37"/>
+                                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="bottom" translatesAutoresizingMaskIntoConstraints="NO" id="Vc4-Db-sef">
+                                                                <rect key="frame" x="0.0" y="0.0" width="180" height="37"/>
                                                                 <subviews>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="تصلب الشرايين" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ipN-4s-WrX">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="58.666666666666664" height="37"/>
+                                                                        <rect key="frame" x="0.0" y="26.666666666666671" width="63" height="10.333333333333336"/>
                                                                         <fontDescription key="fontDescription" name="LamaSans-Medium" family="Lama Sans" pointSize="10"/>
                                                                         <color key="textColor" name="main"/>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="القلب" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m06-4I-b1g">
-                                                                        <rect key="frame" x="58.666666666666679" y="0.0" width="22.333333333333336" height="37"/>
+                                                                        <rect key="frame" x="62.999999999999993" y="26.666666666666671" width="23.666666666666664" height="10.333333333333336"/>
                                                                         <fontDescription key="fontDescription" name="LamaSans-Medium" family="Lama Sans" pointSize="10"/>
                                                                         <color key="textColor" name="main"/>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="الأوردة" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eZK-VN-TfK">
-                                                                        <rect key="frame" x="81" y="0.0" width="26" height="37"/>
+                                                                        <rect key="frame" x="86.666666666666671" y="26.666666666666671" width="27.666666666666671" height="10.333333333333336"/>
                                                                         <fontDescription key="fontDescription" name="LamaSans-Medium" family="Lama Sans" pointSize="10"/>
                                                                         <color key="textColor" name="main"/>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="الأوعية الدموية" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oUv-bR-uYL">
-                                                                        <rect key="frame" x="107" y="0.0" width="61" height="37"/>
+                                                                        <rect key="frame" x="114.33333333333334" y="26.666666666666671" width="65.666666666666657" height="10.333333333333336"/>
                                                                         <fontDescription key="fontDescription" name="LamaSans-Medium" family="Lama Sans" pointSize="10"/>
                                                                         <color key="textColor" name="main"/>
                                                                         <nil key="highlightedColor"/>
@@ -89,7 +89,7 @@
                                                         </constraints>
                                                     </view>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="08/05/2023 03:05 PM" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sE4-Jh-vVe">
-                                                        <rect key="frame" x="0.0" y="72" width="168" height="20"/>
+                                                        <rect key="frame" x="0.0" y="72" width="180" height="20"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="20" id="PSX-a7-vZ0"/>
                                                         </constraints>
@@ -108,20 +108,28 @@
                                             <constraint firstItem="giO-fe-nYN" firstAttribute="top" secondItem="j8q-TO-qDH" secondAttribute="top" id="qR4-Dc-Zci"/>
                                         </constraints>
                                     </view>
-                                    <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Yw5-qy-L8H">
-                                        <rect key="frame" x="178" y="0.0" width="92" height="92"/>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Yw5-qy-L8H">
+                                        <rect key="frame" x="190" y="0.0" width="80" height="92"/>
                                         <subviews>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="JuL-PX-Pxa">
-                                                <rect key="frame" x="0.0" y="0.0" width="92" height="92"/>
+                                                <rect key="frame" x="5" y="11" width="70" height="70"/>
+                                                <color key="backgroundColor" name="main"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="70" id="458-Mi-17J"/>
+                                                    <constraint firstAttribute="height" constant="70" id="hx7-aZ-d5d"/>
+                                                </constraints>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                        <real key="value" value="15"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
                                             </imageView>
                                         </subviews>
-                                        <color key="backgroundColor" name="main"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
-                                            <constraint firstItem="JuL-PX-Pxa" firstAttribute="top" secondItem="Yw5-qy-L8H" secondAttribute="top" id="3FV-w2-6AC"/>
-                                            <constraint firstAttribute="trailing" secondItem="JuL-PX-Pxa" secondAttribute="trailing" id="7B3-QN-ict"/>
-                                            <constraint firstAttribute="width" constant="92" id="Ojd-6T-6f0"/>
-                                            <constraint firstItem="JuL-PX-Pxa" firstAttribute="leading" secondItem="Yw5-qy-L8H" secondAttribute="leading" id="Q82-Se-sI8"/>
-                                            <constraint firstAttribute="bottom" secondItem="JuL-PX-Pxa" secondAttribute="bottom" id="Su2-3W-Jh0"/>
+                                            <constraint firstItem="JuL-PX-Pxa" firstAttribute="centerX" secondItem="Yw5-qy-L8H" secondAttribute="centerX" id="17g-J6-IoD"/>
+                                            <constraint firstAttribute="width" constant="80" id="Ojd-6T-6f0"/>
+                                            <constraint firstItem="JuL-PX-Pxa" firstAttribute="centerY" secondItem="Yw5-qy-L8H" secondAttribute="centerY" id="xJI-ac-oPU"/>
                                         </constraints>
                                     </view>
                                 </subviews>
@@ -132,6 +140,7 @@
                             <constraint firstAttribute="bottom" secondItem="0gA-oS-gEK" secondAttribute="bottom" constant="10" id="GGQ-ng-Q9f"/>
                             <constraint firstItem="0gA-oS-gEK" firstAttribute="top" secondItem="Sx8-hV-Agg" secondAttribute="top" constant="10" id="U1S-36-UzY"/>
                             <constraint firstAttribute="trailing" secondItem="0gA-oS-gEK" secondAttribute="trailing" constant="10" id="iaS-ZL-3FM"/>
+                            <constraint firstAttribute="height" constant="112" id="pCG-tz-bF4"/>
                             <constraint firstItem="0gA-oS-gEK" firstAttribute="leading" secondItem="Sx8-hV-Agg" secondAttribute="leading" constant="10" id="rvg-m4-Tcz"/>
                         </constraints>
                         <userDefinedRuntimeAttributes>

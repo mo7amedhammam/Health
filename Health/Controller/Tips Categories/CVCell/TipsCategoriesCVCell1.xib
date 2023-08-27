@@ -20,24 +20,24 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="TipsCategoriesCVCell1" customModule="Health" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="270" height="263"/>
+            <rect key="frame" x="0.0" y="0.0" width="270" height="268"/>
             <autoresizingMask key="autoresizingMask"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                <rect key="frame" x="0.0" y="0.0" width="270" height="263"/>
+                <rect key="frame" x="0.0" y="0.0" width="270" height="268"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TbG-ZX-HZF">
-                        <rect key="frame" x="0.0" y="0.0" width="270" height="248"/>
+                    <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TbG-ZX-HZF">
+                        <rect key="frame" x="0.0" y="0.0" width="270" height="253"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="WtM-i7-Pag">
-                                <rect key="frame" x="10" y="10" width="250" height="228"/>
+                                <rect key="frame" x="10" y="10" width="250" height="233"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TdC-cI-Y2t">
-                                        <rect key="frame" x="0.0" y="0.0" width="250" height="148"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="250" height="153"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MQZ-5e-ITX">
-                                        <rect key="frame" x="0.0" y="148" width="250" height="30"/>
+                                        <rect key="frame" x="0.0" y="153" width="250" height="30"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="vdr-Uu-5s8">
                                                 <rect key="frame" x="0.0" y="0.0" width="250" height="30"/>
@@ -77,7 +77,7 @@
                                         </constraints>
                                     </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="12 نصيحة للتغلب على حب الشباب" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="syx-Wt-wrv">
-                                        <rect key="frame" x="0.0" y="178" width="250" height="50"/>
+                                        <rect key="frame" x="0.0" y="183" width="250" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="Rjn-D3-6GP"/>
                                         </constraints>
@@ -95,6 +95,11 @@
                             <constraint firstItem="WtM-i7-Pag" firstAttribute="leading" secondItem="TbG-ZX-HZF" secondAttribute="leading" constant="10" id="SV1-tx-neQ"/>
                             <constraint firstAttribute="bottom" secondItem="WtM-i7-Pag" secondAttribute="bottom" constant="10" id="ubw-HY-K2E"/>
                         </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                <real key="value" value="20"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
                     </view>
                 </subviews>
             </view>
@@ -106,8 +111,8 @@
                 <constraint firstAttribute="trailing" secondItem="TbG-ZX-HZF" secondAttribute="trailing" id="b5a-gs-hPs"/>
                 <constraint firstAttribute="bottom" secondItem="TbG-ZX-HZF" secondAttribute="bottom" constant="15" id="b9o-XN-7Te"/>
             </constraints>
-            <size key="customSize" width="270" height="263"/>
-            <point key="canvasLocation" x="97.70992366412213" y="94.718309859154928"/>
+            <size key="customSize" width="270" height="268"/>
+            <point key="canvasLocation" x="97.70992366412213" y="96.478873239436624"/>
         </collectionViewCell>
     </objects>
     <resources>

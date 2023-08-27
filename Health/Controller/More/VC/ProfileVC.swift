@@ -127,15 +127,15 @@ extension ProfileVC : UITableViewDataSource , UITableViewDelegate {
         } else if indexPath.row == 2 {
             
         } else if indexPath.row == 3 {
-            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let vc = storyboard.instantiateViewController(withIdentifier: "MedicationScheduleVC") as! MedicationScheduleVC
-            vc.modalPresentationStyle = .fullScreen
-            self.present(vc, animated: false, completion: nil)
+//            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+//            let vc = storyboard.instantiateViewController(withIdentifier: "MedicationScheduleVC") as! MedicationScheduleVC
+//            vc.modalPresentationStyle = .fullScreen
+//            self.present(vc, animated: false, completion: nil)
         } else if indexPath.row == 4 {
-            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let vc = storyboard.instantiateViewController(withIdentifier: "NotificationVC") as! NotificationVC
-            vc.modalPresentationStyle = .fullScreen
-            self.present(vc, animated: false, completion: nil)
+//            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+//            let vc = storyboard.instantiateViewController(withIdentifier: "NotificationVC") as! NotificationVC
+//            vc.modalPresentationStyle = .fullScreen
+//            self.present(vc, animated: false, completion: nil)
         } else if indexPath.row == 5 {
             
             

@@ -56,25 +56,7 @@ class HTBC: UITabBarController  , UITabBarControllerDelegate {
         tabBar.frame.size.height = 90
         tabBar.frame.origin.y = view.frame.height - 90
     }
-    
-    
-    
-    //    func setupMiddleButton() {
-    //          let menuButton = UIButton(frame: CGRect(x: 0, y: 0, width: 64, height: 64))
-    //          var menuButtonFrame = menuButton.frame
-    //          menuButtonFrame.origin.y = view.bounds.height - menuButtonFrame.height - 50
-    //          menuButtonFrame.origin.x = view.bounds.width/2 - menuButtonFrame.size.width/2
-    //          menuButton.frame = menuButtonFrame
-    //
-    //          menuButton.backgroundColor = UIColor.red
-    //          menuButton.layer.cornerRadius = menuButtonFrame.height/2
-    //          view.addSubview(menuButton)
-    //
-    //          menuButton.setImage(UIImage(named: "logo"), for: .normal)
-    //          menuButton.addTarget(self, action: #selector(menuButtonAction(sender:)), for: .touchUpInside)
-    //          view.layoutIfNeeded()
-    //      }
-    
+ 
     func setupMiddleButton() {
         
         middleBtn = UIButton(frame: CGRect(x: (self.view.bounds.width / 2)-25, y: -20, width: 50, height: 50))
@@ -96,8 +78,21 @@ class HTBC: UITabBarController  , UITabBarControllerDelegate {
         middleBtn.setImage(UIImage(named: "btnCenterSelected"), for: .normal)
     }
     
+    func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
+        
+        if let index = tabBarController.viewControllers?.firstIndex(of: viewController) {
+            print("Selected tab bar item at index \(index)")
+            // Perform any actions you want in response to the selection
+            middleBtn.setImage(UIImage(named: "btnCenter"), for: .normal)
+            if index == 2 {
+                selectedIndex = 2
+                middleBtn.setImage(UIImage(named: "btnCenterSelected"), for: .normal)
+            }
+        }
+    }
     
 }
+
 
 
 

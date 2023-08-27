@@ -8,22 +8,42 @@
 import UIKit
 
 class TipsCategoriesDetailsVC: UIViewController {
+    
+    @IBOutlet weak var LaTitle: UILabel!
+    @IBOutlet weak var LaType: UILabel!
+    @IBOutlet weak var LaDate: UILabel!
+    @IBOutlet weak var LaDescription: UILabel!
+    
+    @IBOutlet weak var ViewFirst: UIView!
+    @IBOutlet weak var ViewSecond: UIView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        let cornerRadius: CGFloat = 60.0
+        let maskLayer = CAShapeLayer()
+        maskLayer.path = UIBezierPath(roundedRect: ViewFirst.bounds,
+                                      byRoundingCorners: [.bottomLeft],
+                                      cornerRadii: CGSize(width: cornerRadius, height: cornerRadius)).cgPath
+        let maskLayer2 = CAShapeLayer()
+        maskLayer2.path = UIBezierPath(roundedRect: ViewSecond.bounds,
+                                      byRoundingCorners: [.bottomLeft],
+                                      cornerRadii: CGSize(width: cornerRadius, height: cornerRadius)).cgPath
+        
         // Do any additional setup after loading the view.
+        LaDescription.setJustifiedRight("هناك العديد من الخطوات التي يمكن اتباعها لتحسين صحة القلب. إليك بعض النصائح: ممارسة التمارين الرياضية بانتظام: ينصح بممارسة التمارين الرياضية المعتدلة مثل المشي السريع أو ركوب الدراجة لمدة 30 دقيقة على الأقل في اليوم، خمسة أيام في الأسبوع. ويمكن أيضًا ممارسة التمارين الرياضية الشديدة بشكل يومي لمدة 20 دقيقة.. والمعالجة..تجنب التدخين: ينصح بالتوقف عن التدخين أو عدم البدء فيه..الحفاظ على مستويات الكوليسترول الصحية: ينصح بتقليل تناول الدهون المشبعة والكوليسترول والأطعمة المعالجة.تناول الأدوية بانتظام: إذا كانت هناك أدوية موصوفة للقلب، فينبغي تناولها بانتظام وفقًا لتعليمات الطبيب. جديدة.  التمارين الرياضية بانتظام: ينصح بممارسة التمارين الرياضية المعتدلة مثل المشي السريع أو ركوب الدراجة لمدة 30 دقيقة على الأقل في اليوم، خمسة أيام في الأسبوع. ويمكن أيضًا ممارسة التمارين الرياضية الشديدة بشكل يومي لمدة 20 دقيقة.. والمعالجة..تجنب التدخين: ينصح بالتوقف عن التدخين أو عدم البدء فيه..الحفاظ على مستويات الكوليسترول الصحية: ينصح بتقليل تناول الدهون المشبعة والكوليسترول والأطعمة المعالجة.تناول الأدوية بانتظام: إذا كانت هناك أدوية موصوفة للقلب، فينبغي تناولها بانتظام وفقًا لتعليمات الطبيب. جديدة.  التمارين الرياضية بانتظام: ينصح بممارسة التمارين الرياضية المعتدلة مثل المشي السريع أو ركوب الدراجة لمدة 30 دقيقة على الأقل في اليوم، خمسة أيام في الأسبوع. ويمكن أيضًا ممارسة التمارين الرياضية الشديدة بشكل يومي لمدة 20 دقيقة.. والمعالجة..تجنب التدخين: ينصح بالتوقف عن التدخين أو عدم البدء فيه..الحفاظ على مستويات الكوليسترول الصحية: ينصح بتقليل تناول الدهون المشبعة والكوليسترول والأطعمة المعالجة.تناول الأدوية بانتظام: إذا كانت هناك أدوية موصوفة للقلب، فينبغي تناولها بانتظام وفقًا لتعليمات الطبيب. جديدة.  التمارين الرياضية بانتظام: ينصح بممارسة التمارين الرياضية المعتدلة مثل المشي السريع أو ركوب الدراجة لمدة 30 دقيقة على الأقل في اليوم، خمسة أيام في الأسبوع. ويمكن أيضًا ممارسة التمارين الرياضية الشديدة بشكل يومي لمدة 20 دقيقة.. والمعالجة..تجنب التدخين: ينصح بالتوقف عن التدخين أو عدم البدء فيه..الحفاظ على مستويات الكوليسترول الصحية: ينصح بتقليل تناول الدهون المشبعة والكوليسترول والأطعمة المعالجة.تناول الأدوية بانتظام: إذا كانت هناك أدوية موصوفة للقلب، فينبغي تناولها بانتظام وفقًا لتعليمات الطبيب. جديدة.  التمارين الرياضية بانتظام: ينصح بممارسة التمارين الرياضية المعتدلة مثل المشي السريع أو ركوب الدراجة لمدة 30 دقيقة على الأقل في اليوم، خمسة أيام في الأسبوع. ويمكن أيضًا ممارسة التمارين الرياضية الشديدة بشكل يومي لمدة 20 دقيقة.. والمعالجة..تجنب التدخين: ينصح بالتوقف عن التدخين أو عدم البدء فيه..الحفاظ على مستويات الكوليسترول الصحية: ينصح بتقليل تناول الدهون المشبعة والكوليسترول والأطعمة المعالجة.تناول الأدوية بانتظام: إذا كانت هناك أدوية موصوفة للقلب، فينبغي تناولها بانتظام وفقًا لتعليمات الطبيب. جديدة.")
+        
+        ViewFirst.layer.mask  = maskLayer
+        ViewSecond.layer.mask = maskLayer2
+        
     }
     
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    @IBAction func BUBack(_ sender: Any) {
+        self.dismiss(animated: true)
     }
-    */
-
+    
+    @IBAction func BUNoti(_ sender: Any) {
+    }
+    
 }

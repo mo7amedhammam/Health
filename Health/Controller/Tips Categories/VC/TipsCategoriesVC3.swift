@@ -8,22 +8,53 @@
 import UIKit
 
 class TipsCategoriesVC3: UIViewController {
-
+    
+    
+    @IBOutlet weak var LaTitleBare: UILabel!
+    @IBOutlet weak var TVScreen: UITableView!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
+        TVScreen.dataSource = self
+        TVScreen.delegate   = self
+        TVScreen.registerCellNib(cellClass: TipsCategories3TVCell.self)
+        TVScreen.reloadData()
+        
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    
+    @IBAction func BUNoti(_ sender: Any) {
     }
-    */
+    
+    @IBAction func BUBack(_ sender: Any) {
+        self.dismiss(animated: true)
+    }
+    
+}
 
+
+extension TipsCategoriesVC3 : UITableViewDataSource , UITableViewDelegate {
+    
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 10
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "TipsCategories3TVCell", for: indexPath) as! TipsCategories3TVCell
+        
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "TipsCategoriesDetailsVC") as! TipsCategoriesDetailsVC
+        vc.modalPresentationStyle = .fullScreen
+        self.present(vc, animated: false, completion: nil)
+    }
+    
 }

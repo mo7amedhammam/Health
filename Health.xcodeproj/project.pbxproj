@@ -54,6 +54,8 @@
 		BB518CF12A9A131300242FAD /* TipsCategoriesDetailsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB518CF02A9A131300242FAD /* TipsCategoriesDetailsVC.swift */; };
 		BB6E07EF2A896B2700689769 /* MeasurementsDetailsTVCell0.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6E07ED2A896B2700689769 /* MeasurementsDetailsTVCell0.swift */; };
 		BB6E07F02A896B2700689769 /* MeasurementsDetailsTVCell0.xib in Resources */ = {isa = PBXBuildFile; fileRef = BB6E07EE2A896B2700689769 /* MeasurementsDetailsTVCell0.xib */; };
+		BB913AD72A9BE04900003AC5 /* TipsCategoriesTVCell1.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB913AD52A9BE04900003AC5 /* TipsCategoriesTVCell1.swift */; };
+		BB913AD82A9BE04900003AC5 /* TipsCategoriesTVCell1.xib in Resources */ = {isa = PBXBuildFile; fileRef = BB913AD62A9BE04900003AC5 /* TipsCategoriesTVCell1.xib */; };
 		BBBD000A2A73101700F066DF /* EXTEnternet.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBBDFFF72A73100E00F066DF /* EXTEnternet.swift */; };
 		BBBD000B2A73101700F066DF /* SalmanLocalize.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBBDFFF82A73100E00F066DF /* SalmanLocalize.swift */; };
 		BBBD000C2A73101700F066DF /* EXTAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBBDFFF92A73100F00F066DF /* EXTAlert.swift */; };
@@ -178,6 +180,8 @@
 		BB518CF02A9A131300242FAD /* TipsCategoriesDetailsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TipsCategoriesDetailsVC.swift; sourceTree = "<group>"; };
 		BB6E07ED2A896B2700689769 /* MeasurementsDetailsTVCell0.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasurementsDetailsTVCell0.swift; sourceTree = "<group>"; };
 		BB6E07EE2A896B2700689769 /* MeasurementsDetailsTVCell0.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MeasurementsDetailsTVCell0.xib; sourceTree = "<group>"; };
+		BB913AD52A9BE04900003AC5 /* TipsCategoriesTVCell1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TipsCategoriesTVCell1.swift; sourceTree = "<group>"; };
+		BB913AD62A9BE04900003AC5 /* TipsCategoriesTVCell1.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TipsCategoriesTVCell1.xib; sourceTree = "<group>"; };
 		BBBD00002A73101200F066DF /* ExtentionLocalize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExtentionLocalize.swift; sourceTree = "<group>"; };
 		BBBD00012A73101300F066DF /* AES.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AES.swift; sourceTree = "<group>"; };
 		BBBD00022A73101300F066DF /* ProgressHud.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressHud.swift; sourceTree = "<group>"; };
@@ -438,6 +442,8 @@
 				BB518CD92A9A118B00242FAD /* TipsCategoriesTVCell0.xib */,
 				BB518CEC2A9A129500242FAD /* TipsCategories3TVCell.swift */,
 				BB518CED2A9A129500242FAD /* TipsCategories3TVCell.xib */,
+				BB913AD52A9BE04900003AC5 /* TipsCategoriesTVCell1.swift */,
+				BB913AD62A9BE04900003AC5 /* TipsCategoriesTVCell1.xib */,
 			);
 			path = TVCell;
 			sourceTree = "<group>";
@@ -782,6 +788,7 @@
 				BB518CEF2A9A129500242FAD /* TipsCategories3TVCell.xib in Resources */,
 				BB1AEAA12A955B450078683A /* NotificationTVCell.xib in Resources */,
 				BB518CE72A9A123200242FAD /* TipsCategoriesCVCell1.xib in Resources */,
+				BB913AD82A9BE04900003AC5 /* TipsCategoriesTVCell1.xib in Resources */,
 				BB14DAF42A7B044500389B96 /* ProfileTVCellLogout.xib in Resources */,
 				BB1B2FFC2A7EA364001677FD /* INBodyDetailsTVCell.xib in Resources */,
 				BB5116D32A829B4900CF5D11 /* MeasurementsCVCell.xib in Resources */,
@@ -944,6 +951,7 @@
 				BBBD00132A73101700F066DF /* ExtentionLocalize.swift in Sources */,
 				BB1B2FFB2A7EA364001677FD /* INBodyDetailsTVCell.swift in Sources */,
 				BBC7B45D2A72CC820079355E /* SceneDelegate.swift in Sources */,
+				BB913AD72A9BE04900003AC5 /* TipsCategoriesTVCell1.swift in Sources */,
 				BB518CEA2A9A125900242FAD /* TipsCategories2CVCell.swift in Sources */,
 				BB14DAE72A7B036400389B96 /* ProfileVC.swift in Sources */,
 				BB1B2FF42A7E9B44001677FD /* INBodyVC.swift in Sources */,

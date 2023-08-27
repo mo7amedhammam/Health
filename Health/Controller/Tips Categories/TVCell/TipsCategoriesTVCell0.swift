@@ -25,7 +25,7 @@ class TipsCategoriesTVCell0: UITableViewCell {
     
     
     @IBAction func BUMore(_ sender: Any) {
-        delegate.MoreCell0()
+        delegate.MoreCell()
     }
     
     
@@ -33,5 +33,5 @@ class TipsCategoriesTVCell0: UITableViewCell {
 }
 
 protocol TipsCategoriesTVCell0_protocoal {
-    func MoreCell0 ()
+    func MoreCell ()
 }
