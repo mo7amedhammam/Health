@@ -49,17 +49,23 @@ class OtpVC: UIViewController , UITextFieldDelegate {
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
-          
           if textField == TFIndex1 {
               TFIndex1.text = ""
+              TFIndex1.textColor = UIColor(named: "main")
+              ViewTF1.backgroundColor = .white
           } else if textField == TFIndex2 {
               TFIndex2.text = ""
+              TFIndex2.textColor = UIColor(named: "main")
+              ViewTF2.backgroundColor = .white
           } else if textField == TFIndex3 {
               TFIndex3.text = ""
+              TFIndex3.textColor = UIColor(named: "main")
+              ViewTF3.backgroundColor = .white
           } else if textField == TFIndex4 {
               TFIndex4.text = ""
+              TFIndex4.textColor = UIColor(named: "main")
+              ViewTF4.backgroundColor = .white
           } else {
-              
           }
       }
     
@@ -72,6 +78,13 @@ class OtpVC: UIViewController , UITextFieldDelegate {
             
             switch textField{
             case self.TFIndex1:
+                
+                if !TFIndex1.text!.isEmpty {
+                    TFIndex1.textColor = .white
+                    ViewTF1.backgroundColor = UIColor(named: "main")
+                } else {
+                    ViewTF1.backgroundColor = .clear
+                }
                 
                 if TFIndex2.text == "" {
                     self.TFIndex2.becomeFirstResponder()
@@ -88,6 +101,12 @@ class OtpVC: UIViewController , UITextFieldDelegate {
                     }
                 }
             case self.TFIndex2:
+                if !TFIndex2.text!.isEmpty {
+                    TFIndex2.textColor = .white
+                    ViewTF2.backgroundColor = UIColor(named: "main")
+                } else {
+                    ViewTF2.backgroundColor = .clear
+                }
                 
                 if TFIndex1.text == "" {
                     self.TFIndex1.becomeFirstResponder()
@@ -104,6 +123,12 @@ class OtpVC: UIViewController , UITextFieldDelegate {
                     }
                 }
             case self.TFIndex3:
+                if !TFIndex3.text!.isEmpty {
+                    TFIndex3.textColor = .white
+                    ViewTF3.backgroundColor = UIColor(named: "main")
+                } else {
+                    ViewTF3.backgroundColor = .clear
+                }
                 
                 if TFIndex1.text == "" {
                     self.TFIndex1.becomeFirstResponder()
@@ -120,6 +145,13 @@ class OtpVC: UIViewController , UITextFieldDelegate {
                     }
                 }
             case self.TFIndex4:
+                if !TFIndex4.text!.isEmpty {
+                    TFIndex4.textColor = .white
+                    ViewTF4.backgroundColor = UIColor(named: "main")
+                } else {
+                    ViewTF4.backgroundColor = .clear
+                }
+                
                 if TFIndex1.text == "" {
                     self.TFIndex1.becomeFirstResponder()
                 } else {
@@ -154,9 +186,32 @@ class OtpVC: UIViewController , UITextFieldDelegate {
         }
     }
     
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        
+        if TFIndex1.text == "" {
+            ViewTF1.backgroundColor = .clear
+        }
+        
+        if TFIndex2.text == "" {
+            ViewTF2.backgroundColor = .clear
+        }
+        
+        if TFIndex3.text == "" {
+            ViewTF3.backgroundColor = .clear
+        }
+        
+        if TFIndex4.text == "" {
+            ViewTF4.backgroundColor = .clear
+        }
+    }
+    
     func SendCode () {
         
-        
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "HTBC") as! HTBC
+        vc.modalPresentationStyle = .fullScreen
+        self.present(vc, animated: false, completion: nil)
     }
     
     @IBAction func BUDontReceive(_ sender: Any) {
@@ -166,6 +221,10 @@ class OtpVC: UIViewController , UITextFieldDelegate {
     }
     
     @IBAction func BUConfirm(_ sender: Any) {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "HTBC") as! HTBC
+        vc.modalPresentationStyle = .fullScreen
+        self.present(vc, animated: false, completion: nil)
     }
     
     

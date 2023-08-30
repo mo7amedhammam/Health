@@ -55,6 +55,10 @@ class SignUp: UIViewController  , UITextFieldDelegate{
     
     @IBAction func BUSignUp(_ sender: Any) {
        
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "ForgetPasswordVC") as! ForgetPasswordVC
+        vc.modalPresentationStyle = .fullScreen
+        self.present(vc, animated: false, completion: nil)
     }
     
     
