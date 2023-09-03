@@ -8,7 +8,6 @@
 
 import UIKit
 import Photos
-import Dimmer
 
 public protocol AssetsPhotoCellProtocol {
     var asset: PHAsset? { get set }
@@ -80,6 +79,7 @@ open class AssetsPhotoCell: UICollectionViewCell, AssetsPhotoCellProtocol {
     private let overlay: AssetsPhotoCellOverlay = {
         let overlay = AssetsPhotoCellOverlay()
         overlay.isHidden = true
+        overlay.isUserInteractionEnabled = false
         return overlay
     }()
     
@@ -124,8 +124,7 @@ open class AssetsPhotoCell: UICollectionViewCell, AssetsPhotoCellProtocol {
     
     open override func layoutSubviews() {
         super.layoutSubviews()
-        if isVideo {
-            imageView.setGradient(.fromBottom, start: 0, end: 0.2, startAlpha: 0.75, color: .black)
-        }
+        guard isVideo else { return }
+        imageView.setGradient(.fromBottom, start: 0, end: 0.2, startAlpha: 0.75, color: .black)
     }
 }

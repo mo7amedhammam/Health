@@ -8,7 +8,6 @@
 
 import UIKit
 import Photos
-import Dimmer
 
 public protocol AssetsAlbumCellProtocol {
     var album: PHAssetCollection? { get set }
@@ -27,19 +26,9 @@ open class AssetsAlbumCell: UICollectionViewCell, AssetsAlbumCellProtocol {
         }
     }
     
-    open override var isSelected: Bool {
-        didSet {
-            if isSelected {
-                imageView.dim(animated: false)
-            } else {
-                imageView.undim(animated: false)
-            }
-        }
-    }
-    
     public let imageView: UIImageView = {
         let view = UIImageView()
-        view.backgroundColor = UIColor(rgbHex: 0xF0F0F0)
+        view.backgroundColor = .ap_cellBackground
         view.contentMode = .scaleAspectFill
         view.clipsToBounds = true
         view.layer.cornerRadius = 5
@@ -61,14 +50,14 @@ open class AssetsAlbumCell: UICollectionViewCell, AssetsAlbumCellProtocol {
     // MARK: - Views
     fileprivate let titleLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .black
+        label.textColor = .ap_label
         label.font = UIFont.systemFont(forStyle: .subheadline)
         return label
     }()
     
     fileprivate let countLabel: UILabel = {
         let label = UILabel()
-        label.textColor = UIColor(rgbHex: 0x8C8C91)
+		label.textColor = .ap_secondaryLabel
         label.font = UIFont.systemFont(forStyle: .subheadline)
         return label
     }()
@@ -110,6 +99,7 @@ open class AssetsAlbumCell: UICollectionViewCell, AssetsAlbumCellProtocol {
             make.leading.equalToSuperview()
             make.trailing.equalToSuperview()
             make.height.equalTo(countLabel.font.pointSize + 2)
+            //make.bottom.equalTo(snp.bottom).offset(8)
         }
     }
 }

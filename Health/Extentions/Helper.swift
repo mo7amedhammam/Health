@@ -23,26 +23,6 @@ class Helper: NSObject {
 //     "imagePath": "string",
 //     "role": "string",
 //     "roleId": 0
-        
-    class func setUserData( id : Int , phoneNumber : String , token : String , name : String ,mobile : String , imagePath : String , role : String ,  roleId : Int , email : String   , nameAr : String , nameEn : String ){
-        
-        let def = UserDefaults.standard
-        
-        def.setValue(id              , forKey: "id")
-        def.setValue(phoneNumber       , forKey: "phoneNumber")
-        def.setValue(token       , forKey: "token")
-        def.setValue(name           , forKey: "name")
-        def.setValue(mobile           , forKey: "mobile")
-        def.setValue(imagePath         , forKey: "imagePath")
-        def.setValue(role           , forKey: "role")
-        def.setValue(roleId         , forKey: "roleId")
-        def.setValue(email         , forKey: "email")
-
-        def.setValue(nameAr         , forKey: "nameAr")
-        def.setValue(nameEn         , forKey: "nameEn")
-
-        def.synchronize()
-    }
     
     
     
@@ -164,23 +144,7 @@ class Helper: NSObject {
     //     "role": "string",
     //     "roleId": 0
     
-    class func logout() {
-        let def = UserDefaults.standard
-        def.removeObject( forKey: "id")
-        def.removeObject( forKey: "phoneNumber")
-        def.removeObject( forKey: "token")
-        def.removeObject( forKey: "name")
-        def.removeObject( forKey: "mobile")
-        def.removeObject( forKey: "imagePath")
-        def.removeObject( forKey: "role")
-        def.removeObject( forKey: "roleId")
-        def.removeObject( forKey: "email")
-        def.removeObject( forKey: "password")
-        def.removeObject( forKey: "nameAr")
-        def.removeObject( forKey: "nameEn")
-        
-        def.removeObject( forKey: "shouldUpdate")
-    }
+
     
     class func isValidEmail(emailStr:String) -> Bool {
         let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
@@ -371,3 +335,111 @@ func height(constraintedWidth width: CGFloat, font: UIFont) -> CGFloat {
 enum VersionError: Error {
     case invalidResponse, invalidBundleInfo
 }
+
+
+
+extension Helper{
+
+    @available(iOS 13.0, *)
+        static let userDef = UserDefaults.standard
+        
+        private static let onBoardKey = "onBoard"
+        private static let LoggedInKey = "LoggedId"
+        private static let UserDataKey = "UserDataKey"
+
+        
+        class func saveUser(user: LoginModel) {
+            let encoder = JSONEncoder()
+            if let encoded = try? encoder.encode(user) {
+                userDef.set(encoded, forKey: UserDataKey)
+                IsLoggedIn(value: true)
+                userDef.synchronize()
+            }
+        }
+
+        class func getUser() -> LoginModel? {
+            if let data = userDef.object(forKey: UserDataKey) as? Data {
+                let decoder = JSONDecoder()
+                if let user = try? decoder.decode(LoginModel.self, from: data) {
+                    return user
+                }
+            }
+            return nil
+        }
+        
+        //remove data then logout
+        class func logout() {
+            IsLoggedIn(value: false)
+            userDef.removeObject(forKey:UserDataKey  )
+        }
+            
+        static func onBoardOpened(opened:Bool) {
+            UserDefaults.standard.set(opened, forKey: onBoardKey)
+        }
+
+        static func checkOnBoard() -> Bool {
+            return UserDefaults.standard.bool(forKey: onBoardKey)
+        }
+        static func IsLoggedIn(value:Bool) {
+            UserDefaults.standard.set(value, forKey: LoggedInKey)
+        }
+        static func CheckIfLoggedIn() -> Bool {
+            return UserDefaults.standard.bool(forKey: LoggedInKey)
+        }
+
+        
+        // Checking internet connection
+        class func isConnectedToNetwork() -> Bool {
+            
+            var zeroAddress = sockaddr_in()
+            zeroAddress.sin_len = UInt8(MemoryLayout.size(ofValue: zeroAddress))
+            zeroAddress.sin_family = sa_family_t(AF_INET)
+            
+            let defaultRouteReachability = withUnsafePointer(to: &zeroAddress) {
+                $0.withMemoryRebound(to: sockaddr.self, capacity: 1) {zeroSockAddress in
+                    SCNetworkReachabilityCreateWithAddress(nil, zeroSockAddress)
+                }
+            }
+            
+            var flags = SCNetworkReachabilityFlags()
+            if !SCNetworkReachabilityGetFlags(defaultRouteReachability!, &flags) {
+                return false
+            }
+            let isReachable = (flags.rawValue & UInt32(kSCNetworkFlagsReachable)) != 0
+            let needsConnection = (flags.rawValue & UInt32(kSCNetworkFlagsConnectionRequired)) != 0
+            return (isReachable && !needsConnection)
+            }
+
+       class func ChangeFormate( NewFormat:String) -> DateFormatter {
+        //    @AppStorage("language")
+        //    var language = LocalizationService.shared.language
+            let df = DateFormatter()
+            df.dateFormat = NewFormat
+        //    df.locale = Locale(identifier: language.rawValue == "ar" ? "ar":"en_US_POSIX")
+            return df
+        }
+
+        class func calculatePercentage(number: Int, total: Int) -> Double {
+            guard total > 0 else {
+                return 0.0  // Avoid division by zero
+            }
+            
+            let percentage = Double(number) / Double(total) * 100.0
+            return percentage
+        }
+        
+        @available(iOS 13.0, *)
+        static func changeRootVC(newroot viewcontroller:UIViewController.Type){
+            guard  let controller = initiateViewController(storyboardName: .main,viewControllerIdentifier: viewcontroller.self) else {return}
+            let nav = UINavigationController(rootViewController: controller)
+            UIApplication.shared.keyWindow?.replaceRootViewController(nav)
+        }
+        
+
+        
+        
+    }
+
+
+
+

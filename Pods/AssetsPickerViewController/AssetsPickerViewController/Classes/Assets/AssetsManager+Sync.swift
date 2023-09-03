@@ -7,7 +7,6 @@
 //
 
 import Photos
-import TinyLog
 
 // MARK: - PHPhotoLibraryChangeObserver & Sync
 extension AssetsManager: PHPhotoLibraryChangeObserver {
@@ -61,7 +60,7 @@ extension AssetsManager: PHPhotoLibraryChangeObserver {
     
     func synchronizeAssets(updatedAlbumIndexSets: [IndexSet], fetchMapBeforeChanges: [String: PHFetchResult<PHAsset>], changeInstance: PHChange) {
         
-        var updatedIndexSets = updatedAlbumIndexSets
+        let updatedIndexSets = updatedAlbumIndexSets
         
         // notify changes of assets
         for (section, albums) in fetchedAlbumsArray.enumerated() {
@@ -70,14 +69,13 @@ extension AssetsManager: PHPhotoLibraryChangeObserver {
             var updatedIndexSet = updatedIndexSets[section]
             
             for (_, album) in albums.enumerated() {
-                logd("Looping album: \(album.localizedTitle ?? "")")
                 guard let fetchResult = fetchMapBeforeChanges[album.localIdentifier], let assetsChangeDetails = changeInstance.changeDetails(for: fetchResult) else {
                     continue
                 }
                 
                 // check thumbnail
                 if isThumbnailChanged(changeDetails: assetsChangeDetails) || isCountChanged(changeDetails: assetsChangeDetails) {
-                    if let updatedRow = fetchedAlbumsArray[section].index(of: album) {
+                    if let updatedRow = fetchedAlbumsArray[section].firstIndex(of: album) {
                         updatedIndexSet.insert(updatedRow)
                     }
                 }
@@ -100,9 +98,13 @@ extension AssetsManager: PHPhotoLibraryChangeObserver {
                 if let removedIndexesSet = assetsChangeDetails.removedIndexes {
                     let removedIndexes = removedIndexesSet.asArray().sorted(by: { $0.row < $1.row })
                     var removedAssets = [PHAsset]()
+                    let result = assetsChangeDetails.fetchResultAfterChanges
                     for removedIndex in removedIndexes.reversed() {
-                        removedAssets.insert(assetArray.remove(at: removedIndex.row), at: 0)
+                        let asset = fetchResult.object(at: removedIndex.row)
+                        removedAssets.insert(asset, at: 0)
                     }
+                    // update date source
+                    self.fetchResult = result
                     // stop caching for removed assets
                     stopCache(assets: removedAssets, size: pickerConfig.assetCacheSize)
                     notifySubscribers({ $0.assetsManager(manager: self, removedAssets: removedAssets, at: removedIndexes) }, condition: removedAssets.count > 0)
@@ -111,11 +113,13 @@ extension AssetsManager: PHPhotoLibraryChangeObserver {
                 if let insertedIndexesSet = assetsChangeDetails.insertedIndexes {
                     let insertedIndexes = insertedIndexesSet.asArray().sorted(by: { $0.row < $1.row })
                     var insertedAssets = [PHAsset]()
+                    let result = assetsChangeDetails.fetchResultAfterChanges
                     for insertedIndex in insertedIndexes {
-                        let insertedAsset = assetsChangeDetails.fetchResultAfterChanges.object(at: insertedIndex.row)
+                        let insertedAsset = result.object(at: insertedIndex.row)
                         insertedAssets.append(insertedAsset)
-                        assetArray.insert(insertedAsset, at: insertedIndex.row)
                     }
+                    // update date source
+                    self.fetchResult = result
                     // start caching for inserted assets
                     cache(assets: insertedAssets, size: pickerConfig.assetCacheSize)
                     notifySubscribers({ $0.assetsManager(manager: self, insertedAssets: insertedAssets, at: insertedIndexes) }, condition: insertedAssets.count > 0)
@@ -134,6 +138,8 @@ extension AssetsManager: PHPhotoLibraryChangeObserver {
                 }
             }
             
+            guard section < sortedAlbumsArray.count && section < fetchedAlbumsArray.count else { return }
+
             // update final changes in albums
             var oldSortedAlbums = sortedAlbumsArray[section]
             let newSortedAlbums = sortedAlbums(fromAlbums: fetchedAlbumsArray[section])

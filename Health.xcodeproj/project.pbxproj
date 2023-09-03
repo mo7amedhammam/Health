@@ -105,6 +105,14 @@
 		BBE3CC7C2A80010B004B0D9A /* MedicationScheduleDetailsTVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BBE3CC7A2A80010B004B0D9A /* MedicationScheduleDetailsTVCell.xib */; };
 		BBE3CC7E2A80011E004B0D9A /* MedicationScheduleDetailsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE3CC7D2A80011E004B0D9A /* MedicationScheduleDetailsVC.swift */; };
 		BF4248823B37C802E7C933CF /* Pods_HealthTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65CCB737364DA0B08042A29D /* Pods_HealthTests.framework */; };
+		C80DA9E22AA4D11300F10808 /* BaseResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80DA9E12AA4D11300F10808 /* BaseResponse.swift */; };
+		C80DA9E42AA4D29500F10808 /* EndPoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80DA9E32AA4D29500F10808 /* EndPoints.swift */; };
+		C80DA9E62AA4D2F100F10808 /* BaseRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80DA9E52AA4D2F100F10808 /* BaseRequest.swift */; };
+		C80DA9E82AA4D33000F10808 /* RequestBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80DA9E72AA4D33000F10808 /* RequestBuilder.swift */; };
+		C80DA9EB2AA4D3B300F10808 /* Authintications.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80DA9EA2AA4D3B300F10808 /* Authintications.swift */; };
+		C80DA9ED2AA4F65300F10808 /* Navigations.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80DA9EC2AA4F65300F10808 /* Navigations.swift */; };
+		C80DA9EF2AA4F6B000F10808 /* UiWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80DA9EE2AA4F6B000F10808 /* UiWindow.swift */; };
+		C80DA9F12AA4F73400F10808 /* LoginModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80DA9F02AA4F73400F10808 /* LoginModel.swift */; };
 		D8F01CB9807BCED647F0DF67 /* Pods_Health_HealthUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D4F58DCAA0D2C4B6098F3C6 /* Pods_Health_HealthUITests.framework */; };
 /* End PBXBuildFile section */
 
@@ -234,6 +242,14 @@
 		BBE3CC792A80010B004B0D9A /* MedicationScheduleDetailsTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedicationScheduleDetailsTVCell.swift; sourceTree = "<group>"; };
 		BBE3CC7A2A80010B004B0D9A /* MedicationScheduleDetailsTVCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MedicationScheduleDetailsTVCell.xib; sourceTree = "<group>"; };
 		BBE3CC7D2A80011E004B0D9A /* MedicationScheduleDetailsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedicationScheduleDetailsVC.swift; sourceTree = "<group>"; };
+		C80DA9E12AA4D11300F10808 /* BaseResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseResponse.swift; sourceTree = "<group>"; };
+		C80DA9E32AA4D29500F10808 /* EndPoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndPoints.swift; sourceTree = "<group>"; };
+		C80DA9E52AA4D2F100F10808 /* BaseRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseRequest.swift; sourceTree = "<group>"; };
+		C80DA9E72AA4D33000F10808 /* RequestBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestBuilder.swift; sourceTree = "<group>"; };
+		C80DA9EA2AA4D3B300F10808 /* Authintications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Authintications.swift; sourceTree = "<group>"; };
+		C80DA9EC2AA4F65300F10808 /* Navigations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Navigations.swift; sourceTree = "<group>"; };
+		C80DA9EE2AA4F6B000F10808 /* UiWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UiWindow.swift; sourceTree = "<group>"; };
+		C80DA9F02AA4F73400F10808 /* LoginModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginModel.swift; sourceTree = "<group>"; };
 		F37B91FD984B0C39EEA6833D /* Pods-Health-HealthUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Health-HealthUITests.release.xcconfig"; path = "Target Support Files/Pods-Health-HealthUITests/Pods-Health-HealthUITests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -530,6 +546,8 @@
 				BBBDFFFA2A73100F00F066DF /* Style.swift */,
 				BBBD00032A73101400F066DF /* UiCollectionView+Extension.swift */,
 				BBBDFFFF2A73101200F066DF /* UITableView+Extensions.swift */,
+				C80DA9EC2AA4F65300F10808 /* Navigations.swift */,
+				C80DA9EE2AA4F6B000F10808 /* UiWindow.swift */,
 			);
 			path = Extentions;
 			sourceTree = "<group>";
@@ -562,6 +580,7 @@
 		BBBDFFF52A730F9400F066DF /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				C80DA9F02AA4F73400F10808 /* LoginModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -569,6 +588,11 @@
 		BBBDFFF62A730F9800F066DF /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				C80DA9E92AA4D37800F10808 /* HealthServices */,
+				C80DA9E12AA4D11300F10808 /* BaseResponse.swift */,
+				C80DA9E32AA4D29500F10808 /* EndPoints.swift */,
+				C80DA9E52AA4D2F100F10808 /* BaseRequest.swift */,
+				C80DA9E72AA4D33000F10808 /* RequestBuilder.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -656,6 +680,14 @@
 				BBE3CC7A2A80010B004B0D9A /* MedicationScheduleDetailsTVCell.xib */,
 			);
 			path = TVCell;
+			sourceTree = "<group>";
+		};
+		C80DA9E92AA4D37800F10808 /* HealthServices */ = {
+			isa = PBXGroup;
+			children = (
+				C80DA9EA2AA4D3B300F10808 /* Authintications.swift */,
+			);
+			path = HealthServices;
 			sourceTree = "<group>";
 		};
 		ECFB6316F9014F7BB09F9E88 /* Frameworks */ = {
@@ -950,12 +982,14 @@
 				BBBD000D2A73101700F066DF /* Style.swift in Sources */,
 				BBBD00132A73101700F066DF /* ExtentionLocalize.swift in Sources */,
 				BB1B2FFB2A7EA364001677FD /* INBodyDetailsTVCell.swift in Sources */,
+				C80DA9F12AA4F73400F10808 /* LoginModel.swift in Sources */,
 				BBC7B45D2A72CC820079355E /* SceneDelegate.swift in Sources */,
 				BB913AD72A9BE04900003AC5 /* TipsCategoriesTVCell1.swift in Sources */,
 				BB518CEA2A9A125900242FAD /* TipsCategories2CVCell.swift in Sources */,
 				BB14DAE72A7B036400389B96 /* ProfileVC.swift in Sources */,
 				BB1B2FF42A7E9B44001677FD /* INBodyVC.swift in Sources */,
 				BB5116D22A829B4900CF5D11 /* MeasurementsCVCell.swift in Sources */,
+				C80DA9ED2AA4F65300F10808 /* Navigations.swift in Sources */,
 				BB1B30012A7EA8BF001677FD /* ViewDone.swift in Sources */,
 				BBBD00162A73101700F066DF /* UiCollectionView+Extension.swift in Sources */,
 				BBBD00262A7311E400F066DF /* ForgetPasswordVC.swift in Sources */,
@@ -984,11 +1018,16 @@
 				BB518CDA2A9A118B00242FAD /* TipsCategoriesTVCell0.swift in Sources */,
 				BBBD000A2A73101700F066DF /* EXTEnternet.swift in Sources */,
 				BB14DAEF2A7B043500389B96 /* ProfileTVCellMiddle.swift in Sources */,
+				C80DA9E62AA4D2F100F10808 /* BaseRequest.swift in Sources */,
 				BBE3CC7E2A80011E004B0D9A /* MedicationScheduleDetailsVC.swift in Sources */,
 				BBBD000E2A73101700F066DF /* ImageViewer.swift in Sources */,
 				BBBD00182A73101700F066DF /* CardView.swift in Sources */,
 				BB1AEAA02A955B450078683A /* NotificationTVCell.swift in Sources */,
+				C80DA9EB2AA4D3B300F10808 /* Authintications.swift in Sources */,
 				BB14DAF72A7B047400389B96 /* ProfileTVCellLine.swift in Sources */,
+				C80DA9E22AA4D11300F10808 /* BaseResponse.swift in Sources */,
+				C80DA9EF2AA4F6B000F10808 /* UiWindow.swift in Sources */,
+				C80DA9E42AA4D29500F10808 /* EndPoints.swift in Sources */,
 				BB5116CD2A829AC900CF5D11 /* MeasurementsDetailsTVCell.swift in Sources */,
 				BB6E07EF2A896B2700689769 /* MeasurementsDetailsTVCell0.swift in Sources */,
 				BBBD00142A73101700F066DF /* AES.swift in Sources */,
@@ -996,6 +1035,7 @@
 				BB14DAF32A7B044500389B96 /* ProfileTVCellLogout.swift in Sources */,
 				BBBD00342A731B3300F066DF /* SplashScreenVC.swift in Sources */,
 				BB5116C62A829A8E00CF5D11 /* MeasurementsDetailsVC.swift in Sources */,
+				C80DA9E82AA4D33000F10808 /* RequestBuilder.swift in Sources */,
 				BBBD00212A73119500F066DF /* LoginVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

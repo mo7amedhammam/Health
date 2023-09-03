@@ -1,3 +1,6 @@
+
+# Now iOS 14 supports multiple asset picker by default. I recommend use PHPickerViewController instead of this picker for many reasons.
+
 ## AssetsPickerViewController
 
 [![Version](https://img.shields.io/cocoapods/v/AssetsPickerViewController.svg?style=flat)](http://cocoapods.org/pods/AssetsPickerViewController)
@@ -26,7 +29,8 @@ https://appetize.io/app/752b6azuj3d3varvmu1hkwuuqm
 iOS friendly UI for Album & Asset
 
 ![albums_portrait](https://cloud.githubusercontent.com/assets/20486591/26525542/43036a42-4395-11e7-98f0-5bf3f40f923d.PNG)
-![photos_portrait](https://cloud.githubusercontent.com/assets/20486591/26525538/42b1d6dc-4395-11e7-9c16-b9abdb2e9247.PNG)
+![photos_portrait](https://user-images.githubusercontent.com/20486591/66302122-50d12b00-e933-11e9-8594-cf3d9e36d582.png)
+![photos_portrait](https://user-images.githubusercontent.com/20486591/66302136-56c70c00-e933-11e9-910f-9e97cb882d31.png)
 
 
 iPad Support
@@ -91,11 +95,18 @@ Customizable Album & Asset Layout
 
 - set selected assets before present picker controller
 
+- supports dark mode from iOS 13
+
+- takes and auto-selects photo or video took inside picker
+
+- multiple selection by dragging cells (from iOS 13)
+
+- SPM(Swift Package Manager) support
+
 
 ## Features To-do
 
-- single select mode with crop
-
+- Cropping image before select
 
 ## Basic Usage
 
@@ -164,6 +175,11 @@ func assetsPicker(controller: AssetsPickerViewController, shouldSelect asset: PH
     }
     return true
 }
+```
+
+To automatically deselect oldest selected asset for limited selection count,
+```swift
+pickerConfig.assetsMaximumSelectionCount = 5
 ```
 
 ### Appearence
@@ -304,9 +320,11 @@ Take note: If you don't set the strings correctly these can cause problems.
 
 ## Requirements & Dependency
 
-Xcode9, Swift 4, iOS 9.0
+Xcode10.2, Swift 5, iOS 10.0
 
-Uses [PureLayout](https://github.com/PureLayout/PureLayout) for creating UI inside library. Thanks to PureLayout development team for doing such a beautiful job.
+Uses [SnapKit](https://github.com/SnapKit/SnapKit) for creating UI inside library. Thanks to SnapKit development team for doing such a beautiful job.
+
+if your app's deployment target is greater than or equal to 11.0, you can use up-to-date version of SnapKit, otherwise you have to fix SnapKit's version to 5.0.0
 
 
 ## Installation
@@ -318,7 +336,7 @@ it, simply add the following line to your Podfile:
 pod 'AssetsPickerViewController', '~> 2.0'
 ```
 
-Swift 3 is not supported anymore.
+Swift 4 is not supported anymore.
 
 ## Author
 

@@ -9,9 +9,7 @@
 import UIKit
 import Photos
 import PhotosUI
-import TinyLog
 
-@available(iOS 9.1, *)
 open class AssetsPreviewController: UIViewController {
     
     fileprivate var player: AVPlayer?
@@ -105,7 +103,7 @@ open class AssetsPreviewController: UIViewController {
         view.contentMode = .scaleAspectFill
         return view
     }()
-//    @available(iOS 9.1, *)
+    @available(iOS 9.1, *)
     lazy var livePhotoView: PHLivePhotoView = {
         let view = PHLivePhotoView()
         view.delegate = self
@@ -115,7 +113,7 @@ open class AssetsPreviewController: UIViewController {
     override open func loadView() {
         super.loadView()
         view = UIView()
-        view.backgroundColor = .white
+        view.backgroundColor = .ap_background
         view.addSubview(imageView)
         if #available(iOS 9.1, *) {
             view.addSubview(livePhotoView)
@@ -154,7 +152,6 @@ open class AssetsPreviewController: UIViewController {
     }
 }
 
-@available(iOS 9.1, *)
 extension AssetsPreviewController {
     open func image(forAsset asset: PHAsset, isNeedDegraded: Bool = true, completion: @escaping ((UIImage?) -> Void)) {
         let options = PHImageRequestOptions()
@@ -200,7 +197,6 @@ extension AssetsPreviewController {
     }
 }
 
-@available(iOS 9.1, *)
 extension AssetsPreviewController: PHLivePhotoViewDelegate {
     @available(iOS 9.1, *)
     public func livePhotoView(_ livePhotoView: PHLivePhotoView, willBeginPlaybackWith playbackStyle: PHLivePhotoViewPlaybackStyle) {}

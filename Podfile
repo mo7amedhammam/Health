@@ -1,15 +1,15 @@
 # Uncomment the next line to define a global platform for your project
- platform :ios, '9.0'
+ platform :ios, '12.0'
 
 target 'Health' do
   # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks!
 
   # Pods for Health
-    pod 'Alamofire', '4.9.1'
+    pod 'Alamofire', '5.6.4'
     pod 'SwiftyJSON'
-    pod 'Kingfisher'
-    pod 'IQKeyboardManagerSwift'
+    pod 'Kingfisher','7.6.1'
+    pod 'IQKeyboardManagerSwift', '6.3.0'
     pod 'Cosmos'
     pod 'Firebase'
     pod 'Firebase/Analytics'
