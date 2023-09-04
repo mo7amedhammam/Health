@@ -16,6 +16,8 @@ class LoginVC: UIViewController , UITextFieldDelegate {
     @IBOutlet weak var TFPassword: UITextField!
     @IBOutlet weak var ViewPassword: UIView!
     
+    let loginViewModel = LoginVM()
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -38,6 +40,7 @@ class LoginVC: UIViewController , UITextFieldDelegate {
     }
         
     @IBAction func BULogin(_ sender: Any) {
+        Login()
     }
     
     @IBAction func BUSignUp(_ sender: Any) {
@@ -92,5 +95,21 @@ class LoginVC: UIViewController , UITextFieldDelegate {
           
       }
     
+    func Login() {
+        loginViewModel.mobile = TFPhone.text
+        loginViewModel.password = TFPassword.text
 
+        loginViewModel.login { [self] success, errorMessage in
+            if success {
+                // Login was successful, you can navigate to the next screen or perform other actions.
+                // For example, show the home screen.
+                //                self.performSegue(withIdentifier: "LoggedInSegue", sender: nil)
+                print("userModel",loginViewModel.usermodel ?? LoginM())
+            } else {
+                // Handle login failure, show an error message, etc.
+                print("Login error: \(errorMessage)")
+            }
+        }
+    }
+    
 }

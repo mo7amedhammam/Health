@@ -60,6 +60,11 @@ final class BaseNetwork{
         _ modelType: M.Type,
         completion: @escaping (Result<M, NetworkError>) -> Void
     ) {
+        guard Helper.isConnectedToNetwork() else{
+            completion(.failure(NetworkError.noConnection))
+            return
+        }
+        
         let parameters = buildparameter(paramaters: target.parameter)
         let headers: HTTPHeaders? = Alamofire.HTTPHeaders(target.headers ?? [:])
         print(target.requestURL)
@@ -209,6 +214,7 @@ public enum NetworkError: Error, Equatable {
     case noResponse(_ error: String)
     case unableToParseData(_ error: String)
     case unknown(code: Int, error: String)
+    case noConnection
 }
 
 extension NetworkError: LocalizedError {
@@ -234,6 +240,9 @@ extension NetworkError: LocalizedError {
             return errorMsg
         case .expiredTokenMsg:
             return " يجب تسجيل دخول من جديد"
+        case .noConnection:
+            return "لا يوجد إتصال بالإنترنت"
+
         }
     }
 }
