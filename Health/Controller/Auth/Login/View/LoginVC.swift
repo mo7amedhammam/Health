@@ -25,7 +25,6 @@ class LoginVC: UIViewController , UITextFieldDelegate {
         TFPhone.delegate = self
         TFPassword.delegate = self
         BtnPhone.isHidden = true
-
     }
     
     @IBAction func BUBack(_ sender: Any) {
@@ -50,7 +49,6 @@ class LoginVC: UIViewController , UITextFieldDelegate {
         self.present(vc, animated: false, completion: nil)
     }
     
-    
     @IBAction func BUShowPassword(_ sender: UIButton) {
         
         if sender.isSelected == false {
@@ -63,7 +61,7 @@ class LoginVC: UIViewController , UITextFieldDelegate {
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
-          
+        
           if textField == TFPhone {
               TFPhone.textColor = UIColor(named: "main")
               ViewPhoneNum.borderColor = UIColor(named: "stroke")
@@ -72,9 +70,9 @@ class LoginVC: UIViewController , UITextFieldDelegate {
               ViewPassword.borderColor = UIColor(named: "stroke")
               TFPassword.textColor = UIColor(named: "main")
           } else {
-              
           }
       }
+    
       func textFieldDidEndEditing(_ textField: UITextField) {
           
           if textField == TFPhone {
@@ -92,9 +90,13 @@ class LoginVC: UIViewController , UITextFieldDelegate {
               
           } else {
           }
-          
       }
     
+}
+
+
+//MARK: ---- functions -----
+extension LoginVC{
     func Login() {
         loginViewModel.mobile = TFPhone.text
         loginViewModel.password = TFPassword.text
@@ -111,5 +113,4 @@ class LoginVC: UIViewController , UITextFieldDelegate {
             }
         }
     }
-    
 }

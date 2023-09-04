@@ -47,5 +47,4 @@ class LoginVM {
         }
     }
     
-    // Other properties and methods...
 }

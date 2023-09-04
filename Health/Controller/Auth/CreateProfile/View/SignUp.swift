@@ -21,17 +21,20 @@ class SignUp: UIViewController  , UITextFieldDelegate{
     @IBOutlet weak var TFDistrict: UITextField!
     @IBOutlet weak var ViewDistrict: UIView!
     @IBOutlet weak var BtnDistrict: UIView!
-    
+    var DistrictId: Int?
+
+    @IBOutlet weak var TFGender: UITextField!
+    @IBOutlet weak var ViewGender: UIView!
+    @IBOutlet weak var BtnGender: UIView!
+    var GenderId: Int?
     
     @IBOutlet weak var TFCode: UITextField!
     @IBOutlet weak var ViewCode: UIView!
     @IBOutlet weak var BtnCode: UIView!
-    
-    
-    
+
+    let signUpViewModel = SignUpVM()
     override func viewDidLoad() {
         super.viewDidLoad()
-
         // Do any additional setup after loading the view.
         
         TFName.delegate = self
@@ -44,6 +47,9 @@ class SignUp: UIViewController  , UITextFieldDelegate{
         BtnCode.isHidden = true
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        getDistricts()
+    }
     
     @IBAction func BUBack(_ sender: Any) {
         self.dismiss(animated: true)
@@ -55,10 +61,11 @@ class SignUp: UIViewController  , UITextFieldDelegate{
     
     @IBAction func BUSignUp(_ sender: Any) {
        
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc = storyboard.instantiateViewController(withIdentifier: "ForgetPasswordVC") as! ForgetPasswordVC
-        vc.modalPresentationStyle = .fullScreen
-        self.present(vc, animated: false, completion: nil)
+//        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+//        let vc = storyboard.instantiateViewController(withIdentifier: "ForgetPasswordVC") as! ForgetPasswordVC
+//        vc.modalPresentationStyle = .fullScreen
+//        self.present(vc, animated: false, completion: nil)
+        SignUp()
     }
     
     
@@ -105,7 +112,39 @@ class SignUp: UIViewController  , UITextFieldDelegate{
           }
           
       }
-    
-    
   
+}
+
+//MARK: ---- functions -----
+extension SignUp{
+    func getDistricts(){
+        signUpViewModel.GetDistricts{ [self] success, errorMessage in
+            if success {
+                print("Districts",signUpViewModel.DistrictsArr ?? [])
+            } else {
+                print("error: \(errorMessage)")
+            }
+        }
+    }
+    
+    func SignUp() {
+        signUpViewModel.name = TFName.text
+        signUpViewModel.mobile = TFPhone.text
+        signUpViewModel.districtId = DistrictId
+        signUpViewModel.genderId = GenderId
+        signUpViewModel.pharmacyCode = TFCode.text
+        
+        signUpViewModel.SignUp{ [self] success, errorMessage in
+            if success {
+                // SignUp was successful, you can navigate to the next screen or perform other actions.
+                // For example, show the home screen.
+                //                self.performSegue(withIdentifier: "LoggedInSegue", sender: nil)
+                print("userModel",signUpViewModel.responseModel ?? SignUpM())
+            } else {
+                // Handle login failure, show an error message, etc.
+                print("Login error: \(errorMessage)")
+            }
+        }
+    }
+    
 }

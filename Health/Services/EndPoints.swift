@@ -30,6 +30,9 @@ enum EndPoints: String {
     case ResetPassword = "Customer/ResetPassword"
     case ChangePassword = "Customer/ChangePassword"
 
+    //MARK: -- Lookups --
+    case GetAllGenders = "Lookups/GetAllGenders"
+    case GetAllDistricts = "District/GetAllForList"
     
     //MARK: -- Main tab --
     case HomePageNewest = "Questions/HomePageNewest"

@@ -115,6 +115,8 @@
 		C80DA9F12AA4F73400F10808 /* LoginModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80DA9F02AA4F73400F10808 /* LoginModel.swift */; };
 		C8346E582AA5EE9C00C3C3EE /* LoginVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8346E572AA5EE9C00C3C3EE /* LoginVM.swift */; };
 		C8346E5A2AA5EEA800C3C3EE /* LoginM.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8346E592AA5EEA800C3C3EE /* LoginM.swift */; };
+		C8C7339A2AA6756B00185698 /* SignUpM.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C733992AA6756B00185698 /* SignUpM.swift */; };
+		C8C7339C2AA6757800185698 /* SignUpVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C7339B2AA6757800185698 /* SignUpVM.swift */; };
 		D8F01CB9807BCED647F0DF67 /* Pods_Health_HealthUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D4F58DCAA0D2C4B6098F3C6 /* Pods_Health_HealthUITests.framework */; };
 /* End PBXBuildFile section */
 
@@ -254,6 +256,8 @@
 		C80DA9F02AA4F73400F10808 /* LoginModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginModel.swift; sourceTree = "<group>"; };
 		C8346E572AA5EE9C00C3C3EE /* LoginVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVM.swift; sourceTree = "<group>"; };
 		C8346E592AA5EEA800C3C3EE /* LoginM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginM.swift; sourceTree = "<group>"; };
+		C8C733992AA6756B00185698 /* SignUpM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpM.swift; sourceTree = "<group>"; };
+		C8C7339B2AA6757800185698 /* SignUpVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpVM.swift; sourceTree = "<group>"; };
 		F37B91FD984B0C39EEA6833D /* Pods-Health-HealthUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Health-HealthUITests.release.xcconfig"; path = "Target Support Files/Pods-Health-HealthUITests/Pods-Health-HealthUITests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -486,7 +490,7 @@
 			children = (
 				BBBD00322A731B0C00F066DF /* Splash */,
 				C8346E532AA5EE5E00C3C3EE /* Login */,
-				BBBD00232A7311AF00F066DF /* SignUp.swift */,
+				C8C733952AA6752700185698 /* CreateProfile */,
 				BBBD00252A7311E400F066DF /* ForgetPasswordVC.swift */,
 				BB48F8A02A747D020051F12C /* ChangePasswordVC.swift */,
 				BB48F8A22A7482480051F12C /* OtpVC.swift */,
@@ -724,6 +728,40 @@
 			isa = PBXGroup;
 			children = (
 				C8346E572AA5EE9C00C3C3EE /* LoginVM.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		C8C733952AA6752700185698 /* CreateProfile */ = {
+			isa = PBXGroup;
+			children = (
+				C8C733982AA6754F00185698 /* ViewModel */,
+				C8C733972AA6754900185698 /* Model */,
+				C8C733962AA6754000185698 /* View */,
+			);
+			path = CreateProfile;
+			sourceTree = "<group>";
+		};
+		C8C733962AA6754000185698 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				BBBD00232A7311AF00F066DF /* SignUp.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		C8C733972AA6754900185698 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				C8C733992AA6756B00185698 /* SignUpM.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		C8C733982AA6754F00185698 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				C8C7339B2AA6757800185698 /* SignUpVM.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -1017,6 +1055,7 @@
 				C8346E5A2AA5EEA800C3C3EE /* LoginM.swift in Sources */,
 				BB518CD52A9A113900242FAD /* TipsCategoriesVC2.swift in Sources */,
 				BBBD000F2A73101700F066DF /* RoundedImage.swift in Sources */,
+				C8C7339C2AA6757800185698 /* SignUpVM.swift in Sources */,
 				BBBD00192A73101700F066DF /* Cesar.swift in Sources */,
 				BBBD000D2A73101700F066DF /* Style.swift in Sources */,
 				BBBD00132A73101700F066DF /* ExtentionLocalize.swift in Sources */,
@@ -1033,6 +1072,7 @@
 				BBBD00162A73101700F066DF /* UiCollectionView+Extension.swift in Sources */,
 				BBBD00262A7311E400F066DF /* ForgetPasswordVC.swift in Sources */,
 				BBBD000B2A73101700F066DF /* SalmanLocalize.swift in Sources */,
+				C8C7339A2AA6756B00185698 /* SignUpM.swift in Sources */,
 				BBBD00172A73101700F066DF /* Helper.swift in Sources */,
 				BB518CEE2A9A129500242FAD /* TipsCategories3TVCell.swift in Sources */,
 				BBBD003F2A731B7B00F066DF /* SplashScreenTVCell3.swift in Sources */,

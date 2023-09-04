@@ -18,6 +18,8 @@ enum Authintications {
     case SendOtp(parameters : [String:Any])
     case VerifyOtp(parameters : [String:Any])
 
+    case GetDistricts
+
     case ResetPassword(parameters : [String:Any])
     case ChangePassword(parameters:[String:Any])
 }
@@ -35,7 +37,10 @@ extension Authintications : TargetType {
             
         case .VerifyOtp:
             return EndPoints.VerifyOTP.rawValue
-
+            
+        case .GetDistricts:
+            return EndPoints.GetAllDistricts.rawValue
+            
         case .ResetPassword:
             return EndPoints.ResetPassword.rawValue
             
@@ -48,11 +53,14 @@ extension Authintications : TargetType {
         switch self {
         case .Register,
                 .Login,
-                .VerifyOtp,
                 .SendOtp,
+                .VerifyOtp,
                 .ResetPassword,
                 .ChangePassword:
             return .post
+            
+        case .GetDistricts:
+            return .get
     }
     }
     
@@ -65,6 +73,9 @@ extension Authintications : TargetType {
                 .ResetPassword(parameters: let parameters),
                 .ChangePassword(parameters: let parameters):
             return .parameterRequest(Parameters: parameters, Encoding: encoding)
+            
+        case .GetDistricts:
+            return .plainRequest
         }
     }
     
