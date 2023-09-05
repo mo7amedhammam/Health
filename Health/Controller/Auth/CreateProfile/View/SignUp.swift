@@ -37,7 +37,6 @@ class SignUp: UIViewController  , UITextFieldDelegate{
     
 //    let dataArray = ["الدمام", "مكة", "الرياض", "بريدة", "القصيم"]
         let rightBarDropDown = DropDown()
-    var DropListSource:DrobListSource = .Gender
     
     let ViewModel = SignUpVM()
     override func viewDidLoad() {
