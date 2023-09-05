@@ -6,9 +6,13 @@
 //
 
 import UIKit
+import DropDown
 
+enum DrobListSource{
+case Gender,District
+}
 class SignUp: UIViewController  , UITextFieldDelegate{
-
+    
     @IBOutlet weak var TFName: UITextField!
     @IBOutlet weak var ViewName: UIView!
     @IBOutlet weak var BtnName: UIView!
@@ -17,22 +21,25 @@ class SignUp: UIViewController  , UITextFieldDelegate{
     @IBOutlet weak var ViewPhoneNum: UIView!
     @IBOutlet weak var BtnPhone: UIView!
     
-    
     @IBOutlet weak var TFDistrict: UITextField!
     @IBOutlet weak var ViewDistrict: UIView!
-    @IBOutlet weak var BtnDistrict: UIView!
+    @IBOutlet weak var BtnDistrict: UIButton!
     var DistrictId: Int?
-
+    
     @IBOutlet weak var TFGender: UITextField!
     @IBOutlet weak var ViewGender: UIView!
-    @IBOutlet weak var BtnGender: UIView!
+    @IBOutlet weak var BtnGender: UIButton!
     var GenderId: Int?
     
     @IBOutlet weak var TFCode: UITextField!
     @IBOutlet weak var ViewCode: UIView!
     @IBOutlet weak var BtnCode: UIView!
-
-    let signUpViewModel = SignUpVM()
+    
+//    let dataArray = ["الدمام", "مكة", "الرياض", "بريدة", "القصيم"]
+        let rightBarDropDown = DropDown()
+    var DropListSource:DrobListSource = .Gender
+    
+    let ViewModel = SignUpVM()
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -45,10 +52,14 @@ class SignUp: UIViewController  , UITextFieldDelegate{
         
         TFCode.delegate = self
         BtnCode.isHidden = true
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        getDistricts()
+        DispatchQueue.main.async {
+            self.getDistricts()
+            self.getGenders()
+        }
     }
     
     @IBAction func BUBack(_ sender: Any) {
@@ -60,91 +71,212 @@ class SignUp: UIViewController  , UITextFieldDelegate{
     }
     
     @IBAction func BUSignUp(_ sender: Any) {
-       
-//        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-//        let vc = storyboard.instantiateViewController(withIdentifier: "ForgetPasswordVC") as! ForgetPasswordVC
-//        vc.modalPresentationStyle = .fullScreen
-//        self.present(vc, animated: false, completion: nil)
-        SignUp()
+        
+        //        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        //        let vc = storyboard.instantiateViewController(withIdentifier: "ForgetPasswordVC") as! ForgetPasswordVC
+        //        vc.modalPresentationStyle = .fullScreen
+        //        self.present(vc, animated: false, completion: nil)
+        SendJoinRequest()
+    }
+    @IBAction func BUSelectDistrict(_ sender: Any) {
+        SetDropDown(DropListSource: .District)
+            rightBarDropDown.show()
+        }
+    
+    @IBAction func BUSelectGender(_ sender: Any) {
+       SetDropDown(DropListSource: .Gender)
+           rightBarDropDown.show()
+       }
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        
+        if textField == TFPhone {
+            TFPhone.textColor = UIColor(named: "main")
+            ViewPhoneNum.borderColor = UIColor(named: "stroke")
+        } else if textField == TFName {
+            ViewName.borderColor = UIColor(named: "stroke")
+            TFName.textColor = UIColor(named: "main")
+        } else if textField == TFCode {
+            ViewCode.borderColor = UIColor(named: "stroke")
+            TFCode.textColor = UIColor(named: "main")
+        }  else {
+            
+        }
     }
     
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        
+        if textField == TFPhone {
+            if TFPhone.text?.count == 0 {
+                BtnPhone.isHidden = true
+            } else {
+                BtnPhone.isHidden = false
+            }
+            
+        } else  if textField == TFName {
+            if TFName.text?.count == 0 {
+                BtnName.isHidden = true
+            } else {
+                BtnName.isHidden = false
+            }
+            
+        } else  if textField == TFCode {
+            if TFCode.text?.count == 0 {
+                BtnCode.isHidden = true
+            } else {
+                BtnCode.isHidden = false
+            }
+        } else {
+        }
+        
+    }
     
-
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-          
-          if textField == TFPhone {
-              TFPhone.textColor = UIColor(named: "main")
-              ViewPhoneNum.borderColor = UIColor(named: "stroke")
-          } else if textField == TFName {
-              ViewName.borderColor = UIColor(named: "stroke")
-              TFName.textColor = UIColor(named: "main")
-          } else if textField == TFCode {
-              ViewCode.borderColor = UIColor(named: "stroke")
-              TFCode.textColor = UIColor(named: "main")
-          }  else {
-              
-          }
-      }
-    
-      func textFieldDidEndEditing(_ textField: UITextField) {
-          
-          if textField == TFPhone {
-              if TFPhone.text?.count == 0 {
-                  BtnPhone.isHidden = true
-              } else {
-                  BtnPhone.isHidden = false
-              }
-              
-          } else  if textField == TFName {
-              if TFName.text?.count == 0 {
-                  BtnName.isHidden = true
-              } else {
-                  BtnName.isHidden = false
-              }
-              
-          } else  if textField == TFCode {
-              if TFCode.text?.count == 0 {
-                  BtnCode.isHidden = true
-              } else {
-                  BtnCode.isHidden = false
-              }
-          } else {
-          }
-          
-      }
-  
 }
 
 //MARK: ---- functions -----
 extension SignUp{
     func getDistricts(){
-        signUpViewModel.GetDistricts{ [self] success, errorMessage in
-            if success {
-                print("Districts",signUpViewModel.DistrictsArr ?? [])
-            } else {
-                print("error: \(errorMessage)")
+        ViewModel.GetDistricts{ [self] state in
+            guard let state = state else{
+                return
+            }
+            
+            switch state {
+            case .loading:
+                Hud.showHud(in: self.view)
+            case .stopLoading:
+                Hud.dismiss(from: self.view)
+            case .success:
+                Hud.dismiss(from: self.view)
+                print(state)
+            case .error(let error):
+                Hud.dismiss(from: self.view)
+                SimpleAlert.shared.showAlert(title:error ?? "",message:"", viewController: self)
+                print(error ?? "")
+            case .none:
+                print("")
             }
         }
     }
-    
-    func SignUp() {
-        signUpViewModel.name = TFName.text
-        signUpViewModel.mobile = TFPhone.text
-        signUpViewModel.districtId = DistrictId
-        signUpViewModel.genderId = GenderId
-        signUpViewModel.pharmacyCode = TFCode.text
-        
-        signUpViewModel.SignUp{ [self] success, errorMessage in
-            if success {
-                // SignUp was successful, you can navigate to the next screen or perform other actions.
-                // For example, show the home screen.
-                //                self.performSegue(withIdentifier: "LoggedInSegue", sender: nil)
-                print("userModel",signUpViewModel.responseModel ?? SignUpM())
-            } else {
-                // Handle login failure, show an error message, etc.
-                print("Login error: \(errorMessage)")
+    func getGenders(){
+        ViewModel.GetGenders{ [self] state in
+            guard let state = state else{
+                return
+            }
+            
+            switch state {
+            case .loading:
+                Hud.showHud(in: self.view)
+            case .stopLoading:
+                Hud.dismiss(from: self.view)
+            case .success:
+                Hud.dismiss(from: self.view)
+                print(state)
+            case .error(let error):
+                Hud.dismiss(from: self.view)
+                SimpleAlert.shared.showAlert(title:error ?? "",message:"", viewController: self)
+                print(error ?? "")
+            case .none:
+                print("")
             }
         }
+    }
+    func SendJoinRequest(){
+        ViewModel.name = TFName.text
+        ViewModel.mobile = TFPhone.text
+        ViewModel.districtId = DistrictId
+        ViewModel.genderId = GenderId
+        ViewModel.pharmacyCode = TFCode.text
+        
+        ViewModel.SignUp{[self] state in
+            guard let state = state else{
+                return
+            }
+            switch state {
+            case .loading:
+                Hud.showHud(in: self.view)
+            case .stopLoading:
+                Hud.dismiss(from: self.view)
+            case .success:
+                Hud.dismiss(from: self.view)
+                print(state)
+                
+                //                if Helper.getUser()?.profileStatusId == 2{
+                //                    gotoHome()
+                //                }else{
+                //                    gotoCompleteInfo()
+                //                }
+            case .error(let error):
+                Hud.dismiss(from: self.view)
+                SimpleAlert.shared.showAlert(title:error ?? "",message:"", viewController: self)
+                print(error ?? "")
+            case .none:
+                print("")
+            }
+        }
+    }
+     
+    func SetDropDown(DropListSource:DrobListSource){
+        
+        switch DropListSource{
+        case .Gender:
+            if let dataArray = ViewModel.GendersArr{
+                rightBarDropDown.dataSource = dataArray.compactMap{$0.title}
+            }
+            rightBarDropDown.anchorView = TFGender
+            let preferredViewWidth = TFGender.frame.size.width // Assuming ViewPreferred is a UIView
+            rightBarDropDown.width = preferredViewWidth
+            ViewGender.borderColor = UIColor(named: "main")
+            ViewGender.backgroundColor = .white
+            BtnGender.isSelected = true
+
+        case .District:
+            if let dataArray = ViewModel.DistrictsArr{
+                rightBarDropDown.dataSource = dataArray.compactMap{$0.title}
+            }
+            rightBarDropDown.anchorView = TFDistrict
+            let preferredViewWidth = TFDistrict.frame.size.width // Assuming ViewPreferred is a UIView
+            rightBarDropDown.width = preferredViewWidth
+            ViewDistrict.borderColor = UIColor(named: "main")
+            ViewDistrict.backgroundColor = .white
+            BtnDistrict.isSelected = true
+
+        }
+        rightBarDropDown.bottomOffset = CGPoint(x: -10 , y: (rightBarDropDown.anchorView?.plainView.bounds.height)!)
+
+        rightBarDropDown.selectionAction = { [self] (index: Int, item: String) in
+            print("Selected item: \(item) at index: \(index)")
+            switch DropListSource {
+            case .Gender:
+                self.TFGender.text = ViewModel.GendersArr?[index].title
+                self.GenderId = ViewModel.GendersArr?[index].id
+                BtnGender.isSelected = false
+
+            case .District:
+                self.TFDistrict.text = ViewModel.DistrictsArr?[index].title
+                self.DistrictId = ViewModel.DistrictsArr?[index].id
+                BtnDistrict.isSelected = false
+
+            }
+        }
+                //        rightBarDropDown.cellConfiguration = { (index, item) in return "\(item)" }
+                rightBarDropDown.cancelAction = { [self] in
+                    switch DropListSource {
+                    case .Gender:
+                        BtnGender.isSelected = false
+                        if TFGender.text == "" {
+                            ViewGender.borderColor     = UIColor(named: "F0F0F0")
+                            ViewGender.backgroundColor = UIColor(named: "F5F5F5")
+                        }
+                    case .District:
+                        BtnDistrict.isSelected = false
+                        if TFDistrict.text == "" {
+                            ViewDistrict.borderColor     = UIColor(named: "F0F0F0")
+                            ViewDistrict.backgroundColor = UIColor(named: "F5F5F5")
+                        }
+                    }
+                    
+                }
     }
     
 }

@@ -18,7 +18,7 @@ enum Authintications {
     case SendOtp(parameters : [String:Any])
     case VerifyOtp(parameters : [String:Any])
 
-    case GetDistricts
+    case GetDistricts,GetGenders
 
     case ResetPassword(parameters : [String:Any])
     case ChangePassword(parameters:[String:Any])
@@ -40,6 +40,8 @@ extension Authintications : TargetType {
             
         case .GetDistricts:
             return EndPoints.GetAllDistricts.rawValue
+        case .GetGenders:
+            return EndPoints.GetAllGenders.rawValue
             
         case .ResetPassword:
             return EndPoints.ResetPassword.rawValue
@@ -59,7 +61,8 @@ extension Authintications : TargetType {
                 .ChangePassword:
             return .post
             
-        case .GetDistricts:
+        case .GetDistricts,
+                .GetGenders:
             return .get
     }
     }
@@ -74,7 +77,8 @@ extension Authintications : TargetType {
                 .ChangePassword(parameters: let parameters):
             return .parameterRequest(Parameters: parameters, Encoding: encoding)
             
-        case .GetDistricts:
+        case .GetDistricts,
+                .GetGenders:
             return .plainRequest
         }
     }

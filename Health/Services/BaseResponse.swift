@@ -30,3 +30,12 @@ struct BaseResponse<T:Codable> : Codable {
         self.data = T.self as? T
     }
 }
+
+
+public enum EventHandler:Equatable {
+    case none
+    case loading
+    case stopLoading
+    case success
+    case error(String?)
+}

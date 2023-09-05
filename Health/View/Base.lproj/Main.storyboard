@@ -371,7 +371,7 @@
                                                                 <rect key="frame" x="0.0" y="0.0" width="363" height="582"/>
                                                                 <subviews>
                                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="4pM-aw-mNB">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="363" height="530"/>
+                                                                        <rect key="frame" x="0.0" y="0.0" width="363" height="620"/>
                                                                         <subviews>
                                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RId-zd-fz6">
                                                                                 <rect key="frame" x="0.0" y="0.0" width="363" height="100"/>
@@ -507,6 +507,9 @@
                                                                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                                                                 <state key="normal" image="chevron.down" catalog="system"/>
                                                                                                 <state key="selected" image="chevron.up" catalog="system"/>
+                                                                                                <connections>
+                                                                                                    <action selector="BUSelectDistrict:" destination="eS9-Kp-U8P" eventType="touchUpInside" id="DiX-LT-kOd"/>
+                                                                                                </connections>
                                                                                             </button>
                                                                                             <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="center" contentVerticalAlignment="center" placeholder="الحي" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="PGm-P7-6ey">
                                                                                                 <rect key="frame" x="50" y="0.0" width="283" height="50"/>
@@ -537,8 +540,57 @@
                                                                                     </userDefinedRuntimeAttribute>
                                                                                 </userDefinedRuntimeAttributes>
                                                                             </view>
-                                                                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="v3q-5d-WLQ">
+                                                                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="r5N-ej-Kug">
                                                                                 <rect key="frame" x="0.0" y="390" width="363" height="70"/>
+                                                                                <subviews>
+                                                                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="9JX-GX-EJh">
+                                                                                        <rect key="frame" x="15" y="10" width="333" height="50"/>
+                                                                                        <subviews>
+                                                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lfv-XO-cbd">
+                                                                                                <rect key="frame" x="0.0" y="0.0" width="40" height="50"/>
+                                                                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                                                <constraints>
+                                                                                                    <constraint firstAttribute="width" constant="40" id="swx-ZD-hcb"/>
+                                                                                                </constraints>
+                                                                                                <color key="tintColor" name="deactive"/>
+                                                                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                                                                <state key="normal" image="chevron.down" catalog="system"/>
+                                                                                                <state key="selected" image="chevron.up" catalog="system"/>
+                                                                                                <connections>
+                                                                                                    <action selector="BUSelectGender:" destination="eS9-Kp-U8P" eventType="touchUpInside" id="009-F6-8sH"/>
+                                                                                                </connections>
+                                                                                            </button>
+                                                                                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="center" contentVerticalAlignment="center" placeholder="النوع" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="d9p-1E-58B">
+                                                                                                <rect key="frame" x="50" y="0.0" width="283" height="50"/>
+                                                                                                <color key="textColor" name="deactive"/>
+                                                                                                <fontDescription key="fontDescription" name="LamaSans-Medium" family="Lama Sans" pointSize="17"/>
+                                                                                                <textInputTraits key="textInputTraits"/>
+                                                                                            </textField>
+                                                                                        </subviews>
+                                                                                    </stackView>
+                                                                                </subviews>
+                                                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                                <constraints>
+                                                                                    <constraint firstItem="9JX-GX-EJh" firstAttribute="leading" secondItem="r5N-ej-Kug" secondAttribute="leading" constant="15" id="9Aj-lU-ULB"/>
+                                                                                    <constraint firstAttribute="bottom" secondItem="9JX-GX-EJh" secondAttribute="bottom" constant="10" id="OWn-cP-I5Y"/>
+                                                                                    <constraint firstAttribute="trailing" secondItem="9JX-GX-EJh" secondAttribute="trailing" constant="15" id="cbJ-4m-kop"/>
+                                                                                    <constraint firstAttribute="height" constant="70" id="gNm-ad-vAc"/>
+                                                                                    <constraint firstItem="9JX-GX-EJh" firstAttribute="top" secondItem="r5N-ej-Kug" secondAttribute="top" constant="10" id="lIq-kK-RiF"/>
+                                                                                </constraints>
+                                                                                <userDefinedRuntimeAttributes>
+                                                                                    <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                                                        <real key="value" value="2"/>
+                                                                                    </userDefinedRuntimeAttribute>
+                                                                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                                                        <real key="value" value="35"/>
+                                                                                    </userDefinedRuntimeAttribute>
+                                                                                    <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                                                                        <color key="value" name="stroke"/>
+                                                                                    </userDefinedRuntimeAttribute>
+                                                                                </userDefinedRuntimeAttributes>
+                                                                            </view>
+                                                                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="v3q-5d-WLQ">
+                                                                                <rect key="frame" x="0.0" y="480" width="363" height="70"/>
                                                                                 <subviews>
                                                                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="yes-xb-zZH">
                                                                                         <rect key="frame" x="15" y="10" width="333" height="50"/>
@@ -582,7 +634,7 @@
                                                                                 </userDefinedRuntimeAttributes>
                                                                             </view>
                                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4YC-9I-Wjw">
-                                                                                <rect key="frame" x="0.0" y="480" width="363" height="50"/>
+                                                                                <rect key="frame" x="0.0" y="570" width="363" height="50"/>
                                                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                                 <nil key="textColor"/>
                                                                                 <nil key="highlightedColor"/>
@@ -718,14 +770,17 @@
                     <connections>
                         <outlet property="BtnCode" destination="WDk-l4-PVF" id="LtJ-3E-9TC"/>
                         <outlet property="BtnDistrict" destination="3bf-jd-leK" id="jfc-eB-a7I"/>
+                        <outlet property="BtnGender" destination="lfv-XO-cbd" id="prj-la-Y1z"/>
                         <outlet property="BtnName" destination="SqK-4t-WL7" id="VB7-gb-CuT"/>
                         <outlet property="BtnPhone" destination="mqt-sM-qWM" id="Mne-BT-0AE"/>
                         <outlet property="TFCode" destination="qts-5U-235" id="NTG-3V-MRU"/>
                         <outlet property="TFDistrict" destination="PGm-P7-6ey" id="0Dj-Se-PSE"/>
+                        <outlet property="TFGender" destination="d9p-1E-58B" id="qj2-UX-sMZ"/>
                         <outlet property="TFName" destination="Coa-L3-2vZ" id="wQo-lh-ite"/>
                         <outlet property="TFPhone" destination="PPb-IG-2N7" id="e3E-Z0-pcC"/>
                         <outlet property="ViewCode" destination="v3q-5d-WLQ" id="epY-pY-GxU"/>
                         <outlet property="ViewDistrict" destination="gyQ-EW-tXj" id="36O-EN-SJP"/>
+                        <outlet property="ViewGender" destination="r5N-ej-Kug" id="3bk-Gd-tR5"/>
                         <outlet property="ViewName" destination="AaM-2f-0gd" id="MJI-DD-Zkr"/>
                         <outlet property="ViewPhoneNum" destination="kKC-th-hxW" id="Jty-rV-al0"/>
                     </connections>

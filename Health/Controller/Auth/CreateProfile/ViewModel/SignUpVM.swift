@@ -16,14 +16,16 @@ class SignUpVM {
     
     var responseModel: SignUpM?
     var DistrictsArr: [DistrictM]?
+    var GendersArr: [DistrictM]?
 
-    func SignUp(completion: @escaping (Bool,String) -> Void) {
+    func SignUp(completion: @escaping (EventHandler?) -> Void) {
         guard  let name = name, let mobile = mobile, let genderId = genderId,let districtId = districtId,let pharmacyCode = pharmacyCode else {
             // Handle missing username or password
             return
         }
         let parametersarr : [String : Any] =  ["name" : name,"mobile" : mobile ,"genderId" : genderId,"districtId" : districtId,"pharmacyCode" : pharmacyCode]
 
+        completion(.loading)
         // Create your API request with the username and password
         let target = Authintications.Login(parameters: parametersarr)
         //print(parametersarr)
@@ -37,20 +39,21 @@ class SignUpVM {
                 print("request successful: \(response)")
 
                 guard response.messageCode == 200 , response.data != nil else {
-                    completion(false,"\(response.message ?? "check validations")")
+                    completion(.error("\(response.message ?? "check validations")"))
                return
                 }
                 self?.responseModel = response.data
-                    completion(true,"")
-                
+                completion(.success)
+
             case .failure(let error):
                 // Handle the error
                 print("Login failed: \(error.localizedDescription)")
+                completion(.error("\(error.localizedDescription)"))
             }
         }
     }
     
-    func GetDistricts(completion: @escaping (Bool,String) -> Void) {
+    func GetDistricts(completion: @escaping (EventHandler?) -> Void) {
         // Create your API request with the username and password
         let target = Authintications.GetDistricts
         
@@ -63,11 +66,11 @@ class SignUpVM {
                 print("request successful: \(response)")
 
                 guard response.messageCode == 200 , response.data != nil else {
-                    completion(false,"\(response.message ?? "check validations")")
+                    completion(.error("\(response.message ?? "check validations")"))
                return
                 }
                 self?.DistrictsArr = response.data
-                    completion(true,"")
+                completion(.success)
                 
             case .failure(let error):
                 // Handle the error
@@ -75,6 +78,30 @@ class SignUpVM {
             }
         }
     }
+    func GetGenders(completion: @escaping (EventHandler?) -> Void) {
+        // Create your API request with the username and password
+        let target = Authintications.GetGenders
+        
+        // Make the API call using your APIManager or networking code
+        BaseNetwork.callApi(target, BaseResponse<[DistrictM]>.self) {[weak self] result in
+            // Handle the API response here
+            switch result {
+            case .success(let response):
+                // Handle the successful response
+                print("request successful: \(response)")
 
+                guard response.messageCode == 200 , response.data != nil else {
+                    completion(.error("\(response.message ?? "check validations")"))
+               return
+                }
+                self?.GendersArr = response.data
+                completion(.success)
+                
+            case .failure(let error):
+                // Handle the error
+                print("Login failed: \(error.localizedDescription)")
+            }
+        }
+    }
     
 }

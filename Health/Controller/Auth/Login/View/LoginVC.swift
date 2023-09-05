@@ -8,23 +8,24 @@
 import UIKit
 
 class LoginVC: UIViewController , UITextFieldDelegate {
-
+    
     @IBOutlet weak var TFPhone: UITextField!
     @IBOutlet weak var ViewPhoneNum: UIView!
     @IBOutlet weak var BtnPhone: UIView!
-
+    
     @IBOutlet weak var TFPassword: UITextField!
     @IBOutlet weak var ViewPassword: UIView!
     
     let loginViewModel = LoginVM()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
         TFPhone.delegate = self
         TFPassword.delegate = self
         BtnPhone.isHidden = true
+        
     }
     
     @IBAction func BUBack(_ sender: Any) {
@@ -37,7 +38,7 @@ class LoginVC: UIViewController , UITextFieldDelegate {
         vc.modalPresentationStyle = .fullScreen
         self.present(vc, animated: false, completion: nil)
     }
-        
+    
     @IBAction func BULogin(_ sender: Any) {
         Login()
     }
@@ -62,35 +63,35 @@ class LoginVC: UIViewController , UITextFieldDelegate {
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
         
-          if textField == TFPhone {
-              TFPhone.textColor = UIColor(named: "main")
-              ViewPhoneNum.borderColor = UIColor(named: "stroke")
-
-          } else if textField == TFPassword {
-              ViewPassword.borderColor = UIColor(named: "stroke")
-              TFPassword.textColor = UIColor(named: "main")
-          } else {
-          }
-      }
+        if textField == TFPhone {
+            TFPhone.textColor = UIColor(named: "main")
+            ViewPhoneNum.borderColor = UIColor(named: "stroke")
+            
+        } else if textField == TFPassword {
+            ViewPassword.borderColor = UIColor(named: "stroke")
+            TFPassword.textColor = UIColor(named: "main")
+        } else {
+        }
+    }
     
-      func textFieldDidEndEditing(_ textField: UITextField) {
-          
-          if textField == TFPhone {
-              if TFPhone.text?.count == 0 {
-                  BtnPhone.isHidden = true
-              } else {
-                  BtnPhone.isHidden = false
-              }
-              
-          } else  if textField == TFPassword {
-              if TFPassword.text?.count == 0 {
-              
-              } else {
-              }
-              
-          } else {
-          }
-      }
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        
+        if textField == TFPhone {
+            if TFPhone.text?.count == 0 {
+                BtnPhone.isHidden = true
+            } else {
+                BtnPhone.isHidden = false
+            }
+            
+        } else  if textField == TFPassword {
+            if TFPassword.text?.count == 0 {
+                
+            } else {
+            }
+            
+        } else {
+        }
+    }
     
 }
 
@@ -100,17 +101,34 @@ extension LoginVC{
     func Login() {
         loginViewModel.mobile = TFPhone.text
         loginViewModel.password = TFPassword.text
-
-        loginViewModel.login { [self] success, errorMessage in
-            if success {
-                // Login was successful, you can navigate to the next screen or perform other actions.
-                // For example, show the home screen.
-                //                self.performSegue(withIdentifier: "LoggedInSegue", sender: nil)
-                print("userModel",loginViewModel.usermodel ?? LoginM())
-            } else {
-                // Handle login failure, show an error message, etc.
-                print("Login error: \(errorMessage)")
+        
+        loginViewModel.login {[self] state in
+            guard let state = state else{
+                return
+            }
+            switch state {
+            case .loading:
+                Hud.showHud(in: self.view)
+            case .stopLoading:
+                Hud.dismiss(from: self.view)
+            case .success:
+                Hud.dismiss(from: self.view)
+                print(state)
+                
+                //                if Helper.getUser()?.profileStatusId == 2{
+                //                    gotoHome()
+                //                }else{
+                //                    gotoCompleteInfo()
+                //                }
+            case .error(let error):
+                Hud.dismiss(from: self.view)
+                SimpleAlert.shared.showAlert(title:error ?? "",message:"", viewController: self)
+                print(error ?? "")
+            case .none:
+                print("")
             }
         }
     }
+    
+    
 }
