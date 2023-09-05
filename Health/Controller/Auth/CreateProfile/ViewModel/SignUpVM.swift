@@ -27,7 +27,7 @@ class SignUpVM {
 
         completion(.loading)
         // Create your API request with the username and password
-        let target = Authintications.Login(parameters: parametersarr)
+        let target = Authintications.Register(parameters: parametersarr)
         //print(parametersarr)
         
         // Make the API call using your APIManager or networking code
