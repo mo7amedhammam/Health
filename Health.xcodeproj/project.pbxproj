@@ -120,6 +120,10 @@
 		C85996752AA7553500533C87 /* HUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = C85996742AA7553500533C87 /* HUD.swift */; };
 		C85996772AA7556400533C87 /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = C85996762AA7556400533C87 /* Alert.swift */; };
 		C88995822AA9EDFE002AD812 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88995812AA9EDFE002AD812 /* Strings.swift */; };
+		C88995882AA9F70C002AD812 /* ForgetPasswordM.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88995872AA9F70C002AD812 /* ForgetPasswordM.swift */; };
+		C889958A2AA9F770002AD812 /* ForgetPasswordVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88995892AA9F770002AD812 /* ForgetPasswordVM.swift */; };
+		C88995902AAA02A2002AD812 /* ChangePasswordM.swift in Sources */ = {isa = PBXBuildFile; fileRef = C889958F2AAA02A2002AD812 /* ChangePasswordM.swift */; };
+		C88995922AAA02BE002AD812 /* ChangePasswordVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88995912AAA02BE002AD812 /* ChangePasswordVM.swift */; };
 		C8C7339A2AA6756B00185698 /* SignUpM.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C733992AA6756B00185698 /* SignUpM.swift */; };
 		C8C7339C2AA6757800185698 /* SignUpVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C7339B2AA6757800185698 /* SignUpVM.swift */; };
 		D8F01CB9807BCED647F0DF67 /* Pods_Health_HealthUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D4F58DCAA0D2C4B6098F3C6 /* Pods_Health_HealthUITests.framework */; };
@@ -266,6 +270,10 @@
 		C85996742AA7553500533C87 /* HUD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HUD.swift; sourceTree = "<group>"; };
 		C85996762AA7556400533C87 /* Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
 		C88995812AA9EDFE002AD812 /* Strings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
+		C88995872AA9F70C002AD812 /* ForgetPasswordM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgetPasswordM.swift; sourceTree = "<group>"; };
+		C88995892AA9F770002AD812 /* ForgetPasswordVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgetPasswordVM.swift; sourceTree = "<group>"; };
+		C889958F2AAA02A2002AD812 /* ChangePasswordM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordM.swift; sourceTree = "<group>"; };
+		C88995912AAA02BE002AD812 /* ChangePasswordVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordVM.swift; sourceTree = "<group>"; };
 		C8C733992AA6756B00185698 /* SignUpM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpM.swift; sourceTree = "<group>"; };
 		C8C7339B2AA6757800185698 /* SignUpVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpVM.swift; sourceTree = "<group>"; };
 		F37B91FD984B0C39EEA6833D /* Pods-Health-HealthUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Health-HealthUITests.release.xcconfig"; path = "Target Support Files/Pods-Health-HealthUITests/Pods-Health-HealthUITests.release.xcconfig"; sourceTree = "<group>"; };
@@ -501,8 +509,8 @@
 				BBBD00322A731B0C00F066DF /* Splash */,
 				C8346E532AA5EE5E00C3C3EE /* Login */,
 				C8C733952AA6752700185698 /* CreateProfile */,
-				BBBD00252A7311E400F066DF /* ForgetPasswordVC.swift */,
-				BB48F8A02A747D020051F12C /* ChangePasswordVC.swift */,
+				C88995832AA9F6B9002AD812 /* ForgetPassword */,
+				C889958B2AAA01C3002AD812 /* ChangePassword */,
 				C8F460AC2AA879DE006D45DE /* OTP */,
 			);
 			path = Auth;
@@ -741,6 +749,74 @@
 			isa = PBXGroup;
 			children = (
 				C8346E572AA5EE9C00C3C3EE /* LoginVM.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		C88995832AA9F6B9002AD812 /* ForgetPassword */ = {
+			isa = PBXGroup;
+			children = (
+				C88995862AA9F6ED002AD812 /* ViewModel */,
+				C88995852AA9F6DF002AD812 /* Model */,
+				C88995842AA9F6D8002AD812 /* View */,
+			);
+			path = ForgetPassword;
+			sourceTree = "<group>";
+		};
+		C88995842AA9F6D8002AD812 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				BBBD00252A7311E400F066DF /* ForgetPasswordVC.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		C88995852AA9F6DF002AD812 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				C88995872AA9F70C002AD812 /* ForgetPasswordM.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		C88995862AA9F6ED002AD812 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				C88995892AA9F770002AD812 /* ForgetPasswordVM.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		C889958B2AAA01C3002AD812 /* ChangePassword */ = {
+			isa = PBXGroup;
+			children = (
+				C889958E2AAA01E6002AD812 /* ViewModel */,
+				C889958D2AAA01E3002AD812 /* Model */,
+				C889958C2AAA01DC002AD812 /* View */,
+			);
+			path = ChangePassword;
+			sourceTree = "<group>";
+		};
+		C889958C2AAA01DC002AD812 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				BB48F8A02A747D020051F12C /* ChangePasswordVC.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		C889958D2AAA01E3002AD812 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				C889958F2AAA02A2002AD812 /* ChangePasswordM.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		C889958E2AAA01E6002AD812 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				C88995912AAA02BE002AD812 /* ChangePasswordVM.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -1091,6 +1167,7 @@
 			files = (
 				BB1B30052A7EB1B7001677FD /* XibViews.swift in Sources */,
 				BB14DAEB2A7B041C00389B96 /* ProfileTVCellHeader.swift in Sources */,
+				C889958A2AA9F770002AD812 /* ForgetPasswordVM.swift in Sources */,
 				C88995822AA9EDFE002AD812 /* Strings.swift in Sources */,
 				BB1B2FFE2A7EA379001677FD /* INBodyDetailsVC.swift in Sources */,
 				BB1AEAA32A955B710078683A /* NotificationVC.swift in Sources */,
@@ -1101,6 +1178,7 @@
 				BB518CE22A9A122400242FAD /* TipsCategoriesCVCell0.swift in Sources */,
 				BBC7B45B2A72CC820079355E /* AppDelegate.swift in Sources */,
 				C8346E5A2AA5EEA800C3C3EE /* LoginM.swift in Sources */,
+				C88995922AAA02BE002AD812 /* ChangePasswordVM.swift in Sources */,
 				BB518CD52A9A113900242FAD /* TipsCategoriesVC2.swift in Sources */,
 				BBBD000F2A73101700F066DF /* RoundedImage.swift in Sources */,
 				C8C7339C2AA6757800185698 /* SignUpVM.swift in Sources */,
@@ -1109,6 +1187,7 @@
 				BBBD00132A73101700F066DF /* ExtentionLocalize.swift in Sources */,
 				C85996772AA7556400533C87 /* Alert.swift in Sources */,
 				BB1B2FFB2A7EA364001677FD /* INBodyDetailsTVCell.swift in Sources */,
+				C88995902AAA02A2002AD812 /* ChangePasswordM.swift in Sources */,
 				C80DA9F12AA4F73400F10808 /* LoginModel.swift in Sources */,
 				BBC7B45D2A72CC820079355E /* SceneDelegate.swift in Sources */,
 				BB913AD72A9BE04900003AC5 /* TipsCategoriesTVCell1.swift in Sources */,
@@ -1145,6 +1224,7 @@
 				BBE3CC772A80000E004B0D9A /* MedicationScheduleTVCell.swift in Sources */,
 				BBBD001B2A73101700F066DF /* FullImageVC.swift in Sources */,
 				BB518CDA2A9A118B00242FAD /* TipsCategoriesTVCell0.swift in Sources */,
+				C88995882AA9F70C002AD812 /* ForgetPasswordM.swift in Sources */,
 				BBBD000A2A73101700F066DF /* EXTEnternet.swift in Sources */,
 				BB14DAEF2A7B043500389B96 /* ProfileTVCellMiddle.swift in Sources */,
 				C80DA9E62AA4D2F100F10808 /* BaseRequest.swift in Sources */,

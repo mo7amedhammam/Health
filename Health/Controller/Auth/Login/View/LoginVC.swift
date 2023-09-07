@@ -115,6 +115,8 @@ extension LoginVC{
             case .success:
                 Hud.dismiss(from: self.view)
                 print(state)
+// -- go to home
+                GoHome()
             case .error(_,let error):
                 Hud.dismiss(from: self.view)
                 SimpleAlert.shared.showAlert(title:error ?? "",message:"", viewController: self)
@@ -124,6 +126,11 @@ extension LoginVC{
             }
         }
     }
-    
+
+    func GoHome(){
+        Helper.saveUser(user: loginViewModel.usermodel ?? LoginM())
+        guard let vc = initiateViewController(storyboardName: .main, viewControllerIdentifier: HTBC.self)else{return}
+                navigationController?.pushViewController(vc, animated: true)
+    }
     
 }

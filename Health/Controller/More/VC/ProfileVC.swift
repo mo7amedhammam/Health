@@ -122,40 +122,45 @@ extension ProfileVC : UITableViewDataSource , UITableViewDelegate {
         
         if indexPath.row == 0 {
             
-        } else if indexPath.row == 1 {
+        } else if indexPath.row == 1 { // - home -
             
-        } else if indexPath.row == 2 {
+        } else if indexPath.row == 2 { // - measurements -
             
-        } else if indexPath.row == 3 {
+        } else if indexPath.row == 3 { // - monthly table -
 //            let storyboard = UIStoryboard(name: "Main", bundle: nil)
 //            let vc = storyboard.instantiateViewController(withIdentifier: "MedicationScheduleVC") as! MedicationScheduleVC
 //            vc.modalPresentationStyle = .fullScreen
 //            self.present(vc, animated: false, completion: nil)
-        } else if indexPath.row == 4 {
+        } else if indexPath.row == 4 { // - medecines notifications -
 //            let storyboard = UIStoryboard(name: "Main", bundle: nil)
 //            let vc = storyboard.instantiateViewController(withIdentifier: "NotificationVC") as! NotificationVC
 //            vc.modalPresentationStyle = .fullScreen
 //            self.present(vc, animated: false, completion: nil)
-        } else if indexPath.row == 5 {
+        } else if indexPath.row == 5 { // - medical advices -
             
             
-        } else if indexPath.row == 6 {
+        } else if indexPath.row == 6 { // - inbody -
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             let vc = storyboard.instantiateViewController(withIdentifier: "INBodyVC") as! INBodyVC
             vc.modalPresentationStyle = .fullScreen
             self.present(vc, animated: false, completion: nil)
-        } else if indexPath.row == 7 {
+        } else if indexPath.row == 7 { // - change password -
+            Gotochangepassword()
+        } else if indexPath.row == 8 { // - privacy -
             
-        } else if indexPath.row == 8 {
+        } else if indexPath.row == 9 { // - terms$conditions -
             
-        } else if indexPath.row == 9 {
-            
-        } else if indexPath.row == 10 {
-            
+        } else if indexPath.row == 10 { // - logout -
+            Helper.logout()
+            Helper.changeRootVC(newroot: LoginVC.self)
         } else {
             
         }
         
     }
     
+    func Gotochangepassword(){
+        guard let vc = initiateViewController(storyboardName: .main, viewControllerIdentifier: ChangePasswordVC.self)else{return}
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
 }

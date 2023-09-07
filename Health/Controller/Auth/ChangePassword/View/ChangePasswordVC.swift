@@ -19,7 +19,7 @@ class ChangePasswordVC: UIViewController  , UITextFieldDelegate {
     @IBOutlet weak var ViewRe_Password: UIView!
     @IBOutlet weak var TFRe_Password: UITextField!
     
-    
+    let ViewModel = ChangePasswordVM()
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -28,9 +28,7 @@ class ChangePasswordVC: UIViewController  , UITextFieldDelegate {
         TFNewPassword.delegate = self
         TFRe_Password.delegate = self
     }
-    
-    
-    
+        
     func textFieldDidBeginEditing(_ textField: UITextField) {
         
         if textField == TFPassword {
@@ -47,9 +45,8 @@ class ChangePasswordVC: UIViewController  , UITextFieldDelegate {
         }
     }
     
-    
     @IBAction func BUBack(_ sender: Any) {
-        self.dismiss(animated: true)
+        self.navigationController?.popViewController(animated: true)
     }
     
     
@@ -85,12 +82,46 @@ class ChangePasswordVC: UIViewController  , UITextFieldDelegate {
     }
     
     @IBAction func BUChange(_ sender: Any) {
-        
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc = storyboard.instantiateViewController(withIdentifier: "OtpVC") as! OtpVC
-        vc.modalPresentationStyle = .fullScreen
-        self.present(vc, animated: false, completion: nil)
-        
+        ChangePassword()
     }
     
+}
+
+extension ChangePasswordVC {
+    func ChangePassword(){
+        ViewModel.oldPassword = TFPassword.text
+        ViewModel.newPassword = TFRe_Password.text
+        
+        ViewModel.ChangePassword{[self] state in
+            guard let state = state else{
+                return
+            }
+            switch state {
+            case .loading:
+                Hud.showHud(in: self.view)
+            case .stopLoading:
+                Hud.dismiss(from: self.view)
+            case .success:
+                Hud.dismiss(from: self.view)
+                print(state)
+                PassChangedDone()
+            case .error(_,let error):
+                Hud.dismiss(from: self.view)
+                SimpleAlert.shared.showAlert(title:error ?? "",message:"", viewController: self)
+                print(error ?? "")
+            case .none:
+                print("")
+            }
+        }
+    }
+    func PassChangedDone()  {
+        if let viewDone:ViewDone = showView(fromNib: ViewDone.self, in: self) {
+            viewDone.title = "تم تغيير ضبط كلمة المرور بنجاح"
+            viewDone.imgStr = "keyicon"
+            viewDone.action = {
+                viewDone.removeFromSuperview()
+                Helper.changeRootVC(newroot: LoginVC.self)
+            }
+        }
+    }
 }

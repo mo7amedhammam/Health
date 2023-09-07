@@ -348,7 +348,8 @@ extension Helper{
         private static let UserDataKey = "UserDataKey"
 
         
-        class func saveUser(user: LoginModel) {
+        class func saveUser(user: LoginM) {
+            IsLoggedIn(value: true)
             let encoder = JSONEncoder()
             if let encoded = try? encoder.encode(user) {
                 userDef.set(encoded, forKey: UserDataKey)
@@ -357,10 +358,10 @@ extension Helper{
             }
         }
 
-        class func getUser() -> LoginModel? {
+        class func getUser() -> LoginM? {
             if let data = userDef.object(forKey: UserDataKey) as? Data {
                 let decoder = JSONDecoder()
-                if let user = try? decoder.decode(LoginModel.self, from: data) {
+                if let user = try? decoder.decode(LoginM.self, from: data) {
                     return user
                 }
             }

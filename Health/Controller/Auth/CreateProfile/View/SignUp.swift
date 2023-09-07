@@ -194,8 +194,7 @@ extension SignUp{
             case .success:
                 Hud.dismiss(from: self.view)
                 print(state)
-                SimpleAlert.shared.showAlert(title: "تم تسجيل طلبك, سوف يتم ارسال كلمة مرور لتتمكن من استخدام التطبيق",message:"", viewController: self)
-
+                JoinRequestSent()
             case .error(_,let error):
                 Hud.dismiss(from: self.view)
                 SimpleAlert.shared.showAlert(title:error ?? "",message:"", viewController: self)
@@ -269,4 +268,14 @@ extension SignUp{
                 }
     }
     
+    func JoinRequestSent()  {
+        if let viewDone:ViewDone = showView(fromNib: ViewDone.self, in: self) {
+            viewDone.title = "تم إرسال طلب انضمامك بنجاح"
+            viewDone.imgStr = "keyicon"
+            viewDone.action = {
+                viewDone.removeFromSuperview()
+                Helper.changeRootVC(newroot: LoginVC.self)
+            }
+        }
+    }
 }

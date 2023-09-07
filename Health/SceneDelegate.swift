@@ -24,10 +24,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         self.window = UIWindow(windowScene: WindowScene)
         
 //        MARK: -- if uikit --
-//        let vc = Helper.checkOnBoard() ? controllerTabBar() : controllerOnBoarding()
-        guard let vc = initiateViewController(storyboardName: .main, viewControllerIdentifier: (Helper.checkOnBoard() ?  (Helper.CheckIfLoggedIn() ? HTBC.self : LoginVC.self) as! LoginVC.Type : SplashScreenVC.self)) else {return}
-
-//        guard let vc = initiateXibViewController(viewControllerIdentifier:VCQuestionDetails.self , as: VCQuestionDetails.self) else {return}
+        var vc : UIViewController = UIViewController()
+        if !Helper.checkOnBoard() {
+            guard let targetvc = initiateViewController(storyboardName: .main, viewControllerIdentifier: SplashScreenVC.self) else {return}
+            vc = targetvc
+        }else{
+            guard let targetvc = initiateViewController(storyboardName: .main, viewControllerIdentifier: Helper.CheckIfLoggedIn() ? HTBC.self : LoginVC.self) else {return}
+            vc = targetvc
+        }
+//        guard let vc = initiateViewController(storyboardName: .main, viewControllerIdentifier: (Helper.checkOnBoard() ? (Helper.CheckIfLoggedIn() ? HTBC.self as? HTBC.Type : LoginVC.self as? LoginVC.)  : SplashScreenVC.self)) else {return}
 
 ////        MARK: -- if SwiftUI --
 ////        let vc = UIHostingController(rootView: SwiftuiTest())

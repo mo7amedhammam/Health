@@ -277,6 +277,7 @@ extension OtpVC{
     
     private func gotoResetPassword(){
         guard let vc = initiateViewController(storyboardName: .main, viewControllerIdentifier: ForgetPasswordVC.self) else{return}
+        vc.Phonenumber = Phonenumber
          navigationController?.pushViewController(vc, animated: true)
     }
     

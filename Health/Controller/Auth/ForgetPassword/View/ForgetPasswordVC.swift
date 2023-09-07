@@ -14,7 +14,8 @@ class ForgetPasswordVC: UIViewController , UITextFieldDelegate {
     
     @IBOutlet weak var ViewRe_Password: UIView!
     @IBOutlet weak var TFRe_Password: UITextField!
-    
+    var Phonenumber : String?
+    let ViewModel = ForgetPasswordVM()
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -53,16 +54,11 @@ class ForgetPasswordVC: UIViewController , UITextFieldDelegate {
     
     
     @IBAction func BURe_Set(_ sender: Any) {
-        
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc = storyboard.instantiateViewController(withIdentifier: "ChangePasswordVC") as! ChangePasswordVC
-        vc.modalPresentationStyle = .fullScreen
-        self.present(vc, animated: false, completion: nil)
-        
+        ResetPassword()
     }
     
     @IBAction func BUBack(_ sender: Any) {
-        self.dismiss(animated: true)
+        self.navigationController?.popViewController(animated: true)
     }
     
     
@@ -89,5 +85,44 @@ class ForgetPasswordVC: UIViewController , UITextFieldDelegate {
         }
         
         
+    }
+}
+
+extension ForgetPasswordVC {
+    func ResetPassword(){
+        ViewModel.mobile = Phonenumber
+        ViewModel.newPassword = TFRe_Password.text
+        
+        ViewModel.ResetPassword{[self] state in
+            guard let state = state else{
+                return
+            }
+            switch state {
+            case .loading:
+                Hud.showHud(in: self.view)
+            case .stopLoading:
+                Hud.dismiss(from: self.view)
+            case .success:
+                Hud.dismiss(from: self.view)
+                print(state)
+                PassResetDone()
+            case .error(_,let error):
+                Hud.dismiss(from: self.view)
+                SimpleAlert.shared.showAlert(title:error ?? "",message:"", viewController: self)
+                print(error ?? "")
+            case .none:
+                print("")
+            }
+        }
+    }
+    func PassResetDone()  {
+        if let viewDone:ViewDone = showView(fromNib: ViewDone.self, in: self) {
+            viewDone.title = "تم إعادة ضبط كلمة المرور بنجاح"
+            viewDone.imgStr = "keyicon"
+            viewDone.action = {
+                viewDone.removeFromSuperview()
+                Helper.changeRootVC(newroot: LoginVC.self)
+            }
+        }
     }
 }

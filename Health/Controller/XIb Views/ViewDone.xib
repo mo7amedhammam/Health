@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -42,17 +43,29 @@
                                         <constraint firstItem="io4-ja-228" firstAttribute="centerX" secondItem="GwH-BZ-489" secondAttribute="centerX" id="zct-EM-vqz"/>
                                     </constraints>
                                 </view>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EQy-fe-1g6">
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uTP-Hm-N4X">
                                     <rect key="frame" x="0.0" y="422" width="363" height="300"/>
-                                    <constraints>
-                                        <constraint firstAttribute="height" constant="300" id="7BN-YM-Rt3"/>
-                                    </constraints>
-                                    <string key="text">تم تحميل التقرير
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EQy-fe-1g6">
+                                            <rect key="frame" x="0.0" y="0.0" width="363" height="150"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="150" id="Ltb-cV-dsH"/>
+                                            </constraints>
+                                            <string key="text">تم تحميل التقرير
 بنجاح</string>
-                                    <fontDescription key="fontDescription" name="LamaSans-Bold" family="Lama Sans" pointSize="24"/>
-                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    <nil key="highlightedColor"/>
-                                </label>
+                                            <fontDescription key="fontDescription" name="LamaSans-Bold" family="Lama Sans" pointSize="24"/>
+                                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <constraints>
+                                        <constraint firstItem="EQy-fe-1g6" firstAttribute="leading" secondItem="uTP-Hm-N4X" secondAttribute="leading" id="CqM-SN-tYl"/>
+                                        <constraint firstAttribute="height" constant="300" id="Wqq-BK-mw9"/>
+                                        <constraint firstAttribute="trailing" secondItem="EQy-fe-1g6" secondAttribute="trailing" id="aix-2U-Hxn"/>
+                                        <constraint firstItem="EQy-fe-1g6" firstAttribute="top" secondItem="uTP-Hm-N4X" secondAttribute="top" id="y03-5r-wsl"/>
+                                    </constraints>
+                                </view>
                                 <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gBa-Tn-RfT">
                                     <rect key="frame" x="0.0" y="732" width="363" height="60"/>
                                     <color key="backgroundColor" name="secondary"/>
@@ -69,6 +82,9 @@
                                             <real key="value" value="30"/>
                                         </userDefinedRuntimeAttribute>
                                     </userDefinedRuntimeAttributes>
+                                    <connections>
+                                        <action selector="buttonPressed:" destination="iN0-l3-epB" eventType="touchUpInside" id="FvX-xo-1ed"/>
+                                    </connections>
                                 </button>
                             </subviews>
                         </stackView>
