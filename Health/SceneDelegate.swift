@@ -16,7 +16,27 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
-        guard let _ = (scene as? UIWindowScene) else { return }
+        window?.overrideUserInterfaceStyle = .light
+//        guard let _ = (scene as? UIWindowScene) else { return }
+        
+//        MARK: -- Programatically --
+        guard let WindowScene = (scene as? UIWindowScene) else { return }
+        self.window = UIWindow(windowScene: WindowScene)
+        
+//        MARK: -- if uikit --
+//        let vc = Helper.checkOnBoard() ? controllerTabBar() : controllerOnBoarding()
+        guard let vc = initiateViewController(storyboardName: .main, viewControllerIdentifier: (Helper.checkOnBoard() ?  (Helper.CheckIfLoggedIn() ? HTBC.self : LoginVC.self) as! LoginVC.Type : SplashScreenVC.self)) else {return}
+
+//        guard let vc = initiateXibViewController(viewControllerIdentifier:VCQuestionDetails.self , as: VCQuestionDetails.self) else {return}
+
+////        MARK: -- if SwiftUI --
+////        let vc = UIHostingController(rootView: SwiftuiTest())
+
+        let nav = UINavigationController(rootViewController: vc)
+        nav.navigationBar.isHidden = true
+        self.window?.rootViewController = nav
+        window?.makeKeyAndVisible()
+        
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

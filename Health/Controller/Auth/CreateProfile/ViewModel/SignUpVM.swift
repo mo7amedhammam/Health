@@ -39,7 +39,7 @@ class SignUpVM {
                 print("request successful: \(response)")
 
                 guard response.messageCode == 200 , response.data != nil else {
-                    completion(.error("\(response.message ?? "check validations")"))
+                    completion(.error(0, "\(response.message ?? "check validations")"))
                return
                 }
                 self?.responseModel = response.data
@@ -48,7 +48,7 @@ class SignUpVM {
             case .failure(let error):
                 // Handle the error
                 print("Login failed: \(error.localizedDescription)")
-                completion(.error("\(error.localizedDescription)"))
+                completion(.error(0, "\(error.localizedDescription)"))
             }
         }
     }
@@ -66,7 +66,7 @@ class SignUpVM {
                 print("request successful: \(response)")
 
                 guard response.messageCode == 200 , response.data != nil else {
-                    completion(.error("\(response.message ?? "check validations")"))
+                    completion(.error(0,"\(response.message ?? "check validations")"))
                return
                 }
                 self?.DistrictsArr = response.data
@@ -78,6 +78,7 @@ class SignUpVM {
             }
         }
     }
+    
     func GetGenders(completion: @escaping (EventHandler?) -> Void) {
         // Create your API request with the username and password
         let target = Authintications.GetGenders
@@ -91,7 +92,7 @@ class SignUpVM {
                 print("request successful: \(response)")
 
                 guard response.messageCode == 200 , response.data != nil else {
-                    completion(.error("\(response.message ?? "check validations")"))
+                    completion(.error(0,"\(response.message ?? "check validations")"))
                return
                 }
                 self?.GendersArr = response.data

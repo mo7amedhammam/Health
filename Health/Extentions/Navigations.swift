@@ -9,7 +9,7 @@ import UIKit
 
 enum storyboards : String {
 case main = "Main"
-    case Question = "Question"
+//    case Question = "Question"
 }
 
 func initiateXibViewController<T: UIViewController>(viewControllerIdentifier:UIViewController.Type, as type: T.Type) -> T? {

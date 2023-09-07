@@ -21,7 +21,7 @@ static var apiURL:String {return "\(baseURL)api/"}
 
 enum EndPoints: String {
     // MARK: - Auth
-    case Register = "Customer/Create"
+    case Register = "RegisterRequest/Create"
     case Login = "Customer/Login"
 
     case sendOTP = "Customer/SendOTP"
@@ -37,5 +37,4 @@ enum EndPoints: String {
     //MARK: -- Main tab --
     case HomePageNewest = "Questions/HomePageNewest"
  
-
 }

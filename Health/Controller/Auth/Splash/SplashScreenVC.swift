@@ -13,7 +13,7 @@ class SplashScreenVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.navigationController?.navigationBar.isHidden = true
         // Do any additional setup after loading the view.
         CollectionSplash.dataSource = self
         CollectionSplash.delegate = self
@@ -31,7 +31,6 @@ class SplashScreenVC: UIViewController {
         CollectionSplash.reloadData()
     }
     
-    
 }
 
 
@@ -39,10 +38,8 @@ extension SplashScreenVC : UICollectionViewDataSource , UICollectionViewDelegate
     
     
     func SkipSplash() {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc = storyboard.instantiateViewController(withIdentifier: "LoginVC") as! LoginVC
-        vc.modalPresentationStyle = .fullScreen
-        self.present(vc, animated: false, completion: nil)
+        Helper.onBoardOpened(opened: true)
+        Helper.changeRootVC(newroot: LoginVC.self)
     }
     
     

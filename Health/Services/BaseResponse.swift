@@ -37,5 +37,5 @@ public enum EventHandler:Equatable {
     case loading
     case stopLoading
     case success
-    case error(String?)
+    case error(Int?=0,String?)
 }

@@ -51,7 +51,6 @@ class SignUp: UIViewController  , UITextFieldDelegate{
         
         TFCode.delegate = self
         BtnCode.isHidden = true
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -62,21 +61,17 @@ class SignUp: UIViewController  , UITextFieldDelegate{
     }
     
     @IBAction func BUBack(_ sender: Any) {
-        self.dismiss(animated: true)
+        self.navigationController?.popViewController(animated: true)
     }
     
     @IBAction func BULogin(_ sender: Any) {
-        self.dismiss(animated: true)
+        navigationController?.popViewController(animated: true)
     }
     
     @IBAction func BUSignUp(_ sender: Any) {
-        
-        //        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        //        let vc = storyboard.instantiateViewController(withIdentifier: "ForgetPasswordVC") as! ForgetPasswordVC
-        //        vc.modalPresentationStyle = .fullScreen
-        //        self.present(vc, animated: false, completion: nil)
         SendJoinRequest()
     }
+    
     @IBAction func BUSelectDistrict(_ sender: Any) {
         SetDropDown(DropListSource: .District)
             rightBarDropDown.show()
@@ -148,7 +143,7 @@ extension SignUp{
             case .success:
                 Hud.dismiss(from: self.view)
                 print(state)
-            case .error(let error):
+            case .error(_,let error):
                 Hud.dismiss(from: self.view)
                 SimpleAlert.shared.showAlert(title:error ?? "",message:"", viewController: self)
                 print(error ?? "")
@@ -171,7 +166,7 @@ extension SignUp{
             case .success:
                 Hud.dismiss(from: self.view)
                 print(state)
-            case .error(let error):
+            case .error(_,let error):
                 Hud.dismiss(from: self.view)
                 SimpleAlert.shared.showAlert(title:error ?? "",message:"", viewController: self)
                 print(error ?? "")
@@ -199,13 +194,9 @@ extension SignUp{
             case .success:
                 Hud.dismiss(from: self.view)
                 print(state)
-                
-                //                if Helper.getUser()?.profileStatusId == 2{
-                //                    gotoHome()
-                //                }else{
-                //                    gotoCompleteInfo()
-                //                }
-            case .error(let error):
+                SimpleAlert.shared.showAlert(title: "تم تسجيل طلبك, سوف يتم ارسال كلمة مرور لتتمكن من استخدام التطبيق",message:"", viewController: self)
+
+            case .error(_,let error):
                 Hud.dismiss(from: self.view)
                 SimpleAlert.shared.showAlert(title:error ?? "",message:"", viewController: self)
                 print(error ?? "")

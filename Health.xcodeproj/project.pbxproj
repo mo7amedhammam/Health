@@ -115,8 +115,11 @@
 		C80DA9F12AA4F73400F10808 /* LoginModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80DA9F02AA4F73400F10808 /* LoginModel.swift */; };
 		C8346E582AA5EE9C00C3C3EE /* LoginVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8346E572AA5EE9C00C3C3EE /* LoginVM.swift */; };
 		C8346E5A2AA5EEA800C3C3EE /* LoginM.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8346E592AA5EEA800C3C3EE /* LoginM.swift */; };
+		C8542D5A2AA8B3EC00ACE480 /* OtpM.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8542D592AA8B3EC00ACE480 /* OtpM.swift */; };
+		C8542D5C2AA8B42600ACE480 /* OtpVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8542D5B2AA8B42600ACE480 /* OtpVM.swift */; };
 		C85996752AA7553500533C87 /* HUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = C85996742AA7553500533C87 /* HUD.swift */; };
 		C85996772AA7556400533C87 /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = C85996762AA7556400533C87 /* Alert.swift */; };
+		C88995822AA9EDFE002AD812 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88995812AA9EDFE002AD812 /* Strings.swift */; };
 		C8C7339A2AA6756B00185698 /* SignUpM.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C733992AA6756B00185698 /* SignUpM.swift */; };
 		C8C7339C2AA6757800185698 /* SignUpVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C7339B2AA6757800185698 /* SignUpVM.swift */; };
 		D8F01CB9807BCED647F0DF67 /* Pods_Health_HealthUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D4F58DCAA0D2C4B6098F3C6 /* Pods_Health_HealthUITests.framework */; };
@@ -258,8 +261,11 @@
 		C80DA9F02AA4F73400F10808 /* LoginModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginModel.swift; sourceTree = "<group>"; };
 		C8346E572AA5EE9C00C3C3EE /* LoginVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVM.swift; sourceTree = "<group>"; };
 		C8346E592AA5EEA800C3C3EE /* LoginM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginM.swift; sourceTree = "<group>"; };
+		C8542D592AA8B3EC00ACE480 /* OtpM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtpM.swift; sourceTree = "<group>"; };
+		C8542D5B2AA8B42600ACE480 /* OtpVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtpVM.swift; sourceTree = "<group>"; };
 		C85996742AA7553500533C87 /* HUD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HUD.swift; sourceTree = "<group>"; };
 		C85996762AA7556400533C87 /* Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
+		C88995812AA9EDFE002AD812 /* Strings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
 		C8C733992AA6756B00185698 /* SignUpM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpM.swift; sourceTree = "<group>"; };
 		C8C7339B2AA6757800185698 /* SignUpVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpVM.swift; sourceTree = "<group>"; };
 		F37B91FD984B0C39EEA6833D /* Pods-Health-HealthUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Health-HealthUITests.release.xcconfig"; path = "Target Support Files/Pods-Health-HealthUITests/Pods-Health-HealthUITests.release.xcconfig"; sourceTree = "<group>"; };
@@ -497,7 +503,7 @@
 				C8C733952AA6752700185698 /* CreateProfile */,
 				BBBD00252A7311E400F066DF /* ForgetPasswordVC.swift */,
 				BB48F8A02A747D020051F12C /* ChangePasswordVC.swift */,
-				BB48F8A22A7482480051F12C /* OtpVC.swift */,
+				C8F460AC2AA879DE006D45DE /* OTP */,
 			);
 			path = Auth;
 			sourceTree = "<group>";
@@ -562,6 +568,7 @@
 				BBBDFFFF2A73101200F066DF /* UITableView+Extensions.swift */,
 				C80DA9EC2AA4F65300F10808 /* Navigations.swift */,
 				C80DA9EE2AA4F6B000F10808 /* UiWindow.swift */,
+				C88995812AA9EDFE002AD812 /* Strings.swift */,
 			);
 			path = Extentions;
 			sourceTree = "<group>";
@@ -768,6 +775,40 @@
 			isa = PBXGroup;
 			children = (
 				C8C7339B2AA6757800185698 /* SignUpVM.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		C8F460AC2AA879DE006D45DE /* OTP */ = {
+			isa = PBXGroup;
+			children = (
+				C8F460AF2AA879F4006D45DE /* ViewModel */,
+				C8F460AE2AA879EE006D45DE /* Model */,
+				C8F460AD2AA879E7006D45DE /* View */,
+			);
+			path = OTP;
+			sourceTree = "<group>";
+		};
+		C8F460AD2AA879E7006D45DE /* View */ = {
+			isa = PBXGroup;
+			children = (
+				BB48F8A22A7482480051F12C /* OtpVC.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		C8F460AE2AA879EE006D45DE /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				C8542D592AA8B3EC00ACE480 /* OtpM.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		C8F460AF2AA879F4006D45DE /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				C8542D5B2AA8B42600ACE480 /* OtpVM.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -1050,6 +1091,7 @@
 			files = (
 				BB1B30052A7EB1B7001677FD /* XibViews.swift in Sources */,
 				BB14DAEB2A7B041C00389B96 /* ProfileTVCellHeader.swift in Sources */,
+				C88995822AA9EDFE002AD812 /* Strings.swift in Sources */,
 				BB1B2FFE2A7EA379001677FD /* INBodyDetailsVC.swift in Sources */,
 				BB1AEAA32A955B710078683A /* NotificationVC.swift in Sources */,
 				BBBD001C2A73101700F066DF /* Shared.swift in Sources */,
@@ -1108,6 +1150,7 @@
 				C80DA9E62AA4D2F100F10808 /* BaseRequest.swift in Sources */,
 				BBE3CC7E2A80011E004B0D9A /* MedicationScheduleDetailsVC.swift in Sources */,
 				BBBD000E2A73101700F066DF /* ImageViewer.swift in Sources */,
+				C8542D5C2AA8B42600ACE480 /* OtpVM.swift in Sources */,
 				BBBD00182A73101700F066DF /* CardView.swift in Sources */,
 				BB1AEAA02A955B450078683A /* NotificationTVCell.swift in Sources */,
 				C80DA9EB2AA4D3B300F10808 /* Authintications.swift in Sources */,
@@ -1125,6 +1168,7 @@
 				BB5116C62A829A8E00CF5D11 /* MeasurementsDetailsVC.swift in Sources */,
 				C80DA9E82AA4D33000F10808 /* RequestBuilder.swift in Sources */,
 				BBBD00212A73119500F066DF /* LoginVC.swift in Sources */,
+				C8542D5A2AA8B3EC00ACE480 /* OtpM.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

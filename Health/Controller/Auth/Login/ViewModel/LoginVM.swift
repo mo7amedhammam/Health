@@ -32,7 +32,7 @@ class LoginVM {
                 print("request successful: \(response)")
 
                 guard response.messageCode == 200 , response.data != nil else {
-                    completion(.error((response.message ?? "check validations")))
+                    completion(.error(0, (response.message ?? "check validations")))
                     return
                 }
                 
@@ -41,7 +41,7 @@ class LoginVM {
             case .failure(let error):
                 // Handle the error
                 print("Login failed: \(error.localizedDescription)")
-                completion(.error("\(error.localizedDescription)"))
+                completion(.error(0, "\(error.localizedDescription)"))
             }
 
         }

@@ -20,23 +20,26 @@ class LoginVC: UIViewController , UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         // Do any additional setup after loading the view.
         TFPhone.delegate = self
         TFPassword.delegate = self
         BtnPhone.isHidden = true
-        
     }
     
     @IBAction func BUBack(_ sender: Any) {
-        self.dismiss(animated: true)
+//        self.dismiss(animated: true)
     }
     
     @IBAction func BUForgetPassword(_ sender: Any) {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc = storyboard.instantiateViewController(withIdentifier: "ForgetPasswordVC") as! ForgetPasswordVC
-        vc.modalPresentationStyle = .fullScreen
-        self.present(vc, animated: false, completion: nil)
+        if TFPhone.text != ""{
+             guard let vc = initiateViewController(storyboardName: .main, viewControllerIdentifier: OtpVC.self) else{return}
+              vc.Phonenumber = TFPhone.text
+              navigationController?.pushViewController(vc, animated: true)
+        } else {
+            SimpleAlert.shared.showAlert(title: "اكتب رقم موبايل الأول", message: "", viewController: self)
+            return
+        }
     }
     
     @IBAction func BULogin(_ sender: Any) {
@@ -44,10 +47,8 @@ class LoginVC: UIViewController , UITextFieldDelegate {
     }
     
     @IBAction func BUSignUp(_ sender: Any) {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc = storyboard.instantiateViewController(withIdentifier: "SignUp") as! SignUp
-        vc.modalPresentationStyle = .fullScreen
-        self.present(vc, animated: false, completion: nil)
+        guard let vc = initiateViewController(storyboardName: .main, viewControllerIdentifier: SignUp.self) else{return}
+         navigationController?.pushViewController(vc, animated: true)
     }
     
     @IBAction func BUShowPassword(_ sender: UIButton) {
@@ -114,13 +115,7 @@ extension LoginVC{
             case .success:
                 Hud.dismiss(from: self.view)
                 print(state)
-                
-                //                if Helper.getUser()?.profileStatusId == 2{
-                //                    gotoHome()
-                //                }else{
-                //                    gotoCompleteInfo()
-                //                }
-            case .error(let error):
+            case .error(_,let error):
                 Hud.dismiss(from: self.view)
                 SimpleAlert.shared.showAlert(title:error ?? "",message:"", viewController: self)
                 print(error ?? "")
