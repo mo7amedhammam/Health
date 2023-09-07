@@ -37,4 +37,5 @@ enum EndPoints: String {
     //MARK: -- Main tab --
     case HomePageNewest = "Questions/HomePageNewest"
  
+    case MyMeasurementsStats = "CustomerMedicalMeasurement/GetMyMeasurementsStats"
 }

@@ -15,6 +15,8 @@ class MeasurementsVC: UIViewController {
     @IBOutlet weak var IVPhoto: UIImageView!
     @IBOutlet weak var IVPhotoOnLine: UIImageView!
 
+    let ViewModel = MyMeasurementsStatsVM()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -26,8 +28,14 @@ class MeasurementsVC: UIViewController {
         layout.minimumLineSpacing      = 0
         layout.minimumInteritemSpacing = 0
         CollectionScreen.setCollectionViewLayout(layout, animated: true)
-        CollectionScreen.reloadData()
+//        CollectionScreen.reloadData()
         
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        DispatchQueue.main.async {
+            self.getData()
+        }
     }
     
     
@@ -39,17 +47,55 @@ class MeasurementsVC: UIViewController {
 }
 
 
+extension MeasurementsVC {
+    
+    func getData() {
+                
+        ViewModel.GetMeasurementsStats { [self] state in
+            guard let state = state else{
+                return
+            }
+            switch state {
+            case .loading:
+                Hud.showHud(in: self.view)
+            case .stopLoading:
+                Hud.dismiss(from: self.view)
+            case .success:
+                Hud.dismiss(from: self.view)
+                CollectionScreen.reloadData()
+                print(state)
+            case .error(_,let error):
+                Hud.dismiss(from: self.view)
+                SimpleAlert.shared.showAlert(title:error ?? "",message:"", viewController: self)
+                print(error ?? "")
+            case .none:
+                print("")
+            }
+        }
+        
+        
+    }
+}
+
+
 
 extension MeasurementsVC : UICollectionViewDataSource , UICollectionViewDelegate , UICollectionViewDelegateFlowLayout  {
     
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 4
+        return ViewModel.ArrMeasurement?.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MeasurementsCVCell", for: indexPath) as! MeasurementsCVCell
+        let model = ViewModel.ArrMeasurement![indexPath.row]
+        
+        cell.LaTitle.text = model.title
+        cell.LaNum.text = "\(model.measurementsCount ?? 0 )"
+        cell.LaLastNum.text = model.lastMeasurementValue
+        cell.LaDate.text = model.lastMeasurementDate
+        
         return cell
         
     }
