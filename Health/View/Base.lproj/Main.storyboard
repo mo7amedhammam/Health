@@ -3982,6 +3982,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="LaTitle" destination="C5v-6p-U2u" id="jnt-y8-sYa"/>
                         <outlet property="PickerDate" destination="y0o-ad-O47" id="A1n-EK-9bL"/>
                         <outlet property="TFDate" destination="TWt-Md-v36" id="8yF-Qv-KVu"/>
                         <outlet property="TFNumMeasure" destination="SMd-TH-gJs" id="Tyj-LG-2ig"/>

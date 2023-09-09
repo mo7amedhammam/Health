@@ -38,4 +38,7 @@ enum EndPoints: String {
     case HomePageNewest = "Questions/HomePageNewest"
  
     case MyMeasurementsStats = "CustomerMedicalMeasurement/GetMyMeasurementsStats"
+    case MeasurementNormalRange = "MedicalMeasurement/GetNormalRange"
+    case MyMedicalMeasurements = "CustomerMedicalMeasurement/GetMyMedicalMeasurements"
+
 }

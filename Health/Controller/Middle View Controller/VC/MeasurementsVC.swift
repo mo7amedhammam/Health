@@ -71,9 +71,7 @@ extension MeasurementsVC {
             case .none:
                 print("")
             }
-        }
-        
-        
+        }        
     }
 }
 
@@ -83,13 +81,13 @@ extension MeasurementsVC : UICollectionViewDataSource , UICollectionViewDelegate
     
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return ViewModel.ArrMeasurement?.count ?? 0
+        return ViewModel.ArrStats?.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MeasurementsCVCell", for: indexPath) as! MeasurementsCVCell
-        let model = ViewModel.ArrMeasurement![indexPath.row]
+        let model = ViewModel.ArrStats![indexPath.row]
         
         cell.LaTitle.text = model.title
         cell.LaNum.text = "\(model.measurementsCount ?? 0 )"
@@ -114,6 +112,8 @@ extension MeasurementsVC : UICollectionViewDataSource , UICollectionViewDelegate
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "MeasurementsDetailsVC") as! MeasurementsDetailsVC
         vc.modalPresentationStyle = .fullScreen
+        vc.id  =  ViewModel.ArrStats![indexPath.row].medicalMeasurementID!
+        vc.num = ViewModel.ArrStats![indexPath.row].measurementsCount!
         self.present(vc, animated: false, completion: nil)
         
     }

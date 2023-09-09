@@ -9,6 +9,7 @@ import UIKit
 
 class MeasurementsDetailsVC: UIViewController {
     
+    @IBOutlet weak var LaTitle: UILabel!
     @IBOutlet weak var TVScreen: UITableView!
     @IBOutlet weak var ViewAddMeasurement: UIView!
     @IBOutlet weak var TFNumMeasure: UITextField!
@@ -17,6 +18,9 @@ class MeasurementsDetailsVC: UIViewController {
     @IBOutlet weak var ViewSelectDate: UIView!
     @IBOutlet weak var PickerDate: UIDatePicker!
     
+    var id  = 0
+    var num = 0
+    var TitleMeasurement = ""
     // to fill lable in cell0
     var CellDateFrom = ""
     var CellDateTo   = ""
@@ -24,6 +28,8 @@ class MeasurementsDetailsVC: UIViewController {
     var selectDateFrom = ""
     let formatter = DateFormatter()
     
+    let ViewModel = MyMeasurementsStatsVM()
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,11 +40,18 @@ class MeasurementsDetailsVC: UIViewController {
         TVScreen.delegate   = self
         TVScreen.registerCellNib(cellClass: MeasurementsDetailsTVCell.self)
         TVScreen.registerCellNib(cellClass: MeasurementsDetailsTVCell0.self)
-        TVScreen.reloadData()
+//        TVScreen.reloadData()
         ViewSelectDate.isHidden     = true
         ViewAddMeasurement.isHidden = true
         
+        LaTitle.text = TitleMeasurement
+        ViewModel.medicalMeasurementId = id
+        ViewModel.maxResultCount = 10
+        ViewModel.skipCount      = 0
+        getDataNormalRange()
+     
     }
+    
     
     
     @objc private func onDateValueChanged(_ datePicker: UIDatePicker) {
@@ -114,6 +127,69 @@ class MeasurementsDetailsVC: UIViewController {
 }
 
 
+extension MeasurementsDetailsVC {
+    
+    func getDataNormalRange() {
+                
+        ViewModel.GetMeasurementNormalRange { [self] state in
+            guard let state = state else{
+                return
+            }
+            switch state {
+            case .loading:
+                Hud.showHud(in: self.view)
+            case .stopLoading:
+                Hud.dismiss(from: self.view)
+            case .success:
+                Hud.dismiss(from: self.view)
+                
+                getDataMeasurement()
+                print(state)
+            case .error(_,let error):
+                Hud.dismiss(from: self.view)
+                SimpleAlert.shared.showAlert(title:error ?? "",message:"", viewController: self)
+                print(error ?? "")
+            case .none:
+                print("")
+            }
+        }
+    }
+    
+    func getDataMeasurement() {
+             
+        ViewModel.ArrMeasurement = nil
+        
+        ViewModel.GetMyMedicalMeasurements { [self] state in
+            guard let state = state else{
+                return
+            }
+            switch state {
+            case .loading:
+                Hud.showHud(in: self.view)
+            case .stopLoading:
+                Hud.dismiss(from: self.view)
+            case .success:
+                Hud.dismiss(from: self.view)
+
+                TVScreen.reloadData()
+                
+                print(state)
+            case .error(_,let error):
+                Hud.dismiss(from: self.view)
+                SimpleAlert.shared.showAlert(title:error ?? "",message:"", viewController: self)
+                print(error ?? "")
+            case .none:
+                print("")
+            }
+        }
+    }
+    
+    
+    
+    
+    
+}
+
 extension MeasurementsDetailsVC : UITableViewDataSource , UITableViewDelegate , MeasurementsDetailsTVCell0_Protocoal {
     
     
@@ -153,7 +229,10 @@ extension MeasurementsDetailsVC : UITableViewDataSource , UITableViewDelegate , 
     }
     
     func AllMeasurement() {
-        
+        ViewModel.medicalMeasurementId = id
+        ViewModel.maxResultCount       = 10
+        ViewModel.skipCount            = 0
+        getDataNormalRange()
     }
     
     func TearMonthDay(tag: Int) {
@@ -170,7 +249,7 @@ extension MeasurementsDetailsVC : UITableViewDataSource , UITableViewDelegate , 
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10 + 1
+        return ViewModel.ArrMeasurement?.measurements?.items?.count ?? 0  + 1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -201,24 +280,40 @@ extension MeasurementsDetailsVC : UITableViewDataSource , UITableViewDelegate , 
                 cell.LaDateTo.isHidden = true
             }
             
+            
+            cell.LaNaturalFrom.text = "\(ViewModel.ArrNormalRange?.fromValue ?? "" ) من : "
+            cell.LaNaturalTo.text   = "\(ViewModel.ArrNormalRange?.toValue ?? "" ) الي : "
+
+            cell.LaNum.text = "\(num)"
+            
             return cell
             
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "MeasurementsDetailsTVCell", for: indexPath) as! MeasurementsDetailsTVCell
             
-            if (indexPath.row - 1)  % 2 == 0 {
+            
+            let model = ViewModel.ArrMeasurement?.measurements?.items![indexPath.row]
+            
+            
+            cell.LaNum.text = model?.value
+            cell.LaDate.text = model?.date
+            
+            if model?.inNormalRang == true {
                 cell.ViewColor.backgroundColor = UIColor(named: "06AD2B")
                 cell.LaNum.textColor           = UIColor(named: "06AD2B")
-                
-                cell.LaDescription.text = "لا يوجد تعليق"
                 cell.LaDescription.textColor = UIColor(named: "deactive")
             } else {
                 cell.ViewColor.backgroundColor = UIColor(named: "EE2E3A")
                 cell.LaNum.textColor           = UIColor(named: "EE2E3A")
-                
-                cell.LaDescription.text = "تم القياس بعد أكل كمية من السكريات تم أكل كمية كبيرة من الأملاح في هذا اليوم"
                 cell.LaDescription.textColor = UIColor(named: "main")
             }
+            
+            if model?.comment == nil {
+                cell.LaDescription.text = "لا يوجد تعليق"
+            } else {
+                cell.LaDescription.text = model?.comment
+            }
+        
             return cell
         }
     }

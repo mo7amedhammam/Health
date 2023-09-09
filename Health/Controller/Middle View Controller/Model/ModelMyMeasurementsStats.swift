@@ -19,3 +19,45 @@ struct ModelMyMeasurementsStats: Codable {
         case image, title, measurementsCount, lastMeasurementValue, lastMeasurementDate, formatValue
     }
 }
+
+//.......................................................
+
+struct ModelMeasurementsNormalRange: Codable {
+    let id: Int?
+    let fromValue, toValue: String?
+}
+
+//.......................................................
+
+
+struct ModelMedicalMeasurements: Codable {
+    let measurements: Measurements?
+    let measurementsValues: [String]?
+}
+
+struct Measurements: Codable {
+    let totalCount: Int?
+    let items: [Item]?
+}
+
+// MARK: - Item
+struct Item: Codable {
+    let inNormalRang: Bool?
+    let id: Int?
+    let date: String?
+    let medicalMeasurementTitle: String?
+    let medicalMeasurementImage: String?
+    let createdBy: Int?
+    let createdByName: String?
+    let customerID, medicalMeasurementID: Int?
+    let value: String?
+    let comment: String?
+
+    enum CodingKeys: String, CodingKey {
+        case inNormalRang, id, date, medicalMeasurementTitle, medicalMeasurementImage, createdBy, createdByName
+        case customerID = "customerId"
+        case medicalMeasurementID = "medicalMeasurementId"
+        case value, comment
+    }
+}
+
