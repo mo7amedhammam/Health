@@ -22,6 +22,10 @@ enum Authintications {
 
     case ResetPassword(parameters : [String:Any])
     case ChangePassword(parameters:[String:Any])
+    
+    // -- med sched --
+    case GetMySchedulePrescriptions(parameters:[String:Any])
+    case GetMyScheduleDrugs(parameters:[String:Any])
 }
 
 extension Authintications : TargetType {
@@ -48,6 +52,10 @@ extension Authintications : TargetType {
             
         case .ChangePassword:
             return EndPoints.ChangePassword.rawValue
+        case .GetMySchedulePrescriptions:
+            return EndPoints.GetMySchedulePrescriptions.rawValue
+        case .GetMyScheduleDrugs:
+            return EndPoints.GetMyScheduleDrugs.rawValue
         }
     }
     
@@ -58,11 +66,13 @@ extension Authintications : TargetType {
                 .SendOtp,
                 .VerifyOtp,
                 .ResetPassword,
-                .ChangePassword:
+                .ChangePassword,
+                .GetMySchedulePrescriptions:
             return .post
             
         case .GetDistricts,
-                .GetGenders:
+                .GetGenders,
+                .GetMyScheduleDrugs:
             return .get
     }
     }
@@ -74,12 +84,15 @@ extension Authintications : TargetType {
                 .VerifyOtp(parameters: let parameters),
                 .SendOtp(parameters: let parameters),
                 .ResetPassword(parameters: let parameters),
-                .ChangePassword(parameters: let parameters):
+                .ChangePassword(parameters: let parameters),
+                .GetMySchedulePrescriptions(parameters: let parameters):
             return .parameterRequest(Parameters: parameters, Encoding: encoding)
             
         case .GetDistricts,
                 .GetGenders:
             return .plainRequest
+        case .GetMyScheduleDrugs(parameters: let parameters):
+            return .BodyparameterRequest(Parameters: parameters, Encoding: encoding)
         }
     }
     

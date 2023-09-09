@@ -1,30 +1,31 @@
 //
-//  LoginVM.swift
+//  MedicationScheduleDetailsVM.swift
 //  Health
 //
-//  Created by wecancity on 04/09/2023.
+//  Created by wecancity on 09/09/2023.
 //
 
 import Foundation
 
-class LoginVM {
-    var mobile: String?
-    var password: String?
+class MedicationScheduleDetailsVM {
+    var scheduleId : Int?
+    var responseModel: [MedicationScheduleDrugM]? = []
     
-    var usermodel: LoginM? = LoginM()
-    
-    func login(completion: @escaping (EventHandler?) -> Void) {
-        guard let mobile = mobile, let password = password else {
+}
+
+extension MedicationScheduleDetailsVM{
+    func GetMyScheduleDrugs(completion: @escaping (EventHandler?) -> Void) {
+        guard let scheduleId = scheduleId else {
             // Handle missing username or password
             return
         }
-        let parametersarr : [String : Any] =  ["mobile" : mobile ,"password" : password]
+        let parametersarr : [String : Any] =  ["scheduleId" : scheduleId]
         completion(.loading)
         // Create your API request with the username and password
-        let target = Authintications.Login(parameters: parametersarr)
+        let target = Authintications.GetMyScheduleDrugs(parameters: parametersarr)
 
         // Make the API call using your APIManager or networking code
-        BaseNetwork.callApi(target, BaseResponse<LoginM>.self) {[weak self] result in
+        BaseNetwork.callApi(target, BaseResponse<[MedicationScheduleDrugM]>.self) {[weak self] result in
             // Handle the API response here
             switch result {
             case .success(let response):
@@ -36,7 +37,7 @@ class LoginVM {
                     return
                 }
                 
-                self?.usermodel = response.data
+                self?.responseModel = response.data
                 completion(.success)
             case .failure(let error):
                 // Handle the error
@@ -46,5 +47,4 @@ class LoginVM {
 
         }
     }
-    
 }

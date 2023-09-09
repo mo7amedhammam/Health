@@ -18,6 +18,12 @@ class SignUpVM {
     var DistrictsArr: [DistrictM]?
     var GendersArr: [DistrictM]?
 
+ 
+}
+
+
+//MARK: -- finctions --
+extension SignUpVM {
     func SignUp(completion: @escaping (EventHandler?) -> Void) {
         guard  let name = name, let mobile = mobile, let genderId = genderId,let districtId = districtId,let pharmacyCode = pharmacyCode else {
             // Handle missing username or password
@@ -38,7 +44,7 @@ class SignUpVM {
                 // Handle the successful response
                 print("request successful: \(response)")
 
-                guard response.messageCode == 200 , response.data != nil else {
+                guard response.messageCode == 200 else {
                     completion(.error(0, "\(response.message ?? "check validations")"))
                return
                 }
@@ -65,7 +71,7 @@ class SignUpVM {
                 // Handle the successful response
                 print("request successful: \(response)")
 
-                guard response.messageCode == 200 , response.data != nil else {
+                guard response.messageCode == 200 else {
                     completion(.error(0,"\(response.message ?? "check validations")"))
                return
                 }
@@ -91,7 +97,7 @@ class SignUpVM {
                 // Handle the successful response
                 print("request successful: \(response)")
 
-                guard response.messageCode == 200 , response.data != nil else {
+                guard response.messageCode == 200 else {
                     completion(.error(0,"\(response.message ?? "check validations")"))
                return
                 }

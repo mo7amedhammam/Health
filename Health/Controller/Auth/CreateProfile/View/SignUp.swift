@@ -206,7 +206,6 @@ extension SignUp{
     }
      
     func SetDropDown(DropListSource:DrobListSource){
-        
         switch DropListSource{
         case .Gender:
             if let dataArray = ViewModel.GendersArr{
