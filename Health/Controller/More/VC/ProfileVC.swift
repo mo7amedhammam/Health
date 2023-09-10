@@ -23,9 +23,6 @@ class ProfileVC: UIViewController {
         TVscreen.registerCellNib(cellClass: ProfileTVCellLogout.self)
         TVscreen.reloadData()
     }
-    
-    
-    
 }
 
 
@@ -36,7 +33,6 @@ extension ProfileVC : UITableViewDataSource , UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
         
         if indexPath.row == 0 {
             
@@ -111,7 +107,7 @@ extension ProfileVC : UITableViewDataSource , UITableViewDelegate {
             cell.IVPhoto.image = UIImage(named: "terms")
             return cell
             
-        } else {
+        } else  {
             let cell = tableView.dequeueReusableCell(withIdentifier: "ProfileTVCellLogout", for: indexPath) as! ProfileTVCellLogout
             return cell
         }
@@ -120,47 +116,40 @@ extension ProfileVC : UITableViewDataSource , UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        if indexPath.row == 0 {
+        if indexPath.row == 0 { // -- user image --
             
-        } else if indexPath.row == 1 { // - home -
+        } else if indexPath.row == 1 { // - "الرئيسية" -
             
-        } else if indexPath.row == 2 { // - measurements -
+        } else if indexPath.row == 2 { // - قياساتى -
             
-        } else if indexPath.row == 3 { // - monthly table -
-//            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-//            let vc = storyboard.instantiateViewController(withIdentifier: "MedicationScheduleVC") as! MedicationScheduleVC
-//            vc.modalPresentationStyle = .fullScreen
-//            self.present(vc, animated: false, completion: nil)
+        } else if indexPath.row == 3 { // - "جداول الأدوية الشهرية" -
+            
         } else if indexPath.row == 4 { // - medecines notifications -
-//            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-//            let vc = storyboard.instantiateViewController(withIdentifier: "NotificationVC") as! NotificationVC
-//            vc.modalPresentationStyle = .fullScreen
-//            self.present(vc, animated: false, completion: nil)
-        } else if indexPath.row == 5 { // - medical advices -
-            
+
+        } else if indexPath.row == 5 { // - "نصائح طبية" -
             
         } else if indexPath.row == 6 { // - inbody -
-            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let vc = storyboard.instantiateViewController(withIdentifier: "INBodyVC") as! INBodyVC
-            vc.modalPresentationStyle = .fullScreen
-            self.present(vc, animated: false, completion: nil)
-        } else if indexPath.row == 7 { // - change password -
-            Gotochangepassword()
-        } else if indexPath.row == 8 { // - privacy -
+            PushTo(destination: INBodyVC.self)
             
-        } else if indexPath.row == 9 { // - terms$conditions -
+        } else if indexPath.row == 7 { // - ProfileTVCellLine -
             
-        } else if indexPath.row == 10 { // - logout -
+        } else if indexPath.row == 8 { // - "تغيير كلمة المرور" -
+            PushTo(destination: ChangePasswordVC.self)
+            
+        } else if indexPath.row == 9 { // - "الحماية والخصوصية" -
+            
+        } else if indexPath.row == 10 { // - "الشروط والأحكام" -
+            
+        } else { // -- تسجيل خروج --
             Helper.logout()
             Helper.changeRootVC(newroot: LoginVC.self)
-        } else {
-            
         }
         
     }
     
-    func Gotochangepassword(){
-        guard let vc = initiateViewController(storyboardName: .main, viewControllerIdentifier: ChangePasswordVC.self)else{return}
+    func PushTo(destination:UIViewController.Type){
+        guard let vc = initiateViewController(storyboardName: .main, viewControllerIdentifier: destination.self)else{return}
+        vc.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(vc, animated: true)
     }
 }

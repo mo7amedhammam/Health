@@ -591,8 +591,8 @@
 		BBBDFFF32A730F8C00F066DF /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				BB518CCE2A9A10EC00242FAD /* Tips Categories */,
 				BB30E6122A7859FE0045569D /* HTBC.swift */,
+				BB518CCE2A9A10EC00242FAD /* Tips Categories */,
 				BB1B2FFF2A7EA8A9001677FD /* XIb Views */,
 				BBE3CC702A7FFFB1004B0D9A /* Medication Schedule */,
 				BB1B2FF02A7E9B1B001677FD /* InBody */,

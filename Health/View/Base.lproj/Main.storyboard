@@ -1425,6 +1425,7 @@
         <scene sceneID="VNc-Os-Gc3">
             <objects>
                 <tabBarController storyboardIdentifier="HTBC" id="H3C-T6-t4y" customClass="HTBC" customModule="Health" customModuleProvider="target" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="pM9-WA-yEt"/>
                     <tabBar key="tabBar" clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="dxe-N1-yU6" customClass="CustomTabBar" customModule="Health" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
