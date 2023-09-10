@@ -46,10 +46,12 @@ class MyMeasurementsStatsVM {
     var dateFrom: String?
     var dateTo: String?
     var ArrMeasurement: ModelMedicalMeasurements?
+    var Parameters =  [String : Any]()
+    
     
     func GetMyMedicalMeasurements(completion: @escaping (EventHandler?) -> Void) {
      
-        let Parameters : [String : Any] =  ["maxResultCount" : maxResultCount ,"skipCount" : skipCount ,"medicalMeasurementId" : medicalMeasurementId]
+         Parameters =  ["maxResultCount" : maxResultCount ,"skipCount" : skipCount ,"medicalMeasurementId" : medicalMeasurementId]
 
         completion(.loading)
         // Create your API request with the username and password
@@ -116,6 +118,50 @@ class MyMeasurementsStatsVM {
             }
         }
     }
+    
+    //........................................
+    
+    var ParametersCreate =  [String : Any]()
+    var customerId : Int?
+    var value : String?
+    var comment : String?
+    var measurementDate : String?
+    
+    
+    
+    func CreateMedicalMeasurements(completion: @escaping (EventHandler?) -> Void) {
+     
+        ParametersCreate =  ["customerId" : customerId ,"value" : value ,"medicalMeasurementId" : medicalMeasurementId , "comment" : comment , "measurementDate" : measurementDate ]
+
+        completion(.loading)
+        // Create your API request with the username and password
+        let target = Measurement.CreateMeasurement(parameters: ParametersCreate)
+        //print(parametersarr)
+        
+        // Make the API call using your APIManager or networking code
+        BaseNetwork.callApi(target, BaseResponse<ModelCreateMeasurements>.self) { result in
+            // Handle the API response here
+            switch result {
+            case .success(let response):
+                // Handle the successful response
+                print("request successful: \(response)")
+                if response.messageCode == 200 {
+                    completion(.success)
+                } else if response.messageCode == 401 {
+                    completion(.error(0,"\(response.message ?? "login again")"))
+                } else {
+                    completion(.error(0,"\(response.message ?? "server error")"))
+                }
+                
+            case .failure(let error):
+                // Handle the error
+                print("Login failed: \(error.localizedDescription)")
+                completion(.error(0, "\(error.localizedDescription)"))
+            }
+        }
+    }
+    
+    
     
     
 }

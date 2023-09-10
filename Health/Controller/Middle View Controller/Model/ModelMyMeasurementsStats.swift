@@ -61,3 +61,19 @@ struct Item: Codable {
     }
 }
 
+//............................................
+
+struct ModelCreateMeasurements: Codable {
+    let customerID, medicalMeasurementID: Int?
+    let value, comment: String?
+    let id: Int?
+    let date, medicalMeasurementTitle, medicalMeasurementImage: String?
+    let createdBy: Int?
+    let createdByName: String?
+
+    enum CodingKeys: String, CodingKey {
+        case customerID = "customerId"
+        case medicalMeasurementID = "medicalMeasurementId"
+        case value, comment, id, date, medicalMeasurementTitle, medicalMeasurementImage, createdBy, createdByName
+    }
+}
