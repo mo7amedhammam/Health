@@ -23,7 +23,7 @@ class INBodyVC: UIViewController {
     
     
     @IBAction func BUBack(_ sender: Any) {
-        self.dismiss(animated: true)
+        navigationController?.popViewController(animated: true)
     }
     
     @IBAction func BUNotification(_ sender: Any) {
