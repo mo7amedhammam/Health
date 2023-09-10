@@ -56,18 +56,33 @@ extension MedicationScheduleVC : UITableViewDataSource , UITableViewDelegate {
         
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "MedicationScheduleDetailsVC") as! MedicationScheduleDetailsVC
+        vc.schedualM = ViewModel.responseModel?.items?[indexPath.row]
         vc.modalPresentationStyle = .fullScreen
-        vc.scheduleId = ViewModel.responseModel?.items?[indexPath.row].id
         self.present(vc, animated: false, completion: nil)
     }
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        // Check if the last visible cell is close to the end of the table view
     
+        let lastVisibleIndexPath = tableView.indexPathsForVisibleRows?.last
+        guard let modelarr = ViewModel.responseModel?.items else {return}
+        if let lastVisibleCell = lastVisibleIndexPath, lastVisibleCell.row == modelarr.count - 1 {
+            if modelarr.count > 0  {
+                    self.loadNextPage()
+            }
+        }
+    }
+    func loadNextPage(){
+        guard (ViewModel.responseModel?.totalCount ?? 0) > (ViewModel.responseModel?.items?.count ?? 0) , ViewModel.cansearch == true else {return}
+        ViewModel.skipCount = ViewModel.responseModel?.items?.count
+        GetMedicationSchedule()
+    }
+
 }
 
 //-- functions --
 extension MedicationScheduleVC{
     
     func GetMedicationSchedule() {
-//        ViewModel.skipCount = 0
         ViewModel.GetMySchedulePrescriptions{[self] state in
             guard let state = state else{
                 return
@@ -81,7 +96,6 @@ extension MedicationScheduleVC{
                 Hud.dismiss(from: self.view)
                 print(state)
 // -- go to home
-                
                 TVScreen.reloadData()
                 
             case .error(_,let error):

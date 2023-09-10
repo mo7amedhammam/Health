@@ -12,8 +12,10 @@ class MedicationScheduleVM {
     var skipCount: Int? = 0
     
     var responseModel: MedicationScheduleM? = MedicationScheduleM()
+    var cansearch = false
     
     func GetMySchedulePrescriptions(completion: @escaping (EventHandler?) -> Void) {
+        cansearch = false
         guard let maxResultCount = maxResultCount, let skipCount = skipCount else {
             // Handle missing username or password
             return
@@ -35,9 +37,13 @@ class MedicationScheduleVM {
                     completion(.error(0, (response.message ?? "check validations")))
                     return
                 }
-                
-                self?.responseModel = response.data
+                if self?.skipCount == 0 {
+                    self?.responseModel = response.data
+                }else{
+                    self?.responseModel?.items?.append(contentsOf: response.data?.items ?? [])
+                }
                 completion(.success)
+                self?.cansearch = true
             case .failure(let error):
                 // Handle the error
                 print("Login failed: \(error.localizedDescription)")

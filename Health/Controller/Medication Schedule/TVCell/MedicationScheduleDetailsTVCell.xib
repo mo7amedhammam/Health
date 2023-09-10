@@ -446,6 +446,8 @@
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <connections>
+                <outlet property="DescribtionView" destination="aKv-zq-h1i" id="GOi-JO-lAZ"/>
+                <outlet property="ImgDrugIcon" destination="G4H-eE-JVA" id="aNr-AD-ccc"/>
                 <outlet property="LaClock" destination="5AP-nR-PHA" id="yac-hb-a5I"/>
                 <outlet property="LaDescription" destination="h3M-1P-hso" id="fgo-4q-MG2"/>
                 <outlet property="LaEndDate" destination="4k4-IE-Uae" id="CJG-pI-o3t"/>
@@ -454,8 +456,28 @@
                 <outlet property="LaStartDate" destination="8E3-TR-yGz" id="mgr-XF-zed"/>
                 <outlet property="LaStatus" destination="XLq-ze-ecx" id="Ucu-AM-MKq"/>
                 <outlet property="LaTitle" destination="lww-A2-XdK" id="wGA-wQ-VYY"/>
+                <outlet property="ViewBackground" destination="VPg-Pd-XEo" id="UgF-c6-i0e"/>
+                <outletCollection property="LaText" destination="zup-AK-mhP" collectionClass="NSMutableArray" id="JrJ-k9-03v"/>
+                <outletCollection property="LaText" destination="TUI-6H-pde" collectionClass="NSMutableArray" id="th1-GH-A5Q"/>
+                <outletCollection property="LaText" destination="zbe-cz-IN0" collectionClass="NSMutableArray" id="gO4-uN-L94"/>
+                <outletCollection property="LaText" destination="eTq-aj-3d7" collectionClass="NSMutableArray" id="KUT-bC-Ixv"/>
+                <outletCollection property="LaText" destination="iBO-Ez-UGo" collectionClass="NSMutableArray" id="JGo-Mr-RdG"/>
+                <outletCollection property="LaText" destination="81X-vh-DMh" collectionClass="NSMutableArray" id="BST-af-qTa"/>
+                <outletCollection property="LaText" destination="h3M-1P-hso" collectionClass="NSMutableArray" id="hUT-1G-RK7"/>
+                <outletCollection property="LaText" destination="XLq-ze-ecx" collectionClass="NSMutableArray" id="qrE-pH-oBq"/>
+                <outletCollection property="LaText" destination="lww-A2-XdK" collectionClass="NSMutableArray" id="2u7-38-wvE"/>
+                <outletCollection property="DotsViews" destination="ItW-Vv-f9V" collectionClass="NSMutableArray" id="ycB-PI-YWx"/>
+                <outletCollection property="DotsViews" destination="QiN-uF-DZw" collectionClass="NSMutableArray" id="ego-wO-7ni"/>
+                <outletCollection property="DotsViews" destination="dFx-Lq-myg" collectionClass="NSMutableArray" id="cVj-i2-Ifu"/>
+                <outletCollection property="DotsViews" destination="7M5-ae-SJj" collectionClass="NSMutableArray" id="2gK-UW-1Zx"/>
+                <outletCollection property="DotsViews" destination="g3f-Uy-Sh7" collectionClass="NSMutableArray" id="M2X-rP-X7A"/>
+                <outletCollection property="LaText" destination="8E3-TR-yGz" collectionClass="NSMutableArray" id="J5e-49-2X5"/>
+                <outletCollection property="LaText" destination="5AP-nR-PHA" collectionClass="NSMutableArray" id="GRY-hU-i6i"/>
+                <outletCollection property="LaText" destination="ot8-uO-lA0" collectionClass="NSMutableArray" id="Cot-Zc-Qbn"/>
+                <outletCollection property="LaText" destination="C8b-VR-Uhl" collectionClass="NSMutableArray" id="lw7-Cc-T4Z"/>
+                <outletCollection property="LaText" destination="4k4-IE-Uae" collectionClass="NSMutableArray" id="gZA-P6-QNb"/>
             </connections>
-            <point key="canvasLocation" x="-90.07633587786259" y="60.563380281690144"/>
+            <point key="canvasLocation" x="14" y="61"/>
         </tableViewCell>
     </objects>
     <resources>

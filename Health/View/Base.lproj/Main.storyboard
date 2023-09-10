@@ -3564,6 +3564,10 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="LaDrugsCount" destination="Cjy-mP-0UZ" id="MHW-xA-8FQ"/>
+                        <outlet property="LaEndDate" destination="LLO-bB-Vkb" id="Rzb-yU-EmW"/>
+                        <outlet property="LaRenewalDate" destination="8fm-YF-Ar4" id="afn-NF-CH7"/>
+                        <outlet property="LaStartDate" destination="Dhi-9N-S6N" id="aBG-Ye-Dtk"/>
                         <outlet property="TVScreen" destination="xcQ-tc-aYC" id="RVH-uy-s62"/>
                     </connections>
                 </viewController>

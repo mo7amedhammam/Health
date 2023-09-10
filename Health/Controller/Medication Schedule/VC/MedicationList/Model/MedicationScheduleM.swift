@@ -14,7 +14,7 @@ struct MedicationScheduleM: Codable {
 }
 
 // MARK: - MedicationScheduleItem -
-struct MedicationScheduleItem: Codable {
+struct MedicationScheduleItem: Codable,Equatable {
     var id: Int?
     var title: String?
     var customerID, drugsCount: Int?

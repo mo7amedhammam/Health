@@ -10,8 +10,12 @@ import UIKit
 class MedicationScheduleDetailsVC: UIViewController {
 
     @IBOutlet weak var TVScreen: UITableView!
-    var scheduleId : Int? = 0
-    var schedualM = MedicationScheduleM()
+    @IBOutlet weak var LaStartDate: UILabel!
+    @IBOutlet weak var LaEndDate: UILabel!
+    @IBOutlet weak var LaDrugsCount: UILabel!
+    @IBOutlet weak var LaRenewalDate: UILabel!
+    
+    var schedualM:MedicationScheduleItem? = MedicationScheduleItem()
     let ViewModel = MedicationScheduleDetailsVM()
     
     override func viewDidLoad() {
@@ -21,8 +25,7 @@ class MedicationScheduleDetailsVC: UIViewController {
         TVScreen.dataSource = self
         TVScreen.delegate = self
         TVScreen.registerCellNib(cellClass: MedicationScheduleDetailsTVCell.self)
-//        TVScreen.reloadData()
-        
+        SetCurrentSched()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -62,8 +65,23 @@ extension MedicationScheduleDetailsVC : UITableViewDataSource , UITableViewDeleg
 }
 
 extension MedicationScheduleDetailsVC {
+    func SetCurrentSched(){
+        guard let model = schedualM else {return}
+        if let startDate =  Helper.ChangeFormate(NewFormat: "yyyy-MM-dd'T'HH:mm:ss").date(from: model.startDate ?? ""){
+            LaStartDate.text = Helper.ChangeFormate(NewFormat: "dd/MM/yyyy").string(from: startDate )
+        }
+        if let endDate =  Helper.ChangeFormate(NewFormat: "yyyy-MM-dd'T'HH:mm:ss").date(from: model.endDate ?? ""){
+            LaEndDate.text = Helper.ChangeFormate(NewFormat: "dd/MM/yyyy").string(from: endDate )
+        }
+        if let renewDate =  Helper.ChangeFormate(NewFormat: "yyyy-MM-dd'T'HH:mm:ss").date(from: model.renewDate ?? ""){
+            LaRenewalDate.text = Helper.ChangeFormate(NewFormat: "dd/MM/yyyy hh:mm a").string(from: renewDate )
+        }
+        LaDrugsCount.text = "\(model.drugsCount ?? 0)"
+    }
+    
     func GetMedicationScheduleDrugs() {
-        ViewModel.scheduleId = scheduleId
+        guard let model = schedualM else {return}
+        ViewModel.scheduleId = model.id
         ViewModel.GetMyScheduleDrugs{[self] state in
             guard let state = state else{
                 return
@@ -89,4 +107,5 @@ extension MedicationScheduleDetailsVC {
             }
         }
     }
+    
 }
