@@ -198,7 +198,7 @@
                                                                                     </label>
                                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZYb-wk-6Gu">
                                                                                         <rect key="frame" x="0.0" y="22.666666666666686" width="87" height="17.333333333333329"/>
-                                                                                        <fontDescription key="fontDescription" name="LamaSans-Medium" family="Lama Sans" pointSize="16"/>
+                                                                                        <fontDescription key="fontDescription" name="LamaSans-Medium" family="Lama Sans" pointSize="13"/>
                                                                                         <color key="textColor" name="main"/>
                                                                                         <nil key="highlightedColor"/>
                                                                                     </label>
@@ -273,7 +273,7 @@
                                                                                     </label>
                                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ii7-Rg-Ew7">
                                                                                         <rect key="frame" x="0.0" y="22.666666666666686" width="87" height="17.333333333333329"/>
-                                                                                        <fontDescription key="fontDescription" name="LamaSans-Medium" family="Lama Sans" pointSize="16"/>
+                                                                                        <fontDescription key="fontDescription" name="LamaSans-Medium" family="Lama Sans" pointSize="13"/>
                                                                                         <color key="textColor" name="main"/>
                                                                                         <nil key="highlightedColor"/>
                                                                                     </label>
@@ -678,11 +678,15 @@
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <connections>
+                <outlet property="BtnDay" destination="mfQ-FB-9s2" id="2Dj-mP-eQ1"/>
+                <outlet property="BtnMonth" destination="pD4-1c-uQQ" id="g4V-Qa-Jcd"/>
+                <outlet property="BtnYear" destination="emA-dx-Zcg" id="Nic-kq-sou"/>
                 <outlet property="LaDateFrom" destination="Ii7-Rg-Ew7" id="wpO-Bd-CCm"/>
                 <outlet property="LaDateTo" destination="ZYb-wk-6Gu" id="nyR-30-kN7"/>
                 <outlet property="LaNaturalFrom" destination="WOg-c5-b5z" id="acu-hm-rAV"/>
                 <outlet property="LaNaturalTo" destination="Jgx-Rx-kQl" id="MrE-MB-MwT"/>
                 <outlet property="LaNum" destination="ah1-TU-llv" id="HLj-km-Swd"/>
+                <outlet property="btnAll" destination="N4O-FK-x9O" id="vEI-dt-8Rk"/>
             </connections>
             <point key="canvasLocation" x="-24.427480916030532" y="374.29577464788736"/>
         </tableViewCell>

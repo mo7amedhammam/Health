@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -39,7 +40,7 @@
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="CFO-gb-RRA"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" name="LamaSans-SemiBold" family="Lama Sans" pointSize="24"/>
+                                        <fontDescription key="fontDescription" name="LamaSans-SemiBold" family="Lama Sans" pointSize="20"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -184,6 +185,12 @@
                 <constraint firstItem="hcE-l6-gDP" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="pCB-0X-fgU"/>
             </constraints>
             <size key="customSize" width="216" height="270"/>
+            <connections>
+                <outlet property="LaDate" destination="s2L-SW-ffG" id="418-w8-mym"/>
+                <outlet property="LaLastNum" destination="ZqR-Yr-Y8x" id="Ogo-Tg-Vzg"/>
+                <outlet property="LaNum" destination="W4b-IF-uSd" id="j5e-DV-QcD"/>
+                <outlet property="LaTitle" destination="euO-MM-bTo" id="ARt-ZR-AFq"/>
+            </connections>
             <point key="canvasLocation" x="36.641221374045799" y="97.183098591549296"/>
         </collectionViewCell>
     </objects>
