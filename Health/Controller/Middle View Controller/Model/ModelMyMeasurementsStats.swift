@@ -9,10 +9,10 @@ import Foundation
 
 // MARK: - ModelMyMeasurementsStats
 struct ModelMyMeasurementsStats: Codable {
-    let medicalMeasurementID: Int?
-    let image, title: String?
-    let measurementsCount: Int?
-    let lastMeasurementValue, lastMeasurementDate, formatValue: String?
+    var medicalMeasurementID: Int?
+    var image, title: String?
+    var measurementsCount: Int?
+    var lastMeasurementValue, lastMeasurementDate, formatValue: String?
 
     enum CodingKeys: String, CodingKey {
         case medicalMeasurementID = "medicalMeasurementId"
@@ -23,35 +23,35 @@ struct ModelMyMeasurementsStats: Codable {
 //.......................................................
 
 struct ModelMeasurementsNormalRange: Codable {
-    let id: Int?
-    let fromValue, toValue: String?
+    var id: Int?
+    var fromValue, toValue: String?
 }
 
 //.......................................................
 
 
 struct ModelMedicalMeasurements: Codable {
-    let measurements: Measurements?
-    let measurementsValues: [String]?
+    var measurements: Measurements?
+    var measurementsValues: [String]?
 }
 
 struct Measurements: Codable {
-    let totalCount: Int?
-    let items: [Item]?
+    var totalCount: Int?
+    var items: [Item]?
 }
 
 // MARK: - Item
 struct Item: Codable {
-    let inNormalRang: Bool?
-    let id: Int?
-    let date: String?
-    let medicalMeasurementTitle: String?
-    let medicalMeasurementImage: String?
-    let createdBy: Int?
-    let createdByName: String?
-    let customerID, medicalMeasurementID: Int?
-    let value: String?
-    let comment: String?
+    var inNormalRang: Bool?
+    var id: Int?
+    var date: String?
+    var medicalMeasurementTitle: String?
+    var medicalMeasurementImage: String?
+    var createdBy: Int?
+    var createdByName: String?
+    var customerID, medicalMeasurementID: Int?
+    var value: String?
+    var comment: String?
 
     enum CodingKeys: String, CodingKey {
         case inNormalRang, id, date, medicalMeasurementTitle, medicalMeasurementImage, createdBy, createdByName
@@ -64,12 +64,12 @@ struct Item: Codable {
 //............................................
 
 struct ModelCreateMeasurements: Codable {
-    let customerID, medicalMeasurementID: Int?
-    let value, comment: String?
-    let id: Int?
-    let date, medicalMeasurementTitle, medicalMeasurementImage: String?
-    let createdBy: Int?
-    let createdByName: String?
+    var customerID, medicalMeasurementID: Int?
+    var value, comment: String?
+    var id: Int?
+    var date, medicalMeasurementTitle, medicalMeasurementImage: String?
+    var createdBy: Int?
+    var createdByName: String?
 
     enum CodingKeys: String, CodingKey {
         case customerID = "customerId"

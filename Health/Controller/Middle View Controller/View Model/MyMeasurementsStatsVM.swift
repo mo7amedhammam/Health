@@ -35,6 +35,7 @@ class MyMeasurementsStatsVM {
             case .failure(let error):
                 // Handle the error
                 print("Login failed: \(error.localizedDescription)")
+                completion(.error(0,"\(error.localizedDescription)"))
             }
         }
     }
@@ -50,9 +51,15 @@ class MyMeasurementsStatsVM {
     
     
     func GetMyMedicalMeasurements(completion: @escaping (EventHandler?) -> Void) {
-     
-         Parameters =  ["maxResultCount" : maxResultCount ,"skipCount" : skipCount ,"medicalMeasurementId" : medicalMeasurementId]
-
+        guard let maxResultCount = maxResultCount, let skipCount = skipCount ,let medicalMeasurementId = medicalMeasurementId else {return}
+         Parameters =  ["maxResultCount" : maxResultCount ,"skipCount" : skipCount ,"medicalMeasurementId" : medicalMeasurementId] // needs dateFrom and dateTo
+        if dateFrom != nil {
+            Parameters["dateFrom"] = dateFrom
+        }
+        if dateTo != nil {
+            Parameters["dateTo"]   = dateTo
+        }
+        
         completion(.loading)
         // Create your API request with the username and password
         let target = Measurement.GetMyMedicalMeasurements(parameters: Parameters)
@@ -90,8 +97,9 @@ class MyMeasurementsStatsVM {
     var ArrNormalRange : ModelMeasurementsNormalRange?
     
     func GetMeasurementNormalRange(completion: @escaping (EventHandler?) -> Void) {
-        // Create your API request with the username and password
-        let Parameters : [String : Any] =  ["medicalMeasurementId" : medicalMeasurementId]
+        guard let medicalMeasurementId = medicalMeasurementId else {return}
+
+        let Parameters : [String : Any] =  ["Id" : medicalMeasurementId]
 
         completion(.loading)
         let target = Measurement.GetNormalRange(parameters: Parameters)
@@ -115,6 +123,7 @@ class MyMeasurementsStatsVM {
             case .failure(let error):
                 // Handle the error
                 print("Login failed: \(error.localizedDescription)")
+                completion(.error(0,"\(error.localizedDescription)"))
             }
         }
     }
@@ -127,11 +136,10 @@ class MyMeasurementsStatsVM {
     var comment : String?
     var measurementDate : String?
     
-    
-    
     func CreateMedicalMeasurements(completion: @escaping (EventHandler?) -> Void) {
      
-        ParametersCreate =  ["customerId" : customerId ,"value" : value ,"medicalMeasurementId" : medicalMeasurementId , "comment" : comment , "measurementDate" : measurementDate ]
+        guard let value = value , let medicalMeasurementId = medicalMeasurementId , let comment = comment , let measurementDate = measurementDate else {return}
+        ParametersCreate =  ["value" : value ,"medicalMeasurementId" : medicalMeasurementId , "comment" : comment , "measurementDate" : measurementDate ]
 
         completion(.loading)
         // Create your API request with the username and password
@@ -160,8 +168,5 @@ class MyMeasurementsStatsVM {
             }
         }
     }
-    
-    
-    
     
 }

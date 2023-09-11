@@ -33,6 +33,7 @@ class MeasurementsVC: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         DispatchQueue.main.async {
             self.getData()
         }
@@ -108,14 +109,10 @@ extension MeasurementsVC : UICollectionViewDataSource , UICollectionViewDelegate
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc = storyboard.instantiateViewController(withIdentifier: "MeasurementsDetailsVC") as! MeasurementsDetailsVC
-        vc.modalPresentationStyle = .fullScreen
+        guard let vc = initiateViewController(storyboardName: .main, viewControllerIdentifier: MeasurementsDetailsVC.self) else{return}
         vc.id  =  ViewModel.ArrStats![indexPath.row].medicalMeasurementID!
         vc.num = ViewModel.ArrStats![indexPath.row].measurementsCount!
-        self.present(vc, animated: false, completion: nil)
-        
+        navigationController?.pushViewController(vc, animated: true)
     }
     
 }

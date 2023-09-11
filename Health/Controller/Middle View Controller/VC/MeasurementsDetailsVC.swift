@@ -30,7 +30,6 @@ class MeasurementsDetailsVC: UIViewController {
     
     let ViewModel = MyMeasurementsStatsVM()
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -48,8 +47,8 @@ class MeasurementsDetailsVC: UIViewController {
         ViewModel.medicalMeasurementId = id
         ViewModel.maxResultCount = 10
         ViewModel.skipCount      = 0
-        ViewModel.Parameters["dateFrom"] = nil
-        ViewModel.Parameters["dateTo"]   = nil
+        ViewModel.dateFrom = nil
+        ViewModel.dateTo   = nil
         getDataNormalRange()
         
     }
@@ -97,7 +96,8 @@ class MeasurementsDetailsVC: UIViewController {
     
     
     @IBAction func BUBack(_ sender: Any) {
-        self.dismiss(animated: true)
+//        self.dismiss(animated: true)
+        navigationController?.popViewController(animated: true)
     }
     
     @IBAction func BuNotification(_ sender: Any) {
@@ -125,7 +125,7 @@ class MeasurementsDetailsVC: UIViewController {
             self.showAlert(message: "من فضلك أدخل التاريخ")
         } else {
             
-            ViewModel.customerId           = Helper.getUser()?.id
+//            ViewModel.customerId           = Helper.getUser()?.id // they take it from token
             ViewModel.medicalMeasurementId = id
             ViewModel.value                = TFNumMeasure.text
             ViewModel.comment              = TVDescription.text ?? ""
@@ -226,11 +226,7 @@ extension MeasurementsDetailsVC {
                 print("")
             }
         }
-        
     }
-    
-    
-    
     
 }
 
@@ -293,8 +289,8 @@ extension MeasurementsDetailsVC : UITableViewDataSource , UITableViewDelegate , 
         ViewModel.medicalMeasurementId = id
         ViewModel.maxResultCount       = 10
         ViewModel.skipCount            = 0
-        ViewModel.Parameters["dateFrom"] = nil
-        ViewModel.Parameters["dateTo"]   = nil
+        ViewModel.dateFrom = nil
+        ViewModel.dateTo  = nil
         getDataNormalRange()
         
     }
@@ -332,11 +328,11 @@ extension MeasurementsDetailsVC : UITableViewDataSource , UITableViewDelegate , 
                 let oneYear = dateFormatter.string(from: sevenDaysAgo!)
                 print("oneYear : \(oneYear)")
                 
-                Lfrom.text = formattedDateString
-                Lto.text   = oneYear
+                Lfrom.text = oneYear
+                Lto.text   = formattedDateString
                 
-                CellDateFrom = formattedDateString
-                CellDateTo   = oneYear
+                CellDateFrom = oneYear
+                CellDateTo   = formattedDateString
                 
             } else {
                 print("Invalid date format")
@@ -366,11 +362,11 @@ extension MeasurementsDetailsVC : UITableViewDataSource , UITableViewDelegate , 
                 let ThreeMonth = dateFormatter.string(from: sevenDaysAgo!)
                 print("ThreeMonth : \(ThreeMonth)")
                 
-                Lfrom.text = formattedDateString
-                Lto.text   = ThreeMonth
+                Lfrom.text = ThreeMonth
+                Lto.text   = formattedDateString
                 
-                CellDateFrom = formattedDateString
-                CellDateTo   = ThreeMonth
+                CellDateFrom = ThreeMonth
+                CellDateTo   = formattedDateString
                 
                 
             } else {
@@ -402,11 +398,11 @@ extension MeasurementsDetailsVC : UITableViewDataSource , UITableViewDelegate , 
                 let sevenDaysAgoString = dateFormatter.string(from: sevenDaysAgo!)
                 print("sevenDaysAgoString : \(sevenDaysAgoString)")
                 
-                Lfrom.text = formattedDateString
-                Lto.text   = sevenDaysAgoString
+                Lfrom.text = sevenDaysAgoString
+                Lto.text   = formattedDateString
                 
-                CellDateFrom = formattedDateString
-                CellDateTo   = sevenDaysAgoString
+                CellDateFrom = sevenDaysAgoString
+                CellDateTo   = formattedDateString
                 
                 
             } else {
@@ -432,8 +428,8 @@ extension MeasurementsDetailsVC : UITableViewDataSource , UITableViewDelegate , 
             ViewModel.medicalMeasurementId = id
             ViewModel.maxResultCount       = 10
             ViewModel.skipCount            = 0
-            ViewModel.Parameters["dateFrom"] = Lfrom.text
-            ViewModel.Parameters["dateTo"]   = Lto.text
+            ViewModel.dateFrom = Lfrom.text
+            ViewModel.dateTo   = Lto.text
             getDataNormalRange()
         }
         
@@ -449,18 +445,16 @@ extension MeasurementsDetailsVC : UITableViewDataSource , UITableViewDelegate , 
             ViewModel.medicalMeasurementId = id
             ViewModel.maxResultCount       = 10
             ViewModel.skipCount            = 0
-            ViewModel.Parameters["dateFrom"] = Lfrom.text
-            ViewModel.Parameters["dateTo"]   = Lto.text
+            ViewModel.dateFrom = Lfrom.text
+            ViewModel.dateTo   = Lto.text
             getDataNormalRange()
         }
-        
         
     }
     
     func AddMeasurement() {
         ViewAddMeasurement.isHidden = false
     }
-    
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return ViewModel.ArrMeasurement?.measurements?.items?.count ?? 0  + 1
@@ -494,10 +488,8 @@ extension MeasurementsDetailsVC : UITableViewDataSource , UITableViewDelegate , 
                 cell.LaDateTo.isHidden = true
             }
             
-            
-            cell.LaNaturalFrom.text = "\(ViewModel.ArrNormalRange?.fromValue ?? "" ) من : "
-            cell.LaNaturalTo.text   = "\(ViewModel.ArrNormalRange?.toValue ?? "" ) الي : "
-            
+            cell.LaNaturalFrom.text = "من : \(ViewModel.ArrNormalRange?.fromValue ?? "" )"
+            cell.LaNaturalTo.text   = "الي : \(ViewModel.ArrNormalRange?.toValue ?? "" )"
             cell.LaNum.text = "\(num)"
             
             return cell
@@ -505,27 +497,25 @@ extension MeasurementsDetailsVC : UITableViewDataSource , UITableViewDelegate , 
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "MeasurementsDetailsTVCell", for: indexPath) as! MeasurementsDetailsTVCell
             
-            
-            let model = ViewModel.ArrMeasurement?.measurements?.items![indexPath.row]
-            
-            
-            cell.LaNum.text = model?.value
-            cell.LaDate.text = model?.date
-            
-            if model?.inNormalRang == true {
-                cell.ViewColor.backgroundColor = UIColor(named: "06AD2B")
-                cell.LaNum.textColor           = UIColor(named: "06AD2B")
-                cell.LaDescription.textColor = UIColor(named: "deactive")
-            } else {
-                cell.ViewColor.backgroundColor = UIColor(named: "EE2E3A")
-                cell.LaNum.textColor           = UIColor(named: "EE2E3A")
-                cell.LaDescription.textColor = UIColor(named: "main")
-            }
-            
-            if model?.comment == nil {
-                cell.LaDescription.text = "لا يوجد تعليق"
-            } else {
-                cell.LaDescription.text = model?.comment
+            if let model = ViewModel.ArrMeasurement?.measurements?.items?[indexPath.row] {
+                cell.LaNum.text = model.value
+                cell.LaDate.text = model.date
+                
+                if model.inNormalRang == true {
+                    cell.ViewColor.backgroundColor = UIColor(named: "06AD2B")
+                    cell.LaNum.textColor           = UIColor(named: "06AD2B")
+                    cell.LaDescription.textColor = UIColor(named: "deactive")
+                } else {
+                    cell.ViewColor.backgroundColor = UIColor(named: "EE2E3A")
+                    cell.LaNum.textColor           = UIColor(named: "EE2E3A")
+                    cell.LaDescription.textColor = UIColor(named: "main")
+                }
+                
+                if model.comment == nil {
+                    cell.LaDescription.text = "لا يوجد تعليق"
+                } else {
+                    cell.LaDescription.text = model.comment
+                }
             }
             
             return cell
