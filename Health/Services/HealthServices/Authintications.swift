@@ -26,6 +26,10 @@ enum Authintications {
     // -- med sched --
     case GetMySchedulePrescriptions(parameters:[String:Any])
     case GetMyScheduleDrugs(parameters:[String:Any])
+    
+    // -- inbody --
+    case GetCustomerInbody(parameters:[String:Any])
+    case CreateCustomerInboy(parameters:[String:Any])
 }
 
 extension Authintications : TargetType {
@@ -52,10 +56,19 @@ extension Authintications : TargetType {
             
         case .ChangePassword:
             return EndPoints.ChangePassword.rawValue
+            
+            // -- schedual --
         case .GetMySchedulePrescriptions:
             return EndPoints.GetMySchedulePrescriptions.rawValue
         case .GetMyScheduleDrugs:
             return EndPoints.GetMyScheduleDrugs.rawValue
+            
+            
+            // -- inbody --
+        case .GetCustomerInbody:
+            return EndPoints.GetCustomerInBody.rawValue
+        case .CreateCustomerInboy:
+            return EndPoints.CreateCustomerInBody.rawValue
         }
     }
     
@@ -67,7 +80,9 @@ extension Authintications : TargetType {
                 .VerifyOtp,
                 .ResetPassword,
                 .ChangePassword,
-                .GetMySchedulePrescriptions:
+                .GetMySchedulePrescriptions,
+                .GetCustomerInbody,
+                .CreateCustomerInboy:
             return .post
             
         case .GetDistricts,
@@ -85,7 +100,9 @@ extension Authintications : TargetType {
                 .SendOtp(parameters: let parameters),
                 .ResetPassword(parameters: let parameters),
                 .ChangePassword(parameters: let parameters),
-                .GetMySchedulePrescriptions(parameters: let parameters):
+                .GetMySchedulePrescriptions(parameters: let parameters),
+                .GetCustomerInbody(parameters: let parameters),
+                .CreateCustomerInboy(parameters: let parameters):
             return .parameterRequest(Parameters: parameters, Encoding: encoding)
             
         case .GetDistricts,

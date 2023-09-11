@@ -10,14 +10,15 @@ import UIKit
 class INBodyDetailsVC: UIViewController {
 
     @IBOutlet weak var TVScreen: UITableView!
-    
+    var SelectedinbodyitemModel : InbodyListItemM?
+    var viewModel = InbodyListVM()
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         TVScreen.dataSource = self
         TVScreen.delegate = self
         TVScreen.registerCellNib(cellClass: INBodyDetailsTVCell.self)
-        TVScreen.reloadData()
+//        TVScreen.reloadData()
         
 //        Show_View_Done(SuperView: self.view, load: true , Stringtitle: "تم تحميل التقرير بنجاح", imgName: "logo")
         

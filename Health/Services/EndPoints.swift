@@ -42,7 +42,12 @@ enum EndPoints: String {
     case MyMedicalMeasurements  = "CustomerMedicalMeasurement/GetMyMedicalMeasurements"
     case CreateMeasurement      = "CustomerMedicalMeasurement/Create"
 
-    //  -- MedicineSchedual -- 
+    //  -- MedicineSchedual --
     case GetMySchedulePrescriptions = "CustomerPrescription/GetMySchedulePrescriptions"
     case GetMyScheduleDrugs = "CustomerPrescriptionDrug/GetMyScheduleDrugs"
+    
+    // -- inbody --
+     case GetCustomerInBody = "CustomerInBodyTest/GetMyList"
+    case CreateCustomerInBody = "CustomerInBodyTest/Create"
+
 }

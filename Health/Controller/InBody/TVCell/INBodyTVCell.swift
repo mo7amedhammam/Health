@@ -16,6 +16,14 @@ class INBodyTVCell: UITableViewCell {
     
     @IBOutlet weak var LaDescription: UILabel!
     
+    var inbodyitemModel : InbodyListItemM? {
+        didSet{
+            guard let model = inbodyitemModel else {return}
+            LaTitle.text = model.customerName
+            LaDate.text = model.date
+            LaDescription.text = model.comment
+        }
+    }
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

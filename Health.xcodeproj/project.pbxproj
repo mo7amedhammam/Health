@@ -124,6 +124,8 @@
 		C8346E5A2AA5EEA800C3C3EE /* LoginM.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8346E592AA5EEA800C3C3EE /* LoginM.swift */; };
 		C8542D5A2AA8B3EC00ACE480 /* OtpM.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8542D592AA8B3EC00ACE480 /* OtpM.swift */; };
 		C8542D5C2AA8B42600ACE480 /* OtpVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8542D5B2AA8B42600ACE480 /* OtpVM.swift */; };
+		C85671BE2AAF5AD900E02D75 /* InbodyM.swift in Sources */ = {isa = PBXBuildFile; fileRef = C85671BD2AAF5AD900E02D75 /* InbodyM.swift */; };
+		C85671C02AAF5AEE00E02D75 /* InbodyVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = C85671BF2AAF5AEE00E02D75 /* InbodyVM.swift */; };
 		C85996752AA7553500533C87 /* HUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = C85996742AA7553500533C87 /* HUD.swift */; };
 		C85996772AA7556400533C87 /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = C85996762AA7556400533C87 /* Alert.swift */; };
 		C88995822AA9EDFE002AD812 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88995812AA9EDFE002AD812 /* Strings.swift */; };
@@ -281,6 +283,8 @@
 		C8346E592AA5EEA800C3C3EE /* LoginM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginM.swift; sourceTree = "<group>"; };
 		C8542D592AA8B3EC00ACE480 /* OtpM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtpM.swift; sourceTree = "<group>"; };
 		C8542D5B2AA8B42600ACE480 /* OtpVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtpVM.swift; sourceTree = "<group>"; };
+		C85671BD2AAF5AD900E02D75 /* InbodyM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InbodyM.swift; sourceTree = "<group>"; };
+		C85671BF2AAF5AEE00E02D75 /* InbodyVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InbodyVM.swift; sourceTree = "<group>"; };
 		C85996742AA7553500533C87 /* HUD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HUD.swift; sourceTree = "<group>"; };
 		C85996762AA7556400533C87 /* Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
 		C88995812AA9EDFE002AD812 /* Strings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
@@ -425,7 +429,7 @@
 		BB1B2FF12A7E9B2B001677FD /* VC */ = {
 			isa = PBXGroup;
 			children = (
-				BB1B2FF32A7E9B44001677FD /* INBodyVC.swift */,
+				C85671B92AAF5A9900E02D75 /* Inbody */,
 				BB1B2FFD2A7EA379001677FD /* INBodyDetailsVC.swift */,
 			);
 			path = VC;
@@ -866,6 +870,40 @@
 			isa = PBXGroup;
 			children = (
 				C8346E572AA5EE9C00C3C3EE /* LoginVM.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		C85671B92AAF5A9900E02D75 /* Inbody */ = {
+			isa = PBXGroup;
+			children = (
+				C85671BC2AAF5ABD00E02D75 /* ViewModel */,
+				C85671BB2AAF5ABA00E02D75 /* Model */,
+				C85671BA2AAF5AB200E02D75 /* View */,
+			);
+			path = Inbody;
+			sourceTree = "<group>";
+		};
+		C85671BA2AAF5AB200E02D75 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				BB1B2FF32A7E9B44001677FD /* INBodyVC.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		C85671BB2AAF5ABA00E02D75 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				C85671BD2AAF5AD900E02D75 /* InbodyM.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		C85671BC2AAF5ABD00E02D75 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				C85671BF2AAF5AEE00E02D75 /* InbodyVM.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -1320,6 +1358,7 @@
 				BBBD00262A7311E400F066DF /* ForgetPasswordVC.swift in Sources */,
 				BBBD000B2A73101700F066DF /* SalmanLocalize.swift in Sources */,
 				C8C7339A2AA6756B00185698 /* SignUpM.swift in Sources */,
+				C85671BE2AAF5AD900E02D75 /* InbodyM.swift in Sources */,
 				BBBD00172A73101700F066DF /* Helper.swift in Sources */,
 				BB518CEE2A9A129500242FAD /* TipsCategories3TVCell.swift in Sources */,
 				BBBD003F2A731B7B00F066DF /* SplashScreenTVCell3.swift in Sources */,
@@ -1373,6 +1412,7 @@
 				C80DA9E82AA4D33000F10808 /* RequestBuilder.swift in Sources */,
 				BBBD00212A73119500F066DF /* LoginVC.swift in Sources */,
 				C8542D5A2AA8B3EC00ACE480 /* OtpM.swift in Sources */,
+				C85671C02AAF5AEE00E02D75 /* InbodyVM.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
