@@ -96,7 +96,7 @@ class MeasurementsDetailsVC: UIViewController {
     
     
     @IBAction func BUBack(_ sender: Any) {
-//        self.dismiss(animated: true)
+        //        self.dismiss(animated: true)
         navigationController?.popViewController(animated: true)
     }
     
@@ -107,7 +107,7 @@ class MeasurementsDetailsVC: UIViewController {
     @IBAction func BUSelectDate(_ sender: Any) {
         
         PickerDate.minimumDate = nil
-        PickerDate.maximumDate = nil
+        PickerDate.maximumDate =  Date()
         
         selectDateFrom = "new"
         ViewSelectDate.isHidden = false
@@ -125,7 +125,7 @@ class MeasurementsDetailsVC: UIViewController {
             self.showAlert(message: "من فضلك أدخل التاريخ")
         } else {
             
-//            ViewModel.customerId           = Helper.getUser()?.id // they take it from token
+            //            ViewModel.customerId           = Helper.getUser()?.id // they take it from token
             ViewModel.medicalMeasurementId = id
             ViewModel.value                = TFNumMeasure.text
             ViewModel.comment              = TVDescription.text ?? ""
@@ -146,7 +146,6 @@ class MeasurementsDetailsVC: UIViewController {
 extension MeasurementsDetailsVC {
     
     func getDataNormalRange() {
-        
         ViewModel.GetMeasurementNormalRange { [self] state in
             guard let state = state else{
                 return
@@ -158,7 +157,6 @@ extension MeasurementsDetailsVC {
                 Hud.dismiss(from: self.view)
             case .success:
                 Hud.dismiss(from: self.view)
-                
                 getDataMeasurement()
                 print(state)
             case .error(_,let error):
@@ -172,9 +170,7 @@ extension MeasurementsDetailsVC {
     }
     
     func getDataMeasurement() {
-        
         ViewModel.ArrMeasurement = nil
-        
         ViewModel.GetMyMedicalMeasurements { [self] state in
             guard let state = state else{
                 return
@@ -186,9 +182,7 @@ extension MeasurementsDetailsVC {
                 Hud.dismiss(from: self.view)
             case .success:
                 Hud.dismiss(from: self.view)
-                
                 TVScreen.reloadData()
-                
                 print(state)
             case .error(_,let error):
                 Hud.dismiss(from: self.view)
@@ -238,7 +232,7 @@ extension MeasurementsDetailsVC : UITableViewDataSource , UITableViewDelegate , 
         
         if select == "from" {
             PickerDate.minimumDate = nil
-            PickerDate.maximumDate = nil
+            PickerDate.maximumDate = Date()
             
             ViewSelectDate.isHidden     = false
             selectDateFrom = "from"
@@ -258,8 +252,9 @@ extension MeasurementsDetailsVC : UITableViewDataSource , UITableViewDelegate , 
                 minDateComponent.year  = Int(stringA?.replacedArabicDigitsWithEnglish ?? "00")
                 let minDate = calendar.date(from: minDateComponent)
                 PickerDate.minimumDate    = minDate
-                PickerDate.maximumDate    = Calendar.current.date(byAdding: .year, value: 10, to: Date())
-                                
+//                PickerDate.maximumDate    = Calendar.current.date(byAdding: .year, value: 10, to: Date())
+                PickerDate.maximumDate    = Date()
+                
                 ViewSelectDate.isHidden     = false
                 selectDateFrom = "to"
             }
@@ -495,6 +490,7 @@ extension MeasurementsDetailsVC : UITableViewDataSource , UITableViewDelegate , 
             return cell
             
         } else {
+            
             let cell = tableView.dequeueReusableCell(withIdentifier: "MeasurementsDetailsTVCell", for: indexPath) as! MeasurementsDetailsTVCell
             
             if let model = ViewModel.ArrMeasurement?.measurements?.items?[indexPath.row] {
