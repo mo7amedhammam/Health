@@ -17,7 +17,17 @@ class INBodyDetailsTVCell: UITableViewCell {
     @IBOutlet weak var LaDescrip: UILabel!
 
     var delegae : INBodyDetailsTVCell_protocoal!
-    
+    var inbodyitemModel : InbodyListItemM? {
+        didSet{
+            guard let model = inbodyitemModel else {return}
+            LaTitle.text = model.customerName
+            if let date =  Helper.ChangeFormate(NewFormat: "yyyy-MM-dd'T'HH:mm:ss").date(from: model.date ?? ""){
+                LaTime.text = Helper.ChangeFormate(NewFormat: "dd/MM/yyyy hh:mm a").string(from: date )
+            }
+            LaDescrip.text = model.comment
+        }
+    }
+
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

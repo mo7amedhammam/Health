@@ -144,12 +144,15 @@ final class BaseNetwork{
 //      }
     
     // MARK: - (Completion handler) CAll API with promiseKit
-
-    static func uploadApi<T: TargetType, M: Codable>(
+     func uploadApi<T: TargetType, M: Codable>(
         _ target: T,
         _ Model: M.Type,
         completion: @escaping (Result<M, NetworkError>) -> Void
     ) {
+        guard Helper.isConnectedToNetwork() else{
+            completion(.failure(NetworkError.noConnection))
+            return
+        }
         let parameters = buildparameter(paramaters: target.parameter)
         let headers: HTTPHeaders? = Alamofire.HTTPHeaders(target.headers ?? [:])
         print(target.requestURL)
@@ -159,6 +162,7 @@ final class BaseNetwork{
         
         AF.upload(multipartFormData: { (multipartFormData) in
             for (key , value) in parameters.0 {
+
                 if let tempImg = value as? UIImage {
                     if let data = tempImg.jpegData(compressionQuality: 0.8), (tempImg.size.width ) > 0 {
                         // Be careful and put the file name in withName parameter
@@ -199,6 +203,28 @@ final class BaseNetwork{
         }
     }
 
+    static func downloadFile(
+        from sourceURL: URL,
+        to destinationURL: URL,
+        completion: @escaping (Result<Void, Error>) -> Void
+    ) {
+        let destination: DownloadRequest.Destination = { _, _ in
+               return (destinationURL, [.removePreviousFile, .createIntermediateDirectories])
+           }
+        AF.download(sourceURL, to: destination)
+            .downloadProgress { progress in
+                print("Download Progress: \(progress.fractionCompleted * 100)%")
+            }
+            .response { response in
+                switch response.result {
+                case .success:
+                    completion(.success(()))
+                case .failure(let error):
+                    completion(.failure(error))
+                }
+            }
+    }
+    
     }
 
 
