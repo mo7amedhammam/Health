@@ -49,5 +49,8 @@ enum EndPoints: String {
     // -- inbody --
      case GetCustomerInBody = "CustomerInBodyTest/GetMyList"
     case CreateCustomerInBody = "CustomerInBodyTest/Create"
+    
+    
+    case GetNotification = "CustomerPrescriptionDrug/GetCustomerNormalDrugs"
 
 }

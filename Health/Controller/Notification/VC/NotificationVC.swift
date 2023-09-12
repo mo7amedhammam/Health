@@ -29,6 +29,7 @@ class NotificationVC: UIViewController {
     let formatter = DateFormatter()
     let timePicker = UIDatePicker()
 
+    let ViewModel = NotificationVM()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,7 +53,11 @@ class NotificationVC: UIViewController {
         TVScreen.dataSource = self
         TVScreen.delegate = self
         TVScreen.registerCellNib(cellClass: NotificationTVCell.self)
-        TVScreen.reloadData()
+//        TVScreen.reloadData()        
+        ViewModel.maxResultCount = 10
+        ViewModel.skipCount  = 0
+        ViewModel.customerId =  Helper.getUser()?.id // they take it from token
+        getNotifications()
         
     }
     
@@ -176,17 +181,52 @@ class NotificationVC: UIViewController {
     
 }
 
+extension NotificationVC {
+    
+    
+    func getNotifications() {
+        
+        ViewModel.GetNotifications { [self] state in
+            guard let state = state else{
+                return
+            }
+            switch state {
+            case .loading:
+                Hud.showHud(in: self.view)
+            case .stopLoading:
+                Hud.dismiss(from: self.view)
+            case .success:
+                Hud.dismiss(from: self.view)
+                TVScreen.reloadData()
+                print(state)
+            case .error(_,let error):
+                Hud.dismiss(from: self.view)
+                SimpleAlert.shared.showAlert(title:error ?? "",message:"", viewController: self)
+                print(error ?? "")
+            case .none:
+                print("")
+            }
+        }
+    }
+    
+    
+}
+
+
 extension NotificationVC : UITableViewDataSource , UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return ViewModel.ArrNotifications?.items?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "NotificationTVCell", for: indexPath) as! NotificationTVCell
         
-        if indexPath.row % 2 == 0 {
+        let model = ViewModel.ArrNotifications?.items![indexPath.row]
+
+        
+        if model?.notification == true {
             
             cell.ViewColor.backgroundColor = UIColor(named: "main")
             cell.View1.backgroundColor = UIColor(named: "secondary")
@@ -212,7 +252,8 @@ extension NotificationVC : UITableViewDataSource , UITableViewDelegate {
             cell.LLocStartDate.textColor = .white
             cell.LLocEndDate.textColor = .white
             cell.LLocPeriod.textColor = .white
-            
+            cell.LaStatus.text = "فعّال"
+
             
         } else {
             
@@ -241,8 +282,19 @@ extension NotificationVC : UITableViewDataSource , UITableViewDelegate {
             cell.LLocEndDate.textColor = UIColor(named: "wrong")
             cell.LLocPeriod.textColor = UIColor(named: "wrong")
             
+            cell.LaStatus.text = "مُنتهي"
+
         }
         
+        cell.LaClock.text = model?.doseTimeTitle
+        cell.LaTitle.text = model?.drugTitle
+        cell.LaEvery.text = model?.doseQuantityTitle
+        cell.LaClock.text = "\(model?.count ?? 0)"
+
+        cell.LaPeriod.text = "\(model?.doseQuantityValue ?? 0 ) \(model?.doseTimeTitle ?? "" )"
+        cell.LaStartDate.text = model?.startDate
+        cell.LaEndDate.text = model?.endDate
+
         return cell
     }
     
