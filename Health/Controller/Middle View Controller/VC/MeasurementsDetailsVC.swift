@@ -186,9 +186,9 @@ extension MeasurementsDetailsVC {
                 Hud.dismiss(from: self.view)
             case .success:
                 Hud.dismiss(from: self.view)
-                
-                TVScreen.reloadData()
-                
+                if ViewModel.ArrMeasurement?.measurements?.items != [] {
+                    TVScreen.reloadData()
+                }
                 print(state)
             case .error(_,let error):
                 Hud.dismiss(from: self.view)

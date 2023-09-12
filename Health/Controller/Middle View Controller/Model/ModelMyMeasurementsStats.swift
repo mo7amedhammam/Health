@@ -41,7 +41,7 @@ struct Measurements: Codable {
 }
 
 // MARK: - Item
-struct Item: Codable {
+struct Item: Codable,Equatable {
     var inNormalRang: Bool?
     var id: Int?
     var date: String?
