@@ -130,17 +130,17 @@ extension INBodyVC{
             ViewModel.TestImage = image
 
         case .Pdf:
-            ViewModel.TestPdf = image
+            ViewModel.TestPdf = pdfURL
 
         }
         ViewModel.Date = Helper.ChangeFormate(NewFormat: "yyyy-MM-dd'T'HH:mm:ss").string(from: Date())
         ViewModel.AddCustomerInbodyReport(fileType:filetype,progressHandler: { progress in
 //            DispatchQueue.main.async {
                 //                self.handleProgress(progress: progress)
-                let progressText = String(format: "%.0f%%", progress * 100)
+                let progressText = String(format: "Uploading: %.0f%%", progress * 100)
                 if progress > 0{
-//                    let hud = Hud()
-//                    Hud.showHud(in: self.view,text: "Uploading...\(progressText)")
+//                    Hud.showHud(in: self.view,text: "")
+                    Hud.updateProgress(progressText)
                 }else{
                     Hud.dismiss(from: self.view)
                 }
@@ -151,7 +151,7 @@ extension INBodyVC{
             }
             switch state {
             case .loading:
-                Hud.showHud(in: self.view,text: "Uploading...")
+                Hud.showHud(in: self.view,text: "")
 //                print("Uploading...")
             case .stopLoading:
                 Hud.dismiss(from: self.view)

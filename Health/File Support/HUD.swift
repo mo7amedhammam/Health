@@ -30,6 +30,10 @@ class Hud: NSObject {
             view.addSubview(label)
         }
     }
+    class func updateProgress(_ newtext: String) {
+           label.text = newtext
+       }
+
 
     class func dismiss(from view: UIView) {
         view.isUserInteractionEnabled = true

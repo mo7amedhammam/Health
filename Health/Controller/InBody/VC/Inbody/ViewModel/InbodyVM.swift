@@ -18,7 +18,7 @@ class InbodyListVM {
     
     // -- Add Record --
     var TestImage:UIImage?
-    var TestPdf:UIImage?
+    var TestPdf:URL?
     var Date:String?
     var CustomerId : Int? = Helper.getUser()?.id // required
     var addresponseModel: InbodyListItemM? = InbodyListItemM()
