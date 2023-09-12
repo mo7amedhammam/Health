@@ -40,14 +40,13 @@ extension INBodyDetailsVC : UITableViewDataSource , UITableViewDelegate , INBody
     func DownloadReport() {
         let downloadURL = URL(string: Constants.baseURL + (SelectedinbodyitemModel?.testFile ?? ""))!
         var urlextension = ""
-        let downloadURLString = SelectedinbodyitemModel?.testFile ?? ""
-        if let downloadURL = URL(string: downloadURLString) {
+        if let downloadURLString = SelectedinbodyitemModel?.testFile {
             if let lastDotIndex = downloadURLString.lastIndex(of: ".") {
                 let extensionSubstring = downloadURLString.suffix(from: downloadURLString.index(after: lastDotIndex))
-                 urlextension = "." + extensionSubstring
-//                print(extensionWithDot)
+                urlextension = "." + extensionSubstring
             }
         }
+        
         let destinationURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!.appendingPathComponent("downloadedFile\(urlextension)")
 
         print("downloadURL :",downloadURL)
