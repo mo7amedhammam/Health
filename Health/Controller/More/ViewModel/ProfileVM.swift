@@ -9,7 +9,7 @@ import Foundation
 
 class ProfileVM {
     
-    var responseModel: LoginM? = LoginM()
+    var responseModel: ProfileM? = ProfileM()
     
     init(){
         responseModel?.name = Helper.getUser()?.name
@@ -25,7 +25,7 @@ extension ProfileVM{
         let target = Authintications.GetMyProfile
         
         // Make the API call using your APIManager or networking code
-        BaseNetwork.callApi(target, BaseResponse<LoginM>.self) {[weak self] result in
+        BaseNetwork.callApi(target, BaseResponse<ProfileM>.self) {[weak self] result in
             // Handle the API response here
             switch result {
             case .success(let response):
@@ -37,7 +37,6 @@ extension ProfileVM{
                     return
                 }
                 self?.responseModel = response.data
-                Helper.saveUser(user: response.data ?? LoginM())
                 completion(.success)
             case .failure(let error):
                 // Handle the error

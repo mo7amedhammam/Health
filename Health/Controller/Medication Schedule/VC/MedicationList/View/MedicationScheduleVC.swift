@@ -19,11 +19,12 @@ class MedicationScheduleVC: UIViewController {
         TVScreen.dataSource = self
         TVScreen.delegate = self
         TVScreen.registerCellNib(cellClass: MedicationScheduleTVCell.self)
+        GetMedicationSchedule()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        GetMedicationSchedule()
+//        GetMedicationSchedule()
     }
 //    @IBAction func BUBack(_ sender: Any) {
 //        self.dismiss(animated: true)

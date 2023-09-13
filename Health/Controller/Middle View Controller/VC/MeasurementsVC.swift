@@ -29,7 +29,6 @@ class MeasurementsVC: UIViewController {
         layout.minimumInteritemSpacing = 0
         CollectionScreen.setCollectionViewLayout(layout, animated: true)
 //        CollectionScreen.reloadData()
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -39,11 +38,9 @@ class MeasurementsVC: UIViewController {
         }
     }
     
-    
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
-        
     
 }
 
