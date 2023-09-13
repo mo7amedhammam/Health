@@ -31,11 +31,13 @@ class INBodyVC: UIViewController {
         // Initialize ImagePickerHelper here
         imagePickerHelper = ImagePickerHelper(viewController: self)
         pdfPickerHelper = PDFPickerHelper(viewController: self)
+
+        GetCustomerInbodyList()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        GetCustomerInbodyList()
+//        GetCustomerInbodyList()
     }
     
     @IBAction func BUBack(_ sender: Any) {
@@ -77,17 +79,17 @@ extension INBodyVC : UITableViewDataSource , UITableViewDelegate {
         vc.modalPresentationStyle = .fullScreen
         self.present(vc, animated: false, completion: nil)
     }
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        // Check if the last visible cell is close to the end of the table view
     
-        let lastVisibleIndexPath = tableView.indexPathsForVisibleRows?.last
-        guard let modelarr = ViewModel.responseModel?.items else {return}
-        if let lastVisibleCell = lastVisibleIndexPath, lastVisibleCell.row == modelarr.count - 1 {
-            if modelarr.count > 0  {
-                    self.loadNextPage()
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if indexPath.row == (ViewModel.responseModel?.items?.count ?? 0) - 1 {
+            // Check if the last cell is about to be displayed
+            if let totalCount = ViewModel.responseModel?.totalCount, let itemsCount = ViewModel.responseModel?.items?.count, itemsCount < totalCount, ViewModel.cansearch {
+                // Load the next page if there are more items to fetch
+                loadNextPage()
             }
         }
     }
+    
     func loadNextPage(){
         guard (ViewModel.responseModel?.totalCount ?? 0) > (ViewModel.responseModel?.items?.count ?? 0) , ViewModel.cansearch == true else {return}
         ViewModel.skipCount = ViewModel.responseModel?.items?.count
@@ -135,16 +137,12 @@ extension INBodyVC{
         }
         ViewModel.Date = Helper.ChangeFormate(NewFormat: "yyyy-MM-dd'T'HH:mm:ss").string(from: Date())
         ViewModel.AddCustomerInbodyReport(fileType:filetype,progressHandler: { progress in
-//            DispatchQueue.main.async {
-                //                self.handleProgress(progress: progress)
                 let progressText = String(format: "%.0f%%", progress * 100)
                 if progress > 0{
-//                    Hud.showHud(in: self.view,text: "")
                     Hud.updateProgress(progressText)
                 }else{
                     Hud.dismiss(from: self.view)
                 }
-//            }
         }){[self] state in
             guard let state = state else{
                 return
@@ -152,7 +150,6 @@ extension INBodyVC{
             switch state {
             case .loading:
                 Hud.showHud(in: self.view,text: "")
-//                print("Uploading...")
             case .stopLoading:
                 Hud.dismiss(from: self.view)
             case .success:

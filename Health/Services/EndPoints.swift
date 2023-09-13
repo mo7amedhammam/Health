@@ -53,4 +53,7 @@ enum EndPoints: String {
     
     case GetNotification = "CustomerPrescriptionDrug/GetCustomerNormalDrugs"
 
+    
+    case GetMyProfile = "Customer/MyProfile"
+
 }

@@ -30,6 +30,10 @@ enum Authintications {
     // -- inbody --
     case GetCustomerInbody(parameters:[String:Any])
     case CreateCustomerInboy(parameters:[String:Any])
+    
+    // -- profile --
+    case GetMyProfile
+
 }
 
 extension Authintications : TargetType {
@@ -69,6 +73,8 @@ extension Authintications : TargetType {
             return EndPoints.GetCustomerInBody.rawValue
         case .CreateCustomerInboy:
             return EndPoints.CreateCustomerInBody.rawValue
+        case .GetMyProfile:
+            return EndPoints.GetMyProfile.rawValue
         }
     }
     
@@ -87,7 +93,8 @@ extension Authintications : TargetType {
             
         case .GetDistricts,
                 .GetGenders,
-                .GetMyScheduleDrugs:
+                .GetMyScheduleDrugs,
+                .GetMyProfile:
             return .get
     }
     }
@@ -104,12 +111,14 @@ extension Authintications : TargetType {
                 .GetCustomerInbody(parameters: let parameters),
                 .CreateCustomerInboy(parameters: let parameters):
             return .parameterRequest(Parameters: parameters, Encoding: encoding)
-            
-        case .GetDistricts,
-                .GetGenders:
-            return .plainRequest
+
         case .GetMyScheduleDrugs(parameters: let parameters):
             return .BodyparameterRequest(Parameters: parameters, Encoding: encoding)
+            
+        case .GetDistricts,
+                .GetGenders,
+                .GetMyProfile:
+            return .plainRequest
         }
     }
     

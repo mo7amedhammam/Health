@@ -165,7 +165,9 @@ final class BaseNetwork{
             for (key , value) in parameters.0 {
                 
                 if let tempImg = value as? UIImage {
-                    if let data = tempImg.jpegData(compressionQuality: 0.8), (tempImg.size.width ) > 0 {
+                    if let data = tempImg.jpegData(compressionQuality: 0.9), (tempImg.size.width ) > 0 {
+
+//                    if let data = tempImg.pngData(), (tempImg.size.width ) > 0 {
                         // Be careful and put the file name in withName parameter
                         multipartFormData.append(data, withName: key , fileName: "file.jpeg", mimeType: "image/jpeg")
                     }
@@ -193,12 +195,6 @@ final class BaseNetwork{
                     }
                 }
             }
-            
-            //            for (key, value) in parameters.0 {
-            //                       if let data = "\(value)".data(using: .utf8) {
-            //                           multipartFormData.append(data, withName: key)
-            //                       }
-            //                   }
         },
                   to: target.requestURL,
                   method: target.method,
@@ -207,6 +203,7 @@ final class BaseNetwork{
         .uploadProgress { progress in
             let completedProgress = progress.fractionCompleted
             progressHandler(completedProgress)
+            print("progress: %.0f%% \(completedProgress)")
         }
         .responseDecodable(of: M.self, decoder: JSONDecoder()) { response in
             print(response)

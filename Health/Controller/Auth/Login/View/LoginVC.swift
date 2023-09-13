@@ -130,6 +130,7 @@ extension LoginVC{
     func GoHome(){
         Helper.saveUser(user: loginViewModel.usermodel ?? LoginM())
         guard let vc = initiateViewController(storyboardName: .main, viewControllerIdentifier: HTBC.self)else{return}
+        vc.navigationController?.navigationBar.isHidden = true
                 navigationController?.pushViewController(vc, animated: true)
     }
     
