@@ -36,8 +36,23 @@ class INBodyDetailsVC: UIViewController {
 
 
 extension INBodyDetailsVC : UITableViewDataSource , UITableViewDelegate , INBodyDetailsTVCell_protocoal {
-        
-    func DownloadReport() {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "INBodyDetailsTVCell", for: indexPath) as! INBodyDetailsTVCell
+        cell.inbodyitemModel = SelectedinbodyitemModel
+        cell.delegae = self
+        return cell
+    }
+    
+}
+
+extension INBodyDetailsVC{
+    
+    func DownloadReport(){
         let downloadURL = URL(string: Constants.baseURL + (SelectedinbodyitemModel?.testFile ?? ""))!
         var urlextension = ""
         if let downloadURLString = SelectedinbodyitemModel?.testFile {
@@ -48,37 +63,30 @@ extension INBodyDetailsVC : UITableViewDataSource , UITableViewDelegate , INBody
         }
         
         let destinationURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!.appendingPathComponent("downloadedFile\(urlextension)")
-
         print("downloadURL :",downloadURL)
-        BaseNetwork.downloadFile(from: downloadURL, to: destinationURL) { [self] result in
+        
+        Hud.showHud(in: self.view,text: "")
+        BaseNetwork.downloadFile(from: downloadURL, to: destinationURL,progressHandler: { progress in
+            let progressText = String(format: "%.0f%%", progress * 100)
+            if progress > 0{
+                Hud.updateProgress(progressText)
+            }else{
+                Hud.dismiss(from: self.view)
+            }
+        }){ [self] result in
+            Hud.dismiss(from: self.view)
             switch result {
             case .success:
                 print("Download successful. File saved at \(destinationURL)")
                 InbodyDownloaded()
-
+                
             case .failure(let error):
                 print("Download failed with error: \(error.localizedDescription)")
+                SimpleAlert.shared.showAlert(title:error.localizedDescription,message:"", viewController: self)
             }
         }
-//        InbodyDownloaded()
-        
     }
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        let cell = tableView.dequeueReusableCell(withIdentifier: "INBodyDetailsTVCell", for: indexPath) as! INBodyDetailsTVCell
-        cell.inbodyitemModel = SelectedinbodyitemModel
-        cell.delegae = self
-        return cell
-    }
-    
-}
-
-extension INBodyDetailsVC{
     func InbodyDownloaded()  {
         if let viewDone:ViewDone = showView(fromNib: ViewDone.self, in: self) {
             viewDone.title = "تم تحمل التقرير بنجاح"

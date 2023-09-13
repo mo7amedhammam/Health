@@ -137,7 +137,7 @@ extension INBodyVC{
         ViewModel.AddCustomerInbodyReport(fileType:filetype,progressHandler: { progress in
 //            DispatchQueue.main.async {
                 //                self.handleProgress(progress: progress)
-                let progressText = String(format: "Uploading: %.0f%%", progress * 100)
+                let progressText = String(format: "%.0f%%", progress * 100)
                 if progress > 0{
 //                    Hud.showHud(in: self.view,text: "")
                     Hud.updateProgress(progressText)
@@ -169,8 +169,8 @@ extension INBodyVC{
             }
         }
     }
-        
-                                          
+             
+    //choose type -> image or pdf
     func chooseFileType(){
         let alertController = UIAlertController(title: "اختر نوع الملف", message: "من فضلك حدد نوع الملف الذي سيتم اضافتة", preferredStyle: .actionSheet)
         let imgButtom = UIAlertAction(title: "صوره", style: .default,handler: { [self](action)->Void in
@@ -190,6 +190,7 @@ extension INBodyVC{
         self.navigationController?.present(alertController, animated: true)
     }
     
+    // if image will be from gallery of camera
     func showImagePickerMenue(){
         imagePickerHelper?.showImagePicker { [weak self] receivedImage in
             if let image = receivedImage {
@@ -201,6 +202,8 @@ extension INBodyVC{
             }
         }
     }
+ 
+    // if pdf -> open document picker to select file
     func addPdfDocument(){
         pdfPickerHelper?.showPDFPicker{ pickedPDFURL in
             if let pdfURL = pickedPDFURL {
