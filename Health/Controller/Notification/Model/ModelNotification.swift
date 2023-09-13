@@ -8,23 +8,23 @@
 import Foundation
 
 struct ModelNotification: Codable {
-    let items: [ItemNoti]?
-    let totalCount: Int?
+    var items: [ItemNoti]?
+    var totalCount: Int?
 }
 
 // MARK: - Item
 struct ItemNoti: Codable {
-    let drugID, doseTimeID, count: Int?
-    let startDate: String?
-    let days: Int?
-    let endDate: String?
-    let doseQuantityID: Int?
-    let pharmacistComment: String?
-    let notification: Bool?
-    let id, customerPrescriptionID: Int?
-    let doseTimeTitle, doseQuantityTitle: String?
-    let doseQuantityValue: Int?
-    let drugTitle: String?
+    var drugID, doseTimeID, count: Int?
+    var startDate: String?
+    var days: Int?
+    var endDate: String?
+    var doseQuantityID: Int?
+    var pharmacistComment: String?
+    var notification: Bool?
+    var id, customerPrescriptionID: Int?
+    var doseTimeTitle, doseQuantityTitle: String?
+    var doseQuantityValue: Int?
+    var drugTitle: String?
 
     enum CodingKeys: String, CodingKey {
         case drugID = "drugId"

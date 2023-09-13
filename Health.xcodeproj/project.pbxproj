@@ -138,6 +138,8 @@
 		C889958A2AA9F770002AD812 /* ForgetPasswordVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88995892AA9F770002AD812 /* ForgetPasswordVM.swift */; };
 		C88995902AAA02A2002AD812 /* ChangePasswordM.swift in Sources */ = {isa = PBXBuildFile; fileRef = C889958F2AAA02A2002AD812 /* ChangePasswordM.swift */; };
 		C88995922AAA02BE002AD812 /* ChangePasswordVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88995912AAA02BE002AD812 /* ChangePasswordVM.swift */; };
+		C8A1509B2AB1C62A00511B1F /* ProfileM.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8A1509A2AB1C62A00511B1F /* ProfileM.swift */; };
+		C8A1509D2AB1C63500511B1F /* ProfileVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8A1509C2AB1C63500511B1F /* ProfileVM.swift */; };
 		C8C7339A2AA6756B00185698 /* SignUpM.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C733992AA6756B00185698 /* SignUpM.swift */; };
 		C8C7339C2AA6757800185698 /* SignUpVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C7339B2AA6757800185698 /* SignUpVM.swift */; };
 		D8F01CB9807BCED647F0DF67 /* Pods_Health_HealthUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D4F58DCAA0D2C4B6098F3C6 /* Pods_Health_HealthUITests.framework */; };
@@ -302,6 +304,8 @@
 		C88995892AA9F770002AD812 /* ForgetPasswordVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgetPasswordVM.swift; sourceTree = "<group>"; };
 		C889958F2AAA02A2002AD812 /* ChangePasswordM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordM.swift; sourceTree = "<group>"; };
 		C88995912AAA02BE002AD812 /* ChangePasswordVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordVM.swift; sourceTree = "<group>"; };
+		C8A1509A2AB1C62A00511B1F /* ProfileM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileM.swift; sourceTree = "<group>"; };
+		C8A1509C2AB1C63500511B1F /* ProfileVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVM.swift; sourceTree = "<group>"; };
 		C8C733992AA6756B00185698 /* SignUpM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpM.swift; sourceTree = "<group>"; };
 		C8C7339B2AA6757800185698 /* SignUpVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpVM.swift; sourceTree = "<group>"; };
 		F37B91FD984B0C39EEA6833D /* Pods-Health-HealthUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Health-HealthUITests.release.xcconfig"; path = "Target Support Files/Pods-Health-HealthUITests/Pods-Health-HealthUITests.release.xcconfig"; sourceTree = "<group>"; };
@@ -372,6 +376,8 @@
 		BB14DAE42A7B027E00389B96 /* More */ = {
 			isa = PBXGroup;
 			children = (
+				C8A150992AB1C60800511B1F /* ViewModel */,
+				C8A150982AB1C5C800511B1F /* Model */,
 				BB14DAE82A7B03F400389B96 /* TVCell */,
 				BB14DAE52A7B028D00389B96 /* VC */,
 			);
@@ -1007,6 +1013,22 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
+		C8A150982AB1C5C800511B1F /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				C8A1509A2AB1C62A00511B1F /* ProfileM.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		C8A150992AB1C60800511B1F /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				C8A1509C2AB1C63500511B1F /* ProfileVM.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 		C8C733952AA6752700185698 /* CreateProfile */ = {
 			isa = PBXGroup;
 			children = (
@@ -1361,11 +1383,13 @@
 				BBBD001C2A73101700F066DF /* Shared.swift in Sources */,
 				BB518CE62A9A123200242FAD /* TipsCategoriesCVCell1.swift in Sources */,
 				BB14DAE32A7AFA0700389B96 /* MeasurementsVC.swift in Sources */,
+				C8A1509D2AB1C63500511B1F /* ProfileVM.swift in Sources */,
 				BBA1DA142AB11C020042713A /* ModelNotification.swift in Sources */,
 				BBBD003B2A731B6C00F066DF /* SplashScreenTVCell2.swift in Sources */,
 				BB518CE22A9A122400242FAD /* TipsCategoriesCVCell0.swift in Sources */,
 				BBA1DA182AB11E5C0042713A /* NotificationVM.swift in Sources */,
 				BBC7B45B2A72CC820079355E /* AppDelegate.swift in Sources */,
+				C8A1509B2AB1C62A00511B1F /* ProfileM.swift in Sources */,
 				BBD2B03A2AAA84D500C0A807 /* ModelMyMeasurementsStats.swift in Sources */,
 				C8346E5A2AA5EEA800C3C3EE /* LoginM.swift in Sources */,
 				C88995922AAA02BE002AD812 /* ChangePasswordVM.swift in Sources */,

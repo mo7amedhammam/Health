@@ -19,11 +19,12 @@ class MedicationScheduleVC: UIViewController {
         TVScreen.dataSource = self
         TVScreen.delegate = self
         TVScreen.registerCellNib(cellClass: MedicationScheduleTVCell.self)
+        GetMedicationSchedule()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        GetMedicationSchedule()
+//        GetMedicationSchedule()
     }
 //    @IBAction func BUBack(_ sender: Any) {
 //        self.dismiss(animated: true)
@@ -62,18 +63,15 @@ extension MedicationScheduleVC : UITableViewDataSource , UITableViewDelegate {
     }
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         // Check if the last visible cell is close to the end of the table view
-    
-        let lastVisibleIndexPath = tableView.indexPathsForVisibleRows?.last
-        guard let modelarr = ViewModel.responseModel?.items else {return}
-        if let lastVisibleCell = lastVisibleIndexPath, lastVisibleCell.row == modelarr.count - 1 {
-            if modelarr.count > 0  {
-                    self.loadNextPage()
+        guard let model = ViewModel.responseModel else {return}
+            if indexPath.row == (model.items?.count ?? 0) - 1 {
+                if let totalCount = model.totalCount, let itemsCount = model.items?.count, itemsCount < totalCount{
+                    self.loadNextPage(itemsCount)
             }
         }
     }
-    func loadNextPage(){
-        guard (ViewModel.responseModel?.totalCount ?? 0) > (ViewModel.responseModel?.items?.count ?? 0) , ViewModel.cansearch == true else {return}
-        ViewModel.skipCount = ViewModel.responseModel?.items?.count
+    func loadNextPage(_ skipCount:Int){
+        ViewModel.skipCount = skipCount
         GetMedicationSchedule()
     }
 

@@ -224,8 +224,6 @@ extension NotificationVC : UITableViewDataSource , UITableViewDelegate {
         let cell = tableView.dequeueReusableCell(withIdentifier: "NotificationTVCell", for: indexPath) as! NotificationTVCell
         
         let model = ViewModel.ArrNotifications?.items![indexPath.row]
-
-        
         if model?.notification == true {
             
             cell.ViewColor.backgroundColor = UIColor(named: "main")
@@ -298,4 +296,18 @@ extension NotificationVC : UITableViewDataSource , UITableViewDelegate {
         return cell
     }
     
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        guard let model = ViewModel.ArrNotifications else{return}
+        if indexPath.row == (model.items?.count ?? 0) - 1 {
+            // Check if the last cell is about to be displayed
+            if let totalCount = model.totalCount, let itemsCount = model.items?.count, itemsCount < totalCount {
+                loadNextPage(itemsCount)
+            }
+        }
+    }
+    
+    func loadNextPage(_ skipCount:Int){
+        ViewModel.skipCount = skipCount
+        getNotifications()
+    }
 }

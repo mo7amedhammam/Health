@@ -27,33 +27,33 @@ final class BaseNetwork{
     static let shared = BaseNetwork()
     
     // MARK: - (Combine) CAll API with promiseKit
-//    static func CallApi<T: TargetType,M:Codable>(_ target: T,_ Model:M.Type) -> AnyPublisher<M, NetworkError> {
-//          return Future<M, NetworkError>{ promise in
-//              let parameters = buildparameter(paramaters: target.parameter)
-//              let headers: HTTPHeaders? = Alamofire.HTTPHeaders(target.headers ?? [:])
-//              print(target.requestURL)
-//              print(target.method)
-//              print(parameters)
-//              print(headers ?? [:])
-//              AF.request(target.requestURL,method: target.method ,parameters:parameters.0,encoding:parameters.1,headers:headers)
-//                  .responseDecodable(of: M.self, decoder: JSONDecoder()){ response in
-////                      print(response)
-////                      print(response.response?.statusCode)
-//                     if response.response?.statusCode == 401{
-//                          promise(.failure(.unauthorized(code: response.response?.statusCode ?? 0, error: NetworkError.expiredTokenMsg.errorDescription ?? "")))
-//                      }else{
-//                          switch response.result {
-//                          case .success(let model):
-//                              promise(.success(model))
-//                          case .failure(let error):
-////                              print(error.localizedDescription)
-//                              promise(.failure(.unknown(code: 0, error: error.localizedDescription)))
-//                          }
-//                      }
-//                  }
-//
-//          }.eraseToAnyPublisher()
-//      }
+    //    static func CallApi<T: TargetType,M:Codable>(_ target: T,_ Model:M.Type) -> AnyPublisher<M, NetworkError> {
+    //          return Future<M, NetworkError>{ promise in
+    //              let parameters = buildparameter(paramaters: target.parameter)
+    //              let headers: HTTPHeaders? = Alamofire.HTTPHeaders(target.headers ?? [:])
+    //              print(target.requestURL)
+    //              print(target.method)
+    //              print(parameters)
+    //              print(headers ?? [:])
+    //              AF.request(target.requestURL,method: target.method ,parameters:parameters.0,encoding:parameters.1,headers:headers)
+    //                  .responseDecodable(of: M.self, decoder: JSONDecoder()){ response in
+    ////                      print(response)
+    ////                      print(response.response?.statusCode)
+    //                     if response.response?.statusCode == 401{
+    //                          promise(.failure(.unauthorized(code: response.response?.statusCode ?? 0, error: NetworkError.expiredTokenMsg.errorDescription ?? "")))
+    //                      }else{
+    //                          switch response.result {
+    //                          case .success(let model):
+    //                              promise(.success(model))
+    //                          case .failure(let error):
+    ////                              print(error.localizedDescription)
+    //                              promise(.failure(.unknown(code: 0, error: error.localizedDescription)))
+    //                          }
+    //                      }
+    //                  }
+    //
+    //          }.eraseToAnyPublisher()
+    //      }
     
     static func callApi<T: TargetType, M: Codable>(
         _ target: T,
@@ -86,62 +86,62 @@ final class BaseNetwork{
                 }
             }
     }
-
+    
     
     // MARK: - (Combine) CAll API with promiseKit
-//    static func uploadApi<T: TargetType,M:Codable>(_ target: T,_ Model:M.Type) -> AnyPublisher<M, NetworkError> {
-//          return Future<M, NetworkError>{ promise in
-//              let parameters = buildparameter(paramaters: target.parameter)
-//              let headers: HTTPHeaders? = Alamofire.HTTPHeaders(target.headers ?? [:])
-//              print(target.requestURL)
-//              print(target.method)
-//              print(parameters)
-//              print(headers ?? [:])
-//              AF.upload(multipartFormData: { (multipartFormData) in
-//                  for (key , value) in parameters.0{
-//                      if let tempImg = value as? UIImage{
-//                          if let data = tempImg.jpegData(compressionQuality: 0.8), (tempImg.size.width ) > 0 {
-//                                  //be carefull and put file name in withName parmeter
-//                                  multipartFormData.append(data, withName: key , fileName: "file.jpeg", mimeType: "image/jpeg")
-//                              }
-//                      }
-//
-//                      if let tempStr = value as? String {
-//                          multipartFormData.append(tempStr.data(using: .utf8)!, withName: key)
-//                      }
-//                      if let tempInt = value as? Int {
-//                          multipartFormData.append("\(tempInt)".data(using: .utf8)!, withName: key)
-//                      }
-//                      if let tempArr = value as? NSArray{
-//                          tempArr.forEach({ element in
-//                              let keyObj = key + "[]"
-//                              if let string = element as? String {
-//                                  multipartFormData.append(string.data(using: .utf8)!, withName: keyObj)
-//                              } else
-//                              if let num = element as? Int {
-//                                  let value = "\(num)"
-//                                  multipartFormData.append(value.data(using: .utf8)!, withName: keyObj)
-//                              }
-//                          })
-//                      }
-//                  }
-//              },
-//                        to: target.requestURL,
-//                        method: target.method,
-//                        headers: headers
-//              )
-//                  .responseDecodable(of: M.self, decoder: JSONDecoder()){ response in
-//                      print(response)
-//                      switch response.result {
-//                      case .success(let model):
-//                          promise(.success(model))
-//                      case .failure(let error):
-//                          promise(.failure(.unknown(code: 0, error: error.localizedDescription)))
-//                      }
-//                  }
-//
-//          }.eraseToAnyPublisher()
-//      }
+    //    static func uploadApi<T: TargetType,M:Codable>(_ target: T,_ Model:M.Type) -> AnyPublisher<M, NetworkError> {
+    //          return Future<M, NetworkError>{ promise in
+    //              let parameters = buildparameter(paramaters: target.parameter)
+    //              let headers: HTTPHeaders? = Alamofire.HTTPHeaders(target.headers ?? [:])
+    //              print(target.requestURL)
+    //              print(target.method)
+    //              print(parameters)
+    //              print(headers ?? [:])
+    //              AF.upload(multipartFormData: { (multipartFormData) in
+    //                  for (key , value) in parameters.0{
+    //                      if let tempImg = value as? UIImage{
+    //                          if let data = tempImg.jpegData(compressionQuality: 0.8), (tempImg.size.width ) > 0 {
+    //                                  //be carefull and put file name in withName parmeter
+    //                                  multipartFormData.append(data, withName: key , fileName: "file.jpeg", mimeType: "image/jpeg")
+    //                              }
+    //                      }
+    //
+    //                      if let tempStr = value as? String {
+    //                          multipartFormData.append(tempStr.data(using: .utf8)!, withName: key)
+    //                      }
+    //                      if let tempInt = value as? Int {
+    //                          multipartFormData.append("\(tempInt)".data(using: .utf8)!, withName: key)
+    //                      }
+    //                      if let tempArr = value as? NSArray{
+    //                          tempArr.forEach({ element in
+    //                              let keyObj = key + "[]"
+    //                              if let string = element as? String {
+    //                                  multipartFormData.append(string.data(using: .utf8)!, withName: keyObj)
+    //                              } else
+    //                              if let num = element as? Int {
+    //                                  let value = "\(num)"
+    //                                  multipartFormData.append(value.data(using: .utf8)!, withName: keyObj)
+    //                              }
+    //                          })
+    //                      }
+    //                  }
+    //              },
+    //                        to: target.requestURL,
+    //                        method: target.method,
+    //                        headers: headers
+    //              )
+    //                  .responseDecodable(of: M.self, decoder: JSONDecoder()){ response in
+    //                      print(response)
+    //                      switch response.result {
+    //                      case .success(let model):
+    //                          promise(.success(model))
+    //                      case .failure(let error):
+    //                          promise(.failure(.unknown(code: 0, error: error.localizedDescription)))
+    //                      }
+    //                  }
+    //
+    //          }.eraseToAnyPublisher()
+    //      }
     
     // MARK: - (Completion handler) CAll API with promiseKit
     static func uploadApi<T: TargetType, M: Codable>(
@@ -162,52 +162,49 @@ final class BaseNetwork{
         print(headers ?? [:])
         
         AF.upload(multipartFormData: { (multipartFormData) in
-                        for (key , value) in parameters.0 {
-            
-                            if let tempImg = value as? UIImage {
-                                if let data = tempImg.jpegData(compressionQuality: 0.8), (tempImg.size.width ) > 0 {
-                                    // Be careful and put the file name in withName parameter
-                                    multipartFormData.append(data, withName: key , fileName: "file.jpeg", mimeType: "image/jpeg")
-                                }
-                            }
-                            else if let tempURL = value as? URL {
-                                            if let data = try? Data(contentsOf: tempURL), tempURL.pathExtension.lowercased() == "pdf" {
-                                                multipartFormData.append(data, withName: key, fileName: "file.pdf", mimeType: "application/pdf")
-                                            }
-                                        }
-                           else if let tempStr = value as? String {
-                                multipartFormData.append(tempStr.data(using: .utf8)!, withName: key)
-                            }
-                           else if let tempInt = value as? Int {
-                                multipartFormData.append("\(tempInt)".data(using: .utf8)!, withName: key)
-                            }
-                            else if let tempArr = value as? NSArray {
-                                tempArr.forEach { element in
-                                    let keyObj = key + "[]"
-                                    if let string = element as? String {
-                                        multipartFormData.append(string.data(using: .utf8)!, withName: keyObj)
-                                    } else if let num = element as? Int {
-                                        let value = "\(num)"
-                                        multipartFormData.append(value.data(using: .utf8)!, withName: keyObj)
-                                    }
-                                }
-                            }
+            for (key , value) in parameters.0 {
+                
+                if let tempImg = value as? UIImage {
+                    if let data = tempImg.jpegData(compressionQuality: 0.9), (tempImg.size.width ) > 0 {
+
+//                    if let data = tempImg.pngData(), (tempImg.size.width ) > 0 {
+                        // Be careful and put the file name in withName parameter
+                        multipartFormData.append(data, withName: key , fileName: "file.jpeg", mimeType: "image/jpeg")
+                    }
+                }
+                else if let tempURL = value as? URL {
+                    if let data = try? Data(contentsOf: tempURL), tempURL.pathExtension.lowercased() == "pdf" {
+                        multipartFormData.append(data, withName: key, fileName: "file.pdf", mimeType: "application/pdf")
+                    }
+                }
+                else if let tempStr = value as? String {
+                    multipartFormData.append(tempStr.data(using: .utf8)!, withName: key)
+                }
+                else if let tempInt = value as? Int {
+                    multipartFormData.append("\(tempInt)".data(using: .utf8)!, withName: key)
+                }
+                else if let tempArr = value as? NSArray {
+                    tempArr.forEach { element in
+                        let keyObj = key + "[]"
+                        if let string = element as? String {
+                            multipartFormData.append(string.data(using: .utf8)!, withName: keyObj)
+                        } else if let num = element as? Int {
+                            let value = "\(num)"
+                            multipartFormData.append(value.data(using: .utf8)!, withName: keyObj)
                         }
-            
-//            for (key, value) in parameters.0 {
-//                       if let data = "\(value)".data(using: .utf8) {
-//                           multipartFormData.append(data, withName: key)
-//                       }
-//                   }
+                    }
+                }
+            }
         },
-        to: target.requestURL,
-        method: target.method,
-        headers: headers
+                  to: target.requestURL,
+                  method: target.method,
+                  headers: headers
         )
         .uploadProgress { progress in
-               let completedProgress = progress.fractionCompleted
-               progressHandler(completedProgress)
-           }
+            let completedProgress = progress.fractionCompleted
+            progressHandler(completedProgress)
+            print("progress: %.0f%% \(completedProgress)")
+        }
         .responseDecodable(of: M.self, decoder: JSONDecoder()) { response in
             print(response)
             switch response.result {
@@ -218,19 +215,21 @@ final class BaseNetwork{
             }
         }
     }
-
+    
     // -- Download File --
     static func downloadFile(
         from sourceURL: URL,
         to destinationURL: URL,
+        progressHandler: @escaping (Double) -> Void,
         completion: @escaping (Result<Void, Error>) -> Void
     ) {
         let destination: DownloadRequest.Destination = { _, _ in
-               return (destinationURL, [.removePreviousFile, .createIntermediateDirectories])
-           }
+            return (destinationURL, [.removePreviousFile, .createIntermediateDirectories])
+        }
         AF.download(sourceURL, to: destination)
             .downloadProgress { progress in
-                print("Download Progress: \(progress.fractionCompleted * 100)%")
+                let completedProgress = progress.fractionCompleted
+                progressHandler(completedProgress)
             }
             .response { response in
                 switch response.result {
@@ -242,7 +241,7 @@ final class BaseNetwork{
             }
     }
     
-    }
+}
 
 
 

@@ -11,6 +11,7 @@ class ProfileVC: UIViewController {
     
     @IBOutlet weak var TVscreen: UITableView!
     
+    let ViewModel = ProfileVM()
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -21,7 +22,12 @@ class ProfileVC: UIViewController {
         TVscreen.registerCellNib(cellClass: ProfileTVCellHeader.self)
         TVscreen.registerCellNib(cellClass: ProfileTVCellMiddle.self)
         TVscreen.registerCellNib(cellClass: ProfileTVCellLogout.self)
-        TVscreen.reloadData()
+//        TVscreen.reloadData()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        GetMyProfile()
     }
 }
 
@@ -37,6 +43,10 @@ extension ProfileVC : UITableViewDataSource , UITableViewDelegate {
         if indexPath.row == 0 {
             
             let cell = tableView.dequeueReusableCell(withIdentifier: "ProfileTVCellHeader", for: indexPath) as! ProfileTVCellHeader
+            if let user = ViewModel.responseModel{
+                cell.LaName.text = user.name
+                cell.LaPhone.text = user.mobile
+            }
             return cell
             
         } else if indexPath.row == 1 {
@@ -151,5 +161,34 @@ extension ProfileVC : UITableViewDataSource , UITableViewDelegate {
         guard let vc = initiateViewController(storyboardName: .main, viewControllerIdentifier: destination.self)else{return}
         vc.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(vc, animated: true)
+    }
+}
+
+// -- functions --
+extension ProfileVC {
+    func GetMyProfile(){
+        ViewModel.GetMyProfile {[self] state in
+            guard let state = state else{
+                return
+            }
+            switch state {
+            case .loading:
+//                Hud.showHud(in: self.view,text: "")
+                print("loading")
+            case .stopLoading:
+                Hud.dismiss(from: self.view)
+            case .success:
+                Hud.dismiss(from: self.view)
+                print(state)
+//                TVscreen.reloadData()
+                TVscreen.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
+            case .error(_,let error):
+                Hud.dismiss(from: self.view)
+//                SimpleAlert.shared.showAlert(title:error ?? "",message:"", viewController: self)
+                print(error ?? "")
+            case .none:
+                print("")
+            }
+        }
     }
 }

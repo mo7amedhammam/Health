@@ -19,10 +19,10 @@ class InbodyListVM {
     // -- Add Record --
     var TestImage:UIImage?
     var TestPdf:URL?
-    var Date:String?
-    var CustomerId : Int? = Helper.getUser()?.id // required
+    var Date:String? // required
+//    var CustomerId : Int? = Helper.getUser()?.id // required
     var addresponseModel: InbodyListItemM? = InbodyListItemM()
-
+    
 }
 
 //MARK: -- Functions --
@@ -72,18 +72,18 @@ extension InbodyListVM{
         var  parametersarr: [String : Any] = [:]
         switch fileType {
         case .image:
-            guard let selfile = TestImage, let Date = Date,let CustomerId = CustomerId else {
+            guard let selfile = TestImage, let Date = Date else {
                 // Handle missing username or password
                 return
             }
-             parametersarr  =  ["TestFile" : selfile ,"Date" : Date,"CustomerId" : CustomerId]
+             parametersarr  =  ["TestFile" : selfile ,"Date" : Date]
 
         case .Pdf:
-            guard let selfile = TestPdf, let Date = Date,let CustomerId = CustomerId else {
+            guard let selfile = TestPdf, let Date = Date else {
                 // Handle missing username or password
                 return
             }
-             parametersarr =  ["TestFile" : selfile ,"Date" : Date,"CustomerId" : CustomerId]
+             parametersarr =  ["TestFile" : selfile ,"Date" : Date]
 
         }
 

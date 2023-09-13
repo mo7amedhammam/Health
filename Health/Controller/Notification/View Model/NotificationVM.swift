@@ -24,7 +24,7 @@ class NotificationVM {
         completion(.loading)
         // Create your API request with the username and password
         let target = NotificationServices.GetNotification(parameters: Parameters)
-        //print(parametersarr)
+//        print(Parameters)
         // Make the API call using your APIManager or networking code
         BaseNetwork.callApi(target, BaseResponse<ModelNotification>.self) {[weak self] result in
             // Handle the API response here
@@ -33,7 +33,11 @@ class NotificationVM {
                 // Handle the successful response
                 print("request successful: \(response)")
                 if response.messageCode == 200 {
-                    self?.ArrNotifications = response.data
+                    if skipCount == 0 {
+                        self?.ArrNotifications = response.data
+                    }else{
+                        self?.ArrNotifications?.items?.append(contentsOf: response.data?.items ?? [])
+                    }
                     completion(.success)
                 } else if response.messageCode == 401 {
                     completion(.error(0,"\(response.message ?? "login again")"))

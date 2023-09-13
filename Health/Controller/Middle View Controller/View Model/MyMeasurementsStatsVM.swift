@@ -75,7 +75,12 @@ class MyMeasurementsStatsVM {
 
                 
                 if response.messageCode == 200 {
-                    self?.ArrMeasurement = response.data
+                    if self?.skipCount == 0 {
+                        self?.ArrMeasurement = response.data
+                    }else{
+                        self?.ArrMeasurement?.measurements?.items?.append(contentsOf: response.data?.measurements?.items ?? [])
+                    }
+
                     completion(.success)
                 } else if response.messageCode == 401 {
                     completion(.error(0,"\(response.message ?? "login again")"))

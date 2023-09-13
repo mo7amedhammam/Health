@@ -521,4 +521,18 @@ extension MeasurementsDetailsVC : UITableViewDataSource , UITableViewDelegate , 
     }
     
     
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if indexPath.row == (ViewModel.ArrMeasurement?.measurements?.items?.count ?? 0) - 1 {
+            // Check if the last cell is about to be displayed
+            if let totalCount = ViewModel.ArrMeasurement?.measurements?.totalCount, let itemsCount = ViewModel.ArrMeasurement?.measurements?.items?.count, itemsCount < totalCount {
+                // Load the next page if there are more items to fetch
+                loadNextPage()
+            }
+        }
+    }
+    func loadNextPage() {
+//        guard (ViewModel.responseModel?.totalCount ?? 0) > (ViewModel.responseModel?.items?.count ?? 0) , ViewModel.cansearch == true else {return}
+        ViewModel.skipCount = ViewModel.ArrMeasurement?.measurements?.items?.count
+        getDataMeasurement()
+    }
 }

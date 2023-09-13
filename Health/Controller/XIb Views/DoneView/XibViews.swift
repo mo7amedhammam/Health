@@ -48,6 +48,22 @@ extension UIViewController {
             UIView.animate(withDuration: 0.3) {
                 viewDone.alpha = 1
             }
+         
+         
+//         // Animate the view's alpha to 1 with a fade-in animation
+//           UIView.animate(withDuration: 0.3, animations: {
+//               viewDone.alpha = 1
+//           }) { (_) in
+//               // Add a bounce effect to the view
+//               let animation = CASpringAnimation(keyPath: "transform.scale")
+//               animation.duration = 0.5
+//               animation.fromValue = 0.7
+//               animation.toValue = 1.0
+//               animation.damping = 7.0
+//               animation.initialVelocity = 0.5
+//               viewDone.layer.add(animation, forKey: "bounce")
+//           }
+
                return viewDone
            
        }
