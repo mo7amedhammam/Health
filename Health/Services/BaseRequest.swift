@@ -7,7 +7,7 @@
 import Foundation
 import UIKit
 import Alamofire
-import Combine
+//import Combine
 
 func buildparameter(paramaters:parameterType)->([String:Any],ParameterEncoding){
     switch paramaters{
@@ -67,23 +67,21 @@ final class BaseNetwork{
         
         let parameters = buildparameter(paramaters: target.parameter)
         let headers: HTTPHeaders? = Alamofire.HTTPHeaders(target.headers ?? [:])
-        print(target.requestURL)
-        print(target.method)
-        print(parameters)
-        print(headers ?? [:])
         
         AF.request(target.requestURL, method: target.method, parameters: parameters.0, encoding: parameters.1, headers: headers)
             .responseDecodable(of: M.self, decoder: JSONDecoder()) { response in
-                if response.response?.statusCode == 401 {
-                    completion(.failure(.unauthorized(code: response.response?.statusCode ?? 0, error: NetworkError.expiredTokenMsg.errorDescription ?? "")))
-                } else {
-                    switch response.result {
-                    case .success(let model):
-                        completion(.success(model))
-                    case .failure(let error):
-                        completion(.failure(.unknown(code: 0, error: error.localizedDescription)))
+                guard let responsecode = response.response?.statusCode else{return}
+                switch response.result {
+                case .success(let model):
+                    completion(.success(model))
+                case .failure(let error):
+                    if responsecode == 401{
+                        completion(.failure(.unauthorized(code: responsecode, error: NetworkError.expiredTokenMsg.localizedDescription)))
+                    }else{
+                        completion(.failure(.unknown(code: responsecode, error: error.localizedDescription)))
                     }
                 }
+                
             }
     }
     

@@ -170,7 +170,7 @@ extension MeasurementsDetailsVC {
     }
     
     func getDataMeasurement() {
-        ViewModel.ArrMeasurement = nil
+//        ViewModel.ArrMeasurement = nil
         ViewModel.GetMyMedicalMeasurements { [self] state in
             guard let state = state else{
                 return
