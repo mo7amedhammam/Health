@@ -138,6 +138,9 @@
 		C889958A2AA9F770002AD812 /* ForgetPasswordVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88995892AA9F770002AD812 /* ForgetPasswordVM.swift */; };
 		C88995902AAA02A2002AD812 /* ChangePasswordM.swift in Sources */ = {isa = PBXBuildFile; fileRef = C889958F2AAA02A2002AD812 /* ChangePasswordM.swift */; };
 		C88995922AAA02BE002AD812 /* ChangePasswordVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88995912AAA02BE002AD812 /* ChangePasswordVM.swift */; };
+		C893A9B32AB5BA070054F171 /* TipsM.swift in Sources */ = {isa = PBXBuildFile; fileRef = C893A9B22AB5BA070054F171 /* TipsM.swift */; };
+		C893A9B52AB5BA190054F171 /* TipsVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = C893A9B42AB5BA190054F171 /* TipsVM.swift */; };
+		C893A9B72AB5BE450054F171 /* TipsCategoryServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = C893A9B62AB5BE450054F171 /* TipsCategoryServices.swift */; };
 		C8A1509B2AB1C62A00511B1F /* ProfileM.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8A1509A2AB1C62A00511B1F /* ProfileM.swift */; };
 		C8A1509D2AB1C63500511B1F /* ProfileVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8A1509C2AB1C63500511B1F /* ProfileVM.swift */; };
 		C8C7339A2AA6756B00185698 /* SignUpM.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C733992AA6756B00185698 /* SignUpM.swift */; };
@@ -304,6 +307,9 @@
 		C88995892AA9F770002AD812 /* ForgetPasswordVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgetPasswordVM.swift; sourceTree = "<group>"; };
 		C889958F2AAA02A2002AD812 /* ChangePasswordM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordM.swift; sourceTree = "<group>"; };
 		C88995912AAA02BE002AD812 /* ChangePasswordVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordVM.swift; sourceTree = "<group>"; };
+		C893A9B22AB5BA070054F171 /* TipsM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TipsM.swift; sourceTree = "<group>"; };
+		C893A9B42AB5BA190054F171 /* TipsVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TipsVM.swift; sourceTree = "<group>"; };
+		C893A9B62AB5BE450054F171 /* TipsCategoryServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TipsCategoryServices.swift; sourceTree = "<group>"; };
 		C8A1509A2AB1C62A00511B1F /* ProfileM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileM.swift; sourceTree = "<group>"; };
 		C8A1509C2AB1C63500511B1F /* ProfileVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVM.swift; sourceTree = "<group>"; };
 		C8C733992AA6756B00185698 /* SignUpM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpM.swift; sourceTree = "<group>"; };
@@ -506,7 +512,7 @@
 		BB518CCF2A9A10FB00242FAD /* VC */ = {
 			isa = PBXGroup;
 			children = (
-				BB518CD22A9A112C00242FAD /* TipsCategoriesVC1.swift */,
+				C893A9AE2AB5B93F0054F171 /* TipsList */,
 				BB518CD42A9A113900242FAD /* TipsCategoriesVC2.swift */,
 				BB518CD62A9A114400242FAD /* TipsCategoriesVC3.swift */,
 				BB518CF02A9A131300242FAD /* TipsCategoriesDetailsVC.swift */,
@@ -788,6 +794,7 @@
 				C80DA9EA2AA4D3B300F10808 /* Authintications.swift */,
 				BBD2B0352AAA832E00C0A807 /* MeasurementServices.swift */,
 				BBA1DA152AB11C3A0042713A /* NotificationServices.swift */,
+				C893A9B62AB5BE450054F171 /* TipsCategoryServices.swift */,
 			);
 			path = HealthServices;
 			sourceTree = "<group>";
@@ -1009,6 +1016,40 @@
 			isa = PBXGroup;
 			children = (
 				C88995912AAA02BE002AD812 /* ChangePasswordVM.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		C893A9AE2AB5B93F0054F171 /* TipsList */ = {
+			isa = PBXGroup;
+			children = (
+				C893A9B12AB5B9570054F171 /* ViewModel */,
+				C893A9B02AB5B9530054F171 /* Model */,
+				C893A9AF2AB5B94B0054F171 /* View */,
+			);
+			path = TipsList;
+			sourceTree = "<group>";
+		};
+		C893A9AF2AB5B94B0054F171 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				BB518CD22A9A112C00242FAD /* TipsCategoriesVC1.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		C893A9B02AB5B9530054F171 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				C893A9B22AB5BA070054F171 /* TipsM.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		C893A9B12AB5B9570054F171 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				C893A9B42AB5BA190054F171 /* TipsVM.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -1378,6 +1419,7 @@
 				C889958A2AA9F770002AD812 /* ForgetPasswordVM.swift in Sources */,
 				C88995822AA9EDFE002AD812 /* Strings.swift in Sources */,
 				C82DCAAF2AACB41600322B55 /* MedicationScheduleDetailsM.swift in Sources */,
+				C893A9B72AB5BE450054F171 /* TipsCategoryServices.swift in Sources */,
 				BB1B2FFE2A7EA379001677FD /* INBodyDetailsVC.swift in Sources */,
 				BB1AEAA32A955B710078683A /* NotificationVC.swift in Sources */,
 				BBBD001C2A73101700F066DF /* Shared.swift in Sources */,
@@ -1453,6 +1495,7 @@
 				C8542D5C2AA8B42600ACE480 /* OtpVM.swift in Sources */,
 				BBBD00182A73101700F066DF /* CardView.swift in Sources */,
 				BB1AEAA02A955B450078683A /* NotificationTVCell.swift in Sources */,
+				C893A9B32AB5BA070054F171 /* TipsM.swift in Sources */,
 				C80DA9EB2AA4D3B300F10808 /* Authintications.swift in Sources */,
 				C82FBA172AB08F200029F151 /* imagePickerHelper.swift in Sources */,
 				BB14DAF72A7B047400389B96 /* ProfileTVCellLine.swift in Sources */,
@@ -1468,6 +1511,7 @@
 				BBBD00342A731B3300F066DF /* SplashScreenVC.swift in Sources */,
 				C8346E582AA5EE9C00C3C3EE /* LoginVM.swift in Sources */,
 				BB5116C62A829A8E00CF5D11 /* MeasurementsDetailsVC.swift in Sources */,
+				C893A9B52AB5BA190054F171 /* TipsVM.swift in Sources */,
 				C82DCAA82AAC785D00322B55 /* MedicationScheduleVM.swift in Sources */,
 				C80DA9E82AA4D33000F10808 /* RequestBuilder.swift in Sources */,
 				BBBD00212A73119500F066DF /* LoginVC.swift in Sources */,

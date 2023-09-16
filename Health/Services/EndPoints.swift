@@ -50,10 +50,15 @@ enum EndPoints: String {
      case GetCustomerInBody = "CustomerInBodyTest/GetMyList"
     case CreateCustomerInBody = "CustomerInBodyTest/Create"
     
-    
+    // -- notifications --
     case GetNotification = "CustomerPrescriptionDrug/GetCustomerNormalDrugs"
 
-    
+    // -- pfofile --
     case GetMyProfile = "Customer/MyProfile"
 
+    // -- tips categories --
+    case GetAllMobile = "TipCategory/GetAllMobile"
+    case GetTipNewest = "Tip/GetTipNewest"
+    case GetTipInterestYou = "Tip/GetTipInterestYou"
+    case GetTipMostViewed = "Tip/GetTipMostViewed"
 }

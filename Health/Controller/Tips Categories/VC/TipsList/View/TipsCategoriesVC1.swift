@@ -13,7 +13,7 @@ class TipsCategoriesVC1: UIViewController {
     var ArrInt = [Int]()
     var TypeCollection = ""
     
-    
+    let ViewModel = TipsVM()
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -26,11 +26,16 @@ class TipsCategoriesVC1: UIViewController {
         ArrInt.append(0)
         ArrInt.append(1)
         ArrInt.append(1)
-        
+        ArrInt.append(1)
+
         TVScreen.reloadData()
+        
     }
     
-    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        getallTips()
+    }
 }
 
 
@@ -43,7 +48,7 @@ extension TipsCategoriesVC1 : UITableViewDataSource , UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-                        
+        
         if ArrInt[indexPath.row] == 0 {
             // cell 0
             let cell = tableView.dequeueReusableCell(withIdentifier: "TipsCategoriesTVCell0", for: indexPath) as! TipsCategoriesTVCell0
@@ -60,7 +65,7 @@ extension TipsCategoriesVC1 : UITableViewDataSource , UITableViewDelegate {
             cell.CollectionTips.reloadData()
             
             return cell
-
+            
         } else {
             // cell 1
             let cell = tableView.dequeueReusableCell(withIdentifier: "TipsCategoriesTVCell1", for: indexPath) as! TipsCategoriesTVCell1
@@ -78,7 +83,7 @@ extension TipsCategoriesVC1 : UITableViewDataSource , UITableViewDelegate {
             cell.CollectionCat.reloadData()
             
             return cell
-
+            
         }
     }
     
@@ -131,6 +136,38 @@ extension TipsCategoriesVC1 : UICollectionViewDataSource , UICollectionViewDeleg
         
         
         
+    }
+    
+}
+
+
+extension TipsCategoriesVC1{
+    func getallTips()  {
+        ViewModel.fetchAllTips{[weak self] state in
+            guard let self = self ,let state = state else{
+                return
+            }
+            DispatchQueue.main.async { [weak self] in // Must be main thread to update UI
+                guard let self = self else{ return }
+
+                switch state {
+                case .loading:
+                    Hud.showHud(in: self.view,text: "")
+                case .stopLoading:
+                    Hud.dismiss(from: self.view)
+                case .success:
+                    Hud.dismiss(from: self.view)
+                    print(state)
+                    
+                case .error(_,let error):
+                    Hud.dismiss(from: self.view)
+                    SimpleAlert.shared.showAlert(title:error ?? "",message:"", viewController: self)
+                    print(error ?? "")
+                case .none:
+                    print("")
+                }
+            }
+        }
     }
     
 }
