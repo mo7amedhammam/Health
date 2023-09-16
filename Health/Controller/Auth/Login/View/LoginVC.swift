@@ -103,7 +103,8 @@ extension LoginVC{
         loginViewModel.mobile = TFPhone.text
         loginViewModel.password = TFPassword.text
         
-        loginViewModel.login {[self] state in
+        loginViewModel.login {[weak self] state in
+            guard let self = self else{return}
             guard let state = state else{
                 return
             }

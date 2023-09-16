@@ -49,7 +49,8 @@ extension MeasurementsVC {
     
     func getData() {
                 
-        ViewModel.GetMeasurementsStats { [self] state in
+        ViewModel.GetMeasurementsStats { [weak self]state in
+            guard let self = self else{return}
             guard let state = state else{
                 return
             }

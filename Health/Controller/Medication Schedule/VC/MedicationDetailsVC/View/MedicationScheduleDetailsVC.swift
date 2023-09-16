@@ -82,7 +82,8 @@ extension MedicationScheduleDetailsVC {
     func GetMedicationScheduleDrugs() {
         guard let model = schedualM else {return}
         ViewModel.scheduleId = model.id
-        ViewModel.GetMyScheduleDrugs{[self] state in
+        ViewModel.GetMyScheduleDrugs{[weak self] state in
+            guard let self = self else{return}
             guard let state = state else{
                 return
             }
