@@ -34,7 +34,8 @@ class TipsCategoriesVC1: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        getallTips()
+//        getallTips()
+        getmostviewed()
     }
 }
 
@@ -142,32 +143,24 @@ extension TipsCategoriesVC1 : UICollectionViewDataSource , UICollectionViewDeleg
 
 
 extension TipsCategoriesVC1{
-    func getallTips()  {
-        ViewModel.fetchAllTips{[weak self] state in
-            guard let self = self ,let state = state else{
-                return
-            }
-            DispatchQueue.main.async { [weak self] in // Must be main thread to update UI
-                guard let self = self else{ return }
-
-                switch state {
-                case .loading:
-                    Hud.showHud(in: self.view,text: "")
-                case .stopLoading:
-                    Hud.dismiss(from: self.view)
-                case .success:
-                    Hud.dismiss(from: self.view)
-                    print(state)
-                    
-                case .error(_,let error):
-                    Hud.dismiss(from: self.view)
-                    SimpleAlert.shared.showAlert(title:error ?? "",message:"", viewController: self)
-                    print(error ?? "")
-                case .none:
-                    print("")
-                }
+    func getmostviewed(){
+        Task {
+            do{
+                Hud.showHud(in: self.view)
+                try await ViewModel.getAllTips()
+                // Handle success async operations
+//                print("ViewModel.mostViewedTipsArr",ViewModel.mostViewedTipsArr)
+                Hud.dismiss(from: self.view)
+                print("all",ViewModel.allTipsResModel?.items)
+                print("interesting",ViewModel.interestingTipsArr)
+                print("newest",ViewModel.newestTipsArr)
+                print("mostview",ViewModel.mostViewedTipsArr)
+            }catch {
+                // Handle any errors that occur during the async operations
+                print("Error: \(error)")
+                Hud.dismiss(from: self.view)
+                SimpleAlert.shared.showAlert(title:error.localizedDescription,message:"", viewController: self)
             }
         }
     }
-    
 }
