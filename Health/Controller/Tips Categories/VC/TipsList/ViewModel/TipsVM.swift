@@ -28,18 +28,16 @@ extension TipsVM{
             throw NetworkError.unknown(code: 0, error: "check inputs")
         }
         let parametersarr : [String : Any] =  ["maxResultCount" : maxResultCount ,"skipCount" : skipCount]
-        // Create your API request with the username and password
         let target = TipsCategoryServices.GetAllMobile(parameters: parametersarr)
             do {
                  let result = try await BaseNetwork.asyncCallApi(target, BaseResponse<TipsAllM>.self)
                 guard let model = result.data else {
                     throw NetworkError.unknown(code: 0, error: "cant get result model")
                 }
-                print("result.data",model)
+//                print("result.data",model)
                 return model
 
             } catch {
-                // Handle any other errors that occurred during the asynchronous operation
                 throw error
             }
         
@@ -49,11 +47,10 @@ extension TipsVM{
         let target = TipsCategoryServices.GetTipNewest
             do {
                  let result = try await BaseNetwork.asyncCallApi(target, BaseResponse<[TipsNewestM]>.self)
-                print("result.data",result.data ?? [])
+//                print("result.data",result.data ?? [])
                 return result.data ?? []
 
             } catch {
-                // Handle any other errors that occurred during the asynchronous operation
                 throw error
             }
         
@@ -63,11 +60,10 @@ extension TipsVM{
         let target = TipsCategoryServices.GetTipInterestYou
             do {
                  let result = try await BaseNetwork.asyncCallApi(target, BaseResponse<[TipsNewestM]>.self)
-                print("result.data",result.data ?? [])
+//                print("result.data",result.data ?? [])
                 return result.data ?? []
 
             } catch {
-                // Handle any other errors that occurred during the asynchronous operation
                 throw error
             }
         
@@ -76,11 +72,10 @@ extension TipsVM{
             let target = TipsCategoryServices.GetTipMostViewed
             do {
                  let result = try await BaseNetwork.asyncCallApi(target, BaseResponse<[TipsNewestM]>.self)
-                print("result.data",result.data ?? [])
+//                print("result.data",result.data ?? [])
                 return result.data ?? []
 
             } catch {
-                // Handle any other errors that occurred during the asynchronous operation
                 throw error
             }
         

@@ -114,6 +114,7 @@
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <connections>
                 <outlet property="CollectionCat" destination="Juu-23-bUO" id="IXp-5T-h19"/>
+                <outlet property="LaCategoryTitle" destination="a59-zK-tgn" id="3P5-mi-yxH"/>
             </connections>
             <point key="canvasLocation" x="-72.51908396946564" y="116.19718309859155"/>
         </tableViewCell>

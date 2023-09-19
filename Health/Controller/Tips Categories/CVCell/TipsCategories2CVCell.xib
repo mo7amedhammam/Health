@@ -27,11 +27,22 @@
                         <rect key="frame" x="0.0" y="0.0" width="196" height="182"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="pAw-rr-QAn">
-                                <rect key="frame" x="10" y="0.0" width="176" height="182"/>
+                                <rect key="frame" x="0.0" y="0.0" width="196" height="182"/>
                                 <subviews>
                                     <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bnc-fg-nfV">
-                                        <rect key="frame" x="0.0" y="0.0" width="176" height="132"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="196" height="132"/>
+                                        <subviews>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Huz-I1-RnU">
+                                                <rect key="frame" x="0.0" y="0.0" width="196" height="132"/>
+                                            </imageView>
+                                        </subviews>
                                         <color key="backgroundColor" red="0.090196078431372548" green="0.078431372549019607" blue="0.20000000000000001" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstItem="Huz-I1-RnU" firstAttribute="top" secondItem="Bnc-fg-nfV" secondAttribute="top" id="4Ov-gt-ouR"/>
+                                            <constraint firstAttribute="bottom" secondItem="Huz-I1-RnU" secondAttribute="bottom" id="F1f-Yu-AfT"/>
+                                            <constraint firstItem="Huz-I1-RnU" firstAttribute="leading" secondItem="Bnc-fg-nfV" secondAttribute="leading" id="Qn1-0y-dm1"/>
+                                            <constraint firstAttribute="trailing" secondItem="Huz-I1-RnU" secondAttribute="trailing" id="uBT-LZ-nDE"/>
+                                        </constraints>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                                 <real key="value" value="20"/>
@@ -39,7 +50,7 @@
                                         </userDefinedRuntimeAttributes>
                                     </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="مرض السكري" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U6I-Aa-t1h">
-                                        <rect key="frame" x="0.0" y="137" width="176" height="20"/>
+                                        <rect key="frame" x="0.0" y="137" width="196" height="20"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="20" id="cIu-cs-8oc"/>
                                         </constraints>
@@ -48,7 +59,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="5 مواضيع" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3BE-RB-efz">
-                                        <rect key="frame" x="0.0" y="162" width="176" height="20"/>
+                                        <rect key="frame" x="0.0" y="162" width="196" height="20"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="20" id="Sl4-DX-Osk"/>
                                         </constraints>
@@ -63,8 +74,8 @@
                         <constraints>
                             <constraint firstAttribute="height" constant="182" id="6UR-Ke-zB5"/>
                             <constraint firstItem="pAw-rr-QAn" firstAttribute="top" secondItem="Vie-5H-K0D" secondAttribute="top" id="EoR-rU-ub1"/>
-                            <constraint firstItem="pAw-rr-QAn" firstAttribute="leading" secondItem="Vie-5H-K0D" secondAttribute="leading" constant="10" id="I28-Qb-fKN"/>
-                            <constraint firstAttribute="trailing" secondItem="pAw-rr-QAn" secondAttribute="trailing" constant="10" id="Ofd-zJ-fF9"/>
+                            <constraint firstItem="pAw-rr-QAn" firstAttribute="leading" secondItem="Vie-5H-K0D" secondAttribute="leading" id="I28-Qb-fKN"/>
+                            <constraint firstAttribute="trailing" secondItem="pAw-rr-QAn" secondAttribute="trailing" id="Ofd-zJ-fF9"/>
                             <constraint firstAttribute="bottom" secondItem="pAw-rr-QAn" secondAttribute="bottom" id="ftz-Hg-qCm"/>
                         </constraints>
                     </view>
@@ -79,6 +90,11 @@
                 <constraint firstItem="Vie-5H-K0D" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="eal-9E-lx7"/>
             </constraints>
             <size key="customSize" width="196" height="192"/>
+            <connections>
+                <outlet property="ImgTipCategory" destination="Huz-I1-RnU" id="VnO-90-qKV"/>
+                <outlet property="LaCount" destination="3BE-RB-efz" id="6je-lb-hdj"/>
+                <outlet property="LaTitle" destination="U6I-Aa-t1h" id="kuE-Ph-RKS"/>
+            </connections>
             <point key="canvasLocation" x="21.374045801526716" y="69.718309859154928"/>
         </collectionViewCell>
     </objects>
