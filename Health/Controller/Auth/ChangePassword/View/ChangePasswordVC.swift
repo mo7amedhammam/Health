@@ -92,7 +92,8 @@ extension ChangePasswordVC {
         ViewModel.oldPassword = TFPassword.text
         ViewModel.newPassword = TFRe_Password.text
         
-        ViewModel.ChangePassword{[self] state in
+        ViewModel.ChangePassword{[weak self] state in
+            guard let self = self else{return}
             guard let state = state else{
                 return
             }

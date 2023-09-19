@@ -14,7 +14,6 @@ class InbodyListVM {
     var skipCount: Int? = 0
     
     var responseModel: InbodyListM? = InbodyListM()
-    var cansearch = false
     
     // -- Add Record --
     var TestImage:UIImage?
@@ -27,8 +26,8 @@ class InbodyListVM {
 
 //MARK: -- Functions --
 extension InbodyListVM{
+    
     func GetCustomerInbodyList(completion: @escaping (EventHandler?) -> Void) {
-        cansearch = false
         guard let maxResultCount = maxResultCount, let skipCount = skipCount else {
             // Handle missing username or password
             return
@@ -56,7 +55,6 @@ extension InbodyListVM{
                     self?.responseModel?.items?.append(contentsOf: response.data?.items ?? [])
                 }
                 completion(.success)
-                self?.cansearch = true
             case .failure(let error):
                 // Handle the error
                 print("Login failed: \(error.localizedDescription)")
@@ -68,7 +66,6 @@ extension InbodyListVM{
     
     
     func AddCustomerInbodyReport(fileType:FileType,progressHandler: @escaping (Double) -> Void,completion: @escaping (EventHandler?) -> Void) {
-        cansearch = false
         var  parametersarr: [String : Any] = [:]
         switch fileType {
         case .image:
@@ -108,7 +105,6 @@ extension InbodyListVM{
                     self?.addresponseModel = response.data
 
                 completion(.success)
-                self?.cansearch = true
             case .failure(let error):
                 // Handle the error
                 print("Login failed: \(error.localizedDescription)")

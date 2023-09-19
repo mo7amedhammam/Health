@@ -146,7 +146,8 @@ class MeasurementsDetailsVC: UIViewController {
 extension MeasurementsDetailsVC {
     
     func getDataNormalRange() {
-        ViewModel.GetMeasurementNormalRange { [self] state in
+        ViewModel.GetMeasurementNormalRange { [weak self] state in
+            guard let self = self else{return}
             guard let state = state else{
                 return
             }
@@ -170,8 +171,9 @@ extension MeasurementsDetailsVC {
     }
     
     func getDataMeasurement() {
-        ViewModel.ArrMeasurement = nil
-        ViewModel.GetMyMedicalMeasurements { [self] state in
+//        ViewModel.ArrMeasurement = nil
+        ViewModel.GetMyMedicalMeasurements { [weak self] state in
+            guard let self = self else{return}
             guard let state = state else{
                 return
             }
@@ -199,8 +201,8 @@ extension MeasurementsDetailsVC {
     
     func CreateMeasurement () {
         
-        ViewModel.CreateMedicalMeasurements { [self] state in
-            guard let state = state else{
+        ViewModel.CreateMedicalMeasurements { [weak self] state in
+            guard let self = self,let state = state else{
                 return
             }
             switch state {

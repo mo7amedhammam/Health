@@ -16,7 +16,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="TipsCategoriesCVCell0" customModule="Health" customModuleProvider="target">
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="TipsCategoriesCVCell0" id="gTV-IL-0wX" customClass="TipsCategoriesCVCell0" customModule="Health" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="179" height="170"/>
             <autoresizingMask key="autoresizingMask"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -31,14 +31,25 @@
                                 <subviews>
                                     <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Hxq-x5-JQO">
                                         <rect key="frame" x="0.0" y="0.0" width="179" height="130"/>
+                                        <subviews>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Fy0-QJ-Ml8">
+                                                <rect key="frame" x="0.0" y="0.0" width="179" height="130"/>
+                                            </imageView>
+                                        </subviews>
                                         <color key="backgroundColor" red="0.090196078430000007" green="0.078431372550000003" blue="0.20000000000000001" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstItem="Fy0-QJ-Ml8" firstAttribute="top" secondItem="Hxq-x5-JQO" secondAttribute="top" id="IKX-mG-pAk"/>
+                                            <constraint firstAttribute="bottom" secondItem="Fy0-QJ-Ml8" secondAttribute="bottom" id="eHd-PF-dDT"/>
+                                            <constraint firstAttribute="trailing" secondItem="Fy0-QJ-Ml8" secondAttribute="trailing" id="eJU-Ah-d3T"/>
+                                            <constraint firstItem="Fy0-QJ-Ml8" firstAttribute="leading" secondItem="Hxq-x5-JQO" secondAttribute="leading" id="rdL-f0-wIt"/>
+                                        </constraints>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                                 <real key="value" value="20"/>
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                     </view>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="مرض السكري" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FV1-3h-HVB">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="مرض السكري" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FV1-3h-HVB">
                                         <rect key="frame" x="0.0" y="140" width="179" height="20"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="20" id="uKF-xk-nYF"/>
@@ -69,6 +80,10 @@
                 <constraint firstAttribute="trailing" secondItem="MXC-9n-YWX" secondAttribute="trailing" id="qBd-Z4-oVU"/>
             </constraints>
             <size key="customSize" width="179" height="170"/>
+            <connections>
+                <outlet property="ImgTipCategory" destination="Fy0-QJ-Ml8" id="DgW-Oi-YF0"/>
+                <outlet property="LaTitleTipCategory" destination="FV1-3h-HVB" id="2z5-on-MJs"/>
+            </connections>
             <point key="canvasLocation" x="112.21374045801527" y="62.676056338028175"/>
         </collectionViewCell>
     </objects>

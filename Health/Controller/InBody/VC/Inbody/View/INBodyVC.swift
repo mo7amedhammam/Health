@@ -23,7 +23,7 @@ class INBodyVC: UIViewController {
     let ViewModel = InbodyListVM()
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
         TVScreen.dataSource = self
         TVScreen.delegate = self
@@ -31,7 +31,7 @@ class INBodyVC: UIViewController {
         // Initialize ImagePickerHelper here
         imagePickerHelper = ImagePickerHelper(viewController: self)
         pdfPickerHelper = PDFPickerHelper(viewController: self)
-
+        
         GetCustomerInbodyList()
     }
     
@@ -83,16 +83,15 @@ extension INBodyVC : UITableViewDataSource , UITableViewDelegate {
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if indexPath.row == (ViewModel.responseModel?.items?.count ?? 0) - 1 {
             // Check if the last cell is about to be displayed
-            if let totalCount = ViewModel.responseModel?.totalCount, let itemsCount = ViewModel.responseModel?.items?.count, itemsCount < totalCount, ViewModel.cansearch {
+            if let totalCount = ViewModel.responseModel?.totalCount, let itemsCount = ViewModel.responseModel?.items?.count, itemsCount < totalCount {
                 // Load the next page if there are more items to fetch
-                loadNextPage()
+                loadNextPage(itemsCount)
             }
         }
     }
     
-    func loadNextPage(){
-        guard (ViewModel.responseModel?.totalCount ?? 0) > (ViewModel.responseModel?.items?.count ?? 0) , ViewModel.cansearch == true else {return}
-        ViewModel.skipCount = ViewModel.responseModel?.items?.count
+    func loadNextPage(_ skipcount:Int){
+        ViewModel.skipCount = skipcount
         GetCustomerInbodyList()
     }
 
@@ -102,7 +101,8 @@ extension INBodyVC : UITableViewDataSource , UITableViewDelegate {
 extension INBodyVC{
     
     func GetCustomerInbodyList() {
-        ViewModel.GetCustomerInbodyList{[self] state in
+        ViewModel.GetCustomerInbodyList{[weak self] state in
+            guard let self = self else{return}
             guard let state = state else{
                 return
             }
@@ -136,14 +136,17 @@ extension INBodyVC{
 
         }
         ViewModel.Date = Helper.ChangeFormate(NewFormat: "yyyy-MM-dd'T'HH:mm:ss").string(from: Date())
-        ViewModel.AddCustomerInbodyReport(fileType:filetype,progressHandler: { progress in
+        ViewModel.AddCustomerInbodyReport(fileType:filetype,progressHandler: {[weak self] progress in
+            guard let self = self else{return}
+
                 let progressText = String(format: "%.0f%%", progress * 100)
                 if progress > 0{
                     Hud.updateProgress(progressText)
                 }else{
                     Hud.dismiss(from: self.view)
                 }
-        }){[self] state in
+        }){[weak self] state in
+            guard let self = self else{return}
             guard let state = state else{
                 return
             }

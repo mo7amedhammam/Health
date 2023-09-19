@@ -7,7 +7,7 @@
 import Foundation
 import UIKit
 import Alamofire
-import Combine
+//import Combine
 
 func buildparameter(paramaters:parameterType)->([String:Any],ParameterEncoding){
     switch paramaters{
@@ -55,6 +55,49 @@ final class BaseNetwork{
     //          }.eraseToAnyPublisher()
     //      }
     
+    static func asyncCallApi<T: TargetType, M: Codable>(
+        _ target: T,
+        _ modelType: M.Type
+    ) async throws -> M {
+        guard Helper.isConnectedToNetwork() else {
+            throw NetworkError.noConnection
+        }
+        
+        let parameters = buildparameter(paramaters: target.parameter)
+        let headers: HTTPHeaders? = Alamofire.HTTPHeaders(target.headers ?? [:])
+        
+        let (requestURL, method, parametersarr, encoding) = (target.requestURL, target.method, parameters.0, parameters.1)
+        
+        let response = try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<M, Error>) in
+            AF.request(requestURL, method: method, parameters: parametersarr, encoding: encoding, headers: headers)
+                .responseDecodable(of: M.self, decoder: JSONDecoder()) { dataResponse in
+                    do {
+                        guard let responsecode = dataResponse.response?.statusCode else {
+                            throw NetworkError.unknown(code: 0, error: "No response code")
+                        }
+                        
+                        switch dataResponse.result {
+                        case .success(let model):
+                            continuation.resume(returning: model)
+                        case .failure(let error):
+                            if responsecode == 401 {
+                                continuation.resume(throwing: NetworkError.unauthorized(code: responsecode, error: NetworkError.expiredTokenMsg.localizedDescription))
+                            } else {
+                                continuation.resume(throwing: NetworkError.unknown(code: responsecode, error: error.localizedDescription))
+                            }
+                        }
+                    } catch {
+                        continuation.resume(throwing: error)
+                    }
+                }
+        }
+        
+        return response
+    }
+
+ 
+            
+
     static func callApi<T: TargetType, M: Codable>(
         _ target: T,
         _ modelType: M.Type,
@@ -67,23 +110,21 @@ final class BaseNetwork{
         
         let parameters = buildparameter(paramaters: target.parameter)
         let headers: HTTPHeaders? = Alamofire.HTTPHeaders(target.headers ?? [:])
-        print(target.requestURL)
-        print(target.method)
-        print(parameters)
-        print(headers ?? [:])
         
         AF.request(target.requestURL, method: target.method, parameters: parameters.0, encoding: parameters.1, headers: headers)
             .responseDecodable(of: M.self, decoder: JSONDecoder()) { response in
-                if response.response?.statusCode == 401 {
-                    completion(.failure(.unauthorized(code: response.response?.statusCode ?? 0, error: NetworkError.expiredTokenMsg.errorDescription ?? "")))
-                } else {
-                    switch response.result {
-                    case .success(let model):
-                        completion(.success(model))
-                    case .failure(let error):
-                        completion(.failure(.unknown(code: 0, error: error.localizedDescription)))
+                guard let responsecode = response.response?.statusCode else{return}
+                switch response.result {
+                case .success(let model):
+                    completion(.success(model))
+                case .failure(let error):
+                    if responsecode == 401{
+                        completion(.failure(.unauthorized(code: responsecode, error: NetworkError.expiredTokenMsg.localizedDescription)))
+                    }else{
+                        completion(.failure(.unknown(code: responsecode, error: error.localizedDescription)))
                     }
                 }
+                
             }
     }
     

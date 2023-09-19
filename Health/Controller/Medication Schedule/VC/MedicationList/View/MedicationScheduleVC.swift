@@ -81,7 +81,8 @@ extension MedicationScheduleVC : UITableViewDataSource , UITableViewDelegate {
 extension MedicationScheduleVC{
     
     func GetMedicationSchedule() {
-        ViewModel.GetMySchedulePrescriptions{[self] state in
+        ViewModel.GetMySchedulePrescriptions{[weak self] state in
+            guard let self = self else{return}
             guard let state = state else{
                 return
             }

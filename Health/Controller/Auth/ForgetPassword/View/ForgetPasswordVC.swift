@@ -93,7 +93,8 @@ extension ForgetPasswordVC {
         ViewModel.mobile = Phonenumber
         ViewModel.newPassword = TFRe_Password.text
         
-        ViewModel.ResetPassword{[self] state in
+        ViewModel.ResetPassword{[weak self] state in
+            guard let self = self else{return}
             guard let state = state else{
                 return
             }

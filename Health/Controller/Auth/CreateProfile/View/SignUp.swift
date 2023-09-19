@@ -130,7 +130,8 @@ class SignUp: UIViewController  , UITextFieldDelegate{
 //MARK: ---- functions -----
 extension SignUp{
     func getDistricts(){
-        ViewModel.GetDistricts{ [self] state in
+        ViewModel.GetDistricts{ [weak self] state in
+            guard let self = self else{return}
             guard let state = state else{
                 return
             }
@@ -153,8 +154,8 @@ extension SignUp{
         }
     }
     func getGenders(){
-        ViewModel.GetGenders{ [self] state in
-            guard let state = state else{
+        ViewModel.GetGenders{ [weak self]state in
+            guard let self = self, let state = state else{
                 return
             }
             
@@ -182,8 +183,8 @@ extension SignUp{
         ViewModel.genderId = GenderId
         ViewModel.pharmacyCode = TFCode.text
         
-        ViewModel.SignUp{[self] state in
-            guard let state = state else{
+        ViewModel.SignUp{[weak self] state in
+            guard let self = self,let state = state else{
                 return
             }
             switch state {

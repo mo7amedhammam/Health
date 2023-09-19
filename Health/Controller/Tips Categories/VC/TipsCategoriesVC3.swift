@@ -9,20 +9,19 @@ import UIKit
 
 class TipsCategoriesVC3: UIViewController {
     
-    
     @IBOutlet weak var LaTitleBare: UILabel!
     @IBOutlet weak var TVScreen: UITableView!
     
-    
+    var categoryId:Int?
+    var LaTitle : String?
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         // Do any additional setup after loading the view.
+        LaTitleBare.text = LaTitle
         TVScreen.dataSource = self
         TVScreen.delegate   = self
         TVScreen.registerCellNib(cellClass: TipsCategories3TVCell.self)
         TVScreen.reloadData()
-        
     }
     
     
@@ -30,7 +29,8 @@ class TipsCategoriesVC3: UIViewController {
     }
     
     @IBAction func BUBack(_ sender: Any) {
-        self.dismiss(animated: true)
+//        self.dismiss(animated: true)
+        self.navigationController?.popViewController(animated: true)
     }
     
 }

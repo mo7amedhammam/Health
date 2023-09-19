@@ -167,7 +167,8 @@ extension ProfileVC : UITableViewDataSource , UITableViewDelegate {
 // -- functions --
 extension ProfileVC {
     func GetMyProfile(){
-        ViewModel.GetMyProfile {[self] state in
+        ViewModel.GetMyProfile {[weak self] state in
+            guard let self = self else{return}
             guard let state = state else{
                 return
             }

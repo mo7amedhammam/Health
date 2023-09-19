@@ -186,7 +186,8 @@ extension NotificationVC {
     
     func getNotifications() {
         
-        ViewModel.GetNotifications { [self] state in
+        ViewModel.GetNotifications { [weak self] state in
+            guard let self = self else{return}
             guard let state = state else{
                 return
             }
