@@ -24,7 +24,6 @@ class TipsCategoriesVC2: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setInits()
-        LaTitleBare.text = LaTitle
     }
     
     @IBAction func BUNoti(_ sender: Any) {
@@ -34,10 +33,7 @@ class TipsCategoriesVC2: UIViewController {
 //        self.dismiss(animated: true)
         self.navigationController?.popViewController(animated: true)
     }
-    
 }
-
-
 
 extension TipsCategoriesVC2 : UICollectionViewDataSource , UICollectionViewDelegate , UICollectionViewDelegateFlowLayout {
     
@@ -71,13 +67,12 @@ extension TipsCategoriesVC2 : UICollectionViewDataSource , UICollectionViewDeleg
         case .MostViewed:
             let model = dataArray?[indexPath.row]
             cell.model = secondVCTipM.init(image: model?.image, title: model?.title,subjectsCount: 0 )
-            
         }
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.frame.size.width / 2 , height: 253)
+        return CGSize(width: (collectionView.frame.size.width / 2) - 10  , height: 253)
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -102,8 +97,6 @@ extension TipsCategoriesVC2 : UICollectionViewDataSource , UICollectionViewDeleg
             vc.categoryId = model.id
             vc.LaTitle = model.tipCategoryTitle
         }
-//        vc.modalPresentationStyle = .fullScreen
-//        self.present(vc, animated: false, completion: nil)
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
@@ -117,10 +110,15 @@ extension TipsCategoriesVC2{
         layout.scrollDirection         = .vertical
         layout.minimumLineSpacing      = 0
         layout.minimumInteritemSpacing = 0
+        layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 10) // Adjust the insets as needed
         CollectionScreen.collectionViewLayout = layout
         CollectionScreen.dataSource = self
         CollectionScreen.delegate = self
         CollectionScreen.registerCell(cellClass: TipsCategories2CVCell.self)
-        CollectionScreen.reloadData()
+        CollectionScreen.transform = CGAffineTransform(scaleX: -1, y: 1) //first tip mirror effect for x -> second in cell
+
+//        CollectionScreen.reloadData()
+        LaTitleBare.text = LaTitle
+
     }
 }

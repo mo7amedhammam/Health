@@ -22,14 +22,18 @@ class TipsCategories2CVCell: UICollectionViewCell {
             guard let model = model else{return}
             LaTitle.text = model.title
             LaCount.text = "\(model.subjectsCount ?? 0) مواضيع"
-            if model.subjectsCount == 0{
-                LaCount.isHidden = true
+            if let img = model.image {
+                //                let processor = SVGImgProcessor() // if receive svg image
+                ImgTipCategory.kf.setImage(with: URL(string:Constants.baseURL + img.validateSlashs()), placeholder: UIImage(named: "person"), options: nil, progressBlock: nil)
             }
+
         }
     }
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        contentView.transform = CGAffineTransform(scaleX: -1, y: 1) //first tip mirror effect for x -> second in cell
+
     }
 
 }
