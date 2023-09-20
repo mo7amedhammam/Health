@@ -10,6 +10,7 @@ import UIKit
 class TipsCategoriesVC1: UIViewController {
     
     @IBOutlet weak var TVScreen: UITableView!
+    let refreshControl = UIRefreshControl()
     
     let ViewModel = TipsVM()
     override func viewDidLoad() {
@@ -19,13 +20,22 @@ class TipsCategoriesVC1: UIViewController {
         TVScreen.delegate   = self
         TVScreen.registerCellNib(cellClass: TipsCategoriesTVCell0.self)
         TVScreen.registerCellNib(cellClass: TipsCategoriesTVCell1.self)
-//        getTipsCategories()
+        // Configure the refresh control
+        refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
+           
+           // Add the refresh control to the table view
+        TVScreen.addSubview(refreshControl)
+        getTipsCategories()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-//        getallTips()
-        getTipsCategories()
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        DispatchQueue.global().asyncAfter(deadline: .now()+1, execute: {[weak self] in
+            guard let self = self else{return}
+            if ViewModel.allTipsResModel?.items == nil || ViewModel.allTipsResModel?.items == [] && Hud.isShowing == false {
+                    getTipsCategories()
+            }
+        })
     }
 }
 
@@ -42,8 +52,8 @@ extension TipsCategoriesVC1 : UITableViewDataSource , UITableViewDelegate {
         switch indexPath.row{
         case 0: // all home -- pagination
             let cell = tableView.dequeueReusableCell(withIdentifier: "TipsCategoriesTVCell0", for: indexPath) as! TipsCategoriesTVCell0
-            cell.ViewModel = ViewModel
             cell.nav = self.navigationController
+            cell.ViewModel = ViewModel
             cell.LaCategoryTitle.text = "تصنيفات النصائح"
             return cell
             
@@ -51,15 +61,7 @@ extension TipsCategoriesVC1 : UITableViewDataSource , UITableViewDelegate {
             let cell = tableView.dequeueReusableCell(withIdentifier: "TipsCategoriesTVCell1", for: indexPath) as! TipsCategoriesTVCell1
             cell.nav = self.navigationController
             cell.tipcategirytype = .Newest
-//            cell.LaCategoryTitle.text = "نصائح حديثة"
-//            cell.moreaction = { [weak self] in
-//                guard let self = self else{return}
-//                guard let vc = initiateViewController(storyboardName: .main, viewControllerIdentifier: TipsCategoriesVC2.self) else {return}
-//                vc.ViewModel = ViewModel
-//                vc.tipcategirytype = .Newest
-//                self.navigationController?.pushViewController(vc, animated: true)
-//            }
-
+            cell.LaCategoryTitle.text = "نصائح حديثة"
             if let model = ViewModel.newestTipsArr {
                 cell.dataArray = model
             }
@@ -69,16 +71,7 @@ extension TipsCategoriesVC1 : UITableViewDataSource , UITableViewDelegate {
             let cell = tableView.dequeueReusableCell(withIdentifier: "TipsCategoriesTVCell1", for: indexPath) as! TipsCategoriesTVCell1
             cell.nav = self.navigationController
             cell.tipcategirytype = .Interesting
-
-//            cell.LaCategoryTitle.text = "نصائح تهمك"
-//            cell.moreaction = { [weak self] in
-//                guard let self = self else{return}
-//                guard let vc = initiateViewController(storyboardName: .main, viewControllerIdentifier: TipsCategoriesVC2.self) else {return}
-//                vc.ViewModel = ViewModel
-//                vc.tipcategirytype = .Interesting
-//                self.navigationController?.pushViewController(vc, animated: true)
-//                
-//            }
+            cell.LaCategoryTitle.text = "نصائح تهمك"
             if let model = ViewModel.interestingTipsArr {
                 cell.dataArray = model
             }
@@ -88,16 +81,7 @@ extension TipsCategoriesVC1 : UITableViewDataSource , UITableViewDelegate {
             let cell = tableView.dequeueReusableCell(withIdentifier: "TipsCategoriesTVCell1", for: indexPath) as! TipsCategoriesTVCell1
             cell.nav = self.navigationController
             cell.tipcategirytype = .MostViewed
-
-//            cell.LaCategoryTitle.text = "النصائح الأكثر مشاهدة"
-//            cell.moreaction = { [weak self] in
-//                guard let self = self else{return}
-//                guard let vc = initiateViewController(storyboardName: .main, viewControllerIdentifier: TipsCategoriesVC2.self) else {return}
-//                vc.ViewModel = ViewModel
-//                vc.tipcategirytype = .MostViewed
-//                self.navigationController?.pushViewController(vc, animated: true)
-//            }
-
+            cell.LaCategoryTitle.text = "النصائح الأكثر مشاهدة"
             if let model = ViewModel.mostViewedTipsArr {
                 cell.dataArray = model
             }
@@ -107,8 +91,8 @@ extension TipsCategoriesVC1 : UITableViewDataSource , UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc = storyboard.instantiateViewController(withIdentifier: "TipsCategoriesVC3") as! TipsCategoriesVC3
+        guard let vc = initiateViewController(storyboardName: .main, viewControllerIdentifier: TipsCategoriesVC3.self) else {return}
+        vc.hidesBottomBarWhenPushed = true
         switch indexPath.row {
         case 0:
             vc.categoryId = ViewModel.allTipsResModel?.items?[indexPath.row].id
@@ -121,7 +105,6 @@ extension TipsCategoriesVC1 : UITableViewDataSource , UITableViewDelegate {
         }
         self.navigationController?.pushViewController(vc, animated: true)
     }
-    
     
 }
 
@@ -147,5 +130,14 @@ extension TipsCategoriesVC1{
                 SimpleAlert.shared.showAlert(title:error.localizedDescription,message:"", viewController: self)
             }
         }
+    }
+    
+    @objc func refreshData() {
+        ViewModel.skipCount = 0
+        // Place your refresh logic here, for example, fetch new data from your data source
+        getTipsCategories()
+
+        // When the refresh operation is complete, endRefreshing() to hide the refresh control
+        refreshControl.endRefreshing()
     }
 }

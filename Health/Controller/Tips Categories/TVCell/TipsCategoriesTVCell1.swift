@@ -12,24 +12,7 @@ class TipsCategoriesTVCell1: UITableViewCell {
     @IBOutlet weak var CollectionCat: UICollectionView!
     @IBOutlet weak var LaCategoryTitle: UILabel!
     var nav : UINavigationController?
-    var tipcategirytype:enumTipsCategories = .All{
-        didSet{
-            switch tipcategirytype {
-            case .All:
-                LaCategoryTitle.text = "تصنيفات النصائح"
-
-            case .Newest:
-                LaCategoryTitle.text = "نصائح حديثة"
-
-            case .Interesting:
-                LaCategoryTitle.text = "نصائح تهمك"
-
-            case .MostViewed:
-                LaCategoryTitle.text = "النصائح الأكثر مشاهدة"
-
-            }
-        }
-    }
+    var tipcategirytype:enumTipsCategories = .All
     
     var dataArray : [TipsNewestM] = []{
         didSet{
@@ -61,6 +44,7 @@ class TipsCategoriesTVCell1: UITableViewCell {
     
     @IBAction func BUMoreFirstCollection(_ sender: Any) {
         guard let vc = initiateViewController(storyboardName: .main, viewControllerIdentifier: TipsCategoriesVC2.self) else {return}
+        vc.hidesBottomBarWhenPushed = true
         vc.tipcategirytype = tipcategirytype
         vc.dataArray = dataArray
 

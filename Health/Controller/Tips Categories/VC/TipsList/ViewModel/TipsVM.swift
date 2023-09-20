@@ -28,6 +28,7 @@ extension TipsVM{
             throw NetworkError.unknown(code: 0, error: "check inputs")
         }
         let parametersarr : [String : Any] =  ["maxResultCount" : maxResultCount ,"skipCount" : skipCount]
+        print("param",parametersarr)
         let target = TipsCategoryServices.GetAllMobile(parameters: parametersarr)
             do {
                  let result = try await BaseNetwork.asyncCallApi(target, BaseResponse<TipsAllM>.self)

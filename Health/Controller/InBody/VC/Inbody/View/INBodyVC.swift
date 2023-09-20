@@ -13,7 +13,7 @@ case image, Pdf
 class INBodyVC: UIViewController {
 
     @IBOutlet weak var TVScreen: UITableView!
-    
+    let refreshControl = UIRefreshControl()
     var imagePickerHelper : ImagePickerHelper?
     var image:UIImage?
 
@@ -33,6 +33,14 @@ class INBodyVC: UIViewController {
         pdfPickerHelper = PDFPickerHelper(viewController: self)
         
         GetCustomerInbodyList()
+        // Configure the refresh control
+        refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
+        
+        // Add the refresh control to the collection view
+        TVScreen.addSubview(refreshControl)
+        
+        // Load your initial data here (e.g., fetchData())
+        refreshData()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -124,6 +132,11 @@ extension INBodyVC{
                 print("")
             }
         }
+    }
+    @objc func refreshData(){
+        ViewModel.skipCount = 0
+        GetCustomerInbodyList()
+        refreshControl.endRefreshing()
     }
    
     func AddInbodyReport(filetype:FileType) {

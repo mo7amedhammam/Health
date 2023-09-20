@@ -48,7 +48,6 @@ class HTBC: UITabBarController  , UITabBarControllerDelegate {
         self.delegate = self
         setupMiddleButton()
         selectedIndex = 4 
-        
     }
     
     override func viewDidLayoutSubviews() {
@@ -58,7 +57,6 @@ class HTBC: UITabBarController  , UITabBarControllerDelegate {
     }
  
     func setupMiddleButton() {
-        
         middleBtn = UIButton(frame: CGRect(x: (self.view.bounds.width / 2)-25, y: -20, width: 50, height: 50))
         //STYLE THE BUTTON YOUR OWN WAY
         middleBtn.backgroundColor = .blue
@@ -72,7 +70,6 @@ class HTBC: UITabBarController  , UITabBarControllerDelegate {
     }
     
     // MARK: - Actions
-    
     @objc private func menuButtonAction(sender: UIButton) {
         selectedIndex = 2
         middleBtn.setImage(UIImage(named: "btnCenterSelected"), for: .normal)
@@ -83,6 +80,7 @@ class HTBC: UITabBarController  , UITabBarControllerDelegate {
         if let index = tabBarController.viewControllers?.firstIndex(of: viewController) {
             print("Selected tab bar item at index \(index)")
             // Perform any actions you want in response to the selection
+            Hud.dismiss(from: self.view)
             middleBtn.setImage(UIImage(named: "btnCenter"), for: .normal)
             if index == 2 {
                 selectedIndex = 2
@@ -92,10 +90,6 @@ class HTBC: UITabBarController  , UITabBarControllerDelegate {
     }
     
 }
-
-
-
-
 
 
 @IBDesignable
