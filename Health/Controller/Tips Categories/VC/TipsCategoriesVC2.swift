@@ -16,6 +16,7 @@ enum enumTipsCategories {
 class TipsCategoriesVC2: UIViewController {
     @IBOutlet weak var LaTitleBare: UILabel!
     @IBOutlet weak var CollectionScreen: UICollectionView!
+    let refreshControl = UIRefreshControl()
     
     var ViewModel : TipsVM?
     var dataArray : [TipsNewestM]?
@@ -100,6 +101,22 @@ extension TipsCategoriesVC2 : UICollectionViewDataSource , UICollectionViewDeleg
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        let model = ViewModel?.allTipsResModel
+        if indexPath.row == (model?.items?.count ?? 0)  - 1 {
+            // Check if the last cell is about to be displayed
+            if let totalCount = model?.totalCount, let itemsCount = model?.items?.count, itemsCount < totalCount {
+                // Load the next page if there are more items to fetch
+                loadNextPage(itemsCount)
+            }
+        }
+    }
+    
+    func loadNextPage(_ skipcount:Int){
+        ViewModel?.skipCount = skipcount
+        getHomeTips()
+    }
 }
 
 // -- functions --
@@ -116,9 +133,46 @@ extension TipsCategoriesVC2{
         CollectionScreen.delegate = self
         CollectionScreen.registerCell(cellClass: TipsCategories2CVCell.self)
         CollectionScreen.transform = CGAffineTransform(scaleX: -1, y: 1) //first tip mirror effect for x -> second in cell
-
-//        CollectionScreen.reloadData()
+        
         LaTitleBare.text = LaTitle
 
+        // Configure the refresh control
+        refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
+
+           // Add the refresh control to the collection view
+        CollectionScreen.addSubview(refreshControl)
+           
+           // Load your initial data here (e.g., fetchData())
+           refreshData()
+
     }
+    
+    
+    func getHomeTips(){
+        Task {
+            do{
+                Hud.showHud(in: self.view)
+                try await ViewModel?.getHomeTips()
+                // Handle success async operations
+                Hud.dismiss(from: self.view)
+                CollectionScreen.reloadData()
+
+            }catch {
+                // Handle any errors that occur during the async operations
+                print("Error: \(error)")
+                Hud.dismiss(from: self.view)
+                SimpleAlert.shared.showAlert(title:error.localizedDescription,message:"", viewController: self)
+            }
+        }
+    }
+    
+    @objc func refreshData() {
+        ViewModel?.skipCount = 0
+        // Place your refresh logic here, for example, fetch new data from your data source
+        getHomeTips()
+
+        // When the refresh operation is complete, endRefreshing() to hide the refresh control
+        refreshControl.endRefreshing()
+    }
+
 }

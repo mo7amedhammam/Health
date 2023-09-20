@@ -41,6 +41,7 @@ class TipsCategoriesTVCell0: UITableViewCell {
     
     @IBAction func BUMore(_ sender: Any) {
         guard let vc = initiateViewController(storyboardName: .main, viewControllerIdentifier: TipsCategoriesVC2.self) else {return}
+        vc.hidesBottomBarWhenPushed = true
         vc.ViewModel = ViewModel
 //        vc.tipcategirytype = .All
         vc.LaTitle = "تصنيفات النصائح"
@@ -79,6 +80,42 @@ extension TipsCategoriesTVCell0 : UICollectionViewDataSource , UICollectionViewD
         nav?.pushViewController(vc, animated: true)
     }
     
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        let model = ViewModel.allTipsResModel
+        if indexPath.row == (model?.items?.count ?? 0)  - 1 {
+            // Check if the last cell is about to be displayed
+            if let totalCount = model?.totalCount, let itemsCount = model?.items?.count, itemsCount < totalCount {
+                // Load the next page if there are more items to fetch
+                loadNextPage(itemsCount)
+            }
+        }
+    }
+    
+    func loadNextPage(_ skipcount:Int){
+        ViewModel.skipCount = skipcount
+        getHomeTips()
+    }
+    
 }
 
+extension TipsCategoriesTVCell0{
+    func getHomeTips(){
+        Task {
+            do{
+                Hud.showHud(in: self.CollectionTips)
+                try await ViewModel.getHomeTips()
+                // Handle success async operations
+                Hud.dismiss(from: self.self.CollectionTips)
+                CollectionTips.reloadData()
+
+            }catch {
+                // Handle any errors that occur during the async operations
+                print("Error: \(error)")
+                Hud.dismiss(from: self.CollectionTips)
+//                SimpleAlert.shared.showAlert(title:error.localizedDescription,message:"", viewController: self)
+            }
+        }
+    }
+
+}
 

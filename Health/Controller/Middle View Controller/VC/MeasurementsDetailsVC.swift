@@ -11,6 +11,7 @@ class MeasurementsDetailsVC: UIViewController {
     
     @IBOutlet weak var LaTitle: UILabel!
     @IBOutlet weak var TVScreen: UITableView!
+    let refreshControl = UIRefreshControl()
     @IBOutlet weak var ViewAddMeasurement: UIView!
     @IBOutlet weak var TFNumMeasure: UITextField!
     @IBOutlet weak var TFDate: UITextField!
@@ -50,6 +51,15 @@ class MeasurementsDetailsVC: UIViewController {
         ViewModel.dateFrom = nil
         ViewModel.dateTo   = nil
         getDataNormalRange()
+        
+        // Configure the refresh control
+        refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
+        
+        // Add the refresh control to the collection view
+        TVScreen.addSubview(refreshControl)
+        
+        // Load your initial data here (e.g., fetchData())
+        refreshData()
         
     }
     
@@ -171,7 +181,6 @@ extension MeasurementsDetailsVC {
     }
     
     func getDataMeasurement() {
-//        ViewModel.ArrMeasurement = nil
         ViewModel.GetMyMedicalMeasurements { [weak self] state in
             guard let self = self else{return}
             guard let state = state else{
@@ -198,9 +207,14 @@ extension MeasurementsDetailsVC {
         }
     }
     
+    @objc func refreshData(){
+        ViewModel.skipCount = 0
+        getDataMeasurement()
+        refreshControl.endRefreshing()
+    }
+    
     
     func CreateMeasurement () {
-        
         ViewModel.CreateMedicalMeasurements { [weak self] state in
             guard let self = self,let state = state else{
                 return

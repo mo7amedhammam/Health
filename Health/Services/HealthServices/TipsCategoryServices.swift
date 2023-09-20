@@ -13,6 +13,9 @@ enum TipsCategoryServices {
     case GetTipNewest
     case GetTipInterestYou
     case GetTipMostViewed
+    
+    case getTipsByCategory(parameters : [String:Any])
+    case getTipDetails(parameters : [String:Any])
 }
 
 
@@ -27,25 +30,33 @@ extension TipsCategoryServices: TargetType {
             return EndPoints.GetTipInterestYou.rawValue
         case .GetTipMostViewed:
             return EndPoints.GetTipMostViewed.rawValue
+        case .getTipsByCategory:
+            return EndPoints.GetByCategory.rawValue
+        case .getTipDetails:
+            return EndPoints.GetDetail.rawValue
         }
     }
     
     var method: Alamofire.HTTPMethod {
         switch self {
-    
-        case .GetAllMobile:
+        case .GetAllMobile,
+                .getTipsByCategory:
             return .post
         case .GetTipNewest,
                 .GetTipInterestYou,
-                .GetTipMostViewed:
+                .GetTipMostViewed,
+                .getTipDetails:
             return .get
         }
     }
     
     var parameter: parameterType {
         switch self {
-        case .GetAllMobile(parameters: let parameters):
+        case .GetAllMobile(parameters: let parameters),
+                .getTipsByCategory(parameters: let parameters):
             return .parameterRequest(Parameters: parameters, Encoding: encoding)
+        case .getTipDetails(parameters: let parameters):
+            return .BodyparameterRequest(Parameters:parameters, Encoding: encoding)
         case .GetTipNewest,
                 .GetTipInterestYou,
                 .GetTipMostViewed:

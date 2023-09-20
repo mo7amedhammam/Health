@@ -10,7 +10,7 @@ import UIKit
 class NotificationVC: UIViewController {
     
     @IBOutlet weak var TVScreen: UITableView!
-    
+    let refreshControl = UIRefreshControl()
     @IBOutlet weak var ViewAddNewNotification: UIView!
     @IBOutlet weak var TFStartDate: UITextField!
     @IBOutlet weak var TFClock: UITextField!
@@ -59,6 +59,16 @@ class NotificationVC: UIViewController {
         ViewModel.customerId =  Helper.getUser()?.id // they take it from token
         getNotifications()
         
+        
+        // Configure the refresh control
+        refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
+        
+        // Add the refresh control to the collection view
+        TVScreen.addSubview(refreshControl)
+        
+        // Load your initial data here (e.g., fetchData())
+        refreshData()
+
     }
     
     @objc private func onDateValueChanged(_ datePicker: UIDatePicker) {
@@ -210,7 +220,11 @@ extension NotificationVC {
         }
     }
     
-    
+    @objc func refreshData(){
+        ViewModel.skipCount = 0
+        getNotifications()
+        refreshControl.endRefreshing()
+    }
 }
 
 

@@ -10,7 +10,7 @@ import UIKit
 class MedicationScheduleVC: UIViewController {
 
     @IBOutlet weak var TVScreen: UITableView!
-
+    let refreshControl = UIRefreshControl()
     let ViewModel = MedicationScheduleVM()
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,6 +20,15 @@ class MedicationScheduleVC: UIViewController {
         TVScreen.delegate = self
         TVScreen.registerCellNib(cellClass: MedicationScheduleTVCell.self)
         GetMedicationSchedule()
+        
+        // Configure the refresh control
+        refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
+        
+        // Add the refresh control to the collection view
+        TVScreen.addSubview(refreshControl)
+        
+        // Load your initial data here (e.g., fetchData())
+        refreshData()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -94,7 +103,6 @@ extension MedicationScheduleVC{
             case .success:
                 Hud.dismiss(from: self.view)
                 print(state)
-// -- go to home
                 TVScreen.reloadData()
                 
             case .error(_,let error):
@@ -106,4 +114,11 @@ extension MedicationScheduleVC{
             }
         }
     }
+    
+    @objc func refreshData(){
+        ViewModel.skipCount = 0
+        GetMedicationSchedule()
+        refreshControl.endRefreshing()
+    }
+    
 }
