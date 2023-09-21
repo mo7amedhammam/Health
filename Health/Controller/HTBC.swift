@@ -47,13 +47,16 @@ class HTBC: UITabBarController  , UITabBarControllerDelegate {
         
         self.delegate = self
         setupMiddleButton()
-        selectedIndex = 4 
+        selectedIndex = 4
+        
+        
+        
     }
     
     override func viewDidLayoutSubviews() {
         super.viewWillLayoutSubviews()
-        tabBar.frame.size.height = 90
-        tabBar.frame.origin.y = view.frame.height - 90
+        tabBar.frame.size.height = 60
+        tabBar.frame.origin.y = view.frame.height - 60
     }
  
     func setupMiddleButton() {

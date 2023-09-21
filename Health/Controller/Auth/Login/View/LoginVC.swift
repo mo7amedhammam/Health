@@ -25,6 +25,7 @@ class LoginVC: UIViewController , UITextFieldDelegate {
         TFPhone.delegate = self
         TFPassword.delegate = self
         BtnPhone.isHidden = true
+        hideKeyboardWhenTappedAround()
     }
     
     @IBAction func BUBack(_ sender: Any) {

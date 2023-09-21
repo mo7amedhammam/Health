@@ -25,3 +25,4 @@ struct InbodyListItemM: Codable,Equatable {
        case customerName,createdByName, date, comment
    }
 }
+

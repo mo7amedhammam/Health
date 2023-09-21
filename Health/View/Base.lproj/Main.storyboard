@@ -2388,10 +2388,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ai5-jW-c4c">
-                                <rect key="frame" x="0.0" y="0.0" width="393" height="822"/>
+                                <rect key="frame" x="0.0" y="0.0" width="393" height="832"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="W7J-kx-0oa">
-                                        <rect key="frame" x="0.0" y="0.0" width="393" height="822"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="393" height="832"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="c4c-G0-PIT">
                                                 <rect key="frame" x="0.0" y="0.0" width="393" height="200"/>
@@ -2530,10 +2530,10 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xGq-78-1aT">
-                                                <rect key="frame" x="0.0" y="200" width="393" height="622"/>
+                                                <rect key="frame" x="0.0" y="200" width="393" height="632"/>
                                                 <subviews>
                                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" semanticContentAttribute="forceRightToLeft" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="QGt-5n-1YD">
-                                                        <rect key="frame" x="0.0" y="0.0" width="393" height="622"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="393" height="632"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </tableView>
                                                 </subviews>
@@ -2563,7 +2563,7 @@
                             <constraint firstItem="ai5-jW-c4c" firstAttribute="top" secondItem="ezw-ly-IiO" secondAttribute="top" id="5OZ-KF-ok8"/>
                             <constraint firstItem="ai5-jW-c4c" firstAttribute="leading" secondItem="j85-Id-YKe" secondAttribute="leading" id="JMr-Ry-cUN"/>
                             <constraint firstItem="ai5-jW-c4c" firstAttribute="trailing" secondItem="j85-Id-YKe" secondAttribute="trailing" id="g2J-t1-TRG"/>
-                            <constraint firstAttribute="bottom" secondItem="ai5-jW-c4c" secondAttribute="bottom" constant="30" id="z3O-Le-NHx"/>
+                            <constraint firstAttribute="bottom" secondItem="ai5-jW-c4c" secondAttribute="bottom" constant="20" id="z3O-Le-NHx"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="y81-w6-CNw"/>
@@ -3138,10 +3138,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3FD-qM-7rQ">
-                                <rect key="frame" x="0.0" y="0.0" width="393" height="822"/>
+                                <rect key="frame" x="0.0" y="0.0" width="393" height="832"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="OdG-hy-DHK">
-                                        <rect key="frame" x="0.0" y="0.0" width="393" height="822"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="393" height="832"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="b0s-md-sEW">
                                                 <rect key="frame" x="0.0" y="0.0" width="393" height="100"/>
@@ -3188,10 +3188,10 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6lK-EA-Mkq">
-                                                <rect key="frame" x="0.0" y="110" width="393" height="712"/>
+                                                <rect key="frame" x="0.0" y="110" width="393" height="722"/>
                                                 <subviews>
                                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="oeK-js-9ba">
-                                                        <rect key="frame" x="0.0" y="0.0" width="393" height="712"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="393" height="722"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </tableView>
                                                 </subviews>
@@ -3219,7 +3219,7 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="3FD-qM-7rQ" firstAttribute="top" secondItem="skZ-Xc-EgZ" secondAttribute="top" id="0WH-c8-PWk"/>
-                            <constraint firstAttribute="bottom" secondItem="3FD-qM-7rQ" secondAttribute="bottom" constant="30" id="Swj-z5-mgm"/>
+                            <constraint firstAttribute="bottom" secondItem="3FD-qM-7rQ" secondAttribute="bottom" constant="20" id="Swj-z5-mgm"/>
                             <constraint firstItem="3FD-qM-7rQ" firstAttribute="trailing" secondItem="vBd-Nx-LYK" secondAttribute="trailing" id="TID-9z-9tn"/>
                             <constraint firstItem="3FD-qM-7rQ" firstAttribute="leading" secondItem="vBd-Nx-LYK" secondAttribute="leading" id="oPj-na-W3l"/>
                         </constraints>
@@ -4010,10 +4010,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bo7-HF-aMq">
-                                <rect key="frame" x="0.0" y="0.0" width="393" height="822"/>
+                                <rect key="frame" x="0.0" y="0.0" width="393" height="832"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="zYf-yG-HdV">
-                                        <rect key="frame" x="0.0" y="0.0" width="393" height="822"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="393" height="832"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="f3m-4U-WLb">
                                                 <rect key="frame" x="0.0" y="0.0" width="393" height="100"/>
@@ -4131,10 +4131,10 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="b9S-p7-P2L">
-                                                <rect key="frame" x="0.0" y="190" width="393" height="632"/>
+                                                <rect key="frame" x="0.0" y="190" width="393" height="642"/>
                                                 <subviews>
                                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="by5-67-jzn">
-                                                        <rect key="frame" x="0.0" y="0.0" width="393" height="632"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="393" height="642"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </tableView>
                                                 </subviews>
@@ -4149,10 +4149,10 @@
                                         </subviews>
                                     </stackView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="brg-SS-GKO">
-                                        <rect key="frame" x="0.0" y="0.0" width="393" height="822"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="393" height="832"/>
                                         <subviews>
                                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="38V-OF-bCf">
-                                                <rect key="frame" x="15" y="111" width="363" height="600"/>
+                                                <rect key="frame" x="15" y="116" width="363" height="600"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="GFc-pG-jV4">
                                                         <rect key="frame" x="25" y="25" width="313" height="550"/>
@@ -4678,10 +4678,10 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="brf-hR-Xxp">
-                                        <rect key="frame" x="0.0" y="0.0" width="393" height="822"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="393" height="832"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3p0-pd-6py">
-                                                <rect key="frame" x="0.0" y="0.0" width="393" height="822"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="393" height="832"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                 <connections>
@@ -4689,7 +4689,7 @@
                                                 </connections>
                                             </button>
                                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6bc-M2-Ii9">
-                                                <rect key="frame" x="20" y="211" width="353" height="400"/>
+                                                <rect key="frame" x="20" y="216" width="353" height="400"/>
                                                 <subviews>
                                                     <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" style="inline" translatesAutoresizingMaskIntoConstraints="NO" id="mh4-6H-ybo">
                                                         <rect key="frame" x="10" y="10" width="333" height="380"/>
@@ -4746,7 +4746,7 @@
                             <constraint firstItem="bo7-HF-aMq" firstAttribute="trailing" secondItem="tc6-Aa-mi5" secondAttribute="trailing" id="0yE-40-72e"/>
                             <constraint firstItem="bo7-HF-aMq" firstAttribute="leading" secondItem="tc6-Aa-mi5" secondAttribute="leading" id="Hx2-kB-r2C"/>
                             <constraint firstItem="bo7-HF-aMq" firstAttribute="top" secondItem="xPk-ND-9al" secondAttribute="top" id="UuP-sn-izz"/>
-                            <constraint firstAttribute="bottom" secondItem="bo7-HF-aMq" secondAttribute="bottom" constant="30" id="p3I-y2-3xS"/>
+                            <constraint firstAttribute="bottom" secondItem="bo7-HF-aMq" secondAttribute="bottom" constant="20" id="p3I-y2-3xS"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="O7q-DZ-hMu"/>
@@ -5085,7 +5085,7 @@
                                                                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="MTB-6O-Ry1">
                                                                                                         <rect key="frame" x="15" y="15" width="363" height="157"/>
                                                                                                         <subviews>
-                                                                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10 نصائح لتحسين صحة القلب والوقاية من أمراض الأوعية" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YpJ-IT-A8h">
+                                                                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="نصيحة" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YpJ-IT-A8h">
                                                                                                                 <rect key="frame" x="0.0" y="0.0" width="363" height="97"/>
                                                                                                                 <fontDescription key="fontDescription" name="LamaSans-SemiBold" family="Lama Sans" pointSize="24"/>
                                                                                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -5149,18 +5149,8 @@
                                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="N5E-mG-lTL">
                                                                                 <rect key="frame" x="0.0" y="487" width="393" height="373.66666666666674"/>
                                                                                 <subviews>
-                                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WbR-bm-uAS">
+                                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="تفاصيل " textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WbR-bm-uAS">
                                                                                         <rect key="frame" x="15" y="0.0" width="363" height="353.66666666666669"/>
-                                                                                        <string key="text">هناك العديد من الخطوات التي يمكن اتباعها لتحسين صحة القلب. إليك بعض النصائح:
-ممارسة التمارين الرياضية بانتظام: ينصح بممارسة التمارين الرياضية المعتدلة مثل المشي السريع أو ركوب الدراجة لمدة 30 دقيقة على الأقل في اليوم، خمسة أيام في الأسبوع. ويمكن أيضًا ممارسة التمارين الرياضية الشديدة بشكل يومي لمدة 20 دقيقة.
-الحفاظ على وزن صحي: ينصح بتناول وجبات خفيفة وصحية، وتقليل الدهون المشبعة والأطعمة المالحة، والحفاظ على وزن صحي.
-تناول الأطعمة الصحية: ينصح بتناول الفواكه والخضروات والأطعمة الكاملة والبروتينات النباتية، وتقليل تناول اللحوم الحمراء والمعالجة.
-التحكم بضغط الدم: ينصح بقياس ضغط الدم بانتظام واتباع نظام غذائي صحي وتقليل تناول الملح والمواد المعالجة.
-تجنب التدخين: ينصح بالتوقف عن التدخين أو عدم البدء فيه.
-التعامل مع الإجهاد: ينصح بالتقليل من الإجهاد وممارسة التمارين الهادئة مثل اليوغا أو التأمل.
-الحفاظ على مستويات الكوليسترول الصحية: ينصح بتقليل تناول الدهون المشبعة والكوليسترول والأطعمة المعالجة.
-تناول الأدوية بانتظام: إذا كانت هناك أدوية موصوفة للقلب، فينبغي تناولها بانتظام وفقًا لتعليمات الطبيب.
-هذه بعض النصائح لتحسين صحة القلب. ومع ذلك، يجب دائمًا استشارة الطبيب قبل بدء أي نظام غذائي أو ممارسة تمارين رياضية جديدة.</string>
                                                                                         <fontDescription key="fontDescription" name="LamaSans-Regular" family="Lama Sans" pointSize="14"/>
                                                                                         <color key="textColor" name="main"/>
                                                                                         <nil key="highlightedColor"/>

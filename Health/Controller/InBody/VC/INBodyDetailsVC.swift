@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Photos
 
 class INBodyDetailsVC: UIViewController {
 
@@ -78,7 +79,7 @@ extension INBodyDetailsVC{
             switch result {
             case .success:
                 print("Download successful. File saved at \(destinationURL)")
-                InbodyDownloaded()
+                InbodyDownloaded(filePath: destinationURL)
                 
             case .failure(let error):
                 print("Download failed with error: \(error.localizedDescription)")
@@ -87,13 +88,91 @@ extension INBodyDetailsVC{
         }
     }
     
-    func InbodyDownloaded()  {
-        if let viewDone:ViewDone = showView(fromNib: ViewDone.self, in: self) {
-            viewDone.title = "تم تحمل التقرير بنجاح"
-            viewDone.imgStr = "downloadicon"
-            viewDone.action = {
-                viewDone.removeFromSuperview()
+    func InbodyDownloaded(filePath: URL) {
+        let destinationURL = filePath
+
+        // Check if the file exists at the destination URL
+        if FileManager.default.fileExists(atPath: destinationURL.path) {
+            let fileExtension = destinationURL.pathExtension.lowercased()
+
+            if fileExtension == "jpg" || fileExtension == "jpeg" || fileExtension == "png" {
+                // It's an image file, save it to the photo library
+                PHPhotoLibrary.requestAuthorization { status in
+                    if status == .authorized {
+                        // Save the image to the photo library
+                        PHPhotoLibrary.shared().performChanges {
+                            let creationRequest = PHAssetChangeRequest.creationRequestForAssetFromImage(atFileURL: destinationURL)
+                        } completionHandler: { success, error in
+                            if success {
+                                print("Image saved to photo library successfully.")
+                                DispatchQueue.main.async { [weak self] in
+                                    guard let self = self else { return }
+                                    if let viewDone: ViewDone = showView(fromNib: ViewDone.self, in: self) {
+                                        viewDone.title = "تم تحميل التقرير بنجاح"
+                                        viewDone.imgStr = "downloadicon"
+                                        viewDone.action = {
+                                            viewDone.removeFromSuperview()
+                                        }
+                                    }
+                                }
+                            } else {
+                                // Handle the case where saving the image fails
+                                print("Failed to save image to photo library. Error: \(error?.localizedDescription ?? "")")
+                            }
+                        }
+                    } else {
+                        // Handle the case where the app doesn't have permission to access the photo library
+                        print("App does not have access to the photo library.")
+                    }
+                }
+            } else if fileExtension == "pdf" {
+                // Check if the PDF file is accessible by your app
+                guard FileManager.default.isReadableFile(atPath: destinationURL.path) else {
+                    print("App does not have permission to read the PDF file.")
+                    return
+                }
+                // It's a PDF file, present the document picker
+                let documentPicker = UIDocumentPickerViewController(url: destinationURL, in: .exportToService)
+                documentPicker.delegate = self
+                documentPicker.modalPresentationStyle = .formSheet
+                present(documentPicker, animated: true, completion: nil)
+            } else {
+                // Handle unsupported file types
+                print("Unsupported file type: \(fileExtension)")
             }
+        } else {
+            // Handle the case where the file doesn't exist at the specified URL
+            print("File does not exist at \(destinationURL.path)")
         }
+    }
+    
+}
+
+extension INBodyDetailsVC: UIDocumentPickerDelegate {
+    func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
+        if let pickedURL = urls.first {
+            // Handle the picked URL (e.g., save it to the Files app)
+            savePDFToFilesApp(pickedURL)
+        }
+    }
+
+    func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
+        // Handle the case where the user cancels the document picker
+    }
+    
+    func savePDFToFilesApp(_ pdfURL: URL) {
+        // Handle the saved PDF file here if needed
+        print("PDF file saved: \(pdfURL)")
+
+//        DispatchQueue.main.async { [weak self] in
+//            guard let self = self else { return }
+//            if let viewDone: ViewDone = showView(fromNib: ViewDone.self, in: self) {
+//                viewDone.title = "تم تحميل التقرير بنجاح"
+//                viewDone.imgStr = "downloadicon"
+//                viewDone.action = {
+//                    viewDone.removeFromSuperview()
+//                }
+//            }
+//        }
     }
 }

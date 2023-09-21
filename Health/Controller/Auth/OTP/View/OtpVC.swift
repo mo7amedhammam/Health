@@ -51,8 +51,9 @@ class OtpVC: UIViewController , UITextFieldDelegate {
         self.TFIndex6.addTarget(self, action: #selector(textFieldDidChange(textField:)), for: UIControl.Event.editingChanged)
 
         TFIndex1.becomeFirstResponder()
-
         LaToNum.text = Phonenumber
+        
+        hideKeyboardWhenTappedAround()
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)

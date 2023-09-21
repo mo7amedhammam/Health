@@ -28,7 +28,7 @@ class MeasurementsVC: UIViewController {
         layout.minimumLineSpacing      = 0
         layout.minimumInteritemSpacing = 0
         CollectionScreen.setCollectionViewLayout(layout, animated: true)
-//        CollectionScreen.reloadData()
+        LaName.text = "أهلا \(Helper.getUser()?.name ?? "")"
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -110,6 +110,7 @@ extension MeasurementsVC : UICollectionViewDataSource , UICollectionViewDelegate
         guard let vc = initiateViewController(storyboardName: .main, viewControllerIdentifier: MeasurementsDetailsVC.self) else{return}
         vc.id  =  ViewModel.ArrStats![indexPath.row].medicalMeasurementID!
         vc.num = ViewModel.ArrStats![indexPath.row].measurementsCount!
+        vc.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(vc, animated: true)
     }
     
