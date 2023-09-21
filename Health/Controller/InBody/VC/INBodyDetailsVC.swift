@@ -21,7 +21,6 @@ class INBodyDetailsVC: UIViewController {
         TVScreen.registerCellNib(cellClass: INBodyDetailsTVCell.self)
         TVScreen.reloadData()
         
-//        Show_View_Done(SuperView: self.view, load: true , Stringtitle: "تم تحميل التقرير بنجاح", imgName: "logo")
     }
 
     override func viewWillAppear(_ animated: Bool) {

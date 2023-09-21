@@ -28,7 +28,7 @@ class MeasurementsVC: UIViewController {
         layout.minimumLineSpacing      = 0
         layout.minimumInteritemSpacing = 0
         CollectionScreen.setCollectionViewLayout(layout, animated: true)
-        LaName.text = "أهلا \(Helper.getUser()?.name ?? "")"
+        LaName.text = "\(Helper.getUser()?.name ?? "")"
     }
     
     override func viewWillAppear(_ animated: Bool) {

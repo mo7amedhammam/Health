@@ -133,6 +133,7 @@
 		C85671C02AAF5AEE00E02D75 /* InbodyVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = C85671BF2AAF5AEE00E02D75 /* InbodyVM.swift */; };
 		C85996752AA7553500533C87 /* HUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = C85996742AA7553500533C87 /* HUD.swift */; };
 		C85996772AA7556400533C87 /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = C85996762AA7556400533C87 /* Alert.swift */; };
+		C85F28532ABC7F500093ADFF /* EXUiDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = C85F28522ABC7F500093ADFF /* EXUiDevice.swift */; };
 		C88974052ABAF2AD00C2A948 /* TipsDetailsVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88974042ABAF2AD00C2A948 /* TipsDetailsVM.swift */; };
 		C88995822AA9EDFE002AD812 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88995812AA9EDFE002AD812 /* Strings.swift */; };
 		C88995882AA9F70C002AD812 /* ForgetPasswordM.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88995872AA9F70C002AD812 /* ForgetPasswordM.swift */; };
@@ -303,6 +304,7 @@
 		C85671BF2AAF5AEE00E02D75 /* InbodyVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InbodyVM.swift; sourceTree = "<group>"; };
 		C85996742AA7553500533C87 /* HUD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HUD.swift; sourceTree = "<group>"; };
 		C85996762AA7556400533C87 /* Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
+		C85F28522ABC7F500093ADFF /* EXUiDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EXUiDevice.swift; sourceTree = "<group>"; };
 		C88974042ABAF2AD00C2A948 /* TipsDetailsVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TipsDetailsVM.swift; sourceTree = "<group>"; };
 		C88995812AA9EDFE002AD812 /* Strings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
 		C88995872AA9F70C002AD812 /* ForgetPasswordM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgetPasswordM.swift; sourceTree = "<group>"; };
@@ -640,6 +642,7 @@
 				C80DA9EC2AA4F65300F10808 /* Navigations.swift */,
 				C80DA9EE2AA4F6B000F10808 /* UiWindow.swift */,
 				C88995812AA9EDFE002AD812 /* Strings.swift */,
+				C85F28522ABC7F500093ADFF /* EXUiDevice.swift */,
 			);
 			path = Extentions;
 			sourceTree = "<group>";
@@ -1445,6 +1448,7 @@
 				BBBD00192A73101700F066DF /* Cesar.swift in Sources */,
 				BBBD000D2A73101700F066DF /* Style.swift in Sources */,
 				BBBD00132A73101700F066DF /* ExtentionLocalize.swift in Sources */,
+				C85F28532ABC7F500093ADFF /* EXUiDevice.swift in Sources */,
 				C85996772AA7556400533C87 /* Alert.swift in Sources */,
 				BB1B2FFB2A7EA364001677FD /* INBodyDetailsTVCell.swift in Sources */,
 				C88995902AAA02A2002AD812 /* ChangePasswordM.swift in Sources */,

@@ -55,8 +55,8 @@ class HTBC: UITabBarController  , UITabBarControllerDelegate {
     
     override func viewDidLayoutSubviews() {
         super.viewWillLayoutSubviews()
-        tabBar.frame.size.height = 60
-        tabBar.frame.origin.y = view.frame.height - 60
+        tabBar.frame.size.height = UIDevice.current.hasNotch ? 80 : 60
+        tabBar.frame.origin.y = view.frame.height - (UIDevice.current.hasNotch ? 80 : 60)
     }
  
     func setupMiddleButton() {
