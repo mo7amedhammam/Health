@@ -146,7 +146,6 @@ extension INBodyVC{
 
         case .Pdf:
             ViewModel.TestPdf = pdfURL
-
         }
         ViewModel.Date = Helper.ChangeFormate(NewFormat: "yyyy-MM-dd'T'HH:mm:ss").string(from: Date())
         ViewModel.AddCustomerInbodyReport(fileType:filetype,progressHandler: {[weak self] progress in

@@ -51,10 +51,12 @@ class SignUp: UIViewController  , UITextFieldDelegate{
         
         TFCode.delegate = self
         BtnCode.isHidden = true
+    hideKeyboardWhenTappedAround()
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        DispatchQueue.main.async {
+        super.viewWillAppear(animated)
+        Task {
             self.getDistricts()
             self.getGenders()
         }

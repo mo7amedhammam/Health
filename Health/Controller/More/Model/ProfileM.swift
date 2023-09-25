@@ -13,7 +13,7 @@ struct ProfileM: Codable {
     var code, genderTitle: String?
     var genderID, districtID: Int?
     var address: String?
-    var pharmacyCode: JSONNull?
+    var pharmacyCode: String?
 
     enum CodingKeys: String, CodingKey {
         case id, code, genderTitle, name, mobile

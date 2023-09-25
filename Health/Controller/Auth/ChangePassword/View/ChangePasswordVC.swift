@@ -27,6 +27,7 @@ class ChangePasswordVC: UIViewController  , UITextFieldDelegate {
         TFPassword.delegate = self
         TFNewPassword.delegate = self
         TFRe_Password.delegate = self
+        hideKeyboardWhenTappedAround()
     }
         
     func textFieldDidBeginEditing(_ textField: UITextField) {

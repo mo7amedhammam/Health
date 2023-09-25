@@ -22,7 +22,7 @@ class ForgetPasswordVC: UIViewController , UITextFieldDelegate {
         // Do any additional setup after loading the view.
         TFPassword.delegate = self
         TFRe_Password.delegate = self
-        
+        hideKeyboardWhenTappedAround()
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
