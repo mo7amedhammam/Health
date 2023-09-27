@@ -38,7 +38,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="gvP-qr-ZKf">
-                                <rect key="frame" x="0.0" y="90" width="393" height="655"/>
+                                <rect key="frame" x="0.0" y="90" width="393" height="675"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="FXT-jS-KPx">
                                     <size key="itemSize" width="128" height="128"/>
@@ -49,13 +49,13 @@
                                 <cells/>
                             </collectionView>
                             <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="c0I-bP-9rf" customClass="CustomPageControl" customModule="Health" customModuleProvider="target">
-                                <rect key="frame" x="138.66666666666666" y="760" width="115.66666666666666" height="26"/>
+                                <rect key="frame" x="138.66666666666666" y="780" width="115.66666666666666" height="26"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="26" id="AJh-0T-FHU"/>
                                 </constraints>
                             </pageControl>
                             <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="es9-tw-AG1">
-                                <rect key="frame" x="8" y="753" width="95" height="40"/>
+                                <rect key="frame" x="8" y="773" width="95" height="40"/>
                                 <color key="backgroundColor" name="main"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="95" id="CId-Vs-NzM"/>
@@ -116,7 +116,7 @@
                             <constraint firstItem="c0I-bP-9rf" firstAttribute="centerY" secondItem="es9-tw-AG1" secondAttribute="centerY" id="sEe-nu-NPh"/>
                             <constraint firstItem="Ldq-Ks-jHg" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="srf-Av-kMc"/>
                             <constraint firstItem="c0I-bP-9rf" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="v7b-Xa-cFt"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="es9-tw-AG1" secondAttribute="bottom" constant="25" id="wP5-OV-pER"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="es9-tw-AG1" secondAttribute="bottom" constant="5" id="wP5-OV-pER"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="jPV-9w-Mrz"/>
