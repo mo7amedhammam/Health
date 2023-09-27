@@ -38,7 +38,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="gvP-qr-ZKf">
-                                <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                                <rect key="frame" x="0.0" y="90" width="393" height="655"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="FXT-jS-KPx">
                                     <size key="itemSize" width="128" height="128"/>
@@ -48,19 +48,82 @@
                                 </collectionViewFlowLayout>
                                 <cells/>
                             </collectionView>
+                            <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="c0I-bP-9rf" customClass="CustomPageControl" customModule="Health" customModuleProvider="target">
+                                <rect key="frame" x="138.66666666666666" y="760" width="115.66666666666666" height="26"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="26" id="AJh-0T-FHU"/>
+                                </constraints>
+                            </pageControl>
+                            <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="es9-tw-AG1">
+                                <rect key="frame" x="8" y="753" width="95" height="40"/>
+                                <color key="backgroundColor" name="main"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="95" id="CId-Vs-NzM"/>
+                                    <constraint firstAttribute="height" constant="40" id="k0Y-nm-eoN"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="LamaSans-Bold" family="Lama Sans" pointSize="18"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" title="التالى">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="20"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="BULogin:" destination="moJ-uw-fN9" eventType="touchUpInside" id="cxh-m1-wu2"/>
+                                    <action selector="nextButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="mH8-eF-UCK"/>
+                                </connections>
+                            </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ldq-Ks-jHg">
+                                <rect key="frame" x="0.0" y="0.0" width="393" height="90"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LAi-P4-bgf">
+                                        <rect key="frame" x="10" y="40" width="70" height="40"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="40" id="1pN-J4-T8Q"/>
+                                            <constraint firstAttribute="width" constant="70" id="AEB-Vm-aoI"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="LamaSans-Regular" family="Lama Sans" pointSize="14"/>
+                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                        <state key="normal" title="تخطي">
+                                            <color key="titleColor" red="0.090196078430000007" green="0.078431372550000003" blue="0.20000000000000001" alpha="0.69999999999999996" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="skipButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="7ar-ge-OEu"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="LAi-P4-bgf" secondAttribute="bottom" constant="10" id="6ef-TV-7yk"/>
+                                    <constraint firstItem="LAi-P4-bgf" firstAttribute="leading" secondItem="Ldq-Ks-jHg" secondAttribute="leading" constant="10" id="SPF-gq-WWd"/>
+                                    <constraint firstAttribute="height" constant="90" id="yRE-qr-VOq"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" name="bg"/>
                         <constraints>
-                            <constraint firstItem="gvP-qr-ZKf" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="6IQ-ds-5rK"/>
+                            <constraint firstItem="es9-tw-AG1" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="8" id="1Ps-46-Nxt"/>
                             <constraint firstItem="gvP-qr-ZKf" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="Kqh-J4-dj6"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Ldq-Ks-jHg" secondAttribute="trailing" id="MyO-Bi-aNT"/>
                             <constraint firstItem="gvP-qr-ZKf" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="S9H-pv-DaY"/>
-                            <constraint firstAttribute="bottom" secondItem="gvP-qr-ZKf" secondAttribute="bottom" id="vg4-v2-89Q"/>
+                            <constraint firstItem="gvP-qr-ZKf" firstAttribute="top" secondItem="Ldq-Ks-jHg" secondAttribute="bottom" id="ViX-wd-1NH"/>
+                            <constraint firstItem="es9-tw-AG1" firstAttribute="top" secondItem="gvP-qr-ZKf" secondAttribute="bottom" constant="8" id="Zcf-cL-g7x"/>
+                            <constraint firstItem="Ldq-Ks-jHg" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="oAA-m6-uMP"/>
+                            <constraint firstItem="c0I-bP-9rf" firstAttribute="centerY" secondItem="es9-tw-AG1" secondAttribute="centerY" id="sEe-nu-NPh"/>
+                            <constraint firstItem="Ldq-Ks-jHg" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="srf-Av-kMc"/>
+                            <constraint firstItem="c0I-bP-9rf" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="v7b-Xa-cFt"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="es9-tw-AG1" secondAttribute="bottom" constant="25" id="wP5-OV-pER"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="jPV-9w-Mrz"/>
                     <connections>
                         <outlet property="CollectionSplash" destination="gvP-qr-ZKf" id="KPG-HS-HZM"/>
+                        <outlet property="MoveButton" destination="es9-tw-AG1" id="Hih-pz-ISC"/>
+                        <outlet property="pageControl" destination="c0I-bP-9rf" id="D4g-bo-bX0"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -5438,6 +5501,9 @@
         </scene>
     </scenes>
     <designables>
+        <designable name="c0I-bP-9rf">
+            <size key="intrinsicContentSize" width="115.66666666666667" height="26"/>
+        </designable>
         <designable name="dxe-N1-yU6">
             <size key="intrinsicContentSize" width="-1" height="83"/>
         </designable>
@@ -5447,7 +5513,7 @@
         <image name="back" width="31" height="31"/>
         <image name="bell" width="18" height="21"/>
         <image name="bellwhite" width="18" height="21"/>
-        <image name="chevron.down" catalog="system" width="32" height="32"/>
+        <image name="chevron.down" catalog="system" width="128" height="70"/>
         <image name="chevron.up" catalog="system" width="128" height="70"/>
         <image name="dateicon" width="35" height="34"/>
         <image name="delete-icn" width="26" height="26"/>

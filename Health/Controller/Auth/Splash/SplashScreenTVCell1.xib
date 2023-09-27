@@ -15,9 +15,6 @@
         <array key="LamaSans-Medium.ttf">
             <string>LamaSans-Medium</string>
         </array>
-        <array key="LamaSans-Regular.ttf">
-            <string>LamaSans-Regular</string>
-        </array>
     </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -35,43 +32,17 @@
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="hNc-i5-uCp">
                                 <rect key="frame" x="0.0" y="0.0" width="304" height="603"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Hsy-JB-OHi">
-                                        <rect key="frame" x="0.0" y="0.0" width="304" height="90"/>
-                                        <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="q5M-1q-Rdd">
-                                                <rect key="frame" x="10" y="40" width="70" height="40"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="width" constant="70" id="6Wl-ze-3J1"/>
-                                                    <constraint firstAttribute="height" constant="40" id="uN0-LB-THN"/>
-                                                </constraints>
-                                                <fontDescription key="fontDescription" name="LamaSans-Regular" family="Lama Sans" pointSize="14"/>
-                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                <state key="normal" title="تخطي">
-                                                    <color key="titleColor" red="0.090196078431372548" green="0.078431372549019607" blue="0.20000000000000001" alpha="0.69999999999999996" colorSpace="custom" customColorSpace="sRGB"/>
-                                                </state>
-                                                <connections>
-                                                    <action selector="BUSkip1:" destination="gTV-IL-0wX" eventType="touchUpInside" id="RN2-1W-5Eb"/>
-                                                </connections>
-                                            </button>
-                                        </subviews>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <constraints>
-                                            <constraint firstItem="q5M-1q-Rdd" firstAttribute="leading" secondItem="Hsy-JB-OHi" secondAttribute="leading" constant="10" id="URy-66-uTe"/>
-                                            <constraint firstAttribute="bottom" secondItem="q5M-1q-Rdd" secondAttribute="bottom" constant="10" id="iWQ-Tm-Tfx"/>
-                                            <constraint firstAttribute="height" constant="90" id="yvp-tJ-VG6"/>
-                                        </constraints>
-                                    </view>
                                     <view contentMode="scaleAspectFill" translatesAutoresizingMaskIntoConstraints="NO" id="Zew-qv-blJ">
-                                        <rect key="frame" x="0.0" y="90" width="304" height="473"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="304" height="563"/>
                                         <subviews>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="newonboardbg1,3" translatesAutoresizingMaskIntoConstraints="NO" id="fzx-7x-dIE">
-                                                <rect key="frame" x="0.0" y="0.0" width="289" height="443"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="289" height="533"/>
                                             </imageView>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bZ2-Fp-Z4K">
-                                                <rect key="frame" x="0.0" y="0.0" width="304" height="473"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="304" height="563"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="vxL-aN-9W1">
-                                                        <rect key="frame" x="0.0" y="0.0" width="304" height="473"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="304" height="563"/>
                                                         <subviews>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="V6t-sm-9YO">
                                                                 <rect key="frame" x="0.0" y="0.0" width="304" height="80"/>
@@ -107,7 +78,7 @@
                                                                 </constraints>
                                                             </view>
                                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="newonboard1" translatesAutoresizingMaskIntoConstraints="NO" id="OQu-PY-6wa">
-                                                                <rect key="frame" x="0.0" y="80" width="304" height="393"/>
+                                                                <rect key="frame" x="0.0" y="80" width="304" height="483"/>
                                                             </imageView>
                                                         </subviews>
                                                     </stackView>
