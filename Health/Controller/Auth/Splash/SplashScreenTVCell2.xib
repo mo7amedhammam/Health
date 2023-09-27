@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -13,9 +14,6 @@
         </array>
         <array key="LamaSans-Medium.ttf">
             <string>LamaSans-Medium</string>
-        </array>
-        <array key="LamaSans-Regular.ttf">
-            <string>LamaSans-Regular</string>
         </array>
     </customFonts>
     <objects>
@@ -34,49 +32,21 @@
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="xXt-Ju-T95">
                                 <rect key="frame" x="0.0" y="0.0" width="326" height="648"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NV9-LN-xYb">
-                                        <rect key="frame" x="0.0" y="0.0" width="326" height="90"/>
-                                        <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BTt-zW-nmL">
-                                                <rect key="frame" x="10" y="40" width="70" height="40"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="40" id="bR4-in-bNg"/>
-                                                    <constraint firstAttribute="width" constant="70" id="oWP-Jd-S3R"/>
-                                                </constraints>
-                                                <fontDescription key="fontDescription" name="LamaSans-Regular" family="Lama Sans" pointSize="14"/>
-                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                <state key="normal" title="تخطي">
-                                                    <color key="titleColor" red="0.090196078430000007" green="0.078431372550000003" blue="0.20000000000000001" alpha="0.69999999999999996" colorSpace="custom" customColorSpace="sRGB"/>
-                                                </state>
-                                                <connections>
-                                                    <action selector="BUSkip2:" destination="gTV-IL-0wX" eventType="touchUpInside" id="3TL-Vs-ZWm"/>
-                                                </connections>
-                                            </button>
-                                        </subviews>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="90" id="Ckr-BT-dub"/>
-                                            <constraint firstAttribute="bottom" secondItem="BTt-zW-nmL" secondAttribute="bottom" constant="10" id="WjF-Ih-ToG"/>
-                                            <constraint firstItem="BTt-zW-nmL" firstAttribute="leading" secondItem="NV9-LN-xYb" secondAttribute="leading" constant="10" id="ibW-c5-D2d"/>
-                                        </constraints>
-                                    </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fX5-em-ArJ">
-                                        <rect key="frame" x="0.0" y="90" width="326" height="518"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="326" height="608"/>
                                         <subviews>
-                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo-vector2" translatesAutoresizingMaskIntoConstraints="NO" id="cAh-Fy-XIE">
-                                                <rect key="frame" x="0.0" y="0.0" width="306" height="518"/>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="newonboardbg2" translatesAutoresizingMaskIntoConstraints="NO" id="cAh-Fy-XIE">
+                                                <rect key="frame" x="0.0" y="-65" width="326" height="648"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             </imageView>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7ki-ym-JEs">
-                                                <rect key="frame" x="19" y="0.0" width="297" height="518"/>
+                                                <rect key="frame" x="19" y="0.0" width="297" height="608"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="IZL-6w-4BP">
-                                                        <rect key="frame" x="0.0" y="0.0" width="297" height="518"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="297" height="608"/>
                                                         <subviews>
-                                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="splash2" translatesAutoresizingMaskIntoConstraints="NO" id="24B-fj-Mds">
-                                                                <rect key="frame" x="0.0" y="0.0" width="297" height="398"/>
-                                                            </imageView>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6H7-NR-zDD">
-                                                                <rect key="frame" x="0.0" y="398" width="297" height="120"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="297" height="120"/>
                                                                 <subviews>
                                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="8EJ-y6-fL6">
                                                                         <rect key="frame" x="30" y="0.0" width="237" height="120"/>
@@ -92,7 +62,7 @@
                                                                             </label>
                                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ضع خطة للتمرين والنظام الغذائي الخاص بك للحفاظ على لياقتك" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="erJ-93-Kpl">
                                                                                 <rect key="frame" x="0.0" y="58" width="237" height="62"/>
-                                                                                <fontDescription key="fontDescription" name="LamaSans-Medium" family="Lama Sans" pointSize="20"/>
+                                                                                <fontDescription key="fontDescription" name="LamaSans-Medium" family="Lama Sans" pointSize="18"/>
                                                                                 <color key="textColor" name="main"/>
                                                                                 <nil key="highlightedColor"/>
                                                                             </label>
@@ -108,6 +78,9 @@
                                                                     <constraint firstAttribute="height" constant="120" id="yaP-96-IYR"/>
                                                                 </constraints>
                                                             </view>
+                                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="newonboard2" translatesAutoresizingMaskIntoConstraints="NO" id="24B-fj-Mds">
+                                                                <rect key="frame" x="0.0" y="120" width="297" height="488"/>
+                                                            </imageView>
                                                         </subviews>
                                                     </stackView>
                                                 </subviews>
@@ -123,11 +96,7 @@
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstItem="7ki-ym-JEs" firstAttribute="top" secondItem="fX5-em-ArJ" secondAttribute="top" id="1EY-Vz-wc8"/>
-                                            <constraint firstAttribute="bottom" secondItem="cAh-Fy-XIE" secondAttribute="bottom" id="3nD-9C-gLO"/>
-                                            <constraint firstItem="cAh-Fy-XIE" firstAttribute="top" secondItem="fX5-em-ArJ" secondAttribute="top" id="5Jb-wX-fPp"/>
                                             <constraint firstAttribute="trailing" secondItem="7ki-ym-JEs" secondAttribute="trailing" constant="10" id="Iuf-MF-qxd"/>
-                                            <constraint firstItem="cAh-Fy-XIE" firstAttribute="leading" secondItem="fX5-em-ArJ" secondAttribute="leading" id="Vkr-xx-HYU"/>
-                                            <constraint firstAttribute="trailing" secondItem="cAh-Fy-XIE" secondAttribute="trailing" constant="20" id="XAi-NZ-Crq"/>
                                             <constraint firstItem="7ki-ym-JEs" firstAttribute="leading" secondItem="fX5-em-ArJ" secondAttribute="leading" constant="19" id="hng-oq-AQ9"/>
                                             <constraint firstAttribute="bottom" secondItem="7ki-ym-JEs" secondAttribute="bottom" id="yqO-lx-Gcx"/>
                                         </constraints>
@@ -164,16 +133,16 @@
         </collectionViewCell>
     </objects>
     <resources>
-        <image name="logo-vector2" width="343" height="668"/>
-        <image name="splash2" width="289" height="287"/>
+        <image name="newonboard2" width="375" height="503"/>
+        <image name="newonboardbg2" width="375" height="812"/>
         <namedColor name="171433">
-            <color red="0.090196078431372548" green="0.078431372549019607" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.090000003576278687" green="0.078000001609325409" blue="0.20000000298023224" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="bg">
-            <color red="1" green="0.98431372549019602" blue="0.97254901960784312" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.96100002527236938" green="0.96100002527236938" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="main">
-            <color red="0.1764705882352941" green="0.1764705882352941" blue="0.69803921568627447" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.17599999904632568" green="0.17599999904632568" blue="0.69800001382827759" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
     </resources>
 </document>
