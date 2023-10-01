@@ -87,7 +87,7 @@ extension MeasurementsVC : UICollectionViewDataSource , UICollectionViewDelegate
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MeasurementsCVCell", for: indexPath) as! MeasurementsCVCell
         let model = ViewModel.ArrStats![indexPath.row]
-        
+        print("formatValue : \( ViewModel.ArrStats![indexPath.row].formatValue!)")
         cell.LaTitle.text = model.title
         cell.LaNum.text = "\(model.measurementsCount ?? 0 )"
         cell.LaLastNum.text = model.lastMeasurementValue
@@ -110,6 +110,8 @@ extension MeasurementsVC : UICollectionViewDataSource , UICollectionViewDelegate
         guard let vc = initiateViewController(storyboardName: .main, viewControllerIdentifier: MeasurementsDetailsVC.self) else{return}
         vc.id  =  ViewModel.ArrStats![indexPath.row].medicalMeasurementID!
         vc.num = ViewModel.ArrStats![indexPath.row].measurementsCount!
+        vc.formatValue = ViewModel.ArrStats![indexPath.row].formatValue!
+        print("formatValue : \( ViewModel.ArrStats![indexPath.row].formatValue!)")
         vc.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(vc, animated: true)
     }

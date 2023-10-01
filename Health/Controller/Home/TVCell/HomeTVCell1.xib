@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
+        <capability name="Image references" minToolsVersion="12.0"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="LamaSans-SemiBold.ttf">
+            <string>LamaSans-SemiBold</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="265" id="KGk-i7-Jjw" customClass="HomeTVCell1" customModule="Health" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="265"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="265"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="elb-LS-GOf">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="250"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="UMC-Kd-WHr">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="250"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kvg-ac-YZX">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="60"/>
+                                        <subviews>
+                                            <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="aa1-lP-a4i">
+                                                <rect key="frame" x="0.0" y="0.0" width="310" height="60"/>
+                                                <subviews>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bL5-Kj-gKR">
+                                                        <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="60" id="VPt-rR-AFT"/>
+                                                        </constraints>
+                                                        <color key="tintColor" name="stroke"/>
+                                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                        <state key="normal">
+                                                            <imageReference key="image" image="ellipsis" catalog="system" symbolScale="large"/>
+                                                        </state>
+                                                    </button>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="تصنيفات النصائح" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O7s-rp-EO3">
+                                                        <rect key="frame" x="70" y="0.0" width="240" height="60"/>
+                                                        <fontDescription key="fontDescription" name="LamaSans-SemiBold" family="Lama Sans" pointSize="22"/>
+                                                        <color key="textColor" name="main"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                </subviews>
+                                            </stackView>
+                                        </subviews>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstItem="aa1-lP-a4i" firstAttribute="leading" secondItem="kvg-ac-YZX" secondAttribute="leading" id="a3v-oB-15J"/>
+                                            <constraint firstAttribute="bottom" secondItem="aa1-lP-a4i" secondAttribute="bottom" id="eqL-X5-uS0"/>
+                                            <constraint firstAttribute="trailing" secondItem="aa1-lP-a4i" secondAttribute="trailing" constant="10" id="gj8-GM-SV8"/>
+                                            <constraint firstItem="aa1-lP-a4i" firstAttribute="top" secondItem="kvg-ac-YZX" secondAttribute="top" id="jes-2b-toQ"/>
+                                            <constraint firstAttribute="height" constant="60" id="qqM-zZ-n61"/>
+                                        </constraints>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="y8T-0i-U1b">
+                                        <rect key="frame" x="0.0" y="60" width="320" height="190"/>
+                                        <subviews>
+                                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="CKL-pk-QGO">
+                                                <rect key="frame" x="0.0" y="0.0" width="310" height="190"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="GjK-Ip-I8G">
+                                                    <size key="itemSize" width="128" height="128"/>
+                                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                                </collectionViewFlowLayout>
+                                            </collectionView>
+                                        </subviews>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstItem="CKL-pk-QGO" firstAttribute="leading" secondItem="y8T-0i-U1b" secondAttribute="leading" id="AXn-JK-VRV"/>
+                                            <constraint firstAttribute="bottom" secondItem="CKL-pk-QGO" secondAttribute="bottom" id="Htq-kG-SDR"/>
+                                            <constraint firstAttribute="trailing" secondItem="CKL-pk-QGO" secondAttribute="trailing" constant="10" id="b1C-dS-wDT"/>
+                                            <constraint firstItem="CKL-pk-QGO" firstAttribute="top" secondItem="y8T-0i-U1b" secondAttribute="top" id="kLh-xx-jL4"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="UMC-Kd-WHr" firstAttribute="top" secondItem="elb-LS-GOf" secondAttribute="top" id="4uP-lT-THX"/>
+                            <constraint firstAttribute="bottom" secondItem="UMC-Kd-WHr" secondAttribute="bottom" id="bg1-Es-yMf"/>
+                            <constraint firstItem="UMC-Kd-WHr" firstAttribute="leading" secondItem="elb-LS-GOf" secondAttribute="leading" id="cvi-WL-Nvd"/>
+                            <constraint firstAttribute="height" constant="250" id="flD-bl-0US"/>
+                            <constraint firstAttribute="trailing" secondItem="UMC-Kd-WHr" secondAttribute="trailing" id="gIi-SE-oJN"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="bottom" secondItem="elb-LS-GOf" secondAttribute="bottom" constant="15" id="4TP-ta-tcw"/>
+                    <constraint firstItem="elb-LS-GOf" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="fjx-K1-14T"/>
+                    <constraint firstAttribute="trailing" secondItem="elb-LS-GOf" secondAttribute="trailing" id="olu-Ck-Zxn"/>
+                    <constraint firstItem="elb-LS-GOf" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="qnL-7t-b1r"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <point key="canvasLocation" x="-122.13740458015266" y="96.83098591549296"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="ellipsis" catalog="system" width="128" height="37"/>
+        <namedColor name="main">
+            <color red="0.17599999904632568" green="0.17599999904632568" blue="0.69800001382827759" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="stroke">
+            <color red="0.17599999904632568" green="0.17599999904632568" blue="0.69800001382827759" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>

@@ -18,13 +18,17 @@ class MeasurementsDetailsVC: UIViewController {
     @IBOutlet weak var TVDescription: TextViewWithPlaceholder!
     @IBOutlet weak var ViewSelectDate: UIView!
     @IBOutlet weak var PickerDate: UIDatePicker!
-    
+    @IBOutlet weak var ViewSecondValue: UIView!
+    @IBOutlet weak var TFSecondValue: UITextField!
+
     var id  = 0
     var num = 0
     var TitleMeasurement = ""
     // to fill lable in cell0
     var CellDateFrom = ""
     var CellDateTo   = ""
+    var formatValue = ""
+    var MeasurementCreated = false
     //
     var selectDateFrom = ""
     let formatter = DateFormatter()
@@ -33,6 +37,13 @@ class MeasurementsDetailsVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
+        if formatValue == "" || formatValue == "X" {
+            ViewSecondValue.isHidden = true
+        } else {
+            ViewSecondValue.isHidden = false
+        }
         
         // Do any additional setup after loading the view.
         self.PickerDate.addTarget(self, action: #selector(onDateValueChanged(_:)), for: .valueChanged)
@@ -135,12 +146,28 @@ class MeasurementsDetailsVC: UIViewController {
             self.showAlert(message: "من فضلك أدخل التاريخ")
         } else {
             
-            //            ViewModel.customerId           = Helper.getUser()?.id // they take it from token
-            ViewModel.medicalMeasurementId = id
-            ViewModel.value                = TFNumMeasure.text
-            ViewModel.comment              = TVDescription.text ?? ""
-            ViewModel.measurementDate      = TFDate.text
-            CreateMeasurement ()
+            if formatValue == "" ||  formatValue == "X" {
+                //            ViewModel.customerId           = Helper.getUser()?.id // they take it from token
+                ViewModel.medicalMeasurementId = id
+                ViewModel.value                = TFNumMeasure.text
+                ViewModel.comment              = TVDescription.text ?? ""
+                ViewModel.measurementDate      = TFDate.text
+                CreateMeasurement ()
+            } else {
+                
+                if TFSecondValue.text == "" {
+                    self.showAlert(message: "من فضلك أدخل القياس التالي")
+                } else {
+                    //            ViewModel.customerId           = Helper.getUser()?.id // they take it from token
+                    ViewModel.medicalMeasurementId = id
+                    ViewModel.value                = "\(TFNumMeasure.text!)/\(TFSecondValue.text!)"
+                    ViewModel.comment              = TVDescription.text ?? ""
+                    ViewModel.measurementDate      = TFDate.text
+                    CreateMeasurement ()
+                }
+                
+            }
+          
         }
         
     }
@@ -226,6 +253,9 @@ extension MeasurementsDetailsVC {
                 Hud.dismiss(from: self.view)
             case .success:
                 
+                MeasurementCreated = true
+                refreshData()
+                    
                 ViewAddMeasurement.isHidden = true
                 Hud.dismiss(from: self.view)
                 SimpleAlert.shared.showAlert(title: "تم تسجيل قياس جديد"  ,message: "", viewController: self)
@@ -503,7 +533,13 @@ extension MeasurementsDetailsVC : UITableViewDataSource , UITableViewDelegate , 
             
             cell.LaNaturalFrom.text = "من : \(ViewModel.ArrNormalRange?.fromValue ?? "" )"
             cell.LaNaturalTo.text   = "الي : \(ViewModel.ArrNormalRange?.toValue ?? "" )"
-            cell.LaNum.text = "\(num)"
+            
+            if MeasurementCreated == true {
+                cell.LaNum.text = "\(num + 1)"
+                MeasurementCreated = false
+            } else {
+                cell.LaNum.text = "\(num)"
+            }
             
             return cell
             
