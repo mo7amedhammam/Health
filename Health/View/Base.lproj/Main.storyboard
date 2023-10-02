@@ -1180,6 +1180,7 @@
                     <connections>
                         <outlet property="BtnLogin" destination="xnA-Jw-hDh" id="9KF-y9-PFR"/>
                         <outlet property="BtnPhone" destination="uFm-5u-7w8" id="dqW-TD-aU3"/>
+                        <outlet property="BtnSecurePassword" destination="Pzn-cW-gq3" id="cJZ-Nw-tL5"/>
                         <outlet property="TFPassword" destination="euG-K0-xBZ" id="jT3-we-3XM"/>
                         <outlet property="TFPhone" destination="IGj-e5-pQg" id="MoZ-OS-jq6"/>
                         <outlet property="ViewPassword" destination="xcH-Kk-rxt" id="2qF-7W-pZ1"/>

@@ -15,6 +15,8 @@ class LoginVC: UIViewController , UITextFieldDelegate {
     
     @IBOutlet weak var TFPassword: UITextField!
     @IBOutlet weak var ViewPassword: UIView!
+    @IBOutlet weak var BtnSecurePassword: UIButton!
+    
     @IBOutlet weak var BtnLogin: UIButton!
     
     let loginViewModel = LoginVM()
@@ -60,14 +62,8 @@ class LoginVC: UIViewController , UITextFieldDelegate {
     }
     
     @IBAction func BUShowPassword(_ sender: UIButton) {
-        
-        if sender.isSelected == false {
-            sender.isSelected = true
-            TFPassword.isSecureTextEntry = false
-        } else {
-            sender.isSelected = false
-            TFPassword.isSecureTextEntry = true
-        }
+            sender.isSelected.toggle()
+            TFPassword.isSecureTextEntry.toggle()
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
@@ -75,10 +71,13 @@ class LoginVC: UIViewController , UITextFieldDelegate {
         if textField == TFPhone {
             TFPhone.textColor = UIColor(named: "main")
             ViewPhoneNum.borderColor = UIColor(named: "stroke")
-            
+            ViewPhoneNum.backgroundColor = .clear
+
         } else if textField == TFPassword {
             ViewPassword.borderColor = UIColor(named: "stroke")
             TFPassword.textColor = UIColor(named: "main")
+            ViewPassword.backgroundColor = .clear
+            BtnSecurePassword.tintColor = UIColor(named: "stroke")
         } else {
         }
     }
@@ -86,15 +85,22 @@ class LoginVC: UIViewController , UITextFieldDelegate {
     func textFieldDidEndEditing(_ textField: UITextField) {
         
         if textField == TFPhone {
-            if TFPhone.text?.count == 0 {
+            if TFPhone.text?.count ?? 0 < 11  {
                 BtnPhone.isHidden = true
+                TFPhone.textColor = UIColor(named: "wrong")
+                ViewPhoneNum.borderColor = UIColor(named: "wrong")
+                ViewPhoneNum.backgroundColor = UIColor(named: "halfwrong")
+
             } else {
                 BtnPhone.isHidden = false
             }
             
         } else  if textField == TFPassword {
-            if TFPassword.text?.count == 0 {
-                
+            if TFPassword.text?.count ?? 0 < 5 {
+                TFPassword.textColor = UIColor(named: "wrong")
+                ViewPassword.borderColor = UIColor(named: "wrong")
+                ViewPassword.backgroundColor = UIColor(named: "halfwrong")
+                BtnSecurePassword.tintColor = UIColor(named: "wrong")
             } else {
             }
             
