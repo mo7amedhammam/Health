@@ -18,7 +18,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         window?.overrideUserInterfaceStyle = .light
 //        guard let _ = (scene as? UIWindowScene) else { return }
-        Helper.onBoardOpened(opened: false)
         
 //        MARK: -- Programatically --
         guard let WindowScene = (scene as? UIWindowScene) else { return }

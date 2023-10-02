@@ -137,7 +137,7 @@ extension ProfileVC : UITableViewDataSource , UITableViewDelegate {
         } else if indexPath.row == 4 { // - medecines notifications -
 
         } else if indexPath.row == 5 { // - "نصائح طبية" -
-            
+            PushTo(destination: TipsCategoriesVC1.self)
         } else if indexPath.row == 6 { // - inbody -
             PushTo(destination: INBodyVC.self)
             

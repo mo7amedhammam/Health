@@ -15,28 +15,35 @@ class LoginVC: UIViewController , UITextFieldDelegate {
     
     @IBOutlet weak var TFPassword: UITextField!
     @IBOutlet weak var ViewPassword: UIView!
+    @IBOutlet weak var BtnLogin: UIButton!
     
     let loginViewModel = LoginVM()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
         TFPhone.delegate = self
         TFPassword.delegate = self
+        TFPhone.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+        TFPassword.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+        
         BtnPhone.isHidden = true
+        BtnLogin.isEnabled = false
+        BtnLogin.alpha = BtnLogin.isEnabled ? 1.0 : 0.5
+        
         hideKeyboardWhenTappedAround()
     }
     
     @IBAction func BUBack(_ sender: Any) {
-//        self.dismiss(animated: true)
+        //        self.dismiss(animated: true)
     }
     
     @IBAction func BUForgetPassword(_ sender: Any) {
         if TFPhone.text != ""{
-             guard let vc = initiateViewController(storyboardName: .main, viewControllerIdentifier: OtpVC.self) else{return}
-              vc.Phonenumber = TFPhone.text
-              navigationController?.pushViewController(vc, animated: true)
+            guard let vc = initiateViewController(storyboardName: .main, viewControllerIdentifier: OtpVC.self) else{return}
+            vc.Phonenumber = TFPhone.text
+            navigationController?.pushViewController(vc, animated: true)
         } else {
             SimpleAlert.shared.showAlert(title: "اكتب رقم موبايل الأول", message: "", viewController: self)
             return
@@ -49,7 +56,7 @@ class LoginVC: UIViewController , UITextFieldDelegate {
     
     @IBAction func BUSignUp(_ sender: Any) {
         guard let vc = initiateViewController(storyboardName: .main, viewControllerIdentifier: SignUp.self) else{return}
-         navigationController?.pushViewController(vc, animated: true)
+        navigationController?.pushViewController(vc, animated: true)
     }
     
     @IBAction func BUShowPassword(_ sender: UIButton) {
@@ -95,6 +102,34 @@ class LoginVC: UIViewController , UITextFieldDelegate {
         }
     }
     
+    fileprivate func enableBtnLogin(isactive:Bool) {
+        // Enable or disable BtnLogin based on conditions
+        BtnLogin.isEnabled = isactive
+        BtnLogin.alpha = BtnLogin.isEnabled ? 1.0 : 0.5
+    }
+    
+    @objc func textFieldDidChange(_ textField: UITextField) {
+        let isPhoneValid = TFPhone.text?.count == 11 // Check if TFPhone has 11 digits
+        let isPasswordValid = TFPassword.hasText // Check if TFPassword is not empty
+        
+        enableBtnLogin(isactive: isPhoneValid && isPasswordValid)
+    }
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        if textField == TFPhone {
+            // Calculate the new length of the text after applying the replacement string
+            let currentText = textField.text ?? ""
+            let newText = (currentText as NSString).replacingCharacters(in: range, with: string)
+            
+            // Check if the new length exceeds the allowed limit (11 digits)
+            if newText.count > 11 {
+                return false
+            }
+        }
+        return true
+    }
+    
+    
 }
 
 
@@ -117,7 +152,7 @@ extension LoginVC{
             case .success:
                 Hud.dismiss(from: self.view)
                 print(state)
-// -- go to home
+                // -- go to home
                 GoHome()
             case .error(_,let error):
                 Hud.dismiss(from: self.view)
@@ -128,7 +163,7 @@ extension LoginVC{
             }
         }
     }
-
+    
     func GoHome(){
         Helper.saveUser(user: loginViewModel.usermodel ?? LoginM())
         guard let vc = initiateViewController(storyboardName: .main, viewControllerIdentifier: HTBC.self)else{return}

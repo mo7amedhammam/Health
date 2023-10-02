@@ -37,11 +37,14 @@ class TipsCategoriesVC1: UIViewController {
             }
         })
     }
+    
+    @IBAction func BackBtnAction(_ sender: Any) {
+        navigationController?.popViewController(animated: true)
+    }
 }
 
 
 extension TipsCategoriesVC1 : UITableViewDataSource , UITableViewDelegate {
-    
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 4
