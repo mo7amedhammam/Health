@@ -10,6 +10,8 @@ import Alamofire
 
 enum NotificationServices {
     case GetNotification(parameters : [String:Any])
+    case CreateNotification (parameters : [String:Any])
+    case GetDrug
 }
 
 
@@ -18,6 +20,10 @@ extension NotificationServices: TargetType {
         switch self {
         case .GetNotification :
             return EndPoints.GetNotification.rawValue
+        case .CreateNotification(parameters: _):
+            return EndPoints.CreateNotification.rawValue
+        case .GetDrug:
+            return EndPoints.GetDrug.rawValue
         }
     }
     
@@ -25,6 +31,10 @@ extension NotificationServices: TargetType {
         switch self {
         case .GetNotification :
             return .post
+        case .CreateNotification(parameters: _):
+            return .post
+        case .GetDrug:
+            return .get
         }
     }
     
@@ -32,6 +42,10 @@ extension NotificationServices: TargetType {
         switch self {
         case .GetNotification(parameters: let parameter) :
             return .parameterRequest(Parameters: parameter, Encoding: encoding)
+        case .CreateNotification(parameters: let parameters):
+            return .parameterRequest(Parameters: parameters, Encoding: encoding)
+        case .GetDrug:
+            return .plainRequest
         }
     }
     

@@ -77,3 +77,4 @@ struct ModelCreateMeasurements: Codable {
         case value, comment, id, date, medicalMeasurementTitle, medicalMeasurementImage, createdBy, createdByName
     }
 }
+

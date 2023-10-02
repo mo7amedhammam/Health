@@ -63,4 +63,7 @@ enum EndPoints: String {
     case GetTipMostViewed = "Tip/GetTipMostViewed"
     case GetByCategory = "Tip/GetByCategory"
     case GetDetail = "Tip/GetDetail"
+    case CreateNotification = "CustomerPrescriptionDrug/Create"
+    case GetDrug = "Drug/Get"
+    
 }
