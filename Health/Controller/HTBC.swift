@@ -6,6 +6,23 @@
 //
 
 import UIKit
+class CustomTabBar1: UITabBar {
+    override func layoutSubviews() {
+        super.layoutSubviews()
+
+        // Adjust the positions of tab bar items here
+        for subview in subviews {
+            if let tabBarButtonClass = NSClassFromString("UITabBarButton") {
+                if subview.isKind(of: tabBarButtonClass) {
+                    // Customize the positioning of subview (tab bar item)
+                    // For example, you can adjust the image and title positions
+                    subview.transform = CGAffineTransform(translationX: 0, y: 5)
+                }
+            }
+        }
+    }
+}
+
 
 class HTBC: UITabBarController  , UITabBarControllerDelegate {
     
@@ -14,42 +31,34 @@ class HTBC: UITabBarController  , UITabBarControllerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        if let tabBarItem0 = self.tabBar.items?[0] {
-            tabBarItem0.image = UIImage(named: "tab5")
-            tabBarItem0.selectedImage = UIImage(named: "")
-            tabBarItem0.title = ""
-        }
         
-        if let tabBarItem1 = self.tabBar.items?[1] {
-            tabBarItem1.image = UIImage(named: "tab4")
-            tabBarItem1.selectedImage = UIImage(named: "")
-            tabBarItem1.title = ""
-        }
-        
-        if let tabBarItem2 = self.tabBar.items?[2] {
-            tabBarItem2.image = UIImage(named: "")
-            tabBarItem2.selectedImage = UIImage(named: "")
-            tabBarItem2.title = ""
-        }
-        
-        
-        if let tabBarItem3 = self.tabBar.items?[3] {
-            tabBarItem3.image = UIImage(named: "tab2")
-            tabBarItem3.selectedImage = UIImage(named: "")
-            tabBarItem3.title = ""
-        }
-        
-        if let tabBarItem4 = self.tabBar.items?[4] {
-            tabBarItem4.image = UIImage(named: "tab1")
-            tabBarItem4.selectedImage = UIImage(named: "")
-            tabBarItem4.title = ""
-        }
+        if let items = tabBar.items {
+            items[0].title = ""
+            items[0].image = UIImage(named: "tab5")
+            items[0].selectedImage = UIImage(named: "")
+
+            items[1].title = ""
+            items[1].image = UIImage(named: "tab4")
+            items[1].selectedImage = UIImage(named: "")
+            
+            items[2].title = ""
+            items[2].image = UIImage(named: "tab3")
+            items[2].selectedImage = UIImage(named: "")
+            
+            items[3].title = ""
+            items[3].image = UIImage(named: "tab2")
+            items[3].selectedImage = UIImage(named: "")
+            
+            items[4].title = ""
+            items[4].image = UIImage(named: "tab1")
+            items[4].selectedImage = UIImage(named: "")
+
+                  // Add more items as needed
+              }
         
         self.delegate = self
         setupMiddleButton()
         selectedIndex = 4
-        
-        
         
     }
     

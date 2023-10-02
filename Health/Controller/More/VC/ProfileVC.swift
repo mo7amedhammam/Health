@@ -35,7 +35,8 @@ class ProfileVC: UIViewController {
 extension ProfileVC : UITableViewDataSource , UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 12
+//        return 12
+        return 8
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -49,68 +50,68 @@ extension ProfileVC : UITableViewDataSource , UITableViewDelegate {
             }
             return cell
             
+//        } else if indexPath.row == 1 {
+//
+//            let cell = tableView.dequeueReusableCell(withIdentifier: "ProfileTVCellMiddle", for: indexPath) as! ProfileTVCellMiddle
+//            cell.LaTitle.text = "الرئيسية"
+//            cell.IVPhoto.image = UIImage(named: "user")
+//            return cell
+//
+//        } else if indexPath.row == 2 {
+//
+//            let cell = tableView.dequeueReusableCell(withIdentifier: "ProfileTVCellMiddle", for: indexPath) as! ProfileTVCellMiddle
+//            cell.LaTitle.text = "قياساتي"
+//            cell.IVPhoto.image = UIImage(named: "measurement")
+//            return cell
+//
+//        } else if indexPath.row == 3 {
+//
+//            let cell = tableView.dequeueReusableCell(withIdentifier: "ProfileTVCellMiddle", for: indexPath) as! ProfileTVCellMiddle
+//            cell.LaTitle.text = "جداول الأدوية الشهرية"
+//            cell.IVPhoto.image = UIImage(named: "table")
+//            return cell
+//
+//        } else if indexPath.row == 4 {
+//
+//            let cell = tableView.dequeueReusableCell(withIdentifier: "ProfileTVCellMiddle", for: indexPath) as! ProfileTVCellMiddle
+//            cell.LaTitle.text = "تنبيهات الأدوية"
+//            cell.IVPhoto.image = UIImage(named: "noti")
+//            return cell
+            
         } else if indexPath.row == 1 {
-            
-            let cell = tableView.dequeueReusableCell(withIdentifier: "ProfileTVCellMiddle", for: indexPath) as! ProfileTVCellMiddle
-            cell.LaTitle.text = "الرئيسية"
-            cell.IVPhoto.image = UIImage(named: "user")
-            return cell
-            
-        } else if indexPath.row == 2 {
-            
-            let cell = tableView.dequeueReusableCell(withIdentifier: "ProfileTVCellMiddle", for: indexPath) as! ProfileTVCellMiddle
-            cell.LaTitle.text = "قياساتي"
-            cell.IVPhoto.image = UIImage(named: "measurement")
-            return cell
-            
-        } else if indexPath.row == 3 {
-            
-            let cell = tableView.dequeueReusableCell(withIdentifier: "ProfileTVCellMiddle", for: indexPath) as! ProfileTVCellMiddle
-            cell.LaTitle.text = "جداول الأدوية الشهرية"
-            cell.IVPhoto.image = UIImage(named: "table")
-            return cell
-            
-        } else if indexPath.row == 4 {
-            
-            let cell = tableView.dequeueReusableCell(withIdentifier: "ProfileTVCellMiddle", for: indexPath) as! ProfileTVCellMiddle
-            cell.LaTitle.text = "تنبيهات الأدوية"
-            cell.IVPhoto.image = UIImage(named: "noti")
-            return cell
-            
-        } else if indexPath.row == 5 {
             
             let cell = tableView.dequeueReusableCell(withIdentifier: "ProfileTVCellMiddle", for: indexPath) as! ProfileTVCellMiddle
             cell.LaTitle.text = "نصائح طبية"
             cell.IVPhoto.image = UIImage(named: "instruction")
             return cell
             
-        } else if indexPath.row == 6 {
+        } else if indexPath.row == 2 {
             
             let cell = tableView.dequeueReusableCell(withIdentifier: "ProfileTVCellMiddle", for: indexPath) as! ProfileTVCellMiddle
             cell.LaTitle.text = "Inbody"
             cell.IVPhoto.image = UIImage(named: "inbody")
             return cell
             
-        } else if indexPath.row == 7 {
+        } else if indexPath.row == 3 {
             
             let cell = tableView.dequeueReusableCell(withIdentifier: "ProfileTVCellLine", for: indexPath) as! ProfileTVCellLine
             return cell
             
-        } else if indexPath.row == 8 {
+        } else if indexPath.row == 4 {
             
             let cell = tableView.dequeueReusableCell(withIdentifier: "ProfileTVCellMiddle", for: indexPath) as! ProfileTVCellMiddle
             cell.LaTitle.text = "تغيير كلمة المرور"
             cell.IVPhoto.image = UIImage(named: "location")
             return cell
             
-        } else if indexPath.row == 9 {
+        } else if indexPath.row == 5 {
             
             let cell = tableView.dequeueReusableCell(withIdentifier: "ProfileTVCellMiddle", for: indexPath) as! ProfileTVCellMiddle
             cell.LaTitle.text = "الحماية والخصوصية"
             cell.IVPhoto.image = UIImage(named: "protection")
             return cell
             
-        } else if indexPath.row == 10 {
+        } else if indexPath.row == 6 {
             
             let cell = tableView.dequeueReusableCell(withIdentifier: "ProfileTVCellMiddle", for: indexPath) as! ProfileTVCellMiddle
             cell.LaTitle.text = "الشروط والأحكام"
@@ -128,27 +129,27 @@ extension ProfileVC : UITableViewDataSource , UITableViewDelegate {
         
         if indexPath.row == 0 { // -- user image --
             
-        } else if indexPath.row == 1 { // - "الرئيسية" -
-            
-        } else if indexPath.row == 2 { // - قياساتى -
-            
-        } else if indexPath.row == 3 { // - "جداول الأدوية الشهرية" -
-            
-        } else if indexPath.row == 4 { // - medecines notifications -
+//        } else if indexPath.row == 1 { // - "الرئيسية" -
+//
+//        } else if indexPath.row == 2 { // - قياساتى -
+//
+//        } else if indexPath.row == 3 { // - "جداول الأدوية الشهرية" -
+//
+//        } else if indexPath.row == 4 { // - medecines notifications -
 
-        } else if indexPath.row == 5 { // - "نصائح طبية" -
+        } else if indexPath.row == 1 { // - "نصائح طبية" -
             PushTo(destination: TipsCategoriesVC1.self)
-        } else if indexPath.row == 6 { // - inbody -
+        } else if indexPath.row == 2 { // - inbody -
             PushTo(destination: INBodyVC.self)
             
-        } else if indexPath.row == 7 { // - ProfileTVCellLine -
+        } else if indexPath.row == 3 { // - ProfileTVCellLine -
             
-        } else if indexPath.row == 8 { // - "تغيير كلمة المرور" -
+        } else if indexPath.row == 4 { // - "تغيير كلمة المرور" -
             PushTo(destination: ChangePasswordVC.self)
             
-        } else if indexPath.row == 9 { // - "الحماية والخصوصية" -
+        } else if indexPath.row == 5 { // - "الحماية والخصوصية" -
             
-        } else if indexPath.row == 10 { // - "الشروط والأحكام" -
+        } else if indexPath.row == 6 { // - "الشروط والأحكام" -
             
         } else { // -- تسجيل خروج --
             Helper.logout()
