@@ -6,23 +6,6 @@
 //
 
 import UIKit
-class CustomTabBar1: UITabBar {
-    override func layoutSubviews() {
-        super.layoutSubviews()
-
-        // Adjust the positions of tab bar items here
-        for subview in subviews {
-            if let tabBarButtonClass = NSClassFromString("UITabBarButton") {
-                if subview.isKind(of: tabBarButtonClass) {
-                    // Customize the positioning of subview (tab bar item)
-                    // For example, you can adjust the image and title positions
-                    subview.transform = CGAffineTransform(translationX: 0, y: 5)
-                }
-            }
-        }
-    }
-}
-
 
 class HTBC: UITabBarController  , UITabBarControllerDelegate {
     
@@ -34,25 +17,24 @@ class HTBC: UITabBarController  , UITabBarControllerDelegate {
         
         if let items = tabBar.items {
             items[0].title = ""
-            items[0].image = UIImage(named: "tab5")
-            items[0].selectedImage = UIImage(named: "")
+            items[0].image = UIImage(named: "tab1")
+            items[0].selectedImage = UIImage(named: "tab1selected")?.withRenderingMode(.alwaysOriginal)
 
             items[1].title = ""
-            items[1].image = UIImage(named: "tab4")
-            items[1].selectedImage = UIImage(named: "")
+            items[1].image = UIImage(named: "tab2")
+            items[1].selectedImage = UIImage(named: "tab2selected")?.withRenderingMode(.alwaysOriginal)
             
             items[2].title = ""
             items[2].image = UIImage(named: "tab3")
             items[2].selectedImage = UIImage(named: "")
             
             items[3].title = ""
-            items[3].image = UIImage(named: "tab2")
-            items[3].selectedImage = UIImage(named: "")
+            items[3].image = UIImage(named: "tab4")
+            items[3].selectedImage = UIImage(named: "tab4selected")?.withRenderingMode(.alwaysOriginal)
             
             items[4].title = ""
-            items[4].image = UIImage(named: "tab1")
-            items[4].selectedImage = UIImage(named: "")
-
+            items[4].image = UIImage(named: "tab5")
+            items[4].selectedImage = UIImage(named: "tab5selected")?.withRenderingMode(.alwaysOriginal)
                   // Add more items as needed
               }
         
@@ -64,8 +46,8 @@ class HTBC: UITabBarController  , UITabBarControllerDelegate {
     
     override func viewDidLayoutSubviews() {
         super.viewWillLayoutSubviews()
-        tabBar.frame.size.height = UIDevice.current.hasNotch ? 80 : 60
-        tabBar.frame.origin.y = view.frame.height - (UIDevice.current.hasNotch ? 80 : 60)
+        tabBar.frame.size.height = UIDevice.current.hasNotch ? 90 : 65
+        tabBar.frame.origin.y = view.frame.height - (UIDevice.current.hasNotch ? 75 : 65)
     }
  
     func setupMiddleButton() {
