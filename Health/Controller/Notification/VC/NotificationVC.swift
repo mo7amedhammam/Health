@@ -429,12 +429,12 @@ extension NotificationVC : UITableViewDataSource , UITableViewDelegate {
         
         cell.LaClock.text = model?.doseTimeTitle
         cell.LaTitle.text = model?.drugTitle
-        cell.LaEvery.text = model?.doseQuantityTitle
+        cell.LaEvery.text =  "\(model?.count ?? 0 ) \(model?.doseTimeTitle ?? "" )"
         cell.LaClock.text = "\(model?.count ?? 0)"
 
-        cell.LaPeriod.text = "\(model?.doseQuantityValue ?? 0 ) \(model?.doseTimeTitle ?? "" )"
-        cell.LaStartDate.text = model?.startDate
-        cell.LaEndDate.text = model?.endDate
+        cell.LaPeriod.text = "\(model?.days ?? 0) أيام"
+        cell.LaStartDate.text = model?.startDate?.CangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "dd/MM/yyyy")
+        cell.LaEndDate.text = model?.endDate?.CangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "dd/MM/yyyy")
 
         return cell
     }

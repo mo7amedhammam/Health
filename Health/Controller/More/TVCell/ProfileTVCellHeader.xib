@@ -27,10 +27,10 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="chG-i2-vP1">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="140"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="110"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ggc-RS-c2X">
-                                <rect key="frame" x="20" y="25" width="280" height="90"/>
+                                <rect key="frame" x="20" y="0.0" width="280" height="90"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="EEw-3I-JvG">
                                         <rect key="frame" x="0.0" y="0.0" width="280" height="90"/>
@@ -86,8 +86,8 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="Ggc-RS-c2X" secondAttribute="trailing" constant="20" id="6RW-XM-U3q"/>
-                            <constraint firstAttribute="height" constant="140" id="C9V-1w-WrO"/>
-                            <constraint firstItem="Ggc-RS-c2X" firstAttribute="centerY" secondItem="chG-i2-vP1" secondAttribute="centerY" id="N3l-b4-j0y"/>
+                            <constraint firstAttribute="height" constant="110" id="C9V-1w-WrO"/>
+                            <constraint firstItem="Ggc-RS-c2X" firstAttribute="top" secondItem="chG-i2-vP1" secondAttribute="top" id="YuS-r0-dsu"/>
                             <constraint firstItem="Ggc-RS-c2X" firstAttribute="leading" secondItem="chG-i2-vP1" secondAttribute="leading" constant="20" id="fFW-Nh-o5S"/>
                             <constraint firstItem="Ggc-RS-c2X" firstAttribute="centerX" secondItem="chG-i2-vP1" secondAttribute="centerX" id="gd0-Lg-cpq"/>
                         </constraints>

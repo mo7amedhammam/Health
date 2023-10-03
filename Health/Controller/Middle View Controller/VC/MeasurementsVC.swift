@@ -91,8 +91,12 @@ extension MeasurementsVC : UICollectionViewDataSource , UICollectionViewDelegate
         cell.LaTitle.text = model.title
         cell.LaNum.text = "\(model.measurementsCount ?? 0 )"
         cell.LaLastNum.text = model.lastMeasurementValue
-        cell.LaDate.text = model.lastMeasurementDate
-        
+        cell.LaDate.text = model.lastMeasurementDate?.CangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "dd/MM/yyyy")
+        if let img = model.image {
+            //                let processor = SVGImgProcessor() // if receive svg image
+            cell.ImgMeasurement.kf.setImage(with: URL(string:Constants.baseURL + img.validateSlashs()), placeholder: UIImage(named: "person"), options: nil, progressBlock: nil)
+        }
+
         return cell
         
     }
@@ -108,9 +112,12 @@ extension MeasurementsVC : UICollectionViewDataSource , UICollectionViewDelegate
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let vc = initiateViewController(storyboardName: .main, viewControllerIdentifier: MeasurementsDetailsVC.self) else{return}
-        vc.id  =  ViewModel.ArrStats![indexPath.row].medicalMeasurementID!
-        vc.num = ViewModel.ArrStats![indexPath.row].measurementsCount!
-        vc.formatValue = ViewModel.ArrStats![indexPath.row].formatValue!
+        if let model = ViewModel.ArrStats?[indexPath.row]{
+            vc.id  =  model.medicalMeasurementID ?? 0
+            vc.num = model.measurementsCount ?? 0
+            vc.imgMeasurement = model.image ?? ""
+            vc.formatValue = model.formatValue ?? ""
+        }
         print("formatValue : \( ViewModel.ArrStats![indexPath.row].formatValue!)")
         vc.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(vc, animated: true)

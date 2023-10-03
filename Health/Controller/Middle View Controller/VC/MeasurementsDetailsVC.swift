@@ -24,6 +24,7 @@ class MeasurementsDetailsVC: UIViewController {
     var id  = 0
     var num = 0
     var TitleMeasurement = ""
+    var imgMeasurement = ""
     // to fill lable in cell0
     var CellDateFrom = ""
     var CellDateTo   = ""
@@ -509,7 +510,10 @@ extension MeasurementsDetailsVC : UITableViewDataSource , UITableViewDelegate , 
             
             let cell = tableView.dequeueReusableCell(withIdentifier: "MeasurementsDetailsTVCell0", for: indexPath) as! MeasurementsDetailsTVCell0
             cell.delegate = self
+            //                let processor = SVGImgProcessor() // if receive svg image
+                cell.ImgMeasurement.kf.setImage(with: URL(string:Constants.baseURL + imgMeasurement.validateSlashs()), placeholder: UIImage(named: "person"), options: nil, progressBlock: nil)
             
+ 
             if CellDateFrom == "" {
                 cell.LaDateFrom.text = ""
                 cell.LaDateFrom.isHidden = true
