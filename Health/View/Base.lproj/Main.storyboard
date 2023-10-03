@@ -4060,21 +4060,39 @@
                                                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LK8-WJ-ZsF">
                                                                 <rect key="frame" x="0.0" y="56" width="313" height="50"/>
                                                                 <subviews>
-                                                                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="اسم الدواء" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="sLj-Vn-jKT">
+                                                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="taB-2h-KL6">
                                                                         <rect key="frame" x="10" y="0.0" width="293" height="50"/>
-                                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                        <color key="textColor" name="main"/>
-                                                                        <fontDescription key="fontDescription" name="LamaSans-Bold" family="Lama Sans" pointSize="18"/>
-                                                                        <textInputTraits key="textInputTraits"/>
-                                                                    </textField>
+                                                                        <subviews>
+                                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gKd-VJ-gfd">
+                                                                                <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                                                                <constraints>
+                                                                                    <constraint firstAttribute="width" constant="50" id="dY6-oP-8WB"/>
+                                                                                </constraints>
+                                                                                <color key="tintColor" systemColor="systemGray2Color"/>
+                                                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                                                <state key="normal" image="chevron.down" catalog="system"/>
+                                                                                <state key="selected" image="chevron.up" catalog="system"/>
+                                                                                <connections>
+                                                                                    <action selector="BUSelectDrug:" destination="AZg-jj-Gqp" eventType="touchUpInside" id="jnN-lS-P0l"/>
+                                                                                </connections>
+                                                                            </button>
+                                                                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="اسم الدواء" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="sLj-Vn-jKT">
+                                                                                <rect key="frame" x="60" y="0.0" width="233" height="50"/>
+                                                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                                <color key="textColor" name="main"/>
+                                                                                <fontDescription key="fontDescription" name="LamaSans-Bold" family="Lama Sans" pointSize="18"/>
+                                                                                <textInputTraits key="textInputTraits"/>
+                                                                            </textField>
+                                                                        </subviews>
+                                                                    </stackView>
                                                                 </subviews>
                                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <constraints>
-                                                                    <constraint firstItem="sLj-Vn-jKT" firstAttribute="leading" secondItem="LK8-WJ-ZsF" secondAttribute="leading" constant="10" id="Gs0-Qi-07g"/>
-                                                                    <constraint firstItem="sLj-Vn-jKT" firstAttribute="top" secondItem="LK8-WJ-ZsF" secondAttribute="top" id="aGj-uS-sWK"/>
-                                                                    <constraint firstAttribute="trailing" secondItem="sLj-Vn-jKT" secondAttribute="trailing" constant="10" id="f4T-2Y-EpE"/>
+                                                                    <constraint firstItem="taB-2h-KL6" firstAttribute="top" secondItem="LK8-WJ-ZsF" secondAttribute="top" id="9rh-AP-p6v"/>
+                                                                    <constraint firstItem="taB-2h-KL6" firstAttribute="leading" secondItem="LK8-WJ-ZsF" secondAttribute="leading" constant="10" id="BaW-qD-fKK"/>
+                                                                    <constraint firstAttribute="bottom" secondItem="taB-2h-KL6" secondAttribute="bottom" id="BiB-Jr-LzZ"/>
+                                                                    <constraint firstAttribute="trailing" secondItem="taB-2h-KL6" secondAttribute="trailing" constant="10" id="BqW-So-xJL"/>
                                                                     <constraint firstAttribute="height" constant="50" id="gMm-JK-qzX"/>
-                                                                    <constraint firstAttribute="bottom" secondItem="sLj-Vn-jKT" secondAttribute="bottom" id="s3g-ZV-Pb4"/>
                                                                 </constraints>
                                                                 <userDefinedRuntimeAttributes>
                                                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -4614,6 +4632,7 @@
                     <connections>
                         <outlet property="BtnClock" destination="DpQ-8k-KSb" id="dbu-bn-cgE"/>
                         <outlet property="BtnDay" destination="Kgy-4M-UJb" id="Ghl-cz-Z24"/>
+                        <outlet property="BtnSelectDrug" destination="gKd-VJ-gfd" id="5Jl-4B-sLJ"/>
                         <outlet property="PickerDate" destination="mh4-6H-ybo" id="Jxu-Oh-1hS"/>
                         <outlet property="TFClock" destination="JWn-j0-QdF" id="IBa-UI-JxW"/>
                         <outlet property="TFDrugName" destination="sLj-Vn-jKT" id="WzQ-KF-U35"/>
@@ -5511,6 +5530,9 @@
         </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemGray2Color">
+            <color red="0.68235294117647061" green="0.68235294117647061" blue="0.69803921568627447" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

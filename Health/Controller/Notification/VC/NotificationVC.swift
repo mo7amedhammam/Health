@@ -6,8 +6,13 @@
 //
 
 import UIKit
+import DropDown
+
 
 class NotificationVC: UIViewController {
+    
+    
+    @IBOutlet weak var BtnSelectDrug: UIButton!
     
     @IBOutlet weak var TVScreen: UITableView!
     let refreshControl = UIRefreshControl()
@@ -30,12 +35,21 @@ class NotificationVC: UIViewController {
     let timePicker = UIDatePicker()
 
     let ViewModel = NotificationVM()
+    var ArrDrugString = [String]()
+    var drugId = 0
+    let rightBarDropDown = DropDown()
+    var doseTimeId = 0 
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        TFDrugName.delegate = self
+        rightBarDropDown.anchorView = TFDrugName
+        rightBarDropDown.cancelAction = { [self] in
+            BtnSelectDrug.isSelected = false
+        }
+                
         self.PickerDate.addTarget(self, action: #selector(onDateValueChanged(_:)), for: .valueChanged)
-        //
         timePicker.datePickerMode = .time
         // Create toolbar where a "Done" button will go
         let toolbar = UIToolbar()
@@ -58,6 +72,7 @@ class NotificationVC: UIViewController {
         ViewModel.skipCount  = 0
         ViewModel.customerId =  Helper.getUser()?.id // they take it from token
         getNotifications()
+        getDrugs()
         
         
         // Configure the refresh control
@@ -95,9 +110,46 @@ class NotificationVC: UIViewController {
         self.dismiss(animated: true)
     }
     
+    @IBAction func BUSelectDrug(_ sender: Any) {
+                
+        rightBarDropDown.dataSource = ArrDrugString
+        rightBarDropDown.selectionAction = { [self] (index: Int, item: String) in
+            print("Selected item: \(item) at index: \(index)")
+            self.TFDrugName.text = ArrDrugString[index]
+            BtnSelectDrug.isSelected = false
+            drugId = ViewModel.ArrDrugs[index].id ?? 0
+            print("drugId : \(drugId)")
+        }
+        BtnSelectDrug.isSelected = true
+        let preferredViewWidth = TFDrugName.frame.size.width // Assuming ViewPreferred is a UIView
+        rightBarDropDown.width = preferredViewWidth
+        rightBarDropDown.bottomOffset = CGPoint(x: -10 , y: (rightBarDropDown.anchorView?.plainView.bounds.height)!)
+        rightBarDropDown.show()
+        
+    }
+    
     
     @IBAction func BUConfirmAddNotification(_ sender: Any) {
-        ViewAddNewNotification.isHidden = true
+        
+        if TFDrugName.text == "" {
+            self.showAlert(message: "من فضلك ادخل اسم الدواء او قم باختيارة من القائمة")
+        } else  if TFStartDate.text == "" {
+            self.showAlert(message: "من فضلك ادخل تاريخ البداية")
+        } else  if TFEndDate.text == "" {
+            self.showAlert(message: "من فضلك ادخل تاريخ النهاية")
+        } else  if TFClock.text == "" {
+            self.showAlert(message: "من فضلك ادخل الساعة")
+        } else  if TFNumDays.text == "" {
+            self.showAlert(message: "من فضلك ادخل عدد الايام ")
+        } else  if TFNumDrug.text == "" {
+            self.showAlert(message: "من فضلك ادخل عدد مرات اخذ الدواء ")
+        } else if doseTimeId == 0 {
+            self.showAlert(message: "من فضلك قم باختيار الدواء كل ساعة ام كل يوم ")
+        } else {
+            // create
+            CreateNotification()
+        }
+                
     }
     
     @IBAction func BUCancelAddNotification(_ sender: Any) {
@@ -110,9 +162,11 @@ class NotificationVC: UIViewController {
         if sender.tag == 0 {
             BtnDay.isSelected = true
             BtnClock.isSelected = false
+            doseTimeId = 1
         } else {
             BtnDay.isSelected = false
             BtnClock.isSelected = true
+            doseTimeId = 2
         }
     }
     
@@ -225,6 +279,80 @@ extension NotificationVC {
         getNotifications()
         refreshControl.endRefreshing()
     }
+    
+    func getDrugs() {
+        
+        ViewModel.GetDrugs { [weak self] state in
+            guard let self = self else{return}
+            guard let state = state else{
+                return
+            }
+            switch state {
+            case .loading:
+//                Hud.showHud(in: self.view)
+                print(state)
+            case .stopLoading:
+//                Hud.dismiss(from: self.view)
+                print(state)
+            case .success:
+//                Hud.dismiss(from: self.view)
+                print(state)
+                for data in ViewModel.ArrDrugs {
+                    ArrDrugString.append(data.title ?? "" )
+                }
+                print("ArrDrugString.count : \(ArrDrugString.count)")
+            case .error(_,let error):
+//                Hud.dismiss(from: self.view)
+//                SimpleAlert.shared.showAlert(title:error ?? "",message:"", viewController: self)
+                print(error ?? "")
+            case .none:
+                print("")
+            }
+        }
+    }
+    
+    func CreateNotification () {
+        
+        if drugId == 0 {
+            ViewModel.otherDrug = TFDrugName.text!
+            ViewModel.drugId = 0
+        } else {
+            ViewModel.drugId = drugId
+        }
+        ViewModel.count      = Int(TFNumDrug.text!)!
+        ViewModel.customerId =  Helper.getUser()?.id // they take it from token
+        ViewModel.doseTimeId = doseTimeId // day 1 hour 2
+        ViewModel.days       = Int(TFNumDays.text!)!
+//        ViewModel.doseQuantityId = 0
+        ViewModel.notification = true
+        ViewModel.startDate    = TFStartDate.text!
+        ViewModel.endDate      = TFEndDate.text!
+        
+        
+        ViewModel.CreateNotification { [weak self] state in
+            guard let self = self,let state = state else{
+                return
+            }
+            switch state {
+            case .loading:
+                Hud.showHud(in: self.view)
+            case .stopLoading:
+                Hud.dismiss(from: self.view)
+            case .success:
+                 ViewAddNewNotification.isHidden = true
+                Hud.dismiss(from: self.view)
+                SimpleAlert.shared.showAlert(title: "تم إضافة تنبية جديد"  ,message: "", viewController: self)
+                print(state)
+            case .error(_,let error):
+                Hud.dismiss(from: self.view)
+                SimpleAlert.shared.showAlert(title:error ?? "",message:"", viewController: self)
+                print(error ?? "")
+            case .none:
+                print("")
+            }
+        }
+    }
+    
 }
 
 
@@ -324,5 +452,18 @@ extension NotificationVC : UITableViewDataSource , UITableViewDelegate {
     func loadNextPage(_ skipCount:Int){
         ViewModel.skipCount = skipCount
         getNotifications()
+    }
+}
+
+
+
+
+extension NotificationVC : UITextFieldDelegate {
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        if textField == TFDrugName {
+            drugId = 0
+            print("drugId is zero : \(drugId)")
+        }
     }
 }
