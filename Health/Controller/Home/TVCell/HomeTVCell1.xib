@@ -46,6 +46,9 @@
                                                         <state key="normal">
                                                             <imageReference key="image" image="ellipsis" catalog="system" symbolScale="large"/>
                                                         </state>
+                                                        <connections>
+                                                            <action selector="BUMore:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="dHX-iu-hDj"/>
+                                                        </connections>
                                                     </button>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="تصنيفات النصائح" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O7s-rp-EO3">
                                                         <rect key="frame" x="70" y="0.0" width="240" height="60"/>
@@ -109,6 +112,12 @@
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <connections>
+                <outlet property="BtnMore" destination="bL5-Kj-gKR" id="LiE-wP-dhX"/>
+                <outlet property="CollectionHome" destination="CKL-pk-QGO" id="RIn-x9-6oO"/>
+                <outlet property="HViewCell" destination="flD-bl-0US" id="71P-Jm-pL1"/>
+                <outlet property="LaTitle" destination="O7s-rp-EO3" id="eLG-Xe-CbC"/>
+            </connections>
             <point key="canvasLocation" x="-122.13740458015266" y="96.83098591549296"/>
         </tableViewCell>
     </objects>

@@ -102,6 +102,8 @@
 		BBBD003C2A731B6C00F066DF /* SplashScreenTVCell2.xib in Resources */ = {isa = PBXBuildFile; fileRef = BBBD003A2A731B6C00F066DF /* SplashScreenTVCell2.xib */; };
 		BBBD003F2A731B7B00F066DF /* SplashScreenTVCell3.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBBD003D2A731B7B00F066DF /* SplashScreenTVCell3.swift */; };
 		BBBD00402A731B7B00F066DF /* SplashScreenTVCell3.xib in Resources */ = {isa = PBXBuildFile; fileRef = BBBD003E2A731B7B00F066DF /* SplashScreenTVCell3.xib */; };
+		BBC3C3ED2ACC912400805524 /* HomeCVCell3.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBC3C3EB2ACC912300805524 /* HomeCVCell3.swift */; };
+		BBC3C3EE2ACC912400805524 /* HomeCVCell3.xib in Resources */ = {isa = PBXBuildFile; fileRef = BBC3C3EC2ACC912300805524 /* HomeCVCell3.xib */; };
 		BBC7B45B2A72CC820079355E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBC7B45A2A72CC820079355E /* AppDelegate.swift */; };
 		BBC7B45D2A72CC820079355E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBC7B45C2A72CC820079355E /* SceneDelegate.swift */; };
 		BBC7B4622A72CC820079355E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BBC7B4602A72CC820079355E /* Main.storyboard */; };
@@ -281,6 +283,8 @@
 		BBBDFFFD2A73101100F066DF /* CheckConnection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckConnection.swift; sourceTree = "<group>"; };
 		BBBDFFFE2A73101100F066DF /* RecieveImageVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecieveImageVC.swift; sourceTree = "<group>"; };
 		BBBDFFFF2A73101200F066DF /* UITableView+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITableView+Extensions.swift"; sourceTree = "<group>"; };
+		BBC3C3EB2ACC912300805524 /* HomeCVCell3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCVCell3.swift; sourceTree = "<group>"; };
+		BBC3C3EC2ACC912300805524 /* HomeCVCell3.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomeCVCell3.xib; sourceTree = "<group>"; };
 		BBC7B4572A72CC820079355E /* Health.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Health.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BBC7B45A2A72CC820079355E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BBC7B45C2A72CC820079355E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -601,6 +605,8 @@
 				BB546DE12AC9D558008A4F8C /* HomeCVCell1.xib */,
 				BB546DE42AC9D565008A4F8C /* HomeCVCell2.swift */,
 				BB546DE52AC9D565008A4F8C /* HomeCVCell2.xib */,
+				BBC3C3EB2ACC912300805524 /* HomeCVCell3.swift */,
+				BBC3C3EC2ACC912300805524 /* HomeCVCell3.xib */,
 			);
 			path = CVCell;
 			sourceTree = "<group>";
@@ -1377,6 +1383,7 @@
 				BB518CE32A9A122400242FAD /* TipsCategoriesCVCell0.xib in Resources */,
 				BB14DAF02A7B043500389B96 /* ProfileTVCellMiddle.xib in Resources */,
 				BBE3CC7C2A80010B004B0D9A /* MedicationScheduleDetailsTVCell.xib in Resources */,
+				BBC3C3EE2ACC912400805524 /* HomeCVCell3.xib in Resources */,
 				BB518CDB2A9A118B00242FAD /* TipsCategoriesTVCell0.xib in Resources */,
 				BBBD002C2A73145200F066DF /* LamaSans-Light.ttf in Resources */,
 			);
@@ -1523,6 +1530,7 @@
 				BBBD003B2A731B6C00F066DF /* SplashScreenTVCell2.swift in Sources */,
 				BB518CE22A9A122400242FAD /* TipsCategoriesCVCell0.swift in Sources */,
 				BBA1DA182AB11E5C0042713A /* NotificationVM.swift in Sources */,
+				BBC3C3ED2ACC912400805524 /* HomeCVCell3.swift in Sources */,
 				BBC7B45B2A72CC820079355E /* AppDelegate.swift in Sources */,
 				C8A1509B2AB1C62A00511B1F /* ProfileM.swift in Sources */,
 				BBD2B03A2AAA84D500C0A807 /* ModelMyMeasurementsStats.swift in Sources */,

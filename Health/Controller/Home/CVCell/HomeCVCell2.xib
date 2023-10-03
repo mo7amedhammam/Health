@@ -36,7 +36,7 @@
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Xuo-2w-Lh7">
                                 <rect key="frame" x="20" y="20" width="310" height="125"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Talimogene Laherparepvec" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gGb-O7-k54">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Talimogene Laherparepvec" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gGb-O7-k54">
                                         <rect key="frame" x="0.0" y="0.0" width="310" height="44"/>
                                         <fontDescription key="fontDescription" name="LamaSans-SemiBold" family="Lama Sans" pointSize="18"/>
                                         <color key="textColor" name="EE2E3A"/>
@@ -59,7 +59,7 @@
                                                         <rect key="frame" x="0.0" y="0.0" width="150" height="60"/>
                                                         <subviews>
                                                             <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" semanticContentAttribute="forceRightToLeft" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oXP-qC-MWU">
-                                                                <rect key="frame" x="10" y="10" width="130" height="40"/>
+                                                                <rect key="frame" x="0.0" y="10" width="130" height="40"/>
                                                                 <color key="backgroundColor" name="wrong"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="40" id="GZ2-Zt-9lN"/>
@@ -82,7 +82,7 @@
                                                         </subviews>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
-                                                            <constraint firstItem="oXP-qC-MWU" firstAttribute="centerX" secondItem="Ekz-b9-ypg" secondAttribute="centerX" id="qUh-Z7-hOO"/>
+                                                            <constraint firstItem="oXP-qC-MWU" firstAttribute="leading" secondItem="Ekz-b9-ypg" secondAttribute="leading" id="scO-6U-n5F"/>
                                                             <constraint firstItem="oXP-qC-MWU" firstAttribute="centerY" secondItem="Ekz-b9-ypg" secondAttribute="centerY" id="tvd-bA-cxf"/>
                                                         </constraints>
                                                     </view>
@@ -92,13 +92,13 @@
                                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="La8-OP-pI1">
                                                                 <rect key="frame" x="0.0" y="0.0" width="150" height="60"/>
                                                                 <subviews>
-                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="تاريخ الإنتهاء" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dHr-sR-9Dm">
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="تاريخ الإنتهاء" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dHr-sR-9Dm">
                                                                         <rect key="frame" x="0.0" y="0.0" width="150" height="30"/>
                                                                         <fontDescription key="fontDescription" name="LamaSans-Bold" family="Lama Sans" pointSize="14"/>
                                                                         <color key="textColor" name="EE2E3A"/>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
-                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="26/7/2022" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pPj-sO-drn">
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="26/7/2022" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pPj-sO-drn">
                                                                         <rect key="frame" x="0.0" y="30" width="150" height="30"/>
                                                                         <fontDescription key="fontDescription" name="LamaSans-Medium" family="Lama Sans" pointSize="12"/>
                                                                         <color key="textColor" name="EE2E3A"/>

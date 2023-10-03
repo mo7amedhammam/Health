@@ -430,9 +430,18 @@ extension NotificationVC : UITableViewDataSource , UITableViewDelegate {
         cell.LaClock.text = model?.doseTimeTitle
         cell.LaTitle.text = model?.drugTitle
         cell.LaEvery.text =  "\(model?.count ?? 0 ) \(model?.doseTimeTitle ?? "" )"
-        cell.LaClock.text = "\(model?.count ?? 0)"
+        cell.LaClock.text = "12:00"
 
-        cell.LaPeriod.text = "\(model?.days ?? 0) أيام"
+        if model?.days == 1 {
+            cell.LaPeriod.text = "يوم"
+        } else if model?.days == 2 {
+            cell.LaPeriod.text = "يومين"
+        }  else if model?.days == 3 || model?.days == 4 || model?.days == 4 || model?.days == 6 || model?.days == 7 || model?.days == 8 || model?.days == 9 || model?.days == 10 {
+            cell.LaPeriod.text = "\(model?.days ?? 0) أيام"
+        } else {
+            cell.LaPeriod.text = "\(model?.days ?? 0) يوم"
+        }
+        
         cell.LaStartDate.text = model?.startDate?.CangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "dd/MM/yyyy")
         cell.LaEndDate.text = model?.endDate?.CangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "dd/MM/yyyy")
 
