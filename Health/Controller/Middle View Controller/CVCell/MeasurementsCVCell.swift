@@ -12,6 +12,8 @@ class MeasurementsCVCell: UICollectionViewCell {
     
     @IBOutlet weak var LaTitle: UILabel!
     
+    @IBOutlet weak var ImgMeasurement: UIImageView!
+    
     @IBOutlet weak var LaNum: UILabel!
     
     @IBOutlet weak var LaLastNum: UILabel!

@@ -9,6 +9,8 @@ import UIKit
 
 class MeasurementsDetailsTVCell0: UITableViewCell {
 
+    
+    @IBOutlet weak var ImgMeasurement: UIImageView!
     @IBOutlet weak var LaNum: UILabel!
     
     @IBOutlet weak var LaDateFrom: UILabel!
