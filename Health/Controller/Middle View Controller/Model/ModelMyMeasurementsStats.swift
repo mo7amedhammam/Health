@@ -13,10 +13,11 @@ struct ModelMyMeasurementsStats: Codable {
     var image, title: String?
     var measurementsCount: Int?
     var lastMeasurementValue, lastMeasurementDate, formatValue: String?
+    var regExpression, normalRangValue: String?
 
     enum CodingKeys: String, CodingKey {
         case medicalMeasurementID = "medicalMeasurementId"
-        case image, title, measurementsCount, lastMeasurementValue, lastMeasurementDate, formatValue
+        case image, title, measurementsCount, lastMeasurementValue, lastMeasurementDate, formatValue, regExpression, normalRangValue
     }
 }
 

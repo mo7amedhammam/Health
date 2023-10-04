@@ -24,4 +24,15 @@ extension String {
                 let newurl  = self.replacingOccurrences(of: "\\",with: "/")
                 return  newurl
             }
+    func matches(regex pattern: String) -> Bool {
+           guard let regex = try? NSRegularExpression(pattern: pattern, options: []) else {
+               // Handle invalid regex pattern here
+               return false
+           }
+           
+           let range = NSRange(location: 0, length: utf16.count)
+           return regex.firstMatch(in: self, options: [], range: range) != nil
+       }
+    
+    
 }

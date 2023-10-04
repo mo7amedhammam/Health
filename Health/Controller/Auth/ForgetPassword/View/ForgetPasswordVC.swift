@@ -14,6 +14,8 @@ class ForgetPasswordVC: UIViewController , UITextFieldDelegate {
     
     @IBOutlet weak var ViewRe_Password: UIView!
     @IBOutlet weak var TFRe_Password: UITextField!
+    
+    @IBOutlet weak var BtnReset: UIButton!
     var Phonenumber : String?
     let ViewModel = ForgetPasswordVM()
     override func viewDidLoad() {
@@ -22,6 +24,10 @@ class ForgetPasswordVC: UIViewController , UITextFieldDelegate {
         // Do any additional setup after loading the view.
         TFPassword.delegate = self
         TFRe_Password.delegate = self
+        TFPassword.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+        TFRe_Password.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+        BtnReset.enable(false)
+
         hideKeyboardWhenTappedAround()
     }
     
@@ -37,6 +43,13 @@ class ForgetPasswordVC: UIViewController , UITextFieldDelegate {
         } else {
             
         }
+    }
+    @objc func textFieldDidChange(_ textField: UITextField) {
+        let isPasswordValid = TFPassword.text?.count ?? 0 >= 5 // Check if TFPhone has 11 digits
+        let isRePasswordValid = TFRe_Password.hasText // Check if TFPassword is not empty
+        let isMatched = (TFPassword.text == TFRe_Password.text)
+        let isValidForm = isPasswordValid && isRePasswordValid && isMatched
+        BtnReset.enable(isValidForm)
     }
     
     //      func textFieldDidEndEditing(_ textField: UITextField) {
@@ -59,9 +72,7 @@ class ForgetPasswordVC: UIViewController , UITextFieldDelegate {
     
     @IBAction func BUBack(_ sender: Any) {
         self.navigationController?.popViewController(animated: true)
-    }
-    
-    
+    }    
     
     @IBAction func BUShowPassword(_ sender: UIButton) {
         

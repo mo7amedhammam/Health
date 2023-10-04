@@ -19,6 +19,8 @@ class ChangePasswordVC: UIViewController  , UITextFieldDelegate {
     @IBOutlet weak var ViewRe_Password: UIView!
     @IBOutlet weak var TFRe_Password: UITextField!
     
+    @IBOutlet weak var BtnChange: UIButton!
+    
     let ViewModel = ChangePasswordVM()
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,6 +29,10 @@ class ChangePasswordVC: UIViewController  , UITextFieldDelegate {
         TFPassword.delegate = self
         TFNewPassword.delegate = self
         TFRe_Password.delegate = self
+        TFPassword.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+        TFNewPassword.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+        TFRe_Password.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+        BtnChange.enable(false)
         hideKeyboardWhenTappedAround()
     }
         
@@ -46,6 +52,15 @@ class ChangePasswordVC: UIViewController  , UITextFieldDelegate {
         }
     }
     
+    @objc func textFieldDidChange(_ textField: UITextField) {
+        let isPasswordValid = TFPassword.text?.count ?? 0 >= 5 // Check if TFPhone has 11 digits
+        let isNewPasswordValid = TFNewPassword.text?.count ?? 0 >= 5 // Check if TFPassword is not empty
+        let isRePasswordValid = TFRe_Password.hasText // Check if TFCode is not empty
+        let isNewPasswordMatched = (TFNewPassword.text == TFRe_Password.text)
+        let isValidForm = isPasswordValid && isNewPasswordValid && isRePasswordValid && isNewPasswordMatched
+        BtnChange.enable(isValidForm)
+    }
+
     @IBAction func BUBack(_ sender: Any) {
         self.navigationController?.popViewController(animated: true)
     }

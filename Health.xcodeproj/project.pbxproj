@@ -151,6 +151,7 @@
 		C889958A2AA9F770002AD812 /* ForgetPasswordVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88995892AA9F770002AD812 /* ForgetPasswordVM.swift */; };
 		C88995902AAA02A2002AD812 /* ChangePasswordM.swift in Sources */ = {isa = PBXBuildFile; fileRef = C889958F2AAA02A2002AD812 /* ChangePasswordM.swift */; };
 		C88995922AAA02BE002AD812 /* ChangePasswordVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88995912AAA02BE002AD812 /* ChangePasswordVM.swift */; };
+		C8918D9C2ACD61F20070A1D3 /* ExUiButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8918D9B2ACD61F20070A1D3 /* ExUiButtons.swift */; };
 		C893A9B32AB5BA070054F171 /* TipsM.swift in Sources */ = {isa = PBXBuildFile; fileRef = C893A9B22AB5BA070054F171 /* TipsM.swift */; };
 		C893A9B52AB5BA190054F171 /* TipsVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = C893A9B42AB5BA190054F171 /* TipsVM.swift */; };
 		C893A9B72AB5BE450054F171 /* TipsCategoryServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = C893A9B62AB5BE450054F171 /* TipsCategoryServices.swift */; };
@@ -335,6 +336,7 @@
 		C88995892AA9F770002AD812 /* ForgetPasswordVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgetPasswordVM.swift; sourceTree = "<group>"; };
 		C889958F2AAA02A2002AD812 /* ChangePasswordM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordM.swift; sourceTree = "<group>"; };
 		C88995912AAA02BE002AD812 /* ChangePasswordVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordVM.swift; sourceTree = "<group>"; };
+		C8918D9B2ACD61F20070A1D3 /* ExUiButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExUiButtons.swift; sourceTree = "<group>"; };
 		C893A9B22AB5BA070054F171 /* TipsM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TipsM.swift; sourceTree = "<group>"; };
 		C893A9B42AB5BA190054F171 /* TipsVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TipsVM.swift; sourceTree = "<group>"; };
 		C893A9B62AB5BE450054F171 /* TipsCategoryServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TipsCategoryServices.swift; sourceTree = "<group>"; };
@@ -729,6 +731,7 @@
 				C80DA9EE2AA4F6B000F10808 /* UiWindow.swift */,
 				C88995812AA9EDFE002AD812 /* Strings.swift */,
 				C85F28522ABC7F500093ADFF /* EXUiDevice.swift */,
+				C8918D9B2ACD61F20070A1D3 /* ExUiButtons.swift */,
 			);
 			path = Extentions;
 			sourceTree = "<group>";
@@ -1580,6 +1583,7 @@
 				BB518CD32A9A112C00242FAD /* TipsCategoriesVC1.swift in Sources */,
 				BB48F8A32A7482480051F12C /* OtpVC.swift in Sources */,
 				BBBD001A2A73101700F066DF /* ImageFromGallary.swift in Sources */,
+				C8918D9C2ACD61F20070A1D3 /* ExUiButtons.swift in Sources */,
 				BBBD00112A73101700F066DF /* RecieveImageVC.swift in Sources */,
 				BBBD00122A73101700F066DF /* UITableView+Extensions.swift in Sources */,
 				C82DCAB22AACB42F00322B55 /* MedicationScheduleDetailsVM.swift in Sources */,

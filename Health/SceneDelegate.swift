@@ -30,6 +30,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             vc = targetvc
         }else{
             guard let targetvc = initiateViewController(storyboardName: .main, viewControllerIdentifier: Helper.CheckIfLoggedIn() ? HTBC.self : LoginVC.self) else {return}
+//            guard let targetvc = initiateViewController(storyboardName: .main, viewControllerIdentifier: ChangePasswordVC.self) else {return}
+            
             vc = targetvc
         }
 //        guard let vc = initiateViewController(storyboardName: .main, viewControllerIdentifier: (Helper.checkOnBoard() ? (Helper.CheckIfLoggedIn() ? HTBC.self as? HTBC.Type : LoginVC.self as? LoginVC.)  : SplashScreenVC.self)) else {return}
