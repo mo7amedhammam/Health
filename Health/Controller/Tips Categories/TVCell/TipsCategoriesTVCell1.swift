@@ -84,11 +84,14 @@ extension TipsCategoriesTVCell1 : UICollectionViewDataSource , UICollectionViewD
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let vc = initiateViewController(storyboardName: .main, viewControllerIdentifier: TipsCategoriesVC3.self) else{return}
+//        guard let vc = initiateViewController(storyboardName: .main, viewControllerIdentifier: TipsCategoriesVC3.self) else{return}
+        guard let vc = initiateViewController(storyboardName: .main, viewControllerIdentifier: TipsCategoriesDetailsVC.self) else {return}
+
         let model = dataArray[indexPath.row]
-        vc.categoryId = model.id
-        vc.LaTitle = model.tipCategoryTitle
-        nav?.pushViewController(vc, animated: true)
+        vc.selectedTipId = model.id
+        vc.ViewModel = TipsDetailsVM()
+        vc.modalPresentationStyle = .fullScreen
+        nav?.present(vc, animated: true)
     }
     
 }

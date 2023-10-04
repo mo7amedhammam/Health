@@ -78,27 +78,27 @@ extension TipsCategoriesVC2 : UICollectionViewDataSource , UICollectionViewDeleg
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc = storyboard.instantiateViewController(withIdentifier: "TipsCategoriesVC3") as! TipsCategoriesVC3
+//        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+//        let vc = storyboard.instantiateViewController(withIdentifier: "TipsCategoriesVC3") as! TipsCategoriesVC3
+
         switch tipcategirytype {
         case .All:
+            guard let vc = initiateViewController(storyboardName: .main, viewControllerIdentifier: TipsCategoriesVC3.self) else{return}
+                    self.navigationController?.pushViewController(vc, animated: true)
             guard let model = ViewModel?.allTipsResModel?.items?[indexPath.row] else {return}
             vc.categoryId = model.id
             vc.LaTitle = model.title
         case .Newest:
             guard let model = dataArray?[indexPath.row] else {return}
-            vc.categoryId = model.id
-            vc.LaTitle = model.tipCategoryTitle
+            PresentDetails(forId: model.id ?? 0)
         case .Interesting:
             guard let model = dataArray?[indexPath.row] else {return}
-            vc.categoryId = model.id
-            vc.LaTitle = model.tipCategoryTitle
+            PresentDetails(forId: model.id ?? 0)
         case .MostViewed:
             guard let model = dataArray?[indexPath.row] else {return}
-            vc.categoryId = model.id
-            vc.LaTitle = model.tipCategoryTitle
+            PresentDetails(forId: model.id ?? 0)
+
         }
-        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     
@@ -175,4 +175,11 @@ extension TipsCategoriesVC2{
         refreshControl.endRefreshing()
     }
 
+    func PresentDetails(forId selectedId:Int){
+        guard let vc = initiateViewController(storyboardName: .main, viewControllerIdentifier: TipsCategoriesDetailsVC.self) else{return}
+        vc.ViewModel = TipsDetailsVM()
+        vc.selectedTipId = selectedId
+        vc.modalPresentationStyle = .fullScreen
+        self.navigationController?.present(vc, animated: true)
+    }
 }
