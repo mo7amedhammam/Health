@@ -24,4 +24,32 @@ extension String {
                 let newurl  = self.replacingOccurrences(of: "\\",with: "/")
                 return  newurl
             }
+    func matches(regex pattern: String) -> Bool {
+           guard let regex = try? NSRegularExpression(pattern: pattern, options: []) else {
+               // Handle invalid regex pattern here
+               return false
+           }
+           
+           let range = NSRange(location: 0, length: utf16.count)
+           return regex.firstMatch(in: self, options: [], range: range) != nil
+       }
+    
+    func convertHTMLToPlainText() -> String? {
+            guard let data = self.data(using: .utf16, allowLossyConversion: true) else {
+                return nil
+            }
+            
+            let options: [NSAttributedString.DocumentReadingOptionKey: Any] = [
+                .documentType: NSAttributedString.DocumentType.html,
+                .characterEncoding: String.Encoding.utf16.rawValue
+            ]
+            
+            do {
+                let attributedString = try NSAttributedString(data: data, options: options, documentAttributes: nil)
+                return attributedString.string
+            } catch {
+                print("Error converting HTML to plain text: \(error)")
+                return nil
+            }
+        }
 }

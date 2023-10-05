@@ -28,7 +28,9 @@ class MeasurementsDetailsVC: UIViewController {
     // to fill lable in cell0
     var CellDateFrom = ""
     var CellDateTo   = ""
-    var formatValue = ""
+//    var formatValue = ""
+    var formatRegex = ""
+    var formatHintMessage = ""
     var MeasurementCreated = false
     //
     var selectDateFrom = ""
@@ -40,11 +42,11 @@ class MeasurementsDetailsVC: UIViewController {
         super.viewDidLoad()
         
         
-        if formatValue == "" || formatValue == "X" {
-            ViewSecondValue.isHidden = true
-        } else {
-            ViewSecondValue.isHidden = false
-        }
+//        if formatValue == "" || formatValue == "X" {
+//            ViewSecondValue.isHidden = true
+//        } else {
+//            ViewSecondValue.isHidden = false
+//        }
         
         // Do any additional setup after loading the view.
         self.PickerDate.addTarget(self, action: #selector(onDateValueChanged(_:)), for: .valueChanged)
@@ -146,8 +148,12 @@ class MeasurementsDetailsVC: UIViewController {
         } else if TFDate.text == "" {
             self.showAlert(message: "من فضلك أدخل التاريخ")
         } else {
-            
-            if formatValue == "" ||  formatValue == "X" {
+            print("regex",formatRegex)
+            print("default",formatHintMessage)
+
+            // Check Format Regex here
+//            if formatValue == "" ||  formatValue == "X" {
+            if let text = TFNumMeasure.text, text.matches(regex: formatRegex) {
                 //            ViewModel.customerId           = Helper.getUser()?.id // they take it from token
                 ViewModel.medicalMeasurementId = id
                 ViewModel.value                = TFNumMeasure.text
@@ -156,16 +162,16 @@ class MeasurementsDetailsVC: UIViewController {
                 CreateMeasurement ()
             } else {
                 
-                if TFSecondValue.text == "" {
-                    self.showAlert(message: "من فضلك أدخل القياس التالي")
-                } else {
-                    //            ViewModel.customerId           = Helper.getUser()?.id // they take it from token
-                    ViewModel.medicalMeasurementId = id
-                    ViewModel.value                = "\(TFNumMeasure.text!)/\(TFSecondValue.text!)"
-                    ViewModel.comment              = TVDescription.text ?? ""
-                    ViewModel.measurementDate      = TFDate.text
-                    CreateMeasurement ()
-                }
+//                if TFSecondValue.text == "" {
+                    self.showAlert(message: "\(formatHintMessage)")
+//                } else {
+//                    //            ViewModel.customerId           = Helper.getUser()?.id // they take it from token
+//                    ViewModel.medicalMeasurementId = id
+//                    ViewModel.value                = "\(TFNumMeasure.text!)/\(TFSecondValue.text!)"
+//                    ViewModel.comment              = TVDescription.text ?? ""
+//                    ViewModel.measurementDate      = TFDate.text
+//                    CreateMeasurement ()
+//                }
                 
             }
           
@@ -241,8 +247,10 @@ extension MeasurementsDetailsVC {
         refreshControl.endRefreshing()
     }
     
-    
     func CreateMeasurement () {
+        //check Measurement Value with Regex
+        
+        //send Create Request
         ViewModel.CreateMedicalMeasurements { [weak self] state in
             guard let self = self,let state = state else{
                 return

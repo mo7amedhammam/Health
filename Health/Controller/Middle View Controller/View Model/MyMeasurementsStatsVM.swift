@@ -63,7 +63,7 @@ class MyMeasurementsStatsVM {
         completion(.loading)
         // Create your API request with the username and password
         let target = Measurement.GetMyMedicalMeasurements(parameters: Parameters)
-        //print(parametersarr)
+        print("Parameters",Parameters)
         
         // Make the API call using your APIManager or networking code
         BaseNetwork.callApi(target, BaseResponse<ModelMedicalMeasurements>.self) {[weak self] result in
@@ -72,7 +72,6 @@ class MyMeasurementsStatsVM {
             case .success(let response):
                 // Handle the successful response
                 print("request successful: \(response)")
-
                 
                 if response.messageCode == 200 {
                     if self?.skipCount == 0 {

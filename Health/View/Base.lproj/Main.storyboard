@@ -322,6 +322,9 @@
                                                                                                 <color key="textColor" name="deactive"/>
                                                                                                 <fontDescription key="fontDescription" name="LamaSans-Medium" family="Lama Sans" pointSize="17"/>
                                                                                                 <textInputTraits key="textInputTraits"/>
+                                                                                                <connections>
+                                                                                                    <action selector="showDestrict:" destination="eS9-Kp-U8P" eventType="editingDidBegin" id="UPx-Gm-6EK"/>
+                                                                                                </connections>
                                                                                             </textField>
                                                                                         </subviews>
                                                                                     </stackView>
@@ -371,6 +374,9 @@
                                                                                                 <color key="textColor" name="deactive"/>
                                                                                                 <fontDescription key="fontDescription" name="LamaSans-Medium" family="Lama Sans" pointSize="17"/>
                                                                                                 <textInputTraits key="textInputTraits"/>
+                                                                                                <connections>
+                                                                                                    <action selector="showGender:" destination="eS9-Kp-U8P" eventType="editingDidBegin" id="JHZ-hg-7JV"/>
+                                                                                                </connections>
                                                                                             </textField>
                                                                                         </subviews>
                                                                                     </stackView>
@@ -579,6 +585,7 @@
                         <outlet property="BtnGender" destination="lfv-XO-cbd" id="prj-la-Y1z"/>
                         <outlet property="BtnName" destination="SqK-4t-WL7" id="VB7-gb-CuT"/>
                         <outlet property="BtnPhone" destination="mqt-sM-qWM" id="Mne-BT-0AE"/>
+                        <outlet property="BtnRegister" destination="I4R-f8-SFg" id="8JQ-Z8-beq"/>
                         <outlet property="TFCode" destination="qts-5U-235" id="NTG-3V-MRU"/>
                         <outlet property="TFDistrict" destination="PGm-P7-6ey" id="0Dj-Se-PSE"/>
                         <outlet property="TFGender" destination="d9p-1E-58B" id="qj2-UX-sMZ"/>
@@ -1215,6 +1222,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="BtnReset" destination="I1C-QP-6aG" id="9za-rF-OI4"/>
                         <outlet property="TFPassword" destination="hlF-4I-cjT" id="Px5-wK-ba5"/>
                         <outlet property="TFRe_Password" destination="akb-IZ-j15" id="cht-RA-GfU"/>
                         <outlet property="ViewPassword" destination="tDk-Yd-EXP" id="s0D-P4-Cin"/>
@@ -1578,6 +1586,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="BtnChange" destination="GCw-wx-aQX" id="oxU-sx-5ip"/>
                         <outlet property="TFNewPassword" destination="4Cb-l6-F7w" id="jsb-ly-3n5"/>
                         <outlet property="TFPassword" destination="MNa-3I-AHR" id="g7D-Xg-u2Y"/>
                         <outlet property="TFRe_Password" destination="jdK-1M-OIK" id="m3K-Zg-0dq"/>
@@ -1658,7 +1667,7 @@
                                                                 <rect key="frame" x="0.0" y="0.0" width="363" height="712"/>
                                                                 <subviews>
                                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="8cc-2V-yea">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="363" height="515"/>
+                                                                        <rect key="frame" x="0.0" y="0.0" width="363" height="395"/>
                                                                         <subviews>
                                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VL9-pD-cNC">
                                                                                 <rect key="frame" x="0.0" y="0.0" width="363" height="0.0"/>
@@ -2055,7 +2064,7 @@
                                                                                 </constraints>
                                                                             </view>
                                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wae-Rr-1s6">
-                                                                                <rect key="frame" x="0.0" y="465" width="363" height="50"/>
+                                                                                <rect key="frame" x="0.0" y="345" width="363" height="50"/>
                                                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                                 <nil key="textColor"/>
                                                                                 <nil key="highlightedColor"/>
@@ -2066,6 +2075,11 @@
                                                                             <constraint firstItem="VL9-pD-cNC" firstAttribute="leading" secondItem="8cc-2V-yea" secondAttribute="leading" id="OPF-RT-AKs"/>
                                                                             <constraint firstAttribute="trailing" secondItem="VL9-pD-cNC" secondAttribute="trailing" id="ZeH-lG-4xb"/>
                                                                         </constraints>
+                                                                        <variation key="default">
+                                                                            <mask key="subviews">
+                                                                                <exclude reference="W5u-FA-3OJ"/>
+                                                                            </mask>
+                                                                        </variation>
                                                                     </stackView>
                                                                 </subviews>
                                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -2580,7 +2594,7 @@
         <scene sceneID="pWq-kI-Sek">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="rHM-dA-UcT" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="oru-Sp-Gat"/>
+                    <tabBarItem key="tabBarItem" title="Item" image="tab1" id="oru-Sp-Gat"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="DlL-jD-8Oh">
                         <autoresizingMask key="autoresizingMask"/>
@@ -2598,7 +2612,7 @@
         <scene sceneID="c0h-6g-mKJ">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="nqO-c0-jKb" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" image="tab5" selectedImage="tab5selected" id="xBx-LU-nW6"/>
+                    <tabBarItem key="tabBarItem" title="Item" image="tab5" id="xBx-LU-nW6"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="iof-Ju-N9o">
                         <autoresizingMask key="autoresizingMask"/>
@@ -2616,7 +2630,7 @@
         <scene sceneID="Nz8-AX-v73">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="efA-m7-HLY" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="cSc-1D-Eim"/>
+                    <tabBarItem key="tabBarItem" title="Item" image="tab4" id="cSc-1D-Eim"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="hxq-9P-Jea">
                         <autoresizingMask key="autoresizingMask"/>
@@ -2652,7 +2666,7 @@
         <scene sceneID="ETB-5n-AKj">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="s2j-oX-6O0" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="QcB-Ge-8iD"/>
+                    <tabBarItem key="tabBarItem" title="Item" image="tab2" id="QcB-Ge-8iD"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="IeX-Qv-EiR">
                         <autoresizingMask key="autoresizingMask"/>
@@ -3553,10 +3567,10 @@
                                                                                 </userDefinedRuntimeAttributes>
                                                                             </view>
                                                                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6qB-c9-GfL">
-                                                                                <rect key="frame" x="146.66666666666663" y="0.0" width="136.33333333333337" height="50"/>
+                                                                                <rect key="frame" x="0.0" y="0.0" width="283" height="50"/>
                                                                                 <subviews>
                                                                                     <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="أدخل القياس" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="SMd-TH-gJs">
-                                                                                        <rect key="frame" x="9.9999999999999929" y="0.0" width="116.33333333333331" height="50"/>
+                                                                                        <rect key="frame" x="10" y="0.0" width="263" height="50"/>
                                                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                                         <color key="textColor" name="main"/>
                                                                                         <fontDescription key="fontDescription" name="LamaSans-Bold" family="Lama Sans" pointSize="15"/>
@@ -3577,6 +3591,11 @@
                                                                                 </userDefinedRuntimeAttributes>
                                                                             </view>
                                                                         </subviews>
+                                                                        <variation key="default">
+                                                                            <mask key="subviews">
+                                                                                <exclude reference="yko-3h-NlO"/>
+                                                                            </mask>
+                                                                        </variation>
                                                                     </stackView>
                                                                 </subviews>
                                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -5501,8 +5520,10 @@
         <image name="radio" width="14" height="14"/>
         <image name="radiofill" width="14" height="14"/>
         <image name="search-icn" width="17" height="16"/>
+        <image name="tab1" width="25" height="25"/>
+        <image name="tab2" width="25" height="30"/>
+        <image name="tab4" width="26" height="27"/>
         <image name="tab5" width="25" height="25"/>
-        <image name="tab5selected" width="53" height="53"/>
         <image name="true" width="21" height="22"/>
         <namedColor name="171433">
             <color red="0.090000003576278687" green="0.078000001609325409" blue="0.20000000298023224" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

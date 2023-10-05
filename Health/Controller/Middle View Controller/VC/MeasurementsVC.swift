@@ -113,12 +113,15 @@ extension MeasurementsVC : UICollectionViewDataSource , UICollectionViewDelegate
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let vc = initiateViewController(storyboardName: .main, viewControllerIdentifier: MeasurementsDetailsVC.self) else{return}
         if let model = ViewModel.ArrStats?[indexPath.row]{
+            print("selectedModel",model)
             vc.id  =  model.medicalMeasurementID ?? 0
             vc.num = model.measurementsCount ?? 0
             vc.imgMeasurement = model.image ?? ""
-            vc.formatValue = model.formatValue ?? ""
+//            vc.formatValue = model.formatValue ?? ""
+            vc.formatRegex = model.regExpression ?? ""
+            vc.formatHintMessage = model.normalRangValue ?? ""
         }
-        print("formatValue : \( ViewModel.ArrStats![indexPath.row].formatValue!)")
+//        print("formatValue : \( ViewModel.ArrStats![indexPath.row].formatValue!)")
         vc.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(vc, animated: true)
     }

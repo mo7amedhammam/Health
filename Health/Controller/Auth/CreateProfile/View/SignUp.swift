@@ -35,6 +35,7 @@ class SignUp: UIViewController  , UITextFieldDelegate{
     @IBOutlet weak var ViewCode: UIView!
     @IBOutlet weak var BtnCode: UIView!
     
+    @IBOutlet weak var BtnRegister: UIButton!
 //    let dataArray = ["الدمام", "مكة", "الرياض", "بريدة", "القصيم"]
         let rightBarDropDown = DropDown()
     
@@ -51,7 +52,15 @@ class SignUp: UIViewController  , UITextFieldDelegate{
         
         TFCode.delegate = self
         BtnCode.isHidden = true
-    hideKeyboardWhenTappedAround()
+        
+        TFName.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+        TFPhone.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+        TFCode.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+        TFDistrict.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+        TFGender.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+
+        BtnRegister.enable(false)
+        hideKeyboardWhenTappedAround()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -76,13 +85,17 @@ class SignUp: UIViewController  , UITextFieldDelegate{
     
     @IBAction func BUSelectDistrict(_ sender: Any) {
         SetDropDown(DropListSource: .District)
-            rightBarDropDown.show()
         }
+    @IBAction func showDestrict(_ sender: Any) {
+        SetDropDown(DropListSource: .District)
+    }
     
     @IBAction func BUSelectGender(_ sender: Any) {
        SetDropDown(DropListSource: .Gender)
-           rightBarDropDown.show()
        }
+    @IBAction func showGender(_ sender: Any) {
+        SetDropDown(DropListSource: .Gender)
+    }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
         
@@ -95,8 +108,11 @@ class SignUp: UIViewController  , UITextFieldDelegate{
         } else if textField == TFCode {
             ViewCode.borderColor = UIColor(named: "stroke")
             TFCode.textColor = UIColor(named: "main")
-        }  else {
-            
+        }else if textField == TFDistrict{
+            ViewDistrict.borderColor = UIColor(named: "stroke")
+        }else if textField == TFDistrict{
+            ViewGender.borderColor = UIColor(named: "stroke")
+        }else{
         }
     }
     
@@ -125,6 +141,31 @@ class SignUp: UIViewController  , UITextFieldDelegate{
         } else {
         }
         
+    }
+        
+    @objc func textFieldDidChange(_ textField: UITextField) {
+        let isPhoneValid = TFPhone.text?.count == 11 // Check if TFPhone has 11 digits
+        let isNameValid = TFName.hasText // Check if TFPassword is not empty
+        let isCodeValid = TFCode.hasText // Check if TFCode is not empty
+        let isDestrictValid = DistrictId != nil
+        let isGenderValid = GenderId != nil
+
+        let isValidForm = isPhoneValid && isNameValid && isDestrictValid && isGenderValid && isCodeValid
+        BtnRegister.enable(isValidForm)
+    }
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        if textField == TFPhone {
+            // Calculate the new length of the text after applying the replacement string
+            let currentText = textField.text ?? ""
+            let newText = (currentText as NSString).replacingCharacters(in: range, with: string)
+            
+            // Check if the new length exceeds the allowed limit (11 digits)
+            if newText.count > 11 {
+                return false
+            }
+        }
+        return true
     }
     
 }
@@ -217,8 +258,9 @@ extension SignUp{
             rightBarDropDown.anchorView = TFGender
             let preferredViewWidth = TFGender.frame.size.width // Assuming ViewPreferred is a UIView
             rightBarDropDown.width = preferredViewWidth
-            ViewGender.borderColor = UIColor(named: "main")
-            ViewGender.backgroundColor = .white
+            ViewGender.borderColor = UIColor(named: "stroke")
+            TFGender.textColor = UIColor(named: "main")
+//            ViewGender.backgroundColor = .white
             BtnGender.isSelected = true
 
         case .District:
@@ -228,8 +270,9 @@ extension SignUp{
             rightBarDropDown.anchorView = TFDistrict
             let preferredViewWidth = TFDistrict.frame.size.width // Assuming ViewPreferred is a UIView
             rightBarDropDown.width = preferredViewWidth
-            ViewDistrict.borderColor = UIColor(named: "main")
-            ViewDistrict.backgroundColor = .white
+            ViewDistrict.borderColor = UIColor(named: "stroke")
+            TFDistrict.textColor = UIColor(named: "main")
+//            ViewDistrict.backgroundColor = .white
             BtnDistrict.isSelected = true
 
         }
@@ -256,18 +299,19 @@ extension SignUp{
                     case .Gender:
                         BtnGender.isSelected = false
                         if TFGender.text == "" {
-                            ViewGender.borderColor     = UIColor(named: "F0F0F0")
-                            ViewGender.backgroundColor = UIColor(named: "F5F5F5")
+                        ViewDistrict.borderColor = UIColor(named: "stroke")
+
+//                            ViewGender.backgroundColor = UIColor(named: "F5F5F5")
                         }
                     case .District:
                         BtnDistrict.isSelected = false
                         if TFDistrict.text == "" {
-                            ViewDistrict.borderColor     = UIColor(named: "F0F0F0")
-                            ViewDistrict.backgroundColor = UIColor(named: "F5F5F5")
+                            ViewDistrict.borderColor     = UIColor(named: "stroke")
+//                            ViewDistrict.backgroundColor = UIColor(named: "F5F5F5")
                         }
                     }
-                    
                 }
+        rightBarDropDown.show()
     }
     
     func JoinRequestSent()  {

@@ -23,7 +23,6 @@ class LoginVC: UIViewController , UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         // Do any additional setup after loading the view.
         TFPhone.delegate = self
         TFPassword.delegate = self
@@ -31,9 +30,7 @@ class LoginVC: UIViewController , UITextFieldDelegate {
         TFPassword.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         
         BtnPhone.isHidden = true
-        BtnLogin.isEnabled = false
-        BtnLogin.alpha = BtnLogin.isEnabled ? 1.0 : 0.5
-        
+        BtnLogin.enable(false)
         hideKeyboardWhenTappedAround()
     }
     
@@ -108,17 +105,12 @@ class LoginVC: UIViewController , UITextFieldDelegate {
         }
     }
     
-    fileprivate func enableBtnLogin(isactive:Bool) {
-        // Enable or disable BtnLogin based on conditions
-        BtnLogin.isEnabled = isactive
-        BtnLogin.alpha = BtnLogin.isEnabled ? 1.0 : 0.5
-    }
-    
     @objc func textFieldDidChange(_ textField: UITextField) {
         let isPhoneValid = TFPhone.text?.count == 11 // Check if TFPhone has 11 digits
         let isPasswordValid = TFPassword.hasText // Check if TFPassword is not empty
         
-        enableBtnLogin(isactive: isPhoneValid && isPasswordValid)
+        let isValidForm = isPhoneValid && isPasswordValid
+        BtnLogin.enable(isValidForm)
     }
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
