@@ -69,7 +69,7 @@ extension TipsCategoriesDetailsVC {
         }
 
         LaTitle.text = model.title
-        LaDescription.setJustifiedRight("\(model.description ?? "")")
+        LaDescription.setJustifiedRight("\(model.description ?? "")".convertHTMLToPlainText())
         LaType.text = model.tipCategoryTitle
         LaDate.text = model.date?.CangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "dd / MM / yyyy hh:mm a")
         CVDrugGroups.reloadData()

@@ -34,5 +34,22 @@ extension String {
            return regex.firstMatch(in: self, options: [], range: range) != nil
        }
     
-    
+    func convertHTMLToPlainText() -> String? {
+            guard let data = self.data(using: .utf16, allowLossyConversion: true) else {
+                return nil
+            }
+            
+            let options: [NSAttributedString.DocumentReadingOptionKey: Any] = [
+                .documentType: NSAttributedString.DocumentType.html,
+                .characterEncoding: String.Encoding.utf16.rawValue
+            ]
+            
+            do {
+                let attributedString = try NSAttributedString(data: data, options: options, documentAttributes: nil)
+                return attributedString.string
+            } catch {
+                print("Error converting HTML to plain text: \(error)")
+                return nil
+            }
+        }
 }
