@@ -9,7 +9,7 @@ import UIKit
 import DropDown
 
 
-class NotificationVC: UIViewController {
+class NotificationVC: UIViewController  {
     
     
     @IBOutlet weak var BtnSelectDrug: UIButton!
@@ -43,6 +43,10 @@ class NotificationVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+//        TFNumDays.delegate = self
+        TFNumDays.addTarget(self, action: #selector(self.textFieldDidChange(textField:)), for: UIControl.Event.editingChanged)
+
+
         TFDrugName.delegate = self
         rightBarDropDown.anchorView = TFDrugName
         rightBarDropDown.cancelAction = { [self] in
@@ -97,13 +101,39 @@ class NotificationVC: UIViewController {
         print(strDate)
          if selectDateFrom == "from" {
             TFStartDate.text = strDate
+                 
+             if TFNumDays.text == "" {
+                 
+             } else {
+                 let dateFormatter = DateFormatter()
+                 dateFormatter.dateFormat = "yyyy-MM-dd"
+                 dateFormatter.locale     = Locale(identifier: "en_US_POSIX")
+
+                 let date = dateFormatter.date(from: TFStartDate.text! )!
+
+                 var dateComponents = DateComponents()
+                 dateComponents.day = Int(TFNumDays.text!)!
+
+                 let calendar = Calendar.current
+                 let newDate = calendar.date(byAdding: dateComponents, to: date)!
+                 let newDateString = dateFormatter.string(from: newDate)
+                 print("newDateString : \(newDateString)")
+                 TFEndDate.text = newDateString
+             }
+             
+             
+             
+             
         } else if selectDateFrom == "to" {
-            TFEndDate.text = strDate
+//            TFEndDate.text = strDate
         } else {
         }
         
         ViewSelectDate.isHidden = true
     }
+    
+    
+    
     
     
     @IBAction func BUBack(_ sender: Any) {
@@ -135,9 +165,11 @@ class NotificationVC: UIViewController {
             self.showAlert(message: "من فضلك ادخل اسم الدواء او قم باختيارة من القائمة")
         } else  if TFStartDate.text == "" {
             self.showAlert(message: "من فضلك ادخل تاريخ البداية")
-        } else  if TFEndDate.text == "" {
-            self.showAlert(message: "من فضلك ادخل تاريخ النهاية")
-        } else  if TFClock.text == "" {
+        }
+//        else  if TFEndDate.text == "" {
+//            self.showAlert(message: "من فضلك ادخل تاريخ النهاية")
+//        }
+        else  if TFClock.text == "" {
             self.showAlert(message: "من فضلك ادخل الساعة")
         } else  if TFNumDays.text == "" {
             self.showAlert(message: "من فضلك ادخل عدد الايام ")
@@ -153,6 +185,15 @@ class NotificationVC: UIViewController {
     }
     
     @IBAction func BUCancelAddNotification(_ sender: Any) {
+        TFClock.text = ""
+        TFEndDate.text = ""
+        TFNumDays.text = ""
+        TFStartDate.text = ""
+        TFNumDrug.text = ""
+        TFDrugName.text = ""
+        drugId = 0
+        BtnDay.isSelected = false
+        BtnClock.isSelected = false
         ViewAddNewNotification.isHidden = true
     }
     
@@ -192,27 +233,29 @@ class NotificationVC: UIViewController {
             ViewSelectDate.isHidden = false
 
         } else if sender.tag == 2 {
-            //
-            selectDateFrom = "to"
-            if TFStartDate.text == "" {
-                self.showAlert(message: "من فضلك حدد تاريخ البداية أولا")
-            } else {
-                let stringA = formattedDateFromString(dateString: TFStartDate.text! , withFormat: "yyyy")
-                let stringB = formattedDateFromString(dateString: TFStartDate.text! , withFormat: "MM")
-                let stringC = formattedDateFromString(dateString: TFStartDate.text! , withFormat: "dd")
-                let calendar = Calendar.current
-                var minDateComponent   = calendar.dateComponents([.day,.month,.year], from: Date())
-                //                minDateComponent.day   = Int(stringC?.replacedArabicDigitsWithEnglish ?? "00")! + 1
-                minDateComponent.day   = Int(stringC?.replacedArabicDigitsWithEnglish ?? "00")!
-                minDateComponent.month = Int(stringB?.replacedArabicDigitsWithEnglish ?? "00")
-                minDateComponent.year  = Int(stringA?.replacedArabicDigitsWithEnglish ?? "00")
-                let minDate = calendar.date(from: minDateComponent)
-                PickerDate.minimumDate    = minDate
-                PickerDate.maximumDate    = Calendar.current.date(byAdding: .year, value: 10, to: Date())
-                PickerDate.datePickerMode = .date
-                
-                ViewSelectDate.isHidden     = false
-            }
+            // hash this code , cant select second date
+            // second date calculated from start date + number of days
+            
+//            selectDateFrom = "to"
+//            if TFStartDate.text == "" {
+//                self.showAlert(message: "من فضلك حدد تاريخ البداية أولا")
+//            } else {
+//                let stringA = formattedDateFromString(dateString: TFStartDate.text! , withFormat: "yyyy")
+//                let stringB = formattedDateFromString(dateString: TFStartDate.text! , withFormat: "MM")
+//                let stringC = formattedDateFromString(dateString: TFStartDate.text! , withFormat: "dd")
+//                let calendar = Calendar.current
+//                var minDateComponent   = calendar.dateComponents([.day,.month,.year], from: Date())
+//                //                minDateComponent.day   = Int(stringC?.replacedArabicDigitsWithEnglish ?? "00")! + 1
+//                minDateComponent.day   = Int(stringC?.replacedArabicDigitsWithEnglish ?? "00")!
+//                minDateComponent.month = Int(stringB?.replacedArabicDigitsWithEnglish ?? "00")
+//                minDateComponent.year  = Int(stringA?.replacedArabicDigitsWithEnglish ?? "00")
+//                let minDate = calendar.date(from: minDateComponent)
+//                PickerDate.minimumDate    = minDate
+//                PickerDate.maximumDate    = Calendar.current.date(byAdding: .year, value: 10, to: Date())
+//                PickerDate.datePickerMode = .date
+//
+//                ViewSelectDate.isHidden     = false
+//            }
             
         } else {
         }
@@ -473,6 +516,42 @@ extension NotificationVC : UITextFieldDelegate {
         if textField == TFDrugName {
             drugId = 0
             print("drugId is zero : \(drugId)")
+        }
+    }
+    
+ 
+    @objc func textFieldDidChange(textField : UITextField){
+
+        if textField == TFNumDays {
+            
+            if TFStartDate.text == "" {
+                TFEndDate.text = ""
+                TFNumDays.text = ""
+                self.showAlert(message: "من فضلك ادخل تاريخ البداية")
+            } else {
+                if textField.text == "0" || textField.text == "" {
+                    TFEndDate.text = ""
+                    TFNumDays.text = ""
+                    self.showAlert(message: "عدد الايام لابد ان يكون اكبر من صفر")
+                } else {
+
+                    let dateFormatter = DateFormatter()
+                    dateFormatter.dateFormat = "yyyy-MM-dd"
+                    dateFormatter.locale     = Locale(identifier: "en_US_POSIX")
+
+                    let date = dateFormatter.date(from: TFStartDate.text! )!
+
+                    var dateComponents = DateComponents()
+                    dateComponents.day = Int(TFNumDays.text!)!
+
+                    let calendar = Calendar.current
+                    let newDate = calendar.date(byAdding: dateComponents, to: date)!
+                    let newDateString = dateFormatter.string(from: newDate)
+                    print("newDateString : \(newDateString)")
+                    TFEndDate.text = newDateString
+                }
+                
+            }
         }
     }
 }

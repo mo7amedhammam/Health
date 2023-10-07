@@ -81,7 +81,7 @@ extension HomeTVCell1 : UICollectionViewDataSource , UICollectionViewDelegate , 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
         if indexx == 1 {
-            return CGSize(width: 140, height: 160)
+            return CGSize(width: ( (CollectionHome.frame.size.width - 10) / 3 ) , height: 160)
         } else if indexx == 2 {
             return CGSize(width: 350, height: 150)
         } else {
