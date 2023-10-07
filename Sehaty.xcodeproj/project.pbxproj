@@ -286,16 +286,16 @@
 		BBBDFFFF2A73101200F066DF /* UITableView+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITableView+Extensions.swift"; sourceTree = "<group>"; };
 		BBC3C3EB2ACC912300805524 /* HomeCVCell3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCVCell3.swift; sourceTree = "<group>"; };
 		BBC3C3EC2ACC912300805524 /* HomeCVCell3.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomeCVCell3.xib; sourceTree = "<group>"; };
-		BBC7B4572A72CC820079355E /* Health.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Health.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		BBC7B4572A72CC820079355E /* Sehaty.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sehaty.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BBC7B45A2A72CC820079355E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BBC7B45C2A72CC820079355E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		BBC7B4612A72CC820079355E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		BBC7B4632A72CC840079355E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BBC7B4662A72CC840079355E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		BBC7B4682A72CC840079355E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		BBC7B46D2A72CC840079355E /* HealthTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HealthTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		BBC7B46D2A72CC840079355E /* SehatyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SehatyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BBC7B4712A72CC840079355E /* HealthTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthTests.swift; sourceTree = "<group>"; };
-		BBC7B4772A72CC840079355E /* HealthUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HealthUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		BBC7B4772A72CC840079355E /* SehatyUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SehatyUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BBC7B47B2A72CC840079355E /* HealthUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthUITests.swift; sourceTree = "<group>"; };
 		BBC7B47D2A72CC840079355E /* HealthUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		BBD2B0352AAA832E00C0A807 /* MeasurementServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasurementServices.swift; sourceTree = "<group>"; };
@@ -797,9 +797,9 @@
 		BBC7B4582A72CC820079355E /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				BBC7B4572A72CC820079355E /* Health.app */,
-				BBC7B46D2A72CC840079355E /* HealthTests.xctest */,
-				BBC7B4772A72CC840079355E /* HealthUITests.xctest */,
+				BBC7B4572A72CC820079355E /* Sehaty.app */,
+				BBC7B46D2A72CC840079355E /* SehatyTests.xctest */,
+				BBC7B4772A72CC840079355E /* SehatyUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1247,9 +1247,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		BBC7B4562A72CC820079355E /* Health */ = {
+		BBC7B4562A72CC820079355E /* Sehaty */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = BBC7B4812A72CC840079355E /* Build configuration list for PBXNativeTarget "Health" */;
+			buildConfigurationList = BBC7B4812A72CC840079355E /* Build configuration list for PBXNativeTarget "Sehaty" */;
 			buildPhases = (
 				8B9766BFAC7E3B23A11072B3 /* [CP] Check Pods Manifest.lock */,
 				BBC7B4532A72CC820079355E /* Sources */,
@@ -1261,14 +1261,14 @@
 			);
 			dependencies = (
 			);
-			name = Health;
+			name = Sehaty;
 			productName = Health;
-			productReference = BBC7B4572A72CC820079355E /* Health.app */;
+			productReference = BBC7B4572A72CC820079355E /* Sehaty.app */;
 			productType = "com.apple.product-type.application";
 		};
-		BBC7B46C2A72CC840079355E /* HealthTests */ = {
+		BBC7B46C2A72CC840079355E /* SehatyTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = BBC7B4842A72CC840079355E /* Build configuration list for PBXNativeTarget "HealthTests" */;
+			buildConfigurationList = BBC7B4842A72CC840079355E /* Build configuration list for PBXNativeTarget "SehatyTests" */;
 			buildPhases = (
 				738F073CEEE83AFB4279ED15 /* [CP] Check Pods Manifest.lock */,
 				BBC7B4692A72CC840079355E /* Sources */,
@@ -1280,14 +1280,14 @@
 			dependencies = (
 				BBC7B46F2A72CC840079355E /* PBXTargetDependency */,
 			);
-			name = HealthTests;
+			name = SehatyTests;
 			productName = HealthTests;
-			productReference = BBC7B46D2A72CC840079355E /* HealthTests.xctest */;
+			productReference = BBC7B46D2A72CC840079355E /* SehatyTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		BBC7B4762A72CC840079355E /* HealthUITests */ = {
+		BBC7B4762A72CC840079355E /* SehatyUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = BBC7B4872A72CC840079355E /* Build configuration list for PBXNativeTarget "HealthUITests" */;
+			buildConfigurationList = BBC7B4872A72CC840079355E /* Build configuration list for PBXNativeTarget "SehatyUITests" */;
 			buildPhases = (
 				088BAD626CD66047F9372290 /* [CP] Check Pods Manifest.lock */,
 				BBC7B4732A72CC840079355E /* Sources */,
@@ -1300,9 +1300,9 @@
 			dependencies = (
 				BBC7B4792A72CC840079355E /* PBXTargetDependency */,
 			);
-			name = HealthUITests;
+			name = SehatyUITests;
 			productName = HealthUITests;
-			productReference = BBC7B4772A72CC840079355E /* HealthUITests.xctest */;
+			productReference = BBC7B4772A72CC840079355E /* SehatyUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -1328,7 +1328,7 @@
 					};
 				};
 			};
-			buildConfigurationList = BBC7B4522A72CC820079355E /* Build configuration list for PBXProject "Health" */;
+			buildConfigurationList = BBC7B4522A72CC820079355E /* Build configuration list for PBXProject "Sehaty" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -1341,9 +1341,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				BBC7B4562A72CC820079355E /* Health */,
-				BBC7B46C2A72CC840079355E /* HealthTests */,
-				BBC7B4762A72CC840079355E /* HealthUITests */,
+				BBC7B4562A72CC820079355E /* Sehaty */,
+				BBC7B46C2A72CC840079355E /* SehatyTests */,
+				BBC7B4762A72CC840079355E /* SehatyUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -1654,12 +1654,12 @@
 /* Begin PBXTargetDependency section */
 		BBC7B46F2A72CC840079355E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = BBC7B4562A72CC820079355E /* Health */;
+			target = BBC7B4562A72CC820079355E /* Sehaty */;
 			targetProxy = BBC7B46E2A72CC840079355E /* PBXContainerItemProxy */;
 		};
 		BBC7B4792A72CC840079355E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = BBC7B4562A72CC820079355E /* Health */;
+			target = BBC7B4562A72CC820079355E /* Sehaty */;
 			targetProxy = BBC7B4782A72CC840079355E /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -1805,10 +1805,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = 23H4SBD5QL;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Health/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "صحتي مع الندى";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.medical";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -1838,10 +1840,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = 23H4SBD5QL;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Health/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "صحتي مع الندى";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.medical";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -1881,7 +1885,7 @@
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Health.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Health";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Sehaty.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Sehaty";
 			};
 			name = Debug;
 		};
@@ -1902,7 +1906,7 @@
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Health.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Health";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Sehaty.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Sehaty";
 			};
 			name = Release;
 		};
@@ -1947,7 +1951,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		BBC7B4522A72CC820079355E /* Build configuration list for PBXProject "Health" */ = {
+		BBC7B4522A72CC820079355E /* Build configuration list for PBXProject "Sehaty" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				BBC7B47F2A72CC840079355E /* Debug */,
@@ -1956,7 +1960,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		BBC7B4812A72CC840079355E /* Build configuration list for PBXNativeTarget "Health" */ = {
+		BBC7B4812A72CC840079355E /* Build configuration list for PBXNativeTarget "Sehaty" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				BBC7B4822A72CC840079355E /* Debug */,
@@ -1965,7 +1969,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		BBC7B4842A72CC840079355E /* Build configuration list for PBXNativeTarget "HealthTests" */ = {
+		BBC7B4842A72CC840079355E /* Build configuration list for PBXNativeTarget "SehatyTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				BBC7B4852A72CC840079355E /* Debug */,
@@ -1974,7 +1978,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		BBC7B4872A72CC840079355E /* Build configuration list for PBXNativeTarget "HealthUITests" */ = {
+		BBC7B4872A72CC840079355E /* Build configuration list for PBXNativeTarget "SehatyUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				BBC7B4882A72CC840079355E /* Debug */,
