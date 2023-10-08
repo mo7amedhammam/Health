@@ -2405,7 +2405,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nid-zh-X5g" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3282" y="2204"/>
+            <point key="canvasLocation" x="4234" y="2204"/>
         </scene>
         <!--MeasurementsVC-->
         <scene sceneID="ilP-5N-Ijx">
@@ -4781,7 +4781,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qbF-dr-K9u" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3150" y="2870"/>
+            <point key="canvasLocation" x="3645" y="2888"/>
         </scene>
         <!--Tips CategoriesVC3-->
         <scene sceneID="nvx-P9-n9t">
@@ -4889,7 +4889,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hzc-q4-pNv" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3804" y="2870"/>
+            <point key="canvasLocation" x="4300" y="2888"/>
         </scene>
         <!--Tips Categories DetailsVC-->
         <scene sceneID="frT-wX-ZKk">
@@ -5174,7 +5174,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gPd-KM-EmY" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4513.740458015267" y="2869.7183098591549"/>
+            <point key="canvasLocation" x="5010" y="2888"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="bIv-e5-Tgs">
@@ -5486,12 +5486,14 @@
                     </view>
                     <navigationItem key="navigationItem" id="b7B-vg-AQE"/>
                     <connections>
+                        <outlet property="ImgUser" destination="lwb-9C-2RM" id="PoI-X4-x2D"/>
+                        <outlet property="LaName" destination="PMm-yv-za9" id="MAp-fo-ajq"/>
                         <outlet property="TVScreen" destination="plo-qg-eAP" id="ay9-A7-kYi"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tPS-m5-k5U" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3960" y="2204"/>
+            <point key="canvasLocation" x="3282" y="2204"/>
         </scene>
     </scenes>
     <designables>

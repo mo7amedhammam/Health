@@ -12,6 +12,8 @@ class HomeCVCell2: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        contentView.transform = CGAffineTransform(scaleX: -1, y: 1) // second tip for mirroring Cell content
+
     }
 
 }

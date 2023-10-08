@@ -32,4 +32,6 @@ class TipsCategoriesCVCell1: UICollectionViewCell {
 
     }
 
+    
+    
 }
