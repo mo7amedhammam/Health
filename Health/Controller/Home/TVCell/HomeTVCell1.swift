@@ -78,7 +78,7 @@ class HomeTVCell1: UITableViewCell {
         CollectionHome.registerCell(cellClass: HomeCVCell3.self)
         CollectionHome.registerCell(cellClass: TipsCategoriesCVCell1.self)
         CollectionHome.transform = CGAffineTransform(scaleX: -1, y: 1) //first tip mirror effect for x -> second in cell
-        CollectionHome.reloadData()
+//        CollectionHome.reloadData()
 
     }
     
@@ -89,7 +89,7 @@ extension HomeTVCell1 : UICollectionViewDataSource , UICollectionViewDelegate , 
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if indexx == 1 {
-            return 6
+            return ViewModelMeasurements?.ArrStats?.count ?? 0
         } else if indexx == 2 {
             return 4
         } else if indexx == 3 {
@@ -147,7 +147,11 @@ extension HomeTVCell1 : UICollectionViewDataSource , UICollectionViewDelegate , 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
         if indexx == 1 {
-            return CGSize(width: (UIScreen.main.bounds.width/3) - 13.5, height: 170)
+            if ViewModelMeasurements?.ArrStats?.count ?? 0 <= 3 {
+                return CGSize(width: (UIScreen.main.bounds.width/3) - 13.5, height: 90)
+            } else {
+                return CGSize(width: (UIScreen.main.bounds.width/3) - 13.5, height: 170)
+            }
         } else if indexx == 2 {
             return CGSize(width: 350, height: 150)
         } else {

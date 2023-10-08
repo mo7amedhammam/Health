@@ -14,7 +14,6 @@ class HomeVC: UIViewController {
     @IBOutlet weak var TVScreen: UITableView!
     let refreshControl = UIRefreshControl()
     let ViewModelMeasurements = MyMeasurementsStatsVM()
-
     let ViewModel = TipsVM()
 
     override func viewDidLoad() {
@@ -25,12 +24,12 @@ class HomeVC: UIViewController {
         TVScreen.delegate   = self
         TVScreen.registerCellNib(cellClass: HomeTVCell0.self)
         TVScreen.registerCellNib(cellClass: HomeTVCell1.self)
-//        TVScreen.reloadData()
+        TVScreen.registerCellNib(cellClass: EmptyTVCell.self)
         // Configure the refresh control
         refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
-           
            // Add the refresh control to the table view
         TVScreen.addSubview(refreshControl)
+//        TVScreen.reloadData()
         getTipsCategories()
     }
 }
@@ -47,33 +46,80 @@ extension HomeVC : UITableViewDataSource , UITableViewDelegate {
             let cell = tableView.dequeueReusableCell(withIdentifier: "HomeTVCell0", for: indexPath) as! HomeTVCell0
             return cell
         } else {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "HomeTVCell1", for: indexPath) as! HomeTVCell1
-            cell.nav =  self.navigationController
-            cell.DataSourseDeledate()
-            cell.indexx = indexPath.row
-            //
+            
             if indexPath.row == 1 {
-                cell.ViewModelMeasurements = ViewModelMeasurements
-                cell.HViewCell.constant = 400
-                cell.BtnMore.isHidden   = true
-                cell.LaTitle.text = "قياساتك الأخيرة"
+                                
+                if ViewModelMeasurements.ArrStats == nil  {
+                    let cell = tableView.dequeueReusableCell(withIdentifier: "EmptyTVCell", for: indexPath) as! EmptyTVCell
+                    return cell
+                } else {
+                    let cell = tableView.dequeueReusableCell(withIdentifier: "HomeTVCell1", for: indexPath) as! HomeTVCell1
+                    cell.nav =  self.navigationController
+//                    cell.DataSourseDeledate()
+                    cell.CollectionHome.reloadData()
+                    cell.indexx = indexPath.row
+                    
+                    cell.ViewModelMeasurements = ViewModelMeasurements
+                    if ViewModelMeasurements.ArrStats?.count ?? 0 <= 3 {
+                        cell.HViewCell.constant = 200
+                    } else {
+                        cell.HViewCell.constant = 400
+                    }
+                    
+                    cell.BtnMore.isHidden   = true
+                    cell.LaTitle.text = "قياساتك الأخيرة"
+                    return cell
+                }
+
             } else if indexPath.row == 2 {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "HomeTVCell1", for: indexPath) as! HomeTVCell1
+                cell.nav =  self.navigationController
+//                cell.DataSourseDeledate()
+                cell.CollectionHome.reloadData()
+                cell.indexx = indexPath.row
+                
                 cell.HViewCell.constant = 220
                 cell.BtnMore.isHidden   = false
                 cell.LaTitle.text = "الأدوية التي قاربة على الإنتهاء"
+                return cell
+
             } else if indexPath.row == 3 {
-                cell.ViewModel = ViewModel
-                cell.HViewCell.constant = 320
-                cell.BtnMore.isHidden   = false
-                cell.LaTitle.text = "نصائح حديثة"
+                
+                if ViewModel.newestTipsArr?.count == 0 {
+                    let cell = tableView.dequeueReusableCell(withIdentifier: "EmptyTVCell", for: indexPath) as! EmptyTVCell
+                    return cell
+                } else {
+                    let cell = tableView.dequeueReusableCell(withIdentifier: "HomeTVCell1", for: indexPath) as! HomeTVCell1
+                    cell.nav =  self.navigationController
+//                    cell.DataSourseDeledate()
+                    cell.CollectionHome.reloadData()
+                    cell.indexx = indexPath.row
+                    
+                    cell.ViewModel = ViewModel
+                    cell.HViewCell.constant = 320
+                    cell.BtnMore.isHidden   = false
+                    cell.LaTitle.text = "نصائح حديثة"
+                    return cell
+                }
+                
             } else  {
-                cell.ViewModel = ViewModel
-                cell.HViewCell.constant = 320
-                cell.BtnMore.isHidden   = false
-                cell.LaTitle.text = "النصائح الأكثر مشاهدة"
+                
+                if ViewModel.mostViewedTipsArr?.count == 0 {
+                    let cell = tableView.dequeueReusableCell(withIdentifier: "EmptyTVCell", for: indexPath) as! EmptyTVCell
+                    return cell
+                } else {
+                    let cell = tableView.dequeueReusableCell(withIdentifier: "HomeTVCell1", for: indexPath) as! HomeTVCell1
+                    cell.nav =  self.navigationController
+//                    cell.DataSourseDeledate()
+                    cell.indexx = indexPath.row
+                    
+                    cell.ViewModel = ViewModel
+                    cell.HViewCell.constant = 320
+                    cell.BtnMore.isHidden   = false
+                    cell.LaTitle.text = "النصائح الأكثر مشاهدة"
+                    return cell
+                }
             }
-            
-            return cell
         }
     }
     
@@ -104,8 +150,9 @@ extension HomeVC{
                 print("interesting",ViewModel.interestingTipsArr ?? [])
                 print("newest",ViewModel.newestTipsArr ?? [])
                 print("mostview",ViewModel.mostViewedTipsArr ?? [])
-            }catch {
+            } catch {
                 // Handle any errors that occur during the async operations
+                TVScreen.reloadData()
                 print("Error: \(error)")
                 Hud.dismiss(from: self.view)
                 SimpleAlert.shared.showAlert(title:error.localizedDescription,message:"", viewController: self)
@@ -117,7 +164,6 @@ extension HomeVC{
         ViewModel.skipCount = 0
         // Place your refresh logic here, for example, fetch new data from your data source
         getTipsCategories()
-
         // When the refresh operation is complete, endRefreshing() to hide the refresh control
         refreshControl.endRefreshing()
     }

@@ -68,6 +68,8 @@
 		BBA1DA142AB11C020042713A /* ModelNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBA1DA132AB11C020042713A /* ModelNotification.swift */; };
 		BBA1DA162AB11C3A0042713A /* NotificationServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBA1DA152AB11C3A0042713A /* NotificationServices.swift */; };
 		BBA1DA182AB11E5C0042713A /* NotificationVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBA1DA172AB11E5C0042713A /* NotificationVM.swift */; };
+		BBAE725E2AD3291F0089512D /* EmptyTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBAE725C2AD3291F0089512D /* EmptyTVCell.swift */; };
+		BBAE725F2AD3291F0089512D /* EmptyTVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BBAE725D2AD3291F0089512D /* EmptyTVCell.xib */; };
 		BBBD000A2A73101700F066DF /* EXTEnternet.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBBDFFF72A73100E00F066DF /* EXTEnternet.swift */; };
 		BBBD000B2A73101700F066DF /* SalmanLocalize.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBBDFFF82A73100E00F066DF /* SalmanLocalize.swift */; };
 		BBBD000C2A73101700F066DF /* EXTAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBBDFFF92A73100F00F066DF /* EXTAlert.swift */; };
@@ -250,6 +252,8 @@
 		BBA1DA132AB11C020042713A /* ModelNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelNotification.swift; sourceTree = "<group>"; };
 		BBA1DA152AB11C3A0042713A /* NotificationServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationServices.swift; sourceTree = "<group>"; };
 		BBA1DA172AB11E5C0042713A /* NotificationVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationVM.swift; sourceTree = "<group>"; };
+		BBAE725C2AD3291F0089512D /* EmptyTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyTVCell.swift; sourceTree = "<group>"; };
+		BBAE725D2AD3291F0089512D /* EmptyTVCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EmptyTVCell.xib; sourceTree = "<group>"; };
 		BBBD00002A73101200F066DF /* ExtentionLocalize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExtentionLocalize.swift; sourceTree = "<group>"; };
 		BBBD00012A73101300F066DF /* AES.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AES.swift; sourceTree = "<group>"; };
 		BBBD00022A73101300F066DF /* ProgressHud.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressHud.swift; sourceTree = "<group>"; };
@@ -634,6 +638,8 @@
 				BB546DDD2AC9D53A008A4F8C /* HomeTVCell0.xib */,
 				BB546DE82AC9E467008A4F8C /* HomeTVCell1.swift */,
 				BB546DE92AC9E467008A4F8C /* HomeTVCell1.xib */,
+				BBAE725C2AD3291F0089512D /* EmptyTVCell.swift */,
+				BBAE725D2AD3291F0089512D /* EmptyTVCell.xib */,
 			);
 			path = TVCell;
 			sourceTree = "<group>";
@@ -1387,6 +1393,7 @@
 				BB14DAF02A7B043500389B96 /* ProfileTVCellMiddle.xib in Resources */,
 				BBE3CC7C2A80010B004B0D9A /* MedicationScheduleDetailsTVCell.xib in Resources */,
 				BBC3C3EE2ACC912400805524 /* HomeCVCell3.xib in Resources */,
+				BBAE725F2AD3291F0089512D /* EmptyTVCell.xib in Resources */,
 				BB518CDB2A9A118B00242FAD /* TipsCategoriesTVCell0.xib in Resources */,
 				BBBD002C2A73145200F066DF /* LamaSans-Light.ttf in Resources */,
 			);
@@ -1535,6 +1542,7 @@
 				BBA1DA182AB11E5C0042713A /* NotificationVM.swift in Sources */,
 				BBC3C3ED2ACC912400805524 /* HomeCVCell3.swift in Sources */,
 				BBC7B45B2A72CC820079355E /* AppDelegate.swift in Sources */,
+				BBAE725E2AD3291F0089512D /* EmptyTVCell.swift in Sources */,
 				C8A1509B2AB1C62A00511B1F /* ProfileM.swift in Sources */,
 				BBD2B03A2AAA84D500C0A807 /* ModelMyMeasurementsStats.swift in Sources */,
 				C8346E5A2AA5EEA800C3C3EE /* LoginM.swift in Sources */,
