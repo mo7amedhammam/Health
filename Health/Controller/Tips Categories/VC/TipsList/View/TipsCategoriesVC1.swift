@@ -144,3 +144,4 @@ extension TipsCategoriesVC1{
         refreshControl.endRefreshing()
     }
 }
+

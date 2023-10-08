@@ -13,30 +13,72 @@ class HomeTVCell1: UITableViewCell {
     @IBOutlet weak var LaTitle: UILabel!
     @IBOutlet weak var BtnMore: UIButton!
     @IBOutlet weak var CollectionHome: UICollectionView!
+    var TVScreen: UITableView?
     var indexx = 0
-   
-    
+    var nav : UINavigationController?
+    var ViewModel : TipsVM?
+
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        DataSourseDeledate()
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
         // Configure the view for the selected state
     }
     
     @IBAction func BUMore(_ sender: Any) {
+//            vc.dataArray = dataArray
+
+            switch indexx {
+            case 1:
+                print("قياساتك الاخيره")
+            case 2:
+                print("الادزيه التى قاربت على الانتهاء")
+
+            case 3:
+                guard let vc = initiateViewController(storyboardName: .main, viewControllerIdentifier: TipsCategoriesVC2.self) else {return}
+                vc.LaTitle = "نصائح حديثة"
+                if let model = ViewModel?.newestTipsArr {
+                    vc.tipcategirytype = .Newest
+                    vc.dataArray = model
+                }
+                vc.hidesBottomBarWhenPushed = true
+                nav?.pushViewController(vc, animated: true)
+
+            default:
+                guard let vc = initiateViewController(storyboardName: .main, viewControllerIdentifier: TipsCategoriesVC2.self) else {return}
+                vc.LaTitle = "النصائح الأكثر مشاهدة"
+                if let model = ViewModel?.mostViewedTipsArr {
+                    vc.tipcategirytype = .MostViewed
+                    vc.dataArray = model
+                }
+                vc.hidesBottomBarWhenPushed = true
+                nav?.pushViewController(vc, animated: true)
+
+            }
+        
     }
     
     func DataSourseDeledate () {
+        let layout = UICollectionViewFlowLayout()
+        layout.minimumLineSpacing      = 10
+        layout.minimumInteritemSpacing = 0
+        layout.scrollDirection   = .horizontal
+        CollectionHome.collectionViewLayout =  layout
+        CollectionHome.reloadData()
+        
         CollectionHome.dataSource = self
         CollectionHome.delegate   = self
         CollectionHome.registerCell(cellClass: HomeCVCell1.self)
         CollectionHome.registerCell(cellClass: HomeCVCell2.self)
         CollectionHome.registerCell(cellClass: HomeCVCell3.self)
-        CollectionHome.transform = CGAffineTransform(scaleX: -1, y: 1)
+        CollectionHome.registerCell(cellClass: TipsCategoriesCVCell1.self)
+        CollectionHome.transform = CGAffineTransform(scaleX: -1, y: 1) //first tip mirror effect for x -> second in cell
+        CollectionHome.reloadData()
+
     }
     
 }
@@ -50,9 +92,9 @@ extension HomeTVCell1 : UICollectionViewDataSource , UICollectionViewDelegate , 
         } else if indexx == 2 {
             return 4
         } else if indexx == 3 {
-            return 4
+            return ViewModel?.newestTipsArr?.count ?? 0
         } else {
-            return 4
+            return ViewModel?.mostViewedTipsArr?.count ?? 0
         }
     }
     
@@ -60,28 +102,56 @@ extension HomeTVCell1 : UICollectionViewDataSource , UICollectionViewDelegate , 
         
         if indexx == 1 {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "HomeCVCell1", for: indexPath) as! HomeCVCell1
-            cell.transform = CGAffineTransform(scaleX: -1, y: 1)
+            collectionView.isScrollEnabled = false
             return cell
         } else if indexx == 2 {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "HomeCVCell2", for: indexPath) as! HomeCVCell2
-            cell.transform = CGAffineTransform(scaleX: -1, y: 1)
             return cell
         } else if indexx == 3 {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "HomeCVCell3", for: indexPath) as! HomeCVCell3
-            cell.transform = CGAffineTransform(scaleX: -1, y: 1)
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TipsCategoriesCVCell1", for: indexPath) as! TipsCategoriesCVCell1
+            if let model = ViewModel?.newestTipsArr?[indexPath.row] {
+                cell.model = model
+            }
             return cell
         } else {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "HomeCVCell3", for: indexPath) as! HomeCVCell3
-            cell.transform = CGAffineTransform(scaleX: -1, y: 1)
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TipsCategoriesCVCell1", for: indexPath) as! TipsCategoriesCVCell1
+            if let model = ViewModel?.mostViewedTipsArr?[indexPath.row] {
+                cell.model = model
+            }
+
             return cell
         }
         
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if indexx == 1 {
+            
+        }else if indexx == 2{
+            
+        }else if indexx == 3{
+            guard let vc = initiateViewController(storyboardName: .main, viewControllerIdentifier: TipsCategoriesDetailsVC.self) else {return}
+            let model = ViewModel?.newestTipsArr?[indexPath.row]
+            vc.selectedTipId = model?.id
+            vc.ViewModel = TipsDetailsVM()
+            vc.modalPresentationStyle = .fullScreen
+            nav?.present(vc, animated: true)
+            
+        }else{
+            guard let vc = initiateViewController(storyboardName: .main, viewControllerIdentifier: TipsCategoriesDetailsVC.self) else {return}
+            let model = ViewModel?.mostViewedTipsArr?[indexPath.row]
+            vc.selectedTipId = model?.id
+            vc.ViewModel = TipsDetailsVM()
+            vc.modalPresentationStyle = .fullScreen
+            nav?.present(vc, animated: true)
+        }
+
+    }
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
         if indexx == 1 {
-            return CGSize(width: 140, height: 160)
+            return CGSize(width: (UIScreen.main.bounds.width/3) - 13.5, height: 170)
         } else if indexx == 2 {
             return CGSize(width: 350, height: 150)
         } else {
