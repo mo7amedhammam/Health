@@ -40,6 +40,18 @@ class MyMeasurementsStatsVM {
         }
     }
     
+    func asyncGetMeasurementsStats() async throws -> [ModelMyMeasurementsStats]  {
+        let target = Measurement.GetMyMeasurementsStats
+            do {
+                 let result = try await BaseNetwork.asyncCallApi(target, BaseResponse<[ModelMyMeasurementsStats]>.self)
+//                print("result.data",result.data ?? [])
+                return result.data ?? []
+
+            } catch {
+                throw error
+            }
+        
+    }
     // .........................
     var maxResultCount: Int?
     var skipCount: Int?

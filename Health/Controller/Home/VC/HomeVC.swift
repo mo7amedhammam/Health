@@ -9,15 +9,18 @@ import UIKit
 
 class HomeVC: UIViewController {
     
+    @IBOutlet weak var LaName: UILabel!
+    @IBOutlet weak var ImgUser: UIImageView!
     @IBOutlet weak var TVScreen: UITableView!
     let refreshControl = UIRefreshControl()
+    let ViewModelMeasurements = MyMeasurementsStatsVM()
 
     let ViewModel = TipsVM()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        
+        SetUserHeader()
         TVScreen.dataSource = self
         TVScreen.delegate   = self
         TVScreen.registerCellNib(cellClass: HomeTVCell0.self)
@@ -45,12 +48,12 @@ extension HomeVC : UITableViewDataSource , UITableViewDelegate {
             return cell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "HomeTVCell1", for: indexPath) as! HomeTVCell1
-            cell.ViewModel = ViewModel
             cell.nav =  self.navigationController
             cell.DataSourseDeledate()
             cell.indexx = indexPath.row
             //
             if indexPath.row == 1 {
+                cell.ViewModelMeasurements = ViewModelMeasurements
                 cell.HViewCell.constant = 400
                 cell.BtnMore.isHidden   = true
                 cell.LaTitle.text = "قياساتك الأخيرة"
@@ -59,10 +62,12 @@ extension HomeVC : UITableViewDataSource , UITableViewDelegate {
                 cell.BtnMore.isHidden   = false
                 cell.LaTitle.text = "الأدوية التي قاربة على الإنتهاء"
             } else if indexPath.row == 3 {
+                cell.ViewModel = ViewModel
                 cell.HViewCell.constant = 320
                 cell.BtnMore.isHidden   = false
                 cell.LaTitle.text = "نصائح حديثة"
             } else  {
+                cell.ViewModel = ViewModel
                 cell.HViewCell.constant = 320
                 cell.BtnMore.isHidden   = false
                 cell.LaTitle.text = "النصائح الأكثر مشاهدة"
@@ -76,14 +81,21 @@ extension HomeVC : UITableViewDataSource , UITableViewDelegate {
 
 //--Functions--
 extension HomeVC{
-    
+    func SetUserHeader(){
+        LaName.text = "\(Helper.getUser()?.name ?? "")"
+//        if let img = Helper.getUser()?.image {
+//            //                let processor = SVGImgProcessor() // if receive svg image
+//            ImgUser.kf.setImage(with: URL(string:Constants.baseURL + img.validateSlashs()), placeholder: UIImage(named: "person"), options: nil, progressBlock: nil)
+//        }
+
+    }
     func getTipsCategories(){
         Task {
             do{
                 Hud.showHud(in: self.view)
                 ViewModel.newestTipsArr = try await ViewModel.GetNewestTips()
                 ViewModel.mostViewedTipsArr = try await ViewModel.GetMostViewedTips()
-
+                ViewModelMeasurements.ArrStats = try await ViewModelMeasurements.asyncGetMeasurementsStats()
                 // Handle success async operations
                 Hud.dismiss(from: self.view)
                 TVScreen.reloadData()
@@ -109,4 +121,5 @@ extension HomeVC{
         // When the refresh operation is complete, endRefreshing() to hide the refresh control
         refreshControl.endRefreshing()
     }
+    
 }

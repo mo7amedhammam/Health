@@ -16,12 +16,13 @@ class HomeTVCell1: UITableViewCell {
     var TVScreen: UITableView?
     var indexx = 0
     var nav : UINavigationController?
+    var ViewModelMeasurements : MyMeasurementsStatsVM?
     var ViewModel : TipsVM?
 
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        DataSourseDeledate()
+            DataSourseDeledate()
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -103,6 +104,9 @@ extension HomeTVCell1 : UICollectionViewDataSource , UICollectionViewDelegate , 
         if indexx == 1 {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "HomeCVCell1", for: indexPath) as! HomeCVCell1
             collectionView.isScrollEnabled = false
+            let model = ViewModelMeasurements?.ArrStats?[indexPath.row]
+            cell.model = model
+
             return cell
         } else if indexx == 2 {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "HomeCVCell2", for: indexPath) as! HomeCVCell2
@@ -126,24 +130,16 @@ extension HomeTVCell1 : UICollectionViewDataSource , UICollectionViewDelegate , 
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if indexx == 1 {
-            
+            guard let SelectedModel = ViewModelMeasurements?.ArrStats?[indexPath.row] else{return}
+            ShowMeasurementDetailFor(SelectedModel: SelectedModel)
         }else if indexx == 2{
             
         }else if indexx == 3{
-            guard let vc = initiateViewController(storyboardName: .main, viewControllerIdentifier: TipsCategoriesDetailsVC.self) else {return}
-            let model = ViewModel?.newestTipsArr?[indexPath.row]
-            vc.selectedTipId = model?.id
-            vc.ViewModel = TipsDetailsVM()
-            vc.modalPresentationStyle = .fullScreen
-            nav?.present(vc, animated: true)
-            
+            let SelectedId = ViewModel?.newestTipsArr?[indexPath.row].id ?? 0
+            self.ShowDetailsFor(Id: SelectedId)
         }else{
-            guard let vc = initiateViewController(storyboardName: .main, viewControllerIdentifier: TipsCategoriesDetailsVC.self) else {return}
-            let model = ViewModel?.mostViewedTipsArr?[indexPath.row]
-            vc.selectedTipId = model?.id
-            vc.ViewModel = TipsDetailsVM()
-            vc.modalPresentationStyle = .fullScreen
-            nav?.present(vc, animated: true)
+            let SelectedId = ViewModel?.newestTipsArr?[indexPath.row].id ?? 0
+            self.ShowDetailsFor(Id: SelectedId)
         }
 
     }
@@ -159,5 +155,32 @@ extension HomeTVCell1 : UICollectionViewDataSource , UICollectionViewDelegate , 
         }
     }
     
+}
+
+extension HomeTVCell1{
     
+     func ShowDetailsFor(Id:Int){
+        guard let vc = initiateViewController(storyboardName: .main, viewControllerIdentifier: TipsCategoriesDetailsVC.self) else {return}
+        vc.selectedTipId = Id
+        vc.ViewModel = TipsDetailsVM()
+        vc.modalPresentationStyle = .fullScreen
+        nav?.present(vc, animated: true)
+
+    }
+    
+    func ShowMeasurementDetailFor(SelectedModel:ModelMyMeasurementsStats){
+        guard let vc = initiateViewController(storyboardName: .main, viewControllerIdentifier: MeasurementsDetailsVC.self) else{return}
+         let model = SelectedModel
+//            print("selectedModel",model)
+            vc.id  =  model.medicalMeasurementID ?? 0
+            vc.num = model.measurementsCount ?? 0
+            vc.imgMeasurement = model.image ?? ""
+//            vc.formatValue = model.formatValue ?? ""
+            vc.formatRegex = model.regExpression ?? ""
+            vc.formatHintMessage = model.normalRangValue ?? ""
+        
+//        print("formatValue : \( ViewModel.ArrStats![indexPath.row].formatValue!)")
+        vc.hidesBottomBarWhenPushed = true
+        nav?.pushViewController(vc, animated: true)
+    }
 }
