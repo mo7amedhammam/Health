@@ -67,9 +67,9 @@ extension MedicationScheduleDetailsVC : UITableViewDataSource , UITableViewDeleg
 extension MedicationScheduleDetailsVC {
     func SetCurrentSched(){
         guard let model = schedualM else {return}
-            LaStartDate.text = model.startDate?.CangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "dd/MM/yyyy")
-            LaEndDate.text = model.endDate?.CangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "dd/MM/yyyy")
-            LaRenewalDate.text = model.renewDate?.CangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "dd/MM/yyyy")
+            LaStartDate.text = model.startDate?.ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "dd/MM/yyyy")
+            LaEndDate.text = model.endDate?.ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "dd/MM/yyyy")
+            LaRenewalDate.text = model.renewDate?.ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "dd/MM/yyyy")
             LaDrugsCount.text = "\(model.drugsCount ?? 0)"
     }
     

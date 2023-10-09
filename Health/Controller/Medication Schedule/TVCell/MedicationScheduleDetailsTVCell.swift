@@ -31,13 +31,13 @@ class MedicationScheduleDetailsTVCell: UITableViewCell {
             guard let model = DrugModel else{return}
             LaTitle.text = model.drugTitle
             
-            LaStartDate.text = model.startDate?.CangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "dd/MM/yyyy")
-            LaClock.text = model.startDate?.CangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "hh:mm a")
+            LaStartDate.text = model.startDate?.ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "dd/MM/yyyy")
+            LaClock.text = model.startDate?.ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "hh:mm a")
         
             LaEvery.text = "\(model.count ?? 0) \(model.doseTimeTitle ?? "")"
             LaPeriod.text = "\(model.days ?? 0) أيام"
             
-            LaEndDate.text = model.endDate?.CangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "dd/MM/yyyy")
+            LaEndDate.text = model.endDate?.ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "dd/MM/yyyy")
             
             LaDescription.text = model.pharmacistComment
             LaStatus.text = model.active ?? false ? "فعّال":"مًنتهى"

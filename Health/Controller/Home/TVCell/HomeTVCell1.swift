@@ -18,7 +18,8 @@ class HomeTVCell1: UITableViewCell {
     var nav : UINavigationController?
     var ViewModelMeasurements : MyMeasurementsStatsVM?
     var ViewModel : TipsVM?
-
+    var ViewModelHome : AlmostFinishedVM?
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -91,7 +92,7 @@ extension HomeTVCell1 : UICollectionViewDataSource , UICollectionViewDelegate , 
         if indexx == 1 {
             return ViewModelMeasurements?.ArrStats?.count ?? 0
         } else if indexx == 2 {
-            return 4
+            return ViewModelHome?.responseModel?.items?.count ?? 0
         } else if indexx == 3 {
             return ViewModel?.newestTipsArr?.count ?? 0
         } else {
@@ -104,12 +105,15 @@ extension HomeTVCell1 : UICollectionViewDataSource , UICollectionViewDelegate , 
         if indexx == 1 {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "HomeCVCell1", for: indexPath) as! HomeCVCell1
             collectionView.isScrollEnabled = false
-            let model = ViewModelMeasurements?.ArrStats?[indexPath.row]
-            cell.model = model
-
+            if let model = ViewModelMeasurements?.ArrStats?[indexPath.row]{
+                cell.model = model
+            }
             return cell
         } else if indexx == 2 {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "HomeCVCell2", for: indexPath) as! HomeCVCell2
+            if let model = ViewModelHome?.responseModel?.items?[indexPath.row]{
+                cell.model = model
+            }
             return cell
         } else if indexx == 3 {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TipsCategoriesCVCell1", for: indexPath) as! TipsCategoriesCVCell1
@@ -158,6 +162,39 @@ extension HomeTVCell1 : UICollectionViewDataSource , UICollectionViewDelegate , 
             return CGSize(width: 250, height: 250)
         }
     }
+    
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        if indexx == 2{
+            let model = ViewModelHome?.responseModel
+            if indexPath.row == (model?.items?.count ?? 0)  - 1 {
+                // Check if the last cell is about to be displayed
+                if let totalCount = model?.totalCount, let itemsCount = model?.items?.count, itemsCount < totalCount {
+                    // Load the next page if there are more items to fetch
+                    loadNextPage(itemsCount)
+                }
+            }
+        }
+    }
+    
+    func loadNextPage(_ skipcount:Int){
+        ViewModelHome?.skipCount = skipcount
+        Task {
+            do{
+                Hud.showHud(in: self)
+                try await ViewModelHome?.getHomeAlmostFinish()
+                Hud.dismiss(from: self)
+                CollectionHome.reloadData()
+            } catch {
+                // Handle any errors that occur during the async operations
+                print("Error: \(error)")
+                Hud.dismiss(from: self)
+//                SimpleAlert.shared.showAlert(title:error.localizedDescription,message:"", viewController: self)
+            }
+        }
+
+    }
+
     
 }
 

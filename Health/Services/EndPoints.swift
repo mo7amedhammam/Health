@@ -17,6 +17,7 @@ static var apiURL:String {return "\(baseURL)api/"}
 
 //var TermsAndConditionsURL =  "https://camelgate.app/terms.html"
 
+    static var WhatsAppNum = "01011138900"
 }
 
 enum EndPoints: String {
@@ -66,4 +67,6 @@ enum EndPoints: String {
     case CreateNotification = "CustomerPrescriptionDrug/Create"
     case GetDrug = "Drug/Get"
     
+    //--Home--
+    case GetAlmostFinishedPresc = "CustomerPrescription/GetCustomerAlmostFinishedPrescription"
 }

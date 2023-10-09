@@ -16,6 +16,9 @@ enum TipsCategoryServices {
     
     case getTipsByCategory(parameters : [String:Any])
     case getTipDetails(parameters : [String:Any])
+    
+    //-- Home --
+    case getAlmostFinishedPresc(parameters : [String:Any])
 }
 
 
@@ -34,13 +37,16 @@ extension TipsCategoryServices: TargetType {
             return EndPoints.GetByCategory.rawValue
         case .getTipDetails:
             return EndPoints.GetDetail.rawValue
+        case .getAlmostFinishedPresc:
+            return EndPoints.GetAlmostFinishedPresc.rawValue
         }
     }
     
     var method: Alamofire.HTTPMethod {
         switch self {
         case .GetAllMobile,
-                .getTipsByCategory:
+                .getTipsByCategory,
+                .getAlmostFinishedPresc:
             return .post
         case .GetTipNewest,
                 .GetTipInterestYou,
@@ -53,7 +59,8 @@ extension TipsCategoryServices: TargetType {
     var parameter: parameterType {
         switch self {
         case .GetAllMobile(parameters: let parameters),
-                .getTipsByCategory(parameters: let parameters):
+                .getTipsByCategory(parameters: let parameters),
+                .getAlmostFinishedPresc(parameters: let parameters):
             return .parameterRequest(Parameters: parameters, Encoding: encoding)
         case .getTipDetails(parameters: let parameters):
             return .BodyparameterRequest(Parameters:parameters, Encoding: encoding)

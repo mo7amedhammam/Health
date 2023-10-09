@@ -485,8 +485,8 @@ extension NotificationVC : UITableViewDataSource , UITableViewDelegate {
             cell.LaPeriod.text = "\(model?.days ?? 0) يوم"
         }
         
-        cell.LaStartDate.text = model?.startDate?.CangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "dd/MM/yyyy")
-        cell.LaEndDate.text = model?.endDate?.CangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "dd/MM/yyyy")
+        cell.LaStartDate.text = model?.startDate?.ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "dd/MM/yyyy")
+        cell.LaEndDate.text = model?.endDate?.ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "dd/MM/yyyy")
 
         return cell
     }

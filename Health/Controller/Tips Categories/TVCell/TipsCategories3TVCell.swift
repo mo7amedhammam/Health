@@ -17,7 +17,7 @@ class TipsCategories3TVCell: UITableViewCell {
         didSet{
             guard let model = model else {return}
             LaTitle.text = model.title
-            LaDAte.text = model.date?.CangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "dd / MM / yyyy hh:mm a")
+            LaDAte.text = model.date?.ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "dd / MM / yyyy hh:mm a")
             if let img = model.image {
                 //                let processor = SVGImgProcessor() // if receive svg image
                 ImgTipCategory.kf.setImage(with: URL(string:Constants.baseURL + img.validateSlashs()), placeholder: UIImage(named: "person"), options: nil, progressBlock: nil)

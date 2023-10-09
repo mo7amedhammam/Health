@@ -627,7 +627,7 @@ public extension String {
         map.forEach { str = str.replacingOccurrences(of: $0, with: $1) }
         return str
     }
-    func CangeDateFormat( FormatFrom:String, FormatTo:String, local:String? = "en" ) -> String {
+    func ChangeDateFormat( FormatFrom:String, FormatTo:String, local:String? = "en" ) -> String {
          var newdate = ""
          let formatter = DateFormatter()
          formatter.locale = Locale(identifier: local ?? "ar")
