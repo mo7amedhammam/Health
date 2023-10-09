@@ -5058,7 +5058,7 @@
                                                                                 <rect key="frame" x="0.0" y="487" width="393" height="373.66666666666674"/>
                                                                                 <subviews>
                                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="تفاصيل " textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WbR-bm-uAS">
-                                                                                        <rect key="frame" x="15" y="0.0" width="363" height="253.66666666666666"/>
+                                                                                        <rect key="frame" x="15" y="0.0" width="363" height="373.66666666666669"/>
                                                                                         <fontDescription key="fontDescription" name="LamaSans-Regular" family="Lama Sans" pointSize="14"/>
                                                                                         <color key="textColor" name="main"/>
                                                                                         <nil key="highlightedColor"/>
@@ -5093,6 +5093,7 @@
                                                                                     <constraint firstItem="WbR-bm-uAS" firstAttribute="leading" secondItem="N5E-mG-lTL" secondAttribute="leading" constant="15" id="FeV-dU-mF8"/>
                                                                                     <constraint firstItem="UdX-vQ-WbW" firstAttribute="leading" secondItem="N5E-mG-lTL" secondAttribute="leading" constant="20" id="K0U-Qc-dYV"/>
                                                                                     <constraint firstAttribute="trailing" secondItem="UdX-vQ-WbW" secondAttribute="trailing" constant="20" id="T0u-h8-MTL"/>
+                                                                                    <constraint firstAttribute="bottom" secondItem="WbR-bm-uAS" secondAttribute="bottom" id="eKb-Ge-aYj"/>
                                                                                     <constraint firstItem="WbR-bm-uAS" firstAttribute="top" secondItem="N5E-mG-lTL" secondAttribute="top" id="lsw-I2-roB"/>
                                                                                     <constraint firstAttribute="trailing" secondItem="WbR-bm-uAS" secondAttribute="trailing" constant="15" id="oNK-qL-5l2"/>
                                                                                     <constraint firstAttribute="bottom" secondItem="UdX-vQ-WbW" secondAttribute="bottom" id="ph4-DT-DCA"/>
@@ -5102,6 +5103,11 @@
                                                                                         <color key="value" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                                     </userDefinedRuntimeAttribute>
                                                                                 </userDefinedRuntimeAttributes>
+                                                                                <variation key="default">
+                                                                                    <mask key="subviews">
+                                                                                        <exclude reference="UdX-vQ-WbW"/>
+                                                                                    </mask>
+                                                                                </variation>
                                                                             </view>
                                                                         </subviews>
                                                                         <constraints>
@@ -5497,6 +5503,9 @@
         </scene>
     </scenes>
     <designables>
+        <designable name="c0I-bP-9rf">
+            <size key="intrinsicContentSize" width="115.66666666666667" height="26"/>
+        </designable>
         <designable name="dxe-N1-yU6">
             <size key="intrinsicContentSize" width="-1" height="83"/>
         </designable>
