@@ -132,6 +132,8 @@
 		C80DA9ED2AA4F65300F10808 /* Navigations.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80DA9EC2AA4F65300F10808 /* Navigations.swift */; };
 		C80DA9EF2AA4F6B000F10808 /* UiWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80DA9EE2AA4F6B000F10808 /* UiWindow.swift */; };
 		C80DA9F12AA4F73400F10808 /* LoginModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80DA9F02AA4F73400F10808 /* LoginModel.swift */; };
+		C824CED62AD418AA0051E491 /* AlmostFinishedPrescriptionM.swift in Sources */ = {isa = PBXBuildFile; fileRef = C824CED52AD418AA0051E491 /* AlmostFinishedPrescriptionM.swift */; };
+		C824CED82AD419550051E491 /* AlmostFinishedVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = C824CED72AD419550051E491 /* AlmostFinishedVM.swift */; };
 		C82DCAA62AAC784F00322B55 /* MedicationScheduleM.swift in Sources */ = {isa = PBXBuildFile; fileRef = C82DCAA52AAC784F00322B55 /* MedicationScheduleM.swift */; };
 		C82DCAA82AAC785D00322B55 /* MedicationScheduleVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = C82DCAA72AAC785D00322B55 /* MedicationScheduleVM.swift */; };
 		C82DCAAF2AACB41600322B55 /* MedicationScheduleDetailsM.swift in Sources */ = {isa = PBXBuildFile; fileRef = C82DCAAE2AACB41600322B55 /* MedicationScheduleDetailsM.swift */; };
@@ -319,6 +321,8 @@
 		C80DA9EC2AA4F65300F10808 /* Navigations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Navigations.swift; sourceTree = "<group>"; };
 		C80DA9EE2AA4F6B000F10808 /* UiWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UiWindow.swift; sourceTree = "<group>"; };
 		C80DA9F02AA4F73400F10808 /* LoginModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginModel.swift; sourceTree = "<group>"; };
+		C824CED52AD418AA0051E491 /* AlmostFinishedPrescriptionM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlmostFinishedPrescriptionM.swift; sourceTree = "<group>"; };
+		C824CED72AD419550051E491 /* AlmostFinishedVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlmostFinishedVM.swift; sourceTree = "<group>"; };
 		C82DCAA52AAC784F00322B55 /* MedicationScheduleM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedicationScheduleM.swift; sourceTree = "<group>"; };
 		C82DCAA72AAC785D00322B55 /* MedicationScheduleVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedicationScheduleVM.swift; sourceTree = "<group>"; };
 		C82DCAAE2AACB41600322B55 /* MedicationScheduleDetailsM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedicationScheduleDetailsM.swift; sourceTree = "<group>"; };
@@ -620,6 +624,7 @@
 		BB546DD72AC9D4C2008A4F8C /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				C824CED52AD418AA0051E491 /* AlmostFinishedPrescriptionM.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -627,6 +632,7 @@
 		BB546DD82AC9D4CC008A4F8C /* View Model */ = {
 			isa = PBXGroup;
 			children = (
+				C824CED72AD419550051E491 /* AlmostFinishedVM.swift */,
 			);
 			path = "View Model";
 			sourceTree = "<group>";
@@ -1545,6 +1551,7 @@
 				BBAE725E2AD3291F0089512D /* EmptyTVCell.swift in Sources */,
 				C8A1509B2AB1C62A00511B1F /* ProfileM.swift in Sources */,
 				BBD2B03A2AAA84D500C0A807 /* ModelMyMeasurementsStats.swift in Sources */,
+				C824CED62AD418AA0051E491 /* AlmostFinishedPrescriptionM.swift in Sources */,
 				C8346E5A2AA5EEA800C3C3EE /* LoginM.swift in Sources */,
 				C88995922AAA02BE002AD812 /* ChangePasswordVM.swift in Sources */,
 				BB518CD52A9A113900242FAD /* TipsCategoriesVC2.swift in Sources */,
@@ -1608,6 +1615,7 @@
 				BBBD000A2A73101700F066DF /* EXTEnternet.swift in Sources */,
 				BB14DAEF2A7B043500389B96 /* ProfileTVCellMiddle.swift in Sources */,
 				C80DA9E62AA4D2F100F10808 /* BaseRequest.swift in Sources */,
+				C824CED82AD419550051E491 /* AlmostFinishedVM.swift in Sources */,
 				BBE3CC7E2A80011E004B0D9A /* MedicationScheduleDetailsVC.swift in Sources */,
 				BBBD000E2A73101700F066DF /* ImageViewer.swift in Sources */,
 				C8542D5C2AA8B42600ACE480 /* OtpVM.swift in Sources */,

@@ -15,7 +15,8 @@ class HomeVC: UIViewController {
     let refreshControl = UIRefreshControl()
     let ViewModelMeasurements = MyMeasurementsStatsVM()
     let ViewModel = TipsVM()
-
+    let ViewModelHome = AlmostFinishedVM()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -58,7 +59,6 @@ extension HomeVC : UITableViewDataSource , UITableViewDelegate {
 //                    cell.DataSourseDeledate()
                     cell.CollectionHome.reloadData()
                     cell.indexx = indexPath.row
-                    
                     cell.ViewModelMeasurements = ViewModelMeasurements
                     if ViewModelMeasurements.ArrStats?.count ?? 0 <= 3 {
                         cell.HViewCell.constant = 200
@@ -77,6 +77,7 @@ extension HomeVC : UITableViewDataSource , UITableViewDelegate {
 //                cell.DataSourseDeledate()
                 cell.CollectionHome.reloadData()
                 cell.indexx = indexPath.row
+                cell.ViewModelHome = ViewModelHome
                 
                 cell.HViewCell.constant = 220
                 cell.BtnMore.isHidden   = false
@@ -142,6 +143,7 @@ extension HomeVC{
                 ViewModel.newestTipsArr = try await ViewModel.GetNewestTips()
                 ViewModel.mostViewedTipsArr = try await ViewModel.GetMostViewedTips()
                 ViewModelMeasurements.ArrStats = try await ViewModelMeasurements.asyncGetMeasurementsStats()
+                try await ViewModelHome.getHomeAlmostFinish()
                 // Handle success async operations
                 Hud.dismiss(from: self.view)
                 TVScreen.reloadData()
@@ -150,9 +152,10 @@ extension HomeVC{
                 print("interesting",ViewModel.interestingTipsArr ?? [])
                 print("newest",ViewModel.newestTipsArr ?? [])
                 print("mostview",ViewModel.mostViewedTipsArr ?? [])
+                print("AlmostFinished",ViewModelHome.responseModel ?? AlmostFinishedPrescriptionM())
             } catch {
                 // Handle any errors that occur during the async operations
-                TVScreen.reloadData()
+//                TVScreen.reloadData()
                 print("Error: \(error)")
                 Hud.dismiss(from: self.view)
                 SimpleAlert.shared.showAlert(title:error.localizedDescription,message:"", viewController: self)

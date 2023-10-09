@@ -39,5 +39,9 @@
 			</array>
 		</dict>
 	</dict>
+    <key>LSApplicationQueriesSchemes</key>
+    <array>
+        <string>whatsapp</string>
+    </array>
 </dict>
 </plist>

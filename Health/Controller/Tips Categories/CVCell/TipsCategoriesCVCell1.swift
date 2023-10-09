@@ -18,7 +18,7 @@ class TipsCategoriesCVCell1: UICollectionViewCell {
             guard let model = model else{return}
             LaTipTitle.text = model.title
             LaTipDisease.text = model.tipCategoryTitle
-            LaTipDate.text = model.date?.CangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "dd / MM / yyyy")
+            LaTipDate.text = model.date?.ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "dd / MM / yyyy")
             if let img = model.image {
                 //                let processor = SVGImgProcessor() // if receive svg image
                 ImgTipCategory.kf.setImage(with: URL(string:Constants.baseURL + img.validateSlashs()), placeholder: UIImage(named: "person"), options: nil, progressBlock: nil)
