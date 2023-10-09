@@ -72,17 +72,23 @@ extension HomeVC : UITableViewDataSource , UITableViewDelegate {
                 }
 
             } else if indexPath.row == 2 {
-                let cell = tableView.dequeueReusableCell(withIdentifier: "HomeTVCell1", for: indexPath) as! HomeTVCell1
-                cell.nav =  self.navigationController
-//                cell.DataSourseDeledate()
-                cell.CollectionHome.reloadData()
-                cell.indexx = indexPath.row
-                cell.ViewModelHome = ViewModelHome
                 
-                cell.HViewCell.constant = 220
-                cell.BtnMore.isHidden   = false
-                cell.LaTitle.text = "الأدوية التي قاربة على الإنتهاء"
-                return cell
+                if ViewModelHome.responseModel?.items == nil {
+                    let cell = tableView.dequeueReusableCell(withIdentifier: "EmptyTVCell", for: indexPath) as! EmptyTVCell
+                    return cell
+                } else {
+                    let cell = tableView.dequeueReusableCell(withIdentifier: "HomeTVCell1", for: indexPath) as! HomeTVCell1
+                    cell.nav =  self.navigationController
+    //                cell.DataSourseDeledate()
+                    cell.CollectionHome.reloadData()
+                    cell.indexx = indexPath.row
+                    cell.ViewModelHome = ViewModelHome
+                    
+                    cell.HViewCell.constant = 220
+                    cell.BtnMore.isHidden   = false
+                    cell.LaTitle.text = "الأدوية التي قاربة على الإنتهاء"
+                    return cell
+                }
 
             } else if indexPath.row == 3 {
                 

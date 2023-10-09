@@ -39,6 +39,13 @@ class HomeTVCell1: UITableViewCell {
                 print("قياساتك الاخيره")
             case 2:
                 print("الادزيه التى قاربت على الانتهاء")
+                guard let vc = initiateViewController(storyboardName: .main, viewControllerIdentifier: WillExpireVC.self) else {return}
+                if let model = ViewModelHome {
+                    vc.ViewModelHome = model
+                }
+                vc.hidesBottomBarWhenPushed = true
+                nav?.pushViewController(vc, animated: true)
+                
 
             case 3:
                 guard let vc = initiateViewController(storyboardName: .main, viewControllerIdentifier: TipsCategoriesVC2.self) else {return}

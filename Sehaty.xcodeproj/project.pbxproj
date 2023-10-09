@@ -30,6 +30,9 @@
 		BB1B30012A7EA8BF001677FD /* ViewDone.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB1B30002A7EA8BF001677FD /* ViewDone.swift */; };
 		BB1B30032A7EA8CB001677FD /* ViewDone.xib in Resources */ = {isa = PBXBuildFile; fileRef = BB1B30022A7EA8CB001677FD /* ViewDone.xib */; };
 		BB1B30052A7EB1B7001677FD /* XibViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB1B30042A7EB1B7001677FD /* XibViews.swift */; };
+		BB1ECAB52AD4741F009BF2DE /* WillExpireTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB1ECAB32AD4741F009BF2DE /* WillExpireTVCell.swift */; };
+		BB1ECAB62AD4741F009BF2DE /* WillExpireTVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BB1ECAB42AD4741F009BF2DE /* WillExpireTVCell.xib */; };
+		BB1ECAB82AD47435009BF2DE /* WillExpireVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB1ECAB72AD47435009BF2DE /* WillExpireVC.swift */; };
 		BB30E6132A7859FE0045569D /* HTBC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB30E6122A7859FE0045569D /* HTBC.swift */; };
 		BB48F8A12A747D020051F12C /* ChangePasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB48F8A02A747D020051F12C /* ChangePasswordVC.swift */; };
 		BB48F8A32A7482480051F12C /* OtpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB48F8A22A7482480051F12C /* OtpVC.swift */; };
@@ -216,6 +219,9 @@
 		BB1B30002A7EA8BF001677FD /* ViewDone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewDone.swift; sourceTree = "<group>"; };
 		BB1B30022A7EA8CB001677FD /* ViewDone.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ViewDone.xib; sourceTree = "<group>"; };
 		BB1B30042A7EB1B7001677FD /* XibViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XibViews.swift; sourceTree = "<group>"; };
+		BB1ECAB32AD4741F009BF2DE /* WillExpireTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WillExpireTVCell.swift; sourceTree = "<group>"; };
+		BB1ECAB42AD4741F009BF2DE /* WillExpireTVCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WillExpireTVCell.xib; sourceTree = "<group>"; };
+		BB1ECAB72AD47435009BF2DE /* WillExpireVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WillExpireVC.swift; sourceTree = "<group>"; };
 		BB30E6122A7859FE0045569D /* HTBC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTBC.swift; sourceTree = "<group>"; };
 		BB48F8A02A747D020051F12C /* ChangePasswordVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordVC.swift; sourceTree = "<group>"; };
 		BB48F8A22A7482480051F12C /* OtpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtpVC.swift; sourceTree = "<group>"; };
@@ -519,6 +525,33 @@
 			path = "XIb Views";
 			sourceTree = "<group>";
 		};
+		BB1ECAB02AD473D9009BF2DE /* WillExpire */ = {
+			isa = PBXGroup;
+			children = (
+				BB1ECAB22AD473F6009BF2DE /* TVCell */,
+				BB1ECAB12AD473E4009BF2DE /* VC */,
+			);
+			path = WillExpire;
+			sourceTree = "<group>";
+		};
+		BB1ECAB12AD473E4009BF2DE /* VC */ = {
+			isa = PBXGroup;
+			children = (
+				BB1ECAB72AD47435009BF2DE /* WillExpireVC.swift */,
+			);
+			name = VC;
+			path = "../New Group/VC";
+			sourceTree = "<group>";
+		};
+		BB1ECAB22AD473F6009BF2DE /* TVCell */ = {
+			isa = PBXGroup;
+			children = (
+				BB1ECAB32AD4741F009BF2DE /* WillExpireTVCell.swift */,
+				BB1ECAB42AD4741F009BF2DE /* WillExpireTVCell.xib */,
+			);
+			path = TVCell;
+			sourceTree = "<group>";
+		};
 		BB5116C42A829A7200CF5D11 /* TVCell */ = {
 			isa = PBXGroup;
 			children = (
@@ -753,6 +786,7 @@
 			children = (
 				BB30E6122A7859FE0045569D /* HTBC.swift */,
 				BB546DD42AC9D47F008A4F8C /* Home */,
+				BB1ECAB02AD473D9009BF2DE /* WillExpire */,
 				BB518CCE2A9A10EC00242FAD /* Tips Categories */,
 				BB1B2FFF2A7EA8A9001677FD /* XIb Views */,
 				BBE3CC702A7FFFB1004B0D9A /* Medication Schedule */,
@@ -1373,6 +1407,7 @@
 				BBBD002B2A73145200F066DF /* LamaSans-Medium.ttf in Resources */,
 				BBBD00302A73148600F066DF /* LamaSans-Regular.ttf in Resources */,
 				BB14DAEC2A7B041C00389B96 /* ProfileTVCellHeader.xib in Resources */,
+				BB1ECAB62AD4741F009BF2DE /* WillExpireTVCell.xib in Resources */,
 				BB6E07F02A896B2700689769 /* MeasurementsDetailsTVCell0.xib in Resources */,
 				BB518CEF2A9A129500242FAD /* TipsCategories3TVCell.xib in Resources */,
 				BB1AEAA12A955B450078683A /* NotificationTVCell.xib in Resources */,
@@ -1564,6 +1599,7 @@
 				C85F28532ABC7F500093ADFF /* EXUiDevice.swift in Sources */,
 				C85996772AA7556400533C87 /* Alert.swift in Sources */,
 				C8F418D82AC19A5100E7A370 /* TipDetailsDrugGroup.swift in Sources */,
+				BB1ECAB52AD4741F009BF2DE /* WillExpireTVCell.swift in Sources */,
 				BB1B2FFB2A7EA364001677FD /* INBodyDetailsTVCell.swift in Sources */,
 				C88995902AAA02A2002AD812 /* ChangePasswordM.swift in Sources */,
 				C80DA9F12AA4F73400F10808 /* LoginModel.swift in Sources */,
@@ -1609,6 +1645,7 @@
 				BB30E6132A7859FE0045569D /* HTBC.swift in Sources */,
 				BBE3CC772A80000E004B0D9A /* MedicationScheduleTVCell.swift in Sources */,
 				BB546DDA2AC9D4F1008A4F8C /* HomeVC.swift in Sources */,
+				BB1ECAB82AD47435009BF2DE /* WillExpireVC.swift in Sources */,
 				BBBD001B2A73101700F066DF /* FullImageVC.swift in Sources */,
 				BB518CDA2A9A118B00242FAD /* TipsCategoriesTVCell0.swift in Sources */,
 				C88995882AA9F70C002AD812 /* ForgetPasswordM.swift in Sources */,
