@@ -45,7 +45,7 @@ class NotificationVC: UIViewController  {
         
 //        TFNumDays.delegate = self
         TFNumDays.addTarget(self, action: #selector(self.textFieldDidChange(textField:)), for: UIControl.Event.editingChanged)
-
+        TFClock.delegate = self
 
         TFDrugName.delegate = self
         rightBarDropDown.anchorView = TFDrugName
@@ -54,6 +54,7 @@ class NotificationVC: UIViewController  {
         }
                 
         self.PickerDate.addTarget(self, action: #selector(onDateValueChanged(_:)), for: .valueChanged)
+
         timePicker.datePickerMode = .time
         // Create toolbar where a "Done" button will go
         let toolbar = UIToolbar()
@@ -214,7 +215,8 @@ class NotificationVC: UIViewController  {
     @objc private func buttonTappedDone(_ datePicker: UIDatePicker) {
         let selectedTime = timePicker.date
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "hh:mm a"
+        dateFormatter.locale = NSLocale.init(localeIdentifier: "en") as Locale
+        dateFormatter.dateFormat = "hh:mm:ss.SSS"
         let formattedTime = dateFormatter.string(from: selectedTime)
         // Perform your desired actions with the selected time
         print("Selected time: \(formattedTime)")
@@ -227,7 +229,7 @@ class NotificationVC: UIViewController  {
         
         if sender.tag == 0 {
             selectDateFrom = "from"
-            PickerDate.minimumDate = nil
+            PickerDate.minimumDate = Date()
             PickerDate.maximumDate = nil
             PickerDate.datePickerMode = .date
             ViewSelectDate.isHidden = false
@@ -368,9 +370,9 @@ extension NotificationVC {
         ViewModel.days       = Int(TFNumDays.text!)!
 //        ViewModel.doseQuantityId = 0
         ViewModel.notification = true
-        ViewModel.startDate    = TFStartDate.text!
+        ViewModel.startDate    = "\(TFStartDate.text!)T\(TFClock.text!)"
         ViewModel.endDate      = TFEndDate.text!
-        
+        print("::::::: \("\(TFStartDate.text!)'T'\(TFClock.text!)")")
         
         ViewModel.CreateNotification { [weak self] state in
             guard let self = self,let state = state else{
@@ -382,6 +384,23 @@ extension NotificationVC {
             case .stopLoading:
                 Hud.dismiss(from: self.view)
             case .success:
+                TFClock.text = ""
+                TFEndDate.text = ""
+                TFNumDays.text = ""
+                TFStartDate.text = ""
+                TFNumDrug.text = ""
+                TFDrugName.text = ""
+                drugId = 0
+                BtnDay.isSelected = false
+                BtnClock.isSelected = false
+                
+                ViewModel.ArrNotifications?.items?.removeAll()
+                TVScreen.reloadData()
+                ViewModel.maxResultCount = 10
+                ViewModel.skipCount  = 0
+                ViewModel.customerId =  Helper.getUser()?.id // they take it from token
+                getNotifications()
+                
                  ViewAddNewNotification.isHidden = true
                 Hud.dismiss(from: self.view)
                 SimpleAlert.shared.showAlert(title: "تم إضافة تنبية جديد"  ,message: "", viewController: self)
@@ -410,7 +429,7 @@ extension NotificationVC : UITableViewDataSource , UITableViewDelegate {
         let cell = tableView.dequeueReusableCell(withIdentifier: "NotificationTVCell", for: indexPath) as! NotificationTVCell
         
         let model = ViewModel.ArrNotifications?.items![indexPath.row]
-        if model?.notification == true {
+        if model?.active == true {
             
             cell.ViewColor.backgroundColor = UIColor(named: "main")
             cell.View1.backgroundColor = UIColor(named: "secondary")
@@ -469,12 +488,10 @@ extension NotificationVC : UITableViewDataSource , UITableViewDelegate {
             cell.LaStatus.text = "مُنتهي"
 
         }
-        
-        cell.LaClock.text = model?.doseTimeTitle
+        print(":::::: \(model?.timeIsOver) \(model?.active)")
         cell.LaTitle.text = model?.drugTitle
         cell.LaEvery.text =  "\(model?.count ?? 0 ) \(model?.doseTimeTitle ?? "" )"
-        cell.LaClock.text = "12:00"
-
+        
         if model?.days == 1 {
             cell.LaPeriod.text = "يوم"
         } else if model?.days == 2 {
@@ -485,9 +502,41 @@ extension NotificationVC : UITableViewDataSource , UITableViewDelegate {
             cell.LaPeriod.text = "\(model?.days ?? 0) يوم"
         }
         
-        cell.LaStartDate.text = model?.startDate?.ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "dd/MM/yyyy")
-        cell.LaEndDate.text = model?.endDate?.ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "dd/MM/yyyy")
+        
+        let dateString = model?.startDate
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
+        let date = dateFormatter.date(from: dateString ?? "")
+        dateFormatter.dateFormat = "HH:mm"
+        if  date == nil {
+            let dateS = model?.startDate
+            let dateFo = DateFormatter()
+            dateFo.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS"
+            let date = dateFo.date(from: dateS ?? "")
+            dateFo.dateFormat = "HH:mm"
+            let timeS = dateFo.string(from: date!)
+            cell.LaClock.text = timeS
+            cell.LaStartDate.text = model?.startDate?.ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss.SSS", FormatTo: "dd/MM/yyyy")
 
+        } else {
+            let timeString = dateFormatter.string(from: date!)
+            print(timeString)
+            cell.LaClock.text = timeString
+            cell.LaStartDate.text = model?.startDate?.ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "dd/MM/yyyy")
+        }
+        
+        
+        let dateStringend = model?.endDate
+        let dateFormatterend = DateFormatter()
+        dateFormatterend.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
+        let dateend = dateFormatterend.date(from: dateStringend ?? "")
+        if  dateend == nil {
+            cell.LaEndDate.text = model?.endDate?.ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss.SSS", FormatTo: "dd/MM/yyyy")
+        } else {
+            cell.LaEndDate.text = model?.endDate?.ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "dd/MM/yyyy")
+        }
+        
+        
         return cell
     }
     
@@ -511,6 +560,15 @@ extension NotificationVC : UITableViewDataSource , UITableViewDelegate {
 
 
 extension NotificationVC : UITextFieldDelegate {
+    
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        if textField == TFClock {
+            return false
+        } else {
+            return true
+        }
+    }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
         if textField == TFDrugName {
