@@ -50,7 +50,7 @@ extension HomeVC : UITableViewDataSource , UITableViewDelegate {
             
             if indexPath.row == 1 {
                                 
-                if ViewModelMeasurements.ArrStats == nil  {
+                if ViewModelMeasurements.ArrStats?.count == 0  {
                     let cell = tableView.dequeueReusableCell(withIdentifier: "EmptyTVCell", for: indexPath) as! EmptyTVCell
                     return cell
                 } else {
@@ -73,7 +73,7 @@ extension HomeVC : UITableViewDataSource , UITableViewDelegate {
 
             } else if indexPath.row == 2 {
                 
-                if ViewModelHome.responseModel?.items == nil {
+                if ViewModelHome.responseModel?.items?.count == 0 {
                     let cell = tableView.dequeueReusableCell(withIdentifier: "EmptyTVCell", for: indexPath) as! EmptyTVCell
                     return cell
                 } else {

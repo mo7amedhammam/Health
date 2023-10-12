@@ -26,7 +26,9 @@ class OtpVC: UIViewController , UITextFieldDelegate {
     @IBOutlet weak var ViewTF6: UIView!
     @IBOutlet weak var BtnResend: UIButton!
     var Phonenumber:String?
+    
     @IBOutlet weak var SecondsCount: UILabel!
+    @IBOutlet weak var ShowOtp: UILabel!
     
     var timer: Timer?
 
@@ -232,7 +234,7 @@ extension OtpVC{
             clearOtp()
                 guard let seconds = viewModel.responseModel?.secondsCount else {return}
                 startTimer(remainingSeconds: seconds)
-                
+                ShowOtp.text = "استخدم \(viewModel.responseModel?.otp ?? 00)"
             case .error(let code,let error):
                 Hud.dismiss(from: self.view)
                 SimpleAlert.shared.showAlert(title:error ?? "",message:"", viewController: self,completion:{

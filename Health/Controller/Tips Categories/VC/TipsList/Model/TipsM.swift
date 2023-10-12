@@ -41,7 +41,7 @@ struct TipsNewestM: Codable {
 
 // MARK: - TipsByCategoryM -
 struct TipsByCategoryM: Codable {
-    var items: [TipsNewestM]?
+    var items: [TipDetailsM]?
     var totalCount: Int?
 }
 
@@ -64,6 +64,6 @@ struct TipDetailsM: Codable {
 
 // MARK: - DrugGroup -
 struct DrugGroup: Codable {
-    var id: Int?
+    var id,order: Int?
     var title: String?
 }
