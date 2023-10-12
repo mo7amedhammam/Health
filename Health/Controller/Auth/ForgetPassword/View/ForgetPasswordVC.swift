@@ -71,7 +71,8 @@ class ForgetPasswordVC: UIViewController , UITextFieldDelegate {
     }
     
     @IBAction func BUBack(_ sender: Any) {
-        self.navigationController?.popViewController(animated: true)
+//        self.navigationController?.popViewController(animated: true)
+        self.navigationController?.popToRootViewController(animated: true)
     }    
     
     @IBAction func BUShowPassword(_ sender: UIButton) {

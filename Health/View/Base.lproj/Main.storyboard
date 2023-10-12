@@ -1680,13 +1680,19 @@
                                                                                 <rect key="frame" x="0.0" y="20" width="363" height="55"/>
                                                                                 <subviews>
                                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="لقد قمنا بإرسال رسالة نصية برمز" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0kl-kD-Jc0">
-                                                                                        <rect key="frame" x="0.0" y="0.0" width="363" height="27.666666666666668"/>
+                                                                                        <rect key="frame" x="0.0" y="0.0" width="363" height="18.333333333333332"/>
                                                                                         <fontDescription key="fontDescription" name="LamaSans-Medium" family="Lama Sans" pointSize="16"/>
                                                                                         <color key="textColor" name="main"/>
                                                                                         <nil key="highlightedColor"/>
                                                                                     </label>
                                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="إلى رقم  0102345678" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vpy-Zl-GZI">
-                                                                                        <rect key="frame" x="0.0" y="27.666666666666657" width="363" height="27.333333333333329"/>
+                                                                                        <rect key="frame" x="0.0" y="18.333333333333343" width="363" height="18.333333333333329"/>
+                                                                                        <fontDescription key="fontDescription" name="LamaSans-Medium" family="Lama Sans" pointSize="16"/>
+                                                                                        <color key="textColor" name="main"/>
+                                                                                        <nil key="highlightedColor"/>
+                                                                                    </label>
+                                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sYz-vI-15c">
+                                                                                        <rect key="frame" x="0.0" y="36.666666666666657" width="363" height="18.333333333333329"/>
                                                                                         <fontDescription key="fontDescription" name="LamaSans-Medium" family="Lama Sans" pointSize="16"/>
                                                                                         <color key="textColor" name="main"/>
                                                                                         <nil key="highlightedColor"/>
@@ -2136,6 +2142,7 @@
                         <outlet property="BtnResend" destination="Sk6-LM-x3e" id="T3O-Bq-ZEu"/>
                         <outlet property="LaToNum" destination="Vpy-Zl-GZI" id="DfC-my-5x0"/>
                         <outlet property="SecondsCount" destination="XhL-xF-mIX" id="fbl-Rl-Qcd"/>
+                        <outlet property="ShowOtp" destination="sYz-vI-15c" id="bsx-Uo-AvG"/>
                         <outlet property="TFIndex1" destination="uBZ-cA-qXB" id="e9h-oA-6mH"/>
                         <outlet property="TFIndex2" destination="OcQ-dH-PHD" id="eNB-LX-Vdm"/>
                         <outlet property="TFIndex3" destination="zg8-pW-O6s" id="PXd-Vj-8HE"/>
