@@ -52,7 +52,8 @@ enum EndPoints: String {
     case CreateCustomerInBody = "CustomerInBodyTest/Create"
     
     // -- notifications --
-    case GetNotification = "CustomerPrescriptionDrug/GetCustomerNormalDrugs"
+//    case GetNotification = "CustomerPrescriptionDrug/GetCustomerNormalDrugs"
+        case GetNotification = "CustomerPrescriptionDrug/GetMyNormalDrugs"
 
     // -- pfofile --
     case GetMyProfile = "Customer/MyProfile"

@@ -20,7 +20,7 @@ struct ItemNoti: Codable {
     var endDate: String?
     var doseQuantityID: Int?
     var pharmacistComment: String?
-    var notification: Bool?
+    var notification , timeIsOver , active : Bool?
     var id, customerPrescriptionID: Int?
     var doseTimeTitle, doseQuantityTitle: String?
     var doseQuantityValue: Int?
@@ -31,7 +31,7 @@ struct ItemNoti: Codable {
         case doseTimeID = "doseTimeId"
         case count, startDate, days, endDate
         case doseQuantityID = "doseQuantityId"
-        case pharmacistComment, notification, id
+        case pharmacistComment, notification  , timeIsOver , active, id
         case customerPrescriptionID = "customerPrescriptionId"
         case doseTimeTitle, doseQuantityTitle, doseQuantityValue, drugTitle
     }
