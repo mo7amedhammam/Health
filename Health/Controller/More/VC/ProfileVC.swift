@@ -153,7 +153,7 @@ extension ProfileVC : UITableViewDataSource , UITableViewDelegate {
             
         } else { // -- تسجيل خروج --
             Helper.logout()
-            Helper.changeRootVC(newroot: LoginVC.self)
+            Helper.changeRootVC(newroot: LoginVC.self,transitionFrom: .fromLeft)
         }
         
     }

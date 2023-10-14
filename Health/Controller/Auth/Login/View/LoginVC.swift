@@ -164,9 +164,21 @@ extension LoginVC{
     
     func GoHome(){
         Helper.saveUser(user: loginViewModel.usermodel ?? LoginM())
-        guard let vc = initiateViewController(storyboardName: .main, viewControllerIdentifier: HTBC.self)else{return}
-        vc.navigationController?.navigationBar.isHidden = true
-        navigationController?.pushViewController(vc, animated: true)
+//        guard let vc = initiateViewController(storyboardName: .main, viewControllerIdentifier: HTBC.self)else{return}
+        Helper.changeRootVC(newroot: HTBC.self,transitionFrom: .fromLeft)
+//        let newNavigationController = UINavigationController(rootViewController: vc)
+//
+//        vc.navigationController?.navigationBar.isHidden = true
+//        navigationController?.pushViewController(vc, animated: true)
+        
+        // Create a new navigation controller with the new view controller as its root
+//        let newNavigationController = UINavigationController(rootViewController: vc)
+//
+//        // Replace the current navigation controller with the new one
+//        if let window = UIApplication.shared.keyWindow {
+//            window.rootViewController = newNavigationController
+//        }
+
     }
     
 }
