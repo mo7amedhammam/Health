@@ -91,6 +91,7 @@ extension MeasurementsVC : UICollectionViewDataSource , UICollectionViewDelegate
         cell.LaTitle.text = model.title
         cell.LaNum.text = "\(model.measurementsCount ?? 0 )"
         cell.LaLastNum.text = model.lastMeasurementValue
+//        cell.LaTitle.text = model.title
         cell.LaDate.text = model.lastMeasurementDate?.ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "dd/MM/yyyy")
         if let img = model.image {
             //                let processor = SVGImgProcessor() // if receive svg image
@@ -117,6 +118,7 @@ extension MeasurementsVC : UICollectionViewDataSource , UICollectionViewDelegate
             vc.id  =  model.medicalMeasurementID ?? 0
             vc.num = model.measurementsCount ?? 0
             vc.imgMeasurement = model.image ?? ""
+            vc.TitleMeasurement = model.title ?? ""
 //            vc.formatValue = model.formatValue ?? ""
             vc.formatRegex = model.regExpression ?? ""
             vc.formatHintMessage = model.normalRangValue ?? ""

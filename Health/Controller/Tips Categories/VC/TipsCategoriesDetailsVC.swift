@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import WebKit
 
 class TipsCategoriesDetailsVC: UIViewController {
     
@@ -19,11 +20,12 @@ class TipsCategoriesDetailsVC: UIViewController {
     @IBOutlet weak var ViewFirst: UIView!
     @IBOutlet weak var ViewSecond: UIView!
 
+    @IBOutlet weak var webView: WKWebView!
+
     var selectedTipId:Int?
     var ViewModel : TipsDetailsVM?
     override func viewDidLoad() {
         super.viewDidLoad()
-
         setInits()
    
     }
@@ -69,7 +71,10 @@ extension TipsCategoriesDetailsVC {
         }
 
         LaTitle.text = model.title
-        LaDescription.setJustifiedRight("\(model.description ?? "")".convertHTMLToPlainText())
+
+        guard let htmlString = model.description else {return}
+        webView.loadHTMLStringWithAutoDirection(htmlString)
+
         LaType.text = model.tipCategoryTitle
         LaDate.text = model.date?.ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "dd / MM / yyyy hh:mm a")
         CVDrugGroups.reloadData()
@@ -92,13 +97,12 @@ extension TipsCategoriesDetailsVC:UICollectionViewDataSource,UICollectionViewDel
         ViewFirst.cornerRadius = 50
         ViewFirst.layer.maskedCorners = [.layerMinXMaxYCorner ]
         
-        
         // drup groups collection tags .
         CVDrugGroups.dataSource = self
         CVDrugGroups.delegate = self
         CVDrugGroups.registerCell(cellClass: TipDetailsDrugGroup.self)
         CVDrugGroups.transform = CGAffineTransform(scaleX: -1, y: 1) //first tip mirror effect for x -> second in cell
-
+        
     }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return ViewModel?.tipDetailsRes?.drugGroups?.count ?? 0
@@ -120,3 +124,11 @@ extension TipsCategoriesDetailsVC:UICollectionViewDataSource,UICollectionViewDel
         return 10.0 // Adjust the spacing between cells as needed
     }
 }
+
+
+
+
+
+
+
+

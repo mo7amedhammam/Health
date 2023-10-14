@@ -27,7 +27,7 @@ class SimpleAlert : NSObject {
               let okAction = UIAlertAction(title: "موافق", style: .default){ _ in
                   completion?()
                   if title == NetworkError.expiredTokenMsg.errorDescription ||  message == NetworkError.expiredTokenMsg.errorDescription {
-                      Helper.changeRootVC(newroot: LoginVC.self)
+                      Helper.changeRootVC(newroot: LoginVC.self,transitionFrom: .fromLeft)
                   }
               }
               okAction.setValue(UIColor.blue, forKey: "titleTextColor") // Set the text color of the action

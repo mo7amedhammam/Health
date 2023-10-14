@@ -12,7 +12,7 @@ extension UIWindow {
     /// then it is set, UIWindow.makeKeyAndVisibile() is called, and no animation is needed.
     ///
     /// - Parameter vc: view controller to present
-    func replaceRootViewController(_ rootViewController: UIViewController) {
+    func replaceRootViewController(_ rootViewController: UIViewController,_ transitionFrom:CATransitionSubtype) {
         
         // if rootViewController isn't set yet. Just set it instead of animating the change
         if self.rootViewController == nil {
@@ -23,7 +23,8 @@ extension UIWindow {
         
         let transition = CATransition()
         transition.type = CATransitionType.push
-        
+        transition.subtype = transitionFrom
+
         layer.add(transition, forKey: kCATransition)
         
         if let vc = self.rootViewController {

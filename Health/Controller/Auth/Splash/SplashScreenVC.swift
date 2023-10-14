@@ -64,7 +64,7 @@ extension SplashScreenVC : UICollectionViewDataSource , UICollectionViewDelegate
     
     func SkipSplash() {
         Helper.onBoardOpened(opened: true)
-        Helper.changeRootVC(newroot: LoginVC.self)
+        Helper.changeRootVC(newroot: LoginVC.self,transitionFrom: .fromLeft)
     }
     
     

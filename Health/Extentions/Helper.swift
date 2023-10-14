@@ -431,11 +431,11 @@ extension Helper{
         }
         
         @available(iOS 13.0, *)
-        static func changeRootVC(newroot viewcontroller:UIViewController.Type){
+    static func changeRootVC(newroot viewcontroller:UIViewController.Type,transitionFrom from : CATransitionSubtype){
             guard  let controller = initiateViewController(storyboardName: .main,viewControllerIdentifier: viewcontroller.self) else {return}
             let nav = UINavigationController(rootViewController: controller)
             nav.navigationBar.isHidden = true
-            UIApplication.shared.keyWindow?.replaceRootViewController(nav)
+            UIApplication.shared.keyWindow?.replaceRootViewController(nav, from)
         }
         
 

@@ -166,6 +166,7 @@
 		C8A1509D2AB1C63500511B1F /* ProfileVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8A1509C2AB1C63500511B1F /* ProfileVM.swift */; };
 		C8C7339A2AA6756B00185698 /* SignUpM.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C733992AA6756B00185698 /* SignUpM.swift */; };
 		C8C7339C2AA6757800185698 /* SignUpVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C7339B2AA6757800185698 /* SignUpVM.swift */; };
+		C8F100DF2ADAC7F70085E508 /* ExWkWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8F100DE2ADAC7F70085E508 /* ExWkWebView.swift */; };
 		C8F418D82AC19A5100E7A370 /* TipDetailsDrugGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8F418D62AC19A5100E7A370 /* TipDetailsDrugGroup.swift */; };
 		C8F418D92AC19A5100E7A370 /* TipDetailsDrugGroup.xib in Resources */ = {isa = PBXBuildFile; fileRef = C8F418D72AC19A5100E7A370 /* TipDetailsDrugGroup.xib */; };
 		D8F01CB9807BCED647F0DF67 /* Pods_Health_HealthUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D4F58DCAA0D2C4B6098F3C6 /* Pods_Health_HealthUITests.framework */; };
@@ -358,6 +359,7 @@
 		C8A1509C2AB1C63500511B1F /* ProfileVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVM.swift; sourceTree = "<group>"; };
 		C8C733992AA6756B00185698 /* SignUpM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpM.swift; sourceTree = "<group>"; };
 		C8C7339B2AA6757800185698 /* SignUpVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpVM.swift; sourceTree = "<group>"; };
+		C8F100DE2ADAC7F70085E508 /* ExWkWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExWkWebView.swift; sourceTree = "<group>"; };
 		C8F418D62AC19A5100E7A370 /* TipDetailsDrugGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TipDetailsDrugGroup.swift; sourceTree = "<group>"; };
 		C8F418D72AC19A5100E7A370 /* TipDetailsDrugGroup.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TipDetailsDrugGroup.xib; sourceTree = "<group>"; };
 		F37B91FD984B0C39EEA6833D /* Pods-Health-HealthUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Health-HealthUITests.release.xcconfig"; path = "Target Support Files/Pods-Health-HealthUITests/Pods-Health-HealthUITests.release.xcconfig"; sourceTree = "<group>"; };
@@ -777,6 +779,7 @@
 				C88995812AA9EDFE002AD812 /* Strings.swift */,
 				C85F28522ABC7F500093ADFF /* EXUiDevice.swift */,
 				C8918D9B2ACD61F20070A1D3 /* ExUiButtons.swift */,
+				C8F100DE2ADAC7F70085E508 /* ExWkWebView.swift */,
 			);
 			path = Extentions;
 			sourceTree = "<group>";
@@ -1598,6 +1601,7 @@
 				BBBD00132A73101700F066DF /* ExtentionLocalize.swift in Sources */,
 				C85F28532ABC7F500093ADFF /* EXUiDevice.swift in Sources */,
 				C85996772AA7556400533C87 /* Alert.swift in Sources */,
+				C8F100DF2ADAC7F70085E508 /* ExWkWebView.swift in Sources */,
 				C8F418D82AC19A5100E7A370 /* TipDetailsDrugGroup.swift in Sources */,
 				BB1ECAB52AD4741F009BF2DE /* WillExpireTVCell.swift in Sources */,
 				BB1B2FFB2A7EA364001677FD /* INBodyDetailsTVCell.swift in Sources */,
@@ -1864,11 +1868,15 @@
 				INFOPLIST_FILE = Health/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "صحتي مع الندى";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.medical";
+				INFOPLIST_KEY_NSCameraUsageDescription = "We need access to your camera to capture photos for adding inbody report.";
+				INFOPLIST_KEY_NSDocumentsFolderUsageDescription = "We need access to your files to import and export pdf documents.";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "We need access to your photo library to save inbody report.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "We need access to your photo library to select images for adding inbody report.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1899,11 +1907,15 @@
 				INFOPLIST_FILE = Health/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "صحتي مع الندى";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.medical";
+				INFOPLIST_KEY_NSCameraUsageDescription = "We need access to your camera to capture photos for adding inbody report.";
+				INFOPLIST_KEY_NSDocumentsFolderUsageDescription = "We need access to your files to import and export pdf documents.";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "We need access to your photo library to save inbody report.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "We need access to your photo library to select images for adding inbody report.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
