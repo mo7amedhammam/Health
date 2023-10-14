@@ -26,7 +26,7 @@ class NotificationVC: UIViewController  {
     
     @IBOutlet weak var ViewSelectDate: UIView!
     @IBOutlet weak var PickerDate: UIDatePicker!
-    
+                   
     @IBOutlet weak var BtnClock: UIButton!
     @IBOutlet weak var BtnDay: UIButton!
     
@@ -113,7 +113,7 @@ class NotificationVC: UIViewController  {
                  let date = dateFormatter.date(from: TFStartDate.text! )!
 
                  var dateComponents = DateComponents()
-                 dateComponents.day = Int(TFNumDays.text!)!
+                 dateComponents.day = Int(TFNumDays.text!.convertedDigitsToLocale(Locale(identifier: "EN")) )!
 
                  let calendar = Calendar.current
                  let newDate = calendar.date(byAdding: dateComponents, to: date)!
@@ -215,8 +215,8 @@ class NotificationVC: UIViewController  {
     @objc private func buttonTappedDone(_ datePicker: UIDatePicker) {
         let selectedTime = timePicker.date
         let dateFormatter = DateFormatter()
-        dateFormatter.locale = NSLocale.init(localeIdentifier: "en") as Locale
-        dateFormatter.dateFormat = "hh:mm:ss.SSS"
+        dateFormatter.locale = NSLocale.init(localeIdentifier: "en_US_POSIX") as Locale
+        dateFormatter.dateFormat = "hh:mm"
         let formattedTime = dateFormatter.string(from: selectedTime)
         // Perform your desired actions with the selected time
         print("Selected time: \(formattedTime)")
@@ -364,16 +364,17 @@ extension NotificationVC {
         } else {
             ViewModel.drugId = drugId
         }
-        ViewModel.count      = Int(TFNumDrug.text!)!
+        ViewModel.count      = Int(TFNumDrug.text!.convertedDigitsToLocale(Locale(identifier: "EN")))!
         ViewModel.customerId =  Helper.getUser()?.id // they take it from token
         ViewModel.doseTimeId = doseTimeId // day 1 hour 2
-        ViewModel.days       = Int(TFNumDays.text!)!
+        ViewModel.days       = Int(TFNumDays.text!.convertedDigitsToLocale(Locale(identifier: "EN")) )!
 //        ViewModel.doseQuantityId = 0
         ViewModel.notification = true
-        ViewModel.startDate    = "\(TFStartDate.text!)T\(TFClock.text!)"
+        ViewModel.startDate    = "\(TFStartDate.text!)T\(TFClock.text!):00.00"
         ViewModel.endDate      = TFEndDate.text!
-        print("::::::: \("\(TFStartDate.text!)'T'\(TFClock.text!)")")
-        
+        print("::::::: \("\(TFStartDate.text!)'T'\(TFClock.text!):00.00")")
+        print("::::::: \(TFEndDate.text!) ")
+
         ViewModel.CreateNotification { [weak self] state in
             guard let self = self,let state = state else{
                 return
@@ -502,16 +503,17 @@ extension NotificationVC : UITableViewDataSource , UITableViewDelegate {
             cell.LaPeriod.text = "\(model?.days ?? 0) يوم"
         }
         
-        
         let dateString = model?.startDate
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
+        dateFormatter.locale     = Locale(identifier: "en_US_POSIX")
         let date = dateFormatter.date(from: dateString ?? "")
         dateFormatter.dateFormat = "HH:mm"
         if  date == nil {
             let dateS = model?.startDate
             let dateFo = DateFormatter()
             dateFo.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS"
+            dateFo.locale     = Locale(identifier: "en_US_POSIX")
             let date = dateFo.date(from: dateS ?? "")
             dateFo.dateFormat = "HH:mm"
             let timeS = dateFo.string(from: date!)
@@ -529,6 +531,7 @@ extension NotificationVC : UITableViewDataSource , UITableViewDelegate {
         let dateStringend = model?.endDate
         let dateFormatterend = DateFormatter()
         dateFormatterend.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
+        dateFormatterend.locale     = Locale(identifier: "en_US_POSIX")
         let dateend = dateFormatterend.date(from: dateStringend ?? "")
         if  dateend == nil {
             cell.LaEndDate.text = model?.endDate?.ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss.SSS", FormatTo: "dd/MM/yyyy")
@@ -536,7 +539,9 @@ extension NotificationVC : UITableViewDataSource , UITableViewDelegate {
             cell.LaEndDate.text = model?.endDate?.ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "dd/MM/yyyy")
         }
         
-        
+        print("LaStartDate : \(model?.startDate)")
+        print("LaEndDate : \(model?.endDate)")
+
         return cell
     }
     
@@ -600,7 +605,7 @@ extension NotificationVC : UITextFieldDelegate {
                     let date = dateFormatter.date(from: TFStartDate.text! )!
 
                     var dateComponents = DateComponents()
-                    dateComponents.day = Int(TFNumDays.text!)!
+                    dateComponents.day = Int(TFNumDays.text!.convertedDigitsToLocale(Locale(identifier: "EN")))
 
                     let calendar = Calendar.current
                     let newDate = calendar.date(byAdding: dateComponents, to: date)!

@@ -226,6 +226,8 @@ extension HomeTVCell1{
 //            vc.formatValue = model.formatValue ?? ""
             vc.formatRegex = model.regExpression ?? ""
             vc.formatHintMessage = model.normalRangValue ?? ""
+        vc.TitleMeasurement = model.title ?? ""
+
         
 //        print("formatValue : \( ViewModel.ArrStats![indexPath.row].formatValue!)")
         vc.hidesBottomBarWhenPushed = true

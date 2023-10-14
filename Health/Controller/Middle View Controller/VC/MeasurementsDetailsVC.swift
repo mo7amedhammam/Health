@@ -41,7 +41,7 @@ class MeasurementsDetailsVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
+        print("id : \(id)")
 //        if formatValue == "" || formatValue == "X" {
 //            ViewSecondValue.isHidden = true
 //        } else {
@@ -65,7 +65,6 @@ class MeasurementsDetailsVC: UIViewController {
         ViewModel.dateFrom = nil
         ViewModel.dateTo   = nil
         getDataNormalRange()
-        
         // Configure the refresh control
         refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
         
@@ -73,7 +72,7 @@ class MeasurementsDetailsVC: UIViewController {
         TVScreen.addSubview(refreshControl)
         
         // Load your initial data here (e.g., fetchData())
-        refreshData()
+//        refreshData()
         
     }
     
@@ -156,7 +155,7 @@ class MeasurementsDetailsVC: UIViewController {
             if let text = TFNumMeasure.text, text.matches(regex: formatRegex) {
                 //            ViewModel.customerId           = Helper.getUser()?.id // they take it from token
                 ViewModel.medicalMeasurementId = id
-                ViewModel.value                = TFNumMeasure.text
+                ViewModel.value                = TFNumMeasure.text!.convertedDigitsToLocale(Locale(identifier: "EN"))
                 ViewModel.comment              = TVDescription.text ?? ""
                 ViewModel.measurementDate      = TFDate.text
                 CreateMeasurement ()
@@ -201,10 +200,12 @@ extension MeasurementsDetailsVC {
             case .stopLoading:
                 Hud.dismiss(from: self.view)
             case .success:
+                TVScreen.reloadData()
                 Hud.dismiss(from: self.view)
                 getDataMeasurement()
                 print(state)
             case .error(_,let error):
+                getDataMeasurement()
                 Hud.dismiss(from: self.view)
                 SimpleAlert.shared.showAlert(title:error ?? "",message:"", viewController: self)
                 print(error ?? "")
@@ -227,11 +228,12 @@ extension MeasurementsDetailsVC {
                 Hud.dismiss(from: self.view)
             case .success:
                 Hud.dismiss(from: self.view)
-                if ViewModel.ArrMeasurement?.measurements?.items != [] {
+                if ViewModel.ArrMeasurement?.measurements?.items?.count != 0 {
                     TVScreen.reloadData()
                 }
                 print(state)
             case .error(_,let error):
+                TVScreen.reloadData()
                 Hud.dismiss(from: self.view)
                 SimpleAlert.shared.showAlert(title:error ?? "",message:"", viewController: self)
                 print(error ?? "")
@@ -261,6 +263,11 @@ extension MeasurementsDetailsVC {
             case .stopLoading:
                 Hud.dismiss(from: self.view)
             case .success:
+                
+                TFDate.text = ""
+                TFNumMeasure.text = ""
+                TFSecondValue.text = ""
+                TVDescription.text = ""
                 
                 MeasurementCreated = true
                 refreshData()
@@ -515,7 +522,7 @@ extension MeasurementsDetailsVC : UITableViewDataSource , UITableViewDelegate , 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         if indexPath.row == 0 {
-            
+            print("::::::: \(ViewModel.ArrMeasurement?.measurements?.items?.count)")
             let cell = tableView.dequeueReusableCell(withIdentifier: "MeasurementsDetailsTVCell0", for: indexPath) as! MeasurementsDetailsTVCell0
             cell.delegate = self
             //                let processor = SVGImgProcessor() // if receive svg image
@@ -559,11 +566,15 @@ extension MeasurementsDetailsVC : UITableViewDataSource , UITableViewDelegate , 
             
             let cell = tableView.dequeueReusableCell(withIdentifier: "MeasurementsDetailsTVCell", for: indexPath) as! MeasurementsDetailsTVCell
             
-            if let model = ViewModel.ArrMeasurement?.measurements?.items?[indexPath.row] {
-                cell.LaNum.text = model.value
-                cell.LaDate.text = model.date
+            print("indexPath.row : \(indexPath.row)")
+            
+            
+             let model = ViewModel.ArrMeasurement?.measurements?.items?[indexPath.row - 1]
                 
-                if model.inNormalRang == true {
+            cell.LaNum.text = model?.value
+                cell.LaDate.text = model?.date
+                
+                if model?.inNormalRang == true {
                     cell.ViewColor.backgroundColor = UIColor(named: "06AD2B")
                     cell.LaNum.textColor           = UIColor(named: "06AD2B")
                     cell.LaDescription.textColor = UIColor(named: "deactive")
@@ -573,12 +584,12 @@ extension MeasurementsDetailsVC : UITableViewDataSource , UITableViewDelegate , 
                     cell.LaDescription.textColor = UIColor(named: "main")
                 }
                 
-                if model.comment == nil {
+                if model?.comment == nil {
                     cell.LaDescription.text = "لا يوجد تعليق"
                 } else {
-                    cell.LaDescription.text = model.comment
+                    cell.LaDescription.text = model?.comment
                 }
-            }
+            
             
             return cell
         }
@@ -586,7 +597,7 @@ extension MeasurementsDetailsVC : UITableViewDataSource , UITableViewDelegate , 
     
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if indexPath.row == (ViewModel.ArrMeasurement?.measurements?.items?.count ?? 0) - 1 {
+        if indexPath.row == (ViewModel.ArrMeasurement?.measurements?.items?.count ?? 0)  {
             // Check if the last cell is about to be displayed
             if let totalCount = ViewModel.ArrMeasurement?.measurements?.totalCount, let itemsCount = ViewModel.ArrMeasurement?.measurements?.items?.count, itemsCount < totalCount {
                 // Load the next page if there are more items to fetch
