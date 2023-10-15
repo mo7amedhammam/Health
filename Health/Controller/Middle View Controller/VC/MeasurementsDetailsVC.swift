@@ -63,7 +63,7 @@ class MeasurementsDetailsVC: UIViewController {
 //        ViewModel.skipCount      = 0
         ViewModel.dateFrom = nil
         ViewModel.dateTo   = nil
-//        getDataNormalRange()
+        getDataNormalRange()
         getDataMeasurement()
         // Configure the refresh control
         refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
@@ -190,8 +190,6 @@ extension MeasurementsDetailsVC {
                 Hud.dismiss(from: self.view)
             case .success:
                 Hud.dismiss(from: self.view)
-                getDataMeasurement()
-                print(state)
             case .error(_,let error):
                 Hud.dismiss(from: self.view)
                 SimpleAlert.shared.showAlert(title:error ?? "",message:"", viewController: self)
@@ -526,10 +524,10 @@ extension MeasurementsDetailsVC : UITableViewDataSource , UITableViewDelegate , 
                 cell.LaDateTo.text = ""
                 cell.LaDateTo.isHidden = true
             }
-            
-            cell.LaNaturalFrom.text = "من : \(ViewModel.ArrNormalRange?.fromValue ?? "" )"
-            cell.LaNaturalTo.text   = "الي : \(ViewModel.ArrNormalRange?.toValue ?? "" )"
-            
+            if let range = ViewModel.ArrNormalRange {
+                cell.LaNaturalFrom.text = "من : \(range.fromValue ?? "" )"
+                cell.LaNaturalTo.text   = "الي : \(range.toValue ?? "" )"
+            }
             if MeasurementCreated == true {
                 cell.LaNum.text = "\(num + 1)"
                 MeasurementCreated = false
@@ -543,7 +541,7 @@ extension MeasurementsDetailsVC : UITableViewDataSource , UITableViewDelegate , 
             
             let cell = tableView.dequeueReusableCell(withIdentifier: "MeasurementsDetailsTVCell", for: indexPath) as! MeasurementsDetailsTVCell
             
-             let model = ViewModel.ArrMeasurement?.measurements?.items?[indexPath.row-1]
+            let model = ViewModel.ArrMeasurement?.measurements?.items?[indexPath.row-1]
             cell.LaNum.text = model?.value
             cell.LaDate.text = model?.date
                 
