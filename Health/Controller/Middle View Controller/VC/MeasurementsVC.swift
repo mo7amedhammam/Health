@@ -113,6 +113,8 @@ extension MeasurementsVC : UICollectionViewDataSource , UICollectionViewDelegate
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let vc = initiateViewController(storyboardName: .main, viewControllerIdentifier: MeasurementsDetailsVC.self) else{return}
+        vc.ViewModel = ViewModel
+        print("array",ViewModel.ArrMeasurement)
         if let model = ViewModel.ArrStats?[indexPath.row]{
             print("selectedModel",model)
             vc.id  =  model.medicalMeasurementID ?? 0
