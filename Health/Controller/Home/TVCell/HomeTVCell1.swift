@@ -218,11 +218,13 @@ extension HomeTVCell1{
     
     func ShowMeasurementDetailFor(SelectedModel:ModelMyMeasurementsStats){
         guard let vc = initiateViewController(storyboardName: .main, viewControllerIdentifier: MeasurementsDetailsVC.self) else{return}
+        vc.ViewModel = ViewModelMeasurements ?? MyMeasurementsStatsVM()
          let model = SelectedModel
 //            print("selectedModel",model)
             vc.id  =  model.medicalMeasurementID ?? 0
             vc.num = model.measurementsCount ?? 0
             vc.imgMeasurement = model.image ?? ""
+            vc.TitleMeasurement = model.title ?? ""
 //            vc.formatValue = model.formatValue ?? ""
             vc.formatRegex = model.regExpression ?? ""
             vc.formatHintMessage = model.normalRangValue ?? ""

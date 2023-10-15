@@ -579,7 +579,7 @@
 		8EF3CF8C4C580B18A94C21472EF532D4 /* AnyValueContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7377C500C3EB289C886DA59D0AC4CC23 /* AnyValueContainer.swift */; };
 		8EFC5E0F53435F083C4190B59B97D8AF /* IQToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C737278CF38BDDD328408B67D0DE07D /* IQToolbar.swift */; };
 		8F564B7CDBC9602B55A9F3804F8036C1 /* FIRInstallationsIIDStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 5496051AF572E1E7038B31DE1947B704 /* FIRInstallationsIIDStore.m */; };
-		8FAB229F0C10469E1B95A3DFD4178A7A /* AssetsPickerViewController-AssetsPickerViewController in Resources */ = {isa = PBXBuildFile; fileRef = C902AA1461A7296D041FE44817DEB00B /* AssetsPickerViewController-AssetsPickerViewController */; };
+		8FAB229F0C10469E1B95A3DFD4178A7A /* AssetsPickerViewController.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C902AA1461A7296D041FE44817DEB00B /* AssetsPickerViewController.bundle */; };
 		8FEABF1C761036E2145FEF32DD9BD644 /* KeyframeGroup+exactlyOneKeyframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69858DA394659388AF5080F16516CCE8 /* KeyframeGroup+exactlyOneKeyframe.swift */; };
 		9009E8AF028CBDC9818FBDAA124BB8D4 /* Glyph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C8395456B1223840B7D544B5FB4EF74 /* Glyph.swift */; };
 		907338727C09F65DB75AA7AB9E10C3B4 /* DropDown-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = E2246E5F6471C16DE327E489A682EDA5 /* DropDown-dummy.m */; };
@@ -1895,7 +1895,7 @@
 		4E365BF7CFF0D57EAFCBE69955762125 /* ParameterEncoding.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ParameterEncoding.swift; path = Source/ParameterEncoding.swift; sourceTree = "<group>"; };
 		4E5C038D02D20347D5EDA85942CBB158 /* GDTCORStorageEventSelector.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = GDTCORStorageEventSelector.m; path = GoogleDataTransport/GDTCORLibrary/GDTCORStorageEventSelector.m; sourceTree = "<group>"; };
 		4E67F780BF8C4EF2D002AD691022A53D /* KeyframeInterpolator.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = KeyframeInterpolator.swift; path = Sources/Private/Utility/Interpolatable/KeyframeInterpolator.swift; sourceTree = "<group>"; };
-		4EB9CDAC8B0981DAA581D94FF13D253D /* Pods-Health */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = "Pods-Health"; path = Pods_Health.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4EB9CDAC8B0981DAA581D94FF13D253D /* Pods_Health.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Health.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4ED475AC8C6B2D6C318FDCC64BCEC501 /* ja.lproj */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder; name = ja.lproj; path = AssetsPickerViewController/Assets/ja.lproj; sourceTree = "<group>"; };
 		4F03D0A838CF69BAFB8C037EA0FB51D1 /* GDTCORDirectorySizeTracker.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GDTCORDirectorySizeTracker.h; path = GoogleDataTransport/GDTCORLibrary/Internal/GDTCORDirectorySizeTracker.h; sourceTree = "<group>"; };
 		4F272F1FAEE6EFD86A29CB75800705F1 /* GULHeartbeatDateStorage.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = GULHeartbeatDateStorage.m; path = GoogleUtilities/Environment/GULHeartbeatDateStorage.m; sourceTree = "<group>"; };
@@ -1907,7 +1907,7 @@
 		510589478BBA79676B54466113C89A56 /* FBLPromise+Always.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "FBLPromise+Always.h"; path = "Sources/FBLPromises/include/FBLPromise+Always.h"; sourceTree = "<group>"; };
 		5122E6A6D251B4130E1C3C86CB76D155 /* FirebaseCoreInternal.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FirebaseCoreInternal.h; path = FirebaseCore/Extension/FirebaseCoreInternal.h; sourceTree = "<group>"; };
 		5163A749E060DA36E2853183C8B251D1 /* GDTCORFlatFileStorage+Promises.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "GDTCORFlatFileStorage+Promises.m"; path = "GoogleDataTransport/GDTCORLibrary/GDTCORFlatFileStorage+Promises.m"; sourceTree = "<group>"; };
-		51BA97E8B5085EFFB47BC9C0B785CEA7 /* lottie-ios */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = "lottie-ios"; path = Lottie.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		51BA97E8B5085EFFB47BC9C0B785CEA7 /* Lottie.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Lottie.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		51C932A68889D7471B91B44331407D1D /* Group.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Group.swift; path = Sources/Private/Model/ShapeItems/Group.swift; sourceTree = "<group>"; };
 		51CA77779C6CACC9BD132846D5F3DC5E /* FIRBundleUtil.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FIRBundleUtil.h; path = FirebaseCore/Sources/FIRBundleUtil.h; sourceTree = "<group>"; };
 		51CC7B1ECBF6574E7E5222B8D7B4A4C4 /* ConstraintMakerPrioritizable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintMakerPrioritizable.swift; path = Sources/ConstraintMakerPrioritizable.swift; sourceTree = "<group>"; };
@@ -2388,7 +2388,7 @@
 		C2BBA8FAF8B73655966681A022914AAD /* LTCharacterDiffResult.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = LTCharacterDiffResult.swift; path = CountdownLabel/LTMorphingLabel/LTCharacterDiffResult.swift; sourceTree = "<group>"; };
 		C3488147A8FA788B752A1646D65A0EC2 /* RequestModifier.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = RequestModifier.swift; path = Sources/Networking/RequestModifier.swift; sourceTree = "<group>"; };
 		C3F434DCE57E756B5AFE0CA608A9BF24 /* FIRComponentType.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FIRComponentType.h; path = FirebaseCore/Extension/FIRComponentType.h; sourceTree = "<group>"; };
-		C3F44C782D64D7EB20B61CE3844EBFAD /* Kingfisher */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Kingfisher; path = Kingfisher.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C3F44C782D64D7EB20B61CE3844EBFAD /* Kingfisher.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Kingfisher.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C41CF2FAF757C4AB0D42DED8CBDA2166 /* AssetsPickerViewController-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "AssetsPickerViewController-prefix.pch"; sourceTree = "<group>"; };
 		C4247C57B4E7BF4C31EC051E9D8C86BD /* FirebaseMessaging.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = FirebaseMessaging.debug.xcconfig; sourceTree = "<group>"; };
 		C432FF31634B6DEEE7EAF4987BA96D75 /* FIRInstallationsHTTPError.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FIRInstallationsHTTPError.h; path = FirebaseInstallations/Source/Library/Errors/FIRInstallationsHTTPError.h; sourceTree = "<group>"; };
@@ -2409,7 +2409,7 @@
 		C84610063B668BAC18C10B72EF0B914E /* es-MX.lproj */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder; name = "es-MX.lproj"; path = "AssetsPickerViewController/Assets/es-MX.lproj"; sourceTree = "<group>"; };
 		C8CD804974FB229A62B9197355A1995A /* PreCompositionLayer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PreCompositionLayer.swift; path = Sources/Private/MainThread/LayerContainers/CompLayers/PreCompositionLayer.swift; sourceTree = "<group>"; };
 		C8D3697E641952370F6DE7EE593F7A26 /* FIRInstallationsHTTPError.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FIRInstallationsHTTPError.m; path = FirebaseInstallations/Source/Library/Errors/FIRInstallationsHTTPError.m; sourceTree = "<group>"; };
-		C902AA1461A7296D041FE44817DEB00B /* AssetsPickerViewController-AssetsPickerViewController */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = "AssetsPickerViewController-AssetsPickerViewController"; path = AssetsPickerViewController.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		C902AA1461A7296D041FE44817DEB00B /* AssetsPickerViewController.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AssetsPickerViewController.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		CA50718186281BECB5C6E874751A2358 /* MathKit.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = MathKit.swift; path = Sources/Private/Utility/Extensions/MathKit.swift; sourceTree = "<group>"; };
 		CA6435DB855E374020644FBE1541414C /* DataExtension.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DataExtension.swift; path = Sources/Private/Utility/Extensions/DataExtension.swift; sourceTree = "<group>"; };
 		CA78A5F35E8F68E96FE8BEA3407318B6 /* ConstraintConstantTarget.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintConstantTarget.swift; path = Sources/ConstraintConstantTarget.swift; sourceTree = "<group>"; };
@@ -4003,7 +4003,7 @@
 			children = (
 				5D797E9A5C5782CE845840781FA1CC81 /* Alamofire.framework */,
 				153A74A2AA9AC8CA4424DFBE1371B418 /* AssetsPickerViewController.framework */,
-				C902AA1461A7296D041FE44817DEB00B /* AssetsPickerViewController-AssetsPickerViewController */,
+				C902AA1461A7296D041FE44817DEB00B /* AssetsPickerViewController.bundle */,
 				05C4280976BF93DA8B36818DE2E2A5E0 /* Cosmos.framework */,
 				8C86383D4AEF4A56A77E21BA63D72A10 /* CountdownLabel.framework */,
 				2CB62BA7EE0C76F7BE7D9B0848A6DFA2 /* CRRefresh.framework */,
@@ -4016,10 +4016,10 @@
 				B43874C6CBB50E7134FBEC24BABFE14F /* GoogleUtilities.framework */,
 				463DD918AF32B01A6E5748E9CA85F5F3 /* ImageViewer.framework */,
 				A8E950A16D00F649C54FFB30F81D7842 /* IQKeyboardManagerSwift.framework */,
-				C3F44C782D64D7EB20B61CE3844EBFAD /* Kingfisher */,
-				51BA97E8B5085EFFB47BC9C0B785CEA7 /* lottie-ios */,
+				C3F44C782D64D7EB20B61CE3844EBFAD /* Kingfisher.framework */,
+				51BA97E8B5085EFFB47BC9C0B785CEA7 /* Lottie.framework */,
 				06FC5C9CF96D60C50FCD47D339C91951 /* nanopb.framework */,
-				4EB9CDAC8B0981DAA581D94FF13D253D /* Pods-Health */,
+				4EB9CDAC8B0981DAA581D94FF13D253D /* Pods_Health.framework */,
 				47D856051E6CBBC1F5B1F356F060A9E4 /* Pods-Health-HealthUITests */,
 				AC91E052C6BEA68FCF8ABA30C5FB35AE /* Pods-HealthTests */,
 				3347A1AB6546F0A3977529B8F199DC41 /* FBLPromises.framework */,
@@ -5057,7 +5057,7 @@
 			);
 			name = "lottie-ios";
 			productName = Lottie;
-			productReference = 51BA97E8B5085EFFB47BC9C0B785CEA7 /* lottie-ios */;
+			productReference = 51BA97E8B5085EFFB47BC9C0B785CEA7 /* Lottie.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 		0DD526091D33E33B86AFCF37F8478384 /* CountdownLabel */ = {
@@ -5271,7 +5271,7 @@
 			);
 			name = "Pods-Health";
 			productName = Pods_Health;
-			productReference = 4EB9CDAC8B0981DAA581D94FF13D253D /* Pods-Health */;
+			productReference = 4EB9CDAC8B0981DAA581D94FF13D253D /* Pods_Health.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 		5C0371EE948D0357B8EE0E34ABB44BF0 /* GoogleDataTransport */ = {
@@ -5309,7 +5309,7 @@
 			);
 			name = "AssetsPickerViewController-AssetsPickerViewController";
 			productName = AssetsPickerViewController;
-			productReference = C902AA1461A7296D041FE44817DEB00B /* AssetsPickerViewController-AssetsPickerViewController */;
+			productReference = C902AA1461A7296D041FE44817DEB00B /* AssetsPickerViewController.bundle */;
 			productType = "com.apple.product-type.bundle";
 		};
 		87803597EB3F20FC46472B85392EC4FD /* FirebaseInstallations */ = {
@@ -5500,7 +5500,7 @@
 			);
 			name = Kingfisher;
 			productName = Kingfisher;
-			productReference = C3F44C782D64D7EB20B61CE3844EBFAD /* Kingfisher */;
+			productReference = C3F44C782D64D7EB20B61CE3844EBFAD /* Kingfisher.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 		E9F9401E9C74C0C393164FD8D86D0068 /* DropDown */ = {
@@ -5655,7 +5655,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8FAB229F0C10469E1B95A3DFD4178A7A /* AssetsPickerViewController-AssetsPickerViewController in Resources */,
+				8FAB229F0C10469E1B95A3DFD4178A7A /* AssetsPickerViewController.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
