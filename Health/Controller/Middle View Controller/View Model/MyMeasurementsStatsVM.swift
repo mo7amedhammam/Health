@@ -52,8 +52,8 @@ class MyMeasurementsStatsVM {
         
     }
     // .........................
-    var maxResultCount: Int?
-    var skipCount: Int?
+    var maxResultCount : Int? = 10
+    var skipCount : Int? = 0
     var medicalMeasurementId: Int?
     var dateFrom: String?
     var dateTo: String?

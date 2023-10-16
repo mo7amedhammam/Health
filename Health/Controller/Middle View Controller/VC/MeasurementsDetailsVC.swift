@@ -36,7 +36,7 @@ class MeasurementsDetailsVC: UIViewController {
     var selectDateFrom = ""
     let formatter = DateFormatter()
     
-    let ViewModel = MyMeasurementsStatsVM()
+    var ViewModel : MyMeasurementsStatsVM = MyMeasurementsStatsVM()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -60,11 +60,12 @@ class MeasurementsDetailsVC: UIViewController {
         
         LaTitle.text = TitleMeasurement
         ViewModel.medicalMeasurementId = id
-        ViewModel.maxResultCount = 10
-        ViewModel.skipCount      = 0
+//        ViewModel.maxResultCount = 10
+//        ViewModel.skipCount      = 0
         ViewModel.dateFrom = nil
         ViewModel.dateTo   = nil
         getDataNormalRange()
+        getDataMeasurement()
         // Configure the refresh control
         refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
         
@@ -75,8 +76,6 @@ class MeasurementsDetailsVC: UIViewController {
 //        refreshData()
         
     }
-    
-    
     
     @objc private func onDateValueChanged(_ datePicker: UIDatePicker) {
         //do something here
@@ -115,8 +114,6 @@ class MeasurementsDetailsVC: UIViewController {
         }
         return nil
     }
-    
-    
     
     @IBAction func BUBack(_ sender: Any) {
         //        self.dismiss(animated: true)
@@ -181,13 +178,10 @@ class MeasurementsDetailsVC: UIViewController {
     @IBAction func BUCancelAdd(_ sender: Any) {
         ViewAddMeasurement.isHidden = true
     }
-    
-    
 }
 
 
 extension MeasurementsDetailsVC {
-    
     func getDataNormalRange() {
         ViewModel.GetMeasurementNormalRange { [weak self] state in
             guard let self = self else{return}
@@ -202,8 +196,6 @@ extension MeasurementsDetailsVC {
             case .success:
                 TVScreen.reloadData()
                 Hud.dismiss(from: self.view)
-                getDataMeasurement()
-                print(state)
             case .error(_,let error):
                 getDataMeasurement()
                 Hud.dismiss(from: self.view)
@@ -285,13 +277,10 @@ extension MeasurementsDetailsVC {
             }
         }
     }
-    
 }
 
 extension MeasurementsDetailsVC : UITableViewDataSource , UITableViewDelegate , MeasurementsDetailsTVCell0_Protocoal {
-    
-    
-    
+        
     func FromDateToDate(select: String  , LaDateFrom : UILabel) {
         
         if select == "from" {
@@ -346,7 +335,7 @@ extension MeasurementsDetailsVC : UITableViewDataSource , UITableViewDelegate , 
         
         
         ViewModel.medicalMeasurementId = id
-        ViewModel.maxResultCount       = 10
+//        ViewModel.maxResultCount       = 10
         ViewModel.skipCount            = 0
         ViewModel.dateFrom = nil
         ViewModel.dateTo  = nil
@@ -485,7 +474,7 @@ extension MeasurementsDetailsVC : UITableViewDataSource , UITableViewDelegate , 
         } else {
             
             ViewModel.medicalMeasurementId = id
-            ViewModel.maxResultCount       = 10
+//            ViewModel.maxResultCount       = 10
             ViewModel.skipCount            = 0
             ViewModel.dateFrom = Lfrom.text
             ViewModel.dateTo   = Lto.text
@@ -502,7 +491,7 @@ extension MeasurementsDetailsVC : UITableViewDataSource , UITableViewDelegate , 
         } else {
             
             ViewModel.medicalMeasurementId = id
-            ViewModel.maxResultCount       = 10
+//            ViewModel.maxResultCount       = 10
             ViewModel.skipCount            = 0
             ViewModel.dateFrom = Lfrom.text
             ViewModel.dateTo   = Lto.text
@@ -516,11 +505,10 @@ extension MeasurementsDetailsVC : UITableViewDataSource , UITableViewDelegate , 
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return ViewModel.ArrMeasurement?.measurements?.items?.count ?? 0  + 1
+        return (ViewModel.ArrMeasurement?.measurements?.items?.count ?? 0)  + 1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
         if indexPath.row == 0 {
             print("::::::: \(ViewModel.ArrMeasurement?.measurements?.items?.count)")
             let cell = tableView.dequeueReusableCell(withIdentifier: "MeasurementsDetailsTVCell0", for: indexPath) as! MeasurementsDetailsTVCell0
@@ -549,10 +537,10 @@ extension MeasurementsDetailsVC : UITableViewDataSource , UITableViewDelegate , 
                 cell.LaDateTo.text = ""
                 cell.LaDateTo.isHidden = true
             }
-            
-            cell.LaNaturalFrom.text = "من : \(ViewModel.ArrNormalRange?.fromValue ?? "" )"
-            cell.LaNaturalTo.text   = "الي : \(ViewModel.ArrNormalRange?.toValue ?? "" )"
-            
+            if let range = ViewModel.ArrNormalRange {
+                cell.LaNaturalFrom.text = "من : \(range.fromValue ?? "" )"
+                cell.LaNaturalTo.text   = "الي : \(range.toValue ?? "" )"
+            }
             if MeasurementCreated == true {
                 cell.LaNum.text = "\(num + 1)"
                 MeasurementCreated = false
@@ -584,7 +572,7 @@ extension MeasurementsDetailsVC : UITableViewDataSource , UITableViewDelegate , 
                     cell.LaDescription.textColor = UIColor(named: "main")
                 }
                 
-                if model?.comment == nil {
+            if model?.comment == nil {
                     cell.LaDescription.text = "لا يوجد تعليق"
                 } else {
                     cell.LaDescription.text = model?.comment

@@ -69,7 +69,7 @@ extension MedicationScheduleDetailsVC {
         guard let model = schedualM else {return}
             LaStartDate.text = model.startDate?.ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "dd/MM/yyyy")
             LaEndDate.text = model.endDate?.ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "dd/MM/yyyy")
-            LaRenewalDate.text = model.renewDate?.ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "dd/MM/yyyy")
+            LaRenewalDate.text = model.renewDate?.ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "dd/MM/yyyy hh:mm a")
             LaDrugsCount.text = "\(model.drugsCount ?? 0)"
     }
     
