@@ -82,12 +82,14 @@ class MyMeasurementsStatsVM {
             switch result {
             case .success(let response):
                 // Handle the successful response
-                print("request successful: \(response)")
-                
+                print("request successful: \(response.data)")
+
                 if response.messageCode == 200 {
+                    print("request successful count : \(response.data?.measurements?.items?.count)")
+
                     if self?.skipCount == 0 {
                         self?.ArrMeasurement = response.data
-                    }else{
+                    } else {
                         self?.ArrMeasurement?.measurements?.items?.append(contentsOf: response.data?.measurements?.items ?? [])
                     }
 
