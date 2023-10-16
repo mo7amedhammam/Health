@@ -700,7 +700,7 @@
                                                                                                 <rect key="frame" x="50" y="0.0" width="283" height="50"/>
                                                                                                 <color key="textColor" name="deactive"/>
                                                                                                 <fontDescription key="fontDescription" name="LamaSans-Medium" family="Lama Sans" pointSize="17"/>
-                                                                                                <textInputTraits key="textInputTraits"/>
+                                                                                                <textInputTraits key="textInputTraits" keyboardType="phonePad"/>
                                                                                             </textField>
                                                                                         </subviews>
                                                                                     </stackView>
@@ -5632,9 +5632,6 @@
         </scene>
     </scenes>
     <designables>
-        <designable name="c0I-bP-9rf">
-            <size key="intrinsicContentSize" width="115.66666666666667" height="26"/>
-        </designable>
         <designable name="dxe-N1-yU6">
             <size key="intrinsicContentSize" width="-1" height="83"/>
         </designable>

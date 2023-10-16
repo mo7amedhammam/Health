@@ -36,6 +36,7 @@ class NotificationVC: UIViewController  {
 
     let ViewModel = NotificationVM()
     var ArrDrugString = [String]()
+    var ArrDrugStringSearch = [String]()
     var drugId = 0
     let rightBarDropDown = DropDown()
     var doseTimeId = 0 
@@ -48,6 +49,8 @@ class NotificationVC: UIViewController  {
         TFClock.delegate = self
 
         TFDrugName.delegate = self
+        TFDrugName.addTarget(self , action: #selector(self.EditingChanged(_:)), for: .editingChanged)
+        
         rightBarDropDown.anchorView = TFDrugName
         rightBarDropDown.cancelAction = { [self] in
             BtnSelectDrug.isSelected = false
@@ -89,6 +92,40 @@ class NotificationVC: UIViewController  {
         // Load your initial data here (e.g., fetchData())
         refreshData()
 
+    }
+    
+    @objc func EditingChanged (_ textField: UITextField) {
+        
+        if textField.text == "" {
+            ArrDrugStringSearch.removeAll()
+            ArrDrugStringSearch = ArrDrugString
+            drugId = 0
+        } else {
+            drugId = 0 // if text entered not found in array 
+            if let searchText = TFDrugName.text {
+                ArrDrugStringSearch = ArrDrugString.filter { $0.localizedStandardContains(searchText) }
+            }
+        }
+        
+        rightBarDropDown.dataSource = ArrDrugStringSearch
+        rightBarDropDown.selectionAction = { [self] (index: Int, item: String) in
+            print("Selected item: \(item) at index: \(index)")
+            self.TFDrugName.text = ArrDrugStringSearch[index]
+            BtnSelectDrug.isSelected = false
+            
+            for data in ViewModel.ArrDrugs {
+                if data.title == ArrDrugStringSearch[index] {
+                    drugId = data.id ?? 0
+                    print("id : \(data.id) title : \(data.title)")
+                }
+            }
+//                        drugId = ViewModel.ArrDrugs[index].id ?? 0
+        }
+        BtnSelectDrug.isSelected = true
+        let preferredViewWidth = TFDrugName.frame.size.width // Assuming ViewPreferred is a UIView
+        rightBarDropDown.width = preferredViewWidth
+        rightBarDropDown.bottomOffset = CGPoint(x: -10 , y: (rightBarDropDown.anchorView?.plainView.bounds.height)!)
+        rightBarDropDown.show()
     }
     
     @objc private func onDateValueChanged(_ datePicker: UIDatePicker) {
@@ -142,21 +179,28 @@ class NotificationVC: UIViewController  {
     }
     
     @IBAction func BUSelectDrug(_ sender: Any) {
-                
-        rightBarDropDown.dataSource = ArrDrugString
-        rightBarDropDown.selectionAction = { [self] (index: Int, item: String) in
-            print("Selected item: \(item) at index: \(index)")
-            self.TFDrugName.text = ArrDrugString[index]
-            BtnSelectDrug.isSelected = false
-            drugId = ViewModel.ArrDrugs[index].id ?? 0
-            print("drugId : \(drugId)")
-        }
-        BtnSelectDrug.isSelected = true
-        let preferredViewWidth = TFDrugName.frame.size.width // Assuming ViewPreferred is a UIView
-        rightBarDropDown.width = preferredViewWidth
-        rightBarDropDown.bottomOffset = CGPoint(x: -10 , y: (rightBarDropDown.anchorView?.plainView.bounds.height)!)
-        rightBarDropDown.show()
         
+        if BtnSelectDrug.isSelected == true {
+            BtnSelectDrug.isSelected = false
+            rightBarDropDown.hide()
+            ArrDrugStringSearch.removeAll()
+            ArrDrugStringSearch = ArrDrugString
+        } else {
+            rightBarDropDown.dataSource = ArrDrugStringSearch
+            rightBarDropDown.selectionAction = { [self] (index: Int, item: String) in
+                print("Selected item: \(item) at index: \(index)")
+                self.TFDrugName.text = ArrDrugStringSearch[index]
+                BtnSelectDrug.isSelected = false
+                drugId = ViewModel.ArrDrugs[index].id ?? 0
+                print("id : \(drugId) title : \(ArrDrugStringSearch[index])")
+            }
+            BtnSelectDrug.isSelected = true
+            let preferredViewWidth = TFDrugName.frame.size.width // Assuming ViewPreferred is a UIView
+            rightBarDropDown.width = preferredViewWidth
+            rightBarDropDown.bottomOffset = CGPoint(x: -10 , y: (rightBarDropDown.anchorView?.plainView.bounds.height)!)
+            rightBarDropDown.show()
+        }
+                
     }
     
     
@@ -345,6 +389,7 @@ extension NotificationVC {
                 for data in ViewModel.ArrDrugs {
                     ArrDrugString.append(data.title ?? "" )
                 }
+                ArrDrugStringSearch = ArrDrugString
                 print("ArrDrugString.count : \(ArrDrugString.count)")
             case .error(_,let error):
 //                Hud.dismiss(from: self.view)
@@ -576,10 +621,10 @@ extension NotificationVC : UITextFieldDelegate {
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        if textField == TFDrugName {
-            drugId = 0
-            print("drugId is zero : \(drugId)")
-        }
+//        if textField == TFDrugName {
+//            drugId = 0
+//            print("drugId is zero : \(drugId)")
+//        }
     }
     
  
