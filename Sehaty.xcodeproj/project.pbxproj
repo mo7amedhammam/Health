@@ -33,6 +33,8 @@
 		BB1ECAB52AD4741F009BF2DE /* WillExpireTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB1ECAB32AD4741F009BF2DE /* WillExpireTVCell.swift */; };
 		BB1ECAB62AD4741F009BF2DE /* WillExpireTVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BB1ECAB42AD4741F009BF2DE /* WillExpireTVCell.xib */; };
 		BB1ECAB82AD47435009BF2DE /* WillExpireVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB1ECAB72AD47435009BF2DE /* WillExpireVC.swift */; };
+		BB218A582ADF1CA90061FF81 /* ViewNoData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB218A572ADF1CA90061FF81 /* ViewNoData.swift */; };
+		BB218A5A2ADF1CB30061FF81 /* ViewNoData.xib in Resources */ = {isa = PBXBuildFile; fileRef = BB218A592ADF1CB30061FF81 /* ViewNoData.xib */; };
 		BB30E6132A7859FE0045569D /* HTBC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB30E6122A7859FE0045569D /* HTBC.swift */; };
 		BB48F8A12A747D020051F12C /* ChangePasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB48F8A02A747D020051F12C /* ChangePasswordVC.swift */; };
 		BB48F8A32A7482480051F12C /* OtpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB48F8A22A7482480051F12C /* OtpVC.swift */; };
@@ -64,6 +66,7 @@
 		BB546DE72AC9D565008A4F8C /* HomeCVCell2.xib in Resources */ = {isa = PBXBuildFile; fileRef = BB546DE52AC9D565008A4F8C /* HomeCVCell2.xib */; };
 		BB546DEA2AC9E467008A4F8C /* HomeTVCell1.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB546DE82AC9E467008A4F8C /* HomeTVCell1.swift */; };
 		BB546DEB2AC9E467008A4F8C /* HomeTVCell1.xib in Resources */ = {isa = PBXBuildFile; fileRef = BB546DE92AC9E467008A4F8C /* HomeTVCell1.xib */; };
+		BB6095702ADF24C9006582F3 /* ControllViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB60956F2ADF24C9006582F3 /* ControllViews.swift */; };
 		BB6E07EF2A896B2700689769 /* MeasurementsDetailsTVCell0.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6E07ED2A896B2700689769 /* MeasurementsDetailsTVCell0.swift */; };
 		BB6E07F02A896B2700689769 /* MeasurementsDetailsTVCell0.xib in Resources */ = {isa = PBXBuildFile; fileRef = BB6E07EE2A896B2700689769 /* MeasurementsDetailsTVCell0.xib */; };
 		BB913AD72A9BE04900003AC5 /* TipsCategoriesTVCell1.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB913AD52A9BE04900003AC5 /* TipsCategoriesTVCell1.swift */; };
@@ -223,6 +226,8 @@
 		BB1ECAB32AD4741F009BF2DE /* WillExpireTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WillExpireTVCell.swift; sourceTree = "<group>"; };
 		BB1ECAB42AD4741F009BF2DE /* WillExpireTVCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WillExpireTVCell.xib; sourceTree = "<group>"; };
 		BB1ECAB72AD47435009BF2DE /* WillExpireVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WillExpireVC.swift; sourceTree = "<group>"; };
+		BB218A572ADF1CA90061FF81 /* ViewNoData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewNoData.swift; sourceTree = "<group>"; };
+		BB218A592ADF1CB30061FF81 /* ViewNoData.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ViewNoData.xib; sourceTree = "<group>"; };
 		BB30E6122A7859FE0045569D /* HTBC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTBC.swift; sourceTree = "<group>"; };
 		BB48F8A02A747D020051F12C /* ChangePasswordVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordVC.swift; sourceTree = "<group>"; };
 		BB48F8A22A7482480051F12C /* OtpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtpVC.swift; sourceTree = "<group>"; };
@@ -254,6 +259,7 @@
 		BB546DE52AC9D565008A4F8C /* HomeCVCell2.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomeCVCell2.xib; sourceTree = "<group>"; };
 		BB546DE82AC9E467008A4F8C /* HomeTVCell1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTVCell1.swift; sourceTree = "<group>"; };
 		BB546DE92AC9E467008A4F8C /* HomeTVCell1.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomeTVCell1.xib; sourceTree = "<group>"; };
+		BB60956F2ADF24C9006582F3 /* ControllViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControllViews.swift; sourceTree = "<group>"; };
 		BB6E07ED2A896B2700689769 /* MeasurementsDetailsTVCell0.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasurementsDetailsTVCell0.swift; sourceTree = "<group>"; };
 		BB6E07EE2A896B2700689769 /* MeasurementsDetailsTVCell0.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MeasurementsDetailsTVCell0.xib; sourceTree = "<group>"; };
 		BB913AD52A9BE04900003AC5 /* TipsCategoriesTVCell1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TipsCategoriesTVCell1.swift; sourceTree = "<group>"; };
@@ -523,6 +529,9 @@
 			children = (
 				C82DCAAA2AACAC9600322B55 /* NoSchedaulsView */,
 				C82DCAA92AACAC8B00322B55 /* DoneView */,
+				BB218A572ADF1CA90061FF81 /* ViewNoData.swift */,
+				BB218A592ADF1CB30061FF81 /* ViewNoData.xib */,
+				BB60956F2ADF24C9006582F3 /* ControllViews.swift */,
 			);
 			path = "XIb Views";
 			sourceTree = "<group>";
@@ -1421,6 +1430,7 @@
 				BB546DE32AC9D558008A4F8C /* HomeCVCell1.xib in Resources */,
 				BB5116D32A829B4900CF5D11 /* MeasurementsCVCell.xib in Resources */,
 				BB546DEB2AC9E467008A4F8C /* HomeTVCell1.xib in Resources */,
+				BB218A5A2ADF1CB30061FF81 /* ViewNoData.xib in Resources */,
 				BBC7B4642A72CC840079355E /* Assets.xcassets in Resources */,
 				BB5116CE2A829AC900CF5D11 /* MeasurementsDetailsTVCell.xib in Resources */,
 				BB518CEB2A9A125900242FAD /* TipsCategories2CVCell.xib in Resources */,
@@ -1572,6 +1582,7 @@
 				C889958A2AA9F770002AD812 /* ForgetPasswordVM.swift in Sources */,
 				C88995822AA9EDFE002AD812 /* Strings.swift in Sources */,
 				C82DCAAF2AACB41600322B55 /* MedicationScheduleDetailsM.swift in Sources */,
+				BB218A582ADF1CA90061FF81 /* ViewNoData.swift in Sources */,
 				C893A9B72AB5BE450054F171 /* TipsCategoryServices.swift in Sources */,
 				BB1B2FFE2A7EA379001677FD /* INBodyDetailsVC.swift in Sources */,
 				BB1AEAA32A955B710078683A /* NotificationVC.swift in Sources */,
@@ -1658,6 +1669,7 @@
 				C80DA9E62AA4D2F100F10808 /* BaseRequest.swift in Sources */,
 				C824CED82AD419550051E491 /* AlmostFinishedVM.swift in Sources */,
 				BBE3CC7E2A80011E004B0D9A /* MedicationScheduleDetailsVC.swift in Sources */,
+				BB6095702ADF24C9006582F3 /* ControllViews.swift in Sources */,
 				BBBD000E2A73101700F066DF /* ImageViewer.swift in Sources */,
 				C8542D5C2AA8B42600ACE480 /* OtpVM.swift in Sources */,
 				BBBD00182A73101700F066DF /* CardView.swift in Sources */,

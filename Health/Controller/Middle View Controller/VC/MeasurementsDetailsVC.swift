@@ -7,7 +7,7 @@
 
 import UIKit
 
-class MeasurementsDetailsVC: UIViewController {
+class MeasurementsDetailsVC: UIViewController  {
     
     @IBOutlet weak var LaTitle: UILabel!
     @IBOutlet weak var TVScreen: UITableView!
@@ -40,6 +40,8 @@ class MeasurementsDetailsVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+    
+        TFNumMeasure.keyboardType = .asciiCapableNumberPad
         
         print("id : \(id)")
 //        if formatValue == "" || formatValue == "X" {

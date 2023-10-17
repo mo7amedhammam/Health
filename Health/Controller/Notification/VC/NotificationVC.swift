@@ -44,6 +44,9 @@ class NotificationVC: UIViewController  {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        TFNumDays.keyboardType = .asciiCapableNumberPad
+        TFNumDrug.keyboardType = .asciiCapableNumberPad
+
 //        TFNumDays.delegate = self
         TFNumDays.addTarget(self, action: #selector(self.textFieldDidChange(textField:)), for: UIControl.Event.editingChanged)
         TFClock.delegate = self
@@ -56,7 +59,7 @@ class NotificationVC: UIViewController  {
             BtnSelectDrug.isSelected = false
         }
                 
-        self.PickerDate.addTarget(self, action: #selector(onDateValueChanged(_:)), for: .valueChanged)
+        self.PickerDate.addTarget(self, action: #selector(onDateValueChanged(_:)), for: UIControl.Event.valueChanged)
 
         timePicker.datePickerMode = .time
         // Create toolbar where a "Done" button will go
@@ -273,7 +276,7 @@ class NotificationVC: UIViewController  {
         
         if sender.tag == 0 {
             selectDateFrom = "from"
-            PickerDate.minimumDate = Date()
+            PickerDate.minimumDate = Date() - TimeInterval(1.0)
             PickerDate.maximumDate = nil
             PickerDate.datePickerMode = .date
             ViewSelectDate.isHidden = false
@@ -338,7 +341,7 @@ extension NotificationVC {
     
     
     func getNotifications() {
-        
+        CloseView_NoContent ()
         ViewModel.GetNotifications { [weak self] state in
             guard let self = self else{return}
             guard let state = state else{
@@ -350,8 +353,15 @@ extension NotificationVC {
             case .stopLoading:
                 Hud.dismiss(from: self.view)
             case .success:
+                
+                if ViewModel.ArrNotifications?.items == nil || ViewModel.ArrNotifications?.items?.count == 0  {
+                    LoadView_NoContent(Superview: TVScreen, title: "لا يوجد تنبيهات", img: "nonotification")
+                } else {
+                    CloseView_NoContent ()
+                    TVScreen.reloadData()
+                }
+                
                 Hud.dismiss(from: self.view)
-                TVScreen.reloadData()
                 print(state)
             case .error(_,let error):
                 Hud.dismiss(from: self.view)

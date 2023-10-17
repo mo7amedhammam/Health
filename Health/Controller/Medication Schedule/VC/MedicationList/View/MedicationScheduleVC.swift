@@ -88,6 +88,7 @@ extension MedicationScheduleVC : UITableViewDataSource , UITableViewDelegate {
 extension MedicationScheduleVC{
     
     func GetMedicationSchedule() {
+        CloseView_NoContent()
         ViewModel.GetMySchedulePrescriptions{[weak self] state in
             guard let self = self else{return}
             guard let state = state else{
@@ -101,7 +102,12 @@ extension MedicationScheduleVC{
             case .success:
                 Hud.dismiss(from: self.view)
                 print(state)
-                TVScreen.reloadData()
+                if ViewModel.responseModel?.items?.count == 0 || ViewModel.responseModel?.items == nil {
+                    LoadView_NoContent(Superview: TVScreen, title:  "لا يوجد اي جدول " , img: "noscheduals")
+                } else {
+                    CloseView_NoContent()
+                    TVScreen.reloadData()
+                }
                 
             case .error(_,let error):
                 Hud.dismiss(from: self.view)

@@ -17,6 +17,8 @@ class MeasurementsVC: UIViewController {
 
     let ViewModel = MyMeasurementsStatsVM()
     
+    let ViewModelProfile = ProfileVM()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -35,6 +37,7 @@ class MeasurementsVC: UIViewController {
         super.viewWillAppear(animated)
         DispatchQueue.main.async {
             self.getData()
+            self.GetMyProfile()
         }
     }
     
@@ -42,6 +45,36 @@ class MeasurementsVC: UIViewController {
         return .lightContent
     }
     
+}
+
+extension MeasurementsVC {
+    func GetMyProfile() {
+        ViewModelProfile.GetMyProfile {[weak self] state in
+            guard let self = self else{return}
+            guard let state = state else{
+                return
+            }
+            switch state {
+            case .loading:
+//                Hud.showHud(in: self.view,text: "")
+                print("loading")
+            case .stopLoading:
+                Hud.dismiss(from: self.view)
+            case .success:
+                Hud.dismiss(from: self.view)
+                print(state)
+                if let user = ViewModelProfile.responseModel{
+                    LaName.text  = user.name
+                }
+            case .error(_,let error):
+                Hud.dismiss(from: self.view)
+//                SimpleAlert.shared.showAlert(title:error ?? "",message:"", viewController: self)
+                print(error ?? "")
+            case .none:
+                print("")
+            }
+        }
+    }
 }
 
 

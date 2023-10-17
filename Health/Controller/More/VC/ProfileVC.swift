@@ -45,7 +45,7 @@ extension ProfileVC : UITableViewDataSource , UITableViewDelegate {
             
             let cell = tableView.dequeueReusableCell(withIdentifier: "ProfileTVCellHeader", for: indexPath) as! ProfileTVCellHeader
             if let user = ViewModel.responseModel{
-                cell.LaName.text = user.name
+                cell.LaName.text  = user.name
                 cell.LaPhone.text = user.mobile
             }
             return cell
