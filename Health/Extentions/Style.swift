@@ -894,3 +894,35 @@ extension String {
         }
     }
 }
+
+extension Date {
+
+    func tomorrow() -> Date {
+        return Calendar.current.date(byAdding: .day, value: 1, to: self)!
+    }
+}
+
+extension UIDatePicker {
+    func removeCurrentSelectedDayDate() {
+        let currentDate = Date()
+        let tomorrowDate = Calendar.current.date(byAdding: .day, value: 1, to: currentDate)!
+        self.minimumDate = tomorrowDate
+        self.date = tomorrowDate
+    }
+}
+
+
+func convertDateToString(inputDateString: String, inputDateFormat: String, outputDateFormat: String) -> String? {
+    let inputDateFormatter = DateFormatter()
+    inputDateFormatter.dateFormat = inputDateFormat
+    
+    let date = inputDateFormatter.date(from: inputDateString)
+    guard let date = date else { return nil }
+    
+    let outputDateFormatter = DateFormatter()
+    outputDateFormatter.locale     = Locale(identifier: "en_US_POSIX")
+    outputDateFormatter.dateFormat = outputDateFormat
+    
+    let outputDateString = outputDateFormatter.string(from: date)
+    return outputDateString
+}

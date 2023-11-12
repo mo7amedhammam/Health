@@ -36,6 +36,10 @@ class TipsCategoriesVC3: UIViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        ViewModel.skipCount = 0
+        ViewModel.tipsByCategoryRes?.items?.removeAll()
+        TVScreen.reloadData()
         getTipsByCategoryId()
     }
     

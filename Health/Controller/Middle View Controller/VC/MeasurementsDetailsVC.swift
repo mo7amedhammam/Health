@@ -7,7 +7,7 @@
 
 import UIKit
 
-class MeasurementsDetailsVC: UIViewController  {
+class MeasurementsDetailsVC: UIViewController {
     
     @IBOutlet weak var LaTitle: UILabel!
     @IBOutlet weak var TVScreen: UITableView!
@@ -42,7 +42,7 @@ class MeasurementsDetailsVC: UIViewController  {
         super.viewDidLoad()
     
         TFNumMeasure.keyboardType = .asciiCapableNumberPad
-        
+
         print("id : \(id)")
 //        if formatValue == "" || formatValue == "X" {
 //            ViewSecondValue.isHidden = true
@@ -78,6 +78,8 @@ class MeasurementsDetailsVC: UIViewController  {
 //        refreshData()
         
     }
+    
+    
     
     @objc private func onDateValueChanged(_ datePicker: UIDatePicker) {
         //do something here
@@ -199,7 +201,9 @@ extension MeasurementsDetailsVC {
                 TVScreen.reloadData()
                 Hud.dismiss(from: self.view)
             case .error(_,let error):
-                getDataMeasurement()
+                if ViewModel.ArrMeasurement?.measurements?.items?.count == 0 {
+                    getDataMeasurement()
+                }
                 Hud.dismiss(from: self.view)
                 SimpleAlert.shared.showAlert(title:error ?? "",message:"", viewController: self)
                 print(error ?? "")
@@ -262,14 +266,25 @@ extension MeasurementsDetailsVC {
                 TFNumMeasure.text = ""
                 TFSecondValue.text = ""
                 TVDescription.text = ""
-                
                 MeasurementCreated = true
                 refreshData()
-                    
                 ViewAddMeasurement.isHidden = true
                 Hud.dismiss(from: self.view)
                 SimpleAlert.shared.showAlert(title: "تم تسجيل قياس جديد"  ,message: "", viewController: self)
                 print(state)
+                
+                ViewModel.ArrMeasurement = nil
+                ViewModel.ArrNormalRange = nil
+                TVScreen.reloadData()
+                
+                ViewModel.medicalMeasurementId = id
+    //            ViewModel.maxResultCount     = 10
+                ViewModel.skipCount            = 0
+                ViewModel.dateFrom = nil
+                ViewModel.dateTo   = nil
+                getDataNormalRange()
+                getDataMeasurement()
+                
             case .error(_,let error):
                 Hud.dismiss(from: self.view)
                 SimpleAlert.shared.showAlert(title:error ?? "",message:"", viewController: self)
@@ -574,7 +589,7 @@ extension MeasurementsDetailsVC : UITableViewDataSource , UITableViewDelegate , 
                     cell.LaDescription.textColor = UIColor(named: "main")
                 }
                 
-            if model?.comment == nil {
+            if model?.comment == nil || model?.comment == "" {
                     cell.LaDescription.text = "لا يوجد تعليق"
                 } else {
                     cell.LaDescription.text = model?.comment

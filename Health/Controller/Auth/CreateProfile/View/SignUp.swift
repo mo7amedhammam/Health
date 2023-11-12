@@ -59,6 +59,9 @@ class SignUp: UIViewController  , UITextFieldDelegate{
         TFDistrict.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         TFGender.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
 
+        TFDistrict.delegate = self
+        TFGender.delegate = self
+
         BtnRegister.enable(false)
         hideKeyboardWhenTappedAround()
     }
@@ -164,6 +167,8 @@ class SignUp: UIViewController  , UITextFieldDelegate{
             if newText.count > 11 {
                 return false
             }
+        } else if textField == TFGender ||  textField == TFDistrict {
+            return false
         }
         return true
     }

@@ -20,7 +20,8 @@ class LoginVC: UIViewController , UITextFieldDelegate {
     @IBOutlet weak var BtnLogin: UIButton!
     
     let loginViewModel = LoginVM()
-    
+    let viewModel = OtpVM()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -40,14 +41,51 @@ class LoginVC: UIViewController , UITextFieldDelegate {
     
     @IBAction func BUForgetPassword(_ sender: Any) {
         if TFPhone.text != ""{
-            guard let vc = initiateViewController(storyboardName: .main, viewControllerIdentifier: OtpVC.self) else{return}
-            vc.Phonenumber = TFPhone.text
-            navigationController?.pushViewController(vc, animated: true)
+            SendOtp()
         } else {
             SimpleAlert.shared.showAlert(title: "اكتب رقم موبايل الأول", message: "", viewController: self)
             return
         }
     }
+    
+    
+    func SendOtp() {
+        viewModel.mobile = TFPhone.text!
+        
+        viewModel.SendOtp{[weak self] state in
+            guard let self = self else{return}
+            guard let state = state else{
+                return
+            }
+            switch state {
+            case .loading:
+                Hud.showHud(in: self.view)
+            case .stopLoading:
+                Hud.dismiss(from: self.view)
+            case .success:
+                Hud.dismiss(from: self.view)
+                print(state)
+                //        guard let seconds = viewModel.responseModel?.secondsCount else {return}
+                guard let vc = initiateViewController(storyboardName: .main, viewControllerIdentifier: OtpVC.self) else{return}
+                vc.Phonenumber = TFPhone.text
+                vc.second =  viewModel.responseModel?.secondsCount ?? 60
+                vc.otp = "استخدم \(viewModel.responseModel?.otp ?? 00)"
+                navigationController?.pushViewController(vc, animated: true)
+            case .error(let code,let error):
+                Hud.dismiss(from: self.view)
+                SimpleAlert.shared.showAlert(title:error ?? "",message:"", viewController: self,completion:{
+                    if code == 400 {
+                        self.navigationController?.popViewController(animated: true)
+                    }
+                })
+                print(error ?? "")
+            case .none:
+                print("")
+            }
+        }
+    }
+    
+    
     
     @IBAction func BULogin(_ sender: Any) {
         Login()

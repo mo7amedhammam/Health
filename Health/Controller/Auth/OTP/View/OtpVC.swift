@@ -31,6 +31,8 @@ class OtpVC: UIViewController , UITextFieldDelegate {
     @IBOutlet weak var ShowOtp: UILabel!
     
     var timer: Timer?
+    var second = 0
+    var otp    = ""
 
     let viewModel = OtpVM()
     override func viewDidLoad() {
@@ -59,7 +61,11 @@ class OtpVC: UIViewController , UITextFieldDelegate {
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        SendOtp()
+//        SendOtp()
+        clearOtp()
+        startTimer(remainingSeconds: second)
+        ShowOtp.text = otp
+        
     }
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)

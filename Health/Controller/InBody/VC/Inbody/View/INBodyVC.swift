@@ -170,8 +170,12 @@ extension INBodyVC{
             case .success:
                 Hud.dismiss(from: self.view)
                 print(state)
-                GetCustomerInbodyList()
                 
+                ViewModel.skipCount = 0
+                ViewModel.responseModel?.items?.removeAll()
+                TVScreen.reloadData()
+                GetCustomerInbodyList()
+                                
             case .error(_,let error):
                 Hud.dismiss(from: self.view)
                 SimpleAlert.shared.showAlert(title:error ?? "",message:"", viewController: self)

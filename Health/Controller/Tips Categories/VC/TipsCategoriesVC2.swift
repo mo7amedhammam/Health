@@ -60,14 +60,14 @@ extension TipsCategoriesVC2 : UICollectionViewDataSource , UICollectionViewDeleg
             cell.model = secondVCTipM.init(image: model?.image, title: model?.title,id: model?.id, subjectsCount: model?.subjectsCount)
         case .Newest:
             let model = dataArray?[indexPath.row]
-            cell.model = secondVCTipM.init(image: model?.image, title: model?.title,subjectsCount: 0 )
+            cell.model = secondVCTipM.init(image: model?.image, title: model?.title,date: model?.date,subjectsCount: 0 )
         case .Interesting:
             let model = dataArray?[indexPath.row]
-            cell.model = secondVCTipM.init(image: model?.image, title: model?.title,subjectsCount: 0 )
+            cell.model = secondVCTipM.init(image: model?.image, title: model?.title,date: model?.date,subjectsCount: 0 )
 
         case .MostViewed:
             let model = dataArray?[indexPath.row]
-            cell.model = secondVCTipM.init(image: model?.image, title: model?.title,subjectsCount: 0 )
+            cell.model = secondVCTipM.init(image: model?.image, title: model?.title,date: model?.date, subjectsCount: 0)
         }
         return cell
     }
