@@ -84,7 +84,7 @@ class MeasurementsDetailsVC: UIViewController {
     @objc private func onDateValueChanged(_ datePicker: UIDatePicker) {
         //do something here
         formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
-        formatter.locale     = Locale(identifier: "en_US_POSIX")
+        formatter.locale     = Locale(identifier: "en")
         let strDate = formatter.string(from: datePicker.date )
         formatter.dateStyle = .medium
         formatter.timeStyle = .none

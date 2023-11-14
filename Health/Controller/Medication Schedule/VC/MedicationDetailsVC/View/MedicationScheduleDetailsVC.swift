@@ -15,12 +15,18 @@ class MedicationScheduleDetailsVC: UIViewController {
     @IBOutlet weak var LaDrugsCount: UILabel!
     @IBOutlet weak var LaRenewalDate: UILabel!
     
+    @IBOutlet weak var LaTitleBare: UILabel!
+
+    
     var schedualM:MedicationScheduleItem? = MedicationScheduleItem()
     let ViewModel = MedicationScheduleDetailsVM()
+    var TitleBare = ""
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        LaTitleBare.text = TitleBare
         // Do any additional setup after loading the view.
         TVScreen.dataSource = self
         TVScreen.delegate = self
@@ -66,11 +72,11 @@ extension MedicationScheduleDetailsVC : UITableViewDataSource , UITableViewDeleg
 
 extension MedicationScheduleDetailsVC {
     func SetCurrentSched(){
-        guard let model = schedualM else {return}
-            LaStartDate.text = model.startDate?.ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "dd/MM/yyyy")
-            LaEndDate.text = model.endDate?.ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "dd/MM/yyyy")
-            LaRenewalDate.text = model.renewDate?.ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "dd/MM/yyyy hh:mm a")
-            LaDrugsCount.text = "\(model.drugsCount ?? 0)"
+         let model = schedualM
+            LaStartDate.text = model?.startDate?.ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "dd/MM/yyyy")
+            LaEndDate.text = model?.endDate?.ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "dd/MM/yyyy")
+            LaRenewalDate.text = model?.renewDate?.ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "dd/MM/yyyy hh:mm a")
+            LaDrugsCount.text = "\(model?.drugsCount ?? 0)"
     }
     
     func GetMedicationScheduleDrugs() {

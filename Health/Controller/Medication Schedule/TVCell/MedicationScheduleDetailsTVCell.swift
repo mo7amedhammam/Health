@@ -24,8 +24,10 @@ class MedicationScheduleDetailsTVCell: UITableViewCell {
     
     @IBOutlet var DotsViews: [UIView]!
     
-    let inactiveTextColor = UIColor(named: "wrong")
+    let inactiveTextColor       = UIColor(named: "wrong")
     let inactiveBackgroundColor = UIColor(red: 1, green: 0.88, blue: 0.88, alpha: 1)
+    
+    
     var DrugModel : MedicationScheduleDrugM?{
         didSet{
             guard let model = DrugModel else{return}
@@ -62,15 +64,24 @@ extension MedicationScheduleDetailsTVCell{
     func setactivColors(isactive : Bool){
         if isactive == false {
             ImgDrugIcon.image = UIImage(named: "inactivedrugicon")
-
-            ViewBackground.backgroundColor = inactiveBackgroundColor
+            ViewBackground.backgroundColor  = inactiveBackgroundColor
             DescribtionView.backgroundColor = .white.withAlphaComponent(0.4)
-            
             LaText.forEach { label in
                 label.textColor = inactiveTextColor
             }
             DotsViews.forEach { dotV in
                 dotV.backgroundColor = inactiveTextColor
+            }
+        } else {
+            
+            ImgDrugIcon.image = UIImage(named: "Medical Notification-01 3")
+            ViewBackground.backgroundColor  = UIColor(named: "main")
+            DescribtionView.backgroundColor = .white
+            LaText.forEach { label in
+                label.textColor = .white
+            }
+            DotsViews.forEach { dotV in
+                dotV.backgroundColor =  UIColor(named: "second")
             }
         }
     }

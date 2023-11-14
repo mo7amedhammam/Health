@@ -55,7 +55,6 @@ extension MedicationScheduleVC : UITableViewDataSource , UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "MedicationScheduleTVCell", for: indexPath) as! MedicationScheduleTVCell
-        
         cell.SchedualModel = ViewModel.responseModel?.items?[indexPath.row] ?? MedicationScheduleItem()
         return cell
     }
@@ -65,6 +64,7 @@ extension MedicationScheduleVC : UITableViewDataSource , UITableViewDelegate {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "MedicationScheduleDetailsVC") as! MedicationScheduleDetailsVC
         vc.schedualM = ViewModel.responseModel?.items?[indexPath.row]
+        vc.TitleBare = ViewModel.responseModel?.items?[indexPath.row].title ?? ""
         vc.modalPresentationStyle = .fullScreen
         self.present(vc, animated: false, completion: nil)
     }

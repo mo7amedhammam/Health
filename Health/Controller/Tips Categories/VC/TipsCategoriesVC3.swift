@@ -107,9 +107,15 @@ extension TipsCategoriesVC3 {
                 // Handle success async operations
                 Hud.dismiss(from: self.view)
                 TVScreen.reloadData()
+                
+                if ViewModel.tipsByCategoryRes?.items?.count == 0 {
+                    LoadView_NoContent(Superview: TVScreen , title: "لا يوجد محتوي", img: "noscheduals")
+                } else {
+                    CloseView_NoContent()
+                }
 
                 print("all",ViewModel.tipsByCategoryRes?.items ?? [])
-            }catch {
+            } catch {
                 // Handle any errors that occur during the async operations
                 print("Error: \(error)")
                 Hud.dismiss(from: self.view)
