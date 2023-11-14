@@ -54,14 +54,15 @@ class OtpVC: UIViewController , UITextFieldDelegate {
         self.TFIndex5.addTarget(self, action: #selector(textFieldDidChange(textField:)), for: UIControl.Event.editingChanged)
         self.TFIndex6.addTarget(self, action: #selector(textFieldDidChange(textField:)), for: UIControl.Event.editingChanged)
 
-        TFIndex1.becomeFirstResponder()
         LaToNum.text = Phonenumber
-        
+        self.BtnResend.isEnabled = false
+
         hideKeyboardWhenTappedAround()
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 //        SendOtp()
+        TFIndex1.becomeFirstResponder()
         clearOtp()
         startTimer(remainingSeconds: second)
         ShowOtp.text = otp

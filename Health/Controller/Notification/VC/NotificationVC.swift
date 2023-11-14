@@ -276,7 +276,12 @@ class NotificationVC: UIViewController  {
         
         if sender.tag == 0 {
             selectDateFrom = "from"
-            PickerDate.minimumDate = Date() - TimeInterval(1.0)
+            let calendar   = Calendar.current
+            var components = DateComponents()
+            components.day = -1
+            let yesterday  = calendar.date(byAdding: components, to: Date())!
+            PickerDate.date = yesterday
+            PickerDate.minimumDate = yesterday
             PickerDate.maximumDate = nil
             PickerDate.datePickerMode = .date
             ViewSelectDate.isHidden = false

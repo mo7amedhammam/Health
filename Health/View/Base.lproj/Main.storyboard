@@ -297,60 +297,8 @@
                                                                                     </userDefinedRuntimeAttribute>
                                                                                 </userDefinedRuntimeAttributes>
                                                                             </view>
-                                                                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gyQ-EW-tXj">
-                                                                                <rect key="frame" x="0.0" y="300" width="363" height="70"/>
-                                                                                <subviews>
-                                                                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Xue-Fd-OdD">
-                                                                                        <rect key="frame" x="15" y="10" width="333" height="50"/>
-                                                                                        <subviews>
-                                                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3bf-jd-leK">
-                                                                                                <rect key="frame" x="0.0" y="0.0" width="40" height="50"/>
-                                                                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                                                <constraints>
-                                                                                                    <constraint firstAttribute="width" constant="40" id="ZTT-Ii-gV7"/>
-                                                                                                </constraints>
-                                                                                                <color key="tintColor" name="deactive"/>
-                                                                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                                                                <state key="normal" image="chevron.down" catalog="system"/>
-                                                                                                <state key="selected" image="chevron.up" catalog="system"/>
-                                                                                                <connections>
-                                                                                                    <action selector="BUSelectDistrict:" destination="eS9-Kp-U8P" eventType="touchUpInside" id="DiX-LT-kOd"/>
-                                                                                                </connections>
-                                                                                            </button>
-                                                                                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="center" contentVerticalAlignment="center" placeholder="الحي" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="PGm-P7-6ey">
-                                                                                                <rect key="frame" x="50" y="0.0" width="283" height="50"/>
-                                                                                                <color key="textColor" name="deactive"/>
-                                                                                                <fontDescription key="fontDescription" name="LamaSans-Medium" family="Lama Sans" pointSize="17"/>
-                                                                                                <textInputTraits key="textInputTraits"/>
-                                                                                                <connections>
-                                                                                                    <action selector="showDestrict:" destination="eS9-Kp-U8P" eventType="editingDidBegin" id="UPx-Gm-6EK"/>
-                                                                                                </connections>
-                                                                                            </textField>
-                                                                                        </subviews>
-                                                                                    </stackView>
-                                                                                </subviews>
-                                                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                                <constraints>
-                                                                                    <constraint firstAttribute="bottom" secondItem="Xue-Fd-OdD" secondAttribute="bottom" constant="10" id="AmK-KY-qTT"/>
-                                                                                    <constraint firstAttribute="height" constant="70" id="fAZ-9J-M4R"/>
-                                                                                    <constraint firstItem="Xue-Fd-OdD" firstAttribute="leading" secondItem="gyQ-EW-tXj" secondAttribute="leading" constant="15" id="iPn-ES-UAQ"/>
-                                                                                    <constraint firstItem="Xue-Fd-OdD" firstAttribute="top" secondItem="gyQ-EW-tXj" secondAttribute="top" constant="10" id="jyO-h1-wKh"/>
-                                                                                    <constraint firstAttribute="trailing" secondItem="Xue-Fd-OdD" secondAttribute="trailing" constant="15" id="v7e-mm-I0s"/>
-                                                                                </constraints>
-                                                                                <userDefinedRuntimeAttributes>
-                                                                                    <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                                                                        <real key="value" value="2"/>
-                                                                                    </userDefinedRuntimeAttribute>
-                                                                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                                                        <real key="value" value="35"/>
-                                                                                    </userDefinedRuntimeAttribute>
-                                                                                    <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                                                                        <color key="value" name="stroke"/>
-                                                                                    </userDefinedRuntimeAttribute>
-                                                                                </userDefinedRuntimeAttributes>
-                                                                            </view>
                                                                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="r5N-ej-Kug">
-                                                                                <rect key="frame" x="0.0" y="390" width="363" height="70"/>
+                                                                                <rect key="frame" x="0.0" y="300" width="363" height="70"/>
                                                                                 <subviews>
                                                                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="9JX-GX-EJh">
                                                                                         <rect key="frame" x="15" y="10" width="333" height="50"/>
@@ -388,6 +336,58 @@
                                                                                     <constraint firstAttribute="trailing" secondItem="9JX-GX-EJh" secondAttribute="trailing" constant="15" id="cbJ-4m-kop"/>
                                                                                     <constraint firstAttribute="height" constant="70" id="gNm-ad-vAc"/>
                                                                                     <constraint firstItem="9JX-GX-EJh" firstAttribute="top" secondItem="r5N-ej-Kug" secondAttribute="top" constant="10" id="lIq-kK-RiF"/>
+                                                                                </constraints>
+                                                                                <userDefinedRuntimeAttributes>
+                                                                                    <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                                                        <real key="value" value="2"/>
+                                                                                    </userDefinedRuntimeAttribute>
+                                                                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                                                        <real key="value" value="35"/>
+                                                                                    </userDefinedRuntimeAttribute>
+                                                                                    <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                                                                        <color key="value" name="stroke"/>
+                                                                                    </userDefinedRuntimeAttribute>
+                                                                                </userDefinedRuntimeAttributes>
+                                                                            </view>
+                                                                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gyQ-EW-tXj">
+                                                                                <rect key="frame" x="0.0" y="390" width="363" height="70"/>
+                                                                                <subviews>
+                                                                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Xue-Fd-OdD">
+                                                                                        <rect key="frame" x="15" y="10" width="333" height="50"/>
+                                                                                        <subviews>
+                                                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3bf-jd-leK">
+                                                                                                <rect key="frame" x="0.0" y="0.0" width="40" height="50"/>
+                                                                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                                                <constraints>
+                                                                                                    <constraint firstAttribute="width" constant="40" id="ZTT-Ii-gV7"/>
+                                                                                                </constraints>
+                                                                                                <color key="tintColor" name="deactive"/>
+                                                                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                                                                <state key="normal" image="chevron.down" catalog="system"/>
+                                                                                                <state key="selected" image="chevron.up" catalog="system"/>
+                                                                                                <connections>
+                                                                                                    <action selector="BUSelectDistrict:" destination="eS9-Kp-U8P" eventType="touchUpInside" id="DiX-LT-kOd"/>
+                                                                                                </connections>
+                                                                                            </button>
+                                                                                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="center" contentVerticalAlignment="center" placeholder="الحي" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="PGm-P7-6ey">
+                                                                                                <rect key="frame" x="50" y="0.0" width="283" height="50"/>
+                                                                                                <color key="textColor" name="deactive"/>
+                                                                                                <fontDescription key="fontDescription" name="LamaSans-Medium" family="Lama Sans" pointSize="17"/>
+                                                                                                <textInputTraits key="textInputTraits"/>
+                                                                                                <connections>
+                                                                                                    <action selector="showDestrict:" destination="eS9-Kp-U8P" eventType="editingDidBegin" id="UPx-Gm-6EK"/>
+                                                                                                </connections>
+                                                                                            </textField>
+                                                                                        </subviews>
+                                                                                    </stackView>
+                                                                                </subviews>
+                                                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                                <constraints>
+                                                                                    <constraint firstAttribute="bottom" secondItem="Xue-Fd-OdD" secondAttribute="bottom" constant="10" id="AmK-KY-qTT"/>
+                                                                                    <constraint firstAttribute="height" constant="70" id="fAZ-9J-M4R"/>
+                                                                                    <constraint firstItem="Xue-Fd-OdD" firstAttribute="leading" secondItem="gyQ-EW-tXj" secondAttribute="leading" constant="15" id="iPn-ES-UAQ"/>
+                                                                                    <constraint firstItem="Xue-Fd-OdD" firstAttribute="top" secondItem="gyQ-EW-tXj" secondAttribute="top" constant="10" id="jyO-h1-wKh"/>
+                                                                                    <constraint firstAttribute="trailing" secondItem="Xue-Fd-OdD" secondAttribute="trailing" constant="15" id="v7e-mm-I0s"/>
                                                                                 </constraints>
                                                                                 <userDefinedRuntimeAttributes>
                                                                                     <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">

@@ -130,8 +130,12 @@ class MeasurementsDetailsVC: UIViewController {
     
     @IBAction func BUSelectDate(_ sender: Any) {
         
+        let calendar = Calendar.current
+        let tomorrow = calendar.date(byAdding: .day, value: 1, to: Date())!
+        
+        PickerDate.date = tomorrow
         PickerDate.minimumDate = nil
-        PickerDate.maximumDate =  Date()
+        PickerDate.maximumDate =  tomorrow
         
         selectDateFrom = "new"
         ViewSelectDate.isHidden = false

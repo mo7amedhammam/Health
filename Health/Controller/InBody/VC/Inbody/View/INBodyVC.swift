@@ -19,7 +19,7 @@ class INBodyVC: UIViewController {
 
     var pdfPickerHelper : PDFPickerHelper?
     var pdfURL:URL?
-
+    var ImageOrPdf = 0
     let ViewModel = InbodyListVM()
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -211,6 +211,7 @@ extension INBodyVC{
         imagePickerHelper?.showImagePicker { [weak self] receivedImage in
             if let image = receivedImage {
                 // Do something with the received image
+                self?.ImageOrPdf = 0
                 self?.image = image
                 self?.AddInbodyReport(filetype: .image)
             } else {
@@ -224,6 +225,7 @@ extension INBodyVC{
         pdfPickerHelper?.showPDFPicker{ pickedPDFURL in
             if let pdfURL = pickedPDFURL {
                 // Do something with the picked PDF file URL
+                self.ImageOrPdf = 1
                 self.pdfURL = pdfURL
                 print("Picked PDF file URL: \(pdfURL)")
                 self.AddInbodyReport(filetype: .Pdf)
@@ -231,6 +233,18 @@ extension INBodyVC{
             } else {
                 // Handle the case where no PDF file was picked or the user canceled
                 print("No PDF file picked or canceled")
+            }
+        }
+    }
+    
+    // Start a background task when the app enters the background state
+    func applicationDidEnterBackground(_ application: UIApplication) {
+        let backgroundTaskIdentifier = application.beginBackgroundTask {
+            // Upload the file in the background task
+            if self.ImageOrPdf == 0 {
+                self.showImagePickerMenue()
+            } else {
+                self.addPdfDocument()
             }
         }
     }

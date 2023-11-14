@@ -64,6 +64,7 @@ extension InbodyListVM{
         }
     }
     
+  
     
     func AddCustomerInbodyReport(fileType:FileType,progressHandler: @escaping (Double) -> Void,completion: @escaping (EventHandler?) -> Void) {
         var  parametersarr: [String : Any] = [:]
