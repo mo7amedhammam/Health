@@ -152,8 +152,28 @@ extension ProfileVC : UITableViewDataSource , UITableViewDelegate {
         } else if indexPath.row == 6 { // - "الشروط والأحكام" -
             
         } else { // -- تسجيل خروج --
-            Helper.logout()
-            Helper.changeRootVC(newroot: LoginVC.self,transitionFrom: .fromLeft)
+            
+            let actionSheet  = UIAlertController(title: "هل أنت متأكد بأنك تريد تسجيل الخروج؟", message: "", preferredStyle: .alert)
+            let alertAction = UIAlertAction(title: "تسجيل الخروج", style: .default, handler: { (_) in
+                Helper.logout()
+                Helper.changeRootVC(newroot: LoginVC.self,transitionFrom: .fromLeft)
+            })
+            actionSheet.addAction(alertAction)
+            
+            let alertAction1 = UIAlertAction(title: "إلفاء", style: .destructive, handler: { (_) in
+                self.dismiss(animated: true, completion: nil)
+            })
+            actionSheet.addAction(alertAction1)
+            
+            // valide ipad action sheet
+            if let popoverController = actionSheet.popoverPresentationController {
+                popoverController.sourceRect = CGRect(x: UIScreen.main.bounds.width / 2, y: UIScreen.main.bounds.height / 2, width: 0, height: 0)
+                popoverController.sourceView = self.view
+                popoverController.permittedArrowDirections = UIPopoverArrowDirection(rawValue: 0)
+            }
+            //------------------------
+            present(actionSheet, animated: true, completion: nil)
+                    
         }
         
     }

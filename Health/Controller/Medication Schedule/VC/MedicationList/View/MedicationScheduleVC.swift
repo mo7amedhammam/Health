@@ -19,21 +19,21 @@ class MedicationScheduleVC: UIViewController {
         TVScreen.dataSource = self
         TVScreen.delegate = self
         TVScreen.registerCellNib(cellClass: MedicationScheduleTVCell.self)
-        GetMedicationSchedule()
-        
         // Configure the refresh control
         refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
-        
         // Add the refresh control to the collection view
         TVScreen.addSubview(refreshControl)
-        
+//        GetMedicationSchedule()
+                
         // Load your initial data here (e.g., fetchData())
-        refreshData()
+//        refreshData()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-//        GetMedicationSchedule()
+    override func viewWillAppear(_ animated: Bool) {        
+        ViewModel.skipCount = 0
+        ViewModel.responseModel?.items?.removeAll()
+        TVScreen.reloadData()
+        GetMedicationSchedule()
     }
 //    @IBAction func BUBack(_ sender: Any) {
 //        self.dismiss(animated: true)
@@ -88,7 +88,7 @@ extension MedicationScheduleVC : UITableViewDataSource , UITableViewDelegate {
 extension MedicationScheduleVC{
     
     func GetMedicationSchedule() {
-        CloseView_NoContent()
+
         ViewModel.GetMySchedulePrescriptions{[weak self] state in
             guard let self = self else{return}
             guard let state = state else{
@@ -102,10 +102,10 @@ extension MedicationScheduleVC{
             case .success:
                 Hud.dismiss(from: self.view)
                 print(state)
+                CloseView_NoContent()
                 if ViewModel.responseModel?.items?.count == 0 || ViewModel.responseModel?.items == nil {
                     LoadView_NoContent(Superview: TVScreen, title:  "لا يوجد اي جدول " , img: "noscheduals")
                 } else {
-                    CloseView_NoContent()
                     TVScreen.reloadData()
                 }
                 

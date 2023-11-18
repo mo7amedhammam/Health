@@ -7,7 +7,7 @@
 
 import UIKit
 import DropDown
-
+import Foundation
 
 class NotificationVC: UIViewController  {
     
@@ -39,7 +39,8 @@ class NotificationVC: UIViewController  {
     var ArrDrugStringSearch = [String]()
     var drugId = 0
     let rightBarDropDown = DropDown()
-    var doseTimeId = 0 
+    var doseTimeId = 0
+    var ClockAmPm = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -78,23 +79,23 @@ class NotificationVC: UIViewController  {
         TVScreen.dataSource = self
         TVScreen.delegate = self
         TVScreen.registerCellNib(cellClass: NotificationTVCell.self)
-//        TVScreen.reloadData()        
+        // Configure the refresh control
+        refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
+        // Add the refresh control to the collection view
+        TVScreen.addSubview(refreshControl)
+        // Load your initial data here (e.g., fetchData())
+//        refreshData()
+        getDrugs()
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {        
         ViewModel.maxResultCount = 10
         ViewModel.skipCount  = 0
         ViewModel.customerId =  Helper.getUser()?.id // they take it from token
+        ViewModel.ArrNotifications?.items?.removeAll()
+        TVScreen.reloadData()
         getNotifications()
-        getDrugs()
-        
-        
-        // Configure the refresh control
-        refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
-        
-        // Add the refresh control to the collection view
-        TVScreen.addSubview(refreshControl)
-        
-        // Load your initial data here (e.g., fetchData())
-        refreshData()
-
     }
     
     @objc func EditingChanged (_ textField: UITextField) {
@@ -233,6 +234,7 @@ class NotificationVC: UIViewController  {
     }
     
     @IBAction func BUCancelAddNotification(_ sender: Any) {
+        ClockAmPm = ""
         TFClock.text = ""
         TFEndDate.text = ""
         TFNumDays.text = ""
@@ -242,6 +244,8 @@ class NotificationVC: UIViewController  {
         drugId = 0
         BtnDay.isSelected = false
         BtnClock.isSelected = false
+        ArrDrugStringSearch.removeAll()
+        ArrDrugStringSearch = ArrDrugString
         ViewAddNewNotification.isHidden = true
     }
     
@@ -263,12 +267,49 @@ class NotificationVC: UIViewController  {
         let selectedTime = timePicker.date
         let dateFormatter = DateFormatter()
         dateFormatter.locale = NSLocale.init(localeIdentifier: "en_US_POSIX") as Locale
-        dateFormatter.dateFormat = "hh:mm"
+        dateFormatter.dateFormat = "hh:mm a"
         let formattedTime = dateFormatter.string(from: selectedTime)
         // Perform your desired actions with the selected time
         print("Selected time: \(formattedTime)")
         TFClock.text = formattedTime
         // Close date picker
+        
+        dateFormatter.dateFormat = "hh"
+        let HH = dateFormatter.string(from: selectedTime)
+        
+        dateFormatter.dateFormat = "mm"
+        let MM = dateFormatter.string(from: selectedTime)
+        
+        dateFormatter.dateFormat = "ss"
+        let SS = dateFormatter.string(from: selectedTime)
+        
+        dateFormatter.dateFormat = "a"
+        let AA = dateFormatter.string(from: selectedTime)
+        
+        print("HH : \(HH)")
+        print("MM : \(MM)")
+        print("AA : \(AA)")
+        print("SS : \(SS)")
+
+        var convertedHour = Int(HH)!
+        
+        if AA == "PM" { // PM
+            if HH != "12" {
+                convertedHour += 12
+            }
+        } else { // AM
+            if HH == "12" {
+                convertedHour = 12
+            } else {
+                convertedHour += 12
+            }
+        }
+        
+        ClockAmPm = "T\(convertedHour):\(MM)Z"
+        
+        print("ClockAmPm : \(ClockAmPm)")
+        print("ClockAmPm : \(ClockAmPm)")
+        
         self.view.endEditing(true)
     }
     
@@ -346,7 +387,6 @@ extension NotificationVC {
     
     
     func getNotifications() {
-        CloseView_NoContent ()
         ViewModel.GetNotifications { [weak self] state in
             guard let self = self else{return}
             guard let state = state else{
@@ -359,10 +399,11 @@ extension NotificationVC {
                 Hud.dismiss(from: self.view)
             case .success:
                 
+                CloseView_NoContent()
+                
                 if ViewModel.ArrNotifications?.items == nil || ViewModel.ArrNotifications?.items?.count == 0  {
-                    LoadView_NoContent(Superview: TVScreen, title: "لا يوجد تنبيهات", img: "nonotification")
+                    LoadView_NoContent(Superview: TVScreen, title: "لا يوجد أي تنبيهات ", img: "nonotification")
                 } else {
-                    CloseView_NoContent ()
                     TVScreen.reloadData()
                 }
                 
@@ -378,8 +419,10 @@ extension NotificationVC {
         }
     }
     
-    @objc func refreshData(){
+    @objc func refreshData() {
         ViewModel.skipCount = 0
+        ViewModel.ArrNotifications?.items?.removeAll()
+        TVScreen.reloadData()
         getNotifications()
         refreshControl.endRefreshing()
     }
@@ -430,10 +473,11 @@ extension NotificationVC {
         ViewModel.days       = Int(TFNumDays.text!.convertedDigitsToLocale(Locale(identifier: "EN")) )!
 //        ViewModel.doseQuantityId = 0
         ViewModel.notification = true
-        ViewModel.startDate    = "\(TFStartDate.text!)T\(TFClock.text!):00.00"
-        ViewModel.endDate      = TFEndDate.text!
-        print("::::::: \("\(TFStartDate.text!)'T'\(TFClock.text!):00.00")")
-        print("::::::: \(TFEndDate.text!) ")
+        ViewModel.startDate    = "\(TFStartDate.text!)\(ClockAmPm)"
+        ViewModel.endDate      =  "\(TFEndDate.text!)"
+        
+        print("::::::: \(TFStartDate.text!)\(ClockAmPm)")
+        print("::::::: \(TFEndDate.text!)\(ClockAmPm) ")
 
         ViewModel.CreateNotification { [weak self] state in
             guard let self = self,let state = state else{
@@ -445,6 +489,9 @@ extension NotificationVC {
             case .stopLoading:
                 Hud.dismiss(from: self.view)
             case .success:
+                ArrDrugStringSearch.removeAll()
+                ArrDrugStringSearch = ArrDrugString
+                ClockAmPm = ""
                 TFClock.text = ""
                 TFEndDate.text = ""
                 TFNumDays.text = ""
@@ -452,17 +499,19 @@ extension NotificationVC {
                 TFNumDrug.text = ""
                 TFDrugName.text = ""
                 drugId = 0
+                doseTimeId = 0
                 BtnDay.isSelected = false
                 BtnClock.isSelected = false
                 
+                CloseView_NoContent()
                 ViewModel.ArrNotifications?.items?.removeAll()
                 TVScreen.reloadData()
                 ViewModel.maxResultCount = 10
-                ViewModel.skipCount  = 0
-                ViewModel.customerId =  Helper.getUser()?.id // they take it from token
+                ViewModel.skipCount      = 0
+                ViewModel.customerId     =  Helper.getUser()?.id // they take it from token
+                ViewAddNewNotification.isHidden = true
                 getNotifications()
-                
-                 ViewAddNewNotification.isHidden = true
+
                 Hud.dismiss(from: self.view)
                 SimpleAlert.shared.showAlert(title: "تم إضافة تنبية جديد"  ,message: "", viewController: self)
                 print(state)
@@ -619,6 +668,7 @@ extension NotificationVC : UITableViewDataSource , UITableViewDelegate {
         ViewModel.skipCount = skipCount
         getNotifications()
     }
+    
 }
 
 
