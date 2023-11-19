@@ -35,14 +35,15 @@ class MeasurementsDetailsVC: UIViewController {
     //
     var selectDateFrom = ""
     let formatter = DateFormatter()
-    
     var ViewModel : MyMeasurementsStatsVM = MyMeasurementsStatsVM()
+    var measurementDate = ""
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
     
-        TFNumMeasure.keyboardType = .asciiCapableNumberPad
-
+        TFNumMeasure.keyboardType = .asciiCapable
+        TFNumMeasure.delegate = self
         print("id : \(id)")
 //        if formatValue == "" || formatValue == "X" {
 //            ViewSecondValue.isHidden = true
@@ -51,12 +52,17 @@ class MeasurementsDetailsVC: UIViewController {
 //        }
         
         // Do any additional setup after loading the view.
-        self.PickerDate.addTarget(self, action: #selector(onDateValueChanged(_:)), for: .valueChanged)
+//        self.PickerDate.addTarget(self, action: #selector(onDateValueChanged(_:)), for: .valueChanged)
         TVScreen.dataSource = self
         TVScreen.delegate   = self
         TVScreen.registerCellNib(cellClass: MeasurementsDetailsTVCell.self)
         TVScreen.registerCellNib(cellClass: MeasurementsDetailsTVCell0.self)
         //        TVScreen.reloadData()
+        // Configure the refresh control
+        refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
+        // Add the refresh control to the collection view
+        TVScreen.addSubview(refreshControl)
+        
         ViewSelectDate.isHidden     = true
         ViewAddMeasurement.isHidden = true
         
@@ -68,11 +74,6 @@ class MeasurementsDetailsVC: UIViewController {
         ViewModel.dateTo   = nil
         getDataNormalRange()
         getDataMeasurement()
-        // Configure the refresh control
-        refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
-        
-        // Add the refresh control to the collection view
-        TVScreen.addSubview(refreshControl)
         
         // Load your initial data here (e.g., fetchData())
 //        refreshData()
@@ -80,32 +81,42 @@ class MeasurementsDetailsVC: UIViewController {
     }
     
     
-    
-    @objc private func onDateValueChanged(_ datePicker: UIDatePicker) {
-        //do something here
-        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
-        formatter.locale     = Locale(identifier: "en")
-        let strDate = formatter.string(from: datePicker.date )
-        formatter.dateStyle = .medium
-        formatter.timeStyle = .none
-        self.view.endEditing(true)
-        print(strDate)
-        
-        if selectDateFrom == "new" {
-            TFDate.text = strDate
-        } else if selectDateFrom == "from" {
-            CellDateFrom = strDate
-            let indexPath = IndexPath(row: 0, section: 0)
-            TVScreen.reloadRows(at: [indexPath], with: .automatic)
-        } else if selectDateFrom == "to" {
-            CellDateTo = strDate
-            let indexPath = IndexPath(row: 0, section: 0)
-            TVScreen.reloadRows(at: [indexPath], with: .automatic)
-        } else {
-        }
+    @IBAction func BUDoneSelectedDateandTime(_ sender: Any) {
+     
+            formatter.dateFormat = "yyyy-MM-dd'T'hh:mm:ss"
+            formatter.locale     = Locale(identifier: "en")
+            let strDate = formatter.string(from: PickerDate.date )
+            formatter.dateStyle = .medium
+            formatter.timeStyle = .none
+            self.view.endEditing(true)
+            print(strDate)
+            
+            if selectDateFrom == "new" {
+                var forma = DateFormatter()
+                forma.dateFormat = "yyyy-MM-dd hh:mm a"
+                forma.locale     = Locale(identifier: "en")
+                let strForma = forma.string(from: PickerDate.date )
+                TFDate.text = strForma
+
+                measurementDate = strDate
+                
+            } else if selectDateFrom == "from" {
+                CellDateFrom = strDate
+                let indexPath = IndexPath(row: 0, section: 0)
+                TVScreen.reloadRows(at: [indexPath], with: .automatic)
+            } else if selectDateFrom == "to" {
+                CellDateTo = strDate
+                let indexPath = IndexPath(row: 0, section: 0)
+                TVScreen.reloadRows(at: [indexPath], with: .automatic)
+            } else {
+            }
         
         ViewSelectDate.isHidden = true
     }
+    
+//    @objc private func onDateValueChanged(_ datePicker: UIDatePicker) {
+//        //do something here
+//    }
     
     func formattedDateFromString(dateString: String, withFormat format: String) -> String? {
         let inputFormatter = DateFormatter()
@@ -130,12 +141,12 @@ class MeasurementsDetailsVC: UIViewController {
     
     @IBAction func BUSelectDate(_ sender: Any) {
         
-        let calendar = Calendar.current
-        let tomorrow = calendar.date(byAdding: .day, value: 1, to: Date())!
+//        let calendar = Calendar.current
+//        let tomorrow = calendar.date(byAdding: .day, value: 1, to: Date())!
+//        PickerDate.date = tomorrow
         
-        PickerDate.date = tomorrow
         PickerDate.minimumDate = nil
-        PickerDate.maximumDate =  tomorrow
+        PickerDate.maximumDate =  Date()
         
         selectDateFrom = "new"
         ViewSelectDate.isHidden = false
@@ -162,7 +173,7 @@ class MeasurementsDetailsVC: UIViewController {
                 ViewModel.medicalMeasurementId = id
                 ViewModel.value                = TFNumMeasure.text!.convertedDigitsToLocale(Locale(identifier: "EN"))
                 ViewModel.comment              = TVDescription.text ?? ""
-                ViewModel.measurementDate      = TFDate.text
+                ViewModel.measurementDate      = measurementDate
                 CreateMeasurement ()
             } else {
                 
@@ -266,21 +277,22 @@ extension MeasurementsDetailsVC {
                 Hud.dismiss(from: self.view)
             case .success:
                 
+                Shared.shared.IsMeasurementAdded = true
+                measurementDate = ""
                 TFDate.text = ""
                 TFNumMeasure.text = ""
                 TFSecondValue.text = ""
                 TVDescription.text = ""
                 MeasurementCreated = true
-                refreshData()
+                TVScreen.reloadData()
+//                refreshData()
                 ViewAddMeasurement.isHidden = true
                 Hud.dismiss(from: self.view)
                 SimpleAlert.shared.showAlert(title: "تم تسجيل قياس جديد"  ,message: "", viewController: self)
                 print(state)
-                
                 ViewModel.ArrMeasurement = nil
                 ViewModel.ArrNormalRange = nil
                 TVScreen.reloadData()
-                
                 ViewModel.medicalMeasurementId = id
     //            ViewModel.maxResultCount     = 10
                 ViewModel.skipCount            = 0
@@ -535,9 +547,9 @@ extension MeasurementsDetailsVC : UITableViewDataSource , UITableViewDelegate , 
             let cell = tableView.dequeueReusableCell(withIdentifier: "MeasurementsDetailsTVCell0", for: indexPath) as! MeasurementsDetailsTVCell0
             cell.delegate = self
             //                let processor = SVGImgProcessor() // if receive svg image
-                cell.ImgMeasurement.kf.setImage(with: URL(string:Constants.baseURL + imgMeasurement.validateSlashs()), placeholder: UIImage(named: "person"), options: nil, progressBlock: nil)
+            cell.ImgMeasurement.kf.setImage(with: URL(string:Constants.baseURL + imgMeasurement.validateSlashs()), placeholder: UIImage(named: "person"), options: nil, progressBlock: nil)
             
- 
+            
             if CellDateFrom == "" {
                 cell.LaDateFrom.text = ""
                 cell.LaDateFrom.isHidden = true
@@ -563,7 +575,8 @@ extension MeasurementsDetailsVC : UITableViewDataSource , UITableViewDelegate , 
                 cell.LaNaturalTo.text   = "الي : \(range.toValue ?? "" )"
             }
             if MeasurementCreated == true {
-                cell.LaNum.text = "\(num + 1)"
+                num += 1
+                cell.LaNum.text = "\(num)"
                 MeasurementCreated = false
             } else {
                 cell.LaNum.text = "\(num)"
@@ -578,26 +591,26 @@ extension MeasurementsDetailsVC : UITableViewDataSource , UITableViewDelegate , 
             print("indexPath.row : \(indexPath.row)")
             
             
-             let model = ViewModel.ArrMeasurement?.measurements?.items?[indexPath.row - 1]
-                
+            let model = ViewModel.ArrMeasurement?.measurements?.items?[indexPath.row - 1]
+            
             cell.LaNum.text = model?.value
-                cell.LaDate.text = model?.date
-                
-                if model?.inNormalRang == true {
-                    cell.ViewColor.backgroundColor = UIColor(named: "06AD2B")
-                    cell.LaNum.textColor           = UIColor(named: "06AD2B")
-                    cell.LaDescription.textColor = UIColor(named: "deactive")
-                } else {
-                    cell.ViewColor.backgroundColor = UIColor(named: "EE2E3A")
-                    cell.LaNum.textColor           = UIColor(named: "EE2E3A")
-                    cell.LaDescription.textColor = UIColor(named: "main")
-                }
-                
+            cell.LaDate.text = model?.date
+            
+            if model?.inNormalRang == true {
+                cell.ViewColor.backgroundColor = UIColor(named: "06AD2B")
+                cell.LaNum.textColor           = UIColor(named: "06AD2B")
+            } else {
+                cell.ViewColor.backgroundColor = UIColor(named: "EE2E3A")
+                cell.LaNum.textColor           = UIColor(named: "EE2E3A")
+            }
+            
             if model?.comment == nil || model?.comment == "" {
-                    cell.LaDescription.text = "لا يوجد تعليق"
-                } else {
-                    cell.LaDescription.text = model?.comment
-                }
+                cell.LaDescription.text = "لا يوجد تعليق"
+                cell.LaDescription.textColor = UIColor(named: "deactive")
+            } else {
+                cell.LaDescription.text = model?.comment
+                cell.LaDescription.textColor = UIColor(named: "main")
+            }
             
             
             return cell
@@ -618,5 +631,20 @@ extension MeasurementsDetailsVC : UITableViewDataSource , UITableViewDelegate , 
 //        guard (ViewModel.responseModel?.totalCount ?? 0) > (ViewModel.responseModel?.items?.count ?? 0) , ViewModel.cansearch == true else {return}
         ViewModel.skipCount = ViewModel.ArrMeasurement?.measurements?.items?.count
         getDataMeasurement()
+    }
+}
+
+
+extension MeasurementsDetailsVC : UITextFieldDelegate {
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        
+        if textField == TFNumMeasure {
+            let allowedCharacters = CharacterSet(charactersIn: "0123456789/-")
+            let filteredString = string.components(separatedBy: allowedCharacters.inverted).joined(separator: "")
+            return string == filteredString
+        } else {
+            return true
+        }
     }
 }

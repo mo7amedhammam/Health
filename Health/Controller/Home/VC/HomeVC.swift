@@ -17,7 +17,7 @@ class HomeVC: UIViewController {
     let ViewModel = TipsVM()
     let ViewModelHome = AlmostFinishedVM()
     let ViewModelProfile = ProfileVM()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -31,13 +31,32 @@ class HomeVC: UIViewController {
         refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
            // Add the refresh control to the table view
         TVScreen.addSubview(refreshControl)
-//        TVScreen.reloadData()
         getTipsCategories()
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        
+        
+        if Shared.shared.IsMeasurementAdded == false {
+        } else {
+            if let arrStat = ViewModelMeasurements.ArrStats {
+                // arrStat.measurementsCount! += 1
+                // ViewModelMeasurements.ArrStats?[indexx].measurementsCount! += 1
+                for data in 0 ...  arrStat.count - 1 {
+                    if ViewModelMeasurements.ArrStats?[data].medicalMeasurementID! == Shared.shared.MeasurementId {
+                        ViewModelMeasurements.ArrStats?[data].measurementsCount! += 1
+                        TVScreen.reloadRows(at: [IndexPath(row: 1 , section: 0)], with: .automatic)
+                        Shared.shared.IsMeasurementAdded = false
+                    }
+                }
+            } else {
+                // Handle the case where arrStat is nil
+            }
+        }
+        
         GetMyProfile()
     }
+ 
 }
 
 extension HomeVC : UITableViewDataSource , UITableViewDelegate {
@@ -197,10 +216,9 @@ extension HomeVC{
                 print("AlmostFinished",ViewModelHome.responseModel ?? AlmostFinishedPrescriptionM())
             } catch {
                 // Handle any errors that occur during the async operations
-//                TVScreen.reloadData()
                 print("Error: \(error)")
                 Hud.dismiss(from: self.view)
-                SimpleAlert.shared.showAlert(title:error.localizedDescription,message:"", viewController: self)
+                SimpleAlert.shared.showAlert(title:error.localizedDescription , message:"" , viewController: self)
             }
         }
     }

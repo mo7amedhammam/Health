@@ -70,7 +70,8 @@ extension INBodyDetailsVC{
             let progressText = String(format: "%.0f%%", progress * 100)
             if progress > 0{
                 Hud.updateProgress(progressText)
-            }else{
+            } else {
+                
                 Hud.dismiss(from: self.view)
             }
         }){ [self] result in
@@ -163,15 +164,17 @@ extension INBodyDetailsVC: UIDocumentPickerDelegate {
         // Handle the saved PDF file here if needed
         print("PDF file saved: \(pdfURL)")
 
-//        DispatchQueue.main.async { [weak self] in
-//            guard let self = self else { return }
-//            if let viewDone: ViewDone = showView(fromNib: ViewDone.self, in: self) {
-//                viewDone.title = "تم تحميل التقرير بنجاح"
-//                viewDone.imgStr = "downloadicon"
-//                viewDone.action = {
-//                    viewDone.removeFromSuperview()
-//                }
-//            }
-//        }
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            if let viewDone: ViewDone = showView(fromNib: ViewDone.self, in: self) {
+                viewDone.title = "تم تحميل التقرير بنجاح"
+                viewDone.imgStr = "downloadicon"
+                viewDone.action = {
+                    viewDone.removeFromSuperview()
+                }
+            }
+        }
+        
+        
     }
 }

@@ -115,6 +115,7 @@ extension HomeTVCell1 : UICollectionViewDataSource , UICollectionViewDelegate , 
             if let model = ViewModelMeasurements?.ArrStats?[indexPath.row]{
                 cell.model = model
             }
+            
             return cell
         } else if indexx == 2 {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "HomeCVCell2", for: indexPath) as! HomeCVCell2
@@ -142,7 +143,7 @@ extension HomeTVCell1 : UICollectionViewDataSource , UICollectionViewDelegate , 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if indexx == 1 {
             guard let SelectedModel = ViewModelMeasurements?.ArrStats?[indexPath.row] else{return}
-            ShowMeasurementDetailFor(SelectedModel: SelectedModel)
+            ShowMeasurementDetailFor(SelectedModel: SelectedModel , index : indexPath.row)
         }else if indexx == 2{
             
         }else if indexx == 3{
@@ -216,7 +217,7 @@ extension HomeTVCell1{
 
     }
     
-    func ShowMeasurementDetailFor(SelectedModel:ModelMyMeasurementsStats){
+    func ShowMeasurementDetailFor(SelectedModel:ModelMyMeasurementsStats , index : Int){
         guard let vc = initiateViewController(storyboardName: .main, viewControllerIdentifier: MeasurementsDetailsVC.self) else{return}
         vc.ViewModel = ViewModelMeasurements ?? MyMeasurementsStatsVM()
          let model = SelectedModel
@@ -229,6 +230,8 @@ extension HomeTVCell1{
             vc.formatRegex = model.regExpression ?? ""
             vc.formatHintMessage = model.normalRangValue ?? ""
         vc.TitleMeasurement = model.title ?? ""
+        vc.TitleMeasurement = model.title ?? ""
+        Shared.shared.MeasurementId = model.medicalMeasurementID ?? 0
 
         
 //        print("formatValue : \( ViewModel.ArrStats![indexPath.row].formatValue!)")

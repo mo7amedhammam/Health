@@ -31,16 +31,14 @@ class INBodyVC: UIViewController {
         // Initialize ImagePickerHelper here
         imagePickerHelper = ImagePickerHelper(viewController: self)
         pdfPickerHelper = PDFPickerHelper(viewController: self)
-        
-        GetCustomerInbodyList()
         // Configure the refresh control
         refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
-        
         // Add the refresh control to the collection view
         TVScreen.addSubview(refreshControl)
         
+        GetCustomerInbodyList()
         // Load your initial data here (e.g., fetchData())
-        refreshData()
+//        refreshData()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -122,7 +120,12 @@ extension INBodyVC{
             case .success:
                 Hud.dismiss(from: self.view)
                 print(state)
-                TVScreen.reloadData()
+                CloseView_NoContent()
+                if ViewModel.responseModel?.items?.count == 0 {
+                    LoadView_NoContent(Superview: TVScreen, title: "لا يوجد محتوي", img: "inbody cell")
+                } else {
+                    TVScreen.reloadData()
+                }
                 
             case .error(_,let error):
                 Hud.dismiss(from: self.view)
@@ -152,7 +155,7 @@ extension INBodyVC{
             guard let self = self else{return}
 
                 let progressText = String(format: "%.0f%%", progress * 100)
-                if progress > 0{
+                if progress > 0 {
                     Hud.updateProgress(progressText)
                 }else{
                     Hud.dismiss(from: self.view)

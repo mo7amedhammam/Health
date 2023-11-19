@@ -3499,6 +3499,24 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vQi-05-SdR">
                                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                                         <subviews>
+                                            <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CMM-Hm-pch">
+                                                <rect key="frame" x="9" y="9" width="375" height="834"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <fontDescription key="fontDescription" name="LamaSans-Bold" family="Lama Sans" pointSize="14"/>
+                                                <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                <state key="normal">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                        <real key="value" value="25"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
+                                                <connections>
+                                                    <action selector="BUCancelAdd:" destination="TNc-i2-cvH" eventType="touchUpInside" id="hmL-ss-Sm3"/>
+                                                </connections>
+                                            </button>
                                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uy9-Ud-PXi">
                                                 <rect key="frame" x="30" y="226" width="333" height="400"/>
                                                 <subviews>
@@ -3794,10 +3812,14 @@
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
+                                            <constraint firstItem="CMM-Hm-pch" firstAttribute="leading" secondItem="vQi-05-SdR" secondAttribute="leading" constant="9" id="22z-KT-xHC"/>
                                             <constraint firstItem="uy9-Ud-PXi" firstAttribute="leading" secondItem="vQi-05-SdR" secondAttribute="leading" constant="30" id="83L-ud-Rnc"/>
+                                            <constraint firstAttribute="trailing" secondItem="CMM-Hm-pch" secondAttribute="trailing" constant="9" id="Rot-tr-TTK"/>
                                             <constraint firstItem="uy9-Ud-PXi" firstAttribute="centerX" secondItem="vQi-05-SdR" secondAttribute="centerX" id="bI2-5f-gpN"/>
                                             <constraint firstItem="uy9-Ud-PXi" firstAttribute="centerY" secondItem="vQi-05-SdR" secondAttribute="centerY" id="bNe-QG-Eiy"/>
+                                            <constraint firstItem="CMM-Hm-pch" firstAttribute="top" secondItem="vQi-05-SdR" secondAttribute="top" constant="9" id="c6h-9K-Nyj"/>
                                             <constraint firstAttribute="trailing" secondItem="uy9-Ud-PXi" secondAttribute="trailing" constant="30" id="nsu-Bz-xof"/>
+                                            <constraint firstAttribute="bottom" secondItem="CMM-Hm-pch" secondAttribute="bottom" constant="9" id="oin-b7-XQ4"/>
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zEA-9q-ClQ">
@@ -3812,19 +3834,55 @@
                                                 </connections>
                                             </button>
                                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IcK-Tf-eI6">
-                                                <rect key="frame" x="20" y="226" width="353" height="400"/>
+                                                <rect key="frame" x="20" y="201" width="353" height="450"/>
                                                 <subviews>
-                                                    <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" style="inline" translatesAutoresizingMaskIntoConstraints="NO" id="y0o-ad-O47">
-                                                        <rect key="frame" x="10" y="10" width="333" height="380"/>
-                                                    </datePicker>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="wAY-EO-Jqh">
+                                                        <rect key="frame" x="10" y="10" width="333" height="430"/>
+                                                        <subviews>
+                                                            <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" style="inline" translatesAutoresizingMaskIntoConstraints="NO" id="y0o-ad-O47">
+                                                                <rect key="frame" x="0.0" y="0.0" width="333" height="380"/>
+                                                            </datePicker>
+                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yrq-GF-vop">
+                                                                <rect key="frame" x="0.0" y="380" width="333" height="50"/>
+                                                                <subviews>
+                                                                    <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QOQ-Oa-UvU">
+                                                                        <rect key="frame" x="91.666666666666686" y="0.0" width="150" height="50"/>
+                                                                        <color key="backgroundColor" name="main"/>
+                                                                        <constraints>
+                                                                            <constraint firstAttribute="width" constant="150" id="bnS-Lo-bvG"/>
+                                                                        </constraints>
+                                                                        <fontDescription key="fontDescription" name="LamaSans-Medium" family="Lama Sans" pointSize="18"/>
+                                                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                                        <state key="normal" title="تم"/>
+                                                                        <userDefinedRuntimeAttributes>
+                                                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                                                <real key="value" value="10"/>
+                                                                            </userDefinedRuntimeAttribute>
+                                                                        </userDefinedRuntimeAttributes>
+                                                                        <connections>
+                                                                            <action selector="BUDoneSelectedDateandTime:" destination="TNc-i2-cvH" eventType="touchUpInside" id="HcO-cx-p5X"/>
+                                                                        </connections>
+                                                                    </button>
+                                                                </subviews>
+                                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                <constraints>
+                                                                    <constraint firstItem="QOQ-Oa-UvU" firstAttribute="centerX" secondItem="yrq-GF-vop" secondAttribute="centerX" id="9a4-em-IK2"/>
+                                                                    <constraint firstAttribute="bottom" secondItem="QOQ-Oa-UvU" secondAttribute="bottom" id="Ff3-4E-WL0"/>
+                                                                    <constraint firstItem="QOQ-Oa-UvU" firstAttribute="top" secondItem="yrq-GF-vop" secondAttribute="top" id="Qpr-c2-dx1"/>
+                                                                    <constraint firstAttribute="height" constant="50" id="Yv9-ey-Uh2"/>
+                                                                    <constraint firstItem="QOQ-Oa-UvU" firstAttribute="centerY" secondItem="yrq-GF-vop" secondAttribute="centerY" id="zsH-Ap-d63"/>
+                                                                </constraints>
+                                                            </view>
+                                                        </subviews>
+                                                    </stackView>
                                                 </subviews>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="400" id="L3e-On-aix"/>
-                                                    <constraint firstAttribute="bottom" secondItem="y0o-ad-O47" secondAttribute="bottom" constant="10" id="SfT-pn-COG"/>
-                                                    <constraint firstItem="y0o-ad-O47" firstAttribute="leading" secondItem="IcK-Tf-eI6" secondAttribute="leading" constant="10" id="TA9-Hz-YMJ"/>
-                                                    <constraint firstItem="y0o-ad-O47" firstAttribute="top" secondItem="IcK-Tf-eI6" secondAttribute="top" constant="10" id="m2n-x8-Lrz"/>
-                                                    <constraint firstAttribute="trailing" secondItem="y0o-ad-O47" secondAttribute="trailing" constant="10" id="qQJ-bX-cH2"/>
+                                                    <constraint firstAttribute="bottom" secondItem="wAY-EO-Jqh" secondAttribute="bottom" constant="10" id="06n-wI-NWx"/>
+                                                    <constraint firstItem="wAY-EO-Jqh" firstAttribute="top" secondItem="IcK-Tf-eI6" secondAttribute="top" constant="10" id="Bx6-q4-V7w"/>
+                                                    <constraint firstItem="wAY-EO-Jqh" firstAttribute="leading" secondItem="IcK-Tf-eI6" secondAttribute="leading" constant="10" id="Fgw-Ab-tLv"/>
+                                                    <constraint firstAttribute="height" constant="450" id="L3e-On-aix"/>
+                                                    <constraint firstAttribute="trailing" secondItem="wAY-EO-Jqh" secondAttribute="trailing" constant="10" id="wZl-Ob-9Ex"/>
                                                 </constraints>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -4039,6 +4097,24 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="brg-SS-GKO">
                                         <rect key="frame" x="0.0" y="0.0" width="393" height="832"/>
                                         <subviews>
+                                            <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0AM-lE-BmR">
+                                                <rect key="frame" x="0.0" y="0.0" width="393" height="832"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <fontDescription key="fontDescription" name="LamaSans-Bold" family="Lama Sans" pointSize="14"/>
+                                                <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                <state key="normal">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                        <real key="value" value="25"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
+                                                <connections>
+                                                    <action selector="BUCancelAddNotification:" destination="AZg-jj-Gqp" eventType="touchUpInside" id="xbX-o3-amQ"/>
+                                                </connections>
+                                            </button>
                                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="38V-OF-bCf">
                                                 <rect key="frame" x="15" y="116" width="363" height="600"/>
                                                 <subviews>
@@ -4577,7 +4653,11 @@
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
+                                            <constraint firstAttribute="trailing" secondItem="0AM-lE-BmR" secondAttribute="trailing" id="2NB-OH-xYZ"/>
                                             <constraint firstAttribute="trailing" secondItem="38V-OF-bCf" secondAttribute="trailing" constant="15" id="6X0-9Y-Aqs"/>
+                                            <constraint firstItem="0AM-lE-BmR" firstAttribute="leading" secondItem="brg-SS-GKO" secondAttribute="leading" id="A3i-YA-hR5"/>
+                                            <constraint firstItem="0AM-lE-BmR" firstAttribute="top" secondItem="brg-SS-GKO" secondAttribute="top" id="RcI-LV-4BZ"/>
+                                            <constraint firstAttribute="bottom" secondItem="0AM-lE-BmR" secondAttribute="bottom" id="XFF-O9-GEp"/>
                                             <constraint firstItem="38V-OF-bCf" firstAttribute="leading" secondItem="brg-SS-GKO" secondAttribute="leading" constant="15" id="a7l-pK-J2w"/>
                                             <constraint firstItem="38V-OF-bCf" firstAttribute="centerY" secondItem="brg-SS-GKO" secondAttribute="centerY" id="pRE-xy-PlT"/>
                                             <constraint firstItem="38V-OF-bCf" firstAttribute="centerX" secondItem="brg-SS-GKO" secondAttribute="centerX" id="pwR-DW-yF7"/>
@@ -5633,6 +5713,9 @@
         </scene>
     </scenes>
     <designables>
+        <designable name="c0I-bP-9rf">
+            <size key="intrinsicContentSize" width="115.66666666666667" height="26"/>
+        </designable>
         <designable name="dxe-N1-yU6">
             <size key="intrinsicContentSize" width="-1" height="83"/>
         </designable>

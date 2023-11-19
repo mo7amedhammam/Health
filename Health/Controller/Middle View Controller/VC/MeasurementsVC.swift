@@ -157,6 +157,8 @@ extension MeasurementsVC : UICollectionViewDataSource , UICollectionViewDelegate
 //            vc.formatValue = model.formatValue ?? ""
             vc.formatRegex = model.regExpression ?? ""
             vc.formatHintMessage = model.normalRangValue ?? ""
+            Shared.shared.MeasurementId = model.medicalMeasurementID ?? 0
+
         }
 //        print("formatValue : \( ViewModel.ArrStats![indexPath.row].formatValue!)")
         vc.hidesBottomBarWhenPushed = true

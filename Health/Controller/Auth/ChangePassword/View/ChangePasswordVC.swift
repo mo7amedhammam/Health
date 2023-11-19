@@ -137,7 +137,8 @@ extension ChangePasswordVC {
             viewDone.imgStr = "keyicon"
             viewDone.action = {
                 viewDone.removeFromSuperview()
-                Helper.changeRootVC(newroot: LoginVC.self,transitionFrom: .fromLeft)
+                self.navigationController?.popViewController(animated: true)
+//                Helper.changeRootVC(newroot: LoginVC.self,transitionFrom: .fromLeft)
             }
         }
     }

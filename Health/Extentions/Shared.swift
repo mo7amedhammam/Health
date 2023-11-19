@@ -28,5 +28,8 @@ final class Shared {
     var payment = ""
     var Multipart = ""
     var Multipart2 = ""
+    
+    var MeasurementId = 0
+    var IsMeasurementAdded = false
 
 }
