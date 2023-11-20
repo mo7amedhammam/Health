@@ -26,8 +26,9 @@ class TipsCategoriesDetailsVC: UIViewController {
     var ViewModel : TipsDetailsVM?
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.webView.scrollView.delegate = self
         setInits()
-   
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -40,6 +41,15 @@ class TipsCategoriesDetailsVC: UIViewController {
     
     @IBAction func BUNoti(_ sender: Any) {
     }
+    
+    func scrollViewWillBeginZooming(_ scrollView: UIScrollView, with view: UIView?) {
+             scrollView.pinchGestureRecognizer?.isEnabled = true
+    }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+    
     
 }
 

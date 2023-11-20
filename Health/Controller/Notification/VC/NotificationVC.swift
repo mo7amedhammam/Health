@@ -141,6 +141,9 @@ class NotificationVC: UIViewController  {
         formatter.timeStyle = .none
         self.view.endEditing(true)
         print(strDate)
+        
+        //"yyyy-MM-dd'T'HH:mm"
+        
          if selectDateFrom == "from" {
             TFStartDate.text = strDate
                  
@@ -273,39 +276,38 @@ class NotificationVC: UIViewController  {
         print("Selected time: \(formattedTime)")
         TFClock.text = formattedTime
         // Close date picker
-        
-        dateFormatter.dateFormat = "hh"
-        let HH = dateFormatter.string(from: selectedTime)
-        
-        dateFormatter.dateFormat = "mm"
-        let MM = dateFormatter.string(from: selectedTime)
-        
-        dateFormatter.dateFormat = "ss"
-        let SS = dateFormatter.string(from: selectedTime)
-        
-        dateFormatter.dateFormat = "a"
-        let AA = dateFormatter.string(from: selectedTime)
-        
-        print("HH : \(HH)")
-        print("MM : \(MM)")
-        print("AA : \(AA)")
-        print("SS : \(SS)")
+        let forma = DateFormatter()
+        forma.dateFormat = "HH:mm"
+        forma.locale     = Locale(identifier: "en")
+        let strForma = forma.string(from: selectedTime )
+        ClockAmPm = "T\(strForma)"
 
-        var convertedHour = Int(HH)!
         
-        if AA == "PM" { // PM
-            if HH != "12" {
-                convertedHour += 12
-            }
-        } else { // AM
-            if HH == "12" {
-                convertedHour = 12
-            } else {
-                convertedHour += 12
-            }
-        }
-        
-        ClockAmPm = "T\(convertedHour):\(MM)Z"
+//        dateFormatter.dateFormat = "hh"
+//        let HH = dateFormatter.string(from: selectedTime)
+//        dateFormatter.dateFormat = "mm"
+//        let MM = dateFormatter.string(from: selectedTime)
+//        dateFormatter.dateFormat = "ss"
+//        let SS = dateFormatter.string(from: selectedTime)
+//        dateFormatter.dateFormat = "a"
+//        let AA = dateFormatter.string(from: selectedTime)
+//        print("HH : \(HH)")
+//        print("MM : \(MM)")
+//        print("AA : \(AA)")
+//        print("SS : \(SS)")
+//        var convertedHour = Int(HH)!
+//        if AA == "PM" { // PM
+//            if HH != "12" {
+//                convertedHour += 12
+//            }
+//        } else { // AM
+//            if HH == "12" {
+//                convertedHour = 12
+//            } else {
+//                convertedHour += 12
+//            }
+//        }
+//        ClockAmPm = "T\(convertedHour):\(MM)Z"
         
         print("ClockAmPm : \(ClockAmPm)")
         print("ClockAmPm : \(ClockAmPm)")
@@ -612,44 +614,88 @@ extension NotificationVC : UITableViewDataSource , UITableViewDelegate {
             cell.LaPeriod.text = "\(model?.days ?? 0) يوم"
         }
         
-        let dateString = model?.startDate
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
-        dateFormatter.locale     = Locale(identifier: "en_US_POSIX")
-        let date = dateFormatter.date(from: dateString ?? "")
-        dateFormatter.dateFormat = "HH:mm"
-        if  date == nil {
-            let dateS = model?.startDate
-            let dateFo = DateFormatter()
-            dateFo.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS"
-            dateFo.locale     = Locale(identifier: "en_US_POSIX")
-            let date = dateFo.date(from: dateS ?? "")
-            dateFo.dateFormat = "HH:mm"
-            let timeS = dateFo.string(from: date!)
-            cell.LaClock.text = timeS
-            cell.LaStartDate.text = model?.startDate?.ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss.SSS", FormatTo: "dd/MM/yyyy")
-
+        let inputFormat = "yyyy-MM-dd'T'HH:mm:ss"
+//        let outputFormat = "yyyy-MM-dd hh:mm a"
+        let outputFormat = "dd/MM/yyyy"
+        let inputFormatter = DateFormatter()
+        inputFormatter.dateFormat = inputFormat
+        
+        if let inputDate = inputFormatter.date(from: (model?.startDate)!) {
+            let outputFormatter = DateFormatter()
+            outputFormatter.dateFormat = outputFormat
+            outputFormatter.locale     = Locale(identifier: "en")
+            let outputDateStr = outputFormatter.string(from: inputDate)
+            cell.LaStartDate.text = outputDateStr
         } else {
-            let timeString = dateFormatter.string(from: date!)
-            print(timeString)
-            cell.LaClock.text = timeString
-            cell.LaStartDate.text = model?.startDate?.ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "dd/MM/yyyy")
+            cell.LaStartDate.text = model?.startDate
+            print("Failed to parse input date")
+        }
+        
+        if let inputDate2 = inputFormatter.date(from: (model?.endDate)!) {
+            let outputFormatter2 = DateFormatter()
+            outputFormatter2.dateFormat = outputFormat
+            outputFormatter2.locale     = Locale(identifier: "en")
+            let outputDateStr2 = outputFormatter2.string(from: inputDate2)
+            cell.LaEndDate.text = outputDateStr2
+        } else {
+            cell.LaEndDate.text = model?.endDate
+            print("Failed to parse input date")
+        }
+                
+        
+        if let inputDate3 = inputFormatter.date(from: (model?.startDate)!) {
+            let outputFormatter3 = DateFormatter()
+            outputFormatter3.dateFormat = "hh:mm a"
+            outputFormatter3.locale     = Locale(identifier: "en")
+            let outputDateStr3 = outputFormatter3.string(from: inputDate3)
+            cell.LaClock.text = outputDateStr3
+        } else {
+            cell.LaEndDate.text = model?.endDate
+            print("Failed to parse input date")
         }
         
         
-        let dateStringend = model?.endDate
-        let dateFormatterend = DateFormatter()
-        dateFormatterend.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
-        dateFormatterend.locale     = Locale(identifier: "en_US_POSIX")
-        let dateend = dateFormatterend.date(from: dateStringend ?? "")
-        if  dateend == nil {
-            cell.LaEndDate.text = model?.endDate?.ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss.SSS", FormatTo: "dd/MM/yyyy")
-        } else {
-            cell.LaEndDate.text = model?.endDate?.ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "dd/MM/yyyy")
-        }
         
-        print("LaStartDate : \(model?.startDate)")
-        print("LaEndDate : \(model?.endDate)")
+        
+        
+//        let dateString = model?.startDate
+//        let dateFormatter = DateFormatter()
+//        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
+//        dateFormatter.locale     = Locale(identifier: "en_US_POSIX")
+//        let date = dateFormatter.date(from: dateString ?? "")
+//        dateFormatter.dateFormat = "HH:mm"
+//        if  date == nil {
+//            let dateS = model?.startDate
+//            let dateFo = DateFormatter()
+//            dateFo.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS"
+//            dateFo.locale     = Locale(identifier: "en_US_POSIX")
+//            let date = dateFo.date(from: dateS ?? "")
+//            dateFo.dateFormat = "HH:mm"
+//            let timeS = dateFo.string(from: date!)
+//            cell.LaClock.text = timeS
+//            cell.LaStartDate.text = model?.startDate?.ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss.SSS", FormatTo: "dd/MM/yyyy")
+//
+//        } else {
+//            let timeString = dateFormatter.string(from: date!)
+//            print(timeString)
+//            cell.LaClock.text = timeString
+//            cell.LaStartDate.text = model?.startDate?.ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "dd/MM/yyyy")
+//        }
+//
+//
+//        let dateStringend = model?.endDate
+//        let dateFormatterend = DateFormatter()
+//        dateFormatterend.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
+//        dateFormatterend.locale     = Locale(identifier: "en_US_POSIX")
+//        let dateend = dateFormatterend.date(from: dateStringend ?? "")
+//        if  dateend == nil {
+//            cell.LaEndDate.text = model?.endDate?.ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss.SSS", FormatTo: "dd/MM/yyyy")
+//        } else {
+//            cell.LaEndDate.text = model?.endDate?.ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "dd/MM/yyyy")
+//        }
+//
+//        print("LaStartDate : \(model?.startDate)")
+//        print("LaEndDate : \(model?.endDate)")
 
         return cell
     }

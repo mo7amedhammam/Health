@@ -7,6 +7,7 @@
 
 import UIKit
 
+
 class MeasurementsDetailsVC: UIViewController {
     
     @IBOutlet weak var LaTitle: UILabel!
@@ -83,7 +84,7 @@ class MeasurementsDetailsVC: UIViewController {
     
     @IBAction func BUDoneSelectedDateandTime(_ sender: Any) {
      
-            formatter.dateFormat = "yyyy-MM-dd'T'hh:mm:ss"
+            formatter.dateFormat = "yyyy-MM-dd'T'HH:mm"
             formatter.locale     = Locale(identifier: "en")
             let strDate = formatter.string(from: PickerDate.date )
             formatter.dateStyle = .medium
@@ -92,7 +93,7 @@ class MeasurementsDetailsVC: UIViewController {
             print(strDate)
             
             if selectDateFrom == "new" {
-                var forma = DateFormatter()
+                let forma = DateFormatter()
                 forma.dateFormat = "yyyy-MM-dd hh:mm a"
                 forma.locale     = Locale(identifier: "en")
                 let strForma = forma.string(from: PickerDate.date )
@@ -195,6 +196,11 @@ class MeasurementsDetailsVC: UIViewController {
     }
     
     @IBAction func BUCancelAdd(_ sender: Any) {
+        measurementDate = ""
+        TFDate.text      = ""
+        TFNumMeasure.text = ""
+        TFSecondValue.text = ""
+        TVDescription.text  = ""
         ViewAddMeasurement.isHidden = true
     }
 }
@@ -594,7 +600,28 @@ extension MeasurementsDetailsVC : UITableViewDataSource , UITableViewDelegate , 
             let model = ViewModel.ArrMeasurement?.measurements?.items?[indexPath.row - 1]
             
             cell.LaNum.text = model?.value
-            cell.LaDate.text = model?.date
+//            cell.LaDate.text = model?.date
+            
+//            let inputDateStr = "2023-11-20T20:48:00"
+            let inputFormat = "yyyy-MM-dd'T'HH:mm:ss"
+            let outputFormat = "dd/MM/yyyy hh:mm a"
+
+            let inputFormatter = DateFormatter()
+            inputFormatter.dateFormat = inputFormat
+
+            if let inputDate = inputFormatter.date(from: (model?.date)!) {
+                let outputFormatter = DateFormatter()
+                outputFormatter.dateFormat = outputFormat
+                outputFormatter.locale     = Locale(identifier: "en")
+                let outputDateStr = outputFormatter.string(from: inputDate)
+                print(outputDateStr)
+                cell.LaDate.text = outputDateStr
+
+            } else {
+                cell.LaDate.text = model?.date
+                print("Failed to parse input date")
+            }
+
             
             if model?.inNormalRang == true {
                 cell.ViewColor.backgroundColor = UIColor(named: "06AD2B")
