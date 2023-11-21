@@ -13,7 +13,9 @@ class TipsCategories3TVCell: UITableViewCell {
     @IBOutlet weak var LaTitle: UILabel!
     @IBOutlet weak var LaDAte: UILabel!
     @IBOutlet weak var CVDrugGroups: UICollectionView!
-
+    @IBOutlet weak var HViewSuper: NSLayoutConstraint!
+    
+    
     var model : TipDetailsM?{
         didSet{
             guard let model = model else {return}
@@ -21,7 +23,7 @@ class TipsCategories3TVCell: UITableViewCell {
             LaDAte.text = model.date?.ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "dd / MM / yyyy hh:mm a")
             if let img = model.image {
                 //                let processor = SVGImgProcessor() // if receive svg image
-                ImgTipCategory.kf.setImage(with: URL(string:Constants.baseURL + img.validateSlashs()), placeholder: UIImage(named: "person"), options: nil, progressBlock: nil)
+                ImgTipCategory.kf.setImage(with: URL(string:Constants.baseURL + img.validateSlashs()), placeholder: UIImage(named: "defaultLogo"), options: nil, progressBlock: nil)
             }
             setDrugGroups()
         }
@@ -40,15 +42,27 @@ class TipsCategories3TVCell: UITableViewCell {
 }
 
 
-extension TipsCategories3TVCell:UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout{
+extension TipsCategories3TVCell:UICollectionViewDataSource,UICollectionViewDelegate {
+    //UICollectionViewDelegateFlowLayout
+    
+    
     fileprivate func setDrugGroups() {
-        
         // drup groups collection tags .
         CVDrugGroups.dataSource = self
         CVDrugGroups.delegate = self
         CVDrugGroups.registerCell(cellClass: TipDetailsDrugGroup.self)
         CVDrugGroups.transform = CGAffineTransform(scaleX: -1, y: 1) //first tip mirror effect for x -> second in cell
-
+        CVDrugGroups.reloadData()
+        
+        if model?.drugGroups?.count == 0 {
+            HViewSuper.constant = 90
+        } else {
+            if ((model?.drugGroups!.count)! ) % 2 == 0 {
+                HViewSuper.constant = (100.0 + (Double((model?.drugGroups!.count)! / 2 ) * 22))
+            } else {
+                HViewSuper.constant = (95.0 + (Double(((model?.drugGroups!.count)! + 1) / 2 ) * 22))
+            }
+        }
     }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return model?.drugGroups?.count ?? 0
@@ -61,12 +75,12 @@ extension TipsCategories3TVCell:UICollectionViewDataSource,UICollectionViewDeleg
         return cell
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        // Calculate and return the size of the cell based on your content
-        return CGSize(width: collectionView.bounds.width, height: 30)
-    }
-
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 10.0 // Adjust the spacing between cells as needed
-    }
+//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+//        // Calculate and return the size of the cell based on your content
+//        return CGSize(width: collectionView.bounds.width, height: 30)
+//    }
+//
+//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+//        return 10.0 // Adjust the spacing between cells as needed
+//    }
 }

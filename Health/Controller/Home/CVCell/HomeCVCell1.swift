@@ -18,12 +18,12 @@ class HomeCVCell1: UICollectionViewCell {
         didSet{
             guard let model = model else{return}
             LaTitle.text = model.title
-            LaCount.text = "\(model.measurementsCount ?? 0)"
+            LaCount.text = "\(model.lastMeasurementValue ?? "")"
             LaDate.text = model.lastMeasurementDate?.ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "dd/MM/yyyy")
 
             if let img = model.image {
                 //                let processor = SVGImgProcessor() // if receive svg image
-                ImgMeasurement.kf.setImage(with: URL(string:Constants.baseURL + img.validateSlashs()), placeholder: UIImage(named: "person"), options: nil, progressBlock: nil)
+                ImgMeasurement.kf.setImage(with: URL(string:Constants.baseURL + img.validateSlashs()), placeholder: UIImage(named: "defaultLogo"), options: nil, progressBlock: nil)
             }
             
         }

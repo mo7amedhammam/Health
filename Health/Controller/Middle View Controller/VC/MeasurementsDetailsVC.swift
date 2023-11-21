@@ -553,7 +553,7 @@ extension MeasurementsDetailsVC : UITableViewDataSource , UITableViewDelegate , 
             let cell = tableView.dequeueReusableCell(withIdentifier: "MeasurementsDetailsTVCell0", for: indexPath) as! MeasurementsDetailsTVCell0
             cell.delegate = self
             //                let processor = SVGImgProcessor() // if receive svg image
-            cell.ImgMeasurement.kf.setImage(with: URL(string:Constants.baseURL + imgMeasurement.validateSlashs()), placeholder: UIImage(named: "person"), options: nil, progressBlock: nil)
+            cell.ImgMeasurement.kf.setImage(with: URL(string:Constants.baseURL + imgMeasurement.validateSlashs()), placeholder: UIImage(named: "defaultLogo"), options: nil, progressBlock: nil)
             
             
             if CellDateFrom == "" {

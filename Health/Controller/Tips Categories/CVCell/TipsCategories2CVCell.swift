@@ -17,16 +17,20 @@ class TipsCategories2CVCell: UICollectionViewCell {
     @IBOutlet weak var LaTitle: UILabel!
     @IBOutlet weak var LaCount: UILabel!
 
+    var type = ""
     var model: secondVCTipM?{
+        
         didSet{
             guard let model = model else{return}
             LaTitle.text = model.title
-//            LaCount.text = "\(model.subjectsCount ?? 0) مواضيع"
             LaCount.text  = convertDateToString(inputDateString: model.date ?? ""  , inputDateFormat: "yyyy-MM-dd'T'HH:mm:ss", outputDateFormat: "yyyy-MM-dd")
-
+            
+            if type == "all" {
+                LaCount.text = "\(model.subjectsCount ?? 0) مواضيع"
+            }
             if let img = model.image {
                 //                let processor = SVGImgProcessor() // if receive svg image
-                ImgTipCategory.kf.setImage(with: URL(string:Constants.baseURL + img.validateSlashs()), placeholder: UIImage(named: "person"), options: nil, progressBlock: nil)
+                ImgTipCategory.kf.setImage(with: URL(string:Constants.baseURL + img.validateSlashs()), placeholder: UIImage(named: "defaultLogo"), options: nil, progressBlock: nil)
             }
 
         }

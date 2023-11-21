@@ -16,6 +16,7 @@ extension WKWebView {
         let customCSS = """
             <style>
                 body {
+                    font-size: 40px;
                     direction: rtl; /* Right-to-left direction */
                     text-align: right; /* Right-align text */
                 }

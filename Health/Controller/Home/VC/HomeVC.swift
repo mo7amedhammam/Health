@@ -193,7 +193,7 @@ extension HomeVC{
         LaName.text = "\(Helper.getUser()?.name ?? "")"
 //        if let img = Helper.getUser()?.image {
 //            //                let processor = SVGImgProcessor() // if receive svg image
-//            ImgUser.kf.setImage(with: URL(string:Constants.baseURL + img.validateSlashs()), placeholder: UIImage(named: "person"), options: nil, progressBlock: nil)
+//            ImgUser.kf.setImage(with: URL(string:Constants.baseURL + img.validateSlashs()), placeholder: UIImage(named: "defaultLogo"), options: nil, progressBlock: nil)
 //        }
 
     }

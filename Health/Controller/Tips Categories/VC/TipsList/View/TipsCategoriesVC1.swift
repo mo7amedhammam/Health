@@ -20,6 +20,8 @@ class TipsCategoriesVC1: UIViewController {
         TVScreen.delegate   = self
         TVScreen.registerCellNib(cellClass: TipsCategoriesTVCell0.self)
         TVScreen.registerCellNib(cellClass: TipsCategoriesTVCell1.self)
+        TVScreen.registerCellNib(cellClass: EmptyTVCell.self)
+
         // Configure the refresh control
         refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
            
@@ -61,34 +63,52 @@ extension TipsCategoriesVC1 : UITableViewDataSource , UITableViewDelegate {
             return cell
             
         case 1: // newest
-            let cell = tableView.dequeueReusableCell(withIdentifier: "TipsCategoriesTVCell1", for: indexPath) as! TipsCategoriesTVCell1
-            cell.nav = self.navigationController
-            cell.tipcategirytype = .Newest
-            cell.LaCategoryTitle.text = "نصائح حديثة"
-            if let model = ViewModel.newestTipsArr {
-                cell.dataArray = model
+            if ViewModel.newestTipsArr?.count == 0 {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "EmptyTVCell", for: indexPath) as! EmptyTVCell
+                return cell
+            } else {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "TipsCategoriesTVCell1", for: indexPath) as! TipsCategoriesTVCell1
+                cell.nav = self.navigationController
+                cell.tipcategirytype = .Newest
+                cell.LaCategoryTitle.text = "نصائح حديثة"
+                if let model = ViewModel.newestTipsArr {
+                    cell.dataArray = model
+                }
+                return cell
             }
-            return cell
+            
             
         case 2: // newest
-            let cell = tableView.dequeueReusableCell(withIdentifier: "TipsCategoriesTVCell1", for: indexPath) as! TipsCategoriesTVCell1
-            cell.nav = self.navigationController
-            cell.tipcategirytype = .Interesting
-            cell.LaCategoryTitle.text = "نصائح تهمك"
-            if let model = ViewModel.interestingTipsArr {
-                cell.dataArray = model
+            if ViewModel.interestingTipsArr?.count == 0 {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "EmptyTVCell", for: indexPath) as! EmptyTVCell
+                return cell
+            } else {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "TipsCategoriesTVCell1", for: indexPath) as! TipsCategoriesTVCell1
+                cell.nav = self.navigationController
+                cell.tipcategirytype = .Interesting
+                cell.LaCategoryTitle.text = "نصائح تهمك"
+                if let model = ViewModel.interestingTipsArr {
+                    cell.dataArray = model
+                }
+                return cell
             }
-            return cell
+            
             
         default: // most viewed
-            let cell = tableView.dequeueReusableCell(withIdentifier: "TipsCategoriesTVCell1", for: indexPath) as! TipsCategoriesTVCell1
-            cell.nav = self.navigationController
-            cell.tipcategirytype = .MostViewed
-            cell.LaCategoryTitle.text = "النصائح الأكثر مشاهدة"
-            if let model = ViewModel.mostViewedTipsArr {
-                cell.dataArray = model
+            if ViewModel.mostViewedTipsArr?.count == 0 {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "EmptyTVCell", for: indexPath) as! EmptyTVCell
+                return cell
+            } else {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "TipsCategoriesTVCell1", for: indexPath) as! TipsCategoriesTVCell1
+                cell.nav = self.navigationController
+                cell.tipcategirytype = .MostViewed
+                cell.LaCategoryTitle.text = "النصائح الأكثر مشاهدة"
+                if let model = ViewModel.mostViewedTipsArr {
+                    cell.dataArray = model
+                }
+                return cell
             }
-            return cell
+            
         }
         
     }

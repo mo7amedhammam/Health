@@ -26,22 +26,25 @@ class TipsCategoriesVC3: UIViewController {
         
         // Configure the refresh control
         refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
-        
         // Add the refresh control to the collection view
         TVScreen.addSubview(refreshControl)
-        
         // Load your initial data here (e.g., fetchData())
-        refreshData()
+//        refreshData()
 
-    }
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
         ViewModel.skipCount = 0
         ViewModel.tipsByCategoryRes?.items?.removeAll()
         TVScreen.reloadData()
         getTipsByCategoryId()
+        
     }
+//    override func viewWillAppear(_ animated: Bool) {
+//        super.viewWillAppear(animated)
+//
+//        ViewModel.skipCount = 0
+//        ViewModel.tipsByCategoryRes?.items?.removeAll()
+//        TVScreen.reloadData()
+//        getTipsByCategoryId()
+//    }
     
     
     @IBAction func BUNoti(_ sender: Any) {
@@ -123,11 +126,12 @@ extension TipsCategoriesVC3 {
             }
         }
     }
+    
     @objc func refreshData() {
         ViewModel.skipCount = 0
-        // Place your refresh logic here, for example, fetch new data from your data source
+        ViewModel.tipsByCategoryRes?.items?.removeAll()
+        TVScreen.reloadData()
         getTipsByCategoryId()
-
         // When the refresh operation is complete, endRefreshing() to hide the refresh control
         refreshControl.endRefreshing()
     }

@@ -17,32 +17,58 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="TipDetailsDrugGroup" customModule="Sehaty" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="134" height="51"/>
+            <rect key="frame" x="0.0" y="0.0" width="134" height="20"/>
             <autoresizingMask key="autoresizingMask"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                <rect key="frame" x="0.0" y="0.0" width="134" height="51"/>
+                <rect key="frame" x="0.0" y="0.0" width="134" height="20"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="الأوعية الدموية" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bhu-pW-nuR">
-                        <rect key="frame" x="0.0" y="0.0" width="134" height="51"/>
-                        <fontDescription key="fontDescription" name="LamaSans-Regular" family="Lama Sans" pointSize="12"/>
-                        <color key="textColor" name="main"/>
-                        <nil key="highlightedColor"/>
-                    </label>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="B8z-eY-79D">
+                        <rect key="frame" x="5" y="0.0" width="129" height="20"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="الأوعية الدموية" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bhu-pW-nuR">
+                                <rect key="frame" x="0.0" y="0.0" width="129" height="20"/>
+                                <fontDescription key="fontDescription" name="LamaSans-Regular" family="Lama Sans" pointSize="12"/>
+                                <color key="textColor" name="main"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X2F-bz-zig">
+                                <rect key="frame" x="0.0" y="19" width="129" height="1"/>
+                                <color key="backgroundColor" name="main"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="1" id="LNz-FM-V3l"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="bhu-pW-nuR" firstAttribute="leading" secondItem="B8z-eY-79D" secondAttribute="leading" id="OBA-pq-rbI"/>
+                            <constraint firstAttribute="bottom" secondItem="bhu-pW-nuR" secondAttribute="bottom" id="Wcm-Zd-8zw"/>
+                            <constraint firstAttribute="bottom" secondItem="X2F-bz-zig" secondAttribute="bottom" id="p2d-Sg-Ueg"/>
+                            <constraint firstItem="X2F-bz-zig" firstAttribute="width" secondItem="bhu-pW-nuR" secondAttribute="width" id="pqK-lN-okf"/>
+                            <constraint firstAttribute="height" constant="20" id="q4d-cq-T63"/>
+                            <constraint firstAttribute="trailing" secondItem="X2F-bz-zig" secondAttribute="trailing" id="qmo-ia-Vpr"/>
+                            <constraint firstItem="bhu-pW-nuR" firstAttribute="top" secondItem="B8z-eY-79D" secondAttribute="top" id="vCR-av-cpl"/>
+                            <constraint firstAttribute="trailing" secondItem="bhu-pW-nuR" secondAttribute="trailing" id="yUW-tM-sWO"/>
+                        </constraints>
+                    </view>
                 </subviews>
             </view>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
             <constraints>
-                <constraint firstItem="bhu-pW-nuR" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="0Ce-eN-1nB"/>
-                <constraint firstAttribute="bottom" secondItem="bhu-pW-nuR" secondAttribute="bottom" id="Jp0-XA-p5b"/>
-                <constraint firstAttribute="trailing" secondItem="bhu-pW-nuR" secondAttribute="trailing" id="Ozj-aK-XCt"/>
-                <constraint firstItem="bhu-pW-nuR" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="Wt1-r7-Tj2"/>
+                <constraint firstAttribute="trailing" secondItem="B8z-eY-79D" secondAttribute="trailing" id="4rg-Rc-aaN"/>
+                <constraint firstItem="B8z-eY-79D" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="5" id="BPo-w0-oXl"/>
+                <constraint firstItem="B8z-eY-79D" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="Owl-oX-Xqt"/>
+                <constraint firstAttribute="bottom" secondItem="B8z-eY-79D" secondAttribute="bottom" id="YEx-yM-KPy"/>
             </constraints>
-            <size key="customSize" width="134" height="51"/>
+            <size key="customSize" width="134" height="20"/>
             <connections>
                 <outlet property="LaDrugTitle" destination="bhu-pW-nuR" id="8Zc-xB-QMb"/>
             </connections>
-            <point key="canvasLocation" x="193.89312977099235" y="-10.91549295774648"/>
+            <point key="canvasLocation" x="192.36641221374046" y="-21.83098591549296"/>
         </collectionViewCell>
     </objects>
     <resources>

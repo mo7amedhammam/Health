@@ -231,7 +231,7 @@ class Helper: NSObject {
         if !EndPoint!.isEmpty || EndPoint != nil {
             let url = URL(string: "" + "\(EndPoint ?? "")")
             image.kf.indicatorType = .activity
-            image.kf.setImage(with: url, placeholder: UIImage(named: "no_image"), options: nil, progressBlock: nil, completionHandler: nil)
+            image.kf.setImage(with: url, placeholder: UIImage(named: "defaultLogo"), options: nil, progressBlock: nil, completionHandler: nil)
 //            print("HelperImage: \(url)")
         } else {
             if status == 0 {

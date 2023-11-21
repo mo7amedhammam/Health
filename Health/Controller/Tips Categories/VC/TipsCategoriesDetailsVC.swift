@@ -77,7 +77,7 @@ extension TipsCategoriesDetailsVC {
         guard let model = model else{return}
         if let img = model.image {
             //                let processor = SVGImgProcessor() // if receive svg image
-            ImgTipDetails.kf.setImage(with: URL(string:Constants.baseURL + img.validateSlashs()), placeholder: UIImage(named: "person"), options: nil, progressBlock: nil)
+            ImgTipDetails.kf.setImage(with: URL(string:Constants.baseURL + img.validateSlashs()), placeholder: UIImage(named: "defaultLogo"), options: nil, progressBlock: nil)
         }
 
         LaTitle.text = model.title
