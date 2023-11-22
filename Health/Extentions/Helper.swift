@@ -416,7 +416,7 @@ extension Helper{
         //    var language = LocalizationService.shared.language
             let df = DateFormatter()
             df.dateFormat = NewFormat
-           df.locale = Locale(identifier: "en_US_POSIX")
+//           df.locale = Locale(identifier: "en_US_POSIX")
 //            df.locale = Locale(identifier: language.rawValue == "ar" ? "ar":"en_US_POSIX")
             return df
         }

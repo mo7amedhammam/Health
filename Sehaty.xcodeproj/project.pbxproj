@@ -76,6 +76,7 @@
 		BBA1DA182AB11E5C0042713A /* NotificationVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBA1DA172AB11E5C0042713A /* NotificationVM.swift */; };
 		BBAE725E2AD3291F0089512D /* EmptyTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBAE725C2AD3291F0089512D /* EmptyTVCell.swift */; };
 		BBAE725F2AD3291F0089512D /* EmptyTVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BBAE725D2AD3291F0089512D /* EmptyTVCell.xib */; };
+		BBB0636A2B0E8D7A00708CF4 /* MeasurementsDetailsFiltterVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBB063692B0E8D7900708CF4 /* MeasurementsDetailsFiltterVC.swift */; };
 		BBBD000A2A73101700F066DF /* EXTEnternet.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBBDFFF72A73100E00F066DF /* EXTEnternet.swift */; };
 		BBBD000B2A73101700F066DF /* SalmanLocalize.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBBDFFF82A73100E00F066DF /* SalmanLocalize.swift */; };
 		BBBD000C2A73101700F066DF /* EXTAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBBDFFF92A73100F00F066DF /* EXTAlert.swift */; };
@@ -269,6 +270,7 @@
 		BBA1DA172AB11E5C0042713A /* NotificationVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationVM.swift; sourceTree = "<group>"; };
 		BBAE725C2AD3291F0089512D /* EmptyTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyTVCell.swift; sourceTree = "<group>"; };
 		BBAE725D2AD3291F0089512D /* EmptyTVCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EmptyTVCell.xib; sourceTree = "<group>"; };
+		BBB063692B0E8D7900708CF4 /* MeasurementsDetailsFiltterVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasurementsDetailsFiltterVC.swift; sourceTree = "<group>"; };
 		BBBD00002A73101200F066DF /* ExtentionLocalize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExtentionLocalize.swift; sourceTree = "<group>"; };
 		BBBD00012A73101300F066DF /* AES.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AES.swift; sourceTree = "<group>"; };
 		BBBD00022A73101300F066DF /* ProgressHud.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressHud.swift; sourceTree = "<group>"; };
@@ -429,6 +431,7 @@
 			children = (
 				BB14DAE22A7AFA0700389B96 /* MeasurementsVC.swift */,
 				BB5116C52A829A8E00CF5D11 /* MeasurementsDetailsVC.swift */,
+				BBB063692B0E8D7900708CF4 /* MeasurementsDetailsFiltterVC.swift */,
 			);
 			path = VC;
 			sourceTree = "<group>";
@@ -1680,6 +1683,7 @@
 				BB14DAF72A7B047400389B96 /* ProfileTVCellLine.swift in Sources */,
 				C80DA9E22AA4D11300F10808 /* BaseResponse.swift in Sources */,
 				C80DA9EF2AA4F6B000F10808 /* UiWindow.swift in Sources */,
+				BBB0636A2B0E8D7A00708CF4 /* MeasurementsDetailsFiltterVC.swift in Sources */,
 				C80DA9E42AA4D29500F10808 /* EndPoints.swift in Sources */,
 				BB5116CD2A829AC900CF5D11 /* MeasurementsDetailsTVCell.swift in Sources */,
 				BB6E07EF2A896B2700689769 /* MeasurementsDetailsTVCell0.swift in Sources */,
@@ -1874,7 +1878,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_TEAM = 23H4SBD5QL;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Health/Info.plist;
@@ -1914,7 +1918,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_TEAM = 23H4SBD5QL;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Health/Info.plist;

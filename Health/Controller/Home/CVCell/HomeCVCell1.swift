@@ -19,7 +19,7 @@ class HomeCVCell1: UICollectionViewCell {
             guard let model = model else{return}
             LaTitle.text = model.title
             LaCount.text = "\(model.lastMeasurementValue ?? "")"
-            LaDate.text = model.lastMeasurementDate?.ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "dd/MM/yyyy")
+            LaDate.text = model.lastMeasurementDate?.ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "yyyy/MM/dd")
 
             if let img = model.image {
                 //                let processor = SVGImgProcessor() // if receive svg image

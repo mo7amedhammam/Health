@@ -144,13 +144,13 @@ extension HomeTVCell1 : UICollectionViewDataSource , UICollectionViewDelegate , 
         if indexx == 1 {
             guard let SelectedModel = ViewModelMeasurements?.ArrStats?[indexPath.row] else{return}
             ShowMeasurementDetailFor(SelectedModel: SelectedModel , index : indexPath.row)
-        }else if indexx == 2{
+        } else if indexx == 2 {
             
-        }else if indexx == 3{
+        } else if indexx == 3 {
             let SelectedId = ViewModel?.newestTipsArr?[indexPath.row].id ?? 0
             self.ShowDetailsFor(Id: SelectedId)
-        }else{
-            let SelectedId = ViewModel?.newestTipsArr?[indexPath.row].id ?? 0
+        } else{
+            let SelectedId = ViewModel?.mostViewedTipsArr?[indexPath.row].id ?? 0
             self.ShowDetailsFor(Id: SelectedId)
         }
 

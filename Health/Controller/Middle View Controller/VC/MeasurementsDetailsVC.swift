@@ -54,6 +54,7 @@ class MeasurementsDetailsVC: UIViewController {
         
         // Do any additional setup after loading the view.
 //        self.PickerDate.addTarget(self, action: #selector(onDateValueChanged(_:)), for: .valueChanged)
+        
         TVScreen.dataSource = self
         TVScreen.delegate   = self
         TVScreen.registerCellNib(cellClass: MeasurementsDetailsTVCell.self)
@@ -84,7 +85,7 @@ class MeasurementsDetailsVC: UIViewController {
     
     @IBAction func BUDoneSelectedDateandTime(_ sender: Any) {
      
-            formatter.dateFormat = "yyyy-MM-dd'T'HH:mm"
+            formatter.dateFormat = "yyyy-MM-dd"
             formatter.locale     = Locale(identifier: "en")
             let strDate = formatter.string(from: PickerDate.date )
             formatter.dateStyle = .medium
@@ -94,7 +95,7 @@ class MeasurementsDetailsVC: UIViewController {
             
             if selectDateFrom == "new" {
                 let forma = DateFormatter()
-                forma.dateFormat = "yyyy-MM-dd hh:mm a"
+                forma.dateFormat = "yyyy-MM-dd"
                 forma.locale     = Locale(identifier: "en")
                 let strForma = forma.string(from: PickerDate.date )
                 TFDate.text = strForma
@@ -373,19 +374,28 @@ extension MeasurementsDetailsVC : UITableViewDataSource , UITableViewDelegate , 
         btnDay.borderColor = UIColor(named: "main")
         
         
-        ViewModel.medicalMeasurementId = id
-//        ViewModel.maxResultCount       = 10
-        ViewModel.skipCount            = 0
-        ViewModel.dateFrom = nil
-        ViewModel.dateTo  = nil
-        getDataNormalRange()
+//        ViewModel.medicalMeasurementId = id
+//        ViewModel.skipCount            = 0
+//        ViewModel.dateFrom = nil
+//        ViewModel.dateTo  = nil
+//        getDataNormalRange()
         
+        guard let vc = initiateViewController(storyboardName: .main, viewControllerIdentifier: MeasurementsDetailsFiltterVC.self) else { return }
+        vc.From = ""
+        vc.To   = ""
+        vc.NormalFrom = ViewModel.ArrNormalRange?.fromValue ?? ""
+        vc.NormalTo   = ViewModel.ArrNormalRange?.toValue ?? ""
+        vc.TitleMeasurement = TitleMeasurement
+        vc.id = id
+        vc.hidesBottomBarWhenPushed = true
+        navigationController?.pushViewController(vc, animated: true)
+                
     }
     
     func TearMonthDay(tag: Int , btnAll : UIButton , btnYear : UIButton , btnMonth : UIButton  , btnDay : UIButton , Lfrom : UILabel , Lto : UILabel  ) {
         
         let currentDate = Date()
-        let outputFormat = "yyyy-MM-dd'T'HH:mm:ss"
+        let outputFormat = "yyyy-MM-dd"
         let dateFormatter = DateFormatter()
         dateFormatter.locale = NSLocale.init(localeIdentifier: "en") as Locale
         dateFormatter.dateFormat = outputFormat
@@ -410,7 +420,7 @@ extension MeasurementsDetailsVC : UITableViewDataSource , UITableViewDelegate , 
             if let currentDate = dateFormatter.date(from: formattedDateString) {
                 let calendar = Calendar.current
                 let sevenDaysAgo = calendar.date(byAdding: .year, value: -1, to: currentDate)
-                let outputFormat = "yyyy-MM-dd'T'HH:mm:ss"
+                let outputFormat = "yyyy-MM-dd"
                 dateFormatter.dateFormat = outputFormat
                 let oneYear = dateFormatter.string(from: sevenDaysAgo!)
                 print("oneYear : \(oneYear)")
@@ -444,7 +454,7 @@ extension MeasurementsDetailsVC : UITableViewDataSource , UITableViewDelegate , 
             if let currentDate = dateFormatter.date(from: formattedDateString) {
                 let calendar = Calendar.current
                 let sevenDaysAgo = calendar.date(byAdding: .month, value: -3, to: currentDate)
-                let outputFormat = "yyyy-MM-dd'T'HH:mm:ss"
+                let outputFormat = "yyyy-MM-dd"
                 dateFormatter.dateFormat = outputFormat
                 let ThreeMonth = dateFormatter.string(from: sevenDaysAgo!)
                 print("ThreeMonth : \(ThreeMonth)")
@@ -480,7 +490,7 @@ extension MeasurementsDetailsVC : UITableViewDataSource , UITableViewDelegate , 
             if let currentDate = dateFormatter.date(from: formattedDateString) {
                 let calendar = Calendar.current
                 let sevenDaysAgo = calendar.date(byAdding: .day, value: -7, to: currentDate)
-                let outputFormat = "yyyy-MM-dd'T'HH:mm:ss"
+                let outputFormat = "yyyy-MM-dd"
                 dateFormatter.dateFormat = outputFormat
                 let sevenDaysAgoString = dateFormatter.string(from: sevenDaysAgo!)
                 print("sevenDaysAgoString : \(sevenDaysAgoString)")
@@ -512,12 +522,22 @@ extension MeasurementsDetailsVC : UITableViewDataSource , UITableViewDelegate , 
             self.showAlert(message: "من فضلك حدد تاريخ النهاية")
         } else {
             
-            ViewModel.medicalMeasurementId = id
-//            ViewModel.maxResultCount       = 10
-            ViewModel.skipCount            = 0
-            ViewModel.dateFrom = Lfrom.text
-            ViewModel.dateTo   = Lto.text
-            getDataNormalRange()
+//            ViewModel.medicalMeasurementId = id
+//            ViewModel.skipCount            = 0
+//            ViewModel.dateFrom = Lfrom.text
+//            ViewModel.dateTo   = Lto.text
+//            getDataNormalRange()
+            
+            guard let vc = initiateViewController(storyboardName: .main, viewControllerIdentifier: MeasurementsDetailsFiltterVC.self) else { return }
+            vc.From = Lfrom.text!
+            vc.To   = Lto.text!
+            vc.NormalFrom = ViewModel.ArrNormalRange?.fromValue ?? ""
+            vc.NormalTo   = ViewModel.ArrNormalRange?.toValue ?? ""
+            vc.TitleMeasurement = TitleMeasurement
+            vc.id = id
+            vc.hidesBottomBarWhenPushed = true
+            navigationController?.pushViewController(vc, animated: true)
+            
         }
         
     }
@@ -529,12 +549,22 @@ extension MeasurementsDetailsVC : UITableViewDataSource , UITableViewDelegate , 
             self.showAlert(message: "من فضلك حدد تاريخ النهاية")
         } else {
             
-            ViewModel.medicalMeasurementId = id
-//            ViewModel.maxResultCount       = 10
-            ViewModel.skipCount            = 0
-            ViewModel.dateFrom = Lfrom.text
-            ViewModel.dateTo   = Lto.text
-            getDataNormalRange()
+//            ViewModel.medicalMeasurementId = id
+//            ViewModel.skipCount            = 0
+//            ViewModel.dateFrom = Lfrom.text
+//            ViewModel.dateTo   = Lto.text
+//            getDataNormalRange()
+            
+            guard let vc = initiateViewController(storyboardName: .main, viewControllerIdentifier: MeasurementsDetailsFiltterVC.self) else { return }
+            vc.From = Lfrom.text!
+            vc.To   = Lto.text!
+            vc.NormalFrom = ViewModel.ArrNormalRange?.fromValue ?? ""
+            vc.NormalTo   = ViewModel.ArrNormalRange?.toValue ?? ""
+            vc.TitleMeasurement = TitleMeasurement
+            vc.id = id
+            vc.hidesBottomBarWhenPushed = true
+            navigationController?.pushViewController(vc, animated: true)
+            
         }
         
     }
@@ -604,7 +634,7 @@ extension MeasurementsDetailsVC : UITableViewDataSource , UITableViewDelegate , 
             
 //            let inputDateStr = "2023-11-20T20:48:00"
             let inputFormat = "yyyy-MM-dd'T'HH:mm:ss"
-            let outputFormat = "dd/MM/yyyy hh:mm a"
+            let outputFormat = "yyyy/MM/dd hh:mm a"
 
             let inputFormatter = DateFormatter()
             inputFormatter.dateFormat = inputFormat
@@ -612,7 +642,7 @@ extension MeasurementsDetailsVC : UITableViewDataSource , UITableViewDelegate , 
             if let inputDate = inputFormatter.date(from: (model?.date)!) {
                 let outputFormatter = DateFormatter()
                 outputFormatter.dateFormat = outputFormat
-                outputFormatter.locale     = Locale(identifier: "en")
+//                outputFormatter.locale     = Locale(identifier: "en")
                 let outputDateStr = outputFormatter.string(from: inputDate)
                 print(outputDateStr)
                 cell.LaDate.text = outputDateStr

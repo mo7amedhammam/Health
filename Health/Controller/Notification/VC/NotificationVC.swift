@@ -616,14 +616,14 @@ extension NotificationVC : UITableViewDataSource , UITableViewDelegate {
         
         let inputFormat = "yyyy-MM-dd'T'HH:mm:ss"
 //        let outputFormat = "yyyy-MM-dd hh:mm a"
-        let outputFormat = "dd/MM/yyyy"
+        let outputFormat = "yyyy/MM/dd"
         let inputFormatter = DateFormatter()
         inputFormatter.dateFormat = inputFormat
         
         if let inputDate = inputFormatter.date(from: (model?.startDate)!) {
             let outputFormatter = DateFormatter()
             outputFormatter.dateFormat = outputFormat
-            outputFormatter.locale     = Locale(identifier: "en")
+//            outputFormatter.locale     = Locale(identifier: "en")
             let outputDateStr = outputFormatter.string(from: inputDate)
             cell.LaStartDate.text = outputDateStr
         } else {
@@ -634,7 +634,7 @@ extension NotificationVC : UITableViewDataSource , UITableViewDelegate {
         if let inputDate2 = inputFormatter.date(from: (model?.endDate)!) {
             let outputFormatter2 = DateFormatter()
             outputFormatter2.dateFormat = outputFormat
-            outputFormatter2.locale     = Locale(identifier: "en")
+//            outputFormatter2.locale     = Locale(identifier: "en")
             let outputDateStr2 = outputFormatter2.string(from: inputDate2)
             cell.LaEndDate.text = outputDateStr2
         } else {
@@ -646,7 +646,7 @@ extension NotificationVC : UITableViewDataSource , UITableViewDelegate {
         if let inputDate3 = inputFormatter.date(from: (model?.startDate)!) {
             let outputFormatter3 = DateFormatter()
             outputFormatter3.dateFormat = "hh:mm a"
-            outputFormatter3.locale     = Locale(identifier: "en")
+//            outputFormatter3.locale     = Locale(identifier: "en")
             let outputDateStr3 = outputFormatter3.string(from: inputDate3)
             cell.LaClock.text = outputDateStr3
         } else {

@@ -125,7 +125,7 @@ extension MeasurementsVC : UICollectionViewDataSource , UICollectionViewDelegate
         cell.LaNum.text = "\(model.measurementsCount ?? 0 )"
         cell.LaLastNum.text = model.lastMeasurementValue
 //        cell.LaTitle.text = model.title
-        cell.LaDate.text = model.lastMeasurementDate?.ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "dd/MM/yyyy")
+        cell.LaDate.text = model.lastMeasurementDate?.ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "yyyy/MM/dd")
         if let img = model.image {
             //                let processor = SVGImgProcessor() // if receive svg image
             cell.ImgMeasurement.kf.setImage(with: URL(string:Constants.baseURL + img.validateSlashs()), placeholder: UIImage(named: "defaultLogo"), options: nil, progressBlock: nil)
@@ -145,6 +145,7 @@ extension MeasurementsVC : UICollectionViewDataSource , UICollectionViewDelegate
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
         guard let vc = initiateViewController(storyboardName: .main, viewControllerIdentifier: MeasurementsDetailsVC.self) else{return}
         vc.ViewModel = ViewModel
         print("array",ViewModel.ArrMeasurement)
