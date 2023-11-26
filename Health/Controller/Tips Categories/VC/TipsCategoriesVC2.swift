@@ -57,8 +57,8 @@ extension TipsCategoriesVC2 : UICollectionViewDataSource , UICollectionViewDeleg
         switch tipcategirytype{
         case .All:
             let model = ViewModel?.allTipsResModel?.items?[indexPath.row]
-            cell.model = secondVCTipM.init(image: model?.image, title: model?.title,id: model?.id, subjectsCount: model?.subjectsCount)
             cell.type = "all"
+            cell.model = secondVCTipM.init(image: model?.image, title: model?.title,id: model?.id, subjectsCount: model?.subjectsCount)
         case .Newest:
             let model = dataArray?[indexPath.row]
             cell.model = secondVCTipM.init(image: model?.image, title: model?.title,date: model?.date,subjectsCount: 0 )

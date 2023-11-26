@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ChangePasswordVC: UIViewController  , UITextFieldDelegate {
+class ChangePasswordVC: UIViewController  , UITextFieldDelegate, UIGestureRecognizerDelegate {
     
     
     @IBOutlet weak var ViewPassword: UIView!
@@ -62,8 +62,9 @@ class ChangePasswordVC: UIViewController  , UITextFieldDelegate {
     }
 
     @IBAction func BUBack(_ sender: Any) {
-        self.navigationController?.popViewController(animated: true)
+        self.navigationController?.popToRootViewController(animated: true)
     }
+
     
     
     @IBAction func BUShowPassword(_ sender: UIButton) {
@@ -137,7 +138,7 @@ extension ChangePasswordVC {
             viewDone.imgStr = "keyicon"
             viewDone.action = {
                 viewDone.removeFromSuperview()
-                self.navigationController?.popViewController(animated: true)
+                self.navigationController?.popToRootViewController(animated: true)
 //                Helper.changeRootVC(newroot: LoginVC.self,transitionFrom: .fromLeft)
             }
         }

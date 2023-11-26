@@ -10,15 +10,21 @@ import WebKit
 extension WKWebView {
     func loadHTMLStringWithAutoDirection(_ htmlString: String) {
         // Set the semanticContentAttribute to .forceRightToLeft
+        //#F5F5FF
         self.semanticContentAttribute = .forceRightToLeft
-
         // Apply custom CSS to ensure right-to-left display
         let customCSS = """
+                
             <style>
                 body {
-                    font-size: 40px;
+                    font-size: 50px;
+                    color :#2D2DB2;
+                    line-height: 1.5;
+                    background-color: #F5F5FF;
                     direction: rtl; /* Right-to-left direction */
                     text-align: right; /* Right-align text */
+                    padding-left: 15px; /* Add 10px padding to the left */
+                    padding-right: 15px;
                 }
             </style>
         """

@@ -23,11 +23,13 @@ class TipsCategories2CVCell: UICollectionViewCell {
         didSet{
             guard let model = model else{return}
             LaTitle.text = model.title
-            LaCount.text  = convertDateToString(inputDateString: model.date ?? ""  , inputDateFormat: "yyyy-MM-dd'T'HH:mm:ss", outputDateFormat: "yyyy-MM-dd")
             
             if type == "all" {
                 LaCount.text = "\(model.subjectsCount ?? 0) مواضيع"
+            } else {
+                LaCount.text  = convertDateToString(inputDateString: model.date ?? ""  , inputDateFormat: "yyyy-MM-dd'T'HH:mm:ss", outputDateFormat: "yyyy-MM-dd")
             }
+            
             if let img = model.image {
                 //                let processor = SVGImgProcessor() // if receive svg image
                 ImgTipCategory.kf.setImage(with: URL(string:Constants.baseURL + img.validateSlashs()), placeholder: UIImage(named: "defaultLogo"), options: nil, progressBlock: nil)

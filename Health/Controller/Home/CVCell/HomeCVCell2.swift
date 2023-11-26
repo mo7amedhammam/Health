@@ -15,7 +15,7 @@ class HomeCVCell2: UICollectionViewCell {
         didSet{
             guard let model = model else{return}
             LaTitle.text = model.drugTitle
-            LaEndDate.text = model.endDate?.ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "dd/MM/yyyy")
+            LaEndDate.text = model.endDate?.ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "yyyy/MM/dd")
         }
     }
 //    var makeOrder:(()->Void)?

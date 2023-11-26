@@ -482,8 +482,8 @@
                                             <action selector="BUAllMeasurement:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="gDU-18-12v"/>
                                         </connections>
                                     </button>
-                                    <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nax-S4-Q4F">
-                                        <rect key="frame" x="0.0" y="660" width="302" height="150"/>
+                                    <view hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nax-S4-Q4F">
+                                        <rect key="frame" x="0.0" y="650" width="302" height="150"/>
                                         <color key="backgroundColor" name="deactive"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="150" id="cDj-PU-aHz"/>
@@ -494,8 +494,8 @@
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                     </view>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="نتائج قياساتك السابقة" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ELn-Yz-OgB">
-                                        <rect key="frame" x="0.0" y="830" width="302" height="40"/>
+                                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="نتائج قياساتك السابقة" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ELn-Yz-OgB">
+                                        <rect key="frame" x="0.0" y="650" width="302" height="40"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="Gy5-Q2-gmO"/>
                                         </constraints>
@@ -503,8 +503,8 @@
                                         <color key="textColor" name="main"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Oer-uu-UPf">
-                                        <rect key="frame" x="0.0" y="890" width="302" height="182"/>
+                                    <view hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Oer-uu-UPf">
+                                        <rect key="frame" x="0.0" y="650" width="302" height="182"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="SxZ-Af-1WZ">
                                                 <rect key="frame" x="15" y="20" width="272" height="142"/>
@@ -664,7 +664,7 @@
                                         </userDefinedRuntimeAttributes>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mRx-QX-Jee">
-                                        <rect key="frame" x="0.0" y="1092" width="302" height="13"/>
+                                        <rect key="frame" x="0.0" y="660" width="302" height="445"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </view>
                                 </subviews>

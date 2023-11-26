@@ -60,7 +60,7 @@ class NotificationVC: UIViewController  {
             BtnSelectDrug.isSelected = false
         }
                 
-        self.PickerDate.addTarget(self, action: #selector(onDateValueChanged(_:)), for: UIControl.Event.valueChanged)
+//        self.PickerDate.addTarget(self, action: #selector(onDateValueChanged(_:)), for: UIControl.Event.valueChanged)
 
         timePicker.datePickerMode = .time
         // Create toolbar where a "Done" button will go
@@ -178,12 +178,57 @@ class NotificationVC: UIViewController  {
     }
     
     
-    
-    
-    
-    @IBAction func BUBack(_ sender: Any) {
-        self.dismiss(animated: true)
+    @IBAction func BUDoneSelectDate(_ sender: Any) {
+        //do something here
+        formatter.dateFormat = "yyyy-MM-dd"
+        formatter.locale     = Locale(identifier: "en_US_POSIX")
+        let strDate = formatter.string(from: PickerDate.date )
+        formatter.dateStyle = .medium
+        formatter.timeStyle = .none
+        self.view.endEditing(true)
+        print(strDate)
+        
+        //"yyyy-MM-dd'T'HH:mm"
+        
+         if selectDateFrom == "from" {
+            TFStartDate.text = strDate
+                 
+             if TFNumDays.text == "" {
+                 
+             } else {
+                 let dateFormatter = DateFormatter()
+                 dateFormatter.dateFormat = "yyyy-MM-dd"
+                 dateFormatter.locale     = Locale(identifier: "en_US_POSIX")
+
+                 let date = dateFormatter.date(from: TFStartDate.text! )!
+
+                 var dateComponents = DateComponents()
+                 dateComponents.day = Int(TFNumDays.text!.convertedDigitsToLocale(Locale(identifier: "EN")) )!
+
+                 let calendar = Calendar.current
+                 let newDate = calendar.date(byAdding: dateComponents, to: date)!
+                 let newDateString = dateFormatter.string(from: newDate)
+                 print("newDateString : \(newDateString)")
+                 TFEndDate.text = newDateString
+             }
+             
+             
+             
+             
+        } else if selectDateFrom == "to" {
+//            TFEndDate.text = strDate
+        } else {
+        }
+        
+        ViewSelectDate.isHidden = true
+        
     }
+    
+    
+    
+//    @IBAction func BUBack(_ sender: Any) {
+//        self.dismiss(animated: true)
+//    }
     
     @IBAction func BUSelectDrug(_ sender: Any) {
         
@@ -319,12 +364,13 @@ class NotificationVC: UIViewController  {
         
         if sender.tag == 0 {
             selectDateFrom = "from"
-            let calendar   = Calendar.current
-            var components = DateComponents()
-            components.day = -1
-            let yesterday  = calendar.date(byAdding: components, to: Date())!
-            PickerDate.date = yesterday
-            PickerDate.minimumDate = yesterday
+//            let calendar   = Calendar.current
+//            var components = DateComponents()
+//            components.day = -1
+//            let yesterday  = calendar.date(byAdding: components, to: Date())!
+//            PickerDate.date = yesterday
+            
+            PickerDate.minimumDate = Date()
             PickerDate.maximumDate = nil
             PickerDate.datePickerMode = .date
             ViewSelectDate.isHidden = false

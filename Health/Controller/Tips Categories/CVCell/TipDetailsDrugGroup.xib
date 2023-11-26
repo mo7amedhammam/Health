@@ -9,8 +9,8 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
-        <array key="LamaSans-Regular.ttf">
-            <string>LamaSans-Regular</string>
+        <array key="LamaSans-Medium.ttf">
+            <string>LamaSans-Medium</string>
         </array>
     </customFonts>
     <objects>
@@ -28,15 +28,15 @@
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="الأوعية الدموية" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bhu-pW-nuR">
                                 <rect key="frame" x="0.0" y="0.0" width="129" height="20"/>
-                                <fontDescription key="fontDescription" name="LamaSans-Regular" family="Lama Sans" pointSize="12"/>
+                                <fontDescription key="fontDescription" name="LamaSans-Medium" family="Lama Sans" pointSize="10"/>
                                 <color key="textColor" name="main"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X2F-bz-zig">
-                                <rect key="frame" x="0.0" y="19" width="129" height="1"/>
+                                <rect key="frame" x="0.0" y="12.333333333333334" width="129" height="0.66666666666666607"/>
                                 <color key="backgroundColor" name="main"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="1" id="LNz-FM-V3l"/>
+                                    <constraint firstAttribute="height" constant="0.59999999999999998" id="LNz-FM-V3l"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -47,7 +47,7 @@
                         <constraints>
                             <constraint firstItem="bhu-pW-nuR" firstAttribute="leading" secondItem="B8z-eY-79D" secondAttribute="leading" id="OBA-pq-rbI"/>
                             <constraint firstAttribute="bottom" secondItem="bhu-pW-nuR" secondAttribute="bottom" id="Wcm-Zd-8zw"/>
-                            <constraint firstAttribute="bottom" secondItem="X2F-bz-zig" secondAttribute="bottom" id="p2d-Sg-Ueg"/>
+                            <constraint firstAttribute="bottom" secondItem="X2F-bz-zig" secondAttribute="bottom" constant="7" id="p2d-Sg-Ueg"/>
                             <constraint firstItem="X2F-bz-zig" firstAttribute="width" secondItem="bhu-pW-nuR" secondAttribute="width" id="pqK-lN-okf"/>
                             <constraint firstAttribute="height" constant="20" id="q4d-cq-T63"/>
                             <constraint firstAttribute="trailing" secondItem="X2F-bz-zig" secondAttribute="trailing" id="qmo-ia-Vpr"/>

@@ -113,21 +113,21 @@ extension TipsCategoriesVC1 : UITableViewDataSource , UITableViewDelegate {
         
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let vc = initiateViewController(storyboardName: .main, viewControllerIdentifier: TipsCategoriesVC3.self) else {return}
-        vc.hidesBottomBarWhenPushed = true
-        switch indexPath.row {
-        case 0:
-            vc.categoryId = ViewModel.allTipsResModel?.items?[indexPath.row].id
-        case 1:
-            vc.categoryId = ViewModel.newestTipsArr?[indexPath.row].id
-        case 2:
-            vc.categoryId = ViewModel.interestingTipsArr?[indexPath.row].id
-        default:
-            vc.categoryId = ViewModel.mostViewedTipsArr?[indexPath.row].id
-        }
-        self.navigationController?.pushViewController(vc, animated: true)
-    }
+//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        guard let vc = initiateViewController(storyboardName: .main, viewControllerIdentifier: TipsCategoriesVC3.self) else {return}
+//        vc.hidesBottomBarWhenPushed = true
+//        switch indexPath.row {
+//        case 0:
+//            vc.categoryId = ViewModel.allTipsResModel?.items?[indexPath.row].id
+//        case 1:
+//            vc.categoryId = ViewModel.newestTipsArr?[indexPath.row].id
+//        case 2:
+//            vc.categoryId = ViewModel.interestingTipsArr?[indexPath.row].id
+//        default:
+//            vc.categoryId = ViewModel.mostViewedTipsArr?[indexPath.row].id
+//        }
+//        self.navigationController?.pushViewController(vc, animated: true)
+//    }
     
 }
 

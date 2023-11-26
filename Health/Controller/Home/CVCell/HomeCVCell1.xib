@@ -138,6 +138,7 @@
                 <outlet property="LaCount" destination="euo-dv-wSn" id="6ZJ-1g-iqt"/>
                 <outlet property="LaDate" destination="XYD-E3-zbx" id="FeT-Da-cLT"/>
                 <outlet property="LaTitle" destination="u4t-At-diu" id="vZ0-93-nk5"/>
+                <outlet property="ViewDate" destination="U9b-Ua-CMK" id="hez-UV-vza"/>
             </connections>
             <point key="canvasLocation" x="0.0" y="89.436619718309871"/>
         </collectionViewCell>

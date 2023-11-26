@@ -34,6 +34,11 @@ class HomeVC: UIViewController {
         getTipsCategories()
     }
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+    
+    
     override func viewWillAppear(_ animated: Bool) {
         
         
@@ -44,7 +49,9 @@ class HomeVC: UIViewController {
                 // ViewModelMeasurements.ArrStats?[indexx].measurementsCount! += 1
                 for data in 0 ...  arrStat.count - 1 {
                     if ViewModelMeasurements.ArrStats?[data].medicalMeasurementID! == Shared.shared.MeasurementId {
-                        ViewModelMeasurements.ArrStats?[data].measurementsCount! += 1
+                        ViewModelMeasurements.ArrStats?[data].lastMeasurementValue  = "\(Shared.shared.ValueMeasurementAdded)"
+                        ViewModelMeasurements.ArrStats?[data].measurementsCount!  += 1
+
                         TVScreen.reloadRows(at: [IndexPath(row: 1 , section: 0)], with: .automatic)
                         Shared.shared.IsMeasurementAdded = false
                     }
@@ -225,6 +232,15 @@ extension HomeVC{
     
     @objc func refreshData() {
         ViewModel.skipCount = 0
+        
+//        ViewModel.allTipsResModel?.items = []
+//        ViewModel.interestingTipsArr = []
+//        ViewModel.newestTipsArr = []
+//        ViewModel.mostViewedTipsArr = []
+//        ViewModelHome.responseModel?.items = []
+//        ViewModelMeasurements.ArrStats = []
+        
+        TVScreen.reloadData()
         // Place your refresh logic here, for example, fetch new data from your data source
         getTipsCategories()
         // When the refresh operation is complete, endRefreshing() to hide the refresh control

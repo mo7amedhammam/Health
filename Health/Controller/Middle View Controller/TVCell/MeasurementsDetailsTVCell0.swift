@@ -45,7 +45,7 @@ class MeasurementsDetailsTVCell0: UITableViewCell {
     }
     
     @IBAction func BUSearch(_ sender: Any) {
-        delegate.Search(Lfrom : LaDateFrom , Lto : LaDateTo)
+        delegate.Search(Lfrom : LaDateFrom , Lto : LaDateTo , btnAl : btnAll , btnYear : BtnYear , btnMonth : BtnMonth  , btnDay : BtnDay)
     }
     
     @IBAction func BUTearMonthDay(_ sender: UIButton) {
@@ -70,7 +70,7 @@ protocol MeasurementsDetailsTVCell0_Protocoal {
     
     func AllMeasurement (btnAll : UIButton , btnYear : UIButton , btnMonth : UIButton  , btnDay : UIButton )
     func TearMonthDay (tag : Int , btnAll : UIButton , btnYear : UIButton , btnMonth : UIButton  , btnDay : UIButton , Lfrom : UILabel , Lto : UILabel )
-    func Search (Lfrom : UILabel , Lto : UILabel)
+    func Search (Lfrom : UILabel , Lto : UILabel  , btnAl : UIButton , btnYear : UIButton ,  btnMonth : UIButton ,  btnDay : UIButton)
     func AddMeasurement ()
     func FromDateToDate (select : String , LaDateFrom : UILabel)
 
