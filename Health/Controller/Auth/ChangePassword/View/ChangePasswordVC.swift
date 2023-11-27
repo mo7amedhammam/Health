@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ChangePasswordVC: UIViewController  , UITextFieldDelegate, UIGestureRecognizerDelegate {
+class ChangePasswordVC: UIViewController  , UITextFieldDelegate {
     
     
     @IBOutlet weak var ViewPassword: UIView!
@@ -35,7 +35,7 @@ class ChangePasswordVC: UIViewController  , UITextFieldDelegate, UIGestureRecogn
         BtnChange.enable(false)
         hideKeyboardWhenTappedAround()
     }
-        
+    
     func textFieldDidBeginEditing(_ textField: UITextField) {
         
         if textField == TFPassword {
@@ -62,7 +62,7 @@ class ChangePasswordVC: UIViewController  , UITextFieldDelegate, UIGestureRecogn
     }
 
     @IBAction func BUBack(_ sender: Any) {
-        self.navigationController?.popToRootViewController(animated: true)
+        self.navigationController?.popViewController(animated: true)
     }
 
     
@@ -138,7 +138,7 @@ extension ChangePasswordVC {
             viewDone.imgStr = "keyicon"
             viewDone.action = {
                 viewDone.removeFromSuperview()
-                self.navigationController?.popToRootViewController(animated: true)
+                self.navigationController?.popViewController(animated: true)
 //                Helper.changeRootVC(newroot: LoginVC.self,transitionFrom: .fromLeft)
             }
         }

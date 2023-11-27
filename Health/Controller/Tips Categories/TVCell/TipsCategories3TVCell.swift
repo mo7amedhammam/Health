@@ -72,6 +72,8 @@ extension TipsCategories3TVCell:UICollectionViewDataSource,UICollectionViewDeleg
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TipDetailsDrugGroup", for: indexPath) as! TipDetailsDrugGroup
         let model = model?.drugGroups?[indexPath.row]
         cell.LaDrugTitle.text = model?.title
+        cell.LaDrugTitle.font = UIFont(name: "LamaSans-Medium", size: 10)
+
         return cell
     }
     

@@ -295,6 +295,7 @@ class NotificationVC: UIViewController  {
         ArrDrugStringSearch.removeAll()
         ArrDrugStringSearch = ArrDrugString
         ViewAddNewNotification.isHidden = true
+        self.view.endEditing(true)
     }
     
     
@@ -373,6 +374,8 @@ class NotificationVC: UIViewController  {
             PickerDate.minimumDate = Date()
             PickerDate.maximumDate = nil
             PickerDate.datePickerMode = .date
+            PickerDate.date = Date()
+            
             ViewSelectDate.isHidden = false
 
         } else if sender.tag == 2 {
@@ -558,6 +561,8 @@ extension NotificationVC {
                 ViewModel.skipCount      = 0
                 ViewModel.customerId     =  Helper.getUser()?.id // they take it from token
                 ViewAddNewNotification.isHidden = true
+                self.view.endEditing(true)
+
                 getNotifications()
 
                 Hud.dismiss(from: self.view)

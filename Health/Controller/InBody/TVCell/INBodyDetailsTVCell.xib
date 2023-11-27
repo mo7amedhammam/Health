@@ -38,10 +38,10 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kZx-E6-8ky">
                                         <rect key="frame" x="0.0" y="0.0" width="280" height="200"/>
                                         <subviews>
-                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="inbodyCalories" translatesAutoresizingMaskIntoConstraints="NO" id="7FH-HP-VNf">
-                                                <rect key="frame" x="15" y="0.0" width="250" height="200"/>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="inbodyCalories" translatesAutoresizingMaskIntoConstraints="NO" id="7FH-HP-VNf">
+                                                <rect key="frame" x="40" y="0.0" width="200" height="200"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="width" constant="250" id="LIj-jO-rqB"/>
+                                                    <constraint firstAttribute="width" constant="200" id="LIj-jO-rqB"/>
                                                     <constraint firstAttribute="height" constant="200" id="uBZ-k4-cWv"/>
                                                 </constraints>
                                             </imageView>

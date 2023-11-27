@@ -33,20 +33,90 @@ class MedicationScheduleDetailsTVCell: UITableViewCell {
             guard let model = DrugModel else{return}
             LaTitle.text = model.drugTitle
             
-            LaStartDate.text = model.startDate?.ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "yyyy/MM/dd")
-            LaClock.text = model.startDate?.ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "hh:mm a")
-        
+            LaStartDate.text = convertToStandardDateFormat(dateString : model.startDate ?? "" )
+            //LaClock.text = model.startDate?.ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "hh:mm a")
+            LaClock.text = convertStringDateToTime(dateString : model.startDate ?? ""  )
+            
             LaEvery.text = "\(model.count ?? 0) \(model.doseTimeTitle ?? "")"
             LaPeriod.text = "\(model.days ?? 0) أيام"
             
-            LaEndDate.text = model.endDate?.ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "yyyy/MM/dd")
-            
+            //LaEndDate.text = model.endDate?.ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "yyyy/MM/dd")
+            LaEndDate.text = convertToStandardDateFormat(dateString : model.endDate ?? "" )
+
             LaDescription.text = model.pharmacistComment
             LaStatus.text = model.active ?? false ? "فعّال":"مًنتهى"
             
             setactivColors(isactive: model.active ?? true)
         }
     }
+    
+    
+    func convertToStandardDateFormat(dateString: String) -> String? {
+        let possibleDateFormats = [
+            "yyyy-MM-dd'T'HH:mm:ss" ,
+            "yyyy-MM-dd'T'HH:mm:ss.SS" ,
+            "yyyy-MM-dd'T'hh:mm:ss.SSS" ,
+            "yyyy-MM-dd'T'hh:mm:ss" ,
+            "yyyy-MM-dd'T'hh:mm:ss.SS" ,
+            "yyyy-MM-dd'T'hh:mm:ss.SSS" ,
+            "yyyy-MM-dd",
+            "MM/dd/yyyy",
+            "dd/MM/yyyy",
+            "MM-dd-yyyy",
+            "dd-MM-yyyy"
+            // Add more possible date formats as needed
+        ]
+
+        let outputDateFormat = DateFormatter()
+        outputDateFormat.dateFormat = "yyyy/MM/dd"
+
+        for dateFormat in possibleDateFormats {
+            let inputDateFormat = DateFormatter()
+            inputDateFormat.dateFormat = dateFormat
+
+            if let date = inputDateFormat.date(from: dateString) {
+                let convertedDate = outputDateFormat.string(from: date)
+                return convertedDate
+            }
+        }
+
+        return dateString
+    }
+    
+    
+    
+    func convertStringDateToTime(dateString: String) -> String? {
+        let possibleDateFormats = [
+            "yyyy-MM-dd'T'HH:mm:ss" ,
+            "yyyy-MM-dd'T'HH:mm:ss.SS" ,
+            "yyyy-MM-dd'T'hh:mm:ss.SSS" ,
+            "yyyy-MM-dd'T'hh:mm:ss" ,
+            "yyyy-MM-dd'T'hh:mm:ss.SS" ,
+            "yyyy-MM-dd'T'hh:mm:ss.SSS" ,
+            "yyyy-MM-dd",
+            "MM/dd/yyyy",
+            "dd/MM/yyyy",
+            "MM-dd-yyyy",
+            "dd-MM-yyyy"
+            // Add more possible date formats as needed
+        ]
+
+        let outputDateFormat = DateFormatter()
+        outputDateFormat.dateFormat = "hh:mm a"
+
+        for dateFormat in possibleDateFormats {
+            let inputDateFormat = DateFormatter()
+            inputDateFormat.dateFormat = dateFormat
+
+            if let date = inputDateFormat.date(from: dateString) {
+                let convertedDate = outputDateFormat.string(from: date)
+                return convertedDate
+            }
+        }
+
+        return ""
+    }
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

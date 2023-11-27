@@ -89,7 +89,7 @@ extension ProfileVC : UITableViewDataSource , UITableViewDelegate {
             
             let cell = tableView.dequeueReusableCell(withIdentifier: "ProfileTVCellMiddle", for: indexPath) as! ProfileTVCellMiddle
             cell.LaTitle.text = "Inbody"
-            cell.IVPhoto.image = UIImage(named: "inbody")
+            cell.IVPhoto.image = UIImage(named: "newInbody")
             return cell
             
         } else if indexPath.row == 3 {

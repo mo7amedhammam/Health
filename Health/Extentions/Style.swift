@@ -639,6 +639,8 @@ public extension String {
       return newdate
        }
   
+    
+    
 
 }
 
@@ -758,6 +760,40 @@ extension UIViewController {
     @objc func dismissKeyboard() {
         view.endEditing(true)
     }
+    
+    
+    func convertToStandardDateFormat(dateString: String) -> String? {
+        let possibleDateFormats = [
+            "yyyy-MM-dd'T'HH:mm:ss" ,
+            "yyyy-MM-dd'T'HH:mm:ss.SS" ,
+            "yyyy-MM-dd'T'hh:mm:ss.SSS" ,
+            "yyyy-MM-dd'T'hh:mm:ss" ,
+            "yyyy-MM-dd'T'hh:mm:ss.SS" ,
+            "yyyy-MM-dd'T'hh:mm:ss.SSS" ,
+            "yyyy-MM-dd",
+            "MM/dd/yyyy",
+            "dd/MM/yyyy",
+            "MM-dd-yyyy",
+            "dd-MM-yyyy"
+            // Add more possible date formats as needed
+        ]
+
+        let outputDateFormat = DateFormatter()
+        outputDateFormat.dateFormat = "yyyy/MM/dd"
+
+        for dateFormat in possibleDateFormats {
+            let inputDateFormat = DateFormatter()
+            inputDateFormat.dateFormat = dateFormat
+
+            if let date = inputDateFormat.date(from: dateString) {
+                let convertedDate = outputDateFormat.string(from: date)
+                return convertedDate
+            }
+        }
+
+        return dateString
+    }
+    
 }
 
 

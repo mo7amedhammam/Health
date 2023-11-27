@@ -72,15 +72,17 @@ class MeasurementsDetailsVC: UIViewController {
     
     @IBAction func BUDoneSelectedDateandTime(_ sender: Any) {
         
-        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm"
-        formatter.locale     = Locale(identifier: "en")
-        let strDate = formatter.string(from: PickerDate.date )
-        formatter.dateStyle = .medium
-        formatter.timeStyle = .none
-        self.view.endEditing(true)
-        print(strDate)
+      
         
         if selectDateFrom == "new" {
+            formatter.dateFormat = "yyyy-MM-dd'T'HH:mm"
+            formatter.locale     = Locale(identifier: "en")
+            let strDate = formatter.string(from: PickerDate.date )
+            formatter.dateStyle = .medium
+            formatter.timeStyle = .none
+            self.view.endEditing(true)
+            print(strDate)
+            
             let forma = DateFormatter()
             forma.dateFormat = "yyyy-MM-dd hh:mm a"
             forma.locale     = Locale(identifier: "en")
@@ -90,10 +92,26 @@ class MeasurementsDetailsVC: UIViewController {
             measurementDate = strDate
             
         } else if selectDateFrom == "from" {
+            formatter.dateFormat = "yyyy-MM-dd"
+            formatter.locale     = Locale(identifier: "en")
+            let strDate = formatter.string(from: PickerDate.date )
+            formatter.dateStyle = .medium
+            formatter.timeStyle = .none
+            self.view.endEditing(true)
+            print(strDate)
+            
             CellDateFrom = strDate
             let indexPath = IndexPath(row: 0, section: 0)
             TVScreen.reloadRows(at: [indexPath], with: .automatic)
         } else if selectDateFrom == "to" {
+            formatter.dateFormat = "yyyy-MM-dd"
+            formatter.locale     = Locale(identifier: "en")
+            let strDate = formatter.string(from: PickerDate.date )
+            formatter.dateStyle = .medium
+            formatter.timeStyle = .none
+            self.view.endEditing(true)
+            print(strDate)
+            
             CellDateTo = strDate
             let indexPath = IndexPath(row: 0, section: 0)
             TVScreen.reloadRows(at: [indexPath], with: .automatic)
@@ -136,6 +154,8 @@ class MeasurementsDetailsVC: UIViewController {
         
         PickerDate.minimumDate = nil
         PickerDate.maximumDate =  Date()
+        PickerDate.datePickerMode = .dateAndTime
+        PickerDate.date = Date()
         
         selectDateFrom = "new"
         ViewSelectDate.isHidden = false
@@ -190,6 +210,7 @@ class MeasurementsDetailsVC: UIViewController {
         TFSecondValue.text = ""
         TVDescription.text  = ""
         ViewAddMeasurement.isHidden = true
+        self.view.endEditing(true)
     }
 }
 
@@ -246,9 +267,21 @@ extension MeasurementsDetailsVC {
                 TVDescription.text = ""
                 MeasurementCreated = true
                 ViewAddMeasurement.isHidden = true
+                self.view.endEditing(true)
                 TVScreen.reloadData()
                 Hud.dismiss(from: self.view)
-                SimpleAlert.shared.showAlert(title: "تم تسجيل قياس جديد"  ,message: "", viewController: self)
+                //....
+                guard let vc = initiateViewController(storyboardName: .main, viewControllerIdentifier: MeasurementsDetailsFiltterVC.self) else { return }
+                vc.From = ""
+                vc.To   = ""
+                vc.NormalFrom = ViewModel.ArrNormalRange?.fromValue ?? ""
+                vc.NormalTo   = ViewModel.ArrNormalRange?.toValue ?? ""
+                vc.TitleMeasurement = TitleMeasurement
+                vc.id = id
+                vc.new = 1
+                vc.hidesBottomBarWhenPushed = true
+                navigationController?.pushViewController(vc, animated: true)
+            
                 
             case .error(_,let error):
                 Hud.dismiss(from: self.view)
@@ -268,7 +301,9 @@ extension MeasurementsDetailsVC : UITableViewDataSource , UITableViewDelegate , 
         if select == "from" {
             PickerDate.minimumDate = nil
             PickerDate.maximumDate = Date()
-            
+            PickerDate.datePickerMode = .date
+            PickerDate.date = Date()
+
             ViewSelectDate.isHidden     = false
             selectDateFrom = "from"
         } else {
@@ -289,6 +324,8 @@ extension MeasurementsDetailsVC : UITableViewDataSource , UITableViewDelegate , 
                 PickerDate.minimumDate    = minDate
                 //                PickerDate.maximumDate    = Calendar.current.date(byAdding: .year, value: 10, to: Date())
                 PickerDate.maximumDate    = Date()
+                PickerDate.datePickerMode = .date
+                PickerDate.date = Date()
                 
                 ViewSelectDate.isHidden     = false
                 selectDateFrom = "to"
@@ -665,6 +702,28 @@ extension MeasurementsDetailsVC : UITableViewDataSource , UITableViewDelegate , 
             num += 1
             cell.LaNum.text = "\(num)"
             MeasurementCreated = false
+            //................................
+            cell.btnAll.backgroundColor = .clear
+            cell.btnAll.setTitleColor(UIColor(named: "main") , for: .normal)
+            cell.btnAll.borderColor = UIColor(named: "main")
+            
+            cell.BtnYear.backgroundColor = .clear
+            cell.BtnYear.setTitleColor( UIColor(named: "main") , for: .normal)
+            cell.BtnYear.borderColor = UIColor(named: "main")
+            
+            cell.BtnMonth.backgroundColor = .clear
+            cell.BtnMonth.setTitleColor( UIColor(named: "main") , for: .normal)
+            cell.BtnMonth.borderColor = UIColor(named: "main")
+            
+            cell.BtnDay.backgroundColor = .clear
+            cell.BtnDay.setTitleColor( UIColor(named: "main") , for: .normal)
+            cell.BtnDay.borderColor = UIColor(named: "main")
+            
+            cell.BtnDay.isSelected = false
+            cell.BtnMonth.isSelected = false
+            cell.BtnYear.isSelected   = false
+                        
+            
         } else {
             cell.LaNum.text = "\(num)"
         }

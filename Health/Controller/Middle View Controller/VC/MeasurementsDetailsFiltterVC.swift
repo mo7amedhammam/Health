@@ -17,7 +17,7 @@ class MeasurementsDetailsFiltterVC: UIViewController {
 
     var NormalFrom = ""
     var NormalTo   = ""
-
+    var new  = 0
     var From = ""
     var To   = ""
     var id   = 0
@@ -54,6 +54,13 @@ class MeasurementsDetailsFiltterVC: UIViewController {
         
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if new == 1 {
+            SimpleAlert.shared.showAlert(title: "تم تسجيل قياس جديد"  ,message: "", viewController: self)
+        }
+    }
+
     
     @IBAction func BUBack(_ sender: Any) {
         navigationController?.popViewController(animated: true)

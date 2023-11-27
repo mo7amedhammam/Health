@@ -8,7 +8,7 @@
 import UIKit
 
 class MedicationScheduleDetailsVC: UIViewController {
-
+    
     @IBOutlet weak var TVScreen: UITableView!
     @IBOutlet weak var LaStartDate: UILabel!
     @IBOutlet weak var LaEndDate: UILabel!
@@ -16,7 +16,7 @@ class MedicationScheduleDetailsVC: UIViewController {
     @IBOutlet weak var LaRenewalDate: UILabel!
     
     @IBOutlet weak var LaTitleBare: UILabel!
-
+    
     
     var schedualM:MedicationScheduleItem? = MedicationScheduleItem()
     let ViewModel = MedicationScheduleDetailsVM()
@@ -25,7 +25,7 @@ class MedicationScheduleDetailsVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         LaTitleBare.text = TitleBare
         // Do any additional setup after loading the view.
         TVScreen.dataSource = self
@@ -44,9 +44,9 @@ class MedicationScheduleDetailsVC: UIViewController {
     }
     
     @IBAction func BUNotification(_ sender: Any) {
-
+        
     }
-
+    
 }
 
 
@@ -65,18 +65,24 @@ extension MedicationScheduleDetailsVC : UITableViewDataSource , UITableViewDeleg
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-      
+        
     }
     
 }
 
 extension MedicationScheduleDetailsVC {
+    
     func SetCurrentSched(){
-         let model = schedualM
-            LaStartDate.text = model?.startDate?.ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "yyyy/MM/dd")
-            LaEndDate.text = model?.endDate?.ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "yyyy/MM/dd")
-            LaRenewalDate.text = model?.renewDate?.ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "yyyy/MM/dd hh:mm a")
-            LaDrugsCount.text = "\(model?.drugsCount ?? 0)"
+        let model = schedualM
+        
+        LaStartDate.text = convertToStandardDateFormat(dateString: model?.startDate ?? "")
+        LaEndDate.text = convertToStandardDateFormat(dateString: model?.endDate ?? "")
+        LaRenewalDate.text = convertToStandardDateFormat(dateString: model?.renewDate ?? "")
+        
+        //            LaStartDate.text = model?.startDate?.ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "yyyy/MM/dd")
+        //            LaEndDate.text = model?.endDate?.ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "yyyy/MM/dd")
+        //            LaRenewalDate.text = model?.renewDate?.ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "yyyy/MM/dd hh:mm a")
+        LaDrugsCount.text = "\(model?.drugsCount ?? 0)"
     }
     
     func GetMedicationScheduleDrugs() {

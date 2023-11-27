@@ -14,7 +14,6 @@ class TipsCategoriesDetailsVC: UIViewController {
     @IBOutlet weak var LaTitle: UILabel!
     @IBOutlet weak var LaType: UILabel!
     @IBOutlet weak var LaDate: UILabel!
-    @IBOutlet weak var LaDescription: UILabel!
     @IBOutlet weak var CVDrugGroups: UICollectionView!
     
     @IBOutlet weak var ViewFirst: UIView!
@@ -121,6 +120,7 @@ extension TipsCategoriesDetailsVC:UICollectionViewDataSource,UICollectionViewDel
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TipDetailsDrugGroup", for: indexPath) as! TipDetailsDrugGroup
         let model = ViewModel?.tipDetailsRes?.drugGroups?[indexPath.row]
+        cell.LaDrugTitle.font = UIFont(name: "LamaSans-Medium", size: 15)
         cell.LaDrugTitle.text = model?.title
         return cell
     }

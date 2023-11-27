@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ForgetPasswordVC: UIViewController , UITextFieldDelegate {
+class ForgetPasswordVC: UIViewController , UITextFieldDelegate , UIGestureRecognizerDelegate {
     
     @IBOutlet weak var ViewPassword: UIView!
     @IBOutlet weak var TFPassword: UITextField!
@@ -29,6 +29,13 @@ class ForgetPasswordVC: UIViewController , UITextFieldDelegate {
         BtnReset.enable(false)
 
         hideKeyboardWhenTappedAround()
+        
+        navigationController?.interactivePopGestureRecognizer?.delegate = self
+
+    }
+    
+    func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+        return false
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
@@ -71,7 +78,6 @@ class ForgetPasswordVC: UIViewController , UITextFieldDelegate {
     }
     
     @IBAction func BUBack(_ sender: Any) {
-//        self.navigationController?.popViewController(animated: true)
         self.navigationController?.popToRootViewController(animated: true)
     }    
     
