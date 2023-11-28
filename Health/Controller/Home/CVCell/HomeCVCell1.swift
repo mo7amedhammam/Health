@@ -21,7 +21,7 @@ class HomeCVCell1: UICollectionViewCell {
             guard let model = model else{return}
             LaTitle.text = model.title
             LaCount.text = "\(model.lastMeasurementValue ?? "0")"
-            LaDate.text = model.lastMeasurementDate?.ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "yyyy/MM/dd")
+            LaDate.text = convertToStandardDateFormat(dateString: model.lastMeasurementDate ?? "")
 
             if LaCount.text == "0" {
                 ViewDate.isHidden = true
@@ -35,6 +35,40 @@ class HomeCVCell1: UICollectionViewCell {
             }
             
         }
+    }
+    
+    
+    func convertToStandardDateFormat(dateString: String) -> String? {
+        let possibleDateFormats = [
+            "yyyy-MM-dd'T'HH:mm" ,
+            "yyyy-MM-dd'T'HH:mm:ss" ,
+            "yyyy-MM-dd'T'HH:mm:ss.SS" ,
+            "yyyy-MM-dd'T'hh:mm:ss.SSS" ,
+            "yyyy-MM-dd'T'hh:mm:ss" ,
+            "yyyy-MM-dd'T'hh:mm:ss.SS" ,
+            "yyyy-MM-dd'T'hh:mm:ss.SSS" ,
+            "yyyy-MM-dd",
+            "MM/dd/yyyy",
+            "dd/MM/yyyy",
+            "MM-dd-yyyy",
+            "dd-MM-yyyy"
+            // Add more possible date formats as needed
+        ]
+
+        let outputDateFormat = DateFormatter()
+        outputDateFormat.dateFormat = "yyyy/MM/dd"
+
+        for dateFormat in possibleDateFormats {
+            let inputDateFormat = DateFormatter()
+            inputDateFormat.dateFormat = dateFormat
+
+            if let date = inputDateFormat.date(from: dateString) {
+                let convertedDate = outputDateFormat.string(from: date)
+                return convertedDate
+            }
+        }
+
+        return dateString
     }
     override func awakeFromNib() {
         super.awakeFromNib()

@@ -8,7 +8,6 @@
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
-        <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -5192,50 +5191,22 @@
                                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="N5E-mG-lTL">
                                                                                 <rect key="frame" x="0.0" y="5" width="393" height="367"/>
                                                                                 <subviews>
-                                                                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="ks7-ZH-vhH">
-                                                                                        <rect key="frame" x="15" y="10" width="363" height="347"/>
-                                                                                        <subviews>
-                                                                                            <wkWebView contentMode="scaleToFill" semanticContentAttribute="forceRightToLeft" translatesAutoresizingMaskIntoConstraints="NO" id="InV-zh-8O5">
-                                                                                                <rect key="frame" x="0.0" y="0.0" width="363" height="237"/>
-                                                                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                                                <wkWebViewConfiguration key="configuration">
-                                                                                                    <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
-                                                                                                    <wkPreferences key="preferences"/>
-                                                                                                </wkWebViewConfiguration>
-                                                                                            </wkWebView>
-                                                                                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="center" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="WDs-NZ-Xn0">
-                                                                                                <rect key="frame" x="0.0" y="267" width="363" height="80"/>
-                                                                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                                                <constraints>
-                                                                                                    <constraint firstAttribute="height" constant="80" id="wMW-41-Jzu"/>
-                                                                                                </constraints>
-                                                                                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="efk-qS-7xQ">
-                                                                                                    <size key="itemSize" width="128" height="128"/>
-                                                                                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                                                                                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                                                                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                                                                                </collectionViewFlowLayout>
-                                                                                                <cells>
-                                                                                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="UuE-ys-LiD">
-                                                                                                        <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
-                                                                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                                                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="H8G-vj-mSm">
-                                                                                                            <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
-                                                                                                            <autoresizingMask key="autoresizingMask"/>
-                                                                                                        </collectionViewCellContentView>
-                                                                                                    </collectionViewCell>
-                                                                                                </cells>
-                                                                                            </collectionView>
-                                                                                        </subviews>
-                                                                                    </stackView>
+                                                                                    <wkWebView contentMode="scaleToFill" semanticContentAttribute="forceRightToLeft" translatesAutoresizingMaskIntoConstraints="NO" id="InV-zh-8O5">
+                                                                                        <rect key="frame" x="10" y="0.0" width="373" height="367"/>
+                                                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                                        <wkWebViewConfiguration key="configuration">
+                                                                                            <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
+                                                                                            <wkPreferences key="preferences" minimumFontSize="14"/>
+                                                                                        </wkWebViewConfiguration>
+                                                                                    </wkWebView>
                                                                                 </subviews>
                                                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                                 <constraints>
-                                                                                    <constraint firstItem="ks7-ZH-vhH" firstAttribute="leading" secondItem="N5E-mG-lTL" secondAttribute="leading" constant="15" id="3ft-T6-WPi"/>
-                                                                                    <constraint firstAttribute="trailing" secondItem="ks7-ZH-vhH" secondAttribute="trailing" constant="15" id="JMM-EY-TIB"/>
-                                                                                    <constraint firstItem="ks7-ZH-vhH" firstAttribute="top" secondItem="N5E-mG-lTL" secondAttribute="top" constant="10" id="Q6l-FC-85a"/>
+                                                                                    <constraint firstItem="InV-zh-8O5" firstAttribute="top" secondItem="N5E-mG-lTL" secondAttribute="top" id="Zji-XW-rxA"/>
                                                                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="287" id="j5Z-as-exn"/>
-                                                                                    <constraint firstAttribute="bottom" secondItem="ks7-ZH-vhH" secondAttribute="bottom" constant="10" id="xvw-XV-KP8"/>
+                                                                                    <constraint firstItem="InV-zh-8O5" firstAttribute="leading" secondItem="N5E-mG-lTL" secondAttribute="leading" constant="10" id="sdW-vY-Smn"/>
+                                                                                    <constraint firstAttribute="trailing" secondItem="InV-zh-8O5" secondAttribute="trailing" constant="10" id="uzh-V1-A0m"/>
+                                                                                    <constraint firstAttribute="bottom" secondItem="InV-zh-8O5" secondAttribute="bottom" id="xVQ-ZN-LpV"/>
                                                                                 </constraints>
                                                                                 <userDefinedRuntimeAttributes>
                                                                                     <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
@@ -5303,7 +5274,6 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="CVDrugGroups" destination="WDs-NZ-Xn0" id="8ZE-Qr-wjz"/>
                         <outlet property="ImgTipDetails" destination="VNf-HH-0cu" id="T4O-xB-uc1"/>
                         <outlet property="LaDate" destination="8gZ-HO-3hS" id="hmH-PO-FFN"/>
                         <outlet property="LaTitle" destination="dyS-1o-ixh" id="J6u-Oh-2w8"/>
@@ -6028,9 +5998,6 @@
         </scene>
     </scenes>
     <designables>
-        <designable name="c0I-bP-9rf">
-            <size key="intrinsicContentSize" width="115.66666666666667" height="26"/>
-        </designable>
         <designable name="dxe-N1-yU6">
             <size key="intrinsicContentSize" width="-1" height="83"/>
         </designable>

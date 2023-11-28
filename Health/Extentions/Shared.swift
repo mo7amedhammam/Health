@@ -32,4 +32,5 @@ final class Shared {
     var MeasurementId = 0
     var IsMeasurementAdded = false
     var ValueMeasurementAdded = ""
+    var DateMeasurementAdded = ""
 }

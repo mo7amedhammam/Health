@@ -764,6 +764,7 @@ extension UIViewController {
     
     func convertToStandardDateFormat(dateString: String) -> String? {
         let possibleDateFormats = [
+            "yyyy-MM-dd'T'HH:mm" ,
             "yyyy-MM-dd'T'HH:mm:ss" ,
             "yyyy-MM-dd'T'HH:mm:ss.SS" ,
             "yyyy-MM-dd'T'hh:mm:ss.SSS" ,

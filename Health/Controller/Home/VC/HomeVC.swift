@@ -50,7 +50,8 @@ class HomeVC: UIViewController {
                 for data in 0 ...  arrStat.count - 1 {
                     if ViewModelMeasurements.ArrStats?[data].medicalMeasurementID! == Shared.shared.MeasurementId {
                         ViewModelMeasurements.ArrStats?[data].lastMeasurementValue  = "\(Shared.shared.ValueMeasurementAdded)"
-                        ViewModelMeasurements.ArrStats?[data].measurementsCount!  += 1
+                        ViewModelMeasurements.ArrStats?[data].measurementsCount!   += 1
+                        ViewModelMeasurements.ArrStats?[data].lastMeasurementDate   = Shared.shared.DateMeasurementAdded
 
                         TVScreen.reloadRows(at: [IndexPath(row: 1 , section: 0)], with: .automatic)
                         Shared.shared.IsMeasurementAdded = false
@@ -149,8 +150,8 @@ extension HomeVC : UITableViewDataSource , UITableViewDelegate {
                     let cell = tableView.dequeueReusableCell(withIdentifier: "HomeTVCell1", for: indexPath) as! HomeTVCell1
                     cell.nav =  self.navigationController
 //                    cell.DataSourseDeledate()
+                    cell.CollectionHome.reloadData()
                     cell.indexx = indexPath.row
-                    
                     cell.ViewModel = ViewModel
                     cell.HViewCell.constant = 320
                     cell.BtnMore.isHidden   = false

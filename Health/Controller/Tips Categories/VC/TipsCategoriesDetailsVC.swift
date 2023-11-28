@@ -14,7 +14,7 @@ class TipsCategoriesDetailsVC: UIViewController {
     @IBOutlet weak var LaTitle: UILabel!
     @IBOutlet weak var LaType: UILabel!
     @IBOutlet weak var LaDate: UILabel!
-    @IBOutlet weak var CVDrugGroups: UICollectionView!
+//    @IBOutlet weak var CVDrugGroups: UICollectionView!
     
     @IBOutlet weak var ViewFirst: UIView!
     @IBOutlet weak var ViewSecond: UIView!
@@ -26,7 +26,7 @@ class TipsCategoriesDetailsVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.webView.scrollView.delegate = self
+//        self.webView.scrollView.delegate = self
         setInits()
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -84,13 +84,12 @@ extension TipsCategoriesDetailsVC {
         guard let htmlString = model.description else {return}
         webView.loadHTMLStringWithAutoDirection(htmlString)
 
+        print("model.description : \(model.description)")
         LaType.text = model.tipCategoryTitle
         LaDate.text = model.date?.ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "dd / MM / yyyy hh:mm a")
-        CVDrugGroups.reloadData()
+//        CVDrugGroups.reloadData()
     }
-}
-
-extension TipsCategoriesDetailsVC:UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout{
+    
     fileprivate func setInits() {
         let cornerRadius: CGFloat = 60.0
         let maskLayer = CAShapeLayer()
@@ -107,33 +106,38 @@ extension TipsCategoriesDetailsVC:UICollectionViewDataSource,UICollectionViewDel
         ViewFirst.layer.maskedCorners = [.layerMinXMaxYCorner ]
         
         // drup groups collection tags .
-        CVDrugGroups.dataSource = self
-        CVDrugGroups.delegate = self
-        CVDrugGroups.registerCell(cellClass: TipDetailsDrugGroup.self)
-        CVDrugGroups.transform = CGAffineTransform(scaleX: -1, y: 1) //first tip mirror effect for x -> second in cell
+//        CVDrugGroups.dataSource = self
+//        CVDrugGroups.delegate = self
+//        CVDrugGroups.registerCell(cellClass: TipDetailsDrugGroup.self)
+//        CVDrugGroups.transform = CGAffineTransform(scaleX: -1, y: 1) //first tip mirror effect for x -> second in cell
         
     }
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return ViewModel?.tipDetailsRes?.drugGroups?.count ?? 0
-    }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TipDetailsDrugGroup", for: indexPath) as! TipDetailsDrugGroup
-        let model = ViewModel?.tipDetailsRes?.drugGroups?[indexPath.row]
-        cell.LaDrugTitle.font = UIFont(name: "LamaSans-Medium", size: 15)
-        cell.LaDrugTitle.text = model?.title
-        return cell
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        // Calculate and return the size of the cell based on your content
-        return CGSize(width: collectionView.bounds.width, height: 30)
-    }
-
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 10.0 // Adjust the spacing between cells as needed
-    }
 }
+//
+//extension TipsCategoriesDetailsVC:UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout{
+//
+//    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+//        return ViewModel?.tipDetailsRes?.drugGroups?.count ?? 0
+//    }
+//
+//    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+//        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TipDetailsDrugGroup", for: indexPath) as! TipDetailsDrugGroup
+//        let model = ViewModel?.tipDetailsRes?.drugGroups?[indexPath.row]
+//        cell.LaDrugTitle.font = UIFont(name: "LamaSans-Medium", size: 15)
+//        cell.LaDrugTitle.text = model?.title
+//        return cell
+//    }
+//
+//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+//        // Calculate and return the size of the cell based on your content
+//        return CGSize(width: collectionView.bounds.width, height: 30)
+//    }
+//
+//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+//        return 10.0 // Adjust the spacing between cells as needed
+//    }
+//}
 
 
 

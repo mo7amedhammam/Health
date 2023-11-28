@@ -25,7 +25,17 @@ extension WKWebView {
                     text-align: right; /* Right-align text */
                     padding-left: 15px; /* Add 10px padding to the left */
                     padding-right: 15px;
+                    padding-bottom: 50px; /* Add 50px padding to the bottom */
                 }
+        
+          footer {
+            font-size: 60px; /* Increase the font size for the footer */
+            padding-top: 20px; /* Add 20px padding to the top of the footer */
+            background-color: #CCCCCC; /* Change the background color of the footer */
+            text-align: center; /* Center-align text in the footer */
+                   
+        }
+        
             </style>
         """
         

@@ -257,9 +257,10 @@ extension MeasurementsDetailsVC {
                 Hud.dismiss(from: self.view)
             case .success:
                 
+                Shared.shared.DateMeasurementAdded = measurementDate
                 Shared.shared.ValueMeasurementAdded = "\(TFNumMeasure.text!.convertedDigitsToLocale(Locale(identifier: "EN")))"
                 Shared.shared.IsMeasurementAdded = true
-                
+
                 measurementDate = ""
                 TFDate.text = ""
                 TFNumMeasure.text = ""

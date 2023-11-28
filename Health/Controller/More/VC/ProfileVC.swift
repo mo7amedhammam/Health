@@ -12,6 +12,8 @@ class ProfileVC: UIViewController {
     @IBOutlet weak var TVscreen: UITableView!
     
     let ViewModel = ProfileVM()
+    var selected = 0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -83,6 +85,11 @@ extension ProfileVC : UITableViewDataSource , UITableViewDelegate {
             let cell = tableView.dequeueReusableCell(withIdentifier: "ProfileTVCellMiddle", for: indexPath) as! ProfileTVCellMiddle
             cell.LaTitle.text = "نصائح طبية"
             cell.IVPhoto.image = UIImage(named: "instruction")
+            if selected == 1 {
+                cell.ViewColor.backgroundColor = UIColor(named: "secondary")
+            } else {
+                cell.ViewColor.backgroundColor = .clear
+            }
             return cell
             
         } else if indexPath.row == 2 {
@@ -90,6 +97,12 @@ extension ProfileVC : UITableViewDataSource , UITableViewDelegate {
             let cell = tableView.dequeueReusableCell(withIdentifier: "ProfileTVCellMiddle", for: indexPath) as! ProfileTVCellMiddle
             cell.LaTitle.text = "Inbody"
             cell.IVPhoto.image = UIImage(named: "newInbody")
+            
+            if selected == 2 {
+                cell.ViewColor.backgroundColor = UIColor(named: "secondary")
+            } else {
+                cell.ViewColor.backgroundColor = .clear
+            }
             return cell
             
         } else if indexPath.row == 3 {
@@ -102,6 +115,11 @@ extension ProfileVC : UITableViewDataSource , UITableViewDelegate {
             let cell = tableView.dequeueReusableCell(withIdentifier: "ProfileTVCellMiddle", for: indexPath) as! ProfileTVCellMiddle
             cell.LaTitle.text = "تغيير كلمة المرور"
             cell.IVPhoto.image = UIImage(named: "location")
+            if selected == 4 {
+                cell.ViewColor.backgroundColor = UIColor(named: "secondary")
+            } else {
+                cell.ViewColor.backgroundColor = .clear
+            }
             return cell
             
         } else if indexPath.row == 5 {
@@ -109,6 +127,11 @@ extension ProfileVC : UITableViewDataSource , UITableViewDelegate {
             let cell = tableView.dequeueReusableCell(withIdentifier: "ProfileTVCellMiddle", for: indexPath) as! ProfileTVCellMiddle
             cell.LaTitle.text = "الحماية والخصوصية"
             cell.IVPhoto.image = UIImage(named: "protection")
+            if selected == 5 {
+                cell.ViewColor.backgroundColor = UIColor(named: "secondary")
+            } else {
+                cell.ViewColor.backgroundColor = .clear
+            }
             return cell
             
         } else if indexPath.row == 6 {
@@ -116,6 +139,11 @@ extension ProfileVC : UITableViewDataSource , UITableViewDelegate {
             let cell = tableView.dequeueReusableCell(withIdentifier: "ProfileTVCellMiddle", for: indexPath) as! ProfileTVCellMiddle
             cell.LaTitle.text = "الشروط والأحكام"
             cell.IVPhoto.image = UIImage(named: "terms")
+            if selected == 6 {
+                cell.ViewColor.backgroundColor = UIColor(named: "secondary")
+            } else {
+                cell.ViewColor.backgroundColor = .clear
+            }
             return cell
             
         } else  {
@@ -138,18 +166,26 @@ extension ProfileVC : UITableViewDataSource , UITableViewDelegate {
 //        } else if indexPath.row == 4 { // - medecines notifications -
 
         } else if indexPath.row == 1 { // - "نصائح طبية" -
+            selected = 1
+            TVscreen.reloadData()
             PushTo(destination: TipsCategoriesVC1.self)
         } else if indexPath.row == 2 { // - inbody -
+            selected = 2
+            TVscreen.reloadData()
             PushTo(destination: INBodyVC.self)
-            
         } else if indexPath.row == 3 { // - ProfileTVCellLine -
             
         } else if indexPath.row == 4 { // - "تغيير كلمة المرور" -
+            selected = 4
+            TVscreen.reloadData()
             PushTo(destination: ChangePasswordVC.self)
-            
         } else if indexPath.row == 5 { // - "الحماية والخصوصية" -
+            selected = 5
+            TVscreen.reloadData()
             
         } else if indexPath.row == 6 { // - "الشروط والأحكام" -
+            selected = 6
+            TVscreen.reloadData()
             
         } else { // -- تسجيل خروج --
             

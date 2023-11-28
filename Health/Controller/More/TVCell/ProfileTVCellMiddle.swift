@@ -9,6 +9,7 @@ import UIKit
 
 class ProfileTVCellMiddle: UITableViewCell {
 
+    @IBOutlet weak var ViewColor: UIView!
     
     @IBOutlet weak var LaTitle: UILabel!
     @IBOutlet weak var IVPhoto: UIImageView!
