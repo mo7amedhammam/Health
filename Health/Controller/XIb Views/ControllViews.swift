@@ -24,7 +24,6 @@ extension UIViewController {
     }
     
     func CloseView_NoContent () {
-        
         UIViewController.customView_NoContent.removeFromSuperview()
     }
     

@@ -156,7 +156,7 @@ class MeasurementsDetailsVC: UIViewController {
         PickerDate.maximumDate =  Date()
         PickerDate.datePickerMode = .dateAndTime
         PickerDate.date = Date()
-        
+        self.view.endEditing(true)
         selectDateFrom = "new"
         ViewSelectDate.isHidden = false
     }

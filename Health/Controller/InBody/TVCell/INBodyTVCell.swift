@@ -23,7 +23,8 @@ class INBodyTVCell: UITableViewCell {
             if let date =  Helper.ChangeFormate(NewFormat: "yyyy-MM-dd'T'HH:mm:ss").date(from: model.date ?? ""){
                 LaDate.text = Helper.ChangeFormate(NewFormat: "yyyy/MM/dd hh:mm a").string(from: date )
             }
-            LaDescription.text = model.comment
+            LaDescription.setJustifiedRight(model.comment)
+            LaDescription.setLineHeight(lineHeight: 2)
         }
     }
     override func awakeFromNib() {

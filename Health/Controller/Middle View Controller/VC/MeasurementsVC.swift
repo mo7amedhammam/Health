@@ -122,10 +122,22 @@ extension MeasurementsVC : UICollectionViewDataSource , UICollectionViewDelegate
         let model = ViewModel.ArrStats![indexPath.row]
         print("formatValue : \( ViewModel.ArrStats![indexPath.row].formatValue!)")
         cell.LaTitle.text = model.title
-        cell.LaNum.text = "\(model.measurementsCount ?? 0 )"
-        cell.LaLastNum.text = model.lastMeasurementValue
-//        cell.LaTitle.text = model.title
-        cell.LaDate.text = model.lastMeasurementDate?.ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "yyyy/MM/dd")
+        cell.LaNum.text = "\(model.measurementsCount ?? 0)"
+
+        if model.measurementsCount == 0 {
+            cell.ViewDate.isHidden = true
+            cell.LaDate.text = ""
+        } else {
+            cell.LaDate.text = model.lastMeasurementDate?.ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "yyyy/MM/dd")
+            cell.ViewDate.isHidden = false
+        }
+        
+        if model.lastMeasurementValue == "" || model.lastMeasurementValue == nil {
+            cell.LaLastNum.text       = "0"
+        } else {
+            cell.LaLastNum.text = model.lastMeasurementValue
+        }
+                
         if let img = model.image {
             //                let processor = SVGImgProcessor() // if receive svg image
             cell.ImgMeasurement.kf.setImage(with: URL(string:Constants.baseURL + img.validateSlashs()), placeholder: UIImage(named: "defaultLogo"), options: nil, progressBlock: nil)

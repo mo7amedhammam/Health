@@ -375,7 +375,8 @@ class NotificationVC: UIViewController  {
             PickerDate.maximumDate = nil
             PickerDate.datePickerMode = .date
             PickerDate.date = Date()
-            
+            self.view.endEditing(true)
+
             ViewSelectDate.isHidden = false
 
         } else if sender.tag == 2 {

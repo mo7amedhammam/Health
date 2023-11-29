@@ -22,7 +22,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="MeasurementsCVCell" customModule="Health" customModuleProvider="target">
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="MeasurementsCVCell" customModule="Sehaty" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="216" height="270"/>
             <autoresizingMask key="autoresizingMask"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -191,6 +191,8 @@
                 <outlet property="LaLastNum" destination="ZqR-Yr-Y8x" id="Ogo-Tg-Vzg"/>
                 <outlet property="LaNum" destination="W4b-IF-uSd" id="j5e-DV-QcD"/>
                 <outlet property="LaTitle" destination="euO-MM-bTo" id="ARt-ZR-AFq"/>
+                <outlet property="ViewDate" destination="lSZ-0d-pZR" id="r0E-kC-2vR"/>
+                <outlet property="ViewLastNum" destination="huT-qh-Hea" id="OpF-fH-fqV"/>
             </connections>
             <point key="canvasLocation" x="36.641221374045799" y="97.183098591549296"/>
         </collectionViewCell>

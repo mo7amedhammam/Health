@@ -20,6 +20,8 @@ class MeasurementsCVCell: UICollectionViewCell {
     
     @IBOutlet weak var LaDate: UILabel!
     
+    @IBOutlet weak var ViewLastNum: UIView!
+    @IBOutlet weak var ViewDate: UIView!
     
     override func awakeFromNib() {
         super.awakeFromNib()

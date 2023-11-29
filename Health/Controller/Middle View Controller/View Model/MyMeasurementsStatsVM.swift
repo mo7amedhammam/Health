@@ -156,8 +156,12 @@ class MyMeasurementsStatsVM {
     func CreateMedicalMeasurements(completion: @escaping (EventHandler?) -> Void) {
      
         guard let value = value , let medicalMeasurementId = medicalMeasurementId , let comment = comment , let measurementDate = measurementDate else {return}
-        ParametersCreate =  ["value" : value ,"medicalMeasurementId" : medicalMeasurementId , "comment" : comment , "measurementDate" : measurementDate ]
+        ParametersCreate =  ["value" : value ,"medicalMeasurementId" : medicalMeasurementId , "measurementDate" : measurementDate ]
 
+        if comment != "" {
+            ParametersCreate ["comment"] =  comment
+        }
+        
         completion(.loading)
         // Create your API request with the username and password
         let target = Measurement.CreateMeasurement(parameters: ParametersCreate)

@@ -174,7 +174,15 @@ extension INBodyDetailsVC: UIDocumentPickerDelegate {
                 }
             }
         }
-        
-        
     }
+    
+    // Start a background task when the app enters the background state
+    func applicationDidEnterBackground(_ application: UIApplication) {
+        let backgroundTaskIdentifier = application.beginBackgroundTask {
+            // download the file in the background task
+            self.DownloadReport()
+        }
+    }
+    
+    
 }

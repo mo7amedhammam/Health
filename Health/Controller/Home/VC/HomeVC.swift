@@ -117,7 +117,7 @@ extension HomeVC : UITableViewDataSource , UITableViewDelegate {
                     cell.ViewModelHome = ViewModelHome
                     
                     cell.HViewCell.constant = 220
-                    cell.BtnMore.isHidden   = false
+                    cell.BtnMore.isHidden   = true
                     cell.LaTitle.text = "الأدوية التي قاربة على الإنتهاء"
                     return cell
                 }

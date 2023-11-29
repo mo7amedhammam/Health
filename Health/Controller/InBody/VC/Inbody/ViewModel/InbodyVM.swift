@@ -49,9 +49,10 @@ extension InbodyListVM{
                     completion(.error(0, (response.message ?? "check validations")))
                     return
                 }
+                
                 if self?.skipCount == 0 {
                     self?.responseModel = response.data
-                }else{
+                } else {
                     self?.responseModel?.items?.append(contentsOf: response.data?.items ?? [])
                 }
                 completion(.success)

@@ -47,6 +47,12 @@ class MedicationScheduleDetailsTVCell: UITableViewCell {
             LaStatus.text = model.active ?? false ? "فعّال":"مًنتهى"
             
             setactivColors(isactive: model.active ?? true)
+            
+            if model.active == true {
+                LaDescription.textColor = UIColor(named: "main")
+            } else {
+                LaDescription.textColor = UIColor(named: "wrong")
+            }
         }
     }
     

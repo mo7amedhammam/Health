@@ -2755,16 +2755,16 @@
                                                         <rect key="frame" x="71.666666666666686" y="5" width="250" height="60"/>
                                                         <subviews>
                                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="lry-eX-3SX">
-                                                                <rect key="frame" x="5" y="5" width="230" height="50"/>
+                                                                <rect key="frame" x="5" y="5" width="237" height="50"/>
                                                                 <subviews>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="تسجيل قياس جديد" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kwH-IH-pZx">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="170" height="50"/>
+                                                                        <rect key="frame" x="0.0" y="0.0" width="177" height="50"/>
                                                                         <fontDescription key="fontDescription" name="LamaSans-Medium" family="Lama Sans" pointSize="18"/>
                                                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
                                                                     <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e6k-9t-HrT">
-                                                                        <rect key="frame" x="180" y="0.0" width="50" height="50"/>
+                                                                        <rect key="frame" x="187" y="0.0" width="50" height="50"/>
                                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="width" constant="50" id="EAo-Gm-kkf"/>
@@ -2800,7 +2800,7 @@
                                                             <constraint firstAttribute="bottom" secondItem="lry-eX-3SX" secondAttribute="bottom" constant="5" id="Mt7-Yx-BJo"/>
                                                             <constraint firstAttribute="trailing" secondItem="Key-sh-rcr" secondAttribute="trailing" id="OL1-Rc-a5D"/>
                                                             <constraint firstItem="lry-eX-3SX" firstAttribute="top" secondItem="9Ez-f4-DaG" secondAttribute="top" constant="5" id="OiP-xu-7hZ"/>
-                                                            <constraint firstAttribute="trailing" secondItem="lry-eX-3SX" secondAttribute="trailing" constant="15" id="blt-dE-Qiu"/>
+                                                            <constraint firstAttribute="trailing" secondItem="lry-eX-3SX" secondAttribute="trailing" constant="8" id="blt-dE-Qiu"/>
                                                             <constraint firstAttribute="bottom" secondItem="Key-sh-rcr" secondAttribute="bottom" id="cLo-1X-jXb"/>
                                                         </constraints>
                                                         <userDefinedRuntimeAttributes>
@@ -5998,6 +5998,9 @@
         </scene>
     </scenes>
     <designables>
+        <designable name="c0I-bP-9rf">
+            <size key="intrinsicContentSize" width="115.66666666666667" height="26"/>
+        </designable>
         <designable name="dxe-N1-yU6">
             <size key="intrinsicContentSize" width="-1" height="83"/>
         </designable>
