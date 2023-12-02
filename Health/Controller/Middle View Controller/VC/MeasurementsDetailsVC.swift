@@ -660,6 +660,24 @@ extension MeasurementsDetailsVC : UITableViewDataSource , UITableViewDelegate , 
     }
     
     func AddMeasurement() {
+        
+        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm"
+        formatter.locale     = Locale(identifier: "en")
+        let strDate = formatter.string(from: PickerDate.date )
+        formatter.dateStyle = .medium
+        formatter.timeStyle = .none
+        self.view.endEditing(true)
+        print(strDate)
+        
+        let forma = DateFormatter()
+        forma.dateFormat = "yyyy-MM-dd hh:mm a"
+        forma.locale     = Locale(identifier: "en")
+        let strForma = forma.string(from: PickerDate.date )
+        TFDate.text = strForma
+        
+        measurementDate = strDate
+        
+        
         ViewAddMeasurement.isHidden = false
     }
     

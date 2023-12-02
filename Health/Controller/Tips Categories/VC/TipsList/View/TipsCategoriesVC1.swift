@@ -27,18 +27,30 @@ class TipsCategoriesVC1: UIViewController {
            
            // Add the refresh control to the table view
         TVScreen.addSubview(refreshControl)
+//        getTipsCategories()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        
+        ViewModel.allTipsResModel?.items?.removeAll()
+        ViewModel.interestingTipsArr?.removeAll()
+        ViewModel.mostViewedTipsArr?.removeAll()
+        ViewModel.newestTipsArr?.removeAll()
+        ViewModel.skipCount = 0
+        TVScreen.reloadData()
+        
         getTipsCategories()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        DispatchQueue.global().asyncAfter(deadline: .now()+1, execute: {[weak self] in
-            guard let self = self else{return}
-            if ViewModel.allTipsResModel?.items == nil || ViewModel.allTipsResModel?.items == [] && Hud.isShowing == false {
-                    getTipsCategories()
-            }
-        })
-    }
+//    override func viewDidAppear(_ animated: Bool) {
+//        super.viewDidAppear(animated)
+//        DispatchQueue.global().asyncAfter(deadline: .now()+1, execute: {[weak self] in
+//            guard let self = self else{return}
+//            if ViewModel.allTipsResModel?.items == nil || ViewModel.allTipsResModel?.items == [] && Hud.isShowing == false {
+//                    getTipsCategories()
+//            }
+//        })
+//    }
     
     @IBAction func BackBtnAction(_ sender: Any) {
         navigationController?.popViewController(animated: true)

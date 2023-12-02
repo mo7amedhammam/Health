@@ -31,6 +31,7 @@ class MedicationScheduleDetailsTVCell: UITableViewCell {
     var DrugModel : MedicationScheduleDrugM?{
         didSet{
             guard let model = DrugModel else{return}
+            
             LaTitle.text = model.drugTitle
             
             LaStartDate.text = convertToStandardDateFormat(dateString : model.startDate ?? "" )

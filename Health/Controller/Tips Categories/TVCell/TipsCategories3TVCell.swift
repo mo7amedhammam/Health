@@ -54,6 +54,7 @@ class TipsCategories3TVCell: UITableViewCell {
         CVDrugGroups.delegate = self
         CVDrugGroups.registerCell(cellClass: TipDetailsDrugGroup.self)
         CVDrugGroups.transform = CGAffineTransform(scaleX: -1, y: 1) //first tip mirror effect for x -> second in cell
+        
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {

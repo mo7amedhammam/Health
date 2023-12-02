@@ -148,7 +148,7 @@ extension MeasurementsVC : UICollectionViewDataSource , UICollectionViewDelegate
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: ( collectionView.bounds.width - 20 )  / 2, height: 260)
+        return CGSize(width: ( collectionView.bounds.width - 20 )  / 2, height: 190)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
@@ -160,7 +160,7 @@ extension MeasurementsVC : UICollectionViewDataSource , UICollectionViewDelegate
         
         guard let vc = initiateViewController(storyboardName: .main, viewControllerIdentifier: MeasurementsDetailsVC.self) else{return}
         vc.ViewModel = ViewModel
-        print("array",ViewModel.ArrMeasurement)
+//        print("array",ViewModel.ArrMeasurement)
         if let model = ViewModel.ArrStats?[indexPath.row]{
             print("selectedModel",model)
             vc.id  =  model.medicalMeasurementID ?? 0
