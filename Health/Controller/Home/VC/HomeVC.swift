@@ -89,14 +89,14 @@ extension HomeVC : UITableViewDataSource , UITableViewDelegate {
                     let cell = tableView.dequeueReusableCell(withIdentifier: "HomeTVCell1", for: indexPath) as! HomeTVCell1
                     cell.nav =  self.navigationController
 //                    cell.DataSourseDeledate()
-                    cell.CollectionHome.reloadData()
-                    cell.indexx = indexPath.row
-                    cell.ViewModelMeasurements = ViewModelMeasurements
                     if ViewModelMeasurements.ArrStats?.count ?? 0 <= 3 {
                         cell.HViewCell.constant = 200
                     } else {
                         cell.HViewCell.constant = 400
                     }
+                    cell.indexx = indexPath.row
+                    cell.ViewModelMeasurements = ViewModelMeasurements
+                    cell.CollectionHome.reloadData()
                     
                     cell.BtnMore.isHidden   = true
                     cell.LaTitle.text = "قياساتك الأخيرة"
@@ -112,11 +112,11 @@ extension HomeVC : UITableViewDataSource , UITableViewDelegate {
                     let cell = tableView.dequeueReusableCell(withIdentifier: "HomeTVCell1", for: indexPath) as! HomeTVCell1
                     cell.nav =  self.navigationController
     //                cell.DataSourseDeledate()
-                    cell.CollectionHome.reloadData()
+                    cell.HViewCell.constant = 220
                     cell.indexx = indexPath.row
                     cell.ViewModelHome = ViewModelHome
+                    cell.CollectionHome.reloadData()
                     
-                    cell.HViewCell.constant = 220
                     cell.BtnMore.isHidden   = true
                     cell.LaTitle.text = "الأدوية التي قاربة على الإنتهاء"
                     return cell
@@ -131,11 +131,11 @@ extension HomeVC : UITableViewDataSource , UITableViewDelegate {
                     let cell = tableView.dequeueReusableCell(withIdentifier: "HomeTVCell1", for: indexPath) as! HomeTVCell1
                     cell.nav =  self.navigationController
 //                    cell.DataSourseDeledate()
-                    cell.CollectionHome.reloadData()
-                    cell.indexx = indexPath.row
-                    
-                    cell.ViewModel = ViewModel
                     cell.HViewCell.constant = 320
+                    cell.indexx = indexPath.row
+                    cell.ViewModel = ViewModel
+                    cell.CollectionHome.reloadData()
+                    
                     cell.BtnMore.isHidden   = false
                     cell.LaTitle.text = "نصائح حديثة"
                     return cell
@@ -150,10 +150,11 @@ extension HomeVC : UITableViewDataSource , UITableViewDelegate {
                     let cell = tableView.dequeueReusableCell(withIdentifier: "HomeTVCell1", for: indexPath) as! HomeTVCell1
                     cell.nav =  self.navigationController
 //                    cell.DataSourseDeledate()
-                    cell.CollectionHome.reloadData()
+                    cell.HViewCell.constant = 320
                     cell.indexx = indexPath.row
                     cell.ViewModel = ViewModel
-                    cell.HViewCell.constant = 320
+                    cell.CollectionHome.reloadData()
+                    
                     cell.BtnMore.isHidden   = false
                     cell.LaTitle.text = "النصائح الأكثر مشاهدة"
                     return cell
@@ -233,13 +234,15 @@ extension HomeVC{
     
     @objc func refreshData() {
         ViewModel.skipCount = 0
+        ViewModelHome.skipCount = 0
+        ViewModelMeasurements.skipCount = 0
         
-//        ViewModel.allTipsResModel?.items = []
-//        ViewModel.interestingTipsArr = []
-//        ViewModel.newestTipsArr = []
-//        ViewModel.mostViewedTipsArr = []
-//        ViewModelHome.responseModel?.items = []
-//        ViewModelMeasurements.ArrStats = []
+        ViewModel.allTipsResModel?.items = []
+        ViewModel.interestingTipsArr = []
+        ViewModel.newestTipsArr = []
+        ViewModel.mostViewedTipsArr = []
+        ViewModelHome.responseModel?.items = []
+        ViewModelMeasurements.ArrStats = []
         
         TVScreen.reloadData()
         // Place your refresh logic here, for example, fetch new data from your data source

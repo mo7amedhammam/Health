@@ -29,6 +29,7 @@ class MeasurementsVC: UIViewController {
         layout.scrollDirection = .vertical //.horizontal
         layout.minimumLineSpacing      = 0
         layout.minimumInteritemSpacing = 0
+        CollectionScreen.semanticContentAttribute = .forceRightToLeft
         CollectionScreen.setCollectionViewLayout(layout, animated: true)
         LaName.text = "\(Helper.getUser()?.name ?? "")"
     }
@@ -119,6 +120,7 @@ extension MeasurementsVC : UICollectionViewDataSource , UICollectionViewDelegate
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MeasurementsCVCell", for: indexPath) as! MeasurementsCVCell
+        
         let model = ViewModel.ArrStats![indexPath.row]
         print("formatValue : \( ViewModel.ArrStats![indexPath.row].formatValue!)")
         cell.LaTitle.text = model.title
@@ -148,11 +150,11 @@ extension MeasurementsVC : UICollectionViewDataSource , UICollectionViewDelegate
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: ( collectionView.bounds.width - 20 )  / 2, height: 190)
+        return CGSize(width: 160, height: 215)
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        return UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
         //here your custom value for spacing
     }
     

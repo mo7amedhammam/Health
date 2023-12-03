@@ -18,13 +18,19 @@ class INBodyTVCell: UITableViewCell {
     
     var inbodyitemModel : InbodyListItemM? {
         didSet{
+            
             guard let model = inbodyitemModel else {return}
             LaTitle.text = model.customerName
             if let date =  Helper.ChangeFormate(NewFormat: "yyyy-MM-dd'T'HH:mm:ss").date(from: model.date ?? ""){
                 LaDate.text = Helper.ChangeFormate(NewFormat: "yyyy/MM/dd hh:mm a").string(from: date )
+            }            
+            if model.comment == "" || model.comment == nil {
+                LaDescription.text = "لا توجد ملاحظات"
+            } else {
+                LaDescription.setJustifiedRight(model.comment)
+                LaDescription.setLineHeight(lineHeight: 2)
             }
-            LaDescription.setJustifiedRight(model.comment)
-            LaDescription.setLineHeight(lineHeight: 2)
+            
         }
     }
     override func awakeFromNib() {

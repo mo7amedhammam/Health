@@ -23,8 +23,8 @@ extension WKWebView {
                     background-color: #F5F5FF;
                     direction: rtl; /* Right-to-left direction */
                     text-align: right; /* Right-align text */
-                    padding-left: 15px; /* Add 10px padding to the left */
-                    padding-right: 15px;
+                    padding-left: 20px; /* Add 10px padding to the left */
+                    padding-right: 20px;
                     padding-bottom: 50px; /* Add 50px padding to the bottom */
                 }
         

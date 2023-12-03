@@ -134,7 +134,7 @@
                                         <rect key="frame" x="0.0" y="151" width="196" height="20"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="GiU-0R-aZH">
-                                                <rect key="frame" x="55.666666666666671" y="5.0000000000000018" width="85.000000000000014" height="10.333333333333334"/>
+                                                <rect key="frame" x="55.666666666666671" y="5.0000000000000009" width="85.000000000000014" height="10.333333333333336"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" 27/6/2022" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="s2L-SW-ffG">
                                                         <rect key="frame" x="0.0" y="0.0" width="51" height="10.333333333333334"/>

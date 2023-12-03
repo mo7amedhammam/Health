@@ -53,6 +53,9 @@ class SignUp: UIViewController  , UITextFieldDelegate{
         TFCode.delegate = self
         BtnCode.isHidden = true
         
+       TFName.addTarget(self, action: #selector(didTapSearchButton), for: .editingDidEndOnExit)
+        TFCode.addTarget(self, action: #selector(didTapSearchButtonCode), for: .editingDidEndOnExit)
+
         TFName.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         TFPhone.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         TFCode.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
@@ -73,6 +76,16 @@ class SignUp: UIViewController  , UITextFieldDelegate{
             self.getGenders()
         }
     }
+    
+    @objc func didTapSearchButton() {
+          // Resign the first responder from the UITextField.
+        TFPhone.becomeFirstResponder()
+     }
+    
+    @objc func didTapSearchButtonCode() {
+          // Resign the first responder from the UITextField.
+        TFCode.resignFirstResponder()
+     }
     
     @IBAction func BUBack(_ sender: Any) {
         self.navigationController?.popViewController(animated: true)

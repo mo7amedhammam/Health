@@ -24,9 +24,14 @@ class INBodyDetailsTVCell: UITableViewCell {
             if let date =  Helper.ChangeFormate(NewFormat: "yyyy-MM-dd'T'HH:mm:ss").date(from: model.date ?? ""){
                 LaTime.text = Helper.ChangeFormate(NewFormat: "dd/MM/yyyy hh:mm a").string(from: date )
             }
-//            LaDescrip.text = model.comment
-            LaDescrip.setJustifiedRight(model.comment)
-            LaDescrip.setLineHeight(lineHeight: 2)
+
+            if model.comment == "" || model.comment == nil {
+                LaDescrip.text = "لا توجد ملاحظات"
+            } else {
+                LaDescrip.setJustifiedRight(model.comment)
+                LaDescrip.setLineHeight(lineHeight: 2)
+            }
+            
 
         }
     }

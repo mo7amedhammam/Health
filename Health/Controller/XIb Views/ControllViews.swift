@@ -17,8 +17,10 @@ extension UIViewController {
         
         UIViewController.customView_NoContent = ViewNoData().loadNib() as! ViewNoData
         UIViewController.customView_NoContent.frame = Superview.bounds
-                
+                       
         UIViewController.customView_NoContent.LaTitle.text = title
+        UIViewController.customView_NoContent.LaTitle.setLineHeight(lineHeight: 2)
+        
         UIViewController.customView_NoContent.IVPhoto.image = UIImage(named: img)
         Superview.addSubview(UIViewController.customView_NoContent)
     }

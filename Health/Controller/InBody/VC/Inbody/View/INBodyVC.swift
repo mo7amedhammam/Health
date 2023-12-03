@@ -41,8 +41,6 @@ class INBodyVC: UIViewController {
         TVScreen.addSubview(refreshControl)
         
         GetCustomerInbodyList()
-        // Load your initial data here (e.g., fetchData())
-        //        refreshData()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -126,7 +124,7 @@ extension INBodyVC{
                 print(state)
                 CloseView_NoContent()
                 if ViewModel.responseModel?.items?.count == 0 || ViewModel.responseModel?.items == nil {
-                    LoadView_NoContent(Superview: TVScreen, title: "لا توجد ملاحظات", img: "inbody cell")
+                    LoadView_NoContent(Superview: TVScreen, title: "لا يوجد أي قياس لتحليل مكونات الجسم", img: "key-vector")
                 } else {
                     TVScreen.reloadData()
                 }

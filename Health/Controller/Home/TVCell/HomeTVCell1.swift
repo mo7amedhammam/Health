@@ -72,12 +72,12 @@ class HomeTVCell1: UITableViewCell {
     }
     
     func DataSourseDeledate () {
+             
         let layout = UICollectionViewFlowLayout()
         layout.minimumLineSpacing      = 10
         layout.minimumInteritemSpacing = 0
         layout.scrollDirection   = .horizontal
         CollectionHome.collectionViewLayout =  layout
-        CollectionHome.reloadData()
         
         CollectionHome.dataSource = self
         CollectionHome.delegate   = self
@@ -119,18 +119,21 @@ extension HomeTVCell1 : UICollectionViewDataSource , UICollectionViewDelegate , 
             return cell
         } else if indexx == 2 {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "HomeCVCell2", for: indexPath) as! HomeCVCell2
+            collectionView.isScrollEnabled = true
             if let model = ViewModelHome?.responseModel?.items?[indexPath.row]{
                 cell.model = model
             }
             return cell
         } else if indexx == 3 {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TipsCategoriesCVCell1", for: indexPath) as! TipsCategoriesCVCell1
+            collectionView.isScrollEnabled = true
             if let model = ViewModel?.newestTipsArr?[indexPath.row] {
                 cell.model = model
             }
             return cell
         } else {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TipsCategoriesCVCell1", for: indexPath) as! TipsCategoriesCVCell1
+            collectionView.isScrollEnabled = true
             if let model = ViewModel?.mostViewedTipsArr?[indexPath.row] {
                 cell.model = model
             }
@@ -160,12 +163,12 @@ extension HomeTVCell1 : UICollectionViewDataSource , UICollectionViewDelegate , 
         
         if indexx == 1 {
             if ViewModelMeasurements?.ArrStats?.count ?? 0 <= 3 {
-                return CGSize(width: (UIScreen.main.bounds.width/3) - 13.5, height: 90)
+                return CGSize(width: (UIScreen.main.bounds.width/3) - 12 , height: 90)
             } else {
-                return CGSize(width: (UIScreen.main.bounds.width/3) - 13.5, height: 170)
+                return CGSize(width: (UIScreen.main.bounds.width/3) - 12 , height: 170)
             }
         } else if indexx == 2 {
-            return CGSize(width: 350, height: 150)
+            return CGSize(width: 280, height: 150)
         } else {
             return CGSize(width: 250, height: 250)
         }

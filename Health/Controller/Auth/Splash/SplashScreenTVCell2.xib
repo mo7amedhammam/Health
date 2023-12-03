@@ -35,8 +35,8 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fX5-em-ArJ">
                                         <rect key="frame" x="0.0" y="0.0" width="326" height="648"/>
                                         <subviews>
-                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="onboarding2" translatesAutoresizingMaskIntoConstraints="NO" id="cAh-Fy-XIE">
-                                                <rect key="frame" x="0.0" y="0.0" width="326" height="648"/>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="onboarding2" translatesAutoresizingMaskIntoConstraints="NO" id="cAh-Fy-XIE">
+                                                <rect key="frame" x="0.0" y="0.0" width="306" height="648"/>
                                             </imageView>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7ki-ym-JEs">
                                                 <rect key="frame" x="0.0" y="0.0" width="326" height="648"/>
@@ -106,7 +106,7 @@
                                             <constraint firstAttribute="bottom" secondItem="cAh-Fy-XIE" secondAttribute="bottom" id="Rx8-30-UZE"/>
                                             <constraint firstItem="cAh-Fy-XIE" firstAttribute="top" secondItem="fX5-em-ArJ" secondAttribute="top" id="eU3-S1-McZ"/>
                                             <constraint firstItem="7ki-ym-JEs" firstAttribute="leading" secondItem="fX5-em-ArJ" secondAttribute="leading" id="hng-oq-AQ9"/>
-                                            <constraint firstAttribute="trailing" secondItem="cAh-Fy-XIE" secondAttribute="trailing" id="yNC-65-huH"/>
+                                            <constraint firstAttribute="trailing" secondItem="cAh-Fy-XIE" secondAttribute="trailing" constant="20" id="yNC-65-huH"/>
                                             <constraint firstAttribute="bottom" secondItem="7ki-ym-JEs" secondAttribute="bottom" id="yqO-lx-Gcx"/>
                                         </constraints>
                                     </view>

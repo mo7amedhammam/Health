@@ -32,7 +32,7 @@ class NotificationVC: UIViewController  {
     
     var selectDateFrom = ""
     let formatter = DateFormatter()
-    let timePicker = UIDatePicker()
+    var timePicker = UIDatePicker()
 
     let ViewModel = NotificationVM()
     var ArrDrugString = [String]()
@@ -62,6 +62,7 @@ class NotificationVC: UIViewController  {
                 
 //        self.PickerDate.addTarget(self, action: #selector(onDateValueChanged(_:)), for: UIControl.Event.valueChanged)
 
+        timePicker = UIDatePicker()
         timePicker.datePickerMode = .time
         // Create toolbar where a "Done" button will go
         let toolbar = UIToolbar()
@@ -72,7 +73,7 @@ class NotificationVC: UIViewController  {
         // Assign toolbar to the top of the text field input view
         TFClock.inputAccessoryView = toolbar
         // Assign date picker as the input view for the text field
-        TFClock.inputView = timePicker
+//        TFClock.inputView = timePicker
         //
         ViewAddNewNotification.isHidden = true
         ViewSelectDate.isHidden         = true
@@ -312,6 +313,16 @@ class NotificationVC: UIViewController  {
         }
     }
     
+    @IBAction func BUSelectTime(_ sender: UIButton) {
+     
+        timePicker = UIDatePicker()
+        timePicker.datePickerMode = .time
+        // Show the time picker
+        TFClock.inputView = timePicker
+        TFClock.becomeFirstResponder()
+
+    }
+    
     @objc private func buttonTappedDone(_ datePicker: UIDatePicker) {
         let selectedTime = timePicker.date
         let dateFormatter = DateFormatter()
@@ -357,8 +368,7 @@ class NotificationVC: UIViewController  {
         
         print("ClockAmPm : \(ClockAmPm)")
         print("ClockAmPm : \(ClockAmPm)")
-        
-        self.view.endEditing(true)
+        TFClock.resignFirstResponder() // Dismiss the keyboard
     }
     
     @IBAction func BUSelectStartClockEnd(_ sender: UIButton) {
