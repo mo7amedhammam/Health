@@ -17,33 +17,33 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         window?.overrideUserInterfaceStyle = .light
-//        guard let _ = (scene as? UIWindowScene) else { return }
+        guard let _ = (scene as? UIWindowScene) else { return }
         
-//        MARK: -- Programatically --
-        guard let WindowScene = (scene as? UIWindowScene) else { return }
-        self.window = UIWindow(windowScene: WindowScene)
-        
-//        MARK: -- if uikit --
-        var vc : UIViewController = UIViewController()
-        if !Helper.checkOnBoard() {
-            guard let targetvc = initiateViewController(storyboardName: .main, viewControllerIdentifier: SplashScreenVC.self) else {return}
-            vc = targetvc
-        }else{
-            guard let targetvc = initiateViewController(storyboardName: .main, viewControllerIdentifier: Helper.CheckIfLoggedIn() ? HTBC.self : LoginVC.self) else {return}
-//            guard let targetvc = initiateViewController(storyboardName: .main, viewControllerIdentifier: ChangePasswordVC.self) else {return}
-            
-            vc = targetvc
-        }
-//        guard let vc = initiateViewController(storyboardName: .main, viewControllerIdentifier: (Helper.checkOnBoard() ? (Helper.CheckIfLoggedIn() ? HTBC.self as? HTBC.Type : LoginVC.self as? LoginVC.)  : SplashScreenVC.self)) else {return}
-
-////        MARK: -- if SwiftUI --
-////        let vc = UIHostingController(rootView: SwiftuiTest())
-
-        let nav = UINavigationController(rootViewController: vc)
-        nav.navigationBar.isHidden = true
-        self.window?.rootViewController = nav
-        window?.makeKeyAndVisible()
-        
+////        MARK: -- Programatically --
+//        guard let WindowScene = (scene as? UIWindowScene) else { return }
+//        self.window = UIWindow(windowScene: WindowScene)
+//
+////        MARK: -- if uikit --
+//        var vc : UIViewController = UIViewController()
+//        if !Helper.checkOnBoard() {
+//            guard let targetvc = initiateViewController(storyboardName: .main, viewControllerIdentifier: SplashScreenVC.self) else {return}
+//            vc = targetvc
+//        }else{
+//            guard let targetvc = initiateViewController(storyboardName: .main, viewControllerIdentifier: Helper.CheckIfLoggedIn() ? HTBC.self : LoginVC.self) else {return}
+////            guard let targetvc = initiateViewController(storyboardName: .main, viewControllerIdentifier: ChangePasswordVC.self) else {return}
+//
+//            vc = targetvc
+//        }
+////        guard let vc = initiateViewController(storyboardName: .main, viewControllerIdentifier: (Helper.checkOnBoard() ? (Helper.CheckIfLoggedIn() ? HTBC.self as? HTBC.Type : LoginVC.self as? LoginVC.)  : SplashScreenVC.self)) else {return}
+//
+//////        MARK: -- if SwiftUI --
+//////        let vc = UIHostingController(rootView: SwiftuiTest())
+//
+//        let nav = UINavigationController(rootViewController: vc)
+//        nav.navigationBar.isHidden = true
+//        self.window?.rootViewController = nav
+//        window?.makeKeyAndVisible()
+//
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

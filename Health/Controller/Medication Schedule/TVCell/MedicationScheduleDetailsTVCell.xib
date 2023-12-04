@@ -477,7 +477,7 @@
                 <outletCollection property="LaText" destination="C8b-VR-Uhl" collectionClass="NSMutableArray" id="lw7-Cc-T4Z"/>
                 <outletCollection property="LaText" destination="4k4-IE-Uae" collectionClass="NSMutableArray" id="gZA-P6-QNb"/>
             </connections>
-            <point key="canvasLocation" x="14" y="61"/>
+            <point key="canvasLocation" x="13.740458015267174" y="60.563380281690144"/>
         </tableViewCell>
     </objects>
     <resources>

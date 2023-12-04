@@ -33,26 +33,26 @@ class MedicationScheduleDetailsTVCell: UITableViewCell {
             guard let model = DrugModel else{return}
             
             LaTitle.text = model.drugTitle
-            
             LaStartDate.text = convertToStandardDateFormat(dateString : model.startDate ?? "" )
             //LaClock.text = model.startDate?.ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "hh:mm a")
             LaClock.text = convertStringDateToTime(dateString : model.startDate ?? ""  )
-            
             LaEvery.text = "\(model.count ?? 0) \(model.doseTimeTitle ?? "")"
             LaPeriod.text = "\(model.days ?? 0) أيام"
-            
             //LaEndDate.text = model.endDate?.ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "yyyy/MM/dd")
             LaEndDate.text = convertToStandardDateFormat(dateString : model.endDate ?? "" )
-
             LaDescription.text = model.pharmacistComment
+            LaDescription.setLineHeight(lineHeight: 1.5)
             LaStatus.text = model.active ?? false ? "فعّال":"مًنتهى"
+            
             
             setactivColors(isactive: model.active ?? true)
             
             if model.active == true {
                 LaDescription.textColor = UIColor(named: "main")
+                LaStatus.textColor = UIColor(named: "FF8F15")
             } else {
                 LaDescription.textColor = UIColor(named: "wrong")
+                LaStatus.textColor = UIColor(named: "wrong")
             }
         }
     }
@@ -159,7 +159,7 @@ extension MedicationScheduleDetailsTVCell{
                 label.textColor = .white
             }
             DotsViews.forEach { dotV in
-                dotV.backgroundColor =  UIColor(named: "second")
+                dotV.backgroundColor =  UIColor(named: "secondary")
             }
         }
     }

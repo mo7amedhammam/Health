@@ -48,6 +48,11 @@ class MeasurementsDetailsVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        PickerDate.minimumDate = nil
+        PickerDate.maximumDate =  Date()
+        PickerDate.datePickerMode = .dateAndTime
+        PickerDate.date = Date()
+        
         TFNumMeasure.keyboardType = .asciiCapable
         TFNumMeasure.delegate = self
         print("id : \(id)")
@@ -175,15 +180,7 @@ class MeasurementsDetailsVC: UIViewController {
     }
     
     @IBAction func BUSelectDate(_ sender: Any) {
-        
-        //        let calendar = Calendar.current
-        //        let tomorrow = calendar.date(byAdding: .day, value: 1, to: Date())!
-        //        PickerDate.date = tomorrow
-        
-        PickerDate.minimumDate = nil
-        PickerDate.maximumDate =  Date()
-        PickerDate.datePickerMode = .dateAndTime
-        PickerDate.date = Date()
+   
         self.view.endEditing(true)
         selectDateFrom = "new"
         ViewSelectDate.isHidden = false
@@ -288,6 +285,9 @@ extension MeasurementsDetailsVC {
                 Shared.shared.DateMeasurementAdded = measurementDate
                 Shared.shared.ValueMeasurementAdded = "\(TFNumMeasure.text!.convertedDigitsToLocale(Locale(identifier: "EN")))"
                 Shared.shared.IsMeasurementAdded = true
+
+                //to set current date again
+                PickerDate.date = Date()
 
                 measurementDate = ""
                 TFDate.text = ""
@@ -441,7 +441,7 @@ extension MeasurementsDetailsVC : UITableViewDataSource , UITableViewDelegate , 
     func TearMonthDay(tag: Int , btnAll : UIButton , btnYear : UIButton , btnMonth : UIButton  , btnDay : UIButton , Lfrom : UILabel , Lto : UILabel  ) {
         
         let currentDate = Date()
-        let outputFormat = "yyyy-MM-dd"
+        let outputFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS"
         let dateFormatter = DateFormatter()
         dateFormatter.locale = NSLocale.init(localeIdentifier: "en") as Locale
         dateFormatter.dateFormat = outputFormat
@@ -465,7 +465,7 @@ extension MeasurementsDetailsVC : UITableViewDataSource , UITableViewDelegate , 
             if let currentDate = dateFormatter.date(from: formattedDateString) {
                 let calendar = Calendar.current
                 let sevenDaysAgo = calendar.date(byAdding: .year, value: -1, to: currentDate)
-                let outputFormat = "yyyy-MM-dd"
+                let outputFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS"
                 dateFormatter.dateFormat = outputFormat
                 let oneYear = dateFormatter.string(from: sevenDaysAgo!)
                 print("oneYear : \(oneYear)")
@@ -500,7 +500,7 @@ extension MeasurementsDetailsVC : UITableViewDataSource , UITableViewDelegate , 
             if let currentDate = dateFormatter.date(from: formattedDateString) {
                 let calendar = Calendar.current
                 let sevenDaysAgo = calendar.date(byAdding: .month, value: -3, to: currentDate)
-                let outputFormat = "yyyy-MM-dd"
+                let outputFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS"
                 dateFormatter.dateFormat = outputFormat
                 let ThreeMonth = dateFormatter.string(from: sevenDaysAgo!)
                 print("ThreeMonth : \(ThreeMonth)")
@@ -535,7 +535,7 @@ extension MeasurementsDetailsVC : UITableViewDataSource , UITableViewDelegate , 
             if let currentDate = dateFormatter.date(from: formattedDateString) {
                 let calendar = Calendar.current
                 let sevenDaysAgo = calendar.date(byAdding: .day, value: -7, to: currentDate)
-                let outputFormat = "yyyy-MM-dd"
+                let outputFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS"
                 dateFormatter.dateFormat = outputFormat
                 let sevenDaysAgoString = dateFormatter.string(from: sevenDaysAgo!)
                 print("sevenDaysAgoString : \(sevenDaysAgoString)")

@@ -45,18 +45,21 @@ class HomeVC: UIViewController {
         if Shared.shared.IsMeasurementAdded == false {
         } else {
             if let arrStat = ViewModelMeasurements.ArrStats {
+                
+                refreshData()
+                Shared.shared.IsMeasurementAdded = false
                 // arrStat.measurementsCount! += 1
                 // ViewModelMeasurements.ArrStats?[indexx].measurementsCount! += 1
-                for data in 0 ...  arrStat.count - 1 {
-                    if ViewModelMeasurements.ArrStats?[data].medicalMeasurementID! == Shared.shared.MeasurementId {
-                        ViewModelMeasurements.ArrStats?[data].lastMeasurementValue  = "\(Shared.shared.ValueMeasurementAdded)"
-                        ViewModelMeasurements.ArrStats?[data].measurementsCount!   += 1
-                        ViewModelMeasurements.ArrStats?[data].lastMeasurementDate   = Shared.shared.DateMeasurementAdded
-
-                        TVScreen.reloadRows(at: [IndexPath(row: 1 , section: 0)], with: .automatic)
-                        Shared.shared.IsMeasurementAdded = false
-                    }
-                }
+//                for data in 0 ...  arrStat.count - 1 {
+//                    if ViewModelMeasurements.ArrStats?[data].medicalMeasurementID! == Shared.shared.MeasurementId {
+//                        ViewModelMeasurements.ArrStats?[data].lastMeasurementValue  = "\(Shared.shared.ValueMeasurementAdded)"
+//                        ViewModelMeasurements.ArrStats?[data].measurementsCount!   += 1
+//                        ViewModelMeasurements.ArrStats?[data].lastMeasurementDate   = Shared.shared.DateMeasurementAdded
+//
+//                        TVScreen.reloadRows(at: [IndexPath(row: 1 , section: 0)], with: .automatic)
+//                        Shared.shared.IsMeasurementAdded = false
+//                    }
+//                }
             } else {
                 // Handle the case where arrStat is nil
             }

@@ -45,6 +45,11 @@ class NotificationVC: UIViewController  {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        PickerDate.minimumDate = Date()
+        PickerDate.maximumDate = nil
+        PickerDate.datePickerMode = .date
+        PickerDate.date = Date()
+        
         TFNumDays.keyboardType = .asciiCapableNumberPad
         TFNumDrug.keyboardType = .asciiCapableNumberPad
 
@@ -263,11 +268,7 @@ class NotificationVC: UIViewController  {
             self.showAlert(message: "من فضلك ادخل اسم الدواء او قم باختيارة من القائمة")
         } else  if TFStartDate.text == "" {
             self.showAlert(message: "من فضلك ادخل تاريخ البداية")
-        }
-//        else  if TFEndDate.text == "" {
-//            self.showAlert(message: "من فضلك ادخل تاريخ النهاية")
-//        }
-        else  if TFClock.text == "" {
+        } else  if TFClock.text == "" {
             self.showAlert(message: "من فضلك ادخل الساعة")
         } else  if TFNumDays.text == "" {
             self.showAlert(message: "من فضلك ادخل عدد الايام ")
@@ -314,13 +315,9 @@ class NotificationVC: UIViewController  {
     }
     
     @IBAction func BUSelectTime(_ sender: UIButton) {
-     
-        timePicker = UIDatePicker()
-        timePicker.datePickerMode = .time
         // Show the time picker
         TFClock.inputView = timePicker
         TFClock.becomeFirstResponder()
-
     }
     
     @objc private func buttonTappedDone(_ datePicker: UIDatePicker) {
@@ -381,10 +378,6 @@ class NotificationVC: UIViewController  {
 //            let yesterday  = calendar.date(byAdding: components, to: Date())!
 //            PickerDate.date = yesterday
             
-            PickerDate.minimumDate = Date()
-            PickerDate.maximumDate = nil
-            PickerDate.datePickerMode = .date
-            PickerDate.date = Date()
             self.view.endEditing(true)
 
             ViewSelectDate.isHidden = false
@@ -551,6 +544,13 @@ extension NotificationVC {
             case .stopLoading:
                 Hud.dismiss(from: self.view)
             case .success:
+                
+                // to set current time again
+                timePicker = UIDatePicker()
+                timePicker.datePickerMode = .time
+                //to set current date again
+                PickerDate.date = Date()
+                
                 ArrDrugStringSearch.removeAll()
                 ArrDrugStringSearch = ArrDrugString
                 ClockAmPm = ""

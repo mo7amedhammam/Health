@@ -29,6 +29,9 @@ class ProfileVC: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        selected = 0
+        TVscreen.reloadData()
+        
         GetMyProfile()
     }
 }
@@ -192,7 +195,7 @@ extension ProfileVC : UITableViewDataSource , UITableViewDelegate {
             let actionSheet  = UIAlertController(title: "هل أنت متأكد بأنك تريد تسجيل الخروج؟", message: "", preferredStyle: .alert)
             let alertAction = UIAlertAction(title: "تسجيل الخروج", style: .default, handler: { (_) in
                 Helper.logout()
-                Helper.changeRootVC(newroot: LoginVC.self,transitionFrom: .fromLeft)
+                Helper.changeRootVC(newroot: StartScreenVC.self,transitionFrom: .fromLeft)
             })
             actionSheet.addAction(alertAction)
             
@@ -215,9 +218,11 @@ extension ProfileVC : UITableViewDataSource , UITableViewDelegate {
     }
     
     func PushTo(destination:UIViewController.Type){
-        guard let vc = initiateViewController(storyboardName: .main, viewControllerIdentifier: destination.self)else{return}
-        vc.hidesBottomBarWhenPushed = true
-        self.navigationController?.pushViewController(vc, animated: true)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2 , execute: {
+            guard let vc = initiateViewController(storyboardName: .main, viewControllerIdentifier: destination.self)else{return}
+            vc.hidesBottomBarWhenPushed = true
+            self.navigationController?.pushViewController(vc, animated: true)
+        })
     }
 }
 
