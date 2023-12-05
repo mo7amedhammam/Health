@@ -757,6 +757,8 @@ extension MeasurementsDetailsVC : UITableViewDataSource , UITableViewDelegate , 
     
     func AddMeasurement() {
         
+        PickerDate.date = Date()
+        PickerDate.datePickerMode = .dateAndTime
         formatter.dateFormat = "yyyy-MM-dd'T'HH:mm"
         formatter.locale     = Locale(identifier: "en")
         let strDate = formatter.string(from: PickerDate.date )
@@ -772,7 +774,6 @@ extension MeasurementsDetailsVC : UITableViewDataSource , UITableViewDelegate , 
         TFDate.text = strForma
         
         measurementDate = strDate
-        
         
         ViewAddMeasurement.isHidden = false
     }

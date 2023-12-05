@@ -77,13 +77,47 @@ extension MedicationScheduleDetailsVC {
         
         LaStartDate.text = convertToStandardDateFormat(dateString: model?.startDate ?? "")
         LaEndDate.text = convertToStandardDateFormat(dateString: model?.endDate ?? "")
-        LaRenewalDate.text = convertToStandardDateFormat(dateString: model?.renewDate ?? "")
-        
+        LaRenewalDate.text = convertToStandardDateFormat2(dateString: model?.renewDate ?? "")
         //            LaStartDate.text = model?.startDate?.ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "yyyy/MM/dd")
         //            LaEndDate.text = model?.endDate?.ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "yyyy/MM/dd")
         //            LaRenewalDate.text = model?.renewDate?.ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "yyyy/MM/dd hh:mm a")
         LaDrugsCount.text = "\(model?.drugsCount ?? 0)"
     }
+    
+    
+    func convertToStandardDateFormat2(dateString: String) -> String? {
+        let possibleDateFormats = [
+            "yyyy-MM-dd'T'HH:mm" ,
+            "yyyy-MM-dd'T'HH:mm:ss" ,
+            "yyyy-MM-dd'T'HH:mm:ss.SS" ,
+            "yyyy-MM-dd'T'hh:mm:ss.SSS" ,
+            "yyyy-MM-dd'T'hh:mm:ss" ,
+            "yyyy-MM-dd'T'hh:mm:ss.SS" ,
+            "yyyy-MM-dd'T'hh:mm:ss.SSS" ,
+            "yyyy-MM-dd",
+            "MM/dd/yyyy",
+            "dd/MM/yyyy",
+            "MM-dd-yyyy",
+            "dd-MM-yyyy"
+            // Add more possible date formats as needed
+        ]
+
+        let outputDateFormat = DateFormatter()
+        outputDateFormat.dateFormat = "hh:mm a  yyyy/MM/dd"
+
+        for dateFormat in possibleDateFormats {
+            let inputDateFormat = DateFormatter()
+            inputDateFormat.dateFormat = dateFormat
+
+            if let date = inputDateFormat.date(from: dateString) {
+                let convertedDate = outputDateFormat.string(from: date)
+                return convertedDate
+            }
+        }
+
+        return dateString
+    }
+    
     
     func GetMedicationScheduleDrugs() {
         guard let model = schedualM else {return}
