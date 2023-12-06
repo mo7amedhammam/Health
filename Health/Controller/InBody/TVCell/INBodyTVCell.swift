@@ -26,6 +26,7 @@ class INBodyTVCell: UITableViewCell {
             }            
             if model.comment == "" || model.comment == nil {
                 LaDescription.text = "لا توجد ملاحظات"
+                LaDescription.textAlignment = .right
             } else {
                 LaDescription.setJustifiedRight(model.comment)
                 LaDescription.setLineHeight(lineHeight: 2)

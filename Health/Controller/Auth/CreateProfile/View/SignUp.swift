@@ -8,9 +8,9 @@
 import UIKit
 import DropDown
 
-enum DrobListSource{
-case Gender,District
-}
+//enum DrobListSource{
+//case Gender,District
+//}
 class SignUp: UIViewController  , UITextFieldDelegate{
     
     @IBOutlet weak var TFName: UITextField!
@@ -36,10 +36,12 @@ class SignUp: UIViewController  , UITextFieldDelegate{
     @IBOutlet weak var BtnCode: UIView!
     
     @IBOutlet weak var BtnRegister: UIButton!
-//    let dataArray = ["الدمام", "مكة", "الرياض", "بريدة", "القصيم"]
-        let rightBarDropDown = DropDown()
+    //    let dataArray = ["الدمام", "مكة", "الرياض", "بريدة", "القصيم"]
+    let rightBarDropDown = DropDown()
     
     let ViewModel = SignUpVM()
+    var select = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -53,39 +55,62 @@ class SignUp: UIViewController  , UITextFieldDelegate{
         TFCode.delegate = self
         BtnCode.isHidden = true
         
-       TFName.addTarget(self, action: #selector(didTapSearchButton), for: .editingDidEndOnExit)
+        TFName.addTarget(self, action: #selector(didTapSearchButton), for: .editingDidEndOnExit)
         TFCode.addTarget(self, action: #selector(didTapSearchButtonCode), for: .editingDidEndOnExit)
-
+        
         TFName.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         TFPhone.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         TFCode.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+        
         TFDistrict.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         TFGender.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
-
+        
         TFDistrict.delegate = self
         TFGender.delegate = self
-
+        
         BtnRegister.enable(false)
         hideKeyboardWhenTappedAround()
+        
+        //        rightBarDropDown.cellConfiguration = { (index, item) in return "\(item)" }
+        rightBarDropDown.cancelAction = { [self] in
+            switch select {
+            case "Gender" :
+                BtnGender.isSelected = false
+                if TFGender.text == "" {
+                    ViewDistrict.borderColor = UIColor(named: "stroke")
+                    
+                    //                            ViewGender.backgroundColor = UIColor(named: "F5F5F5")
+                }
+            case "District":
+                BtnDistrict.isSelected = false
+                if TFDistrict.text == "" {
+                    ViewDistrict.borderColor     = UIColor(named: "stroke")
+                    //                            ViewDistrict.backgroundColor = UIColor(named: "F5F5F5")
+                }
+            default:
+                print("")
+            }
+        }
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         Task {
             self.getDistricts()
-            self.getGenders()
+//            self.getGenders()
         }
     }
     
     @objc func didTapSearchButton() {
-          // Resign the first responder from the UITextField.
+        // Resign the first responder from the UITextField.
         TFPhone.becomeFirstResponder()
-     }
+    }
     
     @objc func didTapSearchButtonCode() {
-          // Resign the first responder from the UITextField.
+        // Resign the first responder from the UITextField.
         TFCode.resignFirstResponder()
-     }
+    }
     
     @IBAction func BUBack(_ sender: Any) {
         self.navigationController?.popViewController(animated: true)
@@ -100,18 +125,20 @@ class SignUp: UIViewController  , UITextFieldDelegate{
     }
     
     @IBAction func BUSelectDistrict(_ sender: Any) {
-        SetDropDown(DropListSource: .District)
-        }
-    @IBAction func showDestrict(_ sender: Any) {
-        SetDropDown(DropListSource: .District)
+        ViewDistrict.borderColor = UIColor(named: "stroke")
+        SetDropDown(DropListSource: "District")
     }
+    //    @IBAction func showDestrict(_ sender: Any) {
+    //        SetDropDown(DropListSource: .District)
+    //    }
     
     @IBAction func BUSelectGender(_ sender: Any) {
-       SetDropDown(DropListSource: .Gender)
-       }
-    @IBAction func showGender(_ sender: Any) {
-        SetDropDown(DropListSource: .Gender)
+        ViewGender.borderColor = UIColor(named: "stroke")
+        SetDropDown(DropListSource: "Gender")
     }
+    //    @IBAction func showGender(_ sender: Any) {
+    //        SetDropDown(DropListSource: .Gender)
+    //    }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
         
@@ -158,15 +185,15 @@ class SignUp: UIViewController  , UITextFieldDelegate{
         }
         
     }
-        
+    
     @objc func textFieldDidChange(_ textField: UITextField) {
         let isPhoneValid = TFPhone.text?.count == 11 // Check if TFPhone has 11 digits
         let isNameValid = TFName.hasText // Check if TFPassword is not empty
-        let isCodeValid = TFCode.hasText // Check if TFCode is not empty
+//        let isCodeValid = TFCode.hasText // Check if TFCode is not empty
         let isDestrictValid = DistrictId != nil
         let isGenderValid = GenderId != nil
-
-        let isValidForm = isPhoneValid && isNameValid && isDestrictValid && isGenderValid && isCodeValid
+        
+        let isValidForm = isPhoneValid && isNameValid && isDestrictValid && isGenderValid
         BtnRegister.enable(isValidForm)
     }
     
@@ -196,17 +223,19 @@ extension SignUp{
             guard let state = state else{
                 return
             }
-            
+            self.getGenders()
+
             switch state {
             case .loading:
                 Hud.showHud(in: self.view)
             case .stopLoading:
-                Hud.dismiss(from: self.view)
+//                Hud.dismiss(from: self.view)
+                print("")
             case .success:
-                Hud.dismiss(from: self.view)
+//                Hud.dismiss(from: self.view)
                 print(state)
             case .error(_,let error):
-                Hud.dismiss(from: self.view)
+//                Hud.dismiss(from: self.view)
                 SimpleAlert.shared.showAlert(title:error ?? "",message:"", viewController: self)
                 print(error ?? "")
             case .none:
@@ -222,7 +251,8 @@ extension SignUp{
             
             switch state {
             case .loading:
-                Hud.showHud(in: self.view)
+//                Hud.showHud(in: self.view)
+                print("")
             case .stopLoading:
                 Hud.dismiss(from: self.view)
             case .success:
@@ -237,6 +267,7 @@ extension SignUp{
             }
         }
     }
+    
     func SendJoinRequest(){
         ViewModel.name = TFName.text
         ViewModel.mobile = TFPhone.text
@@ -266,10 +297,11 @@ extension SignUp{
             }
         }
     }
-     
-    func SetDropDown(DropListSource:DrobListSource){
-        switch DropListSource{
-        case .Gender:
+    
+    func SetDropDown(DropListSource: String ){
+        switch DropListSource {
+            
+        case "Gender":
             if let dataArray = ViewModel.GendersArr{
                 rightBarDropDown.dataSource = dataArray.compactMap{$0.title}
             }
@@ -278,10 +310,10 @@ extension SignUp{
             rightBarDropDown.width = preferredViewWidth
             ViewGender.borderColor = UIColor(named: "stroke")
             TFGender.textColor = UIColor(named: "main")
-//            ViewGender.backgroundColor = .white
+            //            ViewGender.backgroundColor = .white
             BtnGender.isSelected = true
-
-        case .District:
+            
+        case "District":
             if let dataArray = ViewModel.DistrictsArr{
                 rightBarDropDown.dataSource = dataArray.compactMap{$0.title}
             }
@@ -290,21 +322,27 @@ extension SignUp{
             rightBarDropDown.width = preferredViewWidth
             ViewDistrict.borderColor = UIColor(named: "stroke")
             TFDistrict.textColor = UIColor(named: "main")
-//            ViewDistrict.backgroundColor = .white
+            //            ViewDistrict.backgroundColor = .white
             BtnDistrict.isSelected = true
-
+            
+        default:
+            print("")
         }
+        
         rightBarDropDown.bottomOffset = CGPoint(x: -10 , y: (rightBarDropDown.anchorView?.plainView.bounds.height)!)
-
+        rightBarDropDown.show()
+        
+        
+        
         rightBarDropDown.selectionAction = { [self] (index: Int, item: String) in
             print("Selected item: \(item) at index: \(index)")
             switch DropListSource {
-            case .Gender:
+            case "Gender":
                 self.TFGender.text = ViewModel.GendersArr?[index].title
                 self.GenderId = ViewModel.GendersArr?[index].id
                 BtnGender.isSelected = false
-
-            case .District:
+                
+            case "District":
                 self.TFDistrict.text = ViewModel.DistrictsArr?[index].title
                 self.DistrictId = ViewModel.DistrictsArr?[index].id
                 BtnDistrict.isSelected = false
@@ -315,31 +353,14 @@ extension SignUp{
                 let isCodeValid = TFCode.hasText // Check if TFCode is not empty
                 let isDestrictValid = DistrictId != nil
                 let isGenderValid = GenderId != nil
-
+                
                 let isValidForm = isPhoneValid && isNameValid && isDestrictValid && isGenderValid && isCodeValid
                 BtnRegister.enable(isValidForm)
-
+                
+            default:
+                print("")
             }
         }
-                //        rightBarDropDown.cellConfiguration = { (index, item) in return "\(item)" }
-                rightBarDropDown.cancelAction = { [self] in
-                    switch DropListSource {
-                    case .Gender:
-                        BtnGender.isSelected = false
-                        if TFGender.text == "" {
-                        ViewDistrict.borderColor = UIColor(named: "stroke")
-
-//                            ViewGender.backgroundColor = UIColor(named: "F5F5F5")
-                        }
-                    case .District:
-                        BtnDistrict.isSelected = false
-                        if TFDistrict.text == "" {
-                            ViewDistrict.borderColor     = UIColor(named: "stroke")
-//                            ViewDistrict.backgroundColor = UIColor(named: "F5F5F5")
-                        }
-                    }
-                }
-        rightBarDropDown.show()
     }
     
     func JoinRequestSent()  {

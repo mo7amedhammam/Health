@@ -385,20 +385,30 @@
                                                                                                 <color key="textColor" name="deactive"/>
                                                                                                 <fontDescription key="fontDescription" name="LamaSans-Medium" family="Lama Sans" pointSize="17"/>
                                                                                                 <textInputTraits key="textInputTraits"/>
-                                                                                                <connections>
-                                                                                                    <action selector="showGender:" destination="eS9-Kp-U8P" eventType="editingDidBegin" id="JHZ-hg-7JV"/>
-                                                                                                </connections>
                                                                                             </textField>
                                                                                         </subviews>
                                                                                     </stackView>
+                                                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="keh-Or-HFF">
+                                                                                        <rect key="frame" x="0.0" y="0.0" width="363" height="70"/>
+                                                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                                        <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                                                        <connections>
+                                                                                            <action selector="BUSelectGender:" destination="eS9-Kp-U8P" eventType="touchUpInside" id="d6n-eO-tZm"/>
+                                                                                        </connections>
+                                                                                    </button>
                                                                                 </subviews>
                                                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                                 <constraints>
+                                                                                    <constraint firstItem="keh-Or-HFF" firstAttribute="top" secondItem="r5N-ej-Kug" secondAttribute="top" id="038-ef-1kk"/>
                                                                                     <constraint firstItem="9JX-GX-EJh" firstAttribute="leading" secondItem="r5N-ej-Kug" secondAttribute="leading" constant="15" id="9Aj-lU-ULB"/>
                                                                                     <constraint firstAttribute="bottom" secondItem="9JX-GX-EJh" secondAttribute="bottom" constant="10" id="OWn-cP-I5Y"/>
+                                                                                    <constraint firstAttribute="trailing" secondItem="keh-Or-HFF" secondAttribute="trailing" id="UQC-yp-jEe"/>
                                                                                     <constraint firstAttribute="trailing" secondItem="9JX-GX-EJh" secondAttribute="trailing" constant="15" id="cbJ-4m-kop"/>
                                                                                     <constraint firstAttribute="height" constant="70" id="gNm-ad-vAc"/>
                                                                                     <constraint firstItem="9JX-GX-EJh" firstAttribute="top" secondItem="r5N-ej-Kug" secondAttribute="top" constant="10" id="lIq-kK-RiF"/>
+                                                                                    <constraint firstAttribute="bottom" secondItem="keh-Or-HFF" secondAttribute="bottom" id="u5B-yc-Gcy"/>
+                                                                                    <constraint firstItem="keh-Or-HFF" firstAttribute="leading" secondItem="r5N-ej-Kug" secondAttribute="leading" id="uOs-iV-RU4"/>
                                                                                 </constraints>
                                                                                 <userDefinedRuntimeAttributes>
                                                                                     <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
@@ -437,19 +447,29 @@
                                                                                                 <color key="textColor" name="deactive"/>
                                                                                                 <fontDescription key="fontDescription" name="LamaSans-Medium" family="Lama Sans" pointSize="17"/>
                                                                                                 <textInputTraits key="textInputTraits"/>
-                                                                                                <connections>
-                                                                                                    <action selector="showDestrict:" destination="eS9-Kp-U8P" eventType="editingDidBegin" id="UPx-Gm-6EK"/>
-                                                                                                </connections>
                                                                                             </textField>
                                                                                         </subviews>
                                                                                     </stackView>
+                                                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yCa-ZA-gTi">
+                                                                                        <rect key="frame" x="0.0" y="0.0" width="363" height="70"/>
+                                                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                                        <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                                                        <connections>
+                                                                                            <action selector="BUSelectDistrict:" destination="eS9-Kp-U8P" eventType="touchUpInside" id="nBp-ur-YXy"/>
+                                                                                        </connections>
+                                                                                    </button>
                                                                                 </subviews>
                                                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                                 <constraints>
+                                                                                    <constraint firstItem="yCa-ZA-gTi" firstAttribute="top" secondItem="gyQ-EW-tXj" secondAttribute="top" id="2Y9-dP-pd4"/>
                                                                                     <constraint firstAttribute="bottom" secondItem="Xue-Fd-OdD" secondAttribute="bottom" constant="10" id="AmK-KY-qTT"/>
+                                                                                    <constraint firstAttribute="bottom" secondItem="yCa-ZA-gTi" secondAttribute="bottom" id="Zir-wh-7tg"/>
                                                                                     <constraint firstAttribute="height" constant="70" id="fAZ-9J-M4R"/>
                                                                                     <constraint firstItem="Xue-Fd-OdD" firstAttribute="leading" secondItem="gyQ-EW-tXj" secondAttribute="leading" constant="15" id="iPn-ES-UAQ"/>
+                                                                                    <constraint firstAttribute="trailing" secondItem="yCa-ZA-gTi" secondAttribute="trailing" id="iVS-GL-CiM"/>
                                                                                     <constraint firstItem="Xue-Fd-OdD" firstAttribute="top" secondItem="gyQ-EW-tXj" secondAttribute="top" constant="10" id="jyO-h1-wKh"/>
+                                                                                    <constraint firstItem="yCa-ZA-gTi" firstAttribute="leading" secondItem="gyQ-EW-tXj" secondAttribute="leading" id="kJg-fl-ojS"/>
                                                                                     <constraint firstAttribute="trailing" secondItem="Xue-Fd-OdD" secondAttribute="trailing" constant="15" id="v7e-mm-I0s"/>
                                                                                 </constraints>
                                                                                 <userDefinedRuntimeAttributes>
@@ -6053,13 +6073,13 @@
                                                                                 <subviews>
                                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="الي : 100" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qym-0E-hYV">
                                                                                         <rect key="frame" x="0.0" y="0.0" width="167.66666666666666" height="40"/>
-                                                                                        <fontDescription key="fontDescription" name="LamaSans-Regular" family="Lama Sans" pointSize="16"/>
+                                                                                        <fontDescription key="fontDescription" name="LamaSans-Bold" family="Lama Sans" pointSize="16"/>
                                                                                         <color key="textColor" name="main"/>
                                                                                         <nil key="highlightedColor"/>
                                                                                     </label>
                                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="من : 100" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="r8H-9W-WS7">
                                                                                         <rect key="frame" x="175.66666666666663" y="0.0" width="167.33333333333337" height="40"/>
-                                                                                        <fontDescription key="fontDescription" name="LamaSans-Regular" family="Lama Sans" pointSize="16"/>
+                                                                                        <fontDescription key="fontDescription" name="LamaSans-Bold" family="Lama Sans" pointSize="16"/>
                                                                                         <color key="textColor" name="main"/>
                                                                                         <nil key="highlightedColor"/>
                                                                                     </label>

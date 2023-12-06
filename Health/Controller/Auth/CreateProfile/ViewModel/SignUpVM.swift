@@ -29,7 +29,13 @@ extension SignUpVM {
             // Handle missing username or password
             return
         }
-        let parametersarr : [String : Any] =  ["name" : name,"mobile" : mobile ,"genderId" : genderId,"districtId" : districtId,"pharmacyCode" : pharmacyCode]
+        var parametersarr : [String : Any]
+        
+         parametersarr  =  ["name" : name,"mobile" : mobile ,"genderId" : genderId,"districtId" : districtId,"pharmacyCode" : pharmacyCode]
+        
+        if pharmacyCode != "" {
+            parametersarr["pharmacyCode"] = "pharmacyCode"
+        }
 
         completion(.loading)
         // Create your API request with the username and password
@@ -62,7 +68,7 @@ extension SignUpVM {
     func GetDistricts(completion: @escaping (EventHandler?) -> Void) {
         // Create your API request with the username and password
         let target = Authintications.GetDistricts
-        
+        completion(.loading)
         // Make the API call using your APIManager or networking code
         BaseNetwork.callApi(target, BaseResponse<[DistrictM]>.self) {[weak self] result in
             // Handle the API response here

@@ -90,10 +90,10 @@ class MeasurementsDetailsVC: UIViewController {
         } else {
             ViewNoMeasurements.isHidden = true
         }
-        current = ""
-        CellDateFrom = ""
-        CellDateTo   = ""
-        TVScreen.reloadData()
+//        current = ""
+//        CellDateFrom = ""
+//        CellDateTo   = ""
+//        TVScreen.reloadData()
     }
     
     
@@ -134,8 +134,8 @@ class MeasurementsDetailsVC: UIViewController {
             print(strDate)
             
             CellDateFrom = strDate
-            let indexPath = IndexPath(row: 0, section: 0)
-            TVScreen.reloadRows(at: [indexPath], with: .automatic)
+            current = ""
+            TVScreen.reloadData()
         } else if selectDateFrom == "to" {
             formatter.dateFormat = "yyyy-MM-dd"
             formatter.locale     = Locale(identifier: "en")
@@ -146,8 +146,8 @@ class MeasurementsDetailsVC: UIViewController {
             print(strDate)
             
             CellDateTo = strDate
-            let indexPath = IndexPath(row: 0, section: 0)
-            TVScreen.reloadRows(at: [indexPath], with: .automatic)
+            current = ""
+            TVScreen.reloadData()
         } else {
         }
         
@@ -297,26 +297,26 @@ extension MeasurementsDetailsVC {
                 MeasurementCreated = true
                 ViewAddMeasurement.isHidden = true
                 self.view.endEditing(true)
+                
+                CellDateFrom = ""
+                CellDateTo = ""
                 TVScreen.reloadData()
                 newCreated = 1
 
-                DispatchQueue.main.asyncAfter(deadline: .now() + 2 , execute: {
-                    //....
-                    Hud.dismiss(from: self.view)
-                    //......
-                    guard let vc = initiateViewController(storyboardName: .main, viewControllerIdentifier: MeasurementsDetailsFiltterVC.self) else { return }
-                    vc.From = ""
-                    vc.To   = ""
-                    vc.NormalFrom = self.ViewModel.ArrNormalRange?.fromValue ?? ""
-                    vc.NormalTo   = self.ViewModel.ArrNormalRange?.toValue ?? ""
-                    vc.TitleMeasurement = self.TitleMeasurement
-                    vc.id = self.id
-                    vc.new = 1
-                    vc.hidesBottomBarWhenPushed = true
-                    self.navigationController?.pushViewController(vc, animated: true)
-                })
-                            
-                
+                //....
+                Hud.dismiss(from: self.view)
+                //......
+                guard let vc = initiateViewController(storyboardName: .main, viewControllerIdentifier: MeasurementsDetailsFiltterVC.self) else { return }
+                vc.From = ""
+                vc.To   = ""
+                vc.NormalFrom = self.ViewModel.ArrNormalRange?.fromValue ?? ""
+                vc.NormalTo   = self.ViewModel.ArrNormalRange?.toValue ?? ""
+                vc.TitleMeasurement = self.TitleMeasurement
+                vc.id = self.id
+                vc.new = 1
+                vc.hidesBottomBarWhenPushed = true
+                self.navigationController?.pushViewController(vc, animated: true)
+              
             case .error(_,let error):
                 Hud.dismiss(from: self.view)
                 SimpleAlert.shared.showAlert(title:error ?? "",message:"", viewController: self)
@@ -393,48 +393,33 @@ extension MeasurementsDetailsVC : UITableViewDataSource , UITableViewDelegate , 
         //        ViewModel.dateTo  = nil
         //        getDataNormalRange()
         
-//        btnDay.isSelected = false
-//        btnMonth.isSelected = false
-//        btnYear.isSelected   = false
+        btnDay.isSelected = false
+        btnMonth.isSelected = false
+        btnYear.isSelected   = false
         
         CellDateFrom = ""
         CellDateTo   = ""
         current = "all"
         TVScreen.reloadData()
-        
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3 , execute: {
+     
+        if btnAll.isSelected == false {
+            btnAll.isSelected = true
             guard let vc = initiateViewController(storyboardName: .main, viewControllerIdentifier: MeasurementsDetailsFiltterVC.self) else { return }
             vc.From = ""
             vc.To   = ""
-            vc.NormalFrom = self.ViewModel.ArrNormalRange?.fromValue ?? ""
-            vc.NormalTo   = self.ViewModel.ArrNormalRange?.toValue ?? ""
-            vc.TitleMeasurement = self.TitleMeasurement
-            vc.id = self.id
+            vc.NormalFrom = ViewModel.ArrNormalRange?.fromValue ?? ""
+            vc.NormalTo   = ViewModel.ArrNormalRange?.toValue ?? ""
+            vc.TitleMeasurement = TitleMeasurement
+            vc.id = id
             vc.hidesBottomBarWhenPushed = true
-            self.navigationController?.pushViewController(vc, animated: true)
-        })
-     
-        
-        
-//        if btnAll.isSelected == false {
-//            btnAll.isSelected = true
-//            guard let vc = initiateViewController(storyboardName: .main, viewControllerIdentifier: MeasurementsDetailsFiltterVC.self) else { return }
-//            vc.From = ""
-//            vc.To   = ""
-//            vc.NormalFrom = ViewModel.ArrNormalRange?.fromValue ?? ""
-//            vc.NormalTo   = ViewModel.ArrNormalRange?.toValue ?? ""
-//            vc.TitleMeasurement = TitleMeasurement
-//            vc.id = id
-//            vc.hidesBottomBarWhenPushed = true
-//            navigationController?.pushViewController(vc, animated: true)
-//        } else {
-//            btnAll.isSelected = false
-//
-//            btnAll.backgroundColor = .clear
-//            btnAll.setTitleColor( UIColor(named: "main") , for: .normal)
-//            btnAll.borderColor = UIColor(named: "main")
-//        }
+            navigationController?.pushViewController(vc, animated: true)
+        } else {
+            btnAll.isSelected = false
+
+            btnAll.backgroundColor = .clear
+            btnAll.setTitleColor( UIColor(named: "main") , for: .normal)
+            btnAll.borderColor = UIColor(named: "main")
+        }
         
     }
     
@@ -470,9 +455,13 @@ extension MeasurementsDetailsVC : UITableViewDataSource , UITableViewDelegate , 
                 let oneYear = dateFormatter.string(from: sevenDaysAgo!)
                 print("oneYear : \(oneYear)")
                 
-                Lfrom.text = oneYear
-                Lto.text   = formattedDateString
                 
+                
+                Lfrom.text = convertToStandardDateFormat__(dateString: oneYear)
+                Lto.text   = convertToStandardDateFormat__(dateString: formattedDateString)
+                
+                Lfrom.isHidden = false
+                Lto.isHidden   = false
                 CellDateFrom = oneYear
                 CellDateTo   = formattedDateString
                 
@@ -505,9 +494,11 @@ extension MeasurementsDetailsVC : UITableViewDataSource , UITableViewDelegate , 
                 let ThreeMonth = dateFormatter.string(from: sevenDaysAgo!)
                 print("ThreeMonth : \(ThreeMonth)")
                 
-                Lfrom.text = ThreeMonth
-                Lto.text   = formattedDateString
+                Lfrom.text = convertToStandardDateFormat__(dateString: ThreeMonth)
+                Lto.text   = convertToStandardDateFormat__(dateString: formattedDateString)
                 
+                Lfrom.isHidden = false
+                Lto.isHidden   = false
                 CellDateFrom = ThreeMonth
                 CellDateTo   = formattedDateString
                 
@@ -540,9 +531,11 @@ extension MeasurementsDetailsVC : UITableViewDataSource , UITableViewDelegate , 
                 let sevenDaysAgoString = dateFormatter.string(from: sevenDaysAgo!)
                 print("sevenDaysAgoString : \(sevenDaysAgoString)")
                 
-                Lfrom.text = sevenDaysAgoString
-                Lto.text   = formattedDateString
+                Lfrom.text = convertToStandardDateFormat__(dateString: sevenDaysAgoString)
+                Lto.text   = convertToStandardDateFormat__(dateString: formattedDateString)
                 
+                Lfrom.isHidden = false
+                Lto.isHidden   = false
                 CellDateFrom = sevenDaysAgoString
                 CellDateTo   = formattedDateString
                 
@@ -558,7 +551,7 @@ extension MeasurementsDetailsVC : UITableViewDataSource , UITableViewDelegate , 
         btnAll.backgroundColor = .clear
         btnAll.setTitleColor( UIColor(named: "main") , for: .normal)
         btnAll.borderColor = UIColor(named: "main")
-//        btnAll.isSelected = false
+        btnAll.isSelected = false
         
         if Lfrom.text == "" {
             self.showAlert(message: "من فضلك حدد تاريخ البداية")
@@ -566,143 +559,99 @@ extension MeasurementsDetailsVC : UITableViewDataSource , UITableViewDelegate , 
             self.showAlert(message: "من فضلك حدد تاريخ النهاية")
         } else {
             
-            TVScreen.reloadData()
+//            TVScreen.reloadData()
             
             if tag == 0 {
+          
                 
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3 , execute: {
+                if btnYear.isSelected == false {
+                    btnYear.isSelected = true
+
+                    btnMonth.isSelected = false
+                    btnDay.isSelected = false
+
                     guard let vc = initiateViewController(storyboardName: .main, viewControllerIdentifier: MeasurementsDetailsFiltterVC.self) else { return }
-                    vc.From = Lfrom.text!
-                    vc.To   = Lto.text!
-                    vc.NormalFrom = self.ViewModel.ArrNormalRange?.fromValue ?? ""
-                    vc.NormalTo   = self.ViewModel.ArrNormalRange?.toValue ?? ""
-                    vc.TitleMeasurement = self.TitleMeasurement
-                    vc.id = self.id
+                    vc.From = CellDateFrom
+                    vc.To   = CellDateTo
+                    vc.NormalFrom = ViewModel.ArrNormalRange?.fromValue ?? ""
+                    vc.NormalTo   = ViewModel.ArrNormalRange?.toValue ?? ""
+                    vc.TitleMeasurement = TitleMeasurement
+                    vc.id = id
                     vc.hidesBottomBarWhenPushed = true
-                    self.navigationController?.pushViewController(vc, animated: true)
-                })
-                
-             
-                
-                
-//                if btnYear.isSelected == false {
-//                    btnYear.isSelected = true
-//
-//                    btnMonth.isSelected = false
-//                    btnDay.isSelected = false
-//
-//                    guard let vc = initiateViewController(storyboardName: .main, viewControllerIdentifier: MeasurementsDetailsFiltterVC.self) else { return }
-//                    vc.From = Lfrom.text!
-//                    vc.To   = Lto.text!
-//                    vc.NormalFrom = ViewModel.ArrNormalRange?.fromValue ?? ""
-//                    vc.NormalTo   = ViewModel.ArrNormalRange?.toValue ?? ""
-//                    vc.TitleMeasurement = TitleMeasurement
-//                    vc.id = id
-//                    vc.hidesBottomBarWhenPushed = true
-//                    navigationController?.pushViewController(vc, animated: true)
-//                } else {
-//                    CellDateFrom = ""
-//                    CellDateTo   = ""
-//                    TVScreen.reloadData()
-//
-//                    btnYear.isSelected  = false
-//                    btnMonth.isSelected = false
-//                    btnDay.isSelected   = false
-//
-//                    btnYear.backgroundColor = .clear
-//                    btnYear.setTitleColor( UIColor(named: "main") , for: .normal)
-//                    btnYear.borderColor = UIColor(named: "main")
-//                }
+                    navigationController?.pushViewController(vc, animated: true)
+                } else {
+                    CellDateFrom = ""
+                    CellDateTo   = ""
+                    TVScreen.reloadData()
+
+                    btnYear.isSelected  = false
+                    btnMonth.isSelected = false
+                    btnDay.isSelected   = false
+
+                    btnYear.backgroundColor = .clear
+                    btnYear.setTitleColor( UIColor(named: "main") , for: .normal)
+                    btnYear.borderColor = UIColor(named: "main")
+                }
             } else if tag == 1 {
-                
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3 , execute: {
-                        guard let vc = initiateViewController(storyboardName: .main, viewControllerIdentifier: MeasurementsDetailsFiltterVC.self) else { return }
-                        vc.From = Lfrom.text!
-                        vc.To   = Lto.text!
-                        vc.NormalFrom = self.ViewModel.ArrNormalRange?.fromValue ?? ""
-                        vc.NormalTo   = self.ViewModel.ArrNormalRange?.toValue ?? ""
-                        vc.TitleMeasurement = self.TitleMeasurement
-                        vc.id = self.id
-                        vc.hidesBottomBarWhenPushed = true
-                        self.navigationController?.pushViewController(vc, animated: true)
-                    })
-                                                  
-        
-                
-                
-//                if btnMonth.isSelected == false {
-//                    btnMonth.isSelected = true
-//
-//                    btnYear.isSelected = false
-//                    btnDay.isSelected = false
-//
-//                    guard let vc = initiateViewController(storyboardName: .main, viewControllerIdentifier: MeasurementsDetailsFiltterVC.self) else { return }
-//                    vc.From = Lfrom.text!
-//                    vc.To   = Lto.text!
-//                    vc.NormalFrom = ViewModel.ArrNormalRange?.fromValue ?? ""
-//                    vc.NormalTo   = ViewModel.ArrNormalRange?.toValue ?? ""
-//                    vc.TitleMeasurement = TitleMeasurement
-//                    vc.id = id
-//                    vc.hidesBottomBarWhenPushed = true
-//                    navigationController?.pushViewController(vc, animated: true)
-//                } else {
-//                    CellDateFrom = ""
-//                    CellDateTo   = ""
-//                    TVScreen.reloadData()
-//
-//                    btnMonth.isSelected = false
-//                    btnYear.isSelected = false
-//                    btnDay.isSelected   = false
-//
-//                    btnMonth.backgroundColor = .clear
-//                    btnMonth.setTitleColor( UIColor(named: "main") , for: .normal)
-//                    btnMonth.borderColor = UIColor(named: "main")
-//
-//                }
+
+                if btnMonth.isSelected == false {
+                    btnMonth.isSelected = true
+
+                    btnYear.isSelected = false
+                    btnDay.isSelected = false
+
+                    guard let vc = initiateViewController(storyboardName: .main, viewControllerIdentifier: MeasurementsDetailsFiltterVC.self) else { return }
+                    vc.From = CellDateFrom
+                    vc.To   = CellDateTo
+                    vc.NormalFrom = ViewModel.ArrNormalRange?.fromValue ?? ""
+                    vc.NormalTo   = ViewModel.ArrNormalRange?.toValue ?? ""
+                    vc.TitleMeasurement = TitleMeasurement
+                    vc.id = id
+                    vc.hidesBottomBarWhenPushed = true
+                    navigationController?.pushViewController(vc, animated: true)
+                } else {
+                    CellDateFrom = ""
+                    CellDateTo   = ""
+                    TVScreen.reloadData()
+
+                    btnMonth.isSelected = false
+                    btnYear.isSelected = false
+                    btnDay.isSelected   = false
+
+                    btnMonth.backgroundColor = .clear
+                    btnMonth.setTitleColor( UIColor(named: "main") , for: .normal)
+                    btnMonth.borderColor = UIColor(named: "main")
+
+                }
             } else if tag == 2 {
-                
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3 , execute: {
-                            guard let vc = initiateViewController(storyboardName: .main, viewControllerIdentifier: MeasurementsDetailsFiltterVC.self) else { return }
-                            vc.From = Lfrom.text!
-                            vc.To   = Lto.text!
-                            vc.NormalFrom = self.ViewModel.ArrNormalRange?.fromValue ?? ""
-                            vc.NormalTo   = self.ViewModel.ArrNormalRange?.toValue ?? ""
-                            vc.TitleMeasurement = self.TitleMeasurement
-                            vc.id = self.id
-                            vc.hidesBottomBarWhenPushed = true
-                            self.navigationController?.pushViewController(vc, animated: true)
-                        })
-                                                      
-               
-                
-                
-//                if btnDay.isSelected == false {
-//                    btnDay.isSelected   = true
-//                    btnMonth.isSelected = false
-//                    btnYear.isSelected  = false
-//
-//                    guard let vc = initiateViewController(storyboardName: .main, viewControllerIdentifier: MeasurementsDetailsFiltterVC.self) else { return }
-//                    vc.From = Lfrom.text!
-//                    vc.To   = Lto.text!
-//                    vc.NormalFrom = ViewModel.ArrNormalRange?.fromValue ?? ""
-//                    vc.NormalTo   = ViewModel.ArrNormalRange?.toValue ?? ""
-//                    vc.TitleMeasurement = TitleMeasurement
-//                    vc.id = id
-//                    vc.hidesBottomBarWhenPushed = true
-//                    navigationController?.pushViewController(vc, animated: true)
-//                } else {
-//                    CellDateFrom = ""
-//                    CellDateTo   = ""
-//                    TVScreen.reloadData()
-//
-//                    btnDay.isSelected = false
-//                    btnMonth.isSelected = false
-//                    btnYear.isSelected   = false
-//
-//                    btnDay.backgroundColor = .clear
-//                    btnDay.setTitleColor( UIColor(named: "main") , for: .normal)
-//                    btnDay.borderColor = UIColor(named: "main")
-//                }
+              
+                if btnDay.isSelected == false {
+                    btnDay.isSelected   = true
+                    btnMonth.isSelected = false
+                    btnYear.isSelected  = false
+
+                    guard let vc = initiateViewController(storyboardName: .main, viewControllerIdentifier: MeasurementsDetailsFiltterVC.self) else { return }
+                    vc.From = CellDateFrom
+                    vc.To   = CellDateTo
+                    vc.NormalFrom = ViewModel.ArrNormalRange?.fromValue ?? ""
+                    vc.NormalTo   = ViewModel.ArrNormalRange?.toValue ?? ""
+                    vc.TitleMeasurement = TitleMeasurement
+                    vc.id = id
+                    vc.hidesBottomBarWhenPushed = true
+                    navigationController?.pushViewController(vc, animated: true)
+                } else {
+                    CellDateFrom = ""
+                    CellDateTo   = ""
+                    TVScreen.reloadData()
+
+                    btnDay.isSelected = false
+                    btnMonth.isSelected = false
+                    btnYear.isSelected   = false
+
+                    btnDay.backgroundColor = .clear
+                    btnDay.setTitleColor( UIColor(named: "main") , for: .normal)
+                    btnDay.borderColor = UIColor(named: "main")
+                }
             } else {
                 // nothing
             }
@@ -729,10 +678,10 @@ extension MeasurementsDetailsVC : UITableViewDataSource , UITableViewDelegate , 
         btnDay.setTitleColor( UIColor(named: "main") , for: .normal)
         btnDay.borderColor = UIColor(named: "main")
         //
-//        btnDay.isSelected   = false
-//        btnMonth.isSelected = false
-//        btnYear.isSelected  = false
-//        btnAl.isSelected    = false
+        btnDay.isSelected   = false
+        btnMonth.isSelected = false
+        btnYear.isSelected  = false
+        btnAl.isSelected    = false
         
         
         if Lfrom.text == "" {
@@ -762,8 +711,8 @@ extension MeasurementsDetailsVC : UITableViewDataSource , UITableViewDelegate , 
         formatter.dateFormat = "yyyy-MM-dd'T'HH:mm"
         formatter.locale     = Locale(identifier: "en")
         let strDate = formatter.string(from: PickerDate.date )
-        formatter.dateStyle = .medium
-        formatter.timeStyle = .none
+//        formatter.dateStyle = .medium
+//        formatter.timeStyle = .none
         self.view.endEditing(true)
         print(strDate)
         
@@ -819,11 +768,6 @@ extension MeasurementsDetailsVC : UITableViewDataSource , UITableViewDelegate , 
             cell.LaNum.text = "\(num)"
             MeasurementCreated = false
             //................................
-        } else {
-            cell.LaNum.text = "\(num)"
-        }
-        
-        if current == "" {
             // all
             cell.btnAll.backgroundColor = .clear
             cell.btnAll.setTitleColor(UIColor(named: "main") , for: .normal)
@@ -840,10 +784,29 @@ extension MeasurementsDetailsVC : UITableViewDataSource , UITableViewDelegate , 
             cell.BtnDay.backgroundColor = .clear
             cell.BtnDay.setTitleColor( UIColor(named: "main") , for: .normal)
             cell.BtnDay.borderColor = UIColor(named: "main")
+            
+        } else {
+            cell.LaNum.text = "\(num)"
         }
-      
         
-        
+        if current == "" {
+            cell.btnAll.backgroundColor = .clear
+            cell.btnAll.setTitleColor(UIColor(named: "main") , for: .normal)
+            cell.btnAll.borderColor = UIColor(named: "main")
+            
+            cell.BtnYear.backgroundColor = .clear
+            cell.BtnYear.setTitleColor( UIColor(named: "main") , for: .normal)
+            cell.BtnYear.borderColor = UIColor(named: "main")
+            
+            cell.BtnMonth.backgroundColor = .clear
+            cell.BtnMonth.setTitleColor( UIColor(named: "main") , for: .normal)
+            cell.BtnMonth.borderColor = UIColor(named: "main")
+            
+            cell.BtnDay.backgroundColor = .clear
+            cell.BtnDay.setTitleColor( UIColor(named: "main") , for: .normal)
+            cell.BtnDay.borderColor = UIColor(named: "main")
+        }
+       
         return cell
         
     }

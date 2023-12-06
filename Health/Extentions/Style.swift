@@ -764,6 +764,7 @@ extension UIViewController {
     
     func convertToStandardDateFormat(dateString: String) -> String? {
         let possibleDateFormats = [
+            "yyyy-MM-dd'T'HH:mm:ss.SSS" ,
             "yyyy-MM-dd'T'HH:mm" ,
             "yyyy-MM-dd'T'HH:mm:ss" ,
             "yyyy-MM-dd'T'HH:mm:ss.SS" ,
@@ -781,6 +782,42 @@ extension UIViewController {
 
         let outputDateFormat = DateFormatter()
         outputDateFormat.dateFormat = "yyyy/MM/dd"
+
+        for dateFormat in possibleDateFormats {
+            let inputDateFormat = DateFormatter()
+            inputDateFormat.dateFormat = dateFormat
+
+            if let date = inputDateFormat.date(from: dateString) {
+                let convertedDate = outputDateFormat.string(from: date)
+                return convertedDate
+            }
+        }
+
+        return dateString
+    }
+    
+    
+    func convertToStandardDateFormat__(dateString: String) -> String? {
+        let possibleDateFormats = [
+            "yyyy-MM-dd'T'HH:mm:ss.SSS" ,
+            "yyyy-MM-dd'T'HH:mm" ,
+            "yyyy-MM-dd'T'HH:mm:ss" ,
+            "yyyy-MM-dd'T'HH:mm:ss.SS" ,
+            "yyyy-MM-dd'T'hh:mm:ss.SSS" ,
+            "yyyy-MM-dd'T'hh:mm:ss" ,
+            "yyyy-MM-dd'T'hh:mm:ss.SS" ,
+            "yyyy-MM-dd'T'hh:mm:ss.SSS" ,
+            "yyyy-MM-dd",
+            "MM/dd/yyyy",
+            "dd/MM/yyyy",
+            "MM-dd-yyyy",
+            "dd-MM-yyyy"
+            // Add more possible date formats as needed
+        ]
+
+        let outputDateFormat = DateFormatter()
+        outputDateFormat.dateFormat = "yyyy-MM-dd"
+        outputDateFormat.locale = NSLocale.init(localeIdentifier: "en") as Locale
 
         for dateFormat in possibleDateFormats {
             let inputDateFormat = DateFormatter()
