@@ -17,42 +17,44 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="TipDetailsDrugGroup" customModule="Sehaty" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="134" height="20"/>
+            <rect key="frame" x="0.0" y="0.0" width="134" height="15"/>
             <autoresizingMask key="autoresizingMask"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                <rect key="frame" x="0.0" y="0.0" width="134" height="20"/>
+                <rect key="frame" x="0.0" y="0.0" width="134" height="15"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="B8z-eY-79D">
-                        <rect key="frame" x="3" y="0.0" width="131" height="20"/>
+                        <rect key="frame" x="0.0" y="0.0" width="134" height="15"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="الأوعية الدموية" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bhu-pW-nuR">
-                                <rect key="frame" x="0.0" y="0.0" width="131" height="20"/>
-                                <fontDescription key="fontDescription" name="LamaSans-Medium" family="Lama Sans" pointSize="10"/>
-                                <color key="textColor" name="main"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X2F-bz-zig">
-                                <rect key="frame" x="0.0" y="13.333333333333334" width="131" height="0.66666666666666607"/>
-                                <color key="backgroundColor" name="main"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="0.59999999999999998" id="LNz-FM-V3l"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="-8" translatesAutoresizingMaskIntoConstraints="NO" id="PA9-kj-EmY">
+                                <rect key="frame" x="0.0" y="0.0" width="129" height="15"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="الأوعية الدموية" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bhu-pW-nuR">
+                                        <rect key="frame" x="0.0" y="0.0" width="129" height="22.333333333333332"/>
+                                        <fontDescription key="fontDescription" name="LamaSans-Medium" family="Lama Sans" pointSize="10"/>
+                                        <color key="textColor" name="main"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X2F-bz-zig">
+                                        <rect key="frame" x="0.0" y="14.333333333333334" width="129" height="0.66666666666666607"/>
+                                        <color key="backgroundColor" name="main"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="0.59999999999999998" id="LNz-FM-V3l"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="bhu-pW-nuR" firstAttribute="leading" secondItem="B8z-eY-79D" secondAttribute="leading" id="VEo-VP-hIC"/>
-                            <constraint firstAttribute="bottom" secondItem="bhu-pW-nuR" secondAttribute="bottom" id="Wcm-Zd-8zw"/>
-                            <constraint firstAttribute="height" constant="20" id="k5s-XE-Izq"/>
-                            <constraint firstAttribute="bottom" secondItem="X2F-bz-zig" secondAttribute="bottom" constant="6" id="p2d-Sg-Ueg"/>
-                            <constraint firstItem="X2F-bz-zig" firstAttribute="width" secondItem="bhu-pW-nuR" secondAttribute="width" id="pqK-lN-okf"/>
-                            <constraint firstAttribute="trailing" secondItem="X2F-bz-zig" secondAttribute="trailing" id="qmo-ia-Vpr"/>
-                            <constraint firstItem="bhu-pW-nuR" firstAttribute="top" secondItem="B8z-eY-79D" secondAttribute="top" id="vCR-av-cpl"/>
-                            <constraint firstAttribute="trailing" secondItem="bhu-pW-nuR" secondAttribute="trailing" id="yUW-tM-sWO"/>
+                            <constraint firstItem="PA9-kj-EmY" firstAttribute="leading" secondItem="B8z-eY-79D" secondAttribute="leading" id="5w8-I5-A8W"/>
+                            <constraint firstAttribute="trailing" secondItem="PA9-kj-EmY" secondAttribute="trailing" constant="5" id="8ku-TR-0pB"/>
+                            <constraint firstAttribute="bottom" secondItem="PA9-kj-EmY" secondAttribute="bottom" id="rbZ-fi-jSh"/>
+                            <constraint firstItem="PA9-kj-EmY" firstAttribute="top" secondItem="B8z-eY-79D" secondAttribute="top" id="spJ-B1-QdS"/>
+                            <constraint firstAttribute="height" constant="15" id="vx8-8d-UNB"/>
                         </constraints>
                     </view>
                 </subviews>
@@ -62,13 +64,13 @@
                 <constraint firstAttribute="trailing" secondItem="B8z-eY-79D" secondAttribute="trailing" id="4rg-Rc-aaN"/>
                 <constraint firstItem="B8z-eY-79D" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="Owl-oX-Xqt"/>
                 <constraint firstAttribute="bottom" secondItem="B8z-eY-79D" secondAttribute="bottom" id="YEx-yM-KPy"/>
-                <constraint firstItem="B8z-eY-79D" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="3" id="tMO-lj-woY"/>
+                <constraint firstItem="B8z-eY-79D" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="tMO-lj-woY"/>
             </constraints>
-            <size key="customSize" width="134" height="20"/>
+            <size key="customSize" width="134" height="15"/>
             <connections>
                 <outlet property="LaDrugTitle" destination="bhu-pW-nuR" id="8Zc-xB-QMb"/>
             </connections>
-            <point key="canvasLocation" x="192.36641221374046" y="-21.83098591549296"/>
+            <point key="canvasLocation" x="192.36641221374046" y="-23.591549295774648"/>
         </collectionViewCell>
     </objects>
     <resources>

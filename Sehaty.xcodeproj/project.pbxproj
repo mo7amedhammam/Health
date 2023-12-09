@@ -68,6 +68,7 @@
 		BB546DEA2AC9E467008A4F8C /* HomeTVCell1.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB546DE82AC9E467008A4F8C /* HomeTVCell1.swift */; };
 		BB546DEB2AC9E467008A4F8C /* HomeTVCell1.xib in Resources */ = {isa = PBXBuildFile; fileRef = BB546DE92AC9E467008A4F8C /* HomeTVCell1.xib */; };
 		BB6095702ADF24C9006582F3 /* ControllViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB60956F2ADF24C9006582F3 /* ControllViews.swift */; };
+		BB67C0912B247A6200F04266 /* AlignedCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB67C0902B247A6200F04266 /* AlignedCollectionView.swift */; };
 		BB6E07EF2A896B2700689769 /* MeasurementsDetailsTVCell0.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6E07ED2A896B2700689769 /* MeasurementsDetailsTVCell0.swift */; };
 		BB6E07F02A896B2700689769 /* MeasurementsDetailsTVCell0.xib in Resources */ = {isa = PBXBuildFile; fileRef = BB6E07EE2A896B2700689769 /* MeasurementsDetailsTVCell0.xib */; };
 		BB913AD72A9BE04900003AC5 /* TipsCategoriesTVCell1.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB913AD52A9BE04900003AC5 /* TipsCategoriesTVCell1.swift */; };
@@ -263,6 +264,7 @@
 		BB546DE82AC9E467008A4F8C /* HomeTVCell1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTVCell1.swift; sourceTree = "<group>"; };
 		BB546DE92AC9E467008A4F8C /* HomeTVCell1.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomeTVCell1.xib; sourceTree = "<group>"; };
 		BB60956F2ADF24C9006582F3 /* ControllViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControllViews.swift; sourceTree = "<group>"; };
+		BB67C0902B247A6200F04266 /* AlignedCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlignedCollectionView.swift; sourceTree = "<group>"; };
 		BB6E07ED2A896B2700689769 /* MeasurementsDetailsTVCell0.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasurementsDetailsTVCell0.swift; sourceTree = "<group>"; };
 		BB6E07EE2A896B2700689769 /* MeasurementsDetailsTVCell0.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MeasurementsDetailsTVCell0.xib; sourceTree = "<group>"; };
 		BB913AD52A9BE04900003AC5 /* TipsCategoriesTVCell1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TipsCategoriesTVCell1.swift; sourceTree = "<group>"; };
@@ -591,6 +593,7 @@
 		BB518CCE2A9A10EC00242FAD /* Tips Categories */ = {
 			isa = PBXGroup;
 			children = (
+				BB67C08F2B247A4600F04266 /* Aligned Collection */,
 				BB518CD12A9A110900242FAD /* CVCell */,
 				BB518CD02A9A110100242FAD /* TVCell */,
 				BB518CCF2A9A10FB00242FAD /* VC */,
@@ -697,6 +700,14 @@
 				BBAE725D2AD3291F0089512D /* EmptyTVCell.xib */,
 			);
 			path = TVCell;
+			sourceTree = "<group>";
+		};
+		BB67C08F2B247A4600F04266 /* Aligned Collection */ = {
+			isa = PBXGroup;
+			children = (
+				BB67C0902B247A6200F04266 /* AlignedCollectionView.swift */,
+			);
+			path = "Aligned Collection";
 			sourceTree = "<group>";
 		};
 		BBA1DA112AB11BDF0042713A /* Model */ = {
@@ -1684,6 +1695,7 @@
 				C893A9B32AB5BA070054F171 /* TipsM.swift in Sources */,
 				C80DA9EB2AA4D3B300F10808 /* Authintications.swift in Sources */,
 				C82FBA172AB08F200029F151 /* imagePickerHelper.swift in Sources */,
+				BB67C0912B247A6200F04266 /* AlignedCollectionView.swift in Sources */,
 				BB14DAF72A7B047400389B96 /* ProfileTVCellLine.swift in Sources */,
 				C80DA9E22AA4D11300F10808 /* BaseResponse.swift in Sources */,
 				C80DA9EF2AA4F6B000F10808 /* UiWindow.swift in Sources */,
@@ -1903,7 +1915,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.wecancity.Health;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -1943,7 +1955,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.wecancity.Health;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";

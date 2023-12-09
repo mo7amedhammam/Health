@@ -48,6 +48,7 @@ class MeasurementsDetailsVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        TVDescription.placeholderText = "إضافة تعليق"
         PickerDate.minimumDate = nil
         PickerDate.maximumDate =  Date()
         PickerDate.datePickerMode = .dateAndTime
@@ -234,6 +235,9 @@ class MeasurementsDetailsVC: UIViewController {
         TFNumMeasure.text = ""
         TFSecondValue.text = ""
         TVDescription.text  = ""
+        TVDescription.showingPlaceholder = true
+        TVDescription.showPlaceholderText()
+//        TVDescription.placeholderText = "إضافة تعليق"
         ViewAddMeasurement.isHidden = true
         self.view.endEditing(true)
     }

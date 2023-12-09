@@ -18,32 +18,63 @@ class TipsCategories3TVCell: UITableViewCell {
     
     var model : TipDetailsM?{
         
-        didSet{
+        didSet {
             
-            guard let model = model else {return}
-            LaTitle.text = model.title
-            LaDAte.text = model.date?.ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "dd / MM / yyyy hh:mm a")
-            if let img = model.image {
-                //                let processor = SVGImgProcessor() // if receive svg image
-                ImgTipCategory.kf.setImage(with: URL(string:Constants.baseURL + img.validateSlashs()), placeholder: UIImage(named: "defaultLogo"), options: nil, progressBlock: nil)
-            }
-            CVDrugGroups.reloadData()
+//            guard let model = model else {return}
+//            LaTitle.text = model.title
+//            LaDAte.text = model.date?.ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "dd / MM / yyyy hh:mm a")
+//            if let img = model.image {
+//                //                let processor = SVGImgProcessor() // if receive svg image
+//                ImgTipCategory.kf.setImage(with: URL(string:Constants.baseURL + img.validateSlashs()), placeholder: UIImage(named: "defaultLogo"), options: nil, progressBlock: nil)
+//            }
+            
+//            CVDrugGroups.reloadData()
+            
+//            HViewSuper.constant = (100.0 + calculateCollectionViewHeight())
 
-            if model.drugGroups?.count == 0 {
-                HViewSuper.constant = 90
-            } else if model.drugGroups?.count == 1 {
-                HViewSuper.constant = 125
-            } else {
-                if ((model.drugGroups!.count) ) % 2 == 0 {
-                    HViewSuper.constant = (100.0 + (Double((model.drugGroups!.count) / 2 ) * 22))
-                } else {
-                    HViewSuper.constant = (95.0 + (Double(((model.drugGroups!.count) + 1) / 2 ) * 22))
-                }
-            }
+//            if model.drugGroups?.count == 0 {
+//                HViewSuper.constant = 90
+//            } else if model.drugGroups?.count == 1 {
+//                HViewSuper.constant = 125
+//            } else {
+//                if ((model.drugGroups!.count) ) % 2 == 0 {
+//                    HViewSuper.constant = (100.0 + CVDrugGroups.frame.height )
+//                } else {
+//                    HViewSuper.constant = (100.0 + CVDrugGroups.frame.height)
+//                }
+//            }
             
                         
         }
     }
+    
+    func calculateCollectionViewHeight() -> CGFloat {
+//        CVDrugGroups.layoutIfNeeded()
+//        let contentSize = CVDrugGroups.collectionViewLayout.collectionViewContentSize
+//        return contentSize.height
+        
+        let numberOfItems = model?.drugGroups?.count // Number of items in UICollectionView
+        let itemsPerRow   =  calculateItemsPerRow (for: CVDrugGroups)// Number of items per row (if applicable)
+        let itemHeight    =  15.0 // Height of each item in UICollectionView
+
+        let numberOfRows = ceil(Double(numberOfItems!) / Double(itemsPerRow))
+        let collectionViewHeight = numberOfRows * itemHeight
+        return collectionViewHeight
+    }
+
+    func calculateItemsPerRow(for collectionView: UICollectionView) -> Int {
+        let collectionViewFlowLayout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout
+        let sectionInset = collectionViewFlowLayout?.sectionInset ?? UIEdgeInsets.zero
+        let contentInset = collectionView.contentInset
+        let itemSpacing = collectionViewFlowLayout?.minimumInteritemSpacing ?? 0.0
+        let availableWidth = collectionView.bounds.width - sectionInset.left - sectionInset.right - contentInset.left - contentInset.right
+        let itemWidth = collectionViewFlowLayout?.itemSize.width ?? 0.0
+        // Calculate the number of items that can fit in one row
+        let itemsPerRow = max(1, Int((availableWidth + itemSpacing) / (itemWidth + itemSpacing)))
+        
+        return itemsPerRow
+    }
+
     
     
     override func awakeFromNib() {
@@ -53,7 +84,12 @@ class TipsCategories3TVCell: UITableViewCell {
         CVDrugGroups.dataSource = self
         CVDrugGroups.delegate = self
         CVDrugGroups.registerCell(cellClass: TipDetailsDrugGroup.self)
-        CVDrugGroups.transform = CGAffineTransform(scaleX: -1, y: 1) //first tip mirror effect for x -> second in cell
+//        CVDrugGroups.transform = CGAffineTransform(scaleX: -1, y: 1) //first tip mirror effect for x -> second in cell
+        
+        let alignedFlowLayout = AlignedCollectionViewFlowLayout(horizontalAlignment: .right, verticalAlignment: .top)
+        alignedFlowLayout.estimatedItemSize = AlignedCollectionViewFlowLayout.automaticSize
+        CVDrugGroups.collectionViewLayout = alignedFlowLayout
+        
         
     }
     
@@ -75,19 +111,13 @@ extension TipsCategories3TVCell:UICollectionViewDataSource,UICollectionViewDeleg
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TipDetailsDrugGroup", for: indexPath) as! TipDetailsDrugGroup
+        //        CVDr
+        cell.LaDrugTitle.transform = CGAffineTransform(scaleX: -1, y: 1) //first tip mirror effect for x -> second in cell
+
         let model = model?.drugGroups?[indexPath.row]
         cell.LaDrugTitle.text = model?.title
         cell.LaDrugTitle.font = UIFont(name: "LamaSans-Medium", size: 10)
-        
         return cell
     }
-    
-    //    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-    //        // Calculate and return the size of the cell based on your content
-    //        return CGSize(width: collectionView.bounds.width, height: 30)
-    //    }
-    //
-    //    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-    //        return 10.0 // Adjust the spacing between cells as needed
-    //    }
+ 
 }

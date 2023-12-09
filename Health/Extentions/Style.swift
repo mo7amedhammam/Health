@@ -692,7 +692,7 @@ extension Date{
         return super.resignFirstResponder()
     }
 
-    private func showPlaceholderText() {
+     func showPlaceholderText() {
         showingPlaceholder = true
         textColor = placeholderTextColor
         text = placeholderText
