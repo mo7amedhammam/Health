@@ -41,10 +41,12 @@ class MedicationScheduleDetailsTVCell: UITableViewCell {
             //LaEndDate.text = model.endDate?.ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "yyyy/MM/dd")
             LaEndDate.text = convertToStandardDateFormat(dateString : model.endDate ?? "" )
             LaDescription.text = model.pharmacistComment
-            LaDescription.setLineHeight(lineHeight: 1.5)
+            if model.pharmacistComment == "" || model.pharmacistComment == nil {
+            } else {
+                LaDescription.setLineHeight(lineHeight: 1.5)
+            }
+            
             LaStatus.text = model.active ?? false ? "فعّال":"مًنتهى"
-            
-            
             setactivColors(isactive: model.active ?? true)
             
             if model.active == true {

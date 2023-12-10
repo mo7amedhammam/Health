@@ -163,9 +163,9 @@ extension HomeTVCell1 : UICollectionViewDataSource , UICollectionViewDelegate , 
         
         if indexx == 1 {
             if ViewModelMeasurements?.ArrStats?.count ?? 0 <= 3 {
-                return CGSize(width: (UIScreen.main.bounds.width/3) - 12 , height: 90)
+                return CGSize(width: (UIScreen.main.bounds.width/3) - 12 , height: 150)
             } else {
-                return CGSize(width: (UIScreen.main.bounds.width/3) - 12 , height: 170)
+                return CGSize(width: (UIScreen.main.bounds.width/3) - 12 , height: 150)
             }
         } else if indexx == 2 {
             return CGSize(width: 280, height: 150)

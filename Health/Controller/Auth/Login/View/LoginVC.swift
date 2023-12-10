@@ -30,9 +30,18 @@ class LoginVC: UIViewController , UITextFieldDelegate {
         TFPhone.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         TFPassword.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         
+        TFPassword.addTarget(self, action: #selector(didTapTFPassword), for: .editingDidEndOnExit)
+        
         BtnPhone.isHidden = true
         BtnLogin.enable(false)
         hideKeyboardWhenTappedAround()
+    }
+    
+    
+    
+    @objc func didTapTFPassword() {
+        // Resign the first responder from the UITextField.
+        Login()
     }
     
     @IBAction func BUBack(_ sender: Any) {

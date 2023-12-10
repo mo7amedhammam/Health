@@ -27,12 +27,25 @@ class ForgetPasswordVC: UIViewController , UITextFieldDelegate , UIGestureRecogn
         TFPassword.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         TFRe_Password.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         BtnReset.enable(false)
+        
+        TFPassword.addTarget(self, action: #selector(didTapTFPassword), for: .editingDidEndOnExit)
+        TFRe_Password.addTarget(self, action: #selector(didTapTFRe_Password), for: .editingDidEndOnExit)
 
         hideKeyboardWhenTappedAround()
-        
         navigationController?.interactivePopGestureRecognizer?.delegate = self
 
     }
+    
+    @objc func didTapTFPassword() {
+        // Resign the first responder from the UITextField.
+        TFRe_Password.becomeFirstResponder()
+    }
+
+    @objc func didTapTFRe_Password() {
+        // Resign the first responder from the UITextField.
+        ResetPassword()
+    }
+    
     
     func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
         return false

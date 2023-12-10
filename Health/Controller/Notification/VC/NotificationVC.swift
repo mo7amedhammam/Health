@@ -631,6 +631,7 @@ extension NotificationVC : UITableViewDataSource , UITableViewDelegate {
             cell.LLocPeriod.textColor = .white
             cell.LaStatus.text = "فعّال"
 
+            cell.IVPhotoTitle.tintColor = .white
             
         } else {
             
@@ -660,6 +661,7 @@ extension NotificationVC : UITableViewDataSource , UITableViewDelegate {
             cell.LLocPeriod.textColor = UIColor(named: "wrong")
             
             cell.LaStatus.text = "مُنتهي"
+            cell.IVPhotoTitle.tintColor = UIColor(named: "wrong")
 
         }
         print(":::::: \(model?.timeIsOver) \(model?.active)")

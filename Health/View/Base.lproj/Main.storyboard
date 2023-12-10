@@ -1132,7 +1132,7 @@
                                                                                                 <rect key="frame" x="50" y="0.0" width="283" height="50"/>
                                                                                                 <color key="textColor" name="deactive"/>
                                                                                                 <fontDescription key="fontDescription" name="LamaSans-Medium" family="Lama Sans" pointSize="17"/>
-                                                                                                <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                                                                                                <textInputTraits key="textInputTraits" returnKeyType="next" secureTextEntry="YES"/>
                                                                                             </textField>
                                                                                         </subviews>
                                                                                     </stackView>
@@ -1182,7 +1182,7 @@
                                                                                                 <rect key="frame" x="50" y="0.0" width="283" height="50"/>
                                                                                                 <color key="textColor" name="deactive"/>
                                                                                                 <fontDescription key="fontDescription" name="LamaSans-Medium" family="Lama Sans" pointSize="17"/>
-                                                                                                <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                                                                                                <textInputTraits key="textInputTraits" returnKeyType="next" secureTextEntry="YES"/>
                                                                                             </textField>
                                                                                         </subviews>
                                                                                     </stackView>
@@ -1446,7 +1446,7 @@
                                                                                                 <rect key="frame" x="50" y="0.0" width="283" height="50"/>
                                                                                                 <color key="textColor" name="deactive"/>
                                                                                                 <fontDescription key="fontDescription" name="LamaSans-Medium" family="Lama Sans" pointSize="17"/>
-                                                                                                <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                                                                                                <textInputTraits key="textInputTraits" returnKeyType="next" secureTextEntry="YES"/>
                                                                                             </textField>
                                                                                         </subviews>
                                                                                     </stackView>
@@ -1496,7 +1496,7 @@
                                                                                                 <rect key="frame" x="50" y="0.0" width="283" height="50"/>
                                                                                                 <color key="textColor" name="deactive"/>
                                                                                                 <fontDescription key="fontDescription" name="LamaSans-Medium" family="Lama Sans" pointSize="17"/>
-                                                                                                <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                                                                                                <textInputTraits key="textInputTraits" returnKeyType="next" secureTextEntry="YES"/>
                                                                                             </textField>
                                                                                         </subviews>
                                                                                     </stackView>
@@ -1546,7 +1546,7 @@
                                                                                                 <rect key="frame" x="50" y="0.0" width="283" height="50"/>
                                                                                                 <color key="textColor" name="deactive"/>
                                                                                                 <fontDescription key="fontDescription" name="LamaSans-Medium" family="Lama Sans" pointSize="17"/>
-                                                                                                <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                                                                                                <textInputTraits key="textInputTraits" returnKeyType="next" secureTextEntry="YES"/>
                                                                                             </textField>
                                                                                         </subviews>
                                                                                     </stackView>

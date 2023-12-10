@@ -95,7 +95,7 @@ extension HomeVC : UITableViewDataSource , UITableViewDelegate {
                     if ViewModelMeasurements.ArrStats?.count ?? 0 <= 3 {
                         cell.HViewCell.constant = 200
                     } else {
-                        cell.HViewCell.constant = 400
+                        cell.HViewCell.constant = 380
                     }
                     cell.indexx = indexPath.row
                     cell.ViewModelMeasurements = ViewModelMeasurements
@@ -121,7 +121,7 @@ extension HomeVC : UITableViewDataSource , UITableViewDelegate {
                     cell.CollectionHome.reloadData()
                     
                     cell.BtnMore.isHidden   = true
-                    cell.LaTitle.text = "الأدوية التي قاربة على الإنتهاء"
+                    cell.LaTitle.text = "الأدوية التي قاربت على الإنتهاء"
                     return cell
                 }
 

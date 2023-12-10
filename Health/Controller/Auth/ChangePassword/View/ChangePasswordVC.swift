@@ -32,9 +32,30 @@ class ChangePasswordVC: UIViewController  , UITextFieldDelegate {
         TFPassword.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         TFNewPassword.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         TFRe_Password.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+        
+        TFPassword.addTarget(self, action: #selector(didTapTFPassword), for: .editingDidEndOnExit)
+        TFNewPassword.addTarget(self, action: #selector(didTapTFNewPassword), for: .editingDidEndOnExit)
+        TFRe_Password.addTarget(self, action: #selector(didTapTFRe_Password), for: .editingDidEndOnExit)
+        
         BtnChange.enable(false)
         hideKeyboardWhenTappedAround()
     }
+    
+    @objc func didTapTFPassword() {
+        // Resign the first responder from the UITextField.
+        TFNewPassword.becomeFirstResponder()
+    }
+    
+    @objc func didTapTFNewPassword() {
+        // Resign the first responder from the UITextField.
+        TFRe_Password.becomeFirstResponder()
+    }
+    
+    @objc func didTapTFRe_Password() {
+        // Resign the first responder from the UITextField.
+        ChangePassword()
+    }
+    
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
         

@@ -8,16 +8,35 @@
 import UIKit
 
 class HomeCVCell2: UICollectionViewCell {
-    @IBOutlet weak var LaTitle: UILabel!
     
+    @IBOutlet weak var LaTitle: UILabel!
     @IBOutlet weak var LaEndDate: UILabel!
+    
     var model : PrescriptionM?{
         didSet{
             guard let model = model else{return}
             LaTitle.text = model.drugTitle
-//            LaEndDate.text = model.endDate?.ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "yyyy/MM/dd")
             LaEndDate.text = convertToStandardDateFormat(dateString:  model.endDate ?? "")
+            
+            if isArabic(model.drugTitle ?? "") == true {
+                LaTitle.textAlignment = .right
+            } else {
+                LaTitle.textAlignment = .left
+            }
+            
         }
+    }
+    
+    func isArabic(_ text: String) -> Bool {
+        let arabicRange = NSRange(location: 0, length: text.utf16.count)
+        let arabicPattern = "[\u{0600}-\u{06FF}\u{0750}-\u{077F}\u{08A0}-\u{08FF}\u{FB50}-\u{FDFF}\u{FE70}-\u{FEFF}\u{10E60}-\u{10E7F}\u{1EE00}-\u{1EEFF}]"
+        
+        if let regex = try? NSRegularExpression(pattern: arabicPattern, options: []),
+           regex.firstMatch(in: text, options: [], range: arabicRange) != nil {
+            return true
+        }
+        
+        return false
     }
     
     
