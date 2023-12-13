@@ -5691,10 +5691,10 @@
                                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="N3q-WD-K3n">
-                                                <rect key="frame" x="0.0" y="0.0" width="393" height="135"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="393" height="160"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Owo-0X-YXP">
-                                                        <rect key="frame" x="10" y="65" width="373" height="50"/>
+                                                        <rect key="frame" x="10" y="80" width="373" height="50"/>
                                                         <subviews>
                                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Pwb-G9-cLD">
                                                                 <rect key="frame" x="0.0" y="0.0" width="373" height="50"/>
@@ -5778,8 +5778,8 @@
                                                 </subviews>
                                                 <color key="backgroundColor" name="main"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="135" id="IBE-pA-pHk"/>
-                                                    <constraint firstAttribute="bottom" secondItem="Owo-0X-YXP" secondAttribute="bottom" constant="20" id="Ihl-IS-FB4"/>
+                                                    <constraint firstAttribute="height" constant="160" id="IBE-pA-pHk"/>
+                                                    <constraint firstAttribute="bottom" secondItem="Owo-0X-YXP" secondAttribute="bottom" constant="30" id="Ihl-IS-FB4"/>
                                                     <constraint firstItem="Owo-0X-YXP" firstAttribute="leading" secondItem="N3q-WD-K3n" secondAttribute="leading" constant="10" id="PHx-I7-9Ug"/>
                                                     <constraint firstAttribute="trailing" secondItem="Owo-0X-YXP" secondAttribute="trailing" constant="10" id="qLb-YR-5t3"/>
                                                 </constraints>
@@ -5790,10 +5790,10 @@
                                                 </userDefinedRuntimeAttributes>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="P7G-kv-kNO">
-                                                <rect key="frame" x="0.0" y="135" width="393" height="717"/>
+                                                <rect key="frame" x="0.0" y="160" width="393" height="692"/>
                                                 <subviews>
                                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" semanticContentAttribute="forceRightToLeft" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="plo-qg-eAP">
-                                                        <rect key="frame" x="0.0" y="0.0" width="393" height="717"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="393" height="692"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </tableView>
                                                 </subviews>

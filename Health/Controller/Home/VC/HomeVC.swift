@@ -31,7 +31,7 @@ class HomeVC: UIViewController {
         refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
            // Add the refresh control to the table view
         TVScreen.addSubview(refreshControl)
-        getTipsCategories()
+//        getTipsCategories()
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -41,30 +41,17 @@ class HomeVC: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         
+//        if Shared.shared.IsMeasurementAdded == false {
+//        } else {
+//            if let arrStat = ViewModelMeasurements.ArrStats {
+//                refreshData()
+//                Shared.shared.IsMeasurementAdded = false
+//            } else {
+//                // Handle the case where arrStat is nil
+//            }
+//        }
         
-        if Shared.shared.IsMeasurementAdded == false {
-        } else {
-            if let arrStat = ViewModelMeasurements.ArrStats {
-                
-                refreshData()
-                Shared.shared.IsMeasurementAdded = false
-                // arrStat.measurementsCount! += 1
-                // ViewModelMeasurements.ArrStats?[indexx].measurementsCount! += 1
-//                for data in 0 ...  arrStat.count - 1 {
-//                    if ViewModelMeasurements.ArrStats?[data].medicalMeasurementID! == Shared.shared.MeasurementId {
-//                        ViewModelMeasurements.ArrStats?[data].lastMeasurementValue  = "\(Shared.shared.ValueMeasurementAdded)"
-//                        ViewModelMeasurements.ArrStats?[data].measurementsCount!   += 1
-//                        ViewModelMeasurements.ArrStats?[data].lastMeasurementDate   = Shared.shared.DateMeasurementAdded
-//
-//                        TVScreen.reloadRows(at: [IndexPath(row: 1 , section: 0)], with: .automatic)
-//                        Shared.shared.IsMeasurementAdded = false
-//                    }
-//                }
-            } else {
-                // Handle the case where arrStat is nil
-            }
-        }
-        
+        getTipsCategories()
         GetMyProfile()
     }
  
@@ -91,6 +78,7 @@ extension HomeVC : UITableViewDataSource , UITableViewDelegate {
                 } else {
                     let cell = tableView.dequeueReusableCell(withIdentifier: "HomeTVCell1", for: indexPath) as! HomeTVCell1
                     cell.nav =  self.navigationController
+                    cell.layout.scrollDirection   = .vertical
 //                    cell.DataSourseDeledate()
                     if ViewModelMeasurements.ArrStats?.count ?? 0 <= 3 {
                         cell.HViewCell.constant = 200
@@ -98,6 +86,12 @@ extension HomeVC : UITableViewDataSource , UITableViewDelegate {
                         cell.HViewCell.constant = 380
                     }
                     cell.indexx = indexPath.row
+                    
+                    if ViewModelMeasurements.ArrStats?.count ?? 0 >= 6 {
+                        cell.Num = 6
+                    } else {
+                        cell.Num = ViewModelMeasurements.ArrStats?.count ?? 0
+                    }
                     cell.ViewModelMeasurements = ViewModelMeasurements
                     cell.CollectionHome.reloadData()
                     
@@ -115,6 +109,8 @@ extension HomeVC : UITableViewDataSource , UITableViewDelegate {
                     let cell = tableView.dequeueReusableCell(withIdentifier: "HomeTVCell1", for: indexPath) as! HomeTVCell1
                     cell.nav =  self.navigationController
     //                cell.DataSourseDeledate()
+                    cell.layout.scrollDirection   = .horizontal
+
                     cell.HViewCell.constant = 220
                     cell.indexx = indexPath.row
                     cell.ViewModelHome = ViewModelHome
@@ -133,6 +129,7 @@ extension HomeVC : UITableViewDataSource , UITableViewDelegate {
                 } else {
                     let cell = tableView.dequeueReusableCell(withIdentifier: "HomeTVCell1", for: indexPath) as! HomeTVCell1
                     cell.nav =  self.navigationController
+                    cell.layout.scrollDirection   = .horizontal
 //                    cell.DataSourseDeledate()
                     cell.HViewCell.constant = 320
                     cell.indexx = indexPath.row
@@ -152,6 +149,7 @@ extension HomeVC : UITableViewDataSource , UITableViewDelegate {
                 } else {
                     let cell = tableView.dequeueReusableCell(withIdentifier: "HomeTVCell1", for: indexPath) as! HomeTVCell1
                     cell.nav =  self.navigationController
+                    cell.layout.scrollDirection   = .horizontal
 //                    cell.DataSourseDeledate()
                     cell.HViewCell.constant = 320
                     cell.indexx = indexPath.row

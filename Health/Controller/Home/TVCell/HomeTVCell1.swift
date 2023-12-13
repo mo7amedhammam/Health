@@ -19,6 +19,9 @@ class HomeTVCell1: UITableViewCell {
     var ViewModelMeasurements : MyMeasurementsStatsVM?
     var ViewModel : TipsVM?
     var ViewModelHome : AlmostFinishedVM?
+    var Num = 0
+    let layout = UICollectionViewFlowLayout()
+
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -73,12 +76,10 @@ class HomeTVCell1: UITableViewCell {
     
     func DataSourseDeledate () {
              
-        let layout = UICollectionViewFlowLayout()
+//        let layout = UICollectionViewFlowLayout()
         layout.minimumLineSpacing      = 10
         layout.minimumInteritemSpacing = 0
-        layout.scrollDirection   = .horizontal
         CollectionHome.collectionViewLayout =  layout
-        
         CollectionHome.dataSource = self
         CollectionHome.delegate   = self
         CollectionHome.registerCell(cellClass: HomeCVCell1.self)
@@ -97,7 +98,8 @@ extension HomeTVCell1 : UICollectionViewDataSource , UICollectionViewDelegate , 
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if indexx == 1 {
-            return ViewModelMeasurements?.ArrStats?.count ?? 0
+            return Num
+//            return ViewModelMeasurements?.ArrStats?.count ?? 0
         } else if indexx == 2 {
             return ViewModelHome?.responseModel?.items?.count ?? 0
         } else if indexx == 3 {
@@ -163,9 +165,9 @@ extension HomeTVCell1 : UICollectionViewDataSource , UICollectionViewDelegate , 
         
         if indexx == 1 {
             if ViewModelMeasurements?.ArrStats?.count ?? 0 <= 3 {
-                return CGSize(width: (UIScreen.main.bounds.width/3) - 12 , height: 150)
+                return CGSize(width: ((collectionView.frame.width - 30 )/3) , height: 150)
             } else {
-                return CGSize(width: (UIScreen.main.bounds.width/3) - 12 , height: 150)
+                return CGSize(width: ((collectionView.frame.width - 20 )/3) , height: 150)
             }
         } else if indexx == 2 {
             return CGSize(width: 280, height: 150)
