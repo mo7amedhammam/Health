@@ -70,4 +70,5 @@ enum EndPoints: String {
     
     //--Home--
     case GetAlmostFinishedPresc = "CustomerPrescription/GetCustomerAlmostFinishedPrescription"
+    case getHelp = "Help/Get"
 }

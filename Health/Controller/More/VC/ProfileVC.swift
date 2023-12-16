@@ -41,7 +41,7 @@ extension ProfileVC : UITableViewDataSource , UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 //        return 12
-        return 8
+        return 9
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -140,8 +140,8 @@ extension ProfileVC : UITableViewDataSource , UITableViewDelegate {
         } else if indexPath.row == 6 {
             
             let cell = tableView.dequeueReusableCell(withIdentifier: "ProfileTVCellMiddle", for: indexPath) as! ProfileTVCellMiddle
-            cell.LaTitle.text = "الشروط والأحكام"
-            cell.IVPhoto.image = UIImage(named: "terms")
+            cell.LaTitle.text = "المساعده "
+            cell.IVPhoto.image = UIImage(named: "playmain")
             if selected == 6 {
                 cell.ViewColor.backgroundColor = UIColor(named: "secondary")
             } else {
@@ -149,6 +149,16 @@ extension ProfileVC : UITableViewDataSource , UITableViewDelegate {
             }
             return cell
             
+        } else if indexPath.row == 7 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "ProfileTVCellMiddle", for: indexPath) as! ProfileTVCellMiddle
+            cell.LaTitle.text = "الشروط والأحكام"
+            cell.IVPhoto.image = UIImage(named: "terms")
+            if selected == 7 {
+                cell.ViewColor.backgroundColor = UIColor(named: "secondary")
+            } else {
+                cell.ViewColor.backgroundColor = .clear
+            }
+            return cell
         } else  {
             let cell = tableView.dequeueReusableCell(withIdentifier: "ProfileTVCellLogout", for: indexPath) as! ProfileTVCellLogout
             return cell
@@ -186,11 +196,16 @@ extension ProfileVC : UITableViewDataSource , UITableViewDelegate {
             selected = 5
             TVscreen.reloadData()
             
-        } else if indexPath.row == 6 { // - "الشروط والأحكام" -
+        } else if indexPath.row == 6 { // - "المساعده "-
             selected = 6
             TVscreen.reloadData()
+            PushTo(destination: HelpVC.self)
             
-        } else { // -- تسجيل خروج --
+        }  else if indexPath.row == 7 { // - "الشروط والأحكام" -
+            selected = 7
+            TVscreen.reloadData()
+            
+        }else { // -- تسجيل خروج --
             
             let actionSheet  = UIAlertController(title: "هل أنت متأكد بأنك تريد تسجيل الخروج؟", message: "", preferredStyle: .alert)
             let alertAction = UIAlertAction(title: "تسجيل الخروج", style: .default, handler: { (_) in

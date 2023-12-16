@@ -67,6 +67,11 @@
 		BB546DE72AC9D565008A4F8C /* HomeCVCell2.xib in Resources */ = {isa = PBXBuildFile; fileRef = BB546DE52AC9D565008A4F8C /* HomeCVCell2.xib */; };
 		BB546DEA2AC9E467008A4F8C /* HomeTVCell1.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB546DE82AC9E467008A4F8C /* HomeTVCell1.swift */; };
 		BB546DEB2AC9E467008A4F8C /* HomeTVCell1.xib in Resources */ = {isa = PBXBuildFile; fileRef = BB546DE92AC9E467008A4F8C /* HomeTVCell1.xib */; };
+		BB5A26672B2E1DC40005C9B8 /* HelpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB5A26662B2E1DC40005C9B8 /* HelpVC.swift */; };
+		BB5A266B2B2E1E0B0005C9B8 /* ModelHelp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB5A266A2B2E1E0B0005C9B8 /* ModelHelp.swift */; };
+		BB5A266E2B2E1E330005C9B8 /* HelpTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB5A266C2B2E1E330005C9B8 /* HelpTVCell.swift */; };
+		BB5A266F2B2E1E330005C9B8 /* HelpTVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BB5A266D2B2E1E330005C9B8 /* HelpTVCell.xib */; };
+		BB5A26712B2E1F000005C9B8 /* HelpVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB5A26702B2E1F000005C9B8 /* HelpVM.swift */; };
 		BB6095702ADF24C9006582F3 /* ControllViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB60956F2ADF24C9006582F3 /* ControllViews.swift */; };
 		BB67C0912B247A6200F04266 /* AlignedCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB67C0902B247A6200F04266 /* AlignedCollectionView.swift */; };
 		BB6E07EF2A896B2700689769 /* MeasurementsDetailsTVCell0.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6E07ED2A896B2700689769 /* MeasurementsDetailsTVCell0.swift */; };
@@ -263,6 +268,11 @@
 		BB546DE52AC9D565008A4F8C /* HomeCVCell2.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomeCVCell2.xib; sourceTree = "<group>"; };
 		BB546DE82AC9E467008A4F8C /* HomeTVCell1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTVCell1.swift; sourceTree = "<group>"; };
 		BB546DE92AC9E467008A4F8C /* HomeTVCell1.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomeTVCell1.xib; sourceTree = "<group>"; };
+		BB5A26662B2E1DC40005C9B8 /* HelpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpVC.swift; sourceTree = "<group>"; };
+		BB5A266A2B2E1E0B0005C9B8 /* ModelHelp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelHelp.swift; sourceTree = "<group>"; };
+		BB5A266C2B2E1E330005C9B8 /* HelpTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpTVCell.swift; sourceTree = "<group>"; };
+		BB5A266D2B2E1E330005C9B8 /* HelpTVCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HelpTVCell.xib; sourceTree = "<group>"; };
+		BB5A26702B2E1F000005C9B8 /* HelpVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpVM.swift; sourceTree = "<group>"; };
 		BB60956F2ADF24C9006582F3 /* ControllViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControllViews.swift; sourceTree = "<group>"; };
 		BB67C0902B247A6200F04266 /* AlignedCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlignedCollectionView.swift; sourceTree = "<group>"; };
 		BB6E07ED2A896B2700689769 /* MeasurementsDetailsTVCell0.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasurementsDetailsTVCell0.swift; sourceTree = "<group>"; };
@@ -702,6 +712,50 @@
 			path = TVCell;
 			sourceTree = "<group>";
 		};
+		BB5A26612B2E1D570005C9B8 /* Help */ = {
+			isa = PBXGroup;
+			children = (
+				BB5A26652B2E1D8D0005C9B8 /* View Model */,
+				BB5A26642B2E1D840005C9B8 /* Model */,
+				BB5A26632B2E1D7A0005C9B8 /* TVCell */,
+				BB5A26622B2E1D6F0005C9B8 /* VC */,
+			);
+			path = Help;
+			sourceTree = "<group>";
+		};
+		BB5A26622B2E1D6F0005C9B8 /* VC */ = {
+			isa = PBXGroup;
+			children = (
+				BB5A26662B2E1DC40005C9B8 /* HelpVC.swift */,
+			);
+			path = VC;
+			sourceTree = "<group>";
+		};
+		BB5A26632B2E1D7A0005C9B8 /* TVCell */ = {
+			isa = PBXGroup;
+			children = (
+				BB5A266C2B2E1E330005C9B8 /* HelpTVCell.swift */,
+				BB5A266D2B2E1E330005C9B8 /* HelpTVCell.xib */,
+			);
+			path = TVCell;
+			sourceTree = "<group>";
+		};
+		BB5A26642B2E1D840005C9B8 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				BB5A266A2B2E1E0B0005C9B8 /* ModelHelp.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		BB5A26652B2E1D8D0005C9B8 /* View Model */ = {
+			isa = PBXGroup;
+			children = (
+				BB5A26702B2E1F000005C9B8 /* HelpVM.swift */,
+			);
+			path = "View Model";
+			sourceTree = "<group>";
+		};
 		BB67C08F2B247A4600F04266 /* Aligned Collection */ = {
 			isa = PBXGroup;
 			children = (
@@ -813,6 +867,7 @@
 		BBBDFFF32A730F8C00F066DF /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				BB5A26612B2E1D570005C9B8 /* Help */,
 				BB30E6122A7859FE0045569D /* HTBC.swift */,
 				BB546DD42AC9D47F008A4F8C /* Home */,
 				BB1ECAB02AD473D9009BF2DE /* WillExpire */,
@@ -1430,6 +1485,7 @@
 			files = (
 				BB1B2FF82A7E9B5E001677FD /* INBodyTVCell.xib in Resources */,
 				BBBD00382A731B5E00F066DF /* SplashScreenTVCell1.xib in Resources */,
+				BB5A266F2B2E1E330005C9B8 /* HelpTVCell.xib in Resources */,
 				BBC7B4672A72CC840079355E /* LaunchScreen.storyboard in Resources */,
 				BB546DDF2AC9D53A008A4F8C /* HomeTVCell0.xib in Resources */,
 				BBE3CC782A80000E004B0D9A /* MedicationScheduleTVCell.xib in Resources */,
@@ -1613,6 +1669,7 @@
 				BB518CE22A9A122400242FAD /* TipsCategoriesCVCell0.swift in Sources */,
 				BBA1DA182AB11E5C0042713A /* NotificationVM.swift in Sources */,
 				BBC3C3ED2ACC912400805524 /* HomeCVCell3.swift in Sources */,
+				BB5A26712B2E1F000005C9B8 /* HelpVM.swift in Sources */,
 				BBC7B45B2A72CC820079355E /* AppDelegate.swift in Sources */,
 				BBAE725E2AD3291F0089512D /* EmptyTVCell.swift in Sources */,
 				C8A1509B2AB1C62A00511B1F /* ProfileM.swift in Sources */,
@@ -1650,9 +1707,11 @@
 				C8C7339A2AA6756B00185698 /* SignUpM.swift in Sources */,
 				C85671BE2AAF5AD900E02D75 /* InbodyM.swift in Sources */,
 				BBBD00172A73101700F066DF /* Helper.swift in Sources */,
+				BB5A26672B2E1DC40005C9B8 /* HelpVC.swift in Sources */,
 				BB546DEA2AC9E467008A4F8C /* HomeTVCell1.swift in Sources */,
 				BB518CEE2A9A129500242FAD /* TipsCategories3TVCell.swift in Sources */,
 				BBBD003F2A731B7B00F066DF /* SplashScreenTVCell3.swift in Sources */,
+				BB5A266B2B2E1E0B0005C9B8 /* ModelHelp.swift in Sources */,
 				BB546DE62AC9D565008A4F8C /* HomeCVCell2.swift in Sources */,
 				BB1B2FF72A7E9B5E001677FD /* INBodyTVCell.swift in Sources */,
 				BBBD00152A73101700F066DF /* ProgressHud.swift in Sources */,
@@ -1702,6 +1761,7 @@
 				BBB0636A2B0E8D7A00708CF4 /* MeasurementsDetailsFiltterVC.swift in Sources */,
 				C80DA9E42AA4D29500F10808 /* EndPoints.swift in Sources */,
 				BB5116CD2A829AC900CF5D11 /* MeasurementsDetailsTVCell.swift in Sources */,
+				BB5A266E2B2E1E330005C9B8 /* HelpTVCell.swift in Sources */,
 				BB6E07EF2A896B2700689769 /* MeasurementsDetailsTVCell0.swift in Sources */,
 				C82DCAA62AAC784F00322B55 /* MedicationScheduleM.swift in Sources */,
 				BBBD00142A73101700F066DF /* AES.swift in Sources */,

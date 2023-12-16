@@ -90,41 +90,65 @@ extension INBodyDetailsVC{
     
     func InbodyDownloaded(filePath: URL) {
         let destinationURL = filePath
-
+        print("destinationURL :: \(destinationURL)")
         // Check if the file exists at the destination URL
         if FileManager.default.fileExists(atPath: destinationURL.path) {
             let fileExtension = destinationURL.pathExtension.lowercased()
 
             if fileExtension == "jpg" || fileExtension == "jpeg" || fileExtension == "png" {
-                // It's an image file, save it to the photo library
-                PHPhotoLibrary.requestAuthorization { status in
-                    if status == .authorized {
-                        // Save the image to the photo library
-                        PHPhotoLibrary.shared().performChanges {
-                            let creationRequest = PHAssetChangeRequest.creationRequestForAssetFromImage(atFileURL: destinationURL)
-                        } completionHandler: { success, error in
-                            if success {
-                                print("Image saved to photo library successfully.")
-                                DispatchQueue.main.async { [weak self] in
-                                    guard let self = self else { return }
-                                    if let viewDone: ViewDone = showView(fromNib: ViewDone.self, in: self) {
-                                        viewDone.title = "تم تحميل التقرير بنجاح"
-                                        viewDone.imgStr = "downloadicon"
-                                        viewDone.action = {
-                                            viewDone.removeFromSuperview()
-                                        }
-                                    }
+                
+                downloadAndSaveImage(from: filePath) { result in
+                    switch result {
+                    case .success(let filePath):
+                        print("Image saved successfully at: \(filePath)")
+                        print("Image saved to photo library successfully.")
+                        DispatchQueue.main.async { [weak self] in
+                            guard let self = self else { return }
+                            if let viewDone: ViewDone = showView(fromNib: ViewDone.self, in: self) {
+                                viewDone.title = "تم تحميل التقرير بنجاح"
+                                viewDone.imgStr = "downloadicon"
+                                viewDone.action = {
+                                    viewDone.removeFromSuperview()
                                 }
-                            } else {
-                                // Handle the case where saving the image fails
-                                print("Failed to save image to photo library. Error: \(error?.localizedDescription ?? "")")
                             }
                         }
-                    } else {
-                        // Handle the case where the app doesn't have permission to access the photo library
-                        print("App does not have access to the photo library.")
+                        
+                    case .failure(let error):
+                        self.showAlert(message: "Failed to save image. Error: \(error.localizedDescription)")
+                        print("Failed to save image. Error: \(error.localizedDescription)")
                     }
                 }
+              
+                
+                // It's an image file, save it to the photo library
+//                PHPhotoLibrary.requestAuthorization { status in
+//                    if status == .authorized {
+//                        // Save the image to the photo library
+//                        PHPhotoLibrary.shared().performChanges {
+//                            let creationRequest = PHAssetChangeRequest.creationRequestForAssetFromImage(atFileURL: destinationURL)
+//                        } completionHandler: { success, error in
+//                            if success {
+//                                print("Image saved to photo library successfully.")
+//                                DispatchQueue.main.async { [weak self] in
+//                                    guard let self = self else { return }
+//                                    if let viewDone: ViewDone = showView(fromNib: ViewDone.self, in: self) {
+//                                        viewDone.title = "تم تحميل التقرير بنجاح"
+//                                        viewDone.imgStr = "downloadicon"
+//                                        viewDone.action = {
+//                                            viewDone.removeFromSuperview()
+//                                        }
+//                                    }
+//                                }
+//                            } else {
+//                                // Handle the case where saving the image fails
+//                                print("Failed to save image to photo library. Error: \(error?.localizedDescription ?? "")")
+//                            }
+//                        }
+//                    } else {
+//                        // Handle the case where the app doesn't have permission to access the photo library
+//                        print("App does not have access to the photo library.")
+//                    }
+//                }
             } else if fileExtension == "pdf" {
                 // Check if the PDF file is accessible by your app
                 guard FileManager.default.isReadableFile(atPath: destinationURL.path) else {
@@ -145,6 +169,37 @@ extension INBodyDetailsVC{
             print("File does not exist at \(destinationURL.path)")
         }
     }
+    
+    
+    
+    func downloadAndSaveImage(from url: URL, completion: @escaping (Result<String, Error>) -> Void) {
+        URLSession.shared.dataTask(with: url) { data, _, error in
+            if let error = error {
+                completion(.failure(error))
+                return
+            }
+
+            guard let data = data, let image = UIImage(data: data) else {
+                let dataError = NSError(domain: "com.example.app", code: 0, userInfo: [NSLocalizedDescriptionKey: "Invalid image data"])
+                completion(.failure(dataError))
+                return
+            }
+
+            // Save the image to the documents directory
+            if let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
+                let fileName = url.lastPathComponent
+                let fileURL = documentsDirectory.appendingPathComponent(fileName)
+
+                do {
+                    try image.jpegData(compressionQuality: 1.0)?.write(to: fileURL)
+                    completion(.success(fileURL.path))
+                } catch {
+                    completion(.failure(error))
+                }
+            }
+        }.resume()
+    }
+    
     
 }
 
