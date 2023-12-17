@@ -67,7 +67,7 @@ extension TipsCategoriesDetailsVC {
                 // Handle any errors that occur during the async operations
                 print("Error: \(error)")
                 Hud.dismiss(from: self.view)
-                SimpleAlert.shared.showAlert(title:error.localizedDescription,message:"", viewController: self)
+//                SimpleAlert.shared.showAlert(title:error.localizedDescription,message:"", viewController: self)
             }
         }
     }

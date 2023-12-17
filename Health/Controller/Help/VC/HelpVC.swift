@@ -15,8 +15,9 @@ class HelpVC: UIViewController {
     
     let ViewModel = HelpVM()
     let ViewModelProfile = ProfileVM()
-    
-    
+    var currentIndex = -1
+    var Play         = false
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -28,6 +29,10 @@ class HelpVC: UIViewController {
         getHelp()
         GetMyProfile()
         
+    }
+    
+    @IBAction func BUBack(_ sender: Any) {
+        navigationController?.popViewController(animated: true)
     }
     
     
@@ -97,7 +102,7 @@ class HelpVC: UIViewController {
 extension HelpVC : UITableViewDataSource , UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        ViewModel.ArrHelp?.count ?? 0
+       return ViewModel.ArrHelp?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -118,13 +123,26 @@ extension HelpVC : UITableViewDataSource , UITableViewDelegate {
         if let youtubeURL = URL(string: model?.videoURL ?? "") {
             let request = URLRequest(url: youtubeURL)
             cell.webView.load(request)
+            cell.SuperWebView.load(request)
+        }
+              
+        if currentIndex == indexPath.row {
+            if Play == true {
+                cell.SuperWebView.isHidden = false
+            } else {
+                cell.SuperWebView.isHidden = true
+            }
+        } else {
+            cell.SuperWebView.isHidden = true
         }
         
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+        currentIndex = indexPath.row
+        Play         = true
+        TVScreen.reloadData()
     }
     
 }

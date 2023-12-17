@@ -680,7 +680,7 @@ extension NotificationVC : UITableViewDataSource , UITableViewDelegate {
         
         let inputFormat = "yyyy-MM-dd'T'HH:mm:ss"
 //        let outputFormat = "yyyy-MM-dd hh:mm a"
-        let outputFormat = "yyyy/MM/dd"
+        let outputFormat = "dd/MM/yyyy"
         let inputFormatter = DateFormatter()
         inputFormatter.dateFormat = inputFormat
         

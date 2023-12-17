@@ -6316,19 +6316,19 @@
                                                                         </constraints>
                                                                     </view>
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ox6-BN-02r">
-                                                                        <rect key="frame" x="60" y="0.0" width="313" height="50"/>
+                                                                        <rect key="frame" x="60" y="0.0" width="253" height="50"/>
                                                                         <subviews>
                                                                             <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FCQ-xb-65k">
-                                                                                <rect key="frame" x="0.0" y="0.0" width="313" height="50"/>
+                                                                                <rect key="frame" x="0.0" y="0.0" width="253" height="50"/>
                                                                                 <subviews>
                                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ffR-Rn-mPn">
-                                                                                        <rect key="frame" x="0.0" y="0.0" width="263" height="50"/>
-                                                                                        <fontDescription key="fontDescription" name="LamaSans-SemiBold" family="Lama Sans" pointSize="30"/>
+                                                                                        <rect key="frame" x="0.0" y="0.0" width="203" height="50"/>
+                                                                                        <fontDescription key="fontDescription" name="LamaSans-Medium" family="Lama Sans" pointSize="24"/>
                                                                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                                         <nil key="highlightedColor"/>
                                                                                     </label>
                                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="أهلاً," textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bFB-V3-vEO">
-                                                                                        <rect key="frame" x="263" y="0.0" width="50" height="50"/>
+                                                                                        <rect key="frame" x="203" y="0.0" width="50" height="50"/>
                                                                                         <constraints>
                                                                                             <constraint firstAttribute="width" constant="50" id="AjC-Lp-NDh"/>
                                                                                         </constraints>
@@ -6347,6 +6347,17 @@
                                                                             <constraint firstAttribute="bottom" secondItem="FCQ-xb-65k" secondAttribute="bottom" id="ho3-EO-Owj"/>
                                                                         </constraints>
                                                                     </view>
+                                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XNk-Eb-eAB">
+                                                                        <rect key="frame" x="323" y="0.0" width="50" height="50"/>
+                                                                        <constraints>
+                                                                            <constraint firstAttribute="width" constant="50" id="kfx-cq-7Vs"/>
+                                                                        </constraints>
+                                                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                                        <state key="normal" image="back"/>
+                                                                        <connections>
+                                                                            <action selector="BUBack:" destination="zdr-JC-6Sq" eventType="touchUpInside" id="QFk-BD-n4p"/>
+                                                                        </connections>
+                                                                    </button>
                                                                 </subviews>
                                                             </stackView>
                                                         </subviews>

@@ -83,7 +83,7 @@ extension INBodyDetailsVC{
                 
             case .failure(let error):
                 print("Download failed with error: \(error.localizedDescription)")
-                SimpleAlert.shared.showAlert(title:error.localizedDescription,message:"", viewController: self)
+//                SimpleAlert.shared.showAlert(title:error.localizedDescription,message:"", viewController: self)
             }
         }
     }

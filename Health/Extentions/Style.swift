@@ -781,7 +781,7 @@ extension UIViewController {
         ]
 
         let outputDateFormat = DateFormatter()
-        outputDateFormat.dateFormat = "yyyy/MM/dd"
+        outputDateFormat.dateFormat = "dd/MM/yyyy"
 
         for dateFormat in possibleDateFormats {
             let inputDateFormat = DateFormatter()
@@ -816,7 +816,7 @@ extension UIViewController {
         ]
 
         let outputDateFormat = DateFormatter()
-        outputDateFormat.dateFormat = "yyyy-MM-dd"
+        outputDateFormat.dateFormat = "dd/MM/yyyy"
         outputDateFormat.locale = NSLocale.init(localeIdentifier: "en") as Locale
 
         for dateFormat in possibleDateFormats {

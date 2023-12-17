@@ -75,7 +75,7 @@ extension WillExpireVC : UITableViewDataSource , UITableViewDelegate {
             } catch {
                 print("Error: \(error)")
                 Hud.dismiss(from: self.view)
-                SimpleAlert.shared.showAlert(title:error.localizedDescription,message:"", viewController: self)
+//                SimpleAlert.shared.showAlert(title:error.localizedDescription,message:"", viewController: self)
             }
         }
     }

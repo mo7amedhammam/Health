@@ -103,7 +103,7 @@ extension MedicationScheduleDetailsVC {
         ]
 
         let outputDateFormat = DateFormatter()
-        outputDateFormat.dateFormat = "hh:mm a  yyyy/MM/dd"
+        outputDateFormat.dateFormat = "hh:mm a  dd/MM/yyyy"
 
         for dateFormat in possibleDateFormats {
             let inputDateFormat = DateFormatter()

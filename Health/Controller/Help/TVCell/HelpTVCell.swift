@@ -15,10 +15,16 @@ class HelpTVCell: UITableViewCell {
     @IBOutlet weak var LaTitle2: UILabel!
 
     @IBOutlet weak var webView: WKWebView!
+    @IBOutlet weak var ViewBtn: UIView!
+    
+    @IBOutlet weak var SuperWebView: WKWebView!
+    
     
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        SuperWebView.translatesAutoresizingMaskIntoConstraints = false
+
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

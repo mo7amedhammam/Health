@@ -4,7 +4,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
-        <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -154,33 +153,41 @@
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DNx-ul-rr5">
                                                 <rect key="frame" x="0.0" y="0.0" width="290" height="278"/>
                                                 <subviews>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gI6-zG-hCh">
-                                                        <rect key="frame" x="0.0" y="0.0" width="290" height="278"/>
-                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                        <state key="normal">
-                                                            <imageReference key="image" image="play" symbolScale="large"/>
-                                                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="medium" weight="medium"/>
-                                                        </state>
-                                                    </button>
+                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="play" translatesAutoresizingMaskIntoConstraints="NO" id="xYK-6L-enr">
+                                                        <rect key="frame" x="125" y="119" width="40" height="40"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="40" id="jGf-NB-dvr"/>
+                                                            <constraint firstAttribute="height" constant="40" id="lui-XU-Spb"/>
+                                                        </constraints>
+                                                    </imageView>
                                                 </subviews>
                                                 <color key="backgroundColor" red="0.17599999904632568" green="0.17599999904632568" blue="0.69800001382827759" alpha="0.77549951254916027" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="trailing" secondItem="gI6-zG-hCh" secondAttribute="trailing" id="5KU-WK-hVE"/>
-                                                    <constraint firstAttribute="bottom" secondItem="gI6-zG-hCh" secondAttribute="bottom" id="EJS-nm-iHn"/>
-                                                    <constraint firstItem="gI6-zG-hCh" firstAttribute="top" secondItem="DNx-ul-rr5" secondAttribute="top" id="Iyn-kk-SZw"/>
-                                                    <constraint firstItem="gI6-zG-hCh" firstAttribute="leading" secondItem="DNx-ul-rr5" secondAttribute="leading" id="Pn7-wL-CEn"/>
+                                                    <constraint firstItem="xYK-6L-enr" firstAttribute="centerY" secondItem="DNx-ul-rr5" secondAttribute="centerY" id="5L6-Wf-WlE"/>
+                                                    <constraint firstItem="xYK-6L-enr" firstAttribute="centerX" secondItem="DNx-ul-rr5" secondAttribute="centerX" id="zel-rO-QeV"/>
                                                 </constraints>
                                             </view>
+                                            <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cBj-9u-vEY">
+                                                <rect key="frame" x="0.0" y="0.0" width="290" height="278"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <wkWebViewConfiguration key="configuration">
+                                                    <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
+                                                    <wkPreferences key="preferences"/>
+                                                </wkWebViewConfiguration>
+                                            </wkWebView>
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstItem="P0R-5E-aPO" firstAttribute="leading" secondItem="JQr-K2-QYf" secondAttribute="leading" constant="15" id="6WV-bN-cdA"/>
+                                            <constraint firstAttribute="trailing" secondItem="cBj-9u-vEY" secondAttribute="trailing" id="8ct-5w-Frz"/>
                                             <constraint firstItem="DNx-ul-rr5" firstAttribute="leading" secondItem="JQr-K2-QYf" secondAttribute="leading" id="E49-f0-APU"/>
+                                            <constraint firstItem="cBj-9u-vEY" firstAttribute="leading" secondItem="JQr-K2-QYf" secondAttribute="leading" id="LCT-za-3cx"/>
                                             <constraint firstAttribute="trailing" secondItem="P0R-5E-aPO" secondAttribute="trailing" constant="15" id="NVa-UA-EWH"/>
                                             <constraint firstAttribute="bottom" secondItem="P0R-5E-aPO" secondAttribute="bottom" id="POM-i7-Jl8"/>
                                             <constraint firstAttribute="bottom" secondItem="DNx-ul-rr5" secondAttribute="bottom" id="RjP-qd-bT2"/>
+                                            <constraint firstAttribute="bottom" secondItem="cBj-9u-vEY" secondAttribute="bottom" id="TkY-Mg-f99"/>
+                                            <constraint firstItem="cBj-9u-vEY" firstAttribute="top" secondItem="JQr-K2-QYf" secondAttribute="top" id="V5q-SG-Rh7"/>
                                             <constraint firstAttribute="trailing" secondItem="DNx-ul-rr5" secondAttribute="trailing" id="piz-vw-46w"/>
                                             <constraint firstItem="P0R-5E-aPO" firstAttribute="top" secondItem="JQr-K2-QYf" secondAttribute="top" id="vb4-5B-R4j"/>
                                             <constraint firstItem="DNx-ul-rr5" firstAttribute="top" secondItem="JQr-K2-QYf" secondAttribute="top" id="wzS-Hq-bdX"/>
@@ -216,6 +223,8 @@
             <connections>
                 <outlet property="LaTitle1" destination="tkU-4B-L6Z" id="im8-ai-MuY"/>
                 <outlet property="LaTitle2" destination="TNt-cD-b7B" id="Waa-zC-thb"/>
+                <outlet property="SuperWebView" destination="cBj-9u-vEY" id="4Dz-vg-rKz"/>
+                <outlet property="ViewBtn" destination="DNx-ul-rr5" id="XJc-EQ-TAC"/>
                 <outlet property="ViewLine" destination="Yl3-cF-ybZ" id="a8j-I2-3Nb"/>
                 <outlet property="webView" destination="tNG-ME-2yz" id="7gc-5P-dx7"/>
             </connections>
