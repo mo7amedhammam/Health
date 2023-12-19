@@ -120,7 +120,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="0gA-oS-gEK" secondAttribute="bottom" constant="10" id="GGQ-ng-Q9f"/>
-                            <constraint firstAttribute="height" constant="100" id="OF6-7s-G15"/>
+                            <constraint firstAttribute="height" constant="100" id="MQT-Nv-hQu"/>
                             <constraint firstItem="0gA-oS-gEK" firstAttribute="top" secondItem="Sx8-hV-Agg" secondAttribute="top" constant="10" id="U1S-36-UzY"/>
                             <constraint firstAttribute="trailing" secondItem="0gA-oS-gEK" secondAttribute="trailing" constant="10" id="iaS-ZL-3FM"/>
                             <constraint firstItem="0gA-oS-gEK" firstAttribute="leading" secondItem="Sx8-hV-Agg" secondAttribute="leading" constant="10" id="rvg-m4-Tcz"/>
@@ -143,7 +143,7 @@
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <connections>
                 <outlet property="CVDrugGroups" destination="lh5-OA-jcb" id="L6t-Z7-B2J"/>
-                <outlet property="HViewSuper" destination="OF6-7s-G15" id="LiO-Xx-aJe"/>
+                <outlet property="HViewSuper" destination="MQT-Nv-hQu" id="GC4-pj-hsu"/>
                 <outlet property="ImgTipCategory" destination="JuL-PX-Pxa" id="yjq-dg-UWM"/>
                 <outlet property="LaDAte" destination="sE4-Jh-vVe" id="B87-Jv-IfW"/>
                 <outlet property="LaTitle" destination="nSj-rf-3Pi" id="XvY-1V-nVA"/>

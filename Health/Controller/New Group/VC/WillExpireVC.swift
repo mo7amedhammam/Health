@@ -42,7 +42,7 @@ extension WillExpireVC : UITableViewDataSource , UITableViewDelegate {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "WillExpireTVCell", for: indexPath) as! WillExpireTVCell
         cell.LaTitle.text = ViewModelHome?.responseModel?.items?[indexPath.row].drugTitle ?? ""
-        cell.LaEndDate.text = ViewModelHome?.responseModel?.items?[indexPath.row].endDate?.ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "yyyy/MM/dd")
+        cell.LaEndDate.text = ViewModelHome?.responseModel?.items?[indexPath.row].endDate?.ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "dd/MM/yyyy")
         
         return cell
     }

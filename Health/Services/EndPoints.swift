@@ -9,8 +9,8 @@ import Foundation
 
 struct Constants {
 // MARK: - APIs Constants
-    static var baseURL:String {return "https://myhealthapidev.azurewebsites.net/"} //TEST
-//    static var baseURL:String {return "https://myhealthapi.azurewebsites.net/"} //LIVE
+//    static var baseURL:String {return "https://myhealthapidev.azurewebsites.net/"} //TEST
+    static var baseURL:String {return "https://myhealthapi.azurewebsites.net/"} //LIVE
 
 static var apiURL:String {return "\(baseURL)api/"}
 //    static var imagesURL:String {return "http://wecareback.wecancity.com/"}

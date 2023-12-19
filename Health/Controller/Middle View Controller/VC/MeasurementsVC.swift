@@ -130,7 +130,7 @@ extension MeasurementsVC : UICollectionViewDataSource , UICollectionViewDelegate
             cell.ViewDate.isHidden = true
             cell.LaDate.text = ""
         } else {
-            cell.LaDate.text = model.lastMeasurementDate?.ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "yyyy/MM/dd")
+            cell.LaDate.text = model.lastMeasurementDate?.ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "dd/MM/yyyy")
             cell.ViewDate.isHidden = false
         }
         

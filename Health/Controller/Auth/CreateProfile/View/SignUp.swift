@@ -273,7 +273,7 @@ extension SignUp{
         ViewModel.mobile = TFPhone.text
         ViewModel.districtId = DistrictId
         ViewModel.genderId = GenderId
-        ViewModel.pharmacyCode = TFCode.text
+        ViewModel.pharmacyCode = TFCode.text ?? "" 
         
         ViewModel.SignUp{[weak self] state in
             guard let self = self,let state = state else{
@@ -350,11 +350,11 @@ extension SignUp{
                 
                 let isPhoneValid = TFPhone.text?.count == 11 // Check if TFPhone has 11 digits
                 let isNameValid = TFName.hasText // Check if TFPassword is not empty
-                let isCodeValid = TFCode.hasText // Check if TFCode is not empty
+//                let isCodeValid = TFCode.hasText // Check if TFCode is not empty
                 let isDestrictValid = DistrictId != nil
                 let isGenderValid = GenderId != nil
                 
-                let isValidForm = isPhoneValid && isNameValid && isDestrictValid && isGenderValid && isCodeValid
+                let isValidForm = isPhoneValid && isNameValid && isDestrictValid && isGenderValid
                 BtnRegister.enable(isValidForm)
                 
             default:

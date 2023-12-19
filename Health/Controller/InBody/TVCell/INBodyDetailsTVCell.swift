@@ -22,7 +22,7 @@ class INBodyDetailsTVCell: UITableViewCell {
             guard let model = inbodyitemModel else {return}
             LaTitle.text = model.customerName
             if let date =  Helper.ChangeFormate(NewFormat: "yyyy-MM-dd'T'HH:mm:ss").date(from: model.date ?? ""){
-                LaTime.text = Helper.ChangeFormate(NewFormat: "dd/MM/yyyy hh:mm a").string(from: date )
+                LaTime.text = Helper.ChangeFormate(NewFormat: "dd/MM/yyyy  hh:mm a").string(from: date )
             }
 
             if model.comment == "" || model.comment == nil {

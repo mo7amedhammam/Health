@@ -124,7 +124,7 @@ extension MeasurementsDetailsFiltterVC : UITableViewDataSource , UITableViewDele
         
         //            let inputDateStr = "2023-11-20T20:48:00"
         let inputFormat = "yyyy-MM-dd'T'HH:mm:ss"
-        let outputFormat = "yyyy/MM/dd hh:mm a"
+        let outputFormat = "dd/MM/yyyy hh:mm a"
         
         let inputFormatter = DateFormatter()
         inputFormatter.dateFormat = inputFormat

@@ -15,7 +15,8 @@ class TipsCategories3TVCell: UITableViewCell {
     @IBOutlet weak var CVDrugGroups: UICollectionView!
     @IBOutlet weak var HViewSuper: NSLayoutConstraint!
     
-    
+    var labelWidth = 0.0
+
     var model : TipDetailsM?{
         
         didSet {
@@ -55,7 +56,7 @@ class TipsCategories3TVCell: UITableViewCell {
         
         let numberOfItems = model?.drugGroups?.count // Number of items in UICollectionView
         let itemsPerRow   =  calculateItemsPerRow (for: CVDrugGroups)// Number of items per row (if applicable)
-        let itemHeight    =  15.0 // Height of each item in UICollectionView
+        let itemHeight    =  20.0 // Height of each item in UICollectionView
 
         let numberOfRows = ceil(Double(numberOfItems!) / Double(itemsPerRow))
         let collectionViewHeight = numberOfRows * itemHeight
@@ -75,7 +76,6 @@ class TipsCategories3TVCell: UITableViewCell {
         return itemsPerRow
     }
 
-    
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -111,9 +111,8 @@ extension TipsCategories3TVCell:UICollectionViewDataSource,UICollectionViewDeleg
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TipDetailsDrugGroup", for: indexPath) as! TipDetailsDrugGroup
-        //        CVDr
-        cell.LaDrugTitle.transform = CGAffineTransform(scaleX: -1, y: 1) //first tip mirror effect for x -> second in cell
 
+        cell.LaDrugTitle.transform = CGAffineTransform(scaleX: -1, y: 1)
         let model = model?.drugGroups?[indexPath.row]
         cell.LaDrugTitle.text = model?.title
         cell.LaDrugTitle.font = UIFont(name: "LamaSans-Medium", size: 10)

@@ -499,7 +499,7 @@
                                                                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                                                                 <state key="normal" image="true"/>
                                                                                             </button>
-                                                                                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="center" contentVerticalAlignment="center" placeholder="كود العميل في الصيدلية" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="qts-5U-235">
+                                                                                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="center" contentVerticalAlignment="center" placeholder="كود العميل في الصيدلية(إختياري)" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="qts-5U-235">
                                                                                                 <rect key="frame" x="50" y="0.0" width="283" height="50"/>
                                                                                                 <color key="textColor" name="deactive"/>
                                                                                                 <fontDescription key="fontDescription" name="LamaSans-Medium" family="Lama Sans" pointSize="17"/>
@@ -6463,9 +6463,6 @@
         </scene>
     </scenes>
     <designables>
-        <designable name="c0I-bP-9rf">
-            <size key="intrinsicContentSize" width="115.66666666666667" height="26"/>
-        </designable>
         <designable name="dxe-N1-yU6">
             <size key="intrinsicContentSize" width="-1" height="83"/>
         </designable>

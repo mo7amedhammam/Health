@@ -183,6 +183,9 @@ class MeasurementsDetailsVC: UIViewController {
     @IBAction func BUSelectDate(_ sender: Any) {
    
         self.view.endEditing(true)
+        PickerDate.minimumDate = nil
+        PickerDate.maximumDate = Date()
+        
         selectDateFrom = "new"
         ViewSelectDate.isHidden = false
     }
@@ -793,23 +796,23 @@ extension MeasurementsDetailsVC : UITableViewDataSource , UITableViewDelegate , 
             cell.LaNum.text = "\(num)"
         }
         
-        if current == "" {
-            cell.btnAll.backgroundColor = .clear
-            cell.btnAll.setTitleColor(UIColor(named: "main") , for: .normal)
-            cell.btnAll.borderColor = UIColor(named: "main")
-            
-            cell.BtnYear.backgroundColor = .clear
-            cell.BtnYear.setTitleColor( UIColor(named: "main") , for: .normal)
-            cell.BtnYear.borderColor = UIColor(named: "main")
-            
-            cell.BtnMonth.backgroundColor = .clear
-            cell.BtnMonth.setTitleColor( UIColor(named: "main") , for: .normal)
-            cell.BtnMonth.borderColor = UIColor(named: "main")
-            
-            cell.BtnDay.backgroundColor = .clear
-            cell.BtnDay.setTitleColor( UIColor(named: "main") , for: .normal)
-            cell.BtnDay.borderColor = UIColor(named: "main")
-        }
+//        if current == "" {
+//            cell.btnAll.backgroundColor = .clear
+//            cell.btnAll.setTitleColor(UIColor(named: "main") , for: .normal)
+//            cell.btnAll.borderColor = UIColor(named: "main")
+//
+//            cell.BtnYear.backgroundColor = .clear
+//            cell.BtnYear.setTitleColor( UIColor(named: "main") , for: .normal)
+//            cell.BtnYear.borderColor = UIColor(named: "main")
+//
+//            cell.BtnMonth.backgroundColor = .clear
+//            cell.BtnMonth.setTitleColor( UIColor(named: "main") , for: .normal)
+//            cell.BtnMonth.borderColor = UIColor(named: "main")
+//
+//            cell.BtnDay.backgroundColor = .clear
+//            cell.BtnDay.setTitleColor( UIColor(named: "main") , for: .normal)
+//            cell.BtnDay.borderColor = UIColor(named: "main")
+//        }
        
         return cell
         
