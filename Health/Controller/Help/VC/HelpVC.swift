@@ -52,7 +52,7 @@ class HelpVC: UIViewController {
                 CloseView_NoContent()
                 
                 if ViewModel.ArrHelp == nil || ViewModel.ArrHelp?.count == 0  {
-                    LoadView_NoContent(Superview: TVScreen, title: "لا يوجد مساعده  ", img: "playmain")
+                    LoadView_NoContent(Superview: TVScreen, title: "لا يوجد مساعده  ", img: "")
                 } else {
                     TVScreen.reloadData()
                 }

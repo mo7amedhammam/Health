@@ -195,7 +195,6 @@ extension ProfileVC : UITableViewDataSource , UITableViewDelegate {
         } else if indexPath.row == 5 { // - "الحماية والخصوصية" -
             selected = 5
             TVscreen.reloadData()
-            
         } else if indexPath.row == 6 { // - "المساعده "-
             selected = 6
             TVscreen.reloadData()
@@ -204,7 +203,7 @@ extension ProfileVC : UITableViewDataSource , UITableViewDelegate {
         }  else if indexPath.row == 7 { // - "الشروط والأحكام" -
             selected = 7
             TVscreen.reloadData()
-            
+            PushTo(destination: TermsConditionsVC.self)
         }else { // -- تسجيل خروج --
             
             let actionSheet  = UIAlertController(title: "هل أنت متأكد بأنك تريد تسجيل الخروج؟", message: "", preferredStyle: .alert)

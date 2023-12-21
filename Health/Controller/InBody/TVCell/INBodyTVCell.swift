@@ -30,6 +30,12 @@ class INBodyTVCell: UITableViewCell {
             } else {
                 LaDescription.setJustifiedRight(model.comment)
                 LaDescription.setLineHeight(lineHeight: 2)
+                
+                if isArabic(model.comment ?? "") == true {
+                    LaDescription.textAlignment = .right
+                } else {
+                    LaDescription.textAlignment = .left
+                }
             }
             
         }

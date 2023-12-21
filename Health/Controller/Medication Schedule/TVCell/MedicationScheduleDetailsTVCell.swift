@@ -143,7 +143,7 @@ class MedicationScheduleDetailsTVCell: UITableViewCell {
 extension MedicationScheduleDetailsTVCell{
     func setactivColors(isactive : Bool){
         if isactive == false {
-            ImgDrugIcon.image = UIImage(named: "inactivedrugicon")
+            ImgDrugIcon.tintColor = UIColor(named: "wrong")
             ViewBackground.backgroundColor  = inactiveBackgroundColor
             DescribtionView.backgroundColor = .white.withAlphaComponent(0.4)
             LaText.forEach { label in
@@ -153,8 +153,7 @@ extension MedicationScheduleDetailsTVCell{
                 dotV.backgroundColor = inactiveTextColor
             }
         } else {
-            
-            ImgDrugIcon.image = UIImage(named: "Medical Notification-01 3")
+            ImgDrugIcon.tintColor = .white
             ViewBackground.backgroundColor  = UIColor(named: "main")
             DescribtionView.backgroundColor = .white
             LaText.forEach { label in

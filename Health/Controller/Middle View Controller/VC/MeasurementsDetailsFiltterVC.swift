@@ -32,8 +32,8 @@ class MeasurementsDetailsFiltterVC: UIViewController {
         
         print("from ::: \(From) to : \(To)")
         
-        LaFrom.text = "من : \(NormalFrom)"
-        LaTo.text   = "الي : \(NormalTo)"
+        LaFrom.text = "\(NormalFrom)"
+        LaTo.text   = "\(NormalTo)"
         LaTitleBare.text = TitleMeasurement
 
         if From != "" && To != "" {

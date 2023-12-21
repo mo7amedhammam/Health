@@ -91,7 +91,7 @@ class NotificationVC: UIViewController  {
         TVScreen.addSubview(refreshControl)
         // Load your initial data here (e.g., fetchData())
 //        refreshData()
-        getDrugs()
+//        getDrugs()
         
     }
     
@@ -102,6 +102,11 @@ class NotificationVC: UIViewController  {
         ViewModel.ArrNotifications?.items?.removeAll()
         TVScreen.reloadData()
         getNotifications()
+        //
+        ArrDrugString.removeAll()
+        ArrDrugStringSearch.removeAll()
+        getDrugs()
+
     }
     
     @objc func EditingChanged (_ textField: UITextField) {
@@ -297,6 +302,11 @@ class NotificationVC: UIViewController  {
         ArrDrugStringSearch.removeAll()
         ArrDrugStringSearch = ArrDrugString
         ViewAddNewNotification.isHidden = true
+        
+        PickerDate.minimumDate  = Date()
+        PickerDate.maximumDate  = nil
+        PickerDate.date = Date()
+        
         self.view.endEditing(true)
     }
     
@@ -427,6 +437,10 @@ class NotificationVC: UIViewController  {
     
     @IBAction func BUCancelSelectDateClock(_ sender: Any) {
         ViewSelectDate.isHidden = true
+        PickerDate.minimumDate  = Date()
+        PickerDate.maximumDate  = nil
+        PickerDate.date = Date()
+
     }
     
     @IBAction func BUNotification(_ sender: Any) {

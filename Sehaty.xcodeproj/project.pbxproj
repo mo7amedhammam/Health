@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		4FCE2AF17B5A9BBC24477ED3 /* Pods_Health.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 85B7A463D3427924F44EC455 /* Pods_Health.framework */; };
+		BB006DE12B34A9510006E417 /* TermsConditionsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB006DE02B34A9510006E417 /* TermsConditionsVC.swift */; };
 		BB10D9112B1E774100751AAE /* StartScreenVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB10D9102B1E774100751AAE /* StartScreenVC.swift */; };
 		BB14DAE32A7AFA0700389B96 /* MeasurementsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB14DAE22A7AFA0700389B96 /* MeasurementsVC.swift */; };
 		BB14DAE72A7B036400389B96 /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB14DAE62A7B036400389B96 /* ProfileVC.swift */; };
@@ -209,6 +210,7 @@
 		42F3AA86B832A0938AF1F883 /* Pods-Health.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Health.release.xcconfig"; path = "Target Support Files/Pods-Health/Pods-Health.release.xcconfig"; sourceTree = "<group>"; };
 		65CCB737364DA0B08042A29D /* Pods_HealthTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HealthTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		85B7A463D3427924F44EC455 /* Pods_Health.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Health.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BB006DE02B34A9510006E417 /* TermsConditionsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsConditionsVC.swift; sourceTree = "<group>"; };
 		BB10D9102B1E774100751AAE /* StartScreenVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartScreenVC.swift; sourceTree = "<group>"; };
 		BB14DAE22A7AFA0700389B96 /* MeasurementsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasurementsVC.swift; sourceTree = "<group>"; };
 		BB14DAE62A7B036400389B96 /* ProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
@@ -426,6 +428,22 @@
 				1CD65F92D0F90146D20178CC /* Pods-HealthTests.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		BB006DDE2B34A91E0006E417 /* Terms Condition */ = {
+			isa = PBXGroup;
+			children = (
+				BB006DDF2B34A92F0006E417 /* VC */,
+			);
+			path = "Terms Condition";
+			sourceTree = "<group>";
+		};
+		BB006DDF2B34A92F0006E417 /* VC */ = {
+			isa = PBXGroup;
+			children = (
+				BB006DE02B34A9510006E417 /* TermsConditionsVC.swift */,
+			);
+			path = VC;
 			sourceTree = "<group>";
 		};
 		BB14DAE02A7AF95D00389B96 /* Middle View Controller */ = {
@@ -783,6 +801,7 @@
 		BBBD001D2A73116200F066DF /* Auth */ = {
 			isa = PBXGroup;
 			children = (
+				BB006DDE2B34A91E0006E417 /* Terms Condition */,
 				BBBD00322A731B0C00F066DF /* Splash */,
 				C8346E532AA5EE5E00C3C3EE /* Login */,
 				C8C733952AA6752700185698 /* CreateProfile */,
@@ -1701,6 +1720,7 @@
 				BB5116D22A829B4900CF5D11 /* MeasurementsCVCell.swift in Sources */,
 				C80DA9ED2AA4F65300F10808 /* Navigations.swift in Sources */,
 				BB1B30012A7EA8BF001677FD /* ViewDone.swift in Sources */,
+				BB006DE12B34A9510006E417 /* TermsConditionsVC.swift in Sources */,
 				BBBD00162A73101700F066DF /* UiCollectionView+Extension.swift in Sources */,
 				BBBD00262A7311E400F066DF /* ForgetPasswordVC.swift in Sources */,
 				BBBD000B2A73101700F066DF /* SalmanLocalize.swift in Sources */,

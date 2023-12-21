@@ -1000,3 +1000,19 @@ func convertDateToString(inputDateString: String, inputDateFormat: String, outpu
     let outputDateString = outputDateFormatter.string(from: date)
     return outputDateString
 }
+
+
+extension UITableViewCell {
+    
+    func isArabic(_ text: String) -> Bool {
+        let arabicRange = NSRange(location: 0, length: text.utf16.count)
+        let arabicPattern = "[\u{0600}-\u{06FF}\u{0750}-\u{077F}\u{08A0}-\u{08FF}\u{FB50}-\u{FDFF}\u{FE70}-\u{FEFF}\u{10E60}-\u{10E7F}\u{1EE00}-\u{1EEFF}]"
+        
+        if let regex = try? NSRegularExpression(pattern: arabicPattern, options: []),
+           regex.firstMatch(in: text, options: [], range: arabicRange) != nil {
+            return true
+        }
+        
+        return false
+    }
+}
