@@ -46,7 +46,7 @@ class MedicationScheduleDetailsTVCell: UITableViewCell {
                 LaDescription.setLineHeight(lineHeight: 1.5)
             }
             
-            LaStatus.text = model.active ?? false ? "فعّال":"مًنتهى"
+            LaStatus.text = model.active ?? false ? "فعّال":"مُنتهي"
             setactivColors(isactive: model.active ?? true)
             
             if model.active == true {

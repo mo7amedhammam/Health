@@ -35,11 +35,11 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="j8q-TO-qDH">
                                         <rect key="frame" x="0.0" y="0.0" width="180" height="80"/>
                                         <subviews>
-                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="giO-fe-nYN">
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="giO-fe-nYN">
                                                 <rect key="frame" x="0.0" y="8" width="180" height="72"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10 نصائح لتحسين صحة القلب" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nSj-rf-3Pi">
-                                                        <rect key="frame" x="0.0" y="0.0" width="180" height="0.0"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="180" height="21"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" relation="lessThanOrEqual" constant="35" id="ZsH-Oi-4P0"/>
                                                         </constraints>
@@ -47,29 +47,20 @@
                                                         <color key="textColor" name="main"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tWO-93-NPM">
-                                                        <rect key="frame" x="0.0" y="8" width="180" height="36"/>
-                                                        <subviews>
-                                                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="center" semanticContentAttribute="forceRightToLeft" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="lh5-OA-jcb">
-                                                                <rect key="frame" x="0.0" y="0.0" width="180" height="36"/>
-                                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="Etd-VJ-uxX">
-                                                                    <size key="itemSize" width="128" height="128"/>
-                                                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                                                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                                                </collectionViewFlowLayout>
-                                                                <cells/>
-                                                            </collectionView>
-                                                        </subviews>
+                                                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="center" semanticContentAttribute="forceRightToLeft" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="lh5-OA-jcb">
+                                                        <rect key="frame" x="0.0" y="29" width="180" height="15"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
-                                                            <constraint firstItem="lh5-OA-jcb" firstAttribute="leading" secondItem="tWO-93-NPM" secondAttribute="leading" id="JKt-Hi-qFL"/>
-                                                            <constraint firstItem="lh5-OA-jcb" firstAttribute="top" secondItem="tWO-93-NPM" secondAttribute="top" id="XUE-of-FRk"/>
-                                                            <constraint firstAttribute="bottom" secondItem="lh5-OA-jcb" secondAttribute="bottom" id="jHE-be-9Pe"/>
-                                                            <constraint firstAttribute="trailing" secondItem="lh5-OA-jcb" secondAttribute="trailing" id="kyN-GW-3bs"/>
+                                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="3.6699999999999999" id="HjN-Cf-VrH"/>
                                                         </constraints>
-                                                    </view>
+                                                        <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="Etd-VJ-uxX">
+                                                            <size key="itemSize" width="128" height="128"/>
+                                                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                                        </collectionViewFlowLayout>
+                                                        <cells/>
+                                                    </collectionView>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="08/05/2023 03:05 PM" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sE4-Jh-vVe">
                                                         <rect key="frame" x="0.0" y="52" width="180" height="20"/>
                                                         <constraints>
@@ -119,8 +110,8 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstAttribute="height" constant="100" id="24H-l8-8Fk"/>
                             <constraint firstAttribute="bottom" secondItem="0gA-oS-gEK" secondAttribute="bottom" constant="10" id="GGQ-ng-Q9f"/>
-                            <constraint firstAttribute="height" constant="100" id="MQT-Nv-hQu"/>
                             <constraint firstItem="0gA-oS-gEK" firstAttribute="top" secondItem="Sx8-hV-Agg" secondAttribute="top" constant="10" id="U1S-36-UzY"/>
                             <constraint firstAttribute="trailing" secondItem="0gA-oS-gEK" secondAttribute="trailing" constant="10" id="iaS-ZL-3FM"/>
                             <constraint firstItem="0gA-oS-gEK" firstAttribute="leading" secondItem="Sx8-hV-Agg" secondAttribute="leading" constant="10" id="rvg-m4-Tcz"/>
@@ -143,7 +134,7 @@
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <connections>
                 <outlet property="CVDrugGroups" destination="lh5-OA-jcb" id="L6t-Z7-B2J"/>
-                <outlet property="HViewSuper" destination="MQT-Nv-hQu" id="GC4-pj-hsu"/>
+                <outlet property="HViewSuper" destination="24H-l8-8Fk" id="Ga3-TR-zgO"/>
                 <outlet property="ImgTipCategory" destination="JuL-PX-Pxa" id="yjq-dg-UWM"/>
                 <outlet property="LaDAte" destination="sE4-Jh-vVe" id="B87-Jv-IfW"/>
                 <outlet property="LaTitle" destination="nSj-rf-3Pi" id="XvY-1V-nVA"/>

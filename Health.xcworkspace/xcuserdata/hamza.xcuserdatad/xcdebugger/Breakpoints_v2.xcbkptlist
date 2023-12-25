@@ -18,6 +18,38 @@
             endingLineNumber = "115"
             landmarkName = "EditingChanged(_:)"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "AEB53201-BAA2-468B-86AD-DC47F178B4A9 - bed19b33ee356952"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Sehaty.NotificationVC.EditingChanged(__C.UITextField) -&gt; ()"
+                  moduleName = "Sehaty"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/hamza/Desktop/Wecancity/Health/Health/Controller/Notification/VC/NotificationVC.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "115"
+                  endingLineNumber = "115"
+                  offsetFromSymbolStart = "751">
+               </Location>
+               <Location
+                  uuid = "AEB53201-BAA2-468B-86AD-DC47F178B4A9 - bed19b33ee356952"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Sehaty.NotificationVC.EditingChanged(__C.UITextField) -&gt; ()"
+                  moduleName = "Sehaty"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/hamza/Desktop/Wecancity/Health/Health/Controller/Notification/VC/NotificationVC.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "115"
+                  endingLineNumber = "115"
+                  offsetFromSymbolStart = "648">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

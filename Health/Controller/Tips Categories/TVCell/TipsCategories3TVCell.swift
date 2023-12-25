@@ -14,13 +14,14 @@ class TipsCategories3TVCell: UITableViewCell {
     @IBOutlet weak var LaDAte: UILabel!
     @IBOutlet weak var CVDrugGroups: UICollectionView!
     @IBOutlet weak var HViewSuper: NSLayoutConstraint!
-    
     var labelWidth = 0.0
 
     var model : TipDetailsM?{
         
         didSet {
             
+//            HViewSuper.constant = (115.0 + CVDrugGroups.collectionViewLayout.collectionViewContentSize.height)
+
 //            guard let model = model else {return}
 //            LaTitle.text = model.title
 //            LaDAte.text = model.date?.ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "dd / MM / yyyy hh:mm a")
@@ -49,6 +50,7 @@ class TipsCategories3TVCell: UITableViewCell {
         }
     }
     
+
     func calculateCollectionViewHeight() -> CGFloat {
 //        CVDrugGroups.layoutIfNeeded()
 //        let contentSize = CVDrugGroups.collectionViewLayout.collectionViewContentSize
@@ -57,7 +59,6 @@ class TipsCategories3TVCell: UITableViewCell {
         let numberOfItems = model?.drugGroups?.count // Number of items in UICollectionView
         let itemsPerRow   =  calculateItemsPerRow (for: CVDrugGroups)// Number of items per row (if applicable)
         let itemHeight    =  20.0 // Height of each item in UICollectionView
-
         let numberOfRows = ceil(Double(numberOfItems!) / Double(itemsPerRow))
         let collectionViewHeight = numberOfRows * itemHeight
         return collectionViewHeight
@@ -89,7 +90,6 @@ class TipsCategories3TVCell: UITableViewCell {
         let alignedFlowLayout = AlignedCollectionViewFlowLayout(horizontalAlignment: .right, verticalAlignment: .top)
         alignedFlowLayout.estimatedItemSize = AlignedCollectionViewFlowLayout.automaticSize
         CVDrugGroups.collectionViewLayout = alignedFlowLayout
-        
         
     }
     

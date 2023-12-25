@@ -53,7 +53,8 @@ class ChangePasswordVC: UIViewController  , UITextFieldDelegate {
     
     @objc func didTapTFRe_Password() {
         // Resign the first responder from the UITextField.
-        ChangePassword()
+//        ChangePassword()
+        self.view.endEditing(true)
     }
     
     

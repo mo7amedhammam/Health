@@ -19,6 +19,7 @@ class TipsCategoriesDetailsVC: UIViewController {
     @IBOutlet weak var ViewFirst: UIView!
     @IBOutlet weak var ViewSecond: UIView!
 
+    @IBOutlet weak var ViewImage: UIView!
     @IBOutlet weak var webView: WKWebView!
 
     var selectedTipId:Int?
@@ -91,17 +92,23 @@ extension TipsCategoriesDetailsVC {
     }
     
     fileprivate func setInits() {
-        let cornerRadius: CGFloat = 60.0
-        let maskLayer = CAShapeLayer()
-        maskLayer.path = UIBezierPath(roundedRect: ViewFirst.bounds,
-                                      byRoundingCorners: [.bottomLeft],
-                                      cornerRadii: CGSize(width: cornerRadius, height: cornerRadius)).cgPath
-        let maskLayer2 = CAShapeLayer()
-        maskLayer2.path = UIBezierPath(roundedRect: ViewSecond.bounds,
-                                      byRoundingCorners: [.bottomLeft],
-                                      cornerRadii: CGSize(width: cornerRadius, height: cornerRadius)).cgPath
-        ViewSecond.layer.mask = maskLayer2
+        
+//        let cornerRadius: CGFloat = 60.0
+//        let maskLayer = CAShapeLayer()
+//        maskLayer.path = UIBezierPath(roundedRect: ViewFirst.bounds,
+//                                      byRoundingCorners: [.bottomLeft],
+//                                      cornerRadii: CGSize(width: cornerRadius, height: cornerRadius)).cgPath
+//        let maskLayer2 = CAShapeLayer()
+//        maskLayer2.path = UIBezierPath(roundedRect: ViewSecond.bounds,
+//                                      byRoundingCorners: [.bottomLeft],
+//                                      cornerRadii: CGSize(width: cornerRadius, height: cornerRadius)).cgPath
+//        ViewSecond.layer.mask = maskLayer2
         //
+        
+        ViewSecond.cornerRadius = 50
+        ViewSecond.layer.maskedCorners = [.layerMinXMaxYCorner ]
+        
+        
         ViewFirst.cornerRadius = 50
         ViewFirst.layer.maskedCorners = [.layerMinXMaxYCorner ]
         

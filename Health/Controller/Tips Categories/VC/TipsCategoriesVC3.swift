@@ -70,7 +70,7 @@ extension TipsCategoriesVC3 : UITableViewDataSource , UITableViewDelegate {
         let model = ViewModel.tipsByCategoryRes?.items?[indexPath.row]
         cell.model = model
         cell.CVDrugGroups.reloadData()
-
+                
         cell.LaTitle.text = model?.title
         cell.LaDAte.text = model?.date?.ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "dd / MM / yyyy hh:mm a")
         if let img = model?.image {
@@ -78,7 +78,8 @@ extension TipsCategoriesVC3 : UITableViewDataSource , UITableViewDelegate {
             cell.ImgTipCategory.kf.setImage(with: URL(string:Constants.baseURL + img.validateSlashs()), placeholder: UIImage(named: "defaultLogo"), options: nil, progressBlock: nil)
         }
         
-        cell.HViewSuper.constant = (115.0 + cell.calculateCollectionViewHeight())
+        cell.HViewSuper.constant = (115.0 + cell.CVDrugGroups.collectionViewLayout.collectionViewContentSize.height)
+        
         return cell
     }
     

@@ -41,7 +41,8 @@ class LoginVC: UIViewController , UITextFieldDelegate {
     
     @objc func didTapTFPassword() {
         // Resign the first responder from the UITextField.
-        Login()
+//        Login()
+        self.view.endEditing(true)
     }
     
     @IBAction func BUBack(_ sender: Any) {

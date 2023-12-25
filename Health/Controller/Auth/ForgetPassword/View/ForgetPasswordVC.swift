@@ -43,7 +43,8 @@ class ForgetPasswordVC: UIViewController , UITextFieldDelegate , UIGestureRecogn
 
     @objc func didTapTFRe_Password() {
         // Resign the first responder from the UITextField.
-        ResetPassword()
+//        ResetPassword()
+        self.view.endEditing(true)
     }
     
     
