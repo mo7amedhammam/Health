@@ -20,8 +20,11 @@ class TipsCategoriesDetailsVC: UIViewController {
     @IBOutlet weak var ViewSecond: UIView!
 
     @IBOutlet weak var ViewImage: UIView!
-    @IBOutlet weak var webView: WKWebView!
+//    @IBOutlet weak var webView: WKWebView!
 
+    @IBOutlet weak var ViewWKWebview: UIView!
+    
+    
     var selectedTipId:Int?
     var ViewModel : TipsDetailsVM?
     override func viewDidLoad() {
@@ -83,7 +86,15 @@ extension TipsCategoriesDetailsVC {
         LaTitle.text = model.title
 
         guard let htmlString = model.description else {return}
+//        webView.loadHTMLStringWithAutoDirection(htmlString)
+        
+        let webView = WKWebView(frame: ViewWKWebview.bounds)
+//        webView.navigationDelegate = self
+        ViewWKWebview.addSubview(webView)
         webView.loadHTMLStringWithAutoDirection(htmlString)
+
+//        webView.loadHTMLString(htmlString, baseURL: nil)
+
 
         print("model.description : \(model.description)")
         LaType.text = model.tipCategoryTitle

@@ -3012,16 +3012,25 @@
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0Og-g3-DEZ">
                                                 <rect key="frame" x="0.0" y="100" width="393" height="752"/>
                                                 <subviews>
+                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Tyx-Rf-t1t">
+                                                        <rect key="frame" x="0.0" y="0.0" width="393" height="150"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="150" id="j9v-LP-agw"/>
+                                                        </constraints>
+                                                    </imageView>
                                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="ew8-bb-2Yt">
                                                         <rect key="frame" x="0.0" y="0.0" width="393" height="752"/>
-                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <color key="backgroundColor" name="bg"/>
                                                     </tableView>
                                                 </subviews>
-                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <color key="backgroundColor" name="bg"/>
                                                 <constraints>
                                                     <constraint firstAttribute="trailing" secondItem="ew8-bb-2Yt" secondAttribute="trailing" id="MZq-f0-U9q"/>
+                                                    <constraint firstItem="Tyx-Rf-t1t" firstAttribute="top" secondItem="0Og-g3-DEZ" secondAttribute="top" id="WMU-mT-qrj"/>
                                                     <constraint firstAttribute="bottom" secondItem="ew8-bb-2Yt" secondAttribute="bottom" id="apV-2i-zJV"/>
                                                     <constraint firstItem="ew8-bb-2Yt" firstAttribute="leading" secondItem="0Og-g3-DEZ" secondAttribute="leading" id="h0j-iS-2kC"/>
+                                                    <constraint firstAttribute="trailing" secondItem="Tyx-Rf-t1t" secondAttribute="trailing" id="inH-E3-bmg"/>
+                                                    <constraint firstItem="Tyx-Rf-t1t" firstAttribute="leading" secondItem="0Og-g3-DEZ" secondAttribute="leading" id="mD8-0w-eS2"/>
                                                     <constraint firstItem="ew8-bb-2Yt" firstAttribute="top" secondItem="0Og-g3-DEZ" secondAttribute="top" id="sR2-Wi-WFF"/>
                                                 </constraints>
                                             </view>
@@ -3048,6 +3057,7 @@
                     </view>
                     <connections>
                         <outlet property="TVScreen" destination="ew8-bb-2Yt" id="djj-qY-Bh0"/>
+                        <outlet property="imgShare" destination="Tyx-Rf-t1t" id="fKq-fP-lGZ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="roO-ca-n7t" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -5408,7 +5418,7 @@
                                                     <constraint firstAttribute="trailing" secondItem="ozW-u8-e30" secondAttribute="trailing" id="34X-7t-ZmC"/>
                                                     <constraint firstAttribute="bottom" secondItem="ozW-u8-e30" secondAttribute="bottom" id="Cx1-Ig-rep"/>
                                                     <constraint firstItem="ozW-u8-e30" firstAttribute="leading" secondItem="bol-ea-ObF" secondAttribute="leading" id="aNp-t7-adI"/>
-                                                    <constraint firstAttribute="height" relation="lessThanOrEqual" constant="480" id="ehz-20-RKZ"/>
+                                                    <constraint firstAttribute="height" constant="480" id="ehz-20-RKZ"/>
                                                     <constraint firstItem="ozW-u8-e30" firstAttribute="top" secondItem="bol-ea-ObF" secondAttribute="top" id="gtV-ea-9Kg"/>
                                                 </constraints>
                                             </view>
@@ -5431,31 +5441,26 @@
                                                                                     <constraint firstAttribute="height" id="LtB-Mv-T9r"/>
                                                                                 </constraints>
                                                                             </view>
-                                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="N5E-mG-lTL">
+                                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qMq-Om-OVP">
                                                                                 <rect key="frame" x="0.0" y="5" width="393" height="347"/>
                                                                                 <subviews>
-                                                                                    <wkWebView contentMode="scaleToFill" semanticContentAttribute="forceRightToLeft" translatesAutoresizingMaskIntoConstraints="NO" id="InV-zh-8O5">
-                                                                                        <rect key="frame" x="10" y="0.0" width="373" height="347"/>
+                                                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="N5E-mG-lTL">
+                                                                                        <rect key="frame" x="15" y="10" width="363" height="327"/>
                                                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                                        <wkWebViewConfiguration key="configuration">
-                                                                                            <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
-                                                                                            <wkPreferences key="preferences" minimumFontSize="14"/>
-                                                                                        </wkWebViewConfiguration>
-                                                                                    </wkWebView>
+                                                                                        <userDefinedRuntimeAttributes>
+                                                                                            <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                                                                                <color key="value" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                                            </userDefinedRuntimeAttribute>
+                                                                                        </userDefinedRuntimeAttributes>
+                                                                                    </view>
                                                                                 </subviews>
                                                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                                 <constraints>
-                                                                                    <constraint firstItem="InV-zh-8O5" firstAttribute="top" secondItem="N5E-mG-lTL" secondAttribute="top" id="Zji-XW-rxA"/>
-                                                                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="287" id="j5Z-as-exn"/>
-                                                                                    <constraint firstItem="InV-zh-8O5" firstAttribute="leading" secondItem="N5E-mG-lTL" secondAttribute="leading" constant="10" id="sdW-vY-Smn"/>
-                                                                                    <constraint firstAttribute="trailing" secondItem="InV-zh-8O5" secondAttribute="trailing" constant="10" id="uzh-V1-A0m"/>
-                                                                                    <constraint firstAttribute="bottom" secondItem="InV-zh-8O5" secondAttribute="bottom" id="xVQ-ZN-LpV"/>
+                                                                                    <constraint firstItem="N5E-mG-lTL" firstAttribute="leading" secondItem="qMq-Om-OVP" secondAttribute="leading" constant="15" id="AzE-zZ-qww"/>
+                                                                                    <constraint firstItem="N5E-mG-lTL" firstAttribute="top" secondItem="qMq-Om-OVP" secondAttribute="top" constant="10" id="b9y-Mu-qco"/>
+                                                                                    <constraint firstAttribute="bottom" secondItem="N5E-mG-lTL" secondAttribute="bottom" constant="10" id="chE-Y2-S41"/>
+                                                                                    <constraint firstAttribute="trailing" secondItem="N5E-mG-lTL" secondAttribute="trailing" constant="15" id="jww-ce-PuM"/>
                                                                                 </constraints>
-                                                                                <userDefinedRuntimeAttributes>
-                                                                                    <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                                                                        <color key="value" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                                    </userDefinedRuntimeAttribute>
-                                                                                </userDefinedRuntimeAttributes>
                                                                             </view>
                                                                         </subviews>
                                                                         <constraints>
@@ -5524,7 +5529,7 @@
                         <outlet property="ViewFirst" destination="bol-ea-ObF" id="u95-vx-qhs"/>
                         <outlet property="ViewImage" destination="OP9-M1-VEW" id="Hdw-po-lIa"/>
                         <outlet property="ViewSecond" destination="r1S-HE-h9k" id="I3n-9f-JhS"/>
-                        <outlet property="webView" destination="InV-zh-8O5" id="Ii5-Pf-6AW"/>
+                        <outlet property="ViewWKWebview" destination="N5E-mG-lTL" id="xvm-qb-S0Q"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gPd-KM-EmY" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -6634,6 +6639,9 @@
         </scene>
     </scenes>
     <designables>
+        <designable name="c0I-bP-9rf">
+            <size key="intrinsicContentSize" width="115.66666666666667" height="26"/>
+        </designable>
         <designable name="dxe-N1-yU6">
             <size key="intrinsicContentSize" width="-1" height="83"/>
         </designable>

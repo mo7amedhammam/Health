@@ -24,7 +24,7 @@ extension WKWebView {
                     direction: rtl; /* Right-to-left direction */
                     text-align: right; /* Right-align text */
                     padding-left: 20px; /* Add 10px padding to the left */
-                    padding-right: 20px;
+                    padding-right: 50px;
                     padding-bottom: 50px; /* Add 50px padding to the bottom */
                 }
         

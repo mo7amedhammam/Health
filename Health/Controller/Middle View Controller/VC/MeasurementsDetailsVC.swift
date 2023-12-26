@@ -752,6 +752,23 @@ extension MeasurementsDetailsVC : UITableViewDataSource , UITableViewDelegate , 
         } else {
             cell.LaDateFrom.text = CellDateFrom
             cell.LaDateFrom.isHidden = false
+            
+            // to 
+            cell.btnAll.backgroundColor = .clear
+            cell.btnAll.setTitleColor(UIColor(named: "main") , for: .normal)
+            cell.btnAll.borderColor = UIColor(named: "main")
+            
+            cell.BtnYear.backgroundColor = .clear
+            cell.BtnYear.setTitleColor( UIColor(named: "main") , for: .normal)
+            cell.BtnYear.borderColor = UIColor(named: "main")
+            
+            cell.BtnMonth.backgroundColor = .clear
+            cell.BtnMonth.setTitleColor( UIColor(named: "main") , for: .normal)
+            cell.BtnMonth.borderColor = UIColor(named: "main")
+            
+            cell.BtnDay.backgroundColor = .clear
+            cell.BtnDay.setTitleColor( UIColor(named: "main") , for: .normal)
+            cell.BtnDay.borderColor = UIColor(named: "main")
         }
         
         if CellDateTo == "" {

@@ -202,8 +202,12 @@ extension INBodyVC{
             print("upload pdf")
             addPdfDocument()
         })
-        let cancelButtom = UIAlertAction(title: "إلغاء", style: .cancel)
         
+        
+        let cancelButtom = UIAlertAction(title: "إلغاء", style: .cancel ,handler: { [self](action)->Void in
+            isAPIExecuting = false
+        })
+       
         alertController.addAction(imgButtom)
         alertController.addAction(pdfButtom)
         alertController.addAction(cancelButtom)
@@ -253,7 +257,10 @@ extension INBodyVC{
             guard let settingsURL = URL(string: UIApplication.openSettingsURLString) else { return }
             UIApplication.shared.open(settingsURL, options: [:], completionHandler: nil)
         }
-        let cancelAction = UIAlertAction(title: "إلغاء", style: .cancel, handler: nil)
+        let cancelAction = UIAlertAction(title: "إلغاء", style: .cancel ,handler: { [self](action)->Void in
+            isAPIExecuting = false
+        })
+                                         
         alertController.addAction(settingsAction)
         alertController.addAction(cancelAction)
         present(alertController, animated: true, completion: nil)
