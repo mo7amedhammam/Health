@@ -106,7 +106,6 @@ class MeasurementsDetailsVC: UIViewController {
     
     @IBAction func BUDoneSelectedDateandTime(_ sender: Any) {
         
-      
         
         if selectDateFrom == "new" {
             formatter.dateFormat = "yyyy-MM-dd'T'HH:mm"
@@ -146,6 +145,11 @@ class MeasurementsDetailsVC: UIViewController {
             self.view.endEditing(true)
             print(strDate)
             
+            // if select seven day then back and select date to ....to set date from with formatt
+            if CellDateFrom != "" {
+                CellDateFrom =  convertToNew(dateString: CellDateFrom ) ?? ""
+            }
+            
             CellDateTo = strDate
             current = ""
             TVScreen.reloadData()
@@ -162,7 +166,7 @@ class MeasurementsDetailsVC: UIViewController {
     func formattedDateFromString(dateString: String, withFormat format: String) -> String? {
         let inputFormatter = DateFormatter()
         inputFormatter.locale = NSLocale.init(localeIdentifier: "en") as Locale
-        inputFormatter.dateFormat = "yyyy/MM/dd"
+        inputFormatter.dateFormat = "yyyy-MM-dd"
         if let date = inputFormatter.date(from: dateString) {
             let outputFormatter = DateFormatter()
             outputFormatter.dateFormat = format
@@ -430,6 +434,43 @@ extension MeasurementsDetailsVC : UITableViewDataSource , UITableViewDelegate , 
         
     }
     
+    
+    func convertToNew(dateString: String) -> String? {
+        let possibleDateFormats = [
+            "yyyy-MM-dd'T'HH:mm:ss.SSS" ,
+            "yyyy-MM-dd'T'HH:mm" ,
+            "yyyy-MM-dd'T'HH:mm:ss" ,
+            "yyyy-MM-dd'T'HH:mm:ss.SS" ,
+            "yyyy-MM-dd'T'hh:mm:ss.SSS" ,
+            "yyyy-MM-dd'T'hh:mm:ss" ,
+            "yyyy-MM-dd'T'hh:mm:ss.SS" ,
+            "yyyy-MM-dd'T'hh:mm:ss.SSS" ,
+            "yyyy-MM-dd",
+            "MM/dd/yyyy",
+            "dd/MM/yyyy",
+            "MM-dd-yyyy",
+            "dd-MM-yyyy" ,
+            "yyyy-MM-dd"
+            // Add more possible date formats as needed
+        ]
+
+        let outputDateFormat = DateFormatter()
+        outputDateFormat.dateFormat = "yyyy-MM-dd"
+
+        for dateFormat in possibleDateFormats {
+            let inputDateFormat = DateFormatter()
+            inputDateFormat.dateFormat = dateFormat
+
+            if let date = inputDateFormat.date(from: dateString) {
+                let convertedDate = outputDateFormat.string(from: date)
+                return convertedDate
+            }
+        }
+
+        return dateString
+    }
+    
+    
     func TearMonthDay(tag: Int , btnAll : UIButton , btnYear : UIButton , btnMonth : UIButton  , btnDay : UIButton , Lfrom : UILabel , Lto : UILabel  ) {
         
         let currentDate = Date()
@@ -462,10 +503,11 @@ extension MeasurementsDetailsVC : UITableViewDataSource , UITableViewDelegate , 
                 let oneYear = dateFormatter.string(from: sevenDaysAgo!)
                 print("oneYear : \(oneYear)")
                 
+                Lfrom.text = convertToNew(dateString: oneYear)
+                Lto.text   = convertToNew(dateString: formattedDateString)
                 
-                
-                Lfrom.text = convertToStandardDateFormat__(dateString: oneYear)
-                Lto.text   = convertToStandardDateFormat__(dateString: formattedDateString)
+//                Lfrom.text = convertToStandardDateFormat__(dateString: oneYear)
+//                Lto.text   = convertToStandardDateFormat__(dateString: formattedDateString)
                 
                 Lfrom.isHidden = false
                 Lto.isHidden   = false
@@ -501,8 +543,11 @@ extension MeasurementsDetailsVC : UITableViewDataSource , UITableViewDelegate , 
                 let ThreeMonth = dateFormatter.string(from: sevenDaysAgo!)
                 print("ThreeMonth : \(ThreeMonth)")
                 
-                Lfrom.text = convertToStandardDateFormat__(dateString: ThreeMonth)
-                Lto.text   = convertToStandardDateFormat__(dateString: formattedDateString)
+                Lfrom.text = convertToNew(dateString: ThreeMonth)
+                Lto.text   = convertToNew(dateString: formattedDateString)
+                
+//                Lfrom.text = convertToStandardDateFormat__(dateString: ThreeMonth)
+//                Lto.text   = convertToStandardDateFormat__(dateString: formattedDateString)
                 
                 Lfrom.isHidden = false
                 Lto.isHidden   = false
@@ -538,8 +583,12 @@ extension MeasurementsDetailsVC : UITableViewDataSource , UITableViewDelegate , 
                 let sevenDaysAgoString = dateFormatter.string(from: sevenDaysAgo!)
                 print("sevenDaysAgoString : \(sevenDaysAgoString)")
                 
-                Lfrom.text = convertToStandardDateFormat__(dateString: sevenDaysAgoString)
-                Lto.text   = convertToStandardDateFormat__(dateString: formattedDateString)
+                
+                Lfrom.text = convertToNew(dateString: sevenDaysAgoString)
+                Lto.text   = convertToNew(dateString: formattedDateString)
+                
+//                Lfrom.text = convertToStandardDateFormat__(dateString: sevenDaysAgoString)
+//                Lto.text   = convertToStandardDateFormat__(dateString: formattedDateString)
                 
                 Lfrom.isHidden = false
                 Lto.isHidden   = false

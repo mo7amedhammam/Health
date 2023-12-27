@@ -34,7 +34,7 @@ extension SignUpVM {
          parametersarr  =  ["name" : name,"mobile" : mobile ,"genderId" : genderId,"districtId" : districtId,"pharmacyCode" : pharmacyCode]
         
         if pharmacyCode != "" {
-            parametersarr["pharmacyCode"] = "pharmacyCode"
+            parametersarr["pharmacyCode"] = pharmacyCode
         }
 
         completion(.loading)

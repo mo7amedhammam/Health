@@ -22,7 +22,7 @@ class INBodyVC: UIViewController {
     var pdfURL:URL?
     var ImageOrPdf = 0
     let ViewModel = InbodyListVM()
-    var isAPIExecuting = false
+//    var isAPIExecuting = false
     
     
     override func viewDidLoad() {
@@ -205,7 +205,7 @@ extension INBodyVC{
         
         
         let cancelButtom = UIAlertAction(title: "إلغاء", style: .cancel ,handler: { [self](action)->Void in
-            isAPIExecuting = false
+//            isAPIExecuting = false
         })
        
         alertController.addAction(imgButtom)
@@ -258,7 +258,7 @@ extension INBodyVC{
             UIApplication.shared.open(settingsURL, options: [:], completionHandler: nil)
         }
         let cancelAction = UIAlertAction(title: "إلغاء", style: .cancel ,handler: { [self](action)->Void in
-            isAPIExecuting = false
+//            isAPIExecuting = false
         })
                                          
         alertController.addAction(settingsAction)
@@ -268,11 +268,11 @@ extension INBodyVC{
     
     // if image will be from gallery of camera
     func showImagePicker(){
-        guard !isAPIExecuting else {
-            // API call is already in progress, so return early
-            return
-        }
-        isAPIExecuting = true
+//        guard !isAPIExecuting else {
+//            // API call is already in progress, so return early
+//            return
+//        }
+//        isAPIExecuting = true
         imagePickerHelper?.showImagePicker { [weak self] receivedImage in
             if let image = receivedImage {
                 // Do something with the received image
@@ -283,18 +283,17 @@ extension INBodyVC{
                 // Handle the case where no image was received or there was an error
             }
             // Reset the flag after the API call is complete
-            self?.isAPIExecuting = false
+//            self?.isAPIExecuting = false
         }
     }
     
     // if pdf -> open document picker to select file
     func addPdfDocument(){
-        guard !isAPIExecuting else {
-            // API call is already in progress, so return early
-            return
-        }
-        
-        isAPIExecuting = true
+//        guard !isAPIExecuting else {
+//            // API call is already in progress, so return early
+//            return
+//        }
+//        isAPIExecuting = true
         
         pdfPickerHelper?.showPDFPicker{ pickedPDFURL in
             if let pdfURL = pickedPDFURL {
@@ -309,7 +308,7 @@ extension INBodyVC{
                 print("No PDF file picked or canceled")
             }
             // Reset the flag after the API call is complete
-            self.isAPIExecuting = false
+//            self.isAPIExecuting = false
         }
     }
     

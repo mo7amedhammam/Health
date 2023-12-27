@@ -342,6 +342,15 @@ extension SignUp{
                 self.GenderId = ViewModel.GendersArr?[index].id
                 BtnGender.isSelected = false
                 
+                let isPhoneValid = TFPhone.text?.count == 11 // Check if TFPhone has 11 digits
+                let isNameValid = TFName.hasText // Check if TFPassword is not empty
+//                let isCodeValid = TFCode.hasText // Check if TFCode is not empty
+                let isDestrictValid = DistrictId != nil
+                let isGenderValid = GenderId != nil
+                
+                let isValidForm = isPhoneValid && isNameValid && isDestrictValid && isGenderValid
+                BtnRegister.enable(isValidForm)
+                
             case "District":
                 self.TFDistrict.text = ViewModel.DistrictsArr?[index].title
                 self.DistrictId = ViewModel.DistrictsArr?[index].id

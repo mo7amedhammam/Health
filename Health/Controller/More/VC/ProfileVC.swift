@@ -213,7 +213,7 @@ extension ProfileVC : UITableViewDataSource , UITableViewDelegate {
             })
             actionSheet.addAction(alertAction)
             
-            let alertAction1 = UIAlertAction(title: "إلفاء", style: .destructive, handler: { (_) in
+            let alertAction1 = UIAlertAction(title: "إلغاء", style: .destructive, handler: { (_) in
                 self.dismiss(animated: true, completion: nil)
             })
             actionSheet.addAction(alertAction1)
