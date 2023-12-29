@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -15,27 +16,27 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="93" id="KGk-i7-Jjw" customClass="ProfileTVCellLogout" customModule="Health" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="93"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="137" id="KGk-i7-Jjw" customClass="ProfileTVCellLogout" customModule="Sehaty" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="137"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="93"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="137"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="efX-XQ-VVe">
-                        <rect key="frame" x="10" y="0.0" width="300" height="93"/>
+                        <rect key="frame" x="10" y="0.0" width="300" height="137"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="WUz-vV-CsF">
-                                <rect key="frame" x="0.0" y="21.666666666666671" width="300" height="50"/>
+                                <rect key="frame" x="0.0" y="43.666666666666657" width="275" height="50"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="تسجيل الخروج" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ar3-9u-83V">
-                                        <rect key="frame" x="0.0" y="0.0" width="240" height="50"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="215" height="50"/>
                                         <fontDescription key="fontDescription" name="LamaSans-Medium" family="Lama Sans" pointSize="21"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5en-4B-4Ky">
-                                        <rect key="frame" x="250" y="0.0" width="50" height="50"/>
+                                        <rect key="frame" x="225" y="0.0" width="50" height="50"/>
                                         <subviews>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logout" translatesAutoresizingMaskIntoConstraints="NO" id="z9n-A4-O0N">
                                                 <rect key="frame" x="10" y="10" width="30" height="30"/>
@@ -65,11 +66,10 @@
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="93" id="N1c-M3-Dh2"/>
-                            <constraint firstItem="WUz-vV-CsF" firstAttribute="centerX" secondItem="efX-XQ-VVe" secondAttribute="centerX" id="Y2P-g7-Pz5"/>
                             <constraint firstItem="WUz-vV-CsF" firstAttribute="centerY" secondItem="efX-XQ-VVe" secondAttribute="centerY" id="dpm-rT-hNw"/>
-                            <constraint firstAttribute="trailing" secondItem="WUz-vV-CsF" secondAttribute="trailing" id="eQC-rz-Sxx"/>
+                            <constraint firstAttribute="trailing" secondItem="WUz-vV-CsF" secondAttribute="trailing" constant="25" id="eQC-rz-Sxx"/>
                             <constraint firstItem="WUz-vV-CsF" firstAttribute="leading" secondItem="efX-XQ-VVe" secondAttribute="leading" id="myj-Kd-LWu"/>
+                            <constraint firstAttribute="height" constant="137" id="tRz-sy-EJb"/>
                         </constraints>
                     </view>
                 </subviews>
@@ -82,7 +82,7 @@
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-            <point key="canvasLocation" x="-90.07633587786259" y="36.971830985915496"/>
+            <point key="canvasLocation" x="-90.07633587786259" y="52.464788732394368"/>
         </tableViewCell>
     </objects>
     <resources>

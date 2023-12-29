@@ -81,9 +81,9 @@ extension HomeVC : UITableViewDataSource , UITableViewDelegate {
                     cell.layout.scrollDirection   = .vertical
 //                    cell.DataSourseDeledate()
                     if ViewModelMeasurements.ArrStats?.count ?? 0 <= 3 {
-                        cell.HViewCell.constant = 200
+                        cell.HViewCell.constant = 250
                     } else {
-                        cell.HViewCell.constant = 380
+                        cell.HViewCell.constant = 440
                     }
                     cell.indexx = indexPath.row
                     
@@ -136,6 +136,9 @@ extension HomeVC : UITableViewDataSource , UITableViewDelegate {
                     cell.ViewModel = ViewModel
                     cell.CollectionHome.reloadData()
                     
+                    cell.CollectionHome.scrollToItem(at: IndexPath(row: 0, section: 0), at: .centeredHorizontally , animated: false)
+                    
+
                     cell.BtnMore.isHidden   = false
                     cell.LaTitle.text = "نصائح حديثة"
                     return cell
@@ -155,6 +158,8 @@ extension HomeVC : UITableViewDataSource , UITableViewDelegate {
                     cell.indexx = indexPath.row
                     cell.ViewModel = ViewModel
                     cell.CollectionHome.reloadData()
+                    
+                    cell.CollectionHome.scrollToItem(at: IndexPath(row: 0 , section: 0), at: .centeredHorizontally , animated: false)
                     
                     cell.BtnMore.isHidden   = false
                     cell.LaTitle.text = "النصائح الأكثر مشاهدة"

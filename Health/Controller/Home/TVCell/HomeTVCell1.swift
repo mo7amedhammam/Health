@@ -154,7 +154,7 @@ extension HomeTVCell1 : UICollectionViewDataSource , UICollectionViewDelegate , 
         } else if indexx == 3 {
             let SelectedId = ViewModel?.newestTipsArr?[indexPath.row].id ?? 0
             self.ShowDetailsFor(Id: SelectedId)
-        } else{
+        } else {
             let SelectedId = ViewModel?.mostViewedTipsArr?[indexPath.row].id ?? 0
             self.ShowDetailsFor(Id: SelectedId)
         }
@@ -165,9 +165,9 @@ extension HomeTVCell1 : UICollectionViewDataSource , UICollectionViewDelegate , 
         
         if indexx == 1 {
             if ViewModelMeasurements?.ArrStats?.count ?? 0 <= 3 {
-                return CGSize(width: ((collectionView.frame.width - 30 )/3) , height: 150)
+                return CGSize(width: ((collectionView.frame.width - 30 )/3) , height: 185)
             } else {
-                return CGSize(width: ((collectionView.frame.width - 20 )/3) , height: 150)
+                return CGSize(width: ((collectionView.frame.width - 20 )/3) , height: 185)
             }
         } else if indexx == 2 {
             return CGSize(width: 280, height: 150)

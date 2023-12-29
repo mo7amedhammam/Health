@@ -117,7 +117,7 @@ extension ProfileVC : UITableViewDataSource , UITableViewDelegate {
             
             let cell = tableView.dequeueReusableCell(withIdentifier: "ProfileTVCellMiddle", for: indexPath) as! ProfileTVCellMiddle
             cell.LaTitle.text = "تغيير كلمة المرور"
-            cell.IVPhoto.image = UIImage(named: "location")
+            cell.IVPhoto.image = UIImage(named: "changepass")
             if selected == 4 {
                 cell.ViewColor.backgroundColor = UIColor(named: "secondary")
             } else {
@@ -129,7 +129,7 @@ extension ProfileVC : UITableViewDataSource , UITableViewDelegate {
             
             let cell = tableView.dequeueReusableCell(withIdentifier: "ProfileTVCellMiddle", for: indexPath) as! ProfileTVCellMiddle
             cell.LaTitle.text = "الحماية والخصوصية"
-            cell.IVPhoto.image = UIImage(named: "protection")
+            cell.IVPhoto.image = UIImage(named: "privacyprotection")
             if selected == 5 {
                 cell.ViewColor.backgroundColor = UIColor(named: "secondary")
             } else {
@@ -140,7 +140,7 @@ extension ProfileVC : UITableViewDataSource , UITableViewDelegate {
         } else if indexPath.row == 6 {
             
             let cell = tableView.dequeueReusableCell(withIdentifier: "ProfileTVCellMiddle", for: indexPath) as! ProfileTVCellMiddle
-            cell.LaTitle.text = "المساعده "
+            cell.LaTitle.text = "المساعدة"
             cell.IVPhoto.image = UIImage(named: "playmain")
             if selected == 6 {
                 cell.ViewColor.backgroundColor = UIColor(named: "secondary")
@@ -152,7 +152,7 @@ extension ProfileVC : UITableViewDataSource , UITableViewDelegate {
         } else if indexPath.row == 7 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "ProfileTVCellMiddle", for: indexPath) as! ProfileTVCellMiddle
             cell.LaTitle.text = "الشروط والأحكام"
-            cell.IVPhoto.image = UIImage(named: "terms")
+            cell.IVPhoto.image = UIImage(named: "termscondition")
             if selected == 7 {
                 cell.ViewColor.backgroundColor = UIColor(named: "secondary")
             } else {

@@ -44,7 +44,7 @@ extension AlmostFinishedVM{
            let response = try await GetAlmostFinishedPresc()
            if skipCount == 0 {
                responseModel = response
-           }else{
+           } else {
                responseModel?.items?.append(contentsOf: response.items ?? [])
            }
            

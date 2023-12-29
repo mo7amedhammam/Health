@@ -14,6 +14,9 @@ class HomeCVCell1: UICollectionViewCell {
     @IBOutlet weak var LaCount: UILabel!
     @IBOutlet weak var LaDate: UILabel!
     
+    
+    @IBOutlet weak var SVViewDate: UIStackView!
+    
     @IBOutlet weak var ViewDate: UIView!
         
     var model:ModelMyMeasurementsStats?{

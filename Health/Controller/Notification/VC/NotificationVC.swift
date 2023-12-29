@@ -326,6 +326,8 @@ class NotificationVC: UIViewController  {
     
     @IBAction func BUSelectTime(_ sender: UIButton) {
         // Show the time picker
+        timePicker = UIDatePicker()
+        timePicker.datePickerMode = .time
         TFClock.inputView = timePicker
         TFClock.becomeFirstResponder()
     }

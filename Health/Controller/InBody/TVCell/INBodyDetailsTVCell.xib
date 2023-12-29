@@ -103,19 +103,19 @@
                                         <rect key="frame" x="0.0" y="420" width="280" height="70"/>
                                         <subviews>
                                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ah7-gg-WnB">
-                                                <rect key="frame" x="40" y="5" width="200" height="60"/>
+                                                <rect key="frame" x="47.666666666666686" y="5" width="185" height="60"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Xe2-DQ-rtc">
-                                                        <rect key="frame" x="5" y="5" width="180" height="50"/>
+                                                        <rect key="frame" x="5" y="5" width="174" height="50"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="تحميل التقرير" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="V5l-1S-yDL">
-                                                                <rect key="frame" x="0.0" y="0.0" width="120" height="50"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="114" height="50"/>
                                                                 <fontDescription key="fontDescription" name="LamaSans-Medium" family="Lama Sans" pointSize="18"/>
                                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ebm-Pf-CwD">
-                                                                <rect key="frame" x="130" y="0.0" width="50" height="50"/>
+                                                                <rect key="frame" x="124" y="0.0" width="50" height="50"/>
                                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="width" constant="50" id="fuP-HQ-koz"/>
@@ -134,7 +134,7 @@
                                                         </subviews>
                                                     </stackView>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mhq-JY-T8Y">
-                                                        <rect key="frame" x="0.0" y="0.0" width="200" height="60"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="185" height="60"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                         <connections>
@@ -144,9 +144,9 @@
                                                 </subviews>
                                                 <color key="backgroundColor" name="main"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="width" constant="200" id="0IJ-dK-fim"/>
+                                                    <constraint firstAttribute="width" constant="185" id="0IJ-dK-fim"/>
                                                     <constraint firstItem="Xe2-DQ-rtc" firstAttribute="top" secondItem="ah7-gg-WnB" secondAttribute="top" constant="5" id="5b6-IU-Mp7"/>
-                                                    <constraint firstAttribute="trailing" secondItem="Xe2-DQ-rtc" secondAttribute="trailing" constant="15" id="P3e-EW-qHv"/>
+                                                    <constraint firstAttribute="trailing" secondItem="Xe2-DQ-rtc" secondAttribute="trailing" constant="6" id="P3e-EW-qHv"/>
                                                     <constraint firstAttribute="trailing" secondItem="Mhq-JY-T8Y" secondAttribute="trailing" id="Q38-Uc-CXf"/>
                                                     <constraint firstAttribute="bottom" secondItem="Xe2-DQ-rtc" secondAttribute="bottom" constant="5" id="WmL-ZG-nv1"/>
                                                     <constraint firstAttribute="bottom" secondItem="Mhq-JY-T8Y" secondAttribute="bottom" id="eam-HE-jiE"/>

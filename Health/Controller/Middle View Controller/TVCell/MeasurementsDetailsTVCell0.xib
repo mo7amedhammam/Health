@@ -86,19 +86,19 @@
                                         <rect key="frame" x="0.0" y="90" width="302" height="70"/>
                                         <subviews>
                                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TXG-ml-McR">
-                                                <rect key="frame" x="26" y="5" width="250" height="60"/>
+                                                <rect key="frame" x="36" y="5" width="230" height="60"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="J4I-xj-sR1">
-                                                        <rect key="frame" x="5" y="5" width="237" height="50"/>
+                                                        <rect key="frame" x="5" y="5" width="217" height="50"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="تسجيل قياس جديد" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f6c-fF-0bi">
-                                                                <rect key="frame" x="0.0" y="0.0" width="177" height="50"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="157" height="50"/>
                                                                 <fontDescription key="fontDescription" name="LamaSans-Medium" family="Lama Sans" pointSize="18"/>
                                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FfX-dE-hWe">
-                                                                <rect key="frame" x="187" y="0.0" width="50" height="50"/>
+                                                                <rect key="frame" x="167" y="0.0" width="50" height="50"/>
                                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="width" constant="50" id="XJr-QR-hUp"/>
@@ -117,7 +117,7 @@
                                                         </subviews>
                                                     </stackView>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ERq-KY-Zx5">
-                                                        <rect key="frame" x="0.0" y="0.0" width="250" height="60"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="230" height="60"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                         <connections>
@@ -131,7 +131,7 @@
                                                     <constraint firstItem="ERq-KY-Zx5" firstAttribute="leading" secondItem="TXG-ml-McR" secondAttribute="leading" id="Dv9-3m-bj3"/>
                                                     <constraint firstItem="J4I-xj-sR1" firstAttribute="top" secondItem="TXG-ml-McR" secondAttribute="top" constant="5" id="Np4-jp-JJW"/>
                                                     <constraint firstAttribute="trailing" secondItem="ERq-KY-Zx5" secondAttribute="trailing" id="dYU-VN-gTT"/>
-                                                    <constraint firstAttribute="width" constant="250" id="e9p-MG-TlE"/>
+                                                    <constraint firstAttribute="width" constant="230" id="e9p-MG-TlE"/>
                                                     <constraint firstAttribute="bottom" secondItem="ERq-KY-Zx5" secondAttribute="bottom" id="ei4-YX-WbC"/>
                                                     <constraint firstItem="J4I-xj-sR1" firstAttribute="leading" secondItem="TXG-ml-McR" secondAttribute="leading" constant="5" id="enu-fA-xtN"/>
                                                     <constraint firstAttribute="bottom" secondItem="J4I-xj-sR1" secondAttribute="bottom" constant="5" id="fd7-yh-mrT"/>
