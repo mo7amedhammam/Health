@@ -23,28 +23,26 @@ class TipsCategoriesVC3: UIViewController {
         TVScreen.dataSource = self
         TVScreen.delegate   = self
         TVScreen.registerCellNib(cellClass: TipsCategories3TVCell.self)
-        
-        // Configure the refresh control
-        refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
-        // Add the refresh control to the collection view
-        TVScreen.addSubview(refreshControl)
-        // Load your initial data here (e.g., fetchData())
-//        refreshData()
+        TVScreen.rowHeight = UITableView.automaticDimension
 
+        refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
+        TVScreen.addSubview(refreshControl)
+        
         ViewModel.skipCount = 0
         ViewModel.tipsByCategoryRes?.items?.removeAll()
         TVScreen.reloadData()
         getTipsByCategoryId()
         
     }
-//    override func viewWillAppear(_ animated: Bool) {
-//        super.viewWillAppear(animated)
-//
-//        ViewModel.skipCount = 0
-//        ViewModel.tipsByCategoryRes?.items?.removeAll()
-//        TVScreen.reloadData()
-//        getTipsByCategoryId()
-//    }
+    
+    //    override func viewWillAppear(_ animated: Bool) {
+    //        super.viewWillAppear(animated)
+    //
+    //        ViewModel.skipCount = 0
+    //        ViewModel.tipsByCategoryRes?.items?.removeAll()
+    //        TVScreen.reloadData()
+    //        getTipsByCategoryId()
+    //    }
     
     
     @IBAction func BUNoti(_ sender: Any) {
@@ -70,15 +68,15 @@ extension TipsCategoriesVC3 : UITableViewDataSource , UITableViewDelegate {
         let model = ViewModel.tipsByCategoryRes?.items?[indexPath.row]
         cell.model = model
         cell.CVDrugGroups.reloadData()
-                
+        cell.CVDrugGroups.layoutIfNeeded()
+        
         cell.LaTitle.text = model?.title
         cell.LaDAte.text = model?.date?.ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "dd / MM / yyyy hh:mm a")
         if let img = model?.image {
             //                let processor = SVGImgProcessor() // if receive svg image
             cell.ImgTipCategory.kf.setImage(with: URL(string:Constants.baseURL + img.validateSlashs()), placeholder: UIImage(named: "defaultLogo"), options: nil, progressBlock: nil)
         }
-        
-        cell.HViewSuper.constant = (115.0 + cell.CVDrugGroups.collectionViewLayout.collectionViewContentSize.height)
+//        cell.HViewSuper.constant = (115.0 + cell.CVDrugGroups.collectionViewLayout.collectionViewContentSize.height)
         
         return cell
     }
@@ -92,9 +90,13 @@ extension TipsCategoriesVC3 : UITableViewDataSource , UITableViewDelegate {
         self.present(vc, animated: false, completion: nil)
     }
     
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
+    }
+    
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         let model = ViewModel.tipsByCategoryRes
-
+        
         if indexPath.row == (model?.items?.count ?? 0)  - 1 {
             // Check if the last cell is about to be displayed
             if let totalCount = model?.totalCount, let itemsCount = model?.items?.count, itemsCount < totalCount {
@@ -108,7 +110,7 @@ extension TipsCategoriesVC3 : UITableViewDataSource , UITableViewDelegate {
         ViewModel.skipCount = skipcount
         getTipsByCategoryId()
     }
-
+    
 }
 
 extension TipsCategoriesVC3 {
@@ -127,13 +129,13 @@ extension TipsCategoriesVC3 {
                 } else {
                     CloseView_NoContent()
                 }
-
+                
                 print("all",ViewModel.tipsByCategoryRes?.items ?? [])
             } catch {
                 // Handle any errors that occur during the async operations
                 print("Error: \(error)")
                 Hud.dismiss(from: self.view)
-//                SimpleAlert.shared.showAlert(title:error.localizedDescription,message:"", viewController: self)
+                //                SimpleAlert.shared.showAlert(title:error.localizedDescription,message:"", viewController: self)
             }
         }
     }
@@ -146,5 +148,18 @@ extension TipsCategoriesVC3 {
         // When the refresh operation is complete, endRefreshing() to hide the refresh control
         refreshControl.endRefreshing()
     }
+    
+}
 
+
+class CustomCollectionView: UICollectionView {
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        if !(__CGSizeEqualToSize(bounds.size,self.intrinsicContentSize)){
+            self.invalidateIntrinsicContentSize()
+        }
+    }
+    override var intrinsicContentSize: CGSize {
+        return contentSize
+    }
 }

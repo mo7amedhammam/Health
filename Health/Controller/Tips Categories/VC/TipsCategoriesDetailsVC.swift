@@ -84,6 +84,8 @@ extension TipsCategoriesDetailsVC {
         }
 
         LaTitle.text = model.title
+        LaTitle.setLineSpacing(10.0)
+        LaTitle.textAlignment = .right
 
         guard let htmlString = model.description else {return}
 //        webView.loadHTMLStringWithAutoDirection(htmlString)

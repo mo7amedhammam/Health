@@ -171,7 +171,6 @@ extension TipsCategoriesVC2{
         ViewModel?.skipCount = 0
         // Place your refresh logic here, for example, fetch new data from your data source
         getHomeTips()
-
         // When the refresh operation is complete, endRefreshing() to hide the refresh control
         refreshControl.endRefreshing()
     }

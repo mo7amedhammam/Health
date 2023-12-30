@@ -1016,3 +1016,19 @@ extension UITableViewCell {
         return false
     }
 }
+
+
+extension UILabel {
+    func setLineSpacing(_ spacing: CGFloat) {
+        guard let text = self.text else {
+            return
+        }
+
+        let attributedString = NSMutableAttributedString(string: text)
+        let style = NSMutableParagraphStyle()
+        style.lineSpacing = spacing
+        attributedString.addAttribute(NSAttributedString.Key.paragraphStyle, value: style, range: NSMakeRange(0, attributedString.length))
+
+        self.attributedText = attributedString
+    }
+}

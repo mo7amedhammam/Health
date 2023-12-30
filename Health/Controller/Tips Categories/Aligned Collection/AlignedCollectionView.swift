@@ -61,6 +61,23 @@ private struct AlignmentAxis<A: Alignment> {
 /// and you can specify how the cells are vertically aligned in their row.
 open class AlignedCollectionViewFlowLayout: UICollectionViewFlowLayout {
     
+    
+    override open var collectionViewContentSize: CGSize {
+        guard let collectionView = collectionView else {
+            return CGSize.zero
+        }
+        
+        var contentSize = super.collectionViewContentSize
+        
+        // Calculate the height based on the vertical alignment and number of items
+        if let layoutAttributes = layoutAttributesForElements(in: collectionView.bounds) {
+            let maxY = layoutAttributes.reduce(0) { max($0, $1.frame.maxY) }
+            contentSize.height = maxY + sectionInset.bottom
+        }
+        
+        return contentSize
+    }
+    
     // MARK: - 🔶 Properties
     
     /// Determines how the cells are horizontally aligned in a row.

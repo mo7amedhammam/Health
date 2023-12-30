@@ -26,35 +26,34 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="B8z-eY-79D">
                         <rect key="frame" x="0.0" y="0.0" width="134" height="15"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="-8" translatesAutoresizingMaskIntoConstraints="NO" id="PA9-kj-EmY">
-                                <rect key="frame" x="0.0" y="0.0" width="129" height="15"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="الأوعية الدموية" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bhu-pW-nuR">
-                                        <rect key="frame" x="0.0" y="0.0" width="129" height="22.333333333333332"/>
-                                        <fontDescription key="fontDescription" name="LamaSans-Medium" family="Lama Sans" pointSize="10"/>
-                                        <color key="textColor" name="main"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X2F-bz-zig">
-                                        <rect key="frame" x="0.0" y="14.333333333333334" width="129" height="0.66666666666666607"/>
-                                        <color key="backgroundColor" name="main"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="0.59999999999999998" id="LNz-FM-V3l"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                            </stackView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="الأوعية الدموية" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bhu-pW-nuR">
+                                <rect key="frame" x="68" y="0.0" width="66" height="13"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="13" id="UNo-7E-2Sm"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="LamaSans-Medium" family="Lama Sans" pointSize="10"/>
+                                <color key="textColor" name="main"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U7U-eU-k17">
+                                <rect key="frame" x="68" y="9.3333333333333339" width="66" height="0.66666666666666607"/>
+                                <color key="backgroundColor" name="main"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="0.59999999999999998" id="V35-i6-VDB"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="PA9-kj-EmY" firstAttribute="leading" secondItem="B8z-eY-79D" secondAttribute="leading" id="5w8-I5-A8W"/>
-                            <constraint firstAttribute="trailing" secondItem="PA9-kj-EmY" secondAttribute="trailing" constant="5" id="8ku-TR-0pB"/>
-                            <constraint firstAttribute="bottom" secondItem="PA9-kj-EmY" secondAttribute="bottom" id="rbZ-fi-jSh"/>
-                            <constraint firstItem="PA9-kj-EmY" firstAttribute="top" secondItem="B8z-eY-79D" secondAttribute="top" id="spJ-B1-QdS"/>
-                            <constraint firstAttribute="height" constant="15" id="vx8-8d-UNB"/>
+                            <constraint firstItem="U7U-eU-k17" firstAttribute="bottom" secondItem="bhu-pW-nuR" secondAttribute="bottom" constant="-3" id="47y-68-HMA"/>
+                            <constraint firstAttribute="trailing" secondItem="bhu-pW-nuR" secondAttribute="trailing" id="Bdf-l1-daJ"/>
+                            <constraint firstAttribute="bottom" secondItem="bhu-pW-nuR" secondAttribute="bottom" constant="2" id="Jej-4t-6pw"/>
+                            <constraint firstItem="bhu-pW-nuR" firstAttribute="top" secondItem="B8z-eY-79D" secondAttribute="top" id="NFk-WS-fcf"/>
+                            <constraint firstItem="U7U-eU-k17" firstAttribute="trailing" secondItem="bhu-pW-nuR" secondAttribute="trailing" id="U8Y-mB-tmm"/>
+                            <constraint firstItem="U7U-eU-k17" firstAttribute="leading" secondItem="bhu-pW-nuR" secondAttribute="leading" id="Z7i-ja-Wpv"/>
                         </constraints>
                     </view>
                 </subviews>

@@ -168,6 +168,13 @@ extension TipsCategoriesVC1{
     }
     
     @objc func refreshData() {
+        
+        ViewModel.allTipsResModel?.items?.removeAll()
+        ViewModel.interestingTipsArr?.removeAll()
+        ViewModel.mostViewedTipsArr?.removeAll()
+        ViewModel.newestTipsArr?.removeAll()
+        TVScreen.reloadData()
+        
         ViewModel.skipCount = 0
         // Place your refresh logic here, for example, fetch new data from your data source
         getTipsCategories()

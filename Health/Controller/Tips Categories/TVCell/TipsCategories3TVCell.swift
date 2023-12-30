@@ -12,10 +12,14 @@ class TipsCategories3TVCell: UITableViewCell {
     @IBOutlet weak var ImgTipCategory: UIImageView!
     @IBOutlet weak var LaTitle: UILabel!
     @IBOutlet weak var LaDAte: UILabel!
-    @IBOutlet weak var CVDrugGroups: UICollectionView!
+
+    @IBOutlet weak var CVDrugGroups: CustomCollectionView!
+    
     @IBOutlet weak var HViewSuper: NSLayoutConstraint!
     var labelWidth = 0.0
+    var spacing = CGFloat(0)
 
+    
     var model : TipDetailsM?{
         
         didSet {
@@ -82,14 +86,29 @@ class TipsCategories3TVCell: UITableViewCell {
         super.awakeFromNib()
         // Initialization code
         // drup groups collection tags .
+//        CVDrugGroups.dataSource = self
+//        CVDrugGroups.delegate = self
+//        CVDrugGroups.registerCell(cellClass: TipDetailsDrugGroup.self)
+//        CVDrugGroups.transform = CGAffineTransform(scaleX: -1, y: 1) //first tip mirror effect for x -> second in cell
+        
+//        let layout = CollectionViewFlowLayout() //MultipleSelectionCVFlowLayout()
+//        layout.sectionInset = UIEdgeInsets(top: spacing, left: spacing, bottom: spacing, right: spacing)
+//        CVDrugGroups.translatesAutoresizingMaskIntoConstraints = false
+//        CVDrugGroups.contentInset = UIEdgeInsets(top: 0,left: 0,bottom: 0,right: 0)
+//        CVDrugGroups.collectionViewLayout = layout
+//        CVDrugGroups.dataSource = self
+//        CVDrugGroups.delegate = self
+//        CVDrugGroups.registerCell(cellClass: TipDetailsDrugGroup.self)
+
+        
+//        let alignedFlowLayout = AlignedCollectionViewFlowLayout(horizontalAlignment: .right, verticalAlignment: .top)
+//        alignedFlowLayout.estimatedItemSize = AlignedCollectionViewFlowLayout.automaticSize
+//        CVDrugGroups.collectionViewLayout = alignedFlowLayout
         CVDrugGroups.dataSource = self
         CVDrugGroups.delegate = self
         CVDrugGroups.registerCell(cellClass: TipDetailsDrugGroup.self)
-//        CVDrugGroups.transform = CGAffineTransform(scaleX: -1, y: 1) //first tip mirror effect for x -> second in cell
-        
-        let alignedFlowLayout = AlignedCollectionViewFlowLayout(horizontalAlignment: .right, verticalAlignment: .top)
-        alignedFlowLayout.estimatedItemSize = AlignedCollectionViewFlowLayout.automaticSize
-        CVDrugGroups.collectionViewLayout = alignedFlowLayout
+        CVDrugGroups.transform = CGAffineTransform(scaleX: -1, y: 1) //first tip mirror effect for x -> second in cell
+
         
     }
     
@@ -99,10 +118,13 @@ class TipsCategories3TVCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
+    
+    
+    
 }
 
 
-extension TipsCategories3TVCell:UICollectionViewDataSource,UICollectionViewDelegate {
+extension TipsCategories3TVCell:UICollectionViewDataSource,UICollectionViewDelegate , UICollectionViewDelegateFlowLayout {
     //UICollectionViewDelegateFlowLayout
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -112,11 +134,24 @@ extension TipsCategories3TVCell:UICollectionViewDataSource,UICollectionViewDeleg
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TipDetailsDrugGroup", for: indexPath) as! TipDetailsDrugGroup
 
-        cell.LaDrugTitle.transform = CGAffineTransform(scaleX: -1, y: 1)
+//        cell.LaDrugTitle.transform = CGAffineTransform(scaleX: -1, y: 1)
         let model = model?.drugGroups?[indexPath.row]
         cell.LaDrugTitle.text = model?.title
-        cell.LaDrugTitle.font = UIFont(name: "LamaSans-Medium", size: 10)
+//        cell.LaDrugTitle.font = UIFont(name: "LamaSans-Medium", size: 10)
+        cell.LaDrugTitle.setLineSpacing(5.0)
+        LaTitle.textAlignment = .right
+
+        
         return cell
     }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let text = self.model?.drugGroups?[indexPath.row].title
+        let textSize = text!.size(withAttributes:[.font: UIFont.systemFont(ofSize:12.0)])
+           let cellHeight = textSize.height
+           let cellWidth = textSize.width
+           return CGSize(width: cellWidth, height: cellHeight)
+       }
  
 }
+
