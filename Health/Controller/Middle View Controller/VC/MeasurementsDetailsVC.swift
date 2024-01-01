@@ -117,7 +117,7 @@ class MeasurementsDetailsVC: UIViewController {
             print(strDate)
             
             let forma = DateFormatter()
-            forma.dateFormat = "yyyy-MM-dd hh:mm a"
+            forma.dateFormat = "dd/MM/yyyy hh:mm a"
             forma.locale     = Locale(identifier: "en")
             let strForma = forma.string(from: PickerDate.date )
             TFDate.text = strForma
@@ -215,7 +215,7 @@ class MeasurementsDetailsVC: UIViewController {
                 ViewModel.medicalMeasurementId = id
                 ViewModel.value                = TFNumMeasure.text!.convertedDigitsToLocale(Locale(identifier: "EN"))
                 ViewModel.comment              = TVDescription.text ?? ""
-                ViewModel.measurementDate      = measurementDate
+                ViewModel.measurementDate      =  convertWhenupload(dateString: measurementDate)
                 CreateMeasurement ()
             } else {
                 
@@ -469,6 +469,28 @@ extension MeasurementsDetailsVC : UITableViewDataSource , UITableViewDelegate , 
 
         return dateString
     }
+    
+    
+    func convertWhenupload(dateString: String) -> String? {
+        let possibleDateFormats = [
+            "dd/MM/yyyy hh:mm a" ,
+        ]
+        let outputDateFormat = DateFormatter()
+        outputDateFormat.dateFormat = "yyyy-MM-dd hh:mm a"
+
+        for dateFormat in possibleDateFormats {
+            let inputDateFormat = DateFormatter()
+            inputDateFormat.dateFormat = dateFormat
+
+            if let date = inputDateFormat.date(from: dateString) {
+                let convertedDate = outputDateFormat.string(from: date)
+                return convertedDate
+            }
+        }
+
+        return dateString
+    }
+    
     
     
     func TearMonthDay(tag: Int , btnAll : UIButton , btnYear : UIButton , btnMonth : UIButton  , btnDay : UIButton , Lfrom : UILabel , Lto : UILabel  ) {
@@ -773,7 +795,7 @@ extension MeasurementsDetailsVC : UITableViewDataSource , UITableViewDelegate , 
         print(strDate)
         
         let forma = DateFormatter()
-        forma.dateFormat = "yyyy-MM-dd hh:mm a"
+        forma.dateFormat = "dd/MM/yyyy hh:mm a"
         forma.locale     = Locale(identifier: "en")
         let strForma = forma.string(from: PickerDate.date )
         TFDate.text = strForma

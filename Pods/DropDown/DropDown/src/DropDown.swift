@@ -1062,6 +1062,7 @@ extension DropDown: UITableViewDataSource, UITableViewDelegate {
 			cell.accessibilityIdentifier = localizationKeysDataSource[index]
 		}
 		
+        cell.optionLabel.textAlignment = .right
 		cell.optionLabel.textColor = textColor
 		cell.optionLabel.font = textFont
 		cell.selectedBackgroundColor = selectionBackgroundColor
