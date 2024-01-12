@@ -71,6 +71,9 @@ extension TipsCategoriesVC3 : UITableViewDataSource , UITableViewDelegate {
         cell.CVDrugGroups.layoutIfNeeded()
         
         cell.LaTitle.text = model?.title
+        cell.LaTitle.setLineSpacing(5.0)
+        cell.LaTitle.textAlignment = .right
+        
         cell.LaDAte.text = model?.date?.ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "dd / MM / yyyy hh:mm a")
         if let img = model?.image {
             //                let processor = SVGImgProcessor() // if receive svg image

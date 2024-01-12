@@ -155,7 +155,7 @@ extension INBodyVC{
         ViewModel.Date = Helper.ChangeFormate(NewFormat: "yyyy-MM-dd'T'HH:mm:ss").string(from: Date())
         ViewModel.AddCustomerInbodyReport(fileType:filetype,progressHandler: {[weak self] progress in
             guard let self = self else{return}
-            
+
             let progressText = String(format: "%.0f%%", progress * 100)
             if progress > 0 {
                 Hud.updateProgress(progressText)

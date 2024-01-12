@@ -56,22 +56,43 @@ class OtpVC: UIViewController , UITextFieldDelegate {
 
         LaToNum.text = Phonenumber
         self.BtnResend.isEnabled = false
-
+        
         hideKeyboardWhenTappedAround()
-    }
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-//        SendOtp()
-        TFIndex1.becomeFirstResponder()
+        
+        
         clearOtp()
         startTimer(remainingSeconds: second)
         ShowOtp.text = otp
         
     }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        TFIndex1.becomeFirstResponder()
+//        clearOtp()
+//        startTimer(remainingSeconds: second)
+//        ShowOtp.text = otp
+        
+        timer?.invalidate()
+        timer = nil
+        
+        if Shared.shared.remainingSeconds > 0 {
+            startTimer(remainingSeconds: Shared.shared.remainingSeconds)
+        } else {
+            // Time's up, enable the button and invalidate the timer
+            SecondsCount.text        = ""
+            self.BtnResend.isEnabled = true
+            self.BtnResend.alpha     = 1
+        }
+        
+        
+    }
+        
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         timer?.invalidate()
         timer = nil
+     
     }
     @IBAction func BUBack(_ sender: Any) {
         navigationController?.popViewController(animated: true)
@@ -241,6 +262,7 @@ extension OtpVC{
             clearOtp()
                 guard let seconds = viewModel.responseModel?.secondsCount else {return}
                 startTimer(remainingSeconds: seconds)
+                Shared.shared.remainingSeconds = seconds
                 ShowOtp.text = "استخدم \(viewModel.responseModel?.otp ?? 00)"
             case .error(let code,let error):
                 Hud.dismiss(from: self.view)
@@ -258,6 +280,8 @@ extension OtpVC{
     
     func VerifyOtp() {
         viewModel.mobile = Phonenumber
+        Toast.show(message: "\(Phonenumber)", controller: self)
+        
         guard let otp1 = TFIndex1.text ,let otp2 = TFIndex2.text,let otp3 = TFIndex3.text,let otp4 = TFIndex4.text,let otp5 = TFIndex5.text,let otp6 = TFIndex6.text else {return}
         let fullotp = otp1+otp2+otp3+otp4+otp5+otp6
         viewModel.EnteredOtp = fullotp
@@ -321,24 +345,55 @@ extension OtpVC{
         timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] timer in
             guard let self = self else { return }
             
+            
+            
             if remainingSeconds > 0 {
                 remainingSeconds -= 1
                 self.SecondsCount.text = "\(timeString(time: TimeInterval(remainingSeconds))) "
                 // Still have time, enable the button and invalidate the timer
                 self.BtnResend.isEnabled = false
                 self.BtnResend.alpha = 0.5
+                Shared.shared.remainingSeconds = remainingSeconds
+                print("Shared.shared.remainingSeconds :::::: \(Shared.shared.remainingSeconds)")
+
             } else {
                 // Time's up, enable the button and invalidate the timer
                 self.BtnResend.isEnabled = true
                 self.BtnResend.alpha = 1
-
                 timer.invalidate()
             }
+            // Check for background execution and request more time if needed
+                   if UIApplication.shared.applicationState == .background {
+                       self.scheduleBackgroundTask()
+                   }
         }
     }
     func timeString(time:TimeInterval) -> String {
     let minutes = Int(time) / 60 % 60
     let seconds = Int(time) % 60
     return String(format:"%02i:%02i", minutes, seconds)
+    }
+    
+    func scheduleBackgroundTask() {
+        // Request additional background time if needed
+        var backgroundTask: UIBackgroundTaskIdentifier = .invalid
+        backgroundTask = UIApplication.shared.beginBackgroundTask {
+            // End the background task when it's complete
+            UIApplication.shared.endBackgroundTask(backgroundTask)
+            backgroundTask = .invalid
+        }
+        print("Perform your")
+            self.startTimer(remainingSeconds: Shared.shared.remainingSeconds)
+        
+        
+        // Perform your background task here
+        // Make sure to end the background task when the task is complete
+//        DispatchQueue.global().async {
+//            // Your background task code goes here
+//            print("background your")
+//            // End the background task when it's complete
+//            UIApplication.shared.endBackgroundTask(backgroundTask)
+//            backgroundTask = .invalid
+//        }
     }
 }

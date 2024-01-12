@@ -169,6 +169,9 @@ extension TipsCategoriesVC2{
     
     @objc func refreshData() {
         ViewModel?.skipCount = 0
+        ViewModel?.allTipsResModel?.items?.removeAll()
+        CollectionScreen.reloadData()
+        
         // Place your refresh logic here, for example, fetch new data from your data source
         getHomeTips()
         // When the refresh operation is complete, endRefreshing() to hide the refresh control

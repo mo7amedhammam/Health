@@ -33,4 +33,6 @@ final class Shared {
     var IsMeasurementAdded = false
     var ValueMeasurementAdded = ""
     var DateMeasurementAdded = ""
+    
+    var remainingSeconds = 0
 }

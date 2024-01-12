@@ -68,6 +68,13 @@ extension InbodyListVM{
   
     
     func AddCustomerInbodyReport(fileType:FileType,progressHandler: @escaping (Double) -> Void,completion: @escaping (EventHandler?) -> Void) {
+        
+        var backgroundTask: UIBackgroundTaskIdentifier = .invalid
+          backgroundTask = UIApplication.shared.beginBackgroundTask {
+              UIApplication.shared.endBackgroundTask(backgroundTask)
+              backgroundTask = .invalid
+          }
+        
         var  parametersarr: [String : Any] = [:]
         switch fileType {
         case .image:
@@ -90,30 +97,39 @@ extension InbodyListVM{
         // Create your API request with the username and password
         let target = Authintications.CreateCustomerInboy(parameters: parametersarr)
 
-        // Make the API call using your APIManager or networking code
-        BaseNetwork.uploadApi(target, BaseResponse<InbodyListItemM>.self, progressHandler: { progress in
-            progressHandler(progress)
-        }) {[weak self] result in
-            // Handle the API response here
-            switch result {
-            case .success(let response):
-                // Handle the successful response
-                print("request successful: \(response)")
-
-                guard response.messageCode == 200 else {
-                    completion(.error(0, (response.message ?? "check validations")))
-                    return
-                }
+        DispatchQueue.global(qos: .background).async {
+            
+            // Make the API call using your APIManager or networking code
+            BaseNetwork.uploadApi(target, BaseResponse<InbodyListItemM>.self, progressHandler: { progress in
+                progressHandler(progress)
+            }) {[weak self] result in
+                // Handle the API response here
+                switch result {
+                case .success(let response):
+                    // Handle the successful response
+                    print("request successful: \(response)")
+                    
+                    guard response.messageCode == 200 else {
+                        completion(.error(0, (response.message ?? "check validations")))
+                        return
+                    }
                     self?.addresponseModel = response.data
-
-                completion(.success)
-            case .failure(let error):
-                // Handle the error
-                print("Login failed: \(error.localizedDescription)")
-                completion(.error(0, "\(error.localizedDescription)"))
+                    
+                    completion(.success)
+                case .failure(let error):
+                    // Handle the error
+                    print("Login failed: \(error.localizedDescription)")
+                    completion(.error(0, "\(error.localizedDescription)"))
+                }
+                
             }
-
+            
         }
+        
+        
+        
+        
+        
     }
     
 }

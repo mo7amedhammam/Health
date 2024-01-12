@@ -79,6 +79,7 @@ class LoginVC: UIViewController , UITextFieldDelegate {
                 guard let vc = initiateViewController(storyboardName: .main, viewControllerIdentifier: OtpVC.self) else{return}
                 vc.Phonenumber = TFPhone.text
                 vc.second =  viewModel.responseModel?.secondsCount ?? 60
+                Shared.shared.remainingSeconds = viewModel.responseModel?.secondsCount ?? 60
                 vc.otp = "استخدم \(viewModel.responseModel?.otp ?? 00)"
                 navigationController?.pushViewController(vc, animated: true)
             case .error(let code,let error):
