@@ -223,7 +223,7 @@ extension HomeTVCell1{
     }
     
     func ShowMeasurementDetailFor(SelectedModel:ModelMyMeasurementsStats , index : Int){
-        guard let vc = initiateViewController(storyboardName: .main, viewControllerIdentifier: MeasurementsDetailsVC.self) else{return}
+        guard let vc = initiateViewController(storyboardName: .main, viewControllerIdentifier: MeasureDetailsVC.self) else{return}
         vc.ViewModel = ViewModelMeasurements ?? MyMeasurementsStatsVM()
          let model = SelectedModel
 //            print("selectedModel",model)

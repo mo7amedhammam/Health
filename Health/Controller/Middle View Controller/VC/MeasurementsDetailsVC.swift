@@ -13,6 +13,7 @@ class MeasurementsDetailsVC: UIViewController {
     @IBOutlet weak var LaTitle: UILabel!
     @IBOutlet weak var TVScreen: UITableView!
     let refreshControl = UIRefreshControl()
+    
     @IBOutlet weak var ViewAddMeasurement: UIView!
     @IBOutlet weak var TFNumMeasure: UITextField!
     @IBOutlet weak var TFDate: UITextField!

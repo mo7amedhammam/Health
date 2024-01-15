@@ -137,8 +137,7 @@ extension TipsCategories3TVCell:UICollectionViewDataSource,UICollectionViewDeleg
 //        cell.LaDrugTitle.transform = CGAffineTransform(scaleX: -1, y: 1)
         let model = model?.drugGroups?[indexPath.row]
         cell.LaDrugTitle.text = model?.title
-//        cell.LaDrugTitle.font = UIFont(name: "LamaSans-Medium", size: 10)
-        cell.LaDrugTitle.setLineSpacing(5.0)
+//        cell.LaDrugTitle.setLineSpacing(5.0)
         LaTitle.textAlignment = .right
 
         

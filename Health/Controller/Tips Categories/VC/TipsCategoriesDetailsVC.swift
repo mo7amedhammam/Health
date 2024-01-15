@@ -21,7 +21,7 @@ class TipsCategoriesDetailsVC: UIViewController {
 
     @IBOutlet weak var ViewImage: UIView!
     @IBOutlet weak var webView: WKWebView!
-    @IBOutlet weak var LaDescription: UILabel!
+//    @IBOutlet weak var LaDescription: UILabel!
     
     var selectedTipId:Int?
     var ViewModel : TipsDetailsVM?
@@ -87,11 +87,11 @@ extension TipsCategoriesDetailsVC {
 //        let webView = WKWebView(frame: ViewWKWebview.bounds)
 //        ViewWKWebview.addSubview(webView)
 ////        webView.loadHTMLStringWithAutoDirection(htmlString)
-//        webView.loadHTMLString(htmlString, baseURL: nil)
+        webView.loadHTMLString(htmlString, baseURL: nil)
 
         
-        LaDescription.text = model.description?.convertHTMLToPlainText()
-        LaDescription.setLineHeight(lineHeight: 2.0)
+//        LaDescription.text = model.description?.convertHTMLToPlainText()
+//        LaDescription.setLineHeight(lineHeight: 2.0)
 
         
 //    webView.loadHTMLStringWithAutoDirection(htmlString)

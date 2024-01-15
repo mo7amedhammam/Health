@@ -65,7 +65,7 @@ extension TipsCategoriesVC3 : UITableViewDataSource , UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "TipsCategories3TVCell", for: indexPath) as! TipsCategories3TVCell
-        let model = ViewModel.tipsByCategoryRes?.items?[indexPath.row]
+        let model  = ViewModel.tipsByCategoryRes?.items?[indexPath.row]
         cell.model = model
         cell.CVDrugGroups.reloadData()
         cell.CVDrugGroups.layoutIfNeeded()

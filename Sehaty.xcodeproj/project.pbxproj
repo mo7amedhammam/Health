@@ -10,6 +10,7 @@
 		4FCE2AF17B5A9BBC24477ED3 /* Pods_Health.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 85B7A463D3427924F44EC455 /* Pods_Health.framework */; };
 		BB006DE12B34A9510006E417 /* TermsConditionsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB006DE02B34A9510006E417 /* TermsConditionsVC.swift */; };
 		BB10D9112B1E774100751AAE /* StartScreenVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB10D9102B1E774100751AAE /* StartScreenVC.swift */; };
+		BB1200F52B52AC6F00AEBBBE /* MeasureDetailsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB1200F42B52AC6F00AEBBBE /* MeasureDetailsVC.swift */; };
 		BB14DAE32A7AFA0700389B96 /* MeasurementsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB14DAE22A7AFA0700389B96 /* MeasurementsVC.swift */; };
 		BB14DAE72A7B036400389B96 /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB14DAE62A7B036400389B96 /* ProfileVC.swift */; };
 		BB14DAEB2A7B041C00389B96 /* ProfileTVCellHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB14DAE92A7B041C00389B96 /* ProfileTVCellHeader.swift */; };
@@ -212,6 +213,7 @@
 		85B7A463D3427924F44EC455 /* Pods_Health.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Health.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BB006DE02B34A9510006E417 /* TermsConditionsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsConditionsVC.swift; sourceTree = "<group>"; };
 		BB10D9102B1E774100751AAE /* StartScreenVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartScreenVC.swift; sourceTree = "<group>"; };
+		BB1200F42B52AC6F00AEBBBE /* MeasureDetailsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasureDetailsVC.swift; sourceTree = "<group>"; };
 		BB14DAE22A7AFA0700389B96 /* MeasurementsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasurementsVC.swift; sourceTree = "<group>"; };
 		BB14DAE62A7B036400389B96 /* ProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
 		BB14DAE92A7B041C00389B96 /* ProfileTVCellHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTVCellHeader.swift; sourceTree = "<group>"; };
@@ -464,6 +466,7 @@
 				BB14DAE22A7AFA0700389B96 /* MeasurementsVC.swift */,
 				BB5116C52A829A8E00CF5D11 /* MeasurementsDetailsVC.swift */,
 				BBB063692B0E8D7900708CF4 /* MeasurementsDetailsFiltterVC.swift */,
+				BB1200F42B52AC6F00AEBBBE /* MeasureDetailsVC.swift */,
 			);
 			path = VC;
 			sourceTree = "<group>";
@@ -1761,6 +1764,7 @@
 				BBBD001B2A73101700F066DF /* FullImageVC.swift in Sources */,
 				BB518CDA2A9A118B00242FAD /* TipsCategoriesTVCell0.swift in Sources */,
 				C88995882AA9F70C002AD812 /* ForgetPasswordM.swift in Sources */,
+				BB1200F52B52AC6F00AEBBBE /* MeasureDetailsVC.swift in Sources */,
 				BBBD000A2A73101700F066DF /* EXTEnternet.swift in Sources */,
 				BB14DAEF2A7B043500389B96 /* ProfileTVCellMiddle.swift in Sources */,
 				C80DA9E62AA4D2F100F10808 /* BaseRequest.swift in Sources */,
@@ -1995,7 +1999,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.4;
+				MARKETING_VERSION = 1.5;
 				PRODUCT_BUNDLE_IDENTIFIER = com.wecancity.Health;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -2035,7 +2039,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.4;
+				MARKETING_VERSION = 1.5;
 				PRODUCT_BUNDLE_IDENTIFIER = com.wecancity.Health;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
