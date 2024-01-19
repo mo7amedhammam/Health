@@ -119,6 +119,18 @@ class Helper: NSObject {
     }
     
    
+    //save token firebase
+    class func setFirebaseToken(token : String){
+        let def = UserDefaults.standard
+        def.setValue(token, forKey: "FirebaseToken")
+        def.synchronize()
+    }
+    
+    class func getFirebaseToken()->String{
+        let def = UserDefaults.standard
+        return (def.object(forKey: "FirebaseToken") as? String ?? "")
+    }
+    
     
     
     //save image

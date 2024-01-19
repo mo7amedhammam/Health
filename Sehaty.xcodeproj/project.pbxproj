@@ -120,6 +120,8 @@
 		BBBD003C2A731B6C00F066DF /* SplashScreenTVCell2.xib in Resources */ = {isa = PBXBuildFile; fileRef = BBBD003A2A731B6C00F066DF /* SplashScreenTVCell2.xib */; };
 		BBBD003F2A731B7B00F066DF /* SplashScreenTVCell3.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBBD003D2A731B7B00F066DF /* SplashScreenTVCell3.swift */; };
 		BBBD00402A731B7B00F066DF /* SplashScreenTVCell3.xib in Resources */ = {isa = PBXBuildFile; fileRef = BBBD003E2A731B7B00F066DF /* SplashScreenTVCell3.xib */; };
+		BBBEB1BF2B56F4D700502D3E /* TipsCVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBBEB1BD2B56F4D700502D3E /* TipsCVCell.swift */; };
+		BBBEB1C02B56F4D700502D3E /* TipsCVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BBBEB1BE2B56F4D700502D3E /* TipsCVCell.xib */; };
 		BBC3C3ED2ACC912400805524 /* HomeCVCell3.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBC3C3EB2ACC912300805524 /* HomeCVCell3.swift */; };
 		BBC3C3EE2ACC912400805524 /* HomeCVCell3.xib in Resources */ = {isa = PBXBuildFile; fileRef = BBC3C3EC2ACC912300805524 /* HomeCVCell3.xib */; };
 		BBC7B45B2A72CC820079355E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBC7B45A2A72CC820079355E /* AppDelegate.swift */; };
@@ -323,6 +325,8 @@
 		BBBDFFFD2A73101100F066DF /* CheckConnection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckConnection.swift; sourceTree = "<group>"; };
 		BBBDFFFE2A73101100F066DF /* RecieveImageVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecieveImageVC.swift; sourceTree = "<group>"; };
 		BBBDFFFF2A73101200F066DF /* UITableView+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITableView+Extensions.swift"; sourceTree = "<group>"; };
+		BBBEB1BD2B56F4D700502D3E /* TipsCVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TipsCVCell.swift; sourceTree = "<group>"; };
+		BBBEB1BE2B56F4D700502D3E /* TipsCVCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TipsCVCell.xib; sourceTree = "<group>"; };
 		BBC3C3EB2ACC912300805524 /* HomeCVCell3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCVCell3.swift; sourceTree = "<group>"; };
 		BBC3C3EC2ACC912300805524 /* HomeCVCell3.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomeCVCell3.xib; sourceTree = "<group>"; };
 		BBC7B4572A72CC820079355E /* Sehaty.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sehaty.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -346,6 +350,7 @@
 		BBE3CC792A80010B004B0D9A /* MedicationScheduleDetailsTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedicationScheduleDetailsTVCell.swift; sourceTree = "<group>"; };
 		BBE3CC7A2A80010B004B0D9A /* MedicationScheduleDetailsTVCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MedicationScheduleDetailsTVCell.xib; sourceTree = "<group>"; };
 		BBE3CC7D2A80011E004B0D9A /* MedicationScheduleDetailsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedicationScheduleDetailsVC.swift; sourceTree = "<group>"; };
+		BBF0E6442B5AC59000AEC843 /* Sehaty.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Sehaty.entitlements; sourceTree = "<group>"; };
 		C80DA9E12AA4D11300F10808 /* BaseResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseResponse.swift; sourceTree = "<group>"; };
 		C80DA9E32AA4D29500F10808 /* EndPoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndPoints.swift; sourceTree = "<group>"; };
 		C80DA9E52AA4D2F100F10808 /* BaseRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseRequest.swift; sourceTree = "<group>"; };
@@ -667,6 +672,8 @@
 				BB518CE92A9A125900242FAD /* TipsCategories2CVCell.xib */,
 				C8F418D62AC19A5100E7A370 /* TipDetailsDrugGroup.swift */,
 				C8F418D72AC19A5100E7A370 /* TipDetailsDrugGroup.xib */,
+				BBBEB1BD2B56F4D700502D3E /* TipsCVCell.swift */,
+				BBBEB1BE2B56F4D700502D3E /* TipsCVCell.xib */,
 			);
 			path = CVCell;
 			sourceTree = "<group>";
@@ -937,6 +944,7 @@
 		BBC7B44E2A72CC820079355E = {
 			isa = PBXGroup;
 			children = (
+				BBF0E6442B5AC59000AEC843 /* Sehaty.entitlements */,
 				BBC7B4592A72CC820079355E /* Health */,
 				BBC7B4702A72CC840079355E /* HealthTests */,
 				BBC7B47A2A72CC840079355E /* HealthUITests */,
@@ -1537,6 +1545,7 @@
 				BBBD00402A731B7B00F066DF /* SplashScreenTVCell3.xib in Resources */,
 				BBBD003C2A731B6C00F066DF /* SplashScreenTVCell2.xib in Resources */,
 				BBC7B4622A72CC820079355E /* Main.storyboard in Resources */,
+				BBBEB1C02B56F4D700502D3E /* TipsCVCell.xib in Resources */,
 				C8F418D92AC19A5100E7A370 /* TipDetailsDrugGroup.xib in Resources */,
 				BB518CE32A9A122400242FAD /* TipsCategoriesCVCell0.xib in Resources */,
 				BB14DAF02A7B043500389B96 /* ProfileTVCellMiddle.xib in Resources */,
@@ -1683,6 +1692,7 @@
 				BB1AEAA32A955B710078683A /* NotificationVC.swift in Sources */,
 				BBBD001C2A73101700F066DF /* Shared.swift in Sources */,
 				BB518CE62A9A123200242FAD /* TipsCategoriesCVCell1.swift in Sources */,
+				BBBEB1BF2B56F4D700502D3E /* TipsCVCell.swift in Sources */,
 				BB14DAE32A7AFA0700389B96 /* MeasurementsVC.swift in Sources */,
 				BB546DDE2AC9D53A008A4F8C /* HomeTVCell0.swift in Sources */,
 				C8A1509D2AB1C63500511B1F /* ProfileVM.swift in Sources */,
@@ -1977,6 +1987,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Sehaty.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 23H4SBD5QL;
@@ -2017,6 +2028,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Sehaty.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 23H4SBD5QL;

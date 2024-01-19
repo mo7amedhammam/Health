@@ -9,8 +9,8 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
-        <array key="LamaSans-Medium.ttf">
-            <string>LamaSans-Medium</string>
+        <array key="LamaSans-Regular.ttf">
+            <string>LamaSans-Regular</string>
         </array>
     </customFonts>
     <objects>
@@ -28,7 +28,7 @@
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="الأوعية الدموية" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bhu-pW-nuR">
                                 <rect key="frame" x="0.0" y="0.0" width="116" height="14"/>
-                                <fontDescription key="fontDescription" name="LamaSans-Medium" family="Lama Sans" pointSize="10"/>
+                                <fontDescription key="fontDescription" name="LamaSans-Regular" family="Lama Sans" pointSize="15"/>
                                 <color key="textColor" name="main"/>
                                 <nil key="highlightedColor"/>
                             </label>

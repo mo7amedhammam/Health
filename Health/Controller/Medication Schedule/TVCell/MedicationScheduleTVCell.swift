@@ -92,7 +92,7 @@ class MedicationScheduleTVCell: UITableViewCell {
         ]
 
         let outputDateFormat = DateFormatter()
-        outputDateFormat.dateFormat = "a hh:mm  dd/MM/yyyy"
+        outputDateFormat.dateFormat = "dd/MM/yyyy  hh:mm a"
 
         for dateFormat in possibleDateFormats {
             let inputDateFormat = DateFormatter()

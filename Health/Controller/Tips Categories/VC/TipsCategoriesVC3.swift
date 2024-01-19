@@ -67,19 +67,25 @@ extension TipsCategoriesVC3 : UITableViewDataSource , UITableViewDelegate {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TipsCategories3TVCell", for: indexPath) as! TipsCategories3TVCell
         let model  = ViewModel.tipsByCategoryRes?.items?[indexPath.row]
         cell.model = model
+        cell.CVDrugGroups.tag = indexPath.row
         cell.CVDrugGroups.reloadData()
-        cell.CVDrugGroups.layoutIfNeeded()
+//        cell.CVDrugGroups.layoutIfNeeded()
         
         cell.LaTitle.text = model?.title
         cell.LaTitle.setLineSpacing(5.0)
         cell.LaTitle.textAlignment = .right
-        
         cell.LaDAte.text = model?.date?.ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "dd / MM / yyyy hh:mm a")
         if let img = model?.image {
-            //                let processor = SVGImgProcessor() // if receive svg image
             cell.ImgTipCategory.kf.setImage(with: URL(string:Constants.baseURL + img.validateSlashs()), placeholder: UIImage(named: "defaultLogo"), options: nil, progressBlock: nil)
         }
-//        cell.HViewSuper.constant = (115.0 + cell.CVDrugGroups.collectionViewLayout.collectionViewContentSize.height)
+        
+//        let contentSize = cell.CVDrugGroups.collectionViewLayout.collectionViewContentSize.height
+//        cell.HViewSuper.constant = (115.0 + contentSize)
+        if model?.drugGroups?.count == 0 || model?.drugGroups?.count == 1 || model?.drugGroups?.count == 2 {
+            cell.HViewSuper.constant = 120
+        } else {
+            cell.HViewSuper.constant = (120.0 + cell.calculateCollectionViewHeight())
+        }
         
         return cell
     }
