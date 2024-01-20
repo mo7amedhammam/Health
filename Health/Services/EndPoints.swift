@@ -71,4 +71,7 @@ enum EndPoints: String {
     //--Home--
     case GetAlmostFinishedPresc = "CustomerPrescription/GetCustomerAlmostFinishedPrescription"
     case getHelp = "Help/Get"
+    case SendFireBaseDeviceToken = "Customer/UpdateFirebaseDeviceToken"
+    
+    ///api/Customer/UpdateFirebaseDeviceToken
 }

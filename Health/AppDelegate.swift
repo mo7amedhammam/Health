@@ -25,6 +25,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate {
         IQKeyboardManager.shared.enable = true
         IQKeyboardManager.shared.shouldResignOnTouchOutside = true
         FirebaseApp.configure()
+        Messaging.messaging().delegate = self
+
         if #available(iOS 10.0, *) {
             Messaging.messaging().delegate = self
             let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
@@ -55,10 +57,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate {
         // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
     }
     
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any]) {
+            if let messageID = userInfo[gcmMessageIDKey] {
+                print("Message ID: \(messageID)")
+            }
+            print(userInfo)
+        }
+
+        func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any],
+                         fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+            if let messageID = userInfo[gcmMessageIDKey] {
+                print("Message ID: \(messageID)")
+            }
+            print(userInfo)
+            completionHandler(UIBackgroundFetchResult.newData)
+        }
+    
+    
 }
 
 
 extension AppDelegate {
+    
     func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
         print("Firebase registration token: \(fcmToken ?? "")")
         // Retrieve the previous token from UserDefaults or wherever you store it
@@ -77,4 +97,11 @@ extension AppDelegate {
             print("Token is either nil or hasn't changed")
         }
     }
+    
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        Messaging.messaging().apnsToken = deviceToken
+        print("deviceToken : \(deviceToken)")
+    }
+
+    
 }

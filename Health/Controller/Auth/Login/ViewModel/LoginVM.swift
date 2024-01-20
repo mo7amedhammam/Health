@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import FirebaseMessaging
 
 class LoginVM {
     var mobile: String?
@@ -46,5 +47,46 @@ class LoginVM {
 
         }
     }
+    
+    
+    
+    
+    func R_CustomerFireBaseDeviceToken(completion: @escaping (EventHandler?) -> Void) {
+       
+        var token  = ""
+        
+        completion(.loading)
+        // Create your API request with the username and password
+        if Helper.getFirebaseToken() == "" ||  Helper.getFirebaseToken().isEmpty  {
+            if let Newtoken = Messaging.messaging().fcmToken {
+                token = Newtoken
+            }
+        } else {
+            token = Helper.getFirebaseToken()
+        }
+        print("token : \(token)")
+        
+        let target = Authintications.SendFireBaseDeviceToken(parameters: ["customerDeviceToken" : token])
+        // Make the API call using your APIManager or networking code
+        BaseNetwork.callApi(target, BaseResponse<MFirebase>.self) { result in
+            // Handle the API response here
+            switch result {
+            case .success(let response):
+                // Handle the successful response
+                print("request FireBase Device Token: \(response)")
+                guard response.messageCode == 200 else {
+                    completion(.error(0, (response.message ?? "")))
+                    return
+                }
+                completion(.success)
+            case .failure(let error):
+                // Handle the error
+                print("Login failed: \(error.localizedDescription)")
+                completion(.error(0, "\(error.localizedDescription)"))
+            }
+
+        }
+    }
+    
     
 }

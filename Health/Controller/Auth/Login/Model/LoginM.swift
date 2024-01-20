@@ -22,3 +22,18 @@ struct LoginM: Codable{
         case address, pharmacyCode, id, code, genderTitle, token
     }
 }
+
+
+struct MFirebase: Codable {
+    let id: Int?
+    let code, genderTitle, name, mobile: String?
+    let genderID, districtID: Int?
+    let address, pharmacyCode: String?
+
+    enum CodingKeys: String, CodingKey {
+        case id, code, genderTitle, name, mobile
+        case genderID = "genderId"
+        case districtID = "districtId"
+        case address, pharmacyCode
+    }
+}

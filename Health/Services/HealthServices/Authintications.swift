@@ -33,6 +33,7 @@ enum Authintications {
     
     // -- profile --
     case GetMyProfile
+    case SendFireBaseDeviceToken(parameters : [String:Any])
 
 }
 
@@ -75,7 +76,12 @@ extension Authintications : TargetType {
             return EndPoints.CreateCustomerInBody.rawValue
         case .GetMyProfile:
             return EndPoints.GetMyProfile.rawValue
+            
+        case .SendFireBaseDeviceToken :
+            return EndPoints.SendFireBaseDeviceToken.rawValue
         }
+        
+        
     }
     
     var method: HTTPMethod {
@@ -88,7 +94,8 @@ extension Authintications : TargetType {
                 .ChangePassword,
                 .GetMySchedulePrescriptions,
                 .GetCustomerInbody,
-                .CreateCustomerInboy:
+                .CreateCustomerInboy ,
+                .SendFireBaseDeviceToken :
             return .post
             
         case .GetDistricts,
@@ -109,7 +116,8 @@ extension Authintications : TargetType {
                 .ChangePassword(parameters: let parameters),
                 .GetMySchedulePrescriptions(parameters: let parameters),
                 .GetCustomerInbody(parameters: let parameters),
-                .CreateCustomerInboy(parameters: let parameters):
+                .CreateCustomerInboy(parameters: let parameters) ,
+                .SendFireBaseDeviceToken(let parameters) :
             return .parameterRequest(Parameters: parameters, Encoding: encoding)
 
         case .GetMyScheduleDrugs(parameters: let parameters):

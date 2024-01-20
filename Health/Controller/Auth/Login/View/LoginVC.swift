@@ -5,6 +5,12 @@
 //  Created by Hamza on 27/07/2023.
 //
 
+//Key ID:44DR8QTFF9
+//Apple ID 6468809984
+//23H4SBD5QL (Team ID)
+//com.wecancity.Health
+//369783459579-gfh6o502h75lkvkddsu4i9kdce17mlfe.apps.googleusercontent.com
+
 import UIKit
 
 class LoginVC: UIViewController , UITextFieldDelegate {
@@ -200,6 +206,7 @@ extension LoginVC{
                 Hud.dismiss(from: self.view)
                 print(state)
                 // -- go to home
+                Helper.saveUser(user: loginViewModel.usermodel ?? LoginM())
                 GoHome()
             case .error(_,let error):
                 Hud.dismiss(from: self.view)
@@ -212,21 +219,31 @@ extension LoginVC{
     }
     
     func GoHome(){
-        Helper.saveUser(user: loginViewModel.usermodel ?? LoginM())
-//        guard let vc = initiateViewController(storyboardName: .main, viewControllerIdentifier: HTBC.self)else{return}
-        Helper.changeRootVC(newroot: HTBC.self,transitionFrom: .fromLeft)
-//        let newNavigationController = UINavigationController(rootViewController: vc)
-//
-//        vc.navigationController?.navigationBar.isHidden = true
-//        navigationController?.pushViewController(vc, animated: true)
+        //.....
+        loginViewModel.R_CustomerFireBaseDeviceToken {[weak self] state in
+            guard let self = self else{return}
+            guard let state = state else{
+                return
+            }
+            switch state {
+            case .loading:
+                Hud.showHud(in: self.view)
+            case .stopLoading:
+                Hud.dismiss(from: self.view)
+            case .success:
+                Hud.dismiss(from: self.view)
+                print(state)
+                // -- go to home
+                Helper.changeRootVC(newroot: HTBC.self,transitionFrom: .fromLeft)
+            case .error(_,let error):
+                Hud.dismiss(from: self.view)
+                SimpleAlert.shared.showAlert(title:error ?? "",message:"", viewController: self)
+                print(error ?? "")
+            case .none:
+                print("")
+            }
+        }
         
-        // Create a new navigation controller with the new view controller as its root
-//        let newNavigationController = UINavigationController(rootViewController: vc)
-//
-//        // Replace the current navigation controller with the new one
-//        if let window = UIApplication.shared.keyWindow {
-//            window.rootViewController = newNavigationController
-//        }
 
     }
     
