@@ -35,4 +35,5 @@ final class Shared {
     var DateMeasurementAdded = ""
     
     var remainingSeconds = 0
+    var NewFirebaseToken = false
 }

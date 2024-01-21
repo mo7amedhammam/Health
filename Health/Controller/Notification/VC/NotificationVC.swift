@@ -155,45 +155,70 @@ class NotificationVC: UIViewController  {
         self.view.endEditing(true)
         print(strDate)
         
-        var FF = DateFormatter()
+        let FF = DateFormatter()
         FF.dateFormat = "yyyy-MM-dd"
         FF.locale     = Locale(identifier: "en_US_POSIX")
         let NN = FF.string(from: PickerDate.date )
         FF.dateStyle = .medium
         FF.timeStyle = .none
         NewDate = NN
-        
         print("NewDate : \(NewDate)")
         
-         if selectDateFrom == "from" {
+        if selectDateFrom == "from" {
             TFStartDate.text = strDate
 
-             if TFNumDays.text == "" {
-                 
-             } else {
-                 let dateFormatter = DateFormatter()
-                 dateFormatter.dateFormat = "dd/MM/yyyy"
-                 dateFormatter.locale     = Locale(identifier: "en_US_POSIX")
+            if TFNumDays.text == "" {
+                // Handle the case where TFNumDays.text is empty
+            } else {
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "dd/MM/yyyy"
+                dateFormatter.locale = Locale(identifier: "en_US_POSIX")
 
-                 let date = dateFormatter.date(from: NN)!
+                if let date = dateFormatter.date(from: NN) {
+                    var dateComponents = DateComponents()
+                    if let numDays = Int(TFNumDays.text!.convertedDigitsToLocale(Locale(identifier: "EN"))) {
+                        dateComponents.day = numDays
 
-                 var dateComponents = DateComponents()
-                 dateComponents.day = Int(TFNumDays.text!.convertedDigitsToLocale(Locale(identifier: "EN")) )!
-
-                 let calendar = Calendar.current
-                 let newDate = calendar.date(byAdding: dateComponents, to: date)!
-                 let newDateString = dateFormatter.string(from: newDate)
-                 print("newDateString : \(newDateString)")
-                 TFEndDate.text = newDateString
-             }
-             
-             
-             
-             
-        } else if selectDateFrom == "to" {
-//            TFEndDate.text = strDate
-        } else {
+                        let calendar = Calendar.current
+                        if let newDate = calendar.date(byAdding: dateComponents, to: date) {
+                            let newDateString = dateFormatter.string(from: newDate)
+                            print("newDateString: \(newDateString)")
+                            TFEndDate.text = newDateString
+                        } else {
+                            // Handle the case where calculating new date failed
+                        }
+                    } else {
+                        // Handle the case where converting TFNumDays.text to an integer failed
+                    }
+                } else {
+                    // Handle the case where NN couldn't be converted to a date
+                }
+            }
         }
+
+        
+//         if selectDateFrom == "from" {
+//            TFStartDate.text = strDate
+//
+//             if TFNumDays.text == "" {
+//
+//             } else {
+//                 let dateFormatter = DateFormatter()
+//                 dateFormatter.dateFormat = "dd/MM/yyyy"
+//                 dateFormatter.locale     = Locale(identifier: "en_US_POSIX")
+//                 let date = dateFormatter.date(from: NN)!
+//                 var dateComponents = DateComponents()
+//                 dateComponents.day = Int(TFNumDays.text!.convertedDigitsToLocale(Locale(identifier: "EN")) )!
+//                 let calendar = Calendar.current
+//                 let newDate = calendar.date(byAdding: dateComponents, to: date)!
+//                 let newDateString = dateFormatter.string(from: newDate)
+//                 print("newDateString : \(newDateString)")
+//                 TFEndDate.text = newDateString
+//             }
+//        } else if selectDateFrom == "to" {
+////            TFEndDate.text = strDate
+//        } else {
+//        }
         
         ViewSelectDate.isHidden = true
         
@@ -291,8 +316,8 @@ class NotificationVC: UIViewController  {
     
     @IBAction func BUSelectTime(_ sender: UIButton) {
         // Show the time picker
-//        timePicker = UIDatePicker()
-//        timePicker.datePickerMode = .time
+        timePicker = UIDatePicker()
+        timePicker.datePickerMode = .time
         TFClock.inputView = timePicker
         TFClock.becomeFirstResponder()
     }

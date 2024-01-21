@@ -81,26 +81,29 @@ extension TipsCategoriesDetailsVC {
         LaTitle.text = model.title
         LaTitle.setLineSpacing(10.0)
         LaTitle.textAlignment = .right
+        LaType.text = model.tipCategoryTitle
+        LaDate.text = model.date?.ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "dd / MM / yyyy hh:mm a")
 
         guard let htmlString = model.description else {return}
 ////        webView.loadHTMLStringWithAutoDirection(htmlString)
 //        let webView = WKWebView(frame: ViewWKWebview.bounds)
 //        ViewWKWebview.addSubview(webView)
 ////        webView.loadHTMLStringWithAutoDirection(htmlString)
-        webView.loadHTMLString(htmlString, baseURL: nil)
-
-        
 //        LaDescription.text = model.description?.convertHTMLToPlainText()
 //        LaDescription.setLineHeight(lineHeight: 2.0)
-
-        
 //    webView.loadHTMLStringWithAutoDirection(htmlString)
-
+        
+        // webView.loadHTMLString(htmlString, baseURL: nil)
+        
+//        let headString = "<head><meta name='viewport' content='width=device-width, initial-scale=0.5, maximum-scale=0.5, minimum-scale=0.5, user-scalable=no'></head>"
+//        webView.loadHTMLString(headString + htmlString , baseURL: nil)
         
         
-        LaType.text = model.tipCategoryTitle
-        LaDate.text = model.date?.ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "dd / MM / yyyy hh:mm a")
-
+        let headString = "<head><meta name='viewport' content='width=device-width, initial-scale=0.5, maximum-scale=0.5, minimum-scale=0.5, user-scalable=no'></head>"
+               let htmlString2 = "<html><body dir='rtl'>\(htmlString)</body></html>"
+               webView.loadHTMLString(headString + htmlString2, baseURL: nil)
+        
+       
     }
     
     fileprivate func setInits() {

@@ -88,6 +88,7 @@ extension AppDelegate {
             // Token has changed, do something with the new token
             print("New Firebase token: \(newToken)")
             // Update the stored token
+            Shared.shared.NewFirebaseToken = true
             Helper.setFirebaseToken(token: newToken)
             // Notify observers about the new token
             let dataDict: [String: String] = ["token": newToken]

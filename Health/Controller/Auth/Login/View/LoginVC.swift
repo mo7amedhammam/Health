@@ -207,7 +207,7 @@ extension LoginVC{
                 print(state)
                 // -- go to home
                 Helper.saveUser(user: loginViewModel.usermodel ?? LoginM())
-                GoHome()
+                Helper.changeRootVC(newroot: HTBC.self,transitionFrom: .fromLeft)
             case .error(_,let error):
                 Hud.dismiss(from: self.view)
                 SimpleAlert.shared.showAlert(title:error ?? "",message:"", viewController: self)
@@ -218,33 +218,6 @@ extension LoginVC{
         }
     }
     
-    func GoHome(){
-        //.....
-        loginViewModel.R_CustomerFireBaseDeviceToken {[weak self] state in
-            guard let self = self else{return}
-            guard let state = state else{
-                return
-            }
-            switch state {
-            case .loading:
-                Hud.showHud(in: self.view)
-            case .stopLoading:
-                Hud.dismiss(from: self.view)
-            case .success:
-                Hud.dismiss(from: self.view)
-                print(state)
-                // -- go to home
-                Helper.changeRootVC(newroot: HTBC.self,transitionFrom: .fromLeft)
-            case .error(_,let error):
-                Hud.dismiss(from: self.view)
-                SimpleAlert.shared.showAlert(title:error ?? "",message:"", viewController: self)
-                print(error ?? "")
-            case .none:
-                print("")
-            }
-        }
-        
-
-    }
+   
     
 }

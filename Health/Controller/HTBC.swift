@@ -10,7 +10,8 @@ import UIKit
 class HTBC: UITabBarController  , UITabBarControllerDelegate {
     
     var middleBtn = UIButton()
-    
+    let loginViewModel = LoginVM()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -42,6 +43,19 @@ class HTBC: UITabBarController  , UITabBarControllerDelegate {
         setupMiddleButton()
         selectedIndex = 4
         
+        
+        if Shared.shared.NewFirebaseToken == true {
+            Shared.shared.NewFirebaseToken = false
+            SendFirebaseToken()
+        }
+        
+    }
+    
+    func SendFirebaseToken() {
+        //SendFirebaseToken
+        //SendFirebaseToken
+        loginViewModel.R_CustomerFireBaseDeviceToken {_ in
+        }
     }
     
     override func viewDidLayoutSubviews() {

@@ -280,7 +280,6 @@ extension OtpVC{
     
     func VerifyOtp() {
         viewModel.mobile = Phonenumber
-        Toast.show(message: "\(Phonenumber)", controller: self)
         
         guard let otp1 = TFIndex1.text ,let otp2 = TFIndex2.text,let otp3 = TFIndex3.text,let otp4 = TFIndex4.text,let otp5 = TFIndex5.text,let otp6 = TFIndex6.text else {return}
         let fullotp = otp1+otp2+otp3+otp4+otp5+otp6

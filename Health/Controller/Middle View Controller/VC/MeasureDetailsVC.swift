@@ -7,7 +7,7 @@
 
 import UIKit
 
-class MeasureDetailsVC: UIViewController , UITextFieldDelegate {
+class MeasureDetailsVC: UIViewController {
     
     @IBOutlet weak var ImgMeasurement: UIImageView!
     @IBOutlet weak var LaNum: UILabel!
@@ -891,4 +891,21 @@ extension MeasureDetailsVC {
     
     
     
+}
+
+extension MeasureDetailsVC : UITextFieldDelegate {
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        
+        if textField == TFNumMeasure {
+            // Define the allowed characters (0-9 and "/")
+            let allowedCharacterSet = CharacterSet(charactersIn: "0123456789/")
+            // Check if the replacement string contains only allowed characters
+            let isValidInput = string.rangeOfCharacter(from: allowedCharacterSet.inverted) == nil
+            // If it's a valid input, allow the change
+            return isValidInput
+        } else {
+            return true
+        }
+    }
 }

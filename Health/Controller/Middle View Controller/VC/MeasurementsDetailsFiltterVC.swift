@@ -86,7 +86,7 @@ class MeasurementsDetailsFiltterVC: UIViewController {
                 if ViewModel.ArrMeasurement?.measurements?.items?.count != 0 {
                     TVScreen.reloadData()
                 } else {
-                    LoadView_NoContent(Superview: TVScreen, title: "لا توجد قياسات متاحة", img: "")
+                    LoadView_NoContent(Superview: TVScreen, title: "لا يوجد أي قياس", img: "key-vector 1")
                 }
                 print(state)
             case .error(_,let error):
