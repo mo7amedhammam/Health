@@ -69,12 +69,13 @@ class TipsCategories3TVCell: UITableViewCell  {
         CVDrugGroups.delegate   = self
         CVDrugGroups.registerCell(cellClass: TipsCVCell.self)
         CVDrugGroups.registerCell(cellClass: TipDetailsDrugGroup.self)
-//        CVDrugGroups.transform = CGAffineTransform(scaleX: -1, y: 1) //first tip mirror effect for x -> second in cell
+        CVDrugGroups.transform = CGAffineTransform(scaleX: -1, y: 1) //first tip mirror effect for x -> second in cell
      
-        let alignedFlowLayout = AlignedCollectionViewFlowLayout(horizontalAlignment: .right, verticalAlignment: .top)
+        let alignedFlowLayout = AlignedCollectionViewFlowLayout(horizontalAlignment: .left, verticalAlignment: .top)
         alignedFlowLayout.estimatedItemSize = AlignedCollectionViewFlowLayout.automaticSize
         CVDrugGroups.collectionViewLayout = alignedFlowLayout
         
+
     }
 
     
@@ -107,6 +108,8 @@ extension TipsCategories3TVCell:UICollectionViewDataSource,UICollectionViewDeleg
 //        return cell
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TipsCVCell", for: indexPath) as! TipsCVCell
+        cell.LaTitle.transform = CGAffineTransform(scaleX: -1, y: 1)
+
         let model = model?.drugGroups?[indexPath.row]
         cell.LaTitle.text = model?.title
         return cell

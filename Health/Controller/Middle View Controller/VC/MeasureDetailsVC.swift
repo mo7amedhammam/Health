@@ -201,6 +201,22 @@ class MeasureDetailsVC: UIViewController {
     
     @IBAction func BuDateFromDateTo(_ sender: UIButton){
         
+        btnAll.backgroundColor = .clear
+        btnAll.setTitleColor(UIColor(named: "main") , for: .normal)
+        btnAll.borderColor = UIColor(named: "main")
+        
+        BtnYear.backgroundColor = .clear
+        BtnYear.setTitleColor( UIColor(named: "main") , for: .normal)
+        BtnYear.borderColor = UIColor(named: "main")
+        
+        BtnMonth.backgroundColor = .clear
+        BtnMonth.setTitleColor( UIColor(named: "main") , for: .normal)
+        BtnMonth.borderColor = UIColor(named: "main")
+        
+        BtnDay.backgroundColor = .clear
+        BtnDay.setTitleColor( UIColor(named: "main") , for: .normal)
+        BtnDay.borderColor = UIColor(named: "main")
+        
         if sender.tag == 0  {
            
             PickerDate.minimumDate = nil

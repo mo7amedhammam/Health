@@ -44,17 +44,34 @@ class HTBC: UITabBarController  , UITabBarControllerDelegate {
         selectedIndex = 4
         
         
-        if Shared.shared.NewFirebaseToken == true {
-            Shared.shared.NewFirebaseToken = false
+//        if Shared.shared.NewFirebaseToken == true {
+//            Shared.shared.NewFirebaseToken = false
             SendFirebaseToken()
-        }
+//        }
         
     }
     
     func SendFirebaseToken() {
         //SendFirebaseToken
         //SendFirebaseToken
-        loginViewModel.R_CustomerFireBaseDeviceToken {_ in
+        loginViewModel.R_CustomerFireBaseDeviceToken {[weak self] state in
+            guard let self = self else{return}
+            guard let state = state else{
+                return
+            }
+            switch state {
+            case .loading:
+                print(state)
+            case .stopLoading:
+                print(state)
+            case .success:
+                print(state)
+                Toast.show(message: "method 1", controller: self)
+            case .error(_,let error):
+                print(error ?? "")
+            case .none:
+                print("")
+            }
         }
     }
     
