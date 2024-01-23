@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		4FCE2AF17B5A9BBC24477ED3 /* Pods_Health.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 85B7A463D3427924F44EC455 /* Pods_Health.framework */; };
 		BB006DE12B34A9510006E417 /* TermsConditionsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB006DE02B34A9510006E417 /* TermsConditionsVC.swift */; };
+		BB0512482B60313C004CAB83 /* ModelResponseFirebase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0512472B60313C004CAB83 /* ModelResponseFirebase.swift */; };
 		BB10D9112B1E774100751AAE /* StartScreenVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB10D9102B1E774100751AAE /* StartScreenVC.swift */; };
 		BB1200F52B52AC6F00AEBBBE /* MeasureDetailsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB1200F42B52AC6F00AEBBBE /* MeasureDetailsVC.swift */; };
 		BB14DAE32A7AFA0700389B96 /* MeasurementsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB14DAE22A7AFA0700389B96 /* MeasurementsVC.swift */; };
@@ -214,6 +215,7 @@
 		65CCB737364DA0B08042A29D /* Pods_HealthTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HealthTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		85B7A463D3427924F44EC455 /* Pods_Health.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Health.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BB006DE02B34A9510006E417 /* TermsConditionsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsConditionsVC.swift; sourceTree = "<group>"; };
+		BB0512472B60313C004CAB83 /* ModelResponseFirebase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelResponseFirebase.swift; sourceTree = "<group>"; };
 		BB10D9102B1E774100751AAE /* StartScreenVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartScreenVC.swift; sourceTree = "<group>"; };
 		BB1200F42B52AC6F00AEBBBE /* MeasureDetailsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasureDetailsVC.swift; sourceTree = "<group>"; };
 		BB14DAE22A7AFA0700389B96 /* MeasurementsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasurementsVC.swift; sourceTree = "<group>"; };
@@ -451,6 +453,14 @@
 				BB006DE02B34A9510006E417 /* TermsConditionsVC.swift */,
 			);
 			path = VC;
+			sourceTree = "<group>";
+		};
+		BB0512462B603116004CAB83 /* Firebase */ = {
+			isa = PBXGroup;
+			children = (
+				BB0512472B60313C004CAB83 /* ModelResponseFirebase.swift */,
+			);
+			path = Firebase;
 			sourceTree = "<group>";
 		};
 		BB14DAE02A7AF95D00389B96 /* Middle View Controller */ = {
@@ -810,6 +820,7 @@
 		BBBD001D2A73116200F066DF /* Auth */ = {
 			isa = PBXGroup;
 			children = (
+				BB0512462B603116004CAB83 /* Firebase */,
 				BB006DDE2B34A91E0006E417 /* Terms Condition */,
 				BBBD00322A731B0C00F066DF /* Splash */,
 				C8346E532AA5EE5E00C3C3EE /* Login */,
@@ -1753,6 +1764,7 @@
 				BB48F8A12A747D020051F12C /* ChangePasswordVC.swift in Sources */,
 				BBE3CC742A7FFFF8004B0D9A /* MedicationScheduleVC.swift in Sources */,
 				C85996752AA7553500533C87 /* HUD.swift in Sources */,
+				BB0512482B60313C004CAB83 /* ModelResponseFirebase.swift in Sources */,
 				BBBD000C2A73101700F066DF /* EXTAlert.swift in Sources */,
 				BBBD00242A7311AF00F066DF /* SignUp.swift in Sources */,
 				BBBD00372A731B5E00F066DF /* SplashScreenTVCell1.swift in Sources */,

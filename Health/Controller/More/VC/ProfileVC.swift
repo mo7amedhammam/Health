@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import Alamofire
+import SwiftyJSON
 
 class ProfileVC: UIViewController {
     
@@ -24,16 +26,43 @@ class ProfileVC: UIViewController {
         TVscreen.registerCellNib(cellClass: ProfileTVCellHeader.self)
         TVscreen.registerCellNib(cellClass: ProfileTVCellMiddle.self)
         TVscreen.registerCellNib(cellClass: ProfileTVCellLogout.self)
-//        TVscreen.reloadData()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         selected = 0
         TVscreen.reloadData()
-        
         GetMyProfile()
+//        ReturnCustomerFirebaseToken()
     }
+    
+//    func ReturnCustomerFirebaseToken() {
+//           // API endpoint URL
+//           let apiUrl = Constants.apiURL + "Customer/ReturnCustomerFirebaseToken"
+//           let headers: HTTPHeaders = ["Authorization" : "Bearer \(Helper.getUser()?.token ?? "" )"]
+//           print("url : \(apiUrl)")
+//           print("headers : \(headers)")
+//
+//           // Sending the POST request
+//           AF.request(apiUrl,
+//                      method: .get,
+//                      parameters: nil,
+//                      encoding: JSONEncoding.default,
+//                      headers: headers)
+//               .responseJSON { response in
+//                   // remember me to change responseJSON to responseDecodable
+//                   switch response.result {
+//                   case .success(let value):
+//                       let json = JSON(value)
+//                       print("ReturnCustomerFirebaseToken : \(json)")
+//
+//
+//                   case .failure(let error):
+//                       print("Error: \(error)")
+//                   }
+//               }
+//       }
+    
 }
 
 

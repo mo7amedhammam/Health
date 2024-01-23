@@ -8,8 +8,6 @@
 import UIKit
 import DropDown
 import Foundation
-import Alamofire
-import SwiftyJSON
 
 class NotificationVC: UIViewController  {
     
@@ -108,9 +106,6 @@ class NotificationVC: UIViewController  {
         ArrDrugString.removeAll()
         ArrDrugStringSearch.removeAll()
         getDrugs()
-        
-        
-        sendPostRequestWithToken(customerDeviceToken: Helper.getFirebaseToken())
 
     }
     
@@ -786,64 +781,4 @@ extension NotificationVC : UITextFieldDelegate {
             }
         }
     }
-}
-
-
-extension NotificationVC {
- 
-    func sendPostRequestWithToken(customerDeviceToken: String) {
-        // API endpoint URL
-        let apiUrl = Constants.apiURL + "Customer/UpdateFirebaseDeviceToken"
-        // Parameters to be sent in the request body
-        let parameters: [String: Any] = [ "customerDeviceToken": customerDeviceToken ]
-        // Headers, including the token as a query parameter
-        let headers: HTTPHeaders = ["Authorization" : "Bearer \(Helper.getUser()?.token ?? "" )"]
-
-        print("url : \(apiUrl)")
-        print("parameters : \(parameters)")
-        print("headers : \(headers)")
-
-        // Sending the POST request
-        AF.request(apiUrl,
-                   method: .post,
-                   parameters: nil,
-                   encoding: JSONEncoding.default,
-                   headers: headers)
-            .responseJSON { response in
-                // remember me to change responseJSON to responseDecodable
-//                {
-//                 "success" : true,
-//                 "messageCode" : 200,
-//                 "message" : "Sucess",
-//                 "data" : {
-//                   "pharmacyCode" : "mmm",
-//                   "genderTitle" : "أنثي",
-//                   "mobile" : "01003619564",
-//                   "id" : 86,
-//                   "address" : "test",
-//                   "name" : "صيدليات الندي",
-//                   "code" : "C-2023-1056",
-//                   "districtId" : 70,
-//                   "genderId" : 2
-//                 }
-//               }
-                
-                switch response.result {
-                case .success(let value):
-                    let json = JSON(value)
-                    print("Response json: \(json)")
-
-                    if json["messageCode"] == 200 {
-                        Toast.show(message: "method 2", controller: self)
-                    } else {
-                        print("Message Code not found in the response.")
-                    }
-                    
-                case .failure(let error):
-                    print("Error: \(error)")
-                }
-            }
-    }
-
-    
 }

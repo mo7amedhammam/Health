@@ -18,7 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate {
     
     var window : UIWindow?
     let gcmMessageIDKey = "gcm.Message_ID"
-   
+    
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
@@ -26,7 +26,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate {
         IQKeyboardManager.shared.shouldResignOnTouchOutside = true
         FirebaseApp.configure()
         Messaging.messaging().delegate = self
-
+        UNUserNotificationCenter.current().delegate = self
+        
         if #available(iOS 10.0, *) {
             Messaging.messaging().delegate = self
             let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
@@ -39,7 +40,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate {
             application.registerUserNotificationSettings(settings)
         }
         application.registerForRemoteNotifications()
-   
+        
         return true
     }
     
@@ -58,21 +59,43 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate {
     }
     
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any]) {
-            if let messageID = userInfo[gcmMessageIDKey] {
-                print("Message ID: \(messageID)")
-            }
-            print(userInfo)
+        if let messageID = userInfo[gcmMessageIDKey] {
+            print("Message ID: \(messageID)")
         }
+        print("userInfo1 : \(userInfo)")
+        
+    }
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any],
+                     fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+        if let messageID = userInfo[gcmMessageIDKey] {
+            print("Message ID: \(messageID)")
+        }
+        print("userInfo2 : \(userInfo)")
+        // if app in background make sound
+        var systemSoundID : SystemSoundID = 1007 // doesnt matter; edit path instead
+        let url = URL(fileURLWithPath: "/System/Library/Audio/UISounds/sms-received1.caf")
+        AudioServicesCreateSystemSoundID(url as CFURL, &systemSoundID)
+        AudioServicesPlaySystemSound(systemSoundID)
 
-        func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any],
-                         fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
-            if let messageID = userInfo[gcmMessageIDKey] {
-                print("Message ID: \(messageID)")
-            }
-            print(userInfo)
-            completionHandler(UIBackgroundFetchResult.newData)
-        }
+        completionHandler(.newData)
+    }
     
+    
+    
+//    func showCustomNotification(title: String, body: String) {
+//        let content = UNMutableNotificationContent()
+//        content.title = title
+//        content.body = body
+//        content.sound = UNNotificationSound.default
+//
+//        let request = UNNotificationRequest(identifier: "customNotification", content: content, trigger: nil)
+//
+//        UNUserNotificationCenter.current().add(request, withCompletionHandler: { error in
+//            if let error = error {
+//                print("Error displaying notification: \(error.localizedDescription)")
+//            }
+//        })
+//    }
     
 }
 
@@ -83,7 +106,7 @@ extension AppDelegate {
         print("Firebase registration token: \(fcmToken ?? "")")
         // Retrieve the previous token from UserDefaults or wherever you store it
         let previousToken = Helper.getFirebaseToken()
-
+        
         if let newToken = fcmToken, newToken != previousToken {
             // Token has changed, do something with the new token
             print("New Firebase token: \(newToken)")
@@ -103,6 +126,26 @@ extension AppDelegate {
         Messaging.messaging().apnsToken = deviceToken
         print("deviceToken : \(deviceToken)")
     }
-
     
+    
+}
+
+
+extension AppDelegate : UNUserNotificationCenterDelegate {
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter,
+                                willPresent notification: UNNotification,
+                                withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        
+        let userInfo = notification.request.content.userInfo
+        print("userInfo userInfo : \(userInfo)")
+        // play sound
+        // play sound
+        var systemSoundID : SystemSoundID = 1007 // doesnt matter; edit path instead
+        let url = URL(fileURLWithPath: "/System/Library/Audio/UISounds/sms-received1.caf")
+        AudioServicesCreateSystemSoundID(url as CFURL, &systemSoundID)
+        AudioServicesPlaySystemSound(systemSoundID)
+        
+        completionHandler([.alert, .badge , .sound])
+    }
 }

@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import Alamofire
+import SwiftyJSON
 
 class HTBC: UITabBarController  , UITabBarControllerDelegate {
     
@@ -46,33 +48,35 @@ class HTBC: UITabBarController  , UITabBarControllerDelegate {
         
 //        if Shared.shared.NewFirebaseToken == true {
 //            Shared.shared.NewFirebaseToken = false
-            SendFirebaseToken()
+            sendPostRequestWithToken(customerDeviceToken: Helper.getFirebaseToken())
 //        }
         
     }
     
-    func SendFirebaseToken() {
-        //SendFirebaseToken
-        //SendFirebaseToken
-        loginViewModel.R_CustomerFireBaseDeviceToken {[weak self] state in
-            guard let self = self else{return}
-            guard let state = state else{
-                return
+
+    
+    func sendPostRequestWithToken(customerDeviceToken: String) {
+        // API endpoint URL
+        let apiUrl = Constants.apiURL + "Customer/UpdateFirebaseDeviceToken?customerDeviceToken=\(customerDeviceToken)"
+        let headers: HTTPHeaders = ["Authorization": "Bearer \(Helper.getUser()?.token ?? "")"]
+        print("url : \(apiUrl)")
+        print("headers : \(headers)")
+        // Sending the POST request
+        AF.request(apiUrl,
+                   method: .post,
+                   parameters: nil,
+                   encoding: JSONEncoding.default,
+                   headers: headers)
+            .responseDecodable(of: ModelResponseFirebase.self) { response in
+                switch response.result {
+                case .success(let value):
+                    // Handle the success case with the decoded value
+                    print("Response value: \(value)")
+                case .failure(let error):
+                    // Handle the failure case with the error
+                    print("Error: \(error)")
+                }
             }
-            switch state {
-            case .loading:
-                print(state)
-            case .stopLoading:
-                print(state)
-            case .success:
-                print(state)
-                Toast.show(message: "method 1", controller: self)
-            case .error(_,let error):
-                print(error ?? "")
-            case .none:
-                print("")
-            }
-        }
     }
     
     override func viewDidLayoutSubviews() {

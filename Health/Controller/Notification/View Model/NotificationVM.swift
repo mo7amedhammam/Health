@@ -66,7 +66,7 @@ class NotificationVM {
             switch result {
             case .success(let response):
                 // Handle the successful response
-                print("request successful: \(response)")
+//                print("request successful: \(response)")
                 if response.messageCode == 200 {
                     self?.ArrDrugs = response.data!
                     completion(.success)
