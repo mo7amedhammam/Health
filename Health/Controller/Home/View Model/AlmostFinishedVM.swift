@@ -12,7 +12,12 @@ class AlmostFinishedVM {
     var maxResultCount: Int? = 5
     var skipCount: Int? = 0
     
-    var responseModel: AlmostFinishedPrescriptionM? = AlmostFinishedPrescriptionM()
+    var responseModel: AlmostFinishedPrescriptionM? 
+//    = AlmostFinishedPrescriptionM()
+  
+    init(){
+        
+    }
 }
 
 //MARK: -- Functions --
