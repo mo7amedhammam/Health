@@ -16,9 +16,9 @@ class HomeTVCell1: UITableViewCell {
     var TVScreen: UITableView?
     var indexx = 0
     var nav : UINavigationController?
+    var ViewModelHome : AlmostFinishedVM?
     var ViewModelMeasurements : MyMeasurementsStatsVM?
     var ViewModel : TipsVM?
-    var ViewModelHome : AlmostFinishedVM?
     var Num = 0
     let layout = UICollectionViewFlowLayout()
 
