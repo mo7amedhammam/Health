@@ -114,7 +114,8 @@ extension HomeVC : UITableViewDataSource , UITableViewDelegate {
                     return cell
                 }
 
-            } else if indexPath.row == 2 {
+            }
+            if indexPath.row == 2 {
                 
                 if ViewModelHome.responseModel?.items?.count == 0 {
                     let cell = tableView.dequeueReusableCell(withIdentifier: "EmptyTVCell", for: indexPath) as! EmptyTVCell

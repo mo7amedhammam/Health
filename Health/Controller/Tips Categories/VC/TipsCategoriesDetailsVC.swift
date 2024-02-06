@@ -103,6 +103,14 @@ extension TipsCategoriesDetailsVC {
         let htmlString2 = "<html><body dir='rtl'>\(htmlString)</body></html>"
         webView.loadHTMLString(headString + htmlString2, baseURL: nil)
         
+//        let fontSize = 50 // Adjust the font size as needed
+
+//        let headString = "<head><meta name='viewport' content='width=device-width, initial-scale=0.5, maximum-scale=0.5, minimum-scale=0.5, user-scalable=no'><style>body { font-size: \(fontSize)px; }</style></head>"
+//
+//        let htmlStringWithCustomFontSize = "<html><body dir='rtl'>\(htmlString)</body></html>"
+//        let finalHtmlString = headString + htmlStringWithCustomFontSize
+//
+//        webView.loadHTMLString(finalHtmlString, baseURL: nil)
        
     }
     
