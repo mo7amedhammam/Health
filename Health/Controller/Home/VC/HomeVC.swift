@@ -58,7 +58,7 @@ class HomeVC: UIViewController {
         ViewModel.interestingTipsArr     = []
         ViewModel.newestTipsArr          = []
         ViewModel.mostViewedTipsArr      = []
-//        ViewModelHome.responseModel        = nil
+        ViewModelHome.responseModel        = nil
         ViewModelHome.responseModel?.items = []
         ViewModelMeasurements.ArrStats     = []
         TVScreen.reloadData()
@@ -261,7 +261,7 @@ extension HomeVC{
         ViewModel.interestingTipsArr = []
         ViewModel.newestTipsArr = []
         ViewModel.mostViewedTipsArr = []
-//        ViewModelHome.responseModel        = nil
+        ViewModelHome.responseModel        = nil
         ViewModelHome.responseModel?.items = []
         ViewModelMeasurements.ArrStats = []
         
