@@ -21,22 +21,21 @@ class TipsCategoriesVC1: UIViewController {
         TVScreen.registerCellNib(cellClass: TipsCategoriesTVCell0.self)
         TVScreen.registerCellNib(cellClass: TipsCategoriesTVCell1.self)
         TVScreen.registerCellNib(cellClass: EmptyTVCell.self)
-
         // Configure the refresh control
         refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
-           
            // Add the refresh control to the table view
         TVScreen.addSubview(refreshControl)
-//        getTipsCategories()
+
     }
     
     override func viewWillAppear(_ animated: Bool) {
         
+        ViewModel.skipCount = 0
+        ViewModel.allTipsResModel = nil
         ViewModel.allTipsResModel?.items?.removeAll()
         ViewModel.interestingTipsArr?.removeAll()
         ViewModel.mostViewedTipsArr?.removeAll()
         ViewModel.newestTipsArr?.removeAll()
-        ViewModel.skipCount = 0
         TVScreen.reloadData()
         
         getTipsCategories()
@@ -68,11 +67,17 @@ extension TipsCategoriesVC1 : UITableViewDataSource , UITableViewDelegate {
         
         switch indexPath.row{
         case 0: // all home -- pagination
-            let cell = tableView.dequeueReusableCell(withIdentifier: "TipsCategoriesTVCell0", for: indexPath) as! TipsCategoriesTVCell0
-            cell.nav = self.navigationController
-            cell.ViewModel = ViewModel
-            cell.LaCategoryTitle.text = "تصنيفات النصائح"
-            return cell
+            if ViewModel.allTipsResModel?.items?.count == 0 {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "EmptyTVCell", for: indexPath) as! EmptyTVCell
+                return cell
+            } else {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "TipsCategoriesTVCell0", for: indexPath) as! TipsCategoriesTVCell0
+                cell.nav = self.navigationController
+                cell.ViewModel = ViewModel
+                cell.LaCategoryTitle.text = "تصنيفات النصائح"
+                return cell
+            }
+          
             
         case 1: // newest
             if ViewModel.newestTipsArr?.count == 0 {
@@ -169,16 +174,15 @@ extension TipsCategoriesVC1{
     
     @objc func refreshData() {
         
+        ViewModel.skipCount = 0
+        ViewModel.allTipsResModel = nil
         ViewModel.allTipsResModel?.items?.removeAll()
         ViewModel.interestingTipsArr?.removeAll()
         ViewModel.mostViewedTipsArr?.removeAll()
         ViewModel.newestTipsArr?.removeAll()
         TVScreen.reloadData()
-        
-        ViewModel.skipCount = 0
         // Place your refresh logic here, for example, fetch new data from your data source
         getTipsCategories()
-
         // When the refresh operation is complete, endRefreshing() to hide the refresh control
         refreshControl.endRefreshing()
     }

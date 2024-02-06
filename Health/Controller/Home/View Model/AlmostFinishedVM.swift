@@ -10,7 +10,7 @@ import Foundation
 class AlmostFinishedVM {
     // -- Get List --
     var maxResultCount: Int? = 5
-    var skipCount: Int? = 0
+    var skipCount: Int?      = 0
     
     var responseModel: AlmostFinishedPrescriptionM? = AlmostFinishedPrescriptionM()
 }

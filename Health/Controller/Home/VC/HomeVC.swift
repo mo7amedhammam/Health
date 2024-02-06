@@ -51,6 +51,20 @@ class HomeVC: UIViewController {
 //            }
 //        }
         
+        ViewModel.skipCount             = 0
+        ViewModelHome.skipCount         = 0
+        ViewModelMeasurements.skipCount = 0
+        ViewModel.allTipsResModel?.items = []
+        ViewModel.interestingTipsArr     = []
+        ViewModel.newestTipsArr          = []
+        ViewModel.mostViewedTipsArr      = []
+//        ViewModelHome.responseModel        = nil
+        ViewModelHome.responseModel?.items = []
+        ViewModelMeasurements.ArrStats     = []
+        TVScreen.reloadData()
+        
+        
+        
         getTipsCategories()
         GetMyProfile()
     }
@@ -220,7 +234,6 @@ extension HomeVC{
                 ViewModel.mostViewedTipsArr = try await ViewModel.GetMostViewedTips()
                 ViewModelMeasurements.ArrStats = try await ViewModelMeasurements.asyncGetMeasurementsStats()
                 try await ViewModelHome.getHomeAlmostFinish()
-                // Handle success async operations
                 Hud.dismiss(from: self.view)
                 TVScreen.reloadData()
 
@@ -247,6 +260,7 @@ extension HomeVC{
         ViewModel.interestingTipsArr = []
         ViewModel.newestTipsArr = []
         ViewModel.mostViewedTipsArr = []
+//        ViewModelHome.responseModel        = nil
         ViewModelHome.responseModel?.items = []
         ViewModelMeasurements.ArrStats = []
         

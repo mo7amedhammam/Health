@@ -1063,11 +1063,11 @@ extension DropDown: UITableViewDataSource, UITableViewDelegate {
 		}
 		
         cell.optionLabel.textAlignment = .right
-		cell.optionLabel.textColor = textColor
+		cell.optionLabel.textColor = UIColor(named: "main")
 		cell.optionLabel.font = textFont
 		cell.selectedBackgroundColor = selectionBackgroundColor
         cell.highlightTextColor = selectedTextColor
-        cell.normalTextColor = textColor
+        cell.normalTextColor = UIColor(named: "main")
 		
 		if let cellConfiguration = cellConfiguration {
 			cell.optionLabel.text = cellConfiguration(index, dataSource[index])

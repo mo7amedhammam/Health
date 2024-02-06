@@ -2620,7 +2620,7 @@
                                                                     <constraint firstAttribute="height" constant="50" id="jAP-wS-3JY"/>
                                                                 </constraints>
                                                                 <fontDescription key="fontDescription" name="LamaSans-Bold" family="Lama Sans" pointSize="24"/>
-                                                                <color key="textColor" name="main"/>
+                                                                <color key="textColor" red="0.1764705882352941" green="0.1764705882352941" blue="0.69803921568627447" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="PcF-df-jpO">
@@ -7105,9 +7105,6 @@
         </scene>
     </scenes>
     <designables>
-        <designable name="c0I-bP-9rf">
-            <size key="intrinsicContentSize" width="115.66666666666667" height="26"/>
-        </designable>
         <designable name="dxe-N1-yU6">
             <size key="intrinsicContentSize" width="-1" height="83"/>
         </designable>

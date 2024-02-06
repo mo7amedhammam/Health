@@ -99,9 +99,9 @@ extension TipsCategoriesDetailsVC {
 //        webView.loadHTMLString(headString + htmlString , baseURL: nil)
         
         
-        let headString = "<head><meta name='viewport' content='width=device-width, initial-scale=0.5, maximum-scale=0.5, minimum-scale=0.5, user-scalable=no'></head>"
-               let htmlString2 = "<html><body dir='rtl'>\(htmlString)</body></html>"
-               webView.loadHTMLString(headString + htmlString2, baseURL: nil)
+        let headString = "<head><meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no'></head>"
+        let htmlString2 = "<html><body dir='rtl'>\(htmlString)</body></html>"
+        webView.loadHTMLString(headString + htmlString2, baseURL: nil)
         
        
     }
