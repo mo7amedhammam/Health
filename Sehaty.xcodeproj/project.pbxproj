@@ -78,7 +78,6 @@
 		BB67C0912B247A6200F04266 /* AlignedCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB67C0902B247A6200F04266 /* AlignedCollectionView.swift */; };
 		BB6E07EF2A896B2700689769 /* MeasurementsDetailsTVCell0.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6E07ED2A896B2700689769 /* MeasurementsDetailsTVCell0.swift */; };
 		BB6E07F02A896B2700689769 /* MeasurementsDetailsTVCell0.xib in Resources */ = {isa = PBXBuildFile; fileRef = BB6E07EE2A896B2700689769 /* MeasurementsDetailsTVCell0.xib */; };
-		BB6F018C2B5BD3BD0040C409 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BB6F018B2B5BD3BD0040C409 /* GoogleService-Info.plist */; };
 		BB913AD72A9BE04900003AC5 /* TipsCategoriesTVCell1.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB913AD52A9BE04900003AC5 /* TipsCategoriesTVCell1.swift */; };
 		BB913AD82A9BE04900003AC5 /* TipsCategoriesTVCell1.xib in Resources */ = {isa = PBXBuildFile; fileRef = BB913AD62A9BE04900003AC5 /* TipsCategoriesTVCell1.xib */; };
 		BBA1DA142AB11C020042713A /* ModelNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBA1DA132AB11C020042713A /* ModelNotification.swift */; };
@@ -168,6 +167,7 @@
 		C85996752AA7553500533C87 /* HUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = C85996742AA7553500533C87 /* HUD.swift */; };
 		C85996772AA7556400533C87 /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = C85996762AA7556400533C87 /* Alert.swift */; };
 		C85F28532ABC7F500093ADFF /* EXUiDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = C85F28522ABC7F500093ADFF /* EXUiDevice.swift */; };
+		C888B8072B7D3E4B001A6FC0 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C888B8062B7D3E4B001A6FC0 /* GoogleService-Info.plist */; };
 		C88974052ABAF2AD00C2A948 /* TipsDetailsVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88974042ABAF2AD00C2A948 /* TipsDetailsVM.swift */; };
 		C88995822AA9EDFE002AD812 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88995812AA9EDFE002AD812 /* Strings.swift */; };
 		C88995882AA9F70C002AD812 /* ForgetPasswordM.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88995872AA9F70C002AD812 /* ForgetPasswordM.swift */; };
@@ -284,7 +284,6 @@
 		BB67C0902B247A6200F04266 /* AlignedCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlignedCollectionView.swift; sourceTree = "<group>"; };
 		BB6E07ED2A896B2700689769 /* MeasurementsDetailsTVCell0.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasurementsDetailsTVCell0.swift; sourceTree = "<group>"; };
 		BB6E07EE2A896B2700689769 /* MeasurementsDetailsTVCell0.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MeasurementsDetailsTVCell0.xib; sourceTree = "<group>"; };
-		BB6F018B2B5BD3BD0040C409 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
 		BB913AD52A9BE04900003AC5 /* TipsCategoriesTVCell1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TipsCategoriesTVCell1.swift; sourceTree = "<group>"; };
 		BB913AD62A9BE04900003AC5 /* TipsCategoriesTVCell1.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TipsCategoriesTVCell1.xib; sourceTree = "<group>"; };
 		BBA1DA132AB11C020042713A /* ModelNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelNotification.swift; sourceTree = "<group>"; };
@@ -378,6 +377,7 @@
 		C85996742AA7553500533C87 /* HUD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HUD.swift; sourceTree = "<group>"; };
 		C85996762AA7556400533C87 /* Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
 		C85F28522ABC7F500093ADFF /* EXUiDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EXUiDevice.swift; sourceTree = "<group>"; };
+		C888B8062B7D3E4B001A6FC0 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C88974042ABAF2AD00C2A948 /* TipsDetailsVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TipsDetailsVM.swift; sourceTree = "<group>"; };
 		C88995812AA9EDFE002AD812 /* Strings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
 		C88995872AA9F70C002AD812 /* ForgetPasswordM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgetPasswordM.swift; sourceTree = "<group>"; };
@@ -977,7 +977,7 @@
 		BBC7B4592A72CC820079355E /* Health */ = {
 			isa = PBXGroup;
 			children = (
-				BB6F018B2B5BD3BD0040C409 /* GoogleService-Info.plist */,
+				C888B8062B7D3E4B001A6FC0 /* GoogleService-Info.plist */,
 				BBC7B45A2A72CC820079355E /* AppDelegate.swift */,
 				BBC7B45C2A72CC820079355E /* SceneDelegate.swift */,
 				BBC7B4632A72CC840079355E /* Assets.xcassets */,
@@ -1565,7 +1565,7 @@
 				BBAE725F2AD3291F0089512D /* EmptyTVCell.xib in Resources */,
 				BB518CDB2A9A118B00242FAD /* TipsCategoriesTVCell0.xib in Resources */,
 				BBBD002C2A73145200F066DF /* LamaSans-Light.ttf in Resources */,
-				BB6F018C2B5BD3BD0040C409 /* GoogleService-Info.plist in Resources */,
+				C888B8072B7D3E4B001A6FC0 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
