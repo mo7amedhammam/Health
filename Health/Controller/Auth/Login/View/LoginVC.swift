@@ -203,12 +203,15 @@ extension LoginVC{
             case .stopLoading:
                 Hud.dismiss(from: self.view)
             case .success:
-                Hud.dismiss(from: self.view)
-                print(state)
+                DispatchQueue.main.async{ [weak self] in
+                    guard let self = self else{return}
+                    Hud.dismiss(from: self.view)
+                    print(state)
                 // -- go to home
-                Helper.saveUser(user: loginViewModel.usermodel ?? LoginM())
-                Helper.changeRootVC(newroot: HTBC.self,transitionFrom: .fromLeft)
-            case .error(_,let error):
+                    Helper.saveUser(user: loginViewModel.usermodel ?? LoginM())
+                    Helper.changeRootVC(newroot: HTBC.self,transitionFrom: .fromLeft)
+                }
+                case .error(_,let error):
                 Hud.dismiss(from: self.view)
                 SimpleAlert.shared.showAlert(title:error ?? "",message:"", viewController: self)
                 print(error ?? "")
