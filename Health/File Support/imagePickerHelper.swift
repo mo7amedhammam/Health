@@ -33,6 +33,7 @@ class ImagePickerHelper: NSObject, UIImagePickerControllerDelegate, UINavigation
         let galleryAction = UIAlertAction(title: "من مكتبه الصور", style: .default) { [weak self] _ in
             guard let self = self else { return }
             imagePicker.sourceType = .photoLibrary
+            imagePicker.allowsEditing = true // Set allowsEditing to true for image editing
             self.viewController.present(imagePicker, animated: true, completion: nil)
         }
         

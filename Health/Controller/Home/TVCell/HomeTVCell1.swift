@@ -125,6 +125,8 @@ extension HomeTVCell1 : UICollectionViewDataSource , UICollectionViewDelegate , 
             if let model = ViewModelHome?.responseModel?.items?[indexPath.row]{
                 cell.model = model
             }
+            print("id almost finished : \(ViewModelHome?.responseModel?.items?[indexPath.row].id)")
+
             return cell
         } else if indexx == 3 {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TipsCategoriesCVCell1", for: indexPath) as! TipsCategoriesCVCell1

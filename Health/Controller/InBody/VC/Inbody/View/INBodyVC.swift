@@ -179,6 +179,7 @@ extension INBodyVC{
                 ViewModel.skipCount = 0
                 ViewModel.responseModel?.items?.removeAll()
                 TVScreen.reloadData()
+                
                 GetCustomerInbodyList()
                 
             case .error(_,let error):

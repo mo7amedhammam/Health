@@ -17,7 +17,6 @@ class HomeCVCell2: UICollectionViewCell {
             guard let model = model else{return}
             LaTitle.text = model.drugTitle
             LaEndDate.text = convertToStandardDateFormat(dateString:  model.endDate ?? "")
-            
             if isArabic(model.drugTitle ?? "") == true {
                 LaTitle.textAlignment = .right
             } else {
