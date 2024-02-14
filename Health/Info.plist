@@ -4,7 +4,7 @@
 <dict>
 	<key>BGTaskSchedulerPermittedIdentifiers</key>
 	<array>
-		<string>com.wecancity.Health</string>
+		<string>com.AlNadaPharmacies.Health</string>
 	</array>
 	<key>CFBundleURLTypes</key>
 	<array>

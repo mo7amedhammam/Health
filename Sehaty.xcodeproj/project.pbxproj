@@ -2002,7 +2002,7 @@
 				CODE_SIGN_ENTITLEMENTS = Sehaty.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 23H4SBD5QL;
+				DEVELOPMENT_TEAM = M7AX57X8LV;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Health/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "صحتي مع الندى";
@@ -2022,8 +2022,8 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.1;
-				PRODUCT_BUNDLE_IDENTIFIER = com.wecancity.Health;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.AlNadaPharmacies.Health;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -2043,7 +2043,7 @@
 				CODE_SIGN_ENTITLEMENTS = Sehaty.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 23H4SBD5QL;
+				DEVELOPMENT_TEAM = M7AX57X8LV;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Health/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "صحتي مع الندى";
@@ -2063,8 +2063,8 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.1;
-				PRODUCT_BUNDLE_IDENTIFIER = com.wecancity.Health;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.AlNadaPharmacies.Health;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
