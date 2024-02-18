@@ -36,9 +36,10 @@ class LoginVM {
                     completion(.error(0, (response.message ?? "check validations")))
                     return
                 }
-                
-                self?.usermodel = response.data
-                completion(.success)
+                DispatchQueue.main.async {
+                    self?.usermodel = response.data
+                    completion(.success)
+                }
             case .failure(let error):
                 // Handle the error
                 print("Login failed: \(error.localizedDescription)")
@@ -47,10 +48,7 @@ class LoginVM {
 
         }
     }
-    
-    
-    
-    
+        
     func R_CustomerFireBaseDeviceToken(completion: @escaping (EventHandler?) -> Void) {
        
         var token  = ""
