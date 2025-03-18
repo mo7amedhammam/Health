@@ -19,7 +19,7 @@ class InbodyListVM {
     var TestImage:UIImage?
     var TestPdf:URL?
     var Date:String? // required
-//    var CustomerId : Int? = Helper.getUser()?.id // required
+//    var CustomerId : Int? = Helper.shared.getUser()?.id // required
     var addresponseModel: InbodyListItemM? = InbodyListItemM()
     
 }

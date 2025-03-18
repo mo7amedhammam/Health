@@ -31,7 +31,7 @@ class MeasurementsVC: UIViewController {
         layout.minimumInteritemSpacing = 0
         CollectionScreen.semanticContentAttribute = .forceRightToLeft
         CollectionScreen.setCollectionViewLayout(layout, animated: true)
-        LaName.text = "\(Helper.getUser()?.name ?? "")"
+        LaName.text = "\(Helper.shared.getUser()?.name ?? "")"
     }
     
     override func viewWillAppear(_ animated: Bool) {

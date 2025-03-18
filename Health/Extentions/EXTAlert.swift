@@ -100,17 +100,17 @@ extension UIViewController {
     
     func AlertUnAuthorizes (controller : UIViewController ) {
         
-        Helper.logout()
-        Helper.GoToAnyScreen(storyboard: "Main", identifier: "Login")
+        Helper.shared.logout()
+        Helper.shared.GoToAnyScreen(storyboard: "Main", identifier: "Login")
         
 //        let actionSheet  = UIAlertController(title: RagabLocalize.textLocalize(key: "SessionExpired") , message: nil , preferredStyle: .alert)
 //
 //        let alertAction = UIAlertAction(title: RagabLocalize.textLocalize(key: "Login"), style: .default, handler: { (_) in
 ////            self.dismiss(animated: true, completion: nil)
-//            Helper.logout()
+//            Helper.shared.logout()
 ////            let vc = self.storyboard?.instantiateViewController(identifier: "Login") as! Login
 ////            self.present(vc, animated: true, completion: nil)
-//            Helper.GoToAnyScreen(storyboard: "Main", identifier: "Login")
+//            Helper.shared.GoToAnyScreen(storyboard: "Main", identifier: "Login")
 //
 //        })
 //        actionSheet.addAction(alertAction)

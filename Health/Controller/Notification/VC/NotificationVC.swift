@@ -98,7 +98,7 @@ class NotificationVC: UIViewController  {
     override func viewWillAppear(_ animated: Bool) {        
         ViewModel.maxResultCount = 10
         ViewModel.skipCount  = 0
-        ViewModel.customerId =  Helper.getUser()?.id // they take it from token
+        ViewModel.customerId =  Helper.shared.getUser()?.id // they take it from token
         ViewModel.ArrNotifications?.items?.removeAll()
         TVScreen.reloadData()
         getNotifications()
@@ -508,7 +508,7 @@ extension NotificationVC {
             ViewModel.drugId = drugId
         }
         ViewModel.count      = Int(TFNumDrug.text!.convertedDigitsToLocale(Locale(identifier: "EN")))!
-        ViewModel.customerId =  Helper.getUser()?.id // they take it from token
+        ViewModel.customerId =  Helper.shared.getUser()?.id // they take it from token
         ViewModel.doseTimeId = doseTimeId // day 1 hour 2
         ViewModel.days       = Int(TFNumDays.text!.convertedDigitsToLocale(Locale(identifier: "EN")) )!
 //        ViewModel.doseQuantityId = 0
@@ -556,7 +556,7 @@ extension NotificationVC {
                 TVScreen.reloadData()
                 ViewModel.maxResultCount = 10
                 ViewModel.skipCount      = 0
-                ViewModel.customerId     =  Helper.getUser()?.id // they take it from token
+                ViewModel.customerId     =  Helper.shared.getUser()?.id // they take it from token
                 ViewAddNewNotification.isHidden = true
                 self.view.endEditing(true)
 

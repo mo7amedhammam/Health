@@ -1,5 +1,5 @@
 //
-//  Helper.swift
+//  Helper.shared.swift
 //  Flash Card
 //
 //  Created by mac on 25/05/2021.
@@ -13,8 +13,13 @@ import Kingfisher
 
 
 class Helper: NSObject {
+    static let shared = Helper()
     
-    
+    let userDef = UserDefaults.standard
+    let onBoardKey = "onBoard"
+    let LoggedInKey = "LoggedId"
+    let UserDataKey = "UserDataKey"
+    let Languagekey = "languagekey"
 //     "id": 0,
 //     "phoneNumber": "string",
 //     "token": "string",
@@ -23,17 +28,17 @@ class Helper: NSObject {
 //     "imagePath": "string",
 //     "role": "string",
 //     "roleId": 0
+
     
     
-    
-    class func SetAvailableUpdate (shouldUpdate : Int) {
+     func SetAvailableUpdate (shouldUpdate : Int) {
         let def = UserDefaults.standard
         def.setValue(shouldUpdate  , forKey: "shouldUpdate")
         def.synchronize()
 
     }
     
-    class func IS_Available_Update() ->Int {
+     func IS_Available_Update() ->Int {
         let def = UserDefaults.standard
         return (def.object(forKey: "shouldUpdate") as? Int ?? 0)
     }
@@ -41,65 +46,65 @@ class Helper: NSObject {
     // ..............................
     
     
-    class func getnameAr() ->String {
+     func getnameAr() ->String {
         let def = UserDefaults.standard
         return (def.object(forKey: "nameAr") as! String)
     }
-    class func getnameEn() ->String {
+     func getnameEn() ->String {
         let def = UserDefaults.standard
         return (def.object(forKey: "nameEn") as! String)
     }
     
     
-    class func getid()->Int {
+     func getid()->Int {
         let def = UserDefaults.standard
         return (def.object(forKey: "id") as! Int)
     }
-    class func getphoneNumber() ->String {
+     func getphoneNumber() ->String {
         let def = UserDefaults.standard
         return (def.object(forKey: "phoneNumber") as! String)
     }
     
-    class func gettoken() ->String {
+     func gettoken() ->String {
         let def = UserDefaults.standard
         return (def.object(forKey: "token") as! String)
     }
-    class func getname() ->String {
+     func getname() ->String {
         let def = UserDefaults.standard
         return (def.object(forKey: "name") as! String)
     }
-    class func getmobile() ->String {
+     func getmobile() ->String {
         let def = UserDefaults.standard
         return (def.object(forKey: "mobile") as! String)
     }
-    class func getimagePath() ->String {
+     func getimagePath() ->String {
         let def = UserDefaults.standard
         return (def.object(forKey: "imagePath") as! String)
     }
   
-    class func getrole() ->String {
+     func getrole() ->String {
         let def = UserDefaults.standard
         return (def.object(forKey: "role") as! String)
     }
-    class func getroleId() ->Int {
+     func getroleId() ->Int {
         let def = UserDefaults.standard
         return (def.object(forKey: "roleId") as! Int)
     }
     
     
-    class func getemail() ->String {
+     func getemail() ->String {
         let def = UserDefaults.standard
         return (def.object(forKey: "email") as! String)
     }
  
     // check in scene delegate
-    class func IsUserData()->Bool {
+     func IsUserData()->Bool {
         let def = UserDefaults.standard
         return (def.object(forKey: "id") as? Int) != nil
     }
     
     
-    class func Isemail() ->Bool {
+     func Isemail() ->Bool {
         let def = UserDefaults.standard
         return (def.object(forKey: "email") as? String) != nil
     }
@@ -107,26 +112,26 @@ class Helper: NSObject {
     
     
     //save password
-    class func setPassword(password : String){
+     func setPassword(password : String){
         let def = UserDefaults.standard
         def.setValue(password, forKey: "password")
         def.synchronize()
     }
     
-    class func getPassword()->String{
+     func getPassword()->String{
         let def = UserDefaults.standard
         return (def.object(forKey: "password") as! String)
     }
     
    
     //save token firebase
-    class func setFirebaseToken(token : String){
+     func setFirebaseToken(token : String){
         let def = UserDefaults.standard
         def.setValue(token, forKey: "FirebaseToken")
         def.synchronize()
     }
     
-    class func getFirebaseToken()->String{
+     func getFirebaseToken()->String{
         let def = UserDefaults.standard
         return (def.object(forKey: "FirebaseToken") as? String ?? "")
     }
@@ -158,19 +163,19 @@ class Helper: NSObject {
     
 
     
-    class func isValidEmail(emailStr:String) -> Bool {
+     func isValidEmail(emailStr:String) -> Bool {
         let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
         let emailPred = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
         return emailPred.evaluate(with: emailStr)
     }
     
-    class func isValidPassword(passwordStr:String) -> Bool {
+     func isValidPassword(passwordStr:String) -> Bool {
         let passwordRegEx = "(?=.{8,})"
         let passwordPred = NSPredicate(format:"SELF MATCHES %@", passwordRegEx)
         return passwordPred.evaluate(with: passwordStr)
     }
     
-    class func dialNumber(number : String) {
+     func dialNumber(number : String) {
         if let url = URL(string: "tel://\(number)"),
             UIApplication.shared.canOpenURL(url) {
             if #available(iOS 10, *) {
@@ -184,7 +189,7 @@ class Helper: NSObject {
     }
     
     
-    class func openWhatsapp(Num : String){
+     func openWhatsapp(Num : String){
         let urlWhats = "whatsapp://send?phone=(\(Num))"
         if let urlString = urlWhats.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed){
             if let whatsappURL = URL(string: urlString) {
@@ -203,7 +208,7 @@ class Helper: NSObject {
     }
     
     
-    class func openTelegram (TelegramLink : String) {
+     func openTelegram (TelegramLink : String) {
         
         let botURL = URL.init(string: TelegramLink)
             if UIApplication.shared.canOpenURL(botURL!) {
@@ -223,7 +228,7 @@ class Helper: NSObject {
     
     
     
-    class func openFaceBook(pageId: String, pageName: String) {
+     func openFaceBook(pageId: String, pageName: String) {
         let appURL = NSURL(string: "fb://page/?id=\(pageId)")!
         let webURL = NSURL(string: "http://facebook.com/\(pageName)/")!
         let application = UIApplication.shared
@@ -238,7 +243,7 @@ class Helper: NSObject {
 
     
     
-    class func SetImage (EndPoint : String? , image : UIImageView , name : String , status : Int) {
+     func SetImage (EndPoint : String? , image : UIImageView , name : String , status : Int) {
         // status == 0 system  else 1 named
         if !EndPoint!.isEmpty || EndPoint != nil {
             let url = URL(string: "" + "\(EndPoint ?? "")")
@@ -256,7 +261,7 @@ class Helper: NSObject {
     
     
     
-    class func GoToAnyScreen (storyboard : String , identifier : String) {
+     func GoToAnyScreen (storyboard : String , identifier : String) {
         guard let window = UIApplication.shared.keyWindow else{return}
         let storyboard = UIStoryboard(name: storyboard , bundle: nil)
         var vc:UIViewController
@@ -264,19 +269,19 @@ class Helper: NSObject {
         window.rootViewController = vc
     }
     
-    class func PushToAnyScreen (TargetStoryboard : String , targetViewController : String) {
+     func PushToAnyScreen (TargetStoryboard : String , targetViewController : String) {
         let storyboard = UIStoryboard(name: TargetStoryboard , bundle: nil)
         var vc:UIViewController
         vc = storyboard.instantiateViewController(withIdentifier: targetViewController )
         let nav = UINavigationController()
         nav.pushViewController(vc, animated: true)
     }
-    class func PopAnyScreen () {
+     func PopAnyScreen () {
       
         let nav = UINavigationController()
         nav.popViewController(animated: true)
     }
-    class func PopAnyRootScreen () {
+     func PopAnyRootScreen () {
       
         let nav = UINavigationController()
         nav.popToRootViewController(animated: true)
@@ -285,7 +290,7 @@ class Helper: NSObject {
    
     
     
-    class func retreiveCityName(lattitude: Double, longitude: Double, completionHandler: @escaping (String?) -> Void) {
+     func retreiveCityName(lattitude: Double, longitude: Double, completionHandler: @escaping (String?) -> Void) {
             let geocoder = CLGeocoder()
             geocoder.reverseGeocodeLocation(CLLocation(latitude: lattitude, longitude: longitude), completionHandler:
             {
@@ -309,7 +314,7 @@ class Helper: NSObject {
         case tabBar
         case VC
     }
-    class func PushTo(type:pushTo,id: AnyClass ){
+     func PushTo(type:pushTo,id: AnyClass ){
         let storyboard = UIStoryboard(name: "Main" , bundle: nil)
         let nav = UINavigationController()
 
@@ -341,6 +346,16 @@ func height(constraintedWidth width: CGFloat, font: UIFont) -> CGFloat {
 
     return label.frame.height
  }
+    
+    func getValidLanguageCode() -> String {
+        if self.contains("ar"){
+            return "ar"
+        }else if self.contains("en"){
+            return "en"
+        }else{
+            return "en"
+        }
+    }
 }
 
 
@@ -353,14 +368,8 @@ enum VersionError: Error {
 extension Helper{
 
     @available(iOS 13.0, *)
-        static let userDef = UserDefaults.standard
         
-        private static let onBoardKey = "onBoard"
-        private static let LoggedInKey = "LoggedId"
-        private static let UserDataKey = "UserDataKey"
-
-        
-        class func saveUser(user: LoginM) {
+         func saveUser(user: LoginM) {
             IsLoggedIn(value: true)
             let encoder = JSONEncoder()
             if let encoded = try? encoder.encode(user) {
@@ -370,7 +379,7 @@ extension Helper{
             }
         }
 
-        class func getUser() -> LoginM? {
+         func getUser() -> LoginM? {
             if let data = userDef.object(forKey: UserDataKey) as? Data {
                 let decoder = JSONDecoder()
                 if let user = try? decoder.decode(LoginM.self, from: data) {
@@ -379,30 +388,41 @@ extension Helper{
             }
             return nil
         }
+    
+    func setLanguage(currentLanguage: String) {
+        userDef.set(currentLanguage, forKey: Languagekey)
+        userDef.synchronize()
+    }
+    
+    func getLanguage()->String{
+        let deviceLanguage = Locale.preferredLanguages.first ?? "en"
+        let deviceLanguageCode = deviceLanguage.getValidLanguageCode()
+        return userDef.string(forKey: Languagekey) ?? deviceLanguageCode
+    }
         
         //remove data then logout
-        class func logout() {
+        func logout() {
             IsLoggedIn(value: false)
             userDef.removeObject(forKey:UserDataKey  )
         }
             
-        static func onBoardOpened(opened:Bool) {
+         func onBoardOpened(opened:Bool) {
             UserDefaults.standard.set(opened, forKey: onBoardKey)
         }
 
-        static func checkOnBoard() -> Bool {
+         func checkOnBoard() -> Bool {
             return UserDefaults.standard.bool(forKey: onBoardKey)
         }
-        static func IsLoggedIn(value:Bool) {
+         func IsLoggedIn(value:Bool) {
             UserDefaults.standard.set(value, forKey: LoggedInKey)
         }
-        static func CheckIfLoggedIn() -> Bool {
+         func CheckIfLoggedIn() -> Bool {
             return UserDefaults.standard.bool(forKey: LoggedInKey)
         }
 
         
         // Checking internet connection
-        class func isConnectedToNetwork() -> Bool {
+     func isConnectedToNetwork() -> Bool {
             
             var zeroAddress = sockaddr_in()
             zeroAddress.sin_len = UInt8(MemoryLayout.size(ofValue: zeroAddress))
@@ -423,7 +443,7 @@ extension Helper{
             return (isReachable && !needsConnection)
             }
 
-       class func ChangeFormate( NewFormat:String) -> DateFormatter {
+        func ChangeFormate( NewFormat:String) -> DateFormatter {
         //    @AppStorage("language")
         //    var language = LocalizationService.shared.language
             let df = DateFormatter()
@@ -433,7 +453,7 @@ extension Helper{
             return df
         }
 
-        class func calculatePercentage(number: Int, total: Int) -> Double {
+         func calculatePercentage(number: Int, total: Int) -> Double {
             guard total > 0 else {
                 return 0.0  // Avoid division by zero
             }
@@ -443,7 +463,7 @@ extension Helper{
         }
         
         @available(iOS 13.0, *)
-    static func changeRootVC(newroot viewcontroller:UIViewController.Type,transitionFrom from : CATransitionSubtype){
+     func changeRootVC(newroot viewcontroller:UIViewController.Type,transitionFrom from : CATransitionSubtype){
             guard  let controller = initiateViewController(storyboardName: .main,viewControllerIdentifier: viewcontroller.self) else {return}
             let nav = UINavigationController(rootViewController: controller)
             nav.navigationBar.isHidden = true

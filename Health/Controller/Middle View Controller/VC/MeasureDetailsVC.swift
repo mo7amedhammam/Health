@@ -707,7 +707,7 @@ class MeasureDetailsVC: UIViewController {
             // Check Format Regex here
             //            if formatValue == "" ||  formatValue == "X" {
             if let text = TFNumMeasure.text, text.matches(regex: formatRegex) {
-                //            ViewModel.customerId           = Helper.getUser()?.id // they take it from token
+                //            ViewModel.customerId           = Helper.shared.getUser()?.id // they take it from token
                 ViewModel.medicalMeasurementId = id
                 ViewModel.value                = TFNumMeasure.text!.convertedDigitsToLocale(Locale(identifier: "EN"))
                 ViewModel.comment              = TVDescription.text ?? ""
@@ -718,7 +718,7 @@ class MeasureDetailsVC: UIViewController {
                 //                if TFSecondValue.text == "" {
                 self.showAlert(message: "\(formatHintMessage)")
                 //                } else {
-                //                    //            ViewModel.customerId           = Helper.getUser()?.id // they take it from token
+                //                    //            ViewModel.customerId           = Helper.shared.getUser()?.id // they take it from token
                 //                    ViewModel.medicalMeasurementId = id
                 //                    ViewModel.value                = "\(TFNumMeasure.text!)/\(TFSecondValue.text!)"
                 //                    ViewModel.comment              = TVDescription.text ?? ""

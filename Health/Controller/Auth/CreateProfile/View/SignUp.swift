@@ -378,7 +378,7 @@ extension SignUp{
             viewDone.imgStr = "keyicon"
             viewDone.action = {
                 viewDone.removeFromSuperview()
-                Helper.changeRootVC(newroot: LoginVC.self,transitionFrom: .fromLeft)
+                Helper.shared.changeRootVC(newroot: LoginVC.self,transitionFrom: .fromLeft)
             }
         }
     }

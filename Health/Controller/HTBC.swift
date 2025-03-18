@@ -12,7 +12,7 @@ import SwiftyJSON
 class HTBC: UITabBarController  , UITabBarControllerDelegate {
     
     var middleBtn = UIButton()
-    let loginViewModel = LoginVM()
+    let loginViewModel = LoginViewModel()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,7 +48,7 @@ class HTBC: UITabBarController  , UITabBarControllerDelegate {
         
 //        if Shared.shared.NewFirebaseToken == true {
 //            Shared.shared.NewFirebaseToken = false
-            sendPostRequestWithToken(customerDeviceToken: Helper.getFirebaseToken())
+            sendPostRequestWithToken(customerDeviceToken: Helper.shared.getFirebaseToken())
 //        }
         
     }
@@ -58,7 +58,7 @@ class HTBC: UITabBarController  , UITabBarControllerDelegate {
     func sendPostRequestWithToken(customerDeviceToken: String) {
         // API endpoint URL
         let apiUrl = Constants.apiURL + "Customer/UpdateFirebaseDeviceToken?customerDeviceToken=\(customerDeviceToken)"
-        let headers: HTTPHeaders = ["Authorization": "Bearer \(Helper.getUser()?.token ?? "")"]
+        let headers: HTTPHeaders = ["Authorization": "Bearer \(Helper.shared.getUser()?.token ?? "")"]
         print("url : \(apiUrl)")
         print("headers : \(headers)")
         // Sending the POST request

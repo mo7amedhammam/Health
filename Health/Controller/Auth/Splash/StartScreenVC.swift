@@ -20,13 +20,13 @@ class StartScreenVC: UIViewController {
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 2 , execute: {
             
-            if !Helper.checkOnBoard() {
-                Helper.changeRootVC(newroot: SplashScreenVC.self,transitionFrom: .fromLeft)
+            if !Helper.shared.checkOnBoard() {
+                Helper.shared.changeRootVC(newroot: SplashScreenVC.self,transitionFrom: .fromLeft)
             } else {
-                if Helper.CheckIfLoggedIn() {
-                    Helper.changeRootVC(newroot: HTBC.self,transitionFrom: .fromLeft)
+                if Helper.shared.CheckIfLoggedIn() {
+                    Helper.shared.changeRootVC(newroot: HTBC.self,transitionFrom: .fromLeft)
                 } else {
-                    Helper.changeRootVC(newroot: LoginVC.self,transitionFrom: .fromLeft)
+                    Helper.shared.changeRootVC(newroot: LoginVC.self,transitionFrom: .fromLeft)
                 }
             }
         })

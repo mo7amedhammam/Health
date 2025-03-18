@@ -22,6 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        LocalizationInit()
         IQKeyboardManager.shared.enable = true
         IQKeyboardManager.shared.shouldResignOnTouchOutside = true
         FirebaseApp.configure()
@@ -105,14 +106,14 @@ extension AppDelegate {
     func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
         print("Firebase registration token: \(fcmToken ?? "")")
         // Retrieve the previous token from UserDefaults or wherever you store it
-        let previousToken = Helper.getFirebaseToken()
+        let previousToken = Helper.shared.getFirebaseToken()
         
         if let newToken = fcmToken, newToken != previousToken {
             // Token has changed, do something with the new token
             print("New Firebase token: \(newToken)")
             // Update the stored token
             Shared.shared.NewFirebaseToken = true
-            Helper.setFirebaseToken(token: newToken)
+            Helper.shared.setFirebaseToken(token: newToken)
             // Notify observers about the new token
             let dataDict: [String: String] = ["token": newToken]
             NotificationCenter.default.post(name: Notification.Name("FCMToken"), object: nil, userInfo: dataDict)
@@ -147,5 +148,21 @@ extension AppDelegate : UNUserNotificationCenterDelegate {
         AudioServicesPlaySystemSound(systemSoundID)
         
         completionHandler([.alert, .badge , .sound])
+    }
+}
+
+//MARK: --- Localization ---
+extension AppDelegate{
+    func LocalizationInit() {
+        LocalizationManager.shared.setLanguage(Helper.shared.getLanguage()) { _ in }
+
+//        let currentLanguage = Locale.current.languageCode ?? "en" // Detect user's language
+//        LocalizationManager.shared.fetchTranslations(language: currentLanguage) { success in
+//            if success {
+//                print("✅ Localization updated successfully")
+//            } else {
+//                print("❌ Failed to update localization")
+//            }
+//        }
     }
 }

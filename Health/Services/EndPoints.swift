@@ -7,11 +7,22 @@
 
 import Foundation
 
+enum apiType:String{
+//    case testing = "https://alnada-devsehatyapi.azurewebsites.net/"
+    case testing = "https://alnada-sehatyapi.azurewebsites.net/"
+    
+    case production = "https://api.sehatyapi.app/"
+}
 struct Constants {
 // MARK: - APIs Constants
-//    static var baseURL:String {return "https://myhealthapidev.azurewebsites.net/"} //TEST
-    static var baseURL:String {return "https://myhealthapi.azurewebsites.net/"} //LIVE
+    
+    static var apiType : apiType = .testing
+//     var testBaseURL:String {return "https://alnada-devmrsapi.azurewebsites.net/"} //TEST
+//     var liveBaseURL:String {return "https://api.mrscool.app/"} //LIVE
+    
+//    static var liveBaseURL:String {return "https://myhealthapi.azurewebsites.net/"} //LIVE
 
+    static var baseURL:String = apiType.rawValue
     static var apiURL:String {return "\(baseURL)api/"}
 //    static var imagesURL:String {return "http://wecareback.wecancity.com/"}
 

@@ -12,8 +12,8 @@ class ProfileVM {
     var responseModel: ProfileM? = ProfileM()
     
     init(){
-        responseModel?.name = Helper.getUser()?.name
-        responseModel?.mobile = Helper.getUser()?.mobile
+        responseModel?.name = Helper.shared.getUser()?.name
+        responseModel?.mobile = Helper.shared.getUser()?.mobile
     }
 }
 

@@ -7,7 +7,7 @@
 
 import UIKit
 
-@available(iOS 13.0, *)
+//@available(iOS 13.0, *)
 class SimpleAlert : NSObject {
   static let shared = SimpleAlert()
 
@@ -27,7 +27,7 @@ class SimpleAlert : NSObject {
               let okAction = UIAlertAction(title: "موافق", style: .default){ _ in
                   completion?()
                   if title == NetworkError.expiredTokenMsg.errorDescription ||  message == NetworkError.expiredTokenMsg.errorDescription {
-                      Helper.changeRootVC(newroot: LoginVC.self,transitionFrom: .fromLeft)
+                      Helper.shared.changeRootVC(newroot: LoginVC.self,transitionFrom: .fromLeft)
                   }
               }
               okAction.setValue(UIColor.blue, forKey: "titleTextColor") // Set the text color of the action
@@ -65,4 +65,35 @@ class SimpleAlert : NSObject {
 //    }
     
     
+}
+
+
+
+class NewSimpleAlert {
+    static let shared = NewSimpleAlert()
+
+    /// Shows an alert with a title, message, and an optional completion handler.
+    /// - Parameters:
+    ///   - title: The title of the alert.
+    ///   - message: The message of the alert.
+    ///   - viewController: The view controller to present the alert.
+    ///   - completion: An optional closure to execute when the "OK" button is tapped.
+    func showAlert( in viewController: UIViewController, title: String, message: String,btnTitle:String? = "" ,completion: (() -> Void)? = nil) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+
+        // Configure the "OK" action
+        let okAction = UIAlertAction(title:AppKeys.OkAlert.localized, style: .default) { _ in
+            completion?()
+            if title == NetworkError.expiredTokenMsg.errorDescription || message == NetworkError.expiredTokenMsg.errorDescription {
+                Helper.shared.changeRootVC(newroot: LoginVC.self, transitionFrom: .fromLeft)
+            }
+        }
+        okAction.setValue(UIColor.systemBlue, forKey: "titleTextColor") // Adapts to dark/light mode
+
+        // Add the action to the alert
+        alertController.addAction(okAction)
+
+        // Present the alert
+        viewController.present(alertController, animated: true, completion: nil)
+    }
 }

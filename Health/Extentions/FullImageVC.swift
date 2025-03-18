@@ -24,7 +24,7 @@ class FullImageVC: UIViewController {
         
 //        if let url = imageUrl {
 ////            imageView.sd_setImage(with: URL(string: url), placeholderImage: UIImage(named:   "imagePlaceholder") )
-//            Helper.SetImage(EndPoint: url, image: imageView, name: "book", status: 1)
+//            Helper.shared.SetImage(EndPoint: url, image: imageView, name: "book", status: 1)
 //        } else {
 //            if let image = imageToShow {
 //                imageView.image = image
@@ -37,7 +37,7 @@ class FullImageVC: UIViewController {
             IVFuul.image = #imageLiteral(resourceName: "6")
         } else {
             
-            Helper.SetImage(EndPoint: imageUrl , image: IVFuul, name: "book", status: 1)
+            Helper.shared.SetImage(EndPoint: imageUrl , image: IVFuul, name: "book", status: 1)
         }
         
 

@@ -39,7 +39,7 @@ class ProfileVC: UIViewController {
 //    func ReturnCustomerFirebaseToken() {
 //           // API endpoint URL
 //           let apiUrl = Constants.apiURL + "Customer/ReturnCustomerFirebaseToken"
-//           let headers: HTTPHeaders = ["Authorization" : "Bearer \(Helper.getUser()?.token ?? "" )"]
+//           let headers: HTTPHeaders = ["Authorization" : "Bearer \(Helper.shared.getUser()?.token ?? "" )"]
 //           print("url : \(apiUrl)")
 //           print("headers : \(headers)")
 //
@@ -237,8 +237,8 @@ extension ProfileVC : UITableViewDataSource , UITableViewDelegate {
             
             let actionSheet  = UIAlertController(title: "هل أنت متأكد بأنك تريد تسجيل الخروج؟", message: "", preferredStyle: .alert)
             let alertAction = UIAlertAction(title: "تسجيل الخروج", style: .default, handler: { (_) in
-                Helper.logout()
-                Helper.changeRootVC(newroot: StartScreenVC.self,transitionFrom: .fromLeft)
+                Helper.shared.logout()
+                Helper.shared.changeRootVC(newroot: StartScreenVC.self,transitionFrom: .fromLeft)
             })
             actionSheet.addAction(alertAction)
             

@@ -161,7 +161,7 @@ extension ChangePasswordVC {
             viewDone.action = {
                 viewDone.removeFromSuperview()
                 self.navigationController?.popViewController(animated: true)
-//                Helper.changeRootVC(newroot: LoginVC.self,transitionFrom: .fromLeft)
+//                Helper.shared.changeRootVC(newroot: LoginVC.self,transitionFrom: .fromLeft)
             }
         }
     }

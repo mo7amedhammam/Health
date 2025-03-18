@@ -25,16 +25,16 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 //
 ////        MARK: -- if uikit --
 //        var vc : UIViewController = UIViewController()
-//        if !Helper.checkOnBoard() {
+//        if !Helper.shared.checkOnBoard() {
 //            guard let targetvc = initiateViewController(storyboardName: .main, viewControllerIdentifier: SplashScreenVC.self) else {return}
 //            vc = targetvc
 //        }else{
-//            guard let targetvc = initiateViewController(storyboardName: .main, viewControllerIdentifier: Helper.CheckIfLoggedIn() ? HTBC.self : LoginVC.self) else {return}
+//            guard let targetvc = initiateViewController(storyboardName: .main, viewControllerIdentifier: Helper.shared.CheckIfLoggedIn() ? HTBC.self : LoginVC.self) else {return}
 ////            guard let targetvc = initiateViewController(storyboardName: .main, viewControllerIdentifier: ChangePasswordVC.self) else {return}
 //
 //            vc = targetvc
 //        }
-////        guard let vc = initiateViewController(storyboardName: .main, viewControllerIdentifier: (Helper.checkOnBoard() ? (Helper.CheckIfLoggedIn() ? HTBC.self as? HTBC.Type : LoginVC.self as? LoginVC.)  : SplashScreenVC.self)) else {return}
+////        guard let vc = initiateViewController(storyboardName: .main, viewControllerIdentifier: (Helper.shared.checkOnBoard() ? (Helper.shared.CheckIfLoggedIn() ? HTBC.self as? HTBC.Type : LoginVC.self as? LoginVC.)  : SplashScreenVC.self)) else {return}
 //
 //////        MARK: -- if SwiftUI --
 //////        let vc = UIHostingController(rootView: SwiftuiTest())

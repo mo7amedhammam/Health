@@ -26,14 +26,14 @@ class MedicationScheduleTVCell: UITableViewCell {
             LaTimeNext.text = convertToStandardDateFormat2(dateString: model.renewDate ?? "")
 
             
-//            if let startDate =  Helper.ChangeFormate(NewFormat: "yyyy-MM-dd'T'HH:mm:ss").date(from: model.startDate ?? ""){
-//                LaStartDate.text = Helper.ChangeFormate(NewFormat: "yyyy/MM/dd").string(from: startDate )
+//            if let startDate =  Helper.shared.ChangeFormate(NewFormat: "yyyy-MM-dd'T'HH:mm:ss").date(from: model.startDate ?? ""){
+//                LaStartDate.text = Helper.shared.ChangeFormate(NewFormat: "yyyy/MM/dd").string(from: startDate )
 //            }
-//            if let endDate =  Helper.ChangeFormate(NewFormat: "yyyy-MM-dd'T'HH:mm:ss").date(from: model.endDate ?? ""){
-//                LaEndDate.text = Helper.ChangeFormate(NewFormat: "yyyy/MM/dd").string(from: endDate )
+//            if let endDate =  Helper.shared.ChangeFormate(NewFormat: "yyyy-MM-dd'T'HH:mm:ss").date(from: model.endDate ?? ""){
+//                LaEndDate.text = Helper.shared.ChangeFormate(NewFormat: "yyyy/MM/dd").string(from: endDate )
 //            }
-//            if let renewDate =  Helper.ChangeFormate(NewFormat: "yyyy-MM-dd'T'HH:mm:ss").date(from: model.renewDate ?? ""){
-//                LaTimeNext.text = Helper.ChangeFormate(NewFormat: "yyyy/MM/dd hh:mm a").string(from: renewDate )
+//            if let renewDate =  Helper.shared.ChangeFormate(NewFormat: "yyyy-MM-dd'T'HH:mm:ss").date(from: model.renewDate ?? ""){
+//                LaTimeNext.text = Helper.shared.ChangeFormate(NewFormat: "yyyy/MM/dd hh:mm a").string(from: renewDate )
 //            }
 
         }

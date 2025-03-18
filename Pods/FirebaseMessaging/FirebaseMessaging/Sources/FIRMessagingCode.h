@@ -131,7 +131,7 @@ typedef NS_ENUM(NSInteger, FIRMessagingMessageCode) {
   kFIRMessagingMessageCodeAnalytics007 = 19007,                         // I-FCM019007
   kFIRMessagingMessageCodeAnalyticsCouldNotInvokeAnalyticsLog = 19008,  // I-FCM019008
 
-  // FIRMessagingExtensionHelper.m
+  // FIRMessagingExtensionHelper.shared.m
   kFIRMessagingServiceExtensionImageInvalidURL = 20000,
   kFIRMessagingServiceExtensionImageNotDownloaded = 20001,
   kFIRMessagingServiceExtensionLocalFileNotCreated = 20002,

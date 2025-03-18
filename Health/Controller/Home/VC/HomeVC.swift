@@ -220,8 +220,8 @@ extension HomeVC {
 //--Functions--
 extension HomeVC{
     func SetUserHeader(){
-        LaName.text = "\(Helper.getUser()?.name ?? "")"
-//        if let img = Helper.getUser()?.image {
+        LaName.text = "\(Helper.shared.getUser()?.name ?? "")"
+//        if let img = Helper.shared.getUser()?.image {
 //            //                let processor = SVGImgProcessor() // if receive svg image
 //            ImgUser.kf.setImage(with: URL(string:Constants.baseURL + img.validateSlashs()), placeholder: UIImage(named: "defaultLogo"), options: nil, progressBlock: nil)
 //        }
