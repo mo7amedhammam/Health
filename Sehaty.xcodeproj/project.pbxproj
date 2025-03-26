@@ -10,6 +10,7 @@
 		4FCE2AF17B5A9BBC24477ED3 /* Pods_Health.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 85B7A463D3427924F44EC455 /* Pods_Health.framework */; };
 		903667062D82E0A40040AE29 /* LocalizationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 903667052D82E08E0040AE29 /* LocalizationManager.swift */; };
 		903667082D82E1410040AE29 /* AppKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 903667072D82E1370040AE29 /* AppKeys.swift */; };
+		9090A1342D942A6000D9E20B /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 9090A1332D942A6000D9E20B /* PrivacyInfo.xcprivacy */; };
 		BB006DE12B34A9510006E417 /* TermsConditionsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB006DE02B34A9510006E417 /* TermsConditionsVC.swift */; };
 		BB0512482B60313C004CAB83 /* ModelResponseFirebase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0512472B60313C004CAB83 /* ModelResponseFirebase.swift */; };
 		BB10D9112B1E774100751AAE /* StartScreenVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB10D9102B1E774100751AAE /* StartScreenVC.swift */; };
@@ -218,6 +219,7 @@
 		85B7A463D3427924F44EC455 /* Pods_Health.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Health.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		903667052D82E08E0040AE29 /* LocalizationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationManager.swift; sourceTree = "<group>"; };
 		903667072D82E1370040AE29 /* AppKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppKeys.swift; sourceTree = "<group>"; };
+		9090A1332D942A6000D9E20B /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		BB006DE02B34A9510006E417 /* TermsConditionsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsConditionsVC.swift; sourceTree = "<group>"; };
 		BB0512472B60313C004CAB83 /* ModelResponseFirebase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelResponseFirebase.swift; sourceTree = "<group>"; };
 		BB10D9102B1E774100751AAE /* StartScreenVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartScreenVC.swift; sourceTree = "<group>"; };
@@ -991,6 +993,7 @@
 		BBC7B4592A72CC820079355E /* Health */ = {
 			isa = PBXGroup;
 			children = (
+				9090A1332D942A6000D9E20B /* PrivacyInfo.xcprivacy */,
 				C888B8062B7D3E4B001A6FC0 /* GoogleService-Info.plist */,
 				BBC7B45A2A72CC820079355E /* AppDelegate.swift */,
 				BBC7B45C2A72CC820079355E /* SceneDelegate.swift */,
@@ -1571,6 +1574,7 @@
 				BBBD003C2A731B6C00F066DF /* SplashScreenTVCell2.xib in Resources */,
 				BBC7B4622A72CC820079355E /* Main.storyboard in Resources */,
 				BBBEB1C02B56F4D700502D3E /* TipsCVCell.xib in Resources */,
+				9090A1342D942A6000D9E20B /* PrivacyInfo.xcprivacy in Resources */,
 				C8F418D92AC19A5100E7A370 /* TipDetailsDrugGroup.xib in Resources */,
 				BB518CE32A9A122400242FAD /* TipsCategoriesCVCell0.xib in Resources */,
 				BB14DAF02A7B043500389B96 /* ProfileTVCellMiddle.xib in Resources */,
@@ -2018,7 +2022,7 @@
 				CODE_SIGN_ENTITLEMENTS = Sehaty.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2.1.2;
+				CURRENT_PROJECT_VERSION = 2.1.3;
 				DEVELOPMENT_TEAM = M7AX57X8LV;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Health/Info.plist;
@@ -2062,7 +2066,7 @@
 				CODE_SIGN_ENTITLEMENTS = Sehaty.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2.1.2;
+				CURRENT_PROJECT_VERSION = 2.1.3;
 				DEVELOPMENT_TEAM = M7AX57X8LV;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Health/Info.plist;
