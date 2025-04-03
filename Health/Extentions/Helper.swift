@@ -469,7 +469,13 @@ extension Helper{
             nav.navigationBar.isHidden = true
             UIApplication.shared.keyWindow?.replaceRootViewController(nav, from)
         }
-        
+    // Overloaded function for SwiftUI views
+       func changeRootVC(newroot viewController: UIViewController, transitionFrom from: CATransitionSubtype) {
+           let nav = UINavigationController(rootViewController: viewController)
+           nav.navigationBar.isHidden = true
+           UIApplication.shared.keyWindow?.replaceRootViewController(nav, from)
+       }
+
 
         
         

@@ -12,7 +12,7 @@ class LocalizationManager {
     
     private let queue = DispatchQueue(label: "com.yourapp.localization", attributes: .concurrent)
     private var translations: [String: String] = [:]
-    private var currentLanguage: String = "en" // Default language
+     var currentLanguage: String = "ar" // Default language
     
     private init() {}
     

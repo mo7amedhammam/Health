@@ -6,22 +6,24 @@
 //
 
 import UIKit
+import SwiftUI
 
 class StartScreenVC: UIViewController {
         
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
     }
     
-    override func viewDidAppear(_ animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2 , execute: {
-            
+        DispatchQueue.main.async( execute: {
+
             if !Helper.shared.checkOnBoard() {
-                Helper.shared.changeRootVC(newroot: SplashScreenVC.self,transitionFrom: .fromLeft)
+                let rootVC = UIHostingController(rootView: OnboardingView())
+
+                Helper.shared.changeRootVC(newroot: rootVC,transitionFrom: .fromLeft)
             } else {
                 if Helper.shared.CheckIfLoggedIn() {
                     Helper.shared.changeRootVC(newroot: HTBC.self,transitionFrom: .fromLeft)

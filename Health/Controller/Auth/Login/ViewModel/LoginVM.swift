@@ -106,7 +106,6 @@ final class LoginViewModel: LoginViewModelProtocol {
     var mobile: String?
     var password: String?
     var usermodel: LoginM?
-    
     private let networkService: NetworkServiceProtocol
     
     init(networkService: NetworkServiceProtocol = NetworkService1.shared) {

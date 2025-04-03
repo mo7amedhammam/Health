@@ -243,7 +243,8 @@ final class LoginVC: UIViewController {
     @IBOutlet private weak var BtnLogin: UIButton!
     
     private var viewModel: LoginViewModelProtocol
-    
+    let otpViewModel = OtpVM()
+
     init(viewModel: LoginViewModelProtocol = LoginViewModel()) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -275,11 +276,25 @@ final class LoginVC: UIViewController {
     private func setupBindings() {
         // Example: Update UI based on ViewModel state
     }
+       @IBAction func BUBack(_ sender: Any) {
+            //        self.dismiss(animated: true)
+        }
     
+        @IBAction func BUForgetPassword(_ sender: Any) {
+            if TFPhone.text != ""{
+                SendOtp()
+            } else {
+                SimpleAlert.shared.showAlert(title: "اكتب رقم موبايل الأول", message: "", viewController: self)
+                return
+            }
+        }
     @IBAction private func BULogin(_ sender: Any) {
         login()
     }
-    
+        @IBAction func BUSignUp(_ sender: Any) {
+            guard let vc = initiateViewController(storyboardName: .main, viewControllerIdentifier: SignUp.self) else{return}
+            navigationController?.pushViewController(vc, animated: true)
+        }
     @IBAction private func BUShowPassword(_ sender: UIButton) {
         sender.isSelected.toggle()
         TFPassword.isSecureTextEntry.toggle()
@@ -315,6 +330,43 @@ final class LoginVC: UIViewController {
            }
         }
     }
+    
+        func SendOtp() {
+            otpViewModel.mobile = TFPhone.text!
+    
+            otpViewModel.SendOtp{[weak self] state in
+                guard let self = self else{return}
+                guard let state = state else{
+                    return
+                }
+                switch state {
+                case .loading:
+                    Hud.showHud(in: self.view)
+                case .stopLoading:
+                    Hud.dismiss(from: self.view)
+                case .success:
+                    Hud.dismiss(from: self.view)
+                    print(state)
+                    //        guard let seconds = viewModel.responseModel?.secondsCount else {return}
+                    guard let vc = initiateViewController(storyboardName: .main, viewControllerIdentifier: OtpVC.self) else{return}
+                    vc.Phonenumber = TFPhone.text
+                    vc.second =  otpViewModel.responseModel?.secondsCount ?? 60
+                    Shared.shared.remainingSeconds = otpViewModel.responseModel?.secondsCount ?? 60
+                    vc.otp = "استخدم \(otpViewModel.responseModel?.otp ?? 00)"
+                    navigationController?.pushViewController(vc, animated: true)
+                case .error(let code,let error):
+                    Hud.dismiss(from: self.view)
+                    SimpleAlert.shared.showAlert(title:error ?? "",message:"", viewController: self,completion:{
+                        if code == 400 {
+                            self.navigationController?.popViewController(animated: true)
+                        }
+                    })
+                    print(error ?? "")
+                case .none:
+                    print("")
+                }
+            }
+        }
 }
 
 // MARK: - UITextFieldDelegate

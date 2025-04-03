@@ -1,0 +1,5 @@
+
+
+extension Color {
+    public static let myNewSwiftUIColor = Color("myNewSwiftUIColor")
+}

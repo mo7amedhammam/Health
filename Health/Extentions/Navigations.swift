@@ -29,6 +29,14 @@ func initiateViewController<T: UIViewController>(storyboardName: storyboards, vi
     return viewController
 }
 
+func initiateViewController<T: UIViewController>(storyboardName: storyboards, viewControllerIdentifier: T) -> T? {
+    let storyboard = UIStoryboard(name: storyboardName.rawValue, bundle: nil)
+    guard let viewController = storyboard.instantiateViewController(withIdentifier: String(describing: viewControllerIdentifier.self)) as? T else {
+        return nil
+    }
+    return viewController
+}
+
 func loadViewFromNib(nibName: String, owner: Any?) -> UIView? {
     let nib = UINib(nibName: nibName, bundle: nil)
     return nib.instantiate(withOwner: owner, options: nil).first as? UIView

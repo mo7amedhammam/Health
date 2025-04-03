@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SwiftUI
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -20,8 +21,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let _ = (scene as? UIWindowScene) else { return }
         
 ////        MARK: -- Programatically --
-//        guard let WindowScene = (scene as? UIWindowScene) else { return }
-//        self.window = UIWindow(windowScene: WindowScene)
+        guard let WindowScene = (scene as? UIWindowScene) else { return }
+        self.window = UIWindow(windowScene: WindowScene)
 //
 ////        MARK: -- if uikit --
 //        var vc : UIViewController = UIViewController()
@@ -34,16 +35,47 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 //
 //            vc = targetvc
 //        }
-////        guard let vc = initiateViewController(storyboardName: .main, viewControllerIdentifier: (Helper.shared.checkOnBoard() ? (Helper.shared.CheckIfLoggedIn() ? HTBC.self as? HTBC.Type : LoginVC.self as? LoginVC.)  : SplashScreenVC.self)) else {return}
+//        guard let vc = initiateViewController(storyboardName: .main, viewControllerIdentifier: (Helper.shared.checkOnBoard() ? (Helper.shared.CheckIfLoggedIn() ? HTBC.self : LoginVC.self ) : OnboardingView)) else {return}
+        
+//        var rootVC: UIViewController
 //
+//        if !Helper.shared.checkOnBoard() {
+//               // If onboarding is not completed, show the SwiftUI OnboardingView inside UIHostingController
+//            rootVC = UIHostingController(rootView: OnboardingView())
+//           } else {
+//               // Decide between HTBC or LoginVC (UIKit views)
+//               guard let targetVC = initiateViewController(storyboardName: .main,
+//                                                           viewControllerIdentifier: Helper.shared.CheckIfLoggedIn() ? HTBC.self : LoginVC.self)
+//               else { return }
+//               
+//               rootVC = targetVC
+//           }
+
+        
 //////        MARK: -- if SwiftUI --
-//////        let vc = UIHostingController(rootView: SwiftuiTest())
-//
-//        let nav = UINavigationController(rootViewController: vc)
+//        let rootVC = UIHostingController(rootView: SwiftuiTest())
+////
+//        let nav = UINavigationController(rootViewController: rootVC)
 //        nav.navigationBar.isHidden = true
 //        self.window?.rootViewController = nav
 //        window?.makeKeyAndVisible()
-//
+        
+        
+          if !Helper.shared.checkOnBoard() {
+              window?.rootViewController = UIHostingController(rootView: OnboardingView())
+          } else {
+              let initialVC: UIViewController = Helper.shared.CheckIfLoggedIn()
+                  ? initiateViewController(storyboardName: .main, viewControllerIdentifier: HTBC.self)!
+                  : initiateViewController(storyboardName: .main, viewControllerIdentifier: LoginVC.self)!
+              
+              let nav = UINavigationController(rootViewController: initialVC)
+              nav.navigationBar.isHidden = true
+              window?.rootViewController = nav
+          }
+          
+//          self.window = window
+        window?.makeKeyAndVisible()
+        
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
