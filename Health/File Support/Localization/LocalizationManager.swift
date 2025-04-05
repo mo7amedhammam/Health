@@ -7,12 +7,12 @@
 
 import Foundation
 
-class LocalizationManager {
+class LocalizationManager : ObservableObject{
     static let shared = LocalizationManager()
     
     private let queue = DispatchQueue(label: "com.yourapp.localization", attributes: .concurrent)
     private var translations: [String: String] = [:]
-     var currentLanguage: String = "ar" // Default language
+    @Published var currentLanguage: String? = nil // Default language
     
     private init() {}
     
@@ -56,7 +56,7 @@ class LocalizationManager {
 //            return
 //        }
         
-        let urlString = "https://alnada-devmrsapi.azurewebsites.net/api/\(currentLanguage)/Translations/GetTranslationFile/ios"
+        let urlString = "https://alnada-devmrsapi.azurewebsites.net/api/\(currentLanguage ?? "ar")/Translations/GetTranslationFile/ios"
         
         guard let url = URL(string: urlString) else {
             print("Invalid URL")
@@ -82,9 +82,9 @@ class LocalizationManager {
             
             do {
                 if let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: String] {
-                    print("Localization updated for : \(self.currentLanguage)")
+                    print("Localization updated for : \(self.currentLanguage ?? "ar")")
                     self.updateTranslations(json)
-                    self.cacheTranslations(json, for: self.currentLanguage)
+                    self.cacheTranslations(json, for: self.currentLanguage ?? "ar")
                     completion(true)
                 } else {
                     print("Invalid JSON format")
@@ -119,3 +119,33 @@ extension String {
     }
 }
 
+
+import SwiftUI
+//MARK:  --- ViewModifier to update layout Direction RTL ---
+struct LocalizationViewModifier: ViewModifier {
+    @ObservedObject var localizeHelper = LocalizationManager.shared
+    public func body(content: Content) -> some View {
+        content
+            .environment(\.locale, Locale(identifier: localizeHelper.currentLanguage ?? "ar"))
+            .environment(\.layoutDirection, localizeHelper.currentLanguage == "en" ? .rightToLeft : .leftToRight)
+    }
+}
+//MARK:  --- ViewModifier to update layout Direction RTL ---
+struct ReversedLocalizationViewModifier: ViewModifier {
+    @ObservedObject var localizeHelper = LocalizationManager.shared
+    public func body(content: Content) -> some View {
+        content
+            .environment(\.locale, Locale(identifier: localizeHelper.currentLanguage ?? "ar"))
+            .environment(\.layoutDirection, localizeHelper.currentLanguage == "en" ? .leftToRight : .rightToLeft)
+    }
+}
+
+// --- View Extension to apply the modifier ---
+extension View {
+    public func localizeView() -> some View {
+        modifier(LocalizationViewModifier())
+    }
+    public func reversLocalizeView() -> some View {
+        modifier(ReversedLocalizationViewModifier())
+    }
+}

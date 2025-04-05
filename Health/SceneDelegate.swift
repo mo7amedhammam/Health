@@ -62,7 +62,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         
           if !Helper.shared.checkOnBoard() {
-              window?.rootViewController = UIHostingController(rootView: OnboardingView())
+//              window?.rootViewController = UIHostingController(rootView: OnboardingView())
+              window?.rootViewController = UIHostingController(rootView: SelectLanguageView())
+              
           } else {
               let initialVC: UIViewController = Helper.shared.CheckIfLoggedIn()
                   ? initiateViewController(storyboardName: .main, viewControllerIdentifier: HTBC.self)!

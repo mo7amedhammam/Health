@@ -155,7 +155,7 @@ extension AppDelegate : UNUserNotificationCenterDelegate {
 //MARK: --- Localization ---
 extension AppDelegate{
     func LocalizationInit() {
-        LocalizationManager.shared.setLanguage(Helper.shared.getLanguage()) { _ in }
+//        LocalizationManager.shared.setLanguage(Helper.shared.getLanguage()) { _ in }
 
 //        let currentLanguage = Locale.current.languageCode ?? "en" // Detect user's language
 //        LocalizationManager.shared.fetchTranslations(language: currentLanguage) { success in

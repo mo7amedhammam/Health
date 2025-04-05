@@ -17,17 +17,20 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Splash" translatesAutoresizingMaskIntoConstraints="NO" id="X26-WG-ftm">
-                                <rect key="frame" x="0.0" y="59" width="393" height="759"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="X26-WG-ftm">
+                                <rect key="frame" x="69" y="337" width="255" height="178"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="255" id="Cx5-ln-6PT"/>
+                                    <constraint firstAttribute="height" constant="178" id="znH-AC-2Oq"/>
+                                </constraints>
+                                <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="medium"/>
                             </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="X26-WG-ftm" secondAttribute="trailing" id="ASY-7X-uWc"/>
-                            <constraint firstItem="X26-WG-ftm" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="WmO-Ug-Ixb"/>
-                            <constraint firstItem="X26-WG-ftm" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="bWX-9o-Tiz"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="X26-WG-ftm" secondAttribute="bottom" id="rOl-ld-cYj"/>
+                            <constraint firstItem="X26-WG-ftm" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="gjM-1T-fDI"/>
+                            <constraint firstItem="X26-WG-ftm" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="yrY-eP-5eu"/>
                         </constraints>
                     </view>
                 </viewController>
@@ -37,7 +40,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Splash" width="375" height="812"/>
+        <image name="logo" width="255" height="178"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

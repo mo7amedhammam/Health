@@ -45,12 +45,14 @@ struct OnboardingPage: View {
                         .multilineTextAlignment(.center)
                         .padding(.top, 10)
                         .foregroundColor(Color(.white))
+                    
+                        .frame(maxWidth: .infinity)
+                        .frame(height: 55)
+                        .background(Color(.mainBlue))
+                        .cornerRadius(8)
+                        .padding(.horizontal,22)
                 })
-                .frame(maxWidth: .infinity)
-                .frame(height: 55)
-                .background(Color(.mainBlue))
-                .cornerRadius(8)
-                .padding(.horizontal,22)
+               
             }
             .padding(.top,33)
             .padding(.bottom,22)

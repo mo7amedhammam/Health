@@ -10,6 +10,9 @@
 		80575AC14FA23A70DAA7BBEA /* Pods_Sehaty.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0BF0C90049FC1EFFEE4F4C0 /* Pods_Sehaty.framework */; };
 		903667062D82E0A40040AE29 /* LocalizationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 903667052D82E08E0040AE29 /* LocalizationManager.swift */; };
 		903667082D82E1410040AE29 /* AppKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 903667072D82E1370040AE29 /* AppKeys.swift */; };
+		90842F382DA16A3700B02D02 /* SelectLanguageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90842F372DA16A2200B02D02 /* SelectLanguageView.swift */; };
+		90842F3A2DA1748800B02D02 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90842F392DA1748800B02D02 /* CustomButton.swift */; };
+		90842F3C2DA17A7300B02D02 /* CustomNavBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90842F3B2DA17A7300B02D02 /* CustomNavBar.swift */; };
 		90B67BDA2D9EC7B400C1FD31 /* OnBoardingPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90B67BD92D9EC7A900C1FD31 /* OnBoardingPage.swift */; };
 		90B67BDC2D9EC7D600C1FD31 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90B67BDB2D9EC7D600C1FD31 /* OnboardingView.swift */; };
 		90B67BE12D9ED2B600C1FD31 /* exColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90B67BE02D9ED2AD00C1FD31 /* exColors.swift */; };
@@ -220,6 +223,9 @@
 		89D6D697015359A8CFB74DC2 /* Pods-Sehaty.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sehaty.release.xcconfig"; path = "Target Support Files/Pods-Sehaty/Pods-Sehaty.release.xcconfig"; sourceTree = "<group>"; };
 		903667052D82E08E0040AE29 /* LocalizationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationManager.swift; sourceTree = "<group>"; };
 		903667072D82E1370040AE29 /* AppKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppKeys.swift; sourceTree = "<group>"; };
+		90842F372DA16A2200B02D02 /* SelectLanguageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectLanguageView.swift; sourceTree = "<group>"; };
+		90842F392DA1748800B02D02 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
+		90842F3B2DA17A7300B02D02 /* CustomNavBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavBar.swift; sourceTree = "<group>"; };
 		90B67BD92D9EC7A900C1FD31 /* OnBoardingPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingPage.swift; sourceTree = "<group>"; };
 		90B67BDB2D9EC7D600C1FD31 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		90B67BE02D9ED2AD00C1FD31 /* exColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = exColors.swift; sourceTree = "<group>"; };
@@ -458,6 +464,24 @@
 				903667052D82E08E0040AE29 /* LocalizationManager.swift */,
 			);
 			path = Localization;
+			sourceTree = "<group>";
+		};
+		90842F352DA16A0600B02D02 /* SelectLanguage */ = {
+			isa = PBXGroup;
+			children = (
+				90842F362DA16A1600B02D02 /* View */,
+			);
+			path = SelectLanguage;
+			sourceTree = "<group>";
+		};
+		90842F362DA16A1600B02D02 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				90842F372DA16A2200B02D02 /* SelectLanguageView.swift */,
+				90842F3B2DA17A7300B02D02 /* CustomNavBar.swift */,
+				90842F392DA1748800B02D02 /* CustomButton.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		90B67BD72D9EC77900C1FD31 /* OnBoarding */ = {
@@ -858,6 +882,7 @@
 		BBBD001D2A73116200F066DF /* Auth */ = {
 			isa = PBXGroup;
 			children = (
+				90842F352DA16A0600B02D02 /* SelectLanguage */,
 				90B67BD72D9EC77900C1FD31 /* OnBoarding */,
 				BB0512462B603116004CAB83 /* Firebase */,
 				BB006DDE2B34A91E0006E417 /* Terms Condition */,
@@ -1676,6 +1701,7 @@
 				C889958A2AA9F770002AD812 /* ForgetPasswordVM.swift in Sources */,
 				C88995822AA9EDFE002AD812 /* Strings.swift in Sources */,
 				C82DCAAF2AACB41600322B55 /* MedicationScheduleDetailsM.swift in Sources */,
+				90842F382DA16A3700B02D02 /* SelectLanguageView.swift in Sources */,
 				BB218A582ADF1CA90061FF81 /* ViewNoData.swift in Sources */,
 				C893A9B72AB5BE450054F171 /* TipsCategoryServices.swift in Sources */,
 				BB1B2FFE2A7EA379001677FD /* INBodyDetailsVC.swift in Sources */,
@@ -1691,6 +1717,7 @@
 				BBA1DA142AB11C020042713A /* ModelNotification.swift in Sources */,
 				BBBD003B2A731B6C00F066DF /* SplashScreenTVCell2.swift in Sources */,
 				BB518CE22A9A122400242FAD /* TipsCategoriesCVCell0.swift in Sources */,
+				90842F3C2DA17A7300B02D02 /* CustomNavBar.swift in Sources */,
 				BBA1DA182AB11E5C0042713A /* NotificationVM.swift in Sources */,
 				BBC3C3ED2ACC912400805524 /* HomeCVCell3.swift in Sources */,
 				BB5A26712B2E1F000005C9B8 /* HelpVM.swift in Sources */,
@@ -1734,6 +1761,7 @@
 				BBBD00172A73101700F066DF /* Helper.swift in Sources */,
 				BB5A26672B2E1DC40005C9B8 /* HelpVC.swift in Sources */,
 				BB546DEA2AC9E467008A4F8C /* HomeTVCell1.swift in Sources */,
+				90842F3A2DA1748800B02D02 /* CustomButton.swift in Sources */,
 				BB518CEE2A9A129500242FAD /* TipsCategories3TVCell.swift in Sources */,
 				BBBD003F2A731B7B00F066DF /* SplashScreenTVCell3.swift in Sources */,
 				BB5A266B2B2E1E0B0005C9B8 /* ModelHelp.swift in Sources */,
