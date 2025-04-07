@@ -1,0 +1,360 @@
+
+/* Class = "UITextField"; placeholder = "أدخل القياس التالي"; ObjectID = "0RV-1b-81w"; */
+"0RV-1b-81w.placeholder" = "أدخل القياس التالي";
+
+/* Class = "UILabel"; text = "لقد قمنا بإرسال رسالة نصية برمز"; ObjectID = "0kl-kD-Jc0"; */
+"0kl-kD-Jc0.text" = "لقد قمنا بإرسال رسالة نصية برمز";
+
+/* Class = "UITextField"; placeholder = "أدخل القياس"; ObjectID = "1Bt-Tx-z51"; */
+"1Bt-Tx-z51.placeholder" = "أدخل القياس";
+
+/* Class = "UIButton"; normalTitle = "نسيت كلمة المرور؟"; ObjectID = "1Ig-ic-iWC"; */
+"1Ig-ic-iWC.normalTitle" = "نسيت كلمة المرور؟";
+
+/* Class = "UITextField"; placeholder = "عدد مرات أخد الدواء"; ObjectID = "1oi-ca-70Z"; */
+"1oi-ca-70Z.placeholder" = "عدد مرات أخد الدواء";
+
+/* Class = "UIButton"; normalTitle = "أدخل كلمة المرور الجديدة"; ObjectID = "1vu-qL-3HH"; */
+"1vu-qL-3HH.normalTitle" = "أدخل كلمة المرور الجديدة";
+
+/* Class = "UILabel"; text = "إلى تاريخ"; ObjectID = "26j-4Q-g4a"; */
+"26j-4Q-g4a.text" = "إلى تاريخ";
+
+/* Class = "UILabel"; text = "ساعة"; ObjectID = "2IE-1x-iyu"; */
+"2IE-1x-iyu.text" = "ساعة";
+
+/* Class = "UITextField"; placeholder = "أكد كلمة المرور الخاصة بك"; ObjectID = "2c5-Q0-5hb"; */
+"2c5-Q0-5hb.placeholder" = "أكد كلمة المرور الخاصة بك";
+
+/* Class = "UILabel"; text = "Inbody"; ObjectID = "2up-gX-Mzk"; */
+"2up-gX-Mzk.text" = "Inbody";
+
+/* Class = "UILabel"; text = "يوم"; ObjectID = "3tj-xA-zMe"; */
+"3tj-xA-zMe.text" = "يوم";
+
+/* Class = "UITextField"; placeholder = "كلمة المرور الجديدة"; ObjectID = "4Cb-l6-F7w"; */
+"4Cb-l6-F7w.placeholder" = "كلمة المرور الجديدة";
+
+/* Class = "UILabel"; text = "نهاية التنبيه"; ObjectID = "5Iu-pJ-N0L"; */
+"5Iu-pJ-N0L.text" = "نهاية التنبيه";
+
+/* Class = "UILabel"; text = "قمت بالانضمام بالفعل؟ "; ObjectID = "5ty-iA-95q"; */
+"5ty-iA-95q.text" = "قمت بالانضمام بالفعل؟ ";
+
+/* Class = "UILabel"; text = "لمدة"; ObjectID = "6WV-lA-1Ps"; */
+"6WV-lA-1Ps.text" = "لمدة";
+
+/* Class = "UILabel"; text = "أمراض القلب"; ObjectID = "7gT-kd-yNz"; */
+"7gT-kd-yNz.text" = "أمراض القلب";
+
+/* Class = "UILabel"; text = "بداية التنبيه"; ObjectID = "7hd-1n-LY8"; */
+"7hd-1n-LY8.text" = "بداية التنبيه";
+
+/* Class = "UILabel"; text = "جداول الأدوية الشهرية"; ObjectID = "83V-r9-int"; */
+"83V-r9-int.text" = "جداول الأدوية الشهرية";
+
+/* Class = "UILabel"; text = "08/05/2023 03:05 PM"; ObjectID = "8fm-YF-Ar4"; */
+"8fm-YF-Ar4.text" = "08/05/2023 03:05 PM";
+
+/* Class = "UILabel"; text = "الي : "; ObjectID = "AHs-0q-TyZ"; */
+"AHs-0q-TyZ.text" = "الي : ";
+
+/* Class = "UITextField"; placeholder = "عدد الايام"; ObjectID = "Arq-2y-sN6"; */
+"Arq-2y-sN6.placeholder" = "عدد الايام";
+
+/* Class = "UILabel"; text = "أهلاً,"; ObjectID = "BQj-nx-fvx"; */
+"BQj-nx-fvx.text" = "أهلاً,";
+
+/* Class = "UILabel"; text = "تسجيل قياس جديد"; ObjectID = "C6E-ip-Cn9"; */
+"C6E-ip-Cn9.text" = "تسجيل قياس جديد";
+
+/* Class = "UILabel"; text = "تم تسجيل"; ObjectID = "CBR-gT-Gto"; */
+"CBR-gT-Gto.text" = "تم تسجيل";
+
+/* Class = "UILabel"; text = "22"; ObjectID = "Cjy-mP-0UZ"; */
+"Cjy-mP-0UZ.text" = "22";
+
+/* Class = "UITextField"; placeholder = "ادخل اسمك بالكامل"; ObjectID = "Coa-L3-2vZ"; */
+"Coa-L3-2vZ.placeholder" = "ادخل اسمك بالكامل";
+
+/* Class = "UILabel"; text = "26/7/2022"; ObjectID = "Dhi-9N-S6N"; */
+"Dhi-9N-S6N.text" = "26/7/2022";
+
+/* Class = "UILabel"; text = "Inbody"; ObjectID = "ETa-XN-jse"; */
+"ETa-XN-jse.text" = "Inbody";
+
+/* Class = "UILabel"; text = "السكر"; ObjectID = "EWU-vK-tHx"; */
+"EWU-vK-tHx.text" = "السكر";
+
+/* Class = "UILabel"; text = "القاربة علي الانتهاء"; ObjectID = "FE8-r2-GK5"; */
+"FE8-r2-GK5.text" = "القاربة علي الانتهاء";
+
+/* Class = "UILabel"; text = "نتائج قياساتك السابقة"; ObjectID = "FyC-q4-K2r"; */
+"FyC-q4-K2r.text" = "نتائج قياساتك السابقة";
+
+/* Class = "UIButton"; normalTitle = "تغيير"; ObjectID = "GCw-wx-aQX"; */
+"GCw-wx-aQX.normalTitle" = "تغيير";
+
+/* Class = "UILabel"; text = "جداول الأدوية الشهرية"; ObjectID = "HgK-XA-IKq"; */
+"HgK-XA-IKq.text" = "جداول الأدوية الشهرية";
+
+/* Class = "UIButton"; normalTitle = "إعادة الضبط"; ObjectID = "I1C-QP-6aG"; */
+"I1C-QP-6aG.normalTitle" = "إعادة الضبط";
+
+/* Class = "UIButton"; normalTitle = "إنشاء"; ObjectID = "I4R-f8-SFg"; */
+"I4R-f8-SFg.normalTitle" = "إنشاء";
+
+/* Class = "UITextField"; placeholder = "ادخل رقم الموبايل الخاص بك"; ObjectID = "IGj-e5-pQg"; */
+"IGj-e5-pQg.placeholder" = "ادخل رقم الموبايل الخاص بك";
+
+/* Class = "UITextField"; placeholder = "الساعة"; ObjectID = "JWn-j0-QdF"; */
+"JWn-j0-QdF.placeholder" = "الساعة";
+
+/* Class = "UIButton"; normalTitle = "تأكيد"; ObjectID = "JkM-Lj-0N6"; */
+"JkM-Lj-0N6.normalTitle" = "تأكيد";
+
+/* Class = "UIButton"; normalTitle = "تم"; ObjectID = "KkV-7C-agC"; */
+"KkV-7C-agC.normalTitle" = "تم";
+
+/* Class = "UITextField"; placeholder = "ضع كلمة المرور الخاصة بك"; ObjectID = "KtT-t0-f13"; */
+"KtT-t0-f13.placeholder" = "ضع كلمة المرور الخاصة بك";
+
+/* Class = "UIButton"; normalTitle = "تخطي"; ObjectID = "LAi-P4-bgf"; */
+"LAi-P4-bgf.normalTitle" = "تخطي";
+
+/* Class = "UILabel"; text = "تسجيل قياس جديد"; ObjectID = "LJs-6p-IBB"; */
+"LJs-6p-IBB.text" = "تسجيل قياس جديد";
+
+/* Class = "UILabel"; text = "26/7/2022"; ObjectID = "LLO-bB-Vkb"; */
+"LLO-bB-Vkb.text" = "26/7/2022";
+
+/* Class = "UIButton"; normalTitle = "إنشاء حساب"; ObjectID = "Luf-V9-apB"; */
+"Luf-V9-apB.normalTitle" = "إنشاء حساب";
+
+/* Class = "UITextField"; placeholder = "كلمة المرور القديمة"; ObjectID = "MNa-3I-AHR"; */
+"MNa-3I-AHR.placeholder" = "كلمة المرور القديمة";
+
+/* Class = "UILabel"; text = "يوم"; ObjectID = "NpU-wm-eHP"; */
+"NpU-wm-eHP.text" = "يوم";
+
+/* Class = "UILabel"; text = "ادخل بياناتك ثم اضغط على “إنشاء”"; ObjectID = "O6y-JT-Ta5"; */
+"O6y-JT-Ta5.text" = "ادخل بياناتك ثم اضغط على “إنشاء”";
+
+/* Class = "UILabel"; text = "الدواء كل"; ObjectID = "OoM-gW-HTu"; */
+"OoM-gW-HTu.text" = "الدواء كل";
+
+/* Class = "UILabel"; text = "من : "; ObjectID = "P81-9K-5Gm"; */
+"P81-9K-5Gm.text" = "من : ";
+
+/* Class = "UITextField"; placeholder = "ادخل رقم الموبايل الخاص بك"; ObjectID = "PPb-IG-2N7"; */
+"PPb-IG-2N7.placeholder" = "ادخل رقم الموبايل الخاص بك";
+
+/* Class = "UIButton"; configuration.title = "تم"; ObjectID = "PWL-H6-Zvm"; */
+"PWL-H6-Zvm.configuration.title" = "تم";
+
+/* Class = "UIButton"; normalTitle = "تم"; ObjectID = "PWL-H6-Zvm"; */
+"PWL-H6-Zvm.normalTitle" = "تم";
+
+/* Class = "UILabel"; text = "قياسات"; ObjectID = "Pf5-la-ys9"; */
+"Pf5-la-ys9.text" = "قياسات";
+
+/* Class = "UITabBarItem"; title = "Item"; ObjectID = "QcB-Ge-8iD"; */
+"QcB-Ge-8iD.title" = "Item";
+
+/* Class = "UILabel"; text = "100"; ObjectID = "Qym-0E-hYV"; */
+"Qym-0E-hYV.text" = "100";
+
+/* Class = "UITextField"; placeholder = "التاريخ"; ObjectID = "R4x-cE-oFr"; */
+"R4x-cE-oFr.placeholder" = "التاريخ";
+
+/* Class = "UIButton"; configuration.title = "إعادة إرسال الرمز"; ObjectID = "Sk6-LM-x3e"; */
+"Sk6-LM-x3e.configuration.title" = "إعادة إرسال الرمز";
+
+/* Class = "UIButton"; normalTitle = "إعادة إرسال الرمز"; ObjectID = "Sk6-LM-x3e"; */
+"Sk6-LM-x3e.normalTitle" = "إعادة إرسال الرمز";
+
+/* Class = "UIButton"; normalTitle = "تم"; ObjectID = "UW6-zf-Rv2"; */
+"UW6-zf-Rv2.normalTitle" = "تم";
+
+/* Class = "UILabel"; text = "نسيت كلمة المرور"; ObjectID = "VRY-hA-qx0"; */
+"VRY-hA-qx0.text" = "نسيت كلمة المرور";
+
+/* Class = "UIButton"; normalTitle = "آخر سنة"; ObjectID = "Vhz-B4-Gz8"; */
+"Vhz-B4-Gz8.normalTitle" = "آخر سنة";
+
+/* Class = "UILabel"; text = "إلى رقم  0102345678"; ObjectID = "Vpy-Zl-GZI"; */
+"Vpy-Zl-GZI.text" = "إلى رقم  0102345678";
+
+/* Class = "UIButton"; normalTitle = "آخر 7 أيام"; ObjectID = "Vy3-dR-JpI"; */
+"Vy3-dR-JpI.normalTitle" = "آخر 7 أيام";
+
+/* Class = "UIButton"; normalTitle = "إلغاء"; ObjectID = "WIY-jV-2bl"; */
+"WIY-jV-2bl.normalTitle" = "إلغاء";
+
+/* Class = "UILabel"; text = "خارج المعدل الطبيعي"; ObjectID = "XaI-XB-1cj"; */
+"XaI-XB-1cj.text" = "خارج المعدل الطبيعي";
+
+/* Class = "UILabel"; text = "أهلاً,"; ObjectID = "Xcg-xp-LJv"; */
+"Xcg-xp-LJv.text" = "أهلاً,";
+
+/* Class = "UILabel"; text = "00:49"; ObjectID = "XhL-xF-mIX"; */
+"XhL-xF-mIX.text" = "00:49";
+
+/* Class = "UIButton"; normalTitle = "إلغاء"; ObjectID = "Yd6-La-DY7"; */
+"Yd6-La-DY7.normalTitle" = "إلغاء";
+
+/* Class = "UILabel"; text = "المساعدة"; ObjectID = "Yur-NZ-uCe"; */
+"Yur-NZ-uCe.text" = "المساعدة";
+
+/* Class = "UILabel"; text = "عدد الأدوية"; ObjectID = "ZCQ-rq-lyk"; */
+"ZCQ-rq-lyk.text" = "عدد الأدوية";
+
+/* Class = "UIButton"; normalTitle = "آخر 3 شهور"; ObjectID = "Zfd-N0-iV9"; */
+"Zfd-N0-iV9.normalTitle" = "آخر 3 شهور";
+
+/* Class = "UILabel"; text = "133"; ObjectID = "aVD-EX-fM9"; */
+"aVD-EX-fM9.text" = "133";
+
+/* Class = "UILabel"; text = "ضمن المعدل الطبيعي"; ObjectID = "aZm-eZ-oCA"; */
+"aZm-eZ-oCA.text" = "ضمن المعدل الطبيعي";
+
+/* Class = "UIButton"; normalTitle = "تأكيد"; ObjectID = "aeq-rf-1aw"; */
+"aeq-rf-1aw.normalTitle" = "تأكيد";
+
+/* Class = "UILabel"; text = "تنبيهات مواعيد الأدوية"; ObjectID = "akE-qT-BBr"; */
+"akE-qT-BBr.text" = "تنبيهات مواعيد الأدوية";
+
+/* Class = "UITextField"; placeholder = "تأكيد كلمة المرور الجديدة"; ObjectID = "akb-IZ-j15"; */
+"akb-IZ-j15.placeholder" = "تأكيد كلمة المرور الجديدة";
+
+/* Class = "UILabel"; text = "أهلاً,"; ObjectID = "bFB-V3-vEO"; */
+"bFB-V3-vEO.text" = "أهلاً,";
+
+/* Class = "UIButton"; normalTitle = " تسجيل الدخول"; ObjectID = "bXk-tl-nzS"; */
+"bXk-tl-nzS.normalTitle" = " تسجيل الدخول";
+
+/* Class = "UITabBarItem"; title = "Item"; ObjectID = "cSc-1D-Eim"; */
+"cSc-1D-Eim.title" = "Item";
+
+/* Class = "UILabel"; text = "السكر"; ObjectID = "cVy-Qu-Scb"; */
+"cVy-Qu-Scb.text" = "السكر";
+
+/* Class = "UILabel"; text = "لا يوجد أي قياس  "; ObjectID = "dAp-4L-B8O"; */
+"dAp-4L-B8O.text" = "لا يوجد أي قياس  ";
+
+/* Class = "UIButton"; normalTitle = "لم يصلك الرمز؟"; ObjectID = "eJx-tK-6Sy"; */
+"eJx-tK-6Sy.normalTitle" = "لم يصلك الرمز؟";
+
+/* Class = "UIButton"; normalTitle = "التالى"; ObjectID = "es9-tw-AG1"; */
+"es9-tw-AG1.normalTitle" = "التالى";
+
+/* Class = "UITextField"; placeholder = "ادخل كلمة المرور"; ObjectID = "euG-K0-xBZ"; */
+"euG-K0-xBZ.placeholder" = "ادخل كلمة المرور";
+
+/* Class = "UILabel"; text = "تغيير كلمة المرور"; ObjectID = "fOv-6K-avg"; */
+"fOv-6K-avg.text" = "تغيير كلمة المرور";
+
+/* Class = "UILabel"; text = "المعدل الطبيعي"; ObjectID = "fyT-Sg-And"; */
+"fyT-Sg-And.text" = "المعدل الطبيعي";
+
+/* Class = "UIButton"; normalTitle = "بحث"; ObjectID = "gVT-56-Q2d"; */
+"gVT-56-Q2d.normalTitle" = "بحث";
+
+/* Class = "UILabel"; text = "نصائح طبية"; ObjectID = "gaj-p4-RIN"; */
+"gaj-p4-RIN.text" = "نصائح طبية";
+
+/* Class = "UITextField"; placeholder = "كلمة المرور الجديدة"; ObjectID = "hlF-4I-cjT"; */
+"hlF-4I-cjT.placeholder" = "كلمة المرور الجديدة";
+
+/* Class = "UIButton"; normalTitle = "كل القياسات"; ObjectID = "jEt-3n-iCA"; */
+"jEt-3n-iCA.normalTitle" = "كل القياسات";
+
+/* Class = "UILabel"; text = "تم إعادة ضبط كلمة المرور بنجاح"; ObjectID = "jO2-YW-jN7"; */
+"jO2-YW-jN7.text" = "تم إعادة ضبط كلمة المرور بنجاح";
+
+/* Class = "UITabBarItem"; title = "Item"; ObjectID = "jRk-NL-0Is"; */
+"jRk-NL-0Is.title" = "Item";
+
+/* Class = "UITextField"; placeholder = "تأكيد كلمة المرور الجديدة"; ObjectID = "jdK-1M-OIK"; */
+"jdK-1M-OIK.placeholder" = "تأكيد كلمة المرور الجديدة";
+
+/* Class = "UILabel"; text = "من تاريخ"; ObjectID = "kFv-ch-6Uj"; */
+"kFv-ch-6Uj.text" = "من تاريخ";
+
+/* Class = "UILabel"; text = "إضافة تنبيه جديد"; ObjectID = "kZf-d6-Ebo"; */
+"kZf-d6-Ebo.text" = "إضافة تنبيه جديد";
+
+/* Class = "UILabel"; text = "تسجيل قياس جديد"; ObjectID = "kwH-IH-pZx"; */
+"kwH-IH-pZx.text" = "تسجيل قياس جديد";
+
+/* Class = "UILabel"; text = "موعد تجديد طلب الأدوية القادم"; ObjectID = "l50-o5-crP"; */
+"l50-o5-crP.text" = "موعد تجديد طلب الأدوية القادم";
+
+/* Class = "UILabel"; text = " قياس فقط"; ObjectID = "l8t-Am-zeg"; */
+"l8t-Am-zeg.text" = " قياس فقط";
+
+/* Class = "UITextField"; placeholder = "البداية"; ObjectID = "lLk-IY-FYW"; */
+"lLk-IY-FYW.placeholder" = "البداية";
+
+/* Class = "UILabel"; text = "إضافة تنبيه جديد"; ObjectID = "moh-Jo-und"; */
+"moh-Jo-und.text" = "إضافة تنبيه جديد";
+
+/* Class = "UILabel"; text = "تصنيف: "; ObjectID = "n3O-yx-J32"; */
+"n3O-yx-J32.text" = "تصنيف: ";
+
+/* Class = "UILabel"; text = "ادخل بياناتك ثم اضغط على “تسجيل الدخول”"; ObjectID = "nc9-bw-TFq"; */
+"nc9-bw-TFq.text" = "ادخل بياناتك ثم اضغط على “تسجيل الدخول”";
+
+/* Class = "UILabel"; text = "تاريخ بداية الجدول"; ObjectID = "oac-Le-OVG"; */
+"oac-Le-OVG.text" = "تاريخ بداية الجدول";
+
+/* Class = "UITabBarItem"; title = "Item"; ObjectID = "oru-Sp-Gat"; */
+"oru-Sp-Gat.title" = "Item";
+
+/* Class = "UIButton"; normalTitle = "تأكيد"; ObjectID = "ppq-Ja-lwN"; */
+"ppq-Ja-lwN.normalTitle" = "تأكيد";
+
+/* Class = "UILabel"; text = "قياساتك"; ObjectID = "r5C-H3-9Ov"; */
+"r5C-H3-9Ov.text" = "قياساتك";
+
+/* Class = "UILabel"; text = "100"; ObjectID = "r8H-9W-WS7"; */
+"r8H-9W-WS7.text" = "100";
+
+/* Class = "UITextField"; placeholder = "اسم الدواء"; ObjectID = "sLj-Vn-jKT"; */
+"sLj-Vn-jKT.placeholder" = "اسم الدواء";
+
+/* Class = "UILabel"; text = "تسجيل قياس جديد"; ObjectID = "sNX-DR-ReK"; */
+"sNX-DR-ReK.text" = "تسجيل قياس جديد";
+
+/* Class = "UILabel"; text = " تاريخ نهاية الجدول"; ObjectID = "scE-yz-5gT"; */
+"scE-yz-5gT.text" = " تاريخ نهاية الجدول";
+
+/* Class = "UILabel"; text = "إنشاء حساب"; ObjectID = "t81-Fh-qaf"; */
+"t81-Fh-qaf.text" = "إنشاء حساب";
+
+/* Class = "UITextField"; placeholder = "بحث ..."; ObjectID = "tD3-l3-sXN"; */
+"tD3-l3-sXN.placeholder" = "بحث ...";
+
+/* Class = "UILabel"; text = "لم تقم بالانضمام حتى الآن؟ "; ObjectID = "tIO-WF-La0"; */
+"tIO-WF-La0.text" = "لم تقم بالانضمام حتى الآن؟ ";
+
+/* Class = "UILabel"; text = "تصنيفات النصائح"; ObjectID = "uhb-59-281"; */
+"uhb-59-281.text" = "تصنيفات النصائح";
+
+/* Class = "UILabel"; text = "أدخل الرمز هنا"; ObjectID = "vh8-0B-vn3"; */
+"vh8-0B-vn3.text" = "أدخل الرمز هنا";
+
+/* Class = "UITabBarItem"; title = "Item"; ObjectID = "xBx-LU-nW6"; */
+"xBx-LU-nW6.title" = "Item";
+
+/* Class = "UILabel"; text = "نسيت كلمة المرور"; ObjectID = "xYs-Bk-ShA"; */
+"xYs-Bk-ShA.text" = "نسيت كلمة المرور";
+
+/* Class = "UIButton"; normalTitle = "تسجيل الدخول"; ObjectID = "xnA-Jw-hDh"; */
+"xnA-Jw-hDh.normalTitle" = "تسجيل الدخول";
+
+/* Class = "UILabel"; text = "قياسات"; ObjectID = "yhR-K9-Db5"; */
+"yhR-K9-Db5.text" = "قياسات";
+
+/* Class = "UILabel"; text = "تسجيل الدخول"; ObjectID = "zUB-h4-uml"; */
+"zUB-h4-uml.text" = "تسجيل الدخول";

@@ -42,11 +42,31 @@ class LocalizationManager : ObservableObject{
         }
     }
     
-    private func loadDefaultTranslations() -> [String: String] {
-        guard let path = Bundle.main.path(forResource: "Localizable", ofType: "strings"),
-              let dictionary = NSDictionary(contentsOfFile: path) as? [String: String] else {
-            return [:]
+//    private func loadDefaultTranslations() -> [String: String] {
+//        guard let path = Bundle.main.path(forResource: "Localizable", ofType: "strings"),
+//              let dictionary = NSDictionary(contentsOfFile: path) as? [String: String] else {
+//            return [:]
+//        }
+//        return dictionary
+//    }
+    
+    private func loadDefaultTranslations(for language: String) -> [String: String] {
+        // 1. Try to load the specific language file first
+        if let path = Bundle.main.path(forResource: language, ofType: "lproj"),
+           let bundle = Bundle(path: path),
+           let path = bundle.path(forResource: "Localizable", ofType: "strings"),
+           let dictionary = NSDictionary(contentsOfFile: path) as? [String: String] {
+            return dictionary
         }
+        
+        // 2. Fall back to base localization (English)
+        guard let path = Bundle.main.path(forResource: "Base", ofType: "lproj"),
+              let bundle = Bundle(path: path),
+              let path = bundle.path(forResource: "Localizable", ofType: "strings"),
+              let dictionary = NSDictionary(contentsOfFile: path) as? [String: String] else {
+            return [:] // Final fallback
+        }
+        
         return dictionary
     }
     
@@ -57,26 +77,32 @@ class LocalizationManager : ObservableObject{
 //            return
 //        }
         
-        let urlString = "https://alnada-devmrsapi.azurewebsites.net/api/\(currentLanguage ?? "ar")/Translations/GetTranslationFile/ios"
+        let urlString = "https://alnada-devmrsapi.azurewebsites.net/api/\(currentLanguage ?? "ar")/Translations/GetTranslationFile/ios 66"
         
         guard let url = URL(string: urlString) else {
             print("Invalid URL")
-            self.updateTranslations(self.loadDefaultTranslations())
+//            self.updateTranslations(self.loadDefaultTranslations())
+            self.updateTranslations(self.loadDefaultTranslations(for: currentLanguage ?? "ar"))
+
             completion(false)
             return
         }
         
-        URLSession.shared.dataTask(with: url) { data, response, error in
+         URLSession.shared.dataTask(with: url) { [self] data, response, error in
             if let error = error {
                 print("Error fetching translations: \(error.localizedDescription)")
-                self.updateTranslations(self.loadDefaultTranslations())
+//                self.updateTranslations(self.loadDefaultTranslations())
+                self.updateTranslations(self.loadDefaultTranslations(for: currentLanguage ?? "ar"))
+
                 completion(false)
                 return
             }
             
             guard let data = data else {
                 print("No data received")
-                self.updateTranslations(self.loadDefaultTranslations())
+//                self.updateTranslations(self.loadDefaultTranslations())
+                self.updateTranslations(self.loadDefaultTranslations(for: currentLanguage ?? "ar"))
+
                 completion(false)
                 return
             }
@@ -89,12 +115,16 @@ class LocalizationManager : ObservableObject{
                     completion(true)
                 } else {
                     print("Invalid JSON format")
-                    self.updateTranslations(self.loadDefaultTranslations())
+//                    self.updateTranslations(self.loadDefaultTranslations())
+                    self.updateTranslations(self.loadDefaultTranslations(for: currentLanguage ?? "ar"))
+
                     completion(false)
                 }
             } catch {
                 print("JSON parsing error: \(error.localizedDescription)")
-                self.updateTranslations(self.loadDefaultTranslations())
+//                self.updateTranslations(self.loadDefaultTranslations())
+                self.updateTranslations(self.loadDefaultTranslations(for: currentLanguage ?? "ar"))
+
                 completion(false)
             }
         }.resume()

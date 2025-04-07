@@ -721,8 +721,7 @@
                                                                                 </constraints>
                                                                                 <userDefinedRuntimeAttributes>
                                                                                     <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="ادخل رقم الموبايل الخاص بك"/>
-                                                                                    <userDefinedRuntimeAttribute type="string" keyPath="placeholderKey" value="ادخل رقم الموبايل الخاص بك"/>
-                                                                                    <userDefinedRuntimeAttribute type="string" keyPath="titleKey" value="رقم الموبايل"/>
+                                                                                    <userDefinedRuntimeAttribute type="string" keyPath="placeholderKey" value="login_mobile_placeholder"/>
                                                                                     <userDefinedRuntimeAttribute type="color" keyPath="titleColor">
                                                                                         <color key="value" name="mainBlue"/>
                                                                                     </userDefinedRuntimeAttribute>
@@ -749,6 +748,7 @@
                                                                                     <userDefinedRuntimeAttribute type="number" keyPath="maxCharacterCount">
                                                                                         <integer key="value" value="11"/>
                                                                                     </userDefinedRuntimeAttribute>
+                                                                                    <userDefinedRuntimeAttribute type="string" keyPath="titleKey" value="login_mobile_title"/>
                                                                                 </userDefinedRuntimeAttributes>
                                                                             </view>
                                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ckG-ni-Ogf" customClass="CustomTextField" customModule="Sehaty" customModuleProvider="target">
@@ -759,8 +759,8 @@
                                                                                 </constraints>
                                                                                 <userDefinedRuntimeAttributes>
                                                                                     <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="ادخل كلمة المرور"/>
-                                                                                    <userDefinedRuntimeAttribute type="string" keyPath="placeholderKey" value="ادخل كلمة المرور"/>
-                                                                                    <userDefinedRuntimeAttribute type="string" keyPath="titleKey" value="كلمة المرور"/>
+                                                                                    <userDefinedRuntimeAttribute type="string" keyPath="placeholderKey" value="login_password_placeholder"/>
+                                                                                    <userDefinedRuntimeAttribute type="string" keyPath="titleKey" value="login_password_title"/>
                                                                                     <userDefinedRuntimeAttribute type="color" keyPath="titleColor">
                                                                                         <color key="value" name="mainBlue"/>
                                                                                     </userDefinedRuntimeAttribute>

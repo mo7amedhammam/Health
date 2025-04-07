@@ -10,6 +10,8 @@
 		80575AC14FA23A70DAA7BBEA /* Pods_Sehaty.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0BF0C90049FC1EFFEE4F4C0 /* Pods_Sehaty.framework */; };
 		903667062D82E0A40040AE29 /* LocalizationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 903667052D82E08E0040AE29 /* LocalizationManager.swift */; };
 		903667082D82E1410040AE29 /* AppKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 903667072D82E1370040AE29 /* AppKeys.swift */; };
+		9057A6132DA4232B0090C34A /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9057A6122DA4232B0090C34A /* CustomTextField.swift */; };
+		9057A61C2DA430470090C34A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9057A61A2DA430470090C34A /* Localizable.strings */; };
 		90842F382DA16A3700B02D02 /* SelectLanguageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90842F372DA16A2200B02D02 /* SelectLanguageView.swift */; };
 		90842F3A2DA1748800B02D02 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90842F392DA1748800B02D02 /* CustomButton.swift */; };
 		90842F3C2DA17A7300B02D02 /* CustomNavBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90842F3B2DA17A7300B02D02 /* CustomNavBar.swift */; };
@@ -223,6 +225,9 @@
 		89D6D697015359A8CFB74DC2 /* Pods-Sehaty.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sehaty.release.xcconfig"; path = "Target Support Files/Pods-Sehaty/Pods-Sehaty.release.xcconfig"; sourceTree = "<group>"; };
 		903667052D82E08E0040AE29 /* LocalizationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationManager.swift; sourceTree = "<group>"; };
 		903667072D82E1370040AE29 /* AppKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppKeys.swift; sourceTree = "<group>"; };
+		9057A6122DA4232B0090C34A /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
+		9057A61B2DA430470090C34A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		9057A61D2DA430E90090C34A /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Localizable.strings; sourceTree = "<group>"; };
 		90842F372DA16A2200B02D02 /* SelectLanguageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectLanguageView.swift; sourceTree = "<group>"; };
 		90842F392DA1748800B02D02 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
 		90842F3B2DA17A7300B02D02 /* CustomNavBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavBar.swift; sourceTree = "<group>"; };
@@ -462,6 +467,7 @@
 			children = (
 				903667072D82E1370040AE29 /* AppKeys.swift */,
 				903667052D82E08E0040AE29 /* LocalizationManager.swift */,
+				9057A61A2DA430470090C34A /* Localizable.strings */,
 			);
 			path = Localization;
 			sourceTree = "<group>";
@@ -927,6 +933,7 @@
 		BBBDFFF12A730F8400F066DF /* File Support */ = {
 			isa = PBXGroup;
 			children = (
+				9057A6122DA4232B0090C34A /* CustomTextField.swift */,
 				90B67BE62D9EE20B00C1FD31 /* customModifiers.swift */,
 				903667042D82E0700040AE29 /* Localization */,
 				C85996742AA7553500533C87 /* HUD.swift */,
@@ -1569,6 +1576,7 @@
 			knownRegions = (
 				en,
 				Base,
+				ar,
 			);
 			mainGroup = BBC7B44E2A72CC820079355E;
 			productRefGroup = BBC7B4582A72CC820079355E /* Products */;
@@ -1595,6 +1603,7 @@
 				BBE3CC782A80000E004B0D9A /* MedicationScheduleTVCell.xib in Resources */,
 				BBBD002B2A73145200F066DF /* LamaSans-Medium.ttf in Resources */,
 				BBBD00302A73148600F066DF /* LamaSans-Regular.ttf in Resources */,
+				9057A61C2DA430470090C34A /* Localizable.strings in Resources */,
 				BB14DAEC2A7B041C00389B96 /* ProfileTVCellHeader.xib in Resources */,
 				BB1ECAB62AD4741F009BF2DE /* WillExpireTVCell.xib in Resources */,
 				BB6E07F02A896B2700689769 /* MeasurementsDetailsTVCell0.xib in Resources */,
@@ -1657,9 +1666,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Sehaty/Pods-Sehaty-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Sehaty/Pods-Sehaty-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1759,6 +1772,7 @@
 				C8C7339A2AA6756B00185698 /* SignUpM.swift in Sources */,
 				C85671BE2AAF5AD900E02D75 /* InbodyM.swift in Sources */,
 				BBBD00172A73101700F066DF /* Helper.swift in Sources */,
+				9057A6132DA4232B0090C34A /* CustomTextField.swift in Sources */,
 				BB5A26672B2E1DC40005C9B8 /* HelpVC.swift in Sources */,
 				BB546DEA2AC9E467008A4F8C /* HomeTVCell1.swift in Sources */,
 				90842F3A2DA1748800B02D02 /* CustomButton.swift in Sources */,
@@ -1872,6 +1886,15 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		9057A61A2DA430470090C34A /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				9057A61B2DA430470090C34A /* en */,
+				9057A61D2DA430E90090C34A /* ar */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
 		BBC7B4602A72CC820079355E /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -1895,6 +1918,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -1955,6 +1979,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";

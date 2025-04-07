@@ -27,7 +27,7 @@ struct SelectLanguageView : View {
                     .padding(.bottom,15)
 
                 CustomButton(title: "العربية"){
-//                    localizationManager.currentLanguage = "ar"
+                    localizationManager.currentLanguage = "ar"
                     LocalizationManager.shared.setLanguage("ar"){ success in
                         if success {
                             print("✅ Localization updated successfully")
@@ -39,7 +39,7 @@ struct SelectLanguageView : View {
                     .frame(width:200)
 
                 CustomButton(title: "الإنجليزية",backgroundcolor: Color(.secondaryMain)){
-//                    localizationManager.currentLanguage = "en"
+                    localizationManager.currentLanguage = "en"
                     LocalizationManager.shared.setLanguage("en"){ success in
                         if success {
                             print("✅ Localization updated successfully")

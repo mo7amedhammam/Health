@@ -1,0 +1,25 @@
+/* 
+  Localizable.strings
+  Sehaty
+
+  Created by mohamed hammam on 07/04/2025.
+  
+*/
+
+
+/* Login */
+"login_title" = "Login";
+"login_subtitle" = "ادخل بياناتك ثم اضغط على “تسجيل الدخول”";
+
+"login_mobile_title" = "Mobile Number";
+"login_mobile_placeholder" = "Enter Your Mobile Number";
+
+"login_password_title" = "Password";
+"login_password_placeholder" = "Enter Your Password";
+
+"login_forget_Password" = "نسيت كلمة المرور؟";
+
+"login_signin_btn" = "Sign In";
+
+"login_not_signin" = "لم تقم بإنشاء حساب حتى الآن؟";
+"login_signup_btn" = "Create Account";

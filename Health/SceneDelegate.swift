@@ -60,7 +60,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 //        self.window?.rootViewController = nav
 //        window?.makeKeyAndVisible()
         
-        if !Helper.shared.isLanguageSelected(){
+        if Helper.shared.isLanguageSelected(){
             window?.rootViewController = UIHostingController(rootView: SelectLanguageView())
 
         }else if !Helper.shared.checkOnBoard() {
