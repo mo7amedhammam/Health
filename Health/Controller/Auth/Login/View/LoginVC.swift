@@ -232,19 +232,17 @@ import UIKit
 
 final class LoginVC: UIViewController {
     
-    @IBOutlet private weak var TFPhone: UITextField!
-    @IBOutlet private weak var ViewPhoneNum: UIView!
-    @IBOutlet private weak var BtnPhone: UIView!
-    
-    @IBOutlet private weak var TFPasswordold: UITextField!
-    @IBOutlet private weak var ViewPassword: UIView!
-    @IBOutlet private weak var BtnSecurePassword: UIButton!
-    
-    @IBOutlet weak var BtnForgetPassword: UIButton!
-    @IBOutlet private weak var BtnLogin: UIButton!
-    
     @IBOutlet weak var TFMobile: CustomTextField!
     @IBOutlet weak var TFPassword: CustomTextField!
+
+    @IBOutlet weak var BtnForgetPassword: UIButton!
+    @IBOutlet private weak var BtnLogin: UIButton!
+
+    private var isMobileValid = false
+    private var isPasswordValid = false
+
+    private let validationTooltip = UILabel()
+
     private var viewModel: LoginViewModelProtocol
     let otpViewModel = OtpVM()
 
@@ -257,47 +255,73 @@ final class LoginVC: UIViewController {
         self.viewModel = LoginViewModel()
         super.init(coder: coder)
     }
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        setupBindings()
+//        setupBindings()
+        setupValidation()
     }
     
     private func setupUI() {
-        TFPhone.delegate = self
-        TFPasswordold.delegate = self
-        TFPhone.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
-        TFPasswordold.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
-        
         BtnForgetPassword.underlineCurrentTitle()
-        BtnPhone.isHidden = true
-        BtnLogin.isEnableed(false)
-//        BtnLogin.setTitle(AppKeys.BtnLoginTitle.localized, for: .normal)
+        BtnLogin.isEnabled(false)
         hideKeyboardWhenTappedAround()
-        
-        // Set validation rule
-        TFMobile.validationRule = { text in
-            return text?.count ?? 0 < 2 || text?.contains("@") ?? false
-        }
-
-        // Handle validation changes
-        TFMobile.onValidationChanged = { isValid in
-            print("Email field is valid: \(isValid)")
-        }
-
-        // Manually validate
-        if !TFMobile.validateField() {
-            TFMobile.showError()
-        }
     }
+    private func setupValidation() {
+         // Mobile Validation
+         TFMobile.validationRule = { [weak self] text in
+             guard let self = self , let text = text else { return false }
+             let isValid = text.count == 11 && text.starts(with: "01")
+             return isValid
+         }
+        TFMobile.onValidationChanged = { [weak self] isValid in
+            self?.isMobileValid = isValid
+            self?.updateLoginButtonState()
+        }
+          
+        // Example of advanced password validation
+        TFPassword.validationRule = {[weak self] text in
+            guard let self = self, let text = text else { return false }
+            // At least 6 characters, with 1 uppercase, 1 digit
+//            let passwordTest = NSPredicate(format: "SELF MATCHES %@", "^(?=.*[A-Z])(?=.*\\d).{6,}$")
+//            return passwordTest.evaluate(with: text)
+            
+            let isValid = text.count >= 6
+            return isValid
+        }
+          
+          TFPassword.onValidationChanged = { [weak self] isValid in
+              self?.isPasswordValid = isValid
+              self?.updateLoginButtonState()
+          }
+          
+          // Trigger initial validation
+//          TFMobile.validateField()
+//          TFPassword.validateField()
+      }
+    @objc private func mobileFieldDidChange() {
+         // Enforce 11 character limit
+         if let text = TFMobile.text(), text.count > 11 {
+             TFMobile.textField.text = (String(text.prefix(11)))
+         }
+//         TFMobile.validateField()
+     }
     
-    private func setupBindings() {
-        // Example: Update UI based on ViewModel state
-    }
-       @IBAction func BUBack(_ sender: Any) {
-            //        self.dismiss(animated: true)
+    private func updateLoginButtonState() {
+            BtnLogin.isEnabled(isMobileValid && isPasswordValid)
+            
+            // Optional: Change button appearance based on state
+//            BtnLogin.alpha = (isMobileValid && isPasswordValid) ? 1.0 : 0.6
         }
+
+    
+//    private func setupBindings() {
+//        // Example: Update UI based on ViewModel state
+//    }
+//       @IBAction func BUBack(_ sender: Any) {
+//            //        self.dismiss(animated: true)
+//        }
     
         @IBAction func BUForgetPassword(_ sender: Any) {
             if TFMobile.text() != ""{
@@ -314,14 +338,14 @@ final class LoginVC: UIViewController {
             guard let vc = initiateViewController(storyboardName: .main, viewControllerIdentifier: SignUp.self) else{return}
             navigationController?.pushViewController(vc, animated: true)
         }
-    @IBAction private func BUShowPassword(_ sender: UIButton) {
-        sender.isSelected.toggle()
-        TFPasswordold.isSecureTextEntry.toggle()
-    }
+//    @IBAction private func BUShowPassword(_ sender: UIButton) {
+//        sender.isSelected.toggle()
+//        TFPasswordold.isSecureTextEntry.toggle()
+//    }
     
     private func login() {
-        viewModel.mobile = TFPhone.text
-        viewModel.password = TFPasswordold.text
+        viewModel.mobile = TFMobile.text()
+        viewModel.password = TFPassword.text()
         
         DispatchQueue.main.async {
 //            NewHud.show(in: self.view)
@@ -351,7 +375,7 @@ final class LoginVC: UIViewController {
     }
     
         func SendOtp() {
-            otpViewModel.mobile = TFPhone.text!
+            otpViewModel.mobile = TFMobile.text()
     
             otpViewModel.SendOtp{[weak self] state in
                 guard let self = self else{return}
@@ -368,7 +392,7 @@ final class LoginVC: UIViewController {
                     print(state)
                     //        guard let seconds = viewModel.responseModel?.secondsCount else {return}
                     guard let vc = initiateViewController(storyboardName: .main, viewControllerIdentifier: OtpVC.self) else{return}
-                    vc.Phonenumber = TFPhone.text
+                    vc.Phonenumber = TFMobile.text()
                     vc.second =  otpViewModel.responseModel?.secondsCount ?? 60
                     Shared.shared.remainingSeconds = otpViewModel.responseModel?.secondsCount ?? 60
                     vc.otp = "استخدم \(otpViewModel.responseModel?.otp ?? 00)"
@@ -387,32 +411,29 @@ final class LoginVC: UIViewController {
             }
         }
 }
-
 // MARK: - UITextFieldDelegate
-extension LoginVC: UITextFieldDelegate {
-    @objc func textFieldDidChange(_ textField: UITextField) {
-        let isPhoneValid = TFPhone.text?.count == 11
-        let isPasswordValid = TFPasswordold.hasText
-        let isformValid = isPhoneValid && isPasswordValid
-        BtnLogin.isEnableed(isformValid)
-    }
-    
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        if textField == TFPhone {
-            let currentText = textField.text ?? ""
-            let newText = (currentText as NSString).replacingCharacters(in: range, with: string)
-            return newText.count <= 11
-        }
-        return true
-    }
-}
+//extension LoginVC: UITextFieldDelegate {
+//    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+//        if textField == TFMobile.textField {
+//            let currentText = textField.text ?? ""
+//            guard let stringRange = Range(range, in: currentText) else { return false }
+//            let updatedText = currentText.replacingCharacters(in: stringRange, with: string)
+//            
+//            // Only allow numbers and limit to 11 characters
+//            let allowedCharacters = CharacterSet.decimalDigits
+//            let characterSet = CharacterSet(charactersIn: string)
+//            return allowedCharacters.isSuperset(of: characterSet) && updatedText.count <= 11
+//        }
+//        return true
+//    }
+//}
 
 @IBDesignable
 class CustomTextField: UIView {
     
     // MARK: - UI Elements
     private let titleLabel = UILabel()
-    private let textField = UITextField()
+     let textField = UITextField()
     private let separatorView = UIView()
     private let iconImageView = UIImageView()
     private let passwordToggleButton = UIButton(type: .custom)
@@ -442,6 +463,15 @@ class CustomTextField: UIView {
     @IBInspectable var textFontSize: CGFloat = 12 {
         didSet { updateTextFont() }
     }
+    
+    // MARK: - New Properties for Character Limiting
+      @IBInspectable var maxCharacterCount: Int = 0 {
+          didSet {
+              if maxCharacterCount > 0 {
+                  textField.delegate = self
+              }
+          }
+      }
     
     // MARK: - Validation Properties
     @IBInspectable var errorColor: UIColor = .red {
@@ -575,23 +605,35 @@ class CustomTextField: UIView {
         }
     }
     
-    // MARK: - Validation Methods
-    private func validate() {
-        guard let rule = validationRule else { return }
-        let newIsValid = rule(textField.text)
-        
-        if newIsValid != isValid {
-            isValid = newIsValid
-            onValidationChanged?(isValid)
-        }
-    }
+    // MARK: - Modified Validation Methods
+      private func validate() {
+          guard let rule = validationRule else { return }
+          
+          let isEmpty = textField.text?.isEmpty ?? true
+          let newIsValid = isEmpty ? true : rule(textField.text)
+          
+          if newIsValid != isValid {
+              isValid = newIsValid
+              onValidationChanged?(isValid && !isEmpty)
+          }
+      }
     
     private func updateErrorState() {
-        let color = isValid ? titleColor : errorColor
-        titleLabel.textColor = color
-        textField.textColor = isValid ? textColor : errorColor
-        separatorView.backgroundColor = isValid ? separatorColor : errorColor
-    }
+         let isEmpty = textField.text?.isEmpty ?? true
+         
+         if isEmpty {
+             // Reset to default colors when empty
+             titleLabel.textColor = titleColor
+             textField.textColor = textColor
+             separatorView.backgroundColor = separatorColor
+         } else {
+             // Apply validation colors only when not empty
+             let color = isValid || isEmpty ? titleColor : errorColor
+             titleLabel.textColor = color
+             textField.textColor = isValid || isEmpty ? textColor : errorColor
+             separatorView.backgroundColor = isValid || isEmpty ? separatorColor : errorColor
+         }
+     }
     
     @objc private func textFieldDidChange() {
         validate()
@@ -668,6 +710,17 @@ class CustomTextField: UIView {
     }
 }
 
-
+// MARK: - Text Field Delegate
+   extension CustomTextField: UITextFieldDelegate {
+       func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+           guard maxCharacterCount > 0 else { return true }
+           
+           let currentText = textField.text ?? ""
+           guard let stringRange = Range(range, in: currentText) else { return false }
+           let updatedText = currentText.replacingCharacters(in: stringRange, with: string)
+           
+           return updatedText.count <= maxCharacterCount
+       }
+   }
 
 

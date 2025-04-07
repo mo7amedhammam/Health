@@ -7,7 +7,7 @@
 
 import UIKit
 extension UIButton {
-    func isEnableed(_ isActive: Bool) {
+    func isEnabled(_ isActive: Bool) {
         isEnabled = isActive
         backgroundColor = isActive ? UIColor(.mainBlue) : UIColor(resource: .btnDisabledBg)
         titleLabel?.textColor = isActive ? .white : UIColor(resource: .btnDisabledTxt)

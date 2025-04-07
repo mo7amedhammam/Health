@@ -376,9 +376,6 @@
                                                                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                                                                 <state key="normal" image="eye.slash.fill" catalog="system"/>
                                                                                                 <state key="selected" image="eye" catalog="system"/>
-                                                                                                <connections>
-                                                                                                    <action selector="BUShowPassword:" destination="moJ-uw-fN9" eventType="touchUpInside" id="hNM-eP-mrQ"/>
-                                                                                                </connections>
                                                                                             </button>
                                                                                             <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="center" contentVerticalAlignment="center" placeholder="ضع كلمة المرور الخاصة بك" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="KtT-t0-f13">
                                                                                                 <rect key="frame" x="50" y="0.0" width="283" height="50"/>
@@ -425,9 +422,6 @@
                                                                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                                                                 <state key="normal" image="eye.slash.fill" catalog="system"/>
                                                                                                 <state key="selected" image="eye" catalog="system"/>
-                                                                                                <connections>
-                                                                                                    <action selector="BUShowPassword:" destination="moJ-uw-fN9" eventType="touchUpInside" id="Ttr-eT-mwx"/>
-                                                                                                </connections>
                                                                                             </button>
                                                                                             <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="center" contentVerticalAlignment="center" placeholder="أكد كلمة المرور الخاصة بك" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="2c5-Q0-5hb">
                                                                                                 <rect key="frame" x="50" y="0.0" width="283" height="50"/>
@@ -662,7 +656,7 @@
                                                                 <rect key="frame" x="0.0" y="0.0" width="363" height="582"/>
                                                                 <subviews>
                                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="edK-q0-3sU">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="363" height="440"/>
+                                                                        <rect key="frame" x="0.0" y="0.0" width="363" height="560"/>
                                                                         <subviews>
                                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Lmz-LB-59q">
                                                                                 <rect key="frame" x="0.0" y="0.0" width="363" height="0.0"/>
@@ -689,8 +683,38 @@
                                                                                     <constraint firstItem="2F1-FN-9vc" firstAttribute="centerY" secondItem="hiU-2o-tF2" secondAttribute="centerY" id="rIn-y5-JTT"/>
                                                                                 </constraints>
                                                                             </view>
+                                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dF8-k3-kPJ">
+                                                                                <rect key="frame" x="0.0" y="180" width="363" height="100"/>
+                                                                                <subviews>
+                                                                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="ags-Uz-9RN">
+                                                                                        <rect key="frame" x="12" y="15" width="339" height="70"/>
+                                                                                        <subviews>
+                                                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="تسجيل الدخول" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zUB-h4-uml">
+                                                                                                <rect key="frame" x="0.0" y="0.0" width="339" height="32.666666666666664"/>
+                                                                                                <fontDescription key="fontDescription" name="LamaSans-Bold" family="Lama Sans" pointSize="32"/>
+                                                                                                <color key="textColor" name="main"/>
+                                                                                                <nil key="highlightedColor"/>
+                                                                                            </label>
+                                                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ادخل بياناتك ثم اضغط على “تسجيل الدخول”" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nc9-bw-TFq">
+                                                                                                <rect key="frame" x="0.0" y="37.666666666666686" width="339" height="32.333333333333343"/>
+                                                                                                <fontDescription key="fontDescription" name="LamaSans-Medium" family="Lama Sans" pointSize="16"/>
+                                                                                                <color key="textColor" name="SecondaryMain"/>
+                                                                                                <nil key="highlightedColor"/>
+                                                                                            </label>
+                                                                                        </subviews>
+                                                                                    </stackView>
+                                                                                </subviews>
+                                                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                                <constraints>
+                                                                                    <constraint firstAttribute="height" constant="100" id="5Wp-E9-kdT"/>
+                                                                                    <constraint firstItem="ags-Uz-9RN" firstAttribute="leading" secondItem="dF8-k3-kPJ" secondAttribute="leading" constant="12" id="KBl-pI-8bW"/>
+                                                                                    <constraint firstAttribute="bottom" secondItem="ags-Uz-9RN" secondAttribute="bottom" constant="15" id="OME-UV-MAM"/>
+                                                                                    <constraint firstAttribute="trailing" secondItem="ags-Uz-9RN" secondAttribute="trailing" constant="12" id="o7H-Mq-LDb"/>
+                                                                                    <constraint firstItem="ags-Uz-9RN" firstAttribute="top" secondItem="dF8-k3-kPJ" secondAttribute="top" constant="15" id="xId-eH-CXI"/>
+                                                                                </constraints>
+                                                                            </view>
                                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1ks-xj-5Gw" customClass="CustomTextField" customModule="Sehaty" customModuleProvider="target">
-                                                                                <rect key="frame" x="0.0" y="180" width="363" height="50"/>
+                                                                                <rect key="frame" x="0.0" y="300" width="363" height="50"/>
                                                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                                 <constraints>
                                                                                     <constraint firstAttribute="height" constant="50" id="gdU-6P-uRx"/>
@@ -719,10 +743,16 @@
                                                                                     <userDefinedRuntimeAttribute type="color" keyPath="iconColor">
                                                                                         <color key="value" name="SecondaryMain"/>
                                                                                     </userDefinedRuntimeAttribute>
+                                                                                    <userDefinedRuntimeAttribute type="color" keyPath="errorColor">
+                                                                                        <color key="value" name="wrong"/>
+                                                                                    </userDefinedRuntimeAttribute>
+                                                                                    <userDefinedRuntimeAttribute type="number" keyPath="maxCharacterCount">
+                                                                                        <integer key="value" value="11"/>
+                                                                                    </userDefinedRuntimeAttribute>
                                                                                 </userDefinedRuntimeAttributes>
                                                                             </view>
                                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ckG-ni-Ogf" customClass="CustomTextField" customModule="Sehaty" customModuleProvider="target">
-                                                                                <rect key="frame" x="0.0" y="250" width="363" height="60"/>
+                                                                                <rect key="frame" x="0.0" y="370" width="363" height="60"/>
                                                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                                 <constraints>
                                                                                     <constraint firstAttribute="height" constant="60" id="UWv-MY-bWT"/>
@@ -750,6 +780,9 @@
                                                                                     <userDefinedRuntimeAttribute type="boolean" keyPath="isPasswordField" value="YES"/>
                                                                                     <userDefinedRuntimeAttribute type="color" keyPath="iconColor">
                                                                                         <color key="value" name="SecondaryMain"/>
+                                                                                    </userDefinedRuntimeAttribute>
+                                                                                    <userDefinedRuntimeAttribute type="color" keyPath="errorColor">
+                                                                                        <color key="value" name="wrong"/>
                                                                                     </userDefinedRuntimeAttribute>
                                                                                 </userDefinedRuntimeAttributes>
                                                                             </view>
@@ -813,9 +846,6 @@
                                                                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                                                                 <state key="normal" image="eye.slash.fill" catalog="system"/>
                                                                                                 <state key="selected" image="eye" catalog="system"/>
-                                                                                                <connections>
-                                                                                                    <action selector="BUShowPassword:" destination="moJ-uw-fN9" eventType="touchUpInside" id="23C-Od-Lew"/>
-                                                                                                </connections>
                                                                                             </button>
                                                                                             <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="center" contentVerticalAlignment="center" placeholder="ادخل كلمة المرور" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="euG-K0-xBZ">
                                                                                                 <rect key="frame" x="50" y="0.0" width="283" height="50"/>
@@ -847,7 +877,7 @@
                                                                                 </userDefinedRuntimeAttributes>
                                                                             </view>
                                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="trailing" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Ig-ic-iWC">
-                                                                                <rect key="frame" x="0.0" y="330" width="363" height="40"/>
+                                                                                <rect key="frame" x="0.0" y="450" width="363" height="40"/>
                                                                                 <constraints>
                                                                                     <constraint firstAttribute="height" constant="40" id="DBd-ZC-4ZR"/>
                                                                                 </constraints>
@@ -861,7 +891,7 @@
                                                                                 </connections>
                                                                             </button>
                                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bWG-XP-Cta">
-                                                                                <rect key="frame" x="0.0" y="390" width="363" height="50"/>
+                                                                                <rect key="frame" x="0.0" y="510" width="363" height="50"/>
                                                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                                 <nil key="textColor"/>
                                                                                 <nil key="highlightedColor"/>
@@ -1006,14 +1036,8 @@
                     <connections>
                         <outlet property="BtnForgetPassword" destination="1Ig-ic-iWC" id="A5D-13-ZrW"/>
                         <outlet property="BtnLogin" destination="xnA-Jw-hDh" id="9KF-y9-PFR"/>
-                        <outlet property="BtnPhone" destination="uFm-5u-7w8" id="dqW-TD-aU3"/>
-                        <outlet property="BtnSecurePassword" destination="Pzn-cW-gq3" id="cJZ-Nw-tL5"/>
                         <outlet property="TFMobile" destination="1ks-xj-5Gw" id="8hE-oW-x0F"/>
                         <outlet property="TFPassword" destination="ckG-ni-Ogf" id="pxo-ur-l5B"/>
-                        <outlet property="TFPasswordold" destination="euG-K0-xBZ" id="c6D-BD-Pul"/>
-                        <outlet property="TFPhone" destination="IGj-e5-pQg" id="6ab-Mo-T2m"/>
-                        <outlet property="ViewPassword" destination="xcH-Kk-rxt" id="2qF-7W-pZ1"/>
-                        <outlet property="ViewPhoneNum" destination="bhH-Mb-Rzt" id="lTg-KS-i4P"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Kpz-DD-X7E" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -1125,7 +1149,6 @@
                                                                                                 <state key="normal" image="eye.slash.fill" catalog="system"/>
                                                                                                 <state key="selected" image="eye" catalog="system"/>
                                                                                                 <connections>
-                                                                                                    <action selector="BUShowPassword:" destination="moJ-uw-fN9" eventType="touchUpInside" id="Gw9-Qg-QUX"/>
                                                                                                     <action selector="BUShowPassword:" destination="iAw-A0-gAP" eventType="touchUpInside" id="Pg4-T8-BzH"/>
                                                                                                 </connections>
                                                                                             </button>
@@ -1175,7 +1198,6 @@
                                                                                                 <state key="normal" image="eye.slash.fill" catalog="system"/>
                                                                                                 <state key="selected" image="eye" catalog="system"/>
                                                                                                 <connections>
-                                                                                                    <action selector="BUShowPassword:" destination="moJ-uw-fN9" eventType="touchUpInside" id="STW-JZ-Bzf"/>
                                                                                                     <action selector="BUShowPassword:" destination="iAw-A0-gAP" eventType="touchUpInside" id="d8F-Nk-Akn"/>
                                                                                                 </connections>
                                                                                             </button>
@@ -1440,7 +1462,6 @@
                                                                                                 <state key="selected" image="eye" catalog="system"/>
                                                                                                 <connections>
                                                                                                     <action selector="BUShowPassword:" destination="JHo-il-Jky" eventType="touchUpInside" id="PR0-18-S27"/>
-                                                                                                    <action selector="BUShowPassword:" destination="moJ-uw-fN9" eventType="touchUpInside" id="fCU-2o-9cD"/>
                                                                                                 </connections>
                                                                                             </button>
                                                                                             <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="center" contentVerticalAlignment="center" placeholder="كلمة المرور القديمة" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="MNa-3I-AHR">
@@ -1490,7 +1511,6 @@
                                                                                                 <state key="selected" image="eye" catalog="system"/>
                                                                                                 <connections>
                                                                                                     <action selector="BUShowPassword:" destination="JHo-il-Jky" eventType="touchUpInside" id="DVL-va-bcL"/>
-                                                                                                    <action selector="BUShowPassword:" destination="moJ-uw-fN9" eventType="touchUpInside" id="uYY-9e-cRa"/>
                                                                                                 </connections>
                                                                                             </button>
                                                                                             <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="center" contentVerticalAlignment="center" placeholder="كلمة المرور الجديدة" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4Cb-l6-F7w">
@@ -1539,7 +1559,6 @@
                                                                                                 <state key="normal" image="eye.slash.fill" catalog="system"/>
                                                                                                 <state key="selected" image="eye" catalog="system"/>
                                                                                                 <connections>
-                                                                                                    <action selector="BUShowPassword:" destination="moJ-uw-fN9" eventType="touchUpInside" id="ctd-qy-ZZV"/>
                                                                                                     <action selector="BUShowPassword:" destination="JHo-il-Jky" eventType="touchUpInside" id="g4L-Ht-xaE"/>
                                                                                                 </connections>
                                                                                             </button>
@@ -7171,6 +7190,9 @@
         </namedColor>
         <namedColor name="textBlue">
             <color red="0.32899999618530273" green="0.32400000095367432" blue="0.4779999852180481" alpha="0.33000001311302185" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="wrong">
+            <color red="0.93300002813339233" green="0.18000000715255737" blue="0.22699999809265137" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

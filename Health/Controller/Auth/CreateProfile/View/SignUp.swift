@@ -70,7 +70,7 @@ class SignUp: UIViewController  , UITextFieldDelegate{
         TFPassword.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         TFPasswordConfirm.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         
-        BtnRegister.isEnableed(false)
+        BtnRegister.isEnabled(false)
         hideKeyboardWhenTappedAround()
         
         //        rightBarDropDown.cellConfiguration = { (index, item) in return "\(item)" }
@@ -200,7 +200,7 @@ class SignUp: UIViewController  , UITextFieldDelegate{
         let isPasswordConfirmValid = GenderId != nil
         
         let isValidForm = isPhoneValid && isNameValid && isPasswordValid && isPasswordConfirmValid
-        BtnRegister.isEnableed(isValidForm)
+        BtnRegister.isEnabled(isValidForm)
     }
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
