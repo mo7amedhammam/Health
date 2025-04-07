@@ -37,7 +37,7 @@ class ChangePasswordVC: UIViewController  , UITextFieldDelegate {
         TFNewPassword.addTarget(self, action: #selector(didTapTFNewPassword), for: .editingDidEndOnExit)
         TFRe_Password.addTarget(self, action: #selector(didTapTFRe_Password), for: .editingDidEndOnExit)
         
-        BtnChange.enable(false)
+        BtnChange.isEnableed(false)
         hideKeyboardWhenTappedAround()
     }
     
@@ -80,7 +80,7 @@ class ChangePasswordVC: UIViewController  , UITextFieldDelegate {
         let isRePasswordValid = TFRe_Password.hasText // Check if TFCode is not empty
         let isNewPasswordMatched = (TFNewPassword.text == TFRe_Password.text)
         let isValidForm = isPasswordValid && isNewPasswordValid && isRePasswordValid && isNewPasswordMatched
-        BtnChange.enable(isValidForm)
+        BtnChange.isEnableed(isValidForm)
     }
 
     @IBAction func BUBack(_ sender: Any) {

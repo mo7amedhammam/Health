@@ -36,7 +36,7 @@ struct OnboardingPage: View {
                     .padding(.horizontal)
                     .foregroundStyle(Color(.wrong))
                     .lineSpacing(4)
-                
+//                Spacer()
                 Button(action: {
                     buttonaction()
                 }, label: {

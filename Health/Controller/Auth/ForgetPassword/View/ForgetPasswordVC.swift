@@ -26,7 +26,7 @@ class ForgetPasswordVC: UIViewController , UITextFieldDelegate , UIGestureRecogn
         TFRe_Password.delegate = self
         TFPassword.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         TFRe_Password.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
-        BtnReset.enable(false)
+        BtnReset.isEnableed(false)
         
         TFPassword.addTarget(self, action: #selector(didTapTFPassword), for: .editingDidEndOnExit)
         TFRe_Password.addTarget(self, action: #selector(didTapTFRe_Password), for: .editingDidEndOnExit)
@@ -70,7 +70,7 @@ class ForgetPasswordVC: UIViewController , UITextFieldDelegate , UIGestureRecogn
         let isRePasswordValid = TFRe_Password.hasText // Check if TFPassword is not empty
         let isMatched = (TFPassword.text == TFRe_Password.text)
         let isValidForm = isPasswordValid && isRePasswordValid && isMatched
-        BtnReset.enable(isValidForm)
+        BtnReset.isEnableed(isValidForm)
     }
     
     //      func textFieldDidEndEditing(_ textField: UITextField) {

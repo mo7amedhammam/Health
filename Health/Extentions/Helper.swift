@@ -20,6 +20,8 @@ class Helper: NSObject {
     let LoggedInKey = "LoggedId"
     let UserDataKey = "UserDataKey"
     let Languagekey = "languagekey"
+    let LanguageSelectedKey = "LanguageSelectedKey"
+
 //     "id": 0,
 //     "phoneNumber": "string",
 //     "token": "string",
@@ -389,17 +391,25 @@ extension Helper{
             return nil
         }
     
-    func setLanguage(currentLanguage: String) {
-        userDef.set(currentLanguage, forKey: Languagekey)
-        userDef.synchronize()
-    }
+//    func setLanguage(currentLanguage: String) {
+//        userDef.set(currentLanguage, forKey: Languagekey)
+//        userDef.synchronize()
+//    }
     
-    func getLanguage()->String{
-        let deviceLanguage = Locale.preferredLanguages.first ?? "en"
-        let deviceLanguageCode = deviceLanguage.getValidLanguageCode()
-        return userDef.string(forKey: Languagekey) ?? deviceLanguageCode
-    }
+//    func getLanguage()->String{
+//        let deviceLanguage = Locale.preferredLanguages.first ?? "en"
+//        let deviceLanguageCode = deviceLanguage.getValidLanguageCode()
+//        return userDef.string(forKey: Languagekey) ?? deviceLanguageCode
+//    }
         
+    func languageSelected(opened:Bool){
+        UserDefaults.standard.set(opened, forKey: Languagekey)
+   }
+
+    func isLanguageSelected() -> Bool {
+        return UserDefaults.standard.bool(forKey: Languagekey)
+   }
+    
         //remove data then logout
         func logout() {
             IsLoggedIn(value: false)
@@ -467,12 +477,14 @@ extension Helper{
             guard  let controller = initiateViewController(storyboardName: .main,viewControllerIdentifier: viewcontroller.self) else {return}
             let nav = UINavigationController(rootViewController: controller)
             nav.navigationBar.isHidden = true
+            nav.toolbar.isHidden = true
             UIApplication.shared.keyWindow?.replaceRootViewController(nav, from)
         }
     // Overloaded function for SwiftUI views
        func changeRootVC(newroot viewController: UIViewController, transitionFrom from: CATransitionSubtype) {
            let nav = UINavigationController(rootViewController: viewController)
            nav.navigationBar.isHidden = true
+           nav.toolbar.isHidden = true
            UIApplication.shared.keyWindow?.replaceRootViewController(nav, from)
        }
 

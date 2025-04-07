@@ -18,6 +18,7 @@ class LocalizationManager : ObservableObject{
     
     func setLanguage(_ language: String, completion: @escaping (Bool) -> Void) {
         currentLanguage = language
+        Helper.shared.languageSelected(opened: true)
         fetchTranslations { success in
             completion(success)
         }
@@ -49,7 +50,7 @@ class LocalizationManager : ObservableObject{
         return dictionary
     }
     
-    private func fetchTranslations(completion: @escaping (Bool) -> Void) {
+     func fetchTranslations(completion: @escaping (Bool) -> Void) {
 //        if let cachedTranslations = loadCachedTranslations(for: currentLanguage){
 //            self.updateTranslations(cachedTranslations)
 //            completion(true)

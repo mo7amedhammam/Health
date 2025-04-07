@@ -22,7 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        Helper.shared.onBoardOpened(opened: false)
+//        Helper.shared.onBoardOpened(opened: false)
         LocalizationInit()
         IQKeyboardManager.shared.enable = true
         IQKeyboardManager.shared.shouldResignOnTouchOutside = true
@@ -158,12 +158,12 @@ extension AppDelegate{
 //        LocalizationManager.shared.setLanguage(Helper.shared.getLanguage()) { _ in }
 
 //        let currentLanguage = Locale.current.languageCode ?? "en" // Detect user's language
-//        LocalizationManager.shared.fetchTranslations(language: currentLanguage) { success in
-//            if success {
-//                print("✅ Localization updated successfully")
-//            } else {
-//                print("❌ Failed to update localization")
-//            }
-//        }
+        LocalizationManager.shared.fetchTranslations() { success in
+            if success {
+                print("✅ Localization updated successfully")
+            } else {
+                print("❌ Failed to update localization")
+            }
+        }
     }
 }

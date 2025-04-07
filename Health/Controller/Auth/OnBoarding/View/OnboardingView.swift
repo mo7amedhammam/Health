@@ -28,6 +28,7 @@ struct OnboardingView: View {
                                 currentPage += 1
                             }else{
                                 //'go home'
+                                Helper.shared.onBoardOpened(opened: true)
                                 SkipSplash()
                             }
                         }
@@ -36,6 +37,7 @@ struct OnboardingView: View {
                         HStack {
                             Button(action: {
                                 //'go home'
+                                Helper.shared.onBoardOpened(opened: true)
                                 SkipSplash()
                             }) {
                                 Text("تخطي".localized)
@@ -84,16 +86,15 @@ struct OnboardingView: View {
                     .tag(index)
                 }
             }
-            .tabViewStyle(PageTabViewStyle(indexDisplayMode: .always))
+//            .tabViewStyle(PageTabViewStyle(indexDisplayMode: .always))
 //            .padding()
 //            .edgesIgnoringSafeArea(.top)
         }
-        .ignoresSafeArea()
+//        .ignoresSafeArea()
         .edgesIgnoringSafeArea(.top)
     }
     
     func SkipSplash() {
-        Helper.shared.onBoardOpened(opened: true)
         Helper.shared.changeRootVC(newroot: LoginVC.self,transitionFrom: .fromLeft)
     }
 }

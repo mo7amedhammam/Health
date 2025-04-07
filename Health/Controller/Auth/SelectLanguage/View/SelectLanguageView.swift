@@ -27,20 +27,38 @@ struct SelectLanguageView : View {
                     .padding(.bottom,15)
 
                 CustomButton(title: "العربية"){
-                    localizationManager.currentLanguage = "ar"
+//                    localizationManager.currentLanguage = "ar"
+                    LocalizationManager.shared.setLanguage("ar"){ success in
+                        if success {
+                            print("✅ Localization updated successfully")
+                        } else {
+                            print("❌ Failed to update localization")
+                        }
+                    }
                 }
                     .frame(width:200)
 
                 CustomButton(title: "الإنجليزية",backgroundcolor: Color(.secondaryMain)){
-                    localizationManager.currentLanguage = "en"
+//                    localizationManager.currentLanguage = "en"
+                    LocalizationManager.shared.setLanguage("en"){ success in
+                        if success {
+                            print("✅ Localization updated successfully")
+                        } else {
+                            print("❌ Failed to update localization")
+                        }
+                    }
                 }
                     .frame(width:200)
-
             }
             
             Spacer()
 
-            CustomButton(title: "تأكيد",isdisabled: localizationManager.currentLanguage == nil)
+            CustomButton(title: "تأكيد",isdisabled: localizationManager.currentLanguage == nil){
+                let rootVC = UIHostingController(rootView: OnboardingView())
+                rootVC.navigationController?.isNavigationBarHidden = true
+                rootVC.navigationController?.toolbar.isHidden = true
+                Helper.shared.changeRootVC(newroot: rootVC, transitionFrom: .fromLeft)
+            }
         }
         .localizeView()
 

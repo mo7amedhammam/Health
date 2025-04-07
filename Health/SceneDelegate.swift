@@ -60,10 +60,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 //        self.window?.rootViewController = nav
 //        window?.makeKeyAndVisible()
         
-        
-          if !Helper.shared.checkOnBoard() {
-//              window?.rootViewController = UIHostingController(rootView: OnboardingView())
-              window?.rootViewController = UIHostingController(rootView: SelectLanguageView())
+        if !Helper.shared.isLanguageSelected(){
+            window?.rootViewController = UIHostingController(rootView: SelectLanguageView())
+
+        }else if !Helper.shared.checkOnBoard() {
+              window?.rootViewController = UIHostingController(rootView: OnboardingView())
               
           } else {
               let initialVC: UIViewController = Helper.shared.CheckIfLoggedIn()
