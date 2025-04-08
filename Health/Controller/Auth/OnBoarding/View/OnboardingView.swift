@@ -11,11 +11,11 @@ struct OnboardingView: View {
     @State private var currentPage = 0
     
     let pages = [
-        OnboardingPageData(image: "onboarding1", title: "مرحبًا بك في صحتي مع الندى!", description: "استشارات مع خبراء تغذية لمساعدتك على تحقيق أهدافك.", buttontitle: "التالي"),
-        OnboardingPageData(image: "onboarding2", title: "تغذية صحية تناسب أهدافك!", description: "باقات مخصصة لتحسين نمط حياتك.", buttontitle: "التالي"),
-        OnboardingPageData(image: "onboarding3", title: "تابع صحتك بسهولة!", description: "تتبع ضغط الدم، السكر، والهيموجلوبين بلمسة واحدة.", buttontitle: "التالي"),
-        OnboardingPageData(image: "onboarding4", title: "لا تفوّت مواعيدك وأدويتك!", description: "تذكيرات ذكية للجرعات والمواعيد الطبية." ,buttontitle: "التالي"),
-        OnboardingPageData(image: "onboarding5", title: "استشارات طبية وتغذوية متكاملة!", description: "خبراء لمساعدتك في قراراتك الصحية.", buttontitle: "ابدأ")
+        OnboardingPageData(image: "onboarding1", title: "bord1_tilte", description: "bord1_subtilte", buttontitle: "bord_btn_next"),
+        OnboardingPageData(image: "onboarding2", title: "bord2_tilte", description: "bord2_subtilte", buttontitle: "bord_btn_next"),
+        OnboardingPageData(image: "onboarding3", title: "bord3_tilte", description: "bord3_subtilte", buttontitle: "bord_btn_next"),
+        OnboardingPageData(image: "onboarding4", title: "bord4_tilte", description: "bord4_subtilte" ,buttontitle: "bord_btn_next"),
+        OnboardingPageData(image: "onboarding5", title: "bord5_tilte", description: "bord5_subtilte", buttontitle: "bord_btn_start")
     ]
     
     var body: some View {
@@ -40,7 +40,7 @@ struct OnboardingView: View {
                                 Helper.shared.onBoardOpened(opened: true)
                                 SkipSplash()
                             }) {
-                                Text("تخطي".localized)
+                                Text("bord_btn_skip".localized)
                                     .font(.semiBold(size: 14))
                                     .foregroundColor(.blue)
                             }
@@ -53,44 +53,17 @@ struct OnboardingView: View {
                                     currentPage -= 1
                                 }) {
                                     
-                                    Image(LocalizationManager.shared.currentLanguage == "ar" ? .previousLeft : .previousRight)
+                                    Image(LocalizationManager.shared.currentLanguage == "ar" ?  .previousRight :  .previousLeft)
                                 }
                                 .padding()
                             }
-                            
-                            
-//                            if index == pages.count - 1 {
-//                                Button(action: {
-//                                    // Navigate to the main app
-//                                }) {
-//                                    Text("ابدأ")
-//                                        .font(.headline)
-//                                        .padding()
-//                                        .frame(maxWidth: .infinity)
-//                                        .background(Color.blue)
-//                                        .foregroundColor(.white)
-//                                        .cornerRadius(10)
-//                                }
-//                                .padding()
-//                            } else {
-//                                Button(action: {
-//                                    currentPage += 1
-//                                }) {
-//                                    Text("التالي")
-//                                        .foregroundColor(.blue)
-//                                }
-//                                .padding()
-//                            }
                         }
                     }
                     .tag(index)
                 }
             }
-//            .tabViewStyle(PageTabViewStyle(indexDisplayMode: .always))
-//            .padding()
-//            .edgesIgnoringSafeArea(.top)
         }
-//        .ignoresSafeArea()
+        .localizeView()
         .edgesIgnoringSafeArea(.top)
     }
     

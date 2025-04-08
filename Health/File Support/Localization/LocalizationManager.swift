@@ -12,16 +12,21 @@ class LocalizationManager : ObservableObject{
     
     private let queue = DispatchQueue(label: "com.yourapp.localization", attributes: .concurrent)
     private var translations: [String: String] = [:]
-    @Published var currentLanguage: String? = nil // Default language
+    @Published var currentLanguage: String? = ""  // Default language
     
     private init() {}
     
     func setLanguage(_ language: String, completion: @escaping (Bool) -> Void) {
+//        ReloadRootForRTL()
+        print("setLanguage",language)
+
         currentLanguage = language
+        Helper.shared.setLanguage(currentLanguage: language)
         Helper.shared.languageSelected(opened: true)
         fetchTranslations { success in
             completion(success)
         }
+
     }
     
     func localizedString(forKey key: String) -> String {
@@ -76,7 +81,7 @@ class LocalizationManager : ObservableObject{
 //            completion(true)
 //            return
 //        }
-        
+
         let urlString = "https://alnada-devmrsapi.azurewebsites.net/api/\(currentLanguage ?? "ar")/Translations/GetTranslationFile/ios 66"
         
         guard let url = URL(string: urlString) else {
@@ -135,6 +140,13 @@ class LocalizationManager : ObservableObject{
             print("newTranslations",newTranslations)
             self.translations = newTranslations
         }
+    }
+    
+    func ReloadRootForRTL() {
+        // Reload the root view controller
+           let storyboard = UIStoryboard(name: "Main", bundle: nil)
+           let newRootVC = storyboard.instantiateInitialViewController()
+           UIApplication.shared.windows.first?.rootViewController = newRootVC
     }
 }
 

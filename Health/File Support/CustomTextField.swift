@@ -94,6 +94,8 @@ class CustomTextField: UIView {
         didSet { iconImageView.tintColor = iconColor }
     }
     
+    private var didSetupViews = false
+
     // MARK: - Initialization
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -105,8 +107,20 @@ class CustomTextField: UIView {
         setupViews()
     }
     
+    override func prepareForInterfaceBuilder() {
+        super.prepareForInterfaceBuilder()
+        setupViews()
+        // Dummy content
+            titleLabel.text = titleKey.isEmpty ? "Title" : titleKey
+            textField.placeholder = placeholderKey.isEmpty ? "Placeholder" : placeholderKey
+            iconImageView.image = UIImage(systemName: "person")
+    }
+
     // MARK: - Setup
     private func setupViews() {
+        guard !didSetupViews else { return }
+        didSetupViews = true
+
         // Title Label
         titleLabel.textAlignment = .right
         titleLabel.textColor = titleColor
@@ -274,7 +288,10 @@ class CustomTextField: UIView {
         super.layoutSubviews()
         setNeedsLayout()
         
-        if UIView.userInterfaceLayoutDirection(for: semanticContentAttribute) == .rightToLeft {
+        let isRTL = LocalizationManager.shared.currentLanguage == "ar"
+        
+        // Adjust layout for RTL or LTR based on the language
+        if isRTL {
             // Adjust for RTL
             titleLabel.textAlignment = .right
             textField.textAlignment = .right
@@ -289,8 +306,25 @@ class CustomTextField: UIView {
                 NSLayoutConstraint.deactivate(passwordToggleButton.constraints)
                 passwordToggleButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8).isActive = true
             }
+        } else {
+            // Adjust for LTR (default)
+            titleLabel.textAlignment = .left
+            textField.textAlignment = .left
+            textField.semanticContentAttribute = .forceLeftToRight
+            
+            // Move icon to the left side
+            NSLayoutConstraint.deactivate(iconImageView.constraints)
+            iconImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8).isActive = true
+            
+            // Move password toggle to the right side (for LTR)
+            if isPasswordField {
+                NSLayoutConstraint.deactivate(passwordToggleButton.constraints)
+                passwordToggleButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8).isActive = true
+            }
         }
     }
+
+
 }
 
 // MARK: - Text Field Delegate

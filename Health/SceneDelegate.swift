@@ -112,3 +112,34 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 }
 
+extension SceneDelegate {
+    func reloadRootView() {
+        DispatchQueue.main.async {
+            guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene else { return }
+            let window = UIWindow(windowScene: windowScene)
+            window.overrideUserInterfaceStyle = .light
+            
+            // Optional: force layout direction
+            let selectedLang = Helper.shared.getLanguage()
+            UIView.appearance().semanticContentAttribute = selectedLang == "ar" ? .forceRightToLeft : .forceLeftToRight
+
+            if Helper.shared.isLanguageSelected() {
+                window.rootViewController = UIHostingController(rootView: SelectLanguageView())
+            } else if !Helper.shared.checkOnBoard() {
+                window.rootViewController = UIHostingController(rootView: OnboardingView())
+            } else {
+                let initialVC: UIViewController = Helper.shared.CheckIfLoggedIn()
+                    ? initiateViewController(storyboardName: .main, viewControllerIdentifier: HTBC.self)!
+                    : initiateViewController(storyboardName: .main, viewControllerIdentifier: LoginVC.self)!
+                
+                let nav = UINavigationController(rootViewController: initialVC)
+                nav.navigationBar.isHidden = true
+                window.rootViewController = nav
+            }
+
+            self.window = window
+            window.makeKeyAndVisible()
+        }
+    }
+}
+

@@ -8,7 +8,7 @@
 
 import SwiftUI
 struct CustomNavBar: View {
-    var title: String? = "Title"
+    var title: String?
     var image: ImageResource? = .init(LocalizationManager.shared.currentLanguage == "en" ? .backLeft : .backRight)
     var onTap: (() -> Void)?
     var body: some View {

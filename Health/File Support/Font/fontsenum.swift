@@ -23,6 +23,8 @@ enum fontsenum:String{
     case regularItalicEn = "LamaSans-RegularItalic"
     case regularItalicAr = "ArbFONTS-LamaSans-MediumItalic"
 
+    case medium = "LamaSans-Medium"
+    
 //    case semiBoldEn = "Sora-Bold"
     case semiBoldAr = "ArbFONTS-LamaSans-SemiBold"
 //    case semiBoldItalicEn = "Sora-Bold"

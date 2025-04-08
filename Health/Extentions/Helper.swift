@@ -391,23 +391,23 @@ extension Helper{
             return nil
         }
     
-//    func setLanguage(currentLanguage: String) {
-//        userDef.set(currentLanguage, forKey: Languagekey)
-//        userDef.synchronize()
-//    }
+    func setLanguage(currentLanguage: String) {
+        userDef.set(currentLanguage, forKey: Languagekey)
+        userDef.synchronize()
+    }
     
-//    func getLanguage()->String{
-//        let deviceLanguage = Locale.preferredLanguages.first ?? "en"
-//        let deviceLanguageCode = deviceLanguage.getValidLanguageCode()
-//        return userDef.string(forKey: Languagekey) ?? deviceLanguageCode
-//    }
+    func getLanguage()->String{
+        let deviceLanguage = Locale.preferredLanguages.first ?? "en"
+        let deviceLanguageCode = deviceLanguage.getValidLanguageCode()
+        return userDef.string(forKey: Languagekey) ?? deviceLanguageCode
+    }
         
     func languageSelected(opened:Bool){
-        UserDefaults.standard.set(opened, forKey: Languagekey)
+        UserDefaults.standard.set(opened, forKey: LanguageSelectedKey)
    }
 
     func isLanguageSelected() -> Bool {
-        return UserDefaults.standard.bool(forKey: Languagekey)
+        return UserDefaults.standard.bool(forKey: LanguageSelectedKey)
    }
     
         //remove data then logout

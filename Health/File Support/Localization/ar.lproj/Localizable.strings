@@ -6,20 +6,44 @@
   
 */
 
-/* Login */
+/* select language */
+"lang_Title" =  "اللغة";
+"lang_Subtitle" =  "الرجاء اختيار اللغة";
+"lang_Ar_Btn" =  "العربية";
+"lang_En_Btn" =  "الإنجليزية";
+"lang_Ok_Btn" =  "تأكيد";
 
+/* onBoarding*/
+"bord1_tilte" = "مرحبًا بك في \nصحتي مع الندى!";
+"bord1_subtilte" = "استشارات مع خبراء تغذي\nة لمساعدتك على تحقيق أهدافك.";
+"bord2_tilte" = "تغذية صحية تناسب \nأهدافك!";
+"bord2_subtilte" = "باقات مخصصة لتحسين نمط\n حياتك.";
+"bord3_tilte" = "تابع صحتك \nبسهولة!";
+"bord3_subtilte" = "تتبع ضغط الدم، السكر،\n والهيموجلوبين بلمسة واحدة.";
+"bord4_tilte" = "لا تفوّت مواعيدك \nوأدويتك!";
+"bord4_subtilte" = "تذكيرات ذكية للجرعات والمواعيد ا\nلطبية.";
+"bord5_tilte" = "استشارات طبية\n وتغذوية متكاملة!";
+"bord5_subtilte" = "خبراء لمساعدتك \nفي قراراتك الصحية.";
+
+"bord_btn_next" = "التالي";
+"bord_btn_start" = "إبدأ";
+"bord_btn_skip" = "تخطي";
+
+/* Login */
 "login_title" = "تسجيل الدخول";
 "login_subtitle" = "ادخل بياناتك ثم اضغط على “تسجيل الدخول”";
-
 "login_mobile_title" = "رقم الموبايل";
 "login_mobile_placeholder" = "ادخل رقم الموبايل الخاص بك";
-
 "login_password_title" = "كلمة المرور";
 "login_password_placeholder" = "ادخل كلمة المرور";
-
 "login_forget_Password" = "نسيت كلمة المرور؟";
-
 "login_signin_btn" = "تسجيل الدخول";
-
 "login_not_signin" = "لم تقم بإنشاء حساب حتى الآن؟";
 "login_signup_btn" = "إنشاء حساب";
+
+/* Signup */
+"Siginup_Title_title" = "إنشاء حساب";
+"Siginup_Title_subtitle" = "ادخل بياناتك ثم اضغط على “إنشاء”";
+
+"signup_name_title" = "الاسم بالكامل";
+"signup_name_placeholder" = "ادخل اسمك بالكامل";

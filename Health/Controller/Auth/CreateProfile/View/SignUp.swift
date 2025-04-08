@@ -96,6 +96,7 @@ class SignUp: UIViewController  , UITextFieldDelegate{
         
     }
     
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 //        Task {
@@ -386,4 +387,6 @@ extension SignUp{
             }
         }
     }
+    
+    
 }

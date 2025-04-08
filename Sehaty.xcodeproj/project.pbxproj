@@ -15,6 +15,10 @@
 		90842F382DA16A3700B02D02 /* SelectLanguageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90842F372DA16A2200B02D02 /* SelectLanguageView.swift */; };
 		90842F3A2DA1748800B02D02 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90842F392DA1748800B02D02 /* CustomButton.swift */; };
 		90842F3C2DA17A7300B02D02 /* CustomNavBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90842F3B2DA17A7300B02D02 /* CustomNavBar.swift */; };
+		9088CFC32DA559290036EE0E /* CustomHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9088CFC22DA559290036EE0E /* CustomHeader.swift */; };
+		9088CFC52DA561930036EE0E /* CustomHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9088CFC42DA561930036EE0E /* CustomHeader.xib */; };
+		9088CFC92DA5AE570036EE0E /* CustomInputField.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9088CFC82DA5AE570036EE0E /* CustomInputField.xib */; };
+		9088CFCB2DA5AE6C0036EE0E /* CustomInputField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9088CFCA2DA5AE6C0036EE0E /* CustomInputField.swift */; };
 		90B67BDA2D9EC7B400C1FD31 /* OnBoardingPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90B67BD92D9EC7A900C1FD31 /* OnBoardingPage.swift */; };
 		90B67BDC2D9EC7D600C1FD31 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90B67BDB2D9EC7D600C1FD31 /* OnboardingView.swift */; };
 		90B67BE12D9ED2B600C1FD31 /* exColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90B67BE02D9ED2AD00C1FD31 /* exColors.swift */; };
@@ -231,6 +235,10 @@
 		90842F372DA16A2200B02D02 /* SelectLanguageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectLanguageView.swift; sourceTree = "<group>"; };
 		90842F392DA1748800B02D02 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
 		90842F3B2DA17A7300B02D02 /* CustomNavBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavBar.swift; sourceTree = "<group>"; };
+		9088CFC22DA559290036EE0E /* CustomHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomHeader.swift; sourceTree = "<group>"; };
+		9088CFC42DA561930036EE0E /* CustomHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomHeader.xib; sourceTree = "<group>"; };
+		9088CFC82DA5AE570036EE0E /* CustomInputField.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomInputField.xib; sourceTree = "<group>"; };
+		9088CFCA2DA5AE6C0036EE0E /* CustomInputField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomInputField.swift; sourceTree = "<group>"; };
 		90B67BD92D9EC7A900C1FD31 /* OnBoardingPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingPage.swift; sourceTree = "<group>"; };
 		90B67BDB2D9EC7D600C1FD31 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		90B67BE02D9ED2AD00C1FD31 /* exColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = exColors.swift; sourceTree = "<group>"; };
@@ -488,6 +496,24 @@
 				90842F392DA1748800B02D02 /* CustomButton.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		9088CFC62DA5AE090036EE0E /* CustomHeader */ = {
+			isa = PBXGroup;
+			children = (
+				9088CFC22DA559290036EE0E /* CustomHeader.swift */,
+				9088CFC42DA561930036EE0E /* CustomHeader.xib */,
+			);
+			path = CustomHeader;
+			sourceTree = "<group>";
+		};
+		9088CFC72DA5AE1A0036EE0E /* CustomInputField */ = {
+			isa = PBXGroup;
+			children = (
+				9088CFCA2DA5AE6C0036EE0E /* CustomInputField.swift */,
+				9088CFC82DA5AE570036EE0E /* CustomInputField.xib */,
+			);
+			path = CustomInputField;
 			sourceTree = "<group>";
 		};
 		90B67BD72D9EC77900C1FD31 /* OnBoarding */ = {
@@ -1239,6 +1265,8 @@
 			isa = PBXGroup;
 			children = (
 				BBBD00202A73119500F066DF /* LoginVC.swift */,
+				9088CFC72DA5AE1A0036EE0E /* CustomInputField */,
+				9088CFC62DA5AE090036EE0E /* CustomHeader */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1603,6 +1631,7 @@
 				BBE3CC782A80000E004B0D9A /* MedicationScheduleTVCell.xib in Resources */,
 				BBBD002B2A73145200F066DF /* LamaSans-Medium.ttf in Resources */,
 				BBBD00302A73148600F066DF /* LamaSans-Regular.ttf in Resources */,
+				9088CFC92DA5AE570036EE0E /* CustomInputField.xib in Resources */,
 				9057A61C2DA430470090C34A /* Localizable.strings in Resources */,
 				BB14DAEC2A7B041C00389B96 /* ProfileTVCellHeader.xib in Resources */,
 				BB1ECAB62AD4741F009BF2DE /* WillExpireTVCell.xib in Resources */,
@@ -1612,6 +1641,7 @@
 				BB518CE72A9A123200242FAD /* TipsCategoriesCVCell1.xib in Resources */,
 				BB913AD82A9BE04900003AC5 /* TipsCategoriesTVCell1.xib in Resources */,
 				BB14DAF42A7B044500389B96 /* ProfileTVCellLogout.xib in Resources */,
+				9088CFC52DA561930036EE0E /* CustomHeader.xib in Resources */,
 				BB1B2FFC2A7EA364001677FD /* INBodyDetailsTVCell.xib in Resources */,
 				BB546DE32AC9D558008A4F8C /* HomeCVCell1.xib in Resources */,
 				BB5116D32A829B4900CF5D11 /* MeasurementsCVCell.xib in Resources */,
@@ -1724,7 +1754,9 @@
 				BB518CE62A9A123200242FAD /* TipsCategoriesCVCell1.swift in Sources */,
 				BBBEB1BF2B56F4D700502D3E /* TipsCVCell.swift in Sources */,
 				BB14DAE32A7AFA0700389B96 /* MeasurementsVC.swift in Sources */,
+				9088CFCB2DA5AE6C0036EE0E /* CustomInputField.swift in Sources */,
 				90B67BDA2D9EC7B400C1FD31 /* OnBoardingPage.swift in Sources */,
+				9088CFC32DA559290036EE0E /* CustomHeader.swift in Sources */,
 				BB546DDE2AC9D53A008A4F8C /* HomeTVCell0.swift in Sources */,
 				C8A1509D2AB1C63500511B1F /* ProfileVM.swift in Sources */,
 				BBA1DA142AB11C020042713A /* ModelNotification.swift in Sources */,

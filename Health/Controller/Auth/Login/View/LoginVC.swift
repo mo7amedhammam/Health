@@ -41,6 +41,7 @@ final class LoginVC: UIViewController {
 //        setupBindings()
         setupValidation()
 //        refreshLocalization
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -196,7 +197,3 @@ final class LoginVC: UIViewController {
             }
         }
 }
-
-
-
-

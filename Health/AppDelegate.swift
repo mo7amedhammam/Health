@@ -152,18 +152,27 @@ extension AppDelegate : UNUserNotificationCenterDelegate {
     }
 }
 
-//MARK: --- Localization ---
-extension AppDelegate{
+// MARK: --- Localization ---
+extension AppDelegate {
     func LocalizationInit() {
-//        LocalizationManager.shared.setLanguage(Helper.shared.getLanguage()) { _ in }
+        print("Helper Language is:", Helper.shared.getLanguage())
 
-//        let currentLanguage = Locale.current.languageCode ?? "en" // Detect user's language
-        LocalizationManager.shared.fetchTranslations() { success in
-            if success {
-                print("✅ Localization updated successfully")
-            } else {
-                print("❌ Failed to update localization")
+        LocalizationManager.shared.setLanguage(Helper.shared.getLanguage()) { _ in
+            // Ensure this code is executed on the main thread
+            DispatchQueue.main.async {
+                if let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate {
+                    sceneDelegate.reloadRootView()
+                }
             }
         }
+
+        // Uncomment the following if you need to fetch translations
+        // LocalizationManager.shared.fetchTranslations() { success in
+        //    if success {
+        //        print("✅ Localization updated successfully")
+        //    } else {
+        //        print("❌ Failed to update localization")
+        //    }
+        // }
     }
 }

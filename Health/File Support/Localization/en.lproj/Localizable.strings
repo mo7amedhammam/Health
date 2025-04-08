@@ -6,20 +6,45 @@
   
 */
 
+/* select language */
+"lang_Title" =  "Language";
+"lang_Subtitle" =  "Please Select Language";
+"lang_Ar_Btn" =  "العربية";
+"lang_En_Btn" =  "English";
+"lang_Ok_Btn" =  "Confirm";
+
+/* onBoarding*/
+"bord1_tilte" = "مرحبًا بك في \nصحتي مع الندى!";
+"bord1_subtilte" = "استشارات مع خبراء تغذي\nة لمساعدتك على تحقيق أهدافك.";
+"bord2_tilte" = "مرحبًا بك في \nصحتي مع الندى!";
+"bord2_subtilte" = "استشارات مع خبراء تغذي\nة لمساعدتك على تحقيق أهدافك.";
+"bord3_tilte" = "مرحبًا بك في \nصحتي مع الندى!";
+"bord3_subtilte" = "استشارات مع خبراء تغذي\nة لمساعدتك على تحقيق أهدافك.";
+"bord4_tilte" = "مرحبًا بك في \nصحتي مع الندى!";
+"bord4_subtilte" = "استشارات مع خبراء تغذي\nة لمساعدتك على تحقيق أهدافك.";
+"bord5_tilte" = "مرحبًا بك في \nصحتي مع الندى!";
+"bord5_subtilte" = "استشارات مع خبراء تغذي\nة لمساعدتك على تحقيق أهدافك.";
+
+"bord_btn_next" = "Next";
+"bord_btn_start" = "Start";
+"bord_btn_skip" = "Skip";
 
 /* Login */
 "login_title" = "Login";
-"login_subtitle" = "ادخل بياناتك ثم اضغط على “تسجيل الدخول”";
-
+"login_subtitle" = "Enter Your Date and press ”Login”";
 "login_mobile_title" = "Mobile Number";
 "login_mobile_placeholder" = "Enter Your Mobile Number";
-
 "login_password_title" = "Password";
 "login_password_placeholder" = "Enter Your Password";
-
-"login_forget_Password" = "نسيت كلمة المرور؟";
-
+"login_forget_Password" = "Forget Your Password?";
 "login_signin_btn" = "Sign In";
-
-"login_not_signin" = "لم تقم بإنشاء حساب حتى الآن؟";
+"login_not_signin" = "Don't have an account?";
 "login_signup_btn" = "Create Account";
+
+/* Signup */
+"Signup_title" = "Create Account";
+"Signup_subtitle" = "Enter Your Date and press ”Create”";
+
+"signup_name_title" = "Full Name";
+"signup_name_placeholder" = "Enter Your Full Name";
+

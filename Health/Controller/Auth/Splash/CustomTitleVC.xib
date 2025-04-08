@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23727" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23721"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="LamaSans-Bold.ttf">
+            <string>LamaSans-Bold</string>
+        </array>
+        <array key="LamaSans-Medium.ttf">
+            <string>LamaSans-Medium</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CustomTitleVC" customModule="Sehaty" customModuleProvider="target">
+            <connections>
+                <outlet property="LaSubtitle" destination="tUj-Qu-1e7" id="wwk-0f-fp5"/>
+                <outlet property="LaTitle" destination="zkd-W7-1Xw" id="MD2-np-NtZ"/>
+                <outlet property="view" destination="iN0-l3-epB" id="O0P-mj-h3g"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="CustomTitleVC" customModule="Sehaty" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="453" height="208"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="41e-RJ-1WE">
+                    <rect key="frame" x="0.0" y="15" width="453" height="100"/>
+                    <subviews>
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="kjY-3W-IbL">
+                            <rect key="frame" x="15" y="0.0" width="423" height="100"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="إنشاء حساب" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zkd-W7-1Xw">
+                                    <rect key="frame" x="0.0" y="0.0" width="423" height="47.666666666666664"/>
+                                    <fontDescription key="fontDescription" name="LamaSans-Bold" family="Lama Sans" pointSize="32"/>
+                                    <color key="textColor" name="main"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ادخل بياناتك ثم اضغط على “إنشاء”" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tUj-Qu-1e7">
+                                    <rect key="frame" x="0.0" y="52.666666666666671" width="423" height="47.333333333333329"/>
+                                    <fontDescription key="fontDescription" name="LamaSans-Medium" family="Lama Sans" pointSize="16"/>
+                                    <color key="textColor" name="SecondaryMain"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                        </stackView>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="kjY-3W-IbL" secondAttribute="trailing" constant="15" id="4Gu-Dy-mkd"/>
+                        <constraint firstItem="kjY-3W-IbL" firstAttribute="top" secondItem="41e-RJ-1WE" secondAttribute="top" id="I7Z-ZI-29M"/>
+                        <constraint firstAttribute="bottom" secondItem="kjY-3W-IbL" secondAttribute="bottom" id="aMH-C1-MFb"/>
+                        <constraint firstItem="kjY-3W-IbL" firstAttribute="leading" secondItem="41e-RJ-1WE" secondAttribute="leading" constant="15" id="nDb-Fj-v6w"/>
+                        <constraint firstAttribute="height" constant="100" id="yUd-N0-1Cf"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <accessibility key="accessibilityConfiguration" identifier="CustomTitleVC"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="41e-RJ-1WE" secondAttribute="trailing" id="DGK-x7-YGW"/>
+                <constraint firstItem="41e-RJ-1WE" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="WfI-f1-e80"/>
+                <constraint firstItem="41e-RJ-1WE" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="15" id="gxE-LJ-Irc"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="200.76335877862596" y="-452.11267605633805"/>
+        </view>
+    </objects>
+    <resources>
+        <namedColor name="SecondaryMain">
+            <color red="1" green="0.31372549019607843" blue="0.54509803921568623" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="main">
+            <color red="0.17599999904632568" green="0.17599999904632568" blue="0.69800001382827759" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
