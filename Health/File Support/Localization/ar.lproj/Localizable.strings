@@ -42,8 +42,17 @@
 "login_signup_btn" = "إنشاء حساب";
 
 /* Signup */
-"Siginup_Title_title" = "إنشاء حساب";
-"Siginup_Title_subtitle" = "ادخل بياناتك ثم اضغط على “إنشاء”";
+"Signup_title" = "إنشاء حساب";
+"Signup_subtitle" = "ادخل بياناتك ثم اضغط على “إنشاء”";
 
 "signup_name_title" = "الاسم بالكامل";
 "signup_name_placeholder" = "ادخل اسمك بالكامل";
+"signup_mobile_title" = "رقم الموبايل";
+"signup_mobile_placeholder" = "ادخل رقم الموبايل الخاص بك";
+"signup_password_title" = "كلمة المرور";
+"signup_password_placeholder" = "ضع كلمة المرور الخاصة بك";
+"signup_confirmpassword_title" = "تأكيد كلمة المرور";
+"signup_confirmpassword_placeholder" = "أكد كلمة المرور الخاصة بك";
+"signup_signup_btn" = "إنشاء";
+"signup_have_account" = "لديك حساب بالفعل؟";
+"signup_signin_btn" = "تسجيل الدخول";

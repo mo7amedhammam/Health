@@ -217,7 +217,7 @@
                                                             <constraint firstAttribute="height" constant="50" id="Lpt-B1-hhr"/>
                                                         </constraints>
                                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                        <state key="normal" image="back"/>
+                                                        <state key="normal" image="backRight"/>
                                                         <connections>
                                                             <action selector="BUBack:" destination="eS9-Kp-U8P" eventType="touchUpInside" id="uWe-mv-0rr"/>
                                                         </connections>
@@ -242,11 +242,30 @@
                                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="4pM-aw-mNB">
                                                                         <rect key="frame" x="0.0" y="0.0" width="363" height="525"/>
                                                                         <subviews>
-                                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sU6-QD-f2z" customClass="CustomInputField" customModule="Sehaty" customModuleProvider="target">
+                                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sU6-QD-f2z" userLabel="Header" customClass="CustomHeader" customModule="Sehaty" customModuleProvider="target">
                                                                                 <rect key="frame" x="0.0" y="0.0" width="363" height="95"/>
                                                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                                 <constraints>
                                                                                     <constraint firstAttribute="height" constant="95" id="SvU-dc-lcw"/>
+                                                                                </constraints>
+                                                                                <userDefinedRuntimeAttributes>
+                                                                                    <userDefinedRuntimeAttribute type="string" keyPath="titleKey" value="Signup_title"/>
+                                                                                    <userDefinedRuntimeAttribute type="string" keyPath="subtitleKey" value="Signup_subtitle"/>
+                                                                                    <userDefinedRuntimeAttribute type="color" keyPath="titleColor">
+                                                                                        <color key="value" name="mainBlue"/>
+                                                                                    </userDefinedRuntimeAttribute>
+                                                                                    <userDefinedRuntimeAttribute type="color" keyPath="subtitleColor">
+                                                                                        <color key="value" name="SecondaryMain"/>
+                                                                                    </userDefinedRuntimeAttribute>
+                                                                                    <userDefinedRuntimeAttribute type="string" keyPath="placeholderKey" value="signup_name_placeholder"/>
+                                                                                    <userDefinedRuntimeAttribute type="image" keyPath="icon" value="signup_person"/>
+                                                                                </userDefinedRuntimeAttributes>
+                                                                            </view>
+                                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wvy-jn-9u1" userLabel="TFName" customClass="CustomInputField" customModule="Sehaty" customModuleProvider="target">
+                                                                                <rect key="frame" x="0.0" y="115" width="363" height="70"/>
+                                                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                                <constraints>
+                                                                                    <constraint firstAttribute="height" constant="70" id="f8n-9B-QLT"/>
                                                                                 </constraints>
                                                                                 <userDefinedRuntimeAttributes>
                                                                                     <userDefinedRuntimeAttribute type="string" keyPath="titleKey" value="signup_name_title"/>
@@ -261,184 +280,64 @@
                                                                                     <userDefinedRuntimeAttribute type="image" keyPath="icon" value="signup_person"/>
                                                                                 </userDefinedRuntimeAttributes>
                                                                             </view>
-                                                                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AaM-2f-0gd">
-                                                                                <rect key="frame" x="0.0" y="115" width="363" height="70"/>
-                                                                                <subviews>
-                                                                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="9f2-W6-qP4">
-                                                                                        <rect key="frame" x="15" y="10" width="333" height="50"/>
-                                                                                        <subviews>
-                                                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SqK-4t-WL7">
-                                                                                                <rect key="frame" x="0.0" y="0.0" width="40" height="50"/>
-                                                                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                                                <constraints>
-                                                                                                    <constraint firstAttribute="width" constant="40" id="mB1-BE-CwA"/>
-                                                                                                </constraints>
-                                                                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                                                                <state key="normal" image="true"/>
-                                                                                            </button>
-                                                                                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="center" contentVerticalAlignment="center" placeholder="ادخل اسمك بالكامل" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Coa-L3-2vZ">
-                                                                                                <rect key="frame" x="50" y="0.0" width="283" height="50"/>
-                                                                                                <color key="textColor" name="deactive"/>
-                                                                                                <fontDescription key="fontDescription" name="LamaSans-Medium" family="Lama Sans" pointSize="12"/>
-                                                                                                <textInputTraits key="textInputTraits" returnKeyType="next"/>
-                                                                                            </textField>
-                                                                                        </subviews>
-                                                                                    </stackView>
-                                                                                </subviews>
-                                                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                                <constraints>
-                                                                                    <constraint firstAttribute="height" constant="70" id="4ul-fR-t6n"/>
-                                                                                    <constraint firstAttribute="bottom" secondItem="9f2-W6-qP4" secondAttribute="bottom" constant="10" id="OkR-QM-xZZ"/>
-                                                                                    <constraint firstAttribute="trailing" secondItem="9f2-W6-qP4" secondAttribute="trailing" constant="15" id="YbH-g6-8WP"/>
-                                                                                    <constraint firstItem="9f2-W6-qP4" firstAttribute="leading" secondItem="AaM-2f-0gd" secondAttribute="leading" constant="15" id="eZy-qJ-BkV"/>
-                                                                                    <constraint firstItem="9f2-W6-qP4" firstAttribute="top" secondItem="AaM-2f-0gd" secondAttribute="top" constant="10" id="zYo-Wf-UhL"/>
-                                                                                </constraints>
-                                                                                <userDefinedRuntimeAttributes>
-                                                                                    <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                                                                        <real key="value" value="2"/>
-                                                                                    </userDefinedRuntimeAttribute>
-                                                                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                                                        <real key="value" value="35"/>
-                                                                                    </userDefinedRuntimeAttribute>
-                                                                                    <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                                                                        <color key="value" name="stroke"/>
-                                                                                    </userDefinedRuntimeAttribute>
-                                                                                </userDefinedRuntimeAttributes>
-                                                                            </view>
-                                                                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kKC-th-hxW">
+                                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5c9-Sh-JTy" userLabel="TFPhone" customClass="CustomInputField" customModule="Sehaty" customModuleProvider="target">
                                                                                 <rect key="frame" x="0.0" y="205" width="363" height="70"/>
-                                                                                <subviews>
-                                                                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="vSA-go-GWY">
-                                                                                        <rect key="frame" x="15" y="10" width="333" height="50"/>
-                                                                                        <subviews>
-                                                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mqt-sM-qWM">
-                                                                                                <rect key="frame" x="0.0" y="0.0" width="40" height="50"/>
-                                                                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                                                <constraints>
-                                                                                                    <constraint firstAttribute="width" constant="40" id="bo4-yr-s5u"/>
-                                                                                                </constraints>
-                                                                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                                                                <state key="normal" image="true"/>
-                                                                                            </button>
-                                                                                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="center" contentVerticalAlignment="center" placeholder="ادخل رقم الموبايل الخاص بك" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="PPb-IG-2N7">
-                                                                                                <rect key="frame" x="50" y="0.0" width="283" height="50"/>
-                                                                                                <color key="textColor" name="deactive"/>
-                                                                                                <fontDescription key="fontDescription" name="LamaSans-Medium" family="Lama Sans" pointSize="12"/>
-                                                                                                <textInputTraits key="textInputTraits" keyboardType="ASCIICapableNumberPad"/>
-                                                                                            </textField>
-                                                                                        </subviews>
-                                                                                    </stackView>
-                                                                                </subviews>
                                                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                                 <constraints>
-                                                                                    <constraint firstAttribute="height" constant="70" id="2UB-ww-dcX"/>
-                                                                                    <constraint firstAttribute="bottom" secondItem="vSA-go-GWY" secondAttribute="bottom" constant="10" id="7pr-DE-2IN"/>
-                                                                                    <constraint firstItem="vSA-go-GWY" firstAttribute="top" secondItem="kKC-th-hxW" secondAttribute="top" constant="10" id="c1d-be-FS4"/>
-                                                                                    <constraint firstAttribute="trailing" secondItem="vSA-go-GWY" secondAttribute="trailing" constant="15" id="mX1-lG-mDP"/>
-                                                                                    <constraint firstItem="vSA-go-GWY" firstAttribute="leading" secondItem="kKC-th-hxW" secondAttribute="leading" constant="15" id="vZW-ew-YaM"/>
+                                                                                    <constraint firstAttribute="height" constant="70" id="R4z-ql-vRd"/>
                                                                                 </constraints>
                                                                                 <userDefinedRuntimeAttributes>
-                                                                                    <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                                                                        <real key="value" value="2"/>
+                                                                                    <userDefinedRuntimeAttribute type="string" keyPath="titleKey" value="signup_mobile_title"/>
+                                                                                    <userDefinedRuntimeAttribute type="string" keyPath="subtitleKey" value="Signup_subtitle"/>
+                                                                                    <userDefinedRuntimeAttribute type="color" keyPath="titleColor">
+                                                                                        <color key="value" name="mainBlue"/>
                                                                                     </userDefinedRuntimeAttribute>
-                                                                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                                                        <real key="value" value="35"/>
+                                                                                    <userDefinedRuntimeAttribute type="color" keyPath="subtitleColor">
+                                                                                        <color key="value" name="SecondaryMain"/>
                                                                                     </userDefinedRuntimeAttribute>
-                                                                                    <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                                                                        <color key="value" name="stroke"/>
+                                                                                    <userDefinedRuntimeAttribute type="string" keyPath="placeholderKey" value="signup_mobile_placeholder"/>
+                                                                                    <userDefinedRuntimeAttribute type="image" keyPath="icon" value="signup_phone"/>
+                                                                                    <userDefinedRuntimeAttribute type="number" keyPath="maxCharacterCount">
+                                                                                        <integer key="value" value="11"/>
                                                                                     </userDefinedRuntimeAttribute>
                                                                                 </userDefinedRuntimeAttributes>
                                                                             </view>
-                                                                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BFg-st-g02">
+                                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="43h-ur-whi" userLabel="TFPassword" customClass="CustomInputField" customModule="Sehaty" customModuleProvider="target">
                                                                                 <rect key="frame" x="0.0" y="295" width="363" height="70"/>
-                                                                                <subviews>
-                                                                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="bh3-lv-Yfe">
-                                                                                        <rect key="frame" x="15" y="10" width="333" height="50"/>
-                                                                                        <subviews>
-                                                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="veT-GY-mgU">
-                                                                                                <rect key="frame" x="0.0" y="0.0" width="40" height="50"/>
-                                                                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                                                <constraints>
-                                                                                                    <constraint firstAttribute="width" constant="40" id="H3o-xe-FUZ"/>
-                                                                                                </constraints>
-                                                                                                <color key="tintColor" name="stroke"/>
-                                                                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                                                                <state key="normal" image="eye.slash.fill" catalog="system"/>
-                                                                                                <state key="selected" image="eye" catalog="system"/>
-                                                                                            </button>
-                                                                                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="center" contentVerticalAlignment="center" placeholder="ضع كلمة المرور الخاصة بك" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="KtT-t0-f13">
-                                                                                                <rect key="frame" x="50" y="0.0" width="283" height="50"/>
-                                                                                                <color key="textColor" name="deactive"/>
-                                                                                                <fontDescription key="fontDescription" name="LamaSans-Medium" family="Lama Sans" pointSize="12"/>
-                                                                                                <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
-                                                                                            </textField>
-                                                                                        </subviews>
-                                                                                    </stackView>
-                                                                                </subviews>
                                                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                                 <constraints>
-                                                                                    <constraint firstAttribute="trailing" secondItem="bh3-lv-Yfe" secondAttribute="trailing" constant="15" id="1mT-cw-tJC"/>
-                                                                                    <constraint firstItem="bh3-lv-Yfe" firstAttribute="leading" secondItem="BFg-st-g02" secondAttribute="leading" constant="15" id="A7H-rV-qSr"/>
-                                                                                    <constraint firstItem="bh3-lv-Yfe" firstAttribute="top" secondItem="BFg-st-g02" secondAttribute="top" constant="10" id="Qa5-Ol-QpQ"/>
-                                                                                    <constraint firstAttribute="bottom" secondItem="bh3-lv-Yfe" secondAttribute="bottom" constant="10" id="rYh-zC-BuU"/>
-                                                                                    <constraint firstAttribute="height" constant="70" id="u6q-XL-5Ur"/>
+                                                                                    <constraint firstAttribute="height" constant="70" id="YwH-fz-AyP"/>
                                                                                 </constraints>
                                                                                 <userDefinedRuntimeAttributes>
-                                                                                    <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                                                                        <real key="value" value="2"/>
+                                                                                    <userDefinedRuntimeAttribute type="string" keyPath="titleKey" value="signup_password_title"/>
+                                                                                    <userDefinedRuntimeAttribute type="string" keyPath="subtitleKey" value="Signup_subtitle"/>
+                                                                                    <userDefinedRuntimeAttribute type="color" keyPath="titleColor">
+                                                                                        <color key="value" name="mainBlue"/>
                                                                                     </userDefinedRuntimeAttribute>
-                                                                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                                                        <real key="value" value="35"/>
+                                                                                    <userDefinedRuntimeAttribute type="color" keyPath="subtitleColor">
+                                                                                        <color key="value" name="SecondaryMain"/>
                                                                                     </userDefinedRuntimeAttribute>
-                                                                                    <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                                                                        <color key="value" name="stroke"/>
-                                                                                    </userDefinedRuntimeAttribute>
+                                                                                    <userDefinedRuntimeAttribute type="string" keyPath="placeholderKey" value="signup_password_placeholder"/>
+                                                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="isPasswordField" value="YES"/>
                                                                                 </userDefinedRuntimeAttributes>
                                                                             </view>
-                                                                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kw0-fw-F0V">
+                                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Xif-Qa-UwW" userLabel="TFConfirmPassword" customClass="CustomInputField" customModule="Sehaty" customModuleProvider="target">
                                                                                 <rect key="frame" x="0.0" y="385" width="363" height="70"/>
-                                                                                <subviews>
-                                                                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Mrm-B8-pMF">
-                                                                                        <rect key="frame" x="15" y="10" width="333" height="50"/>
-                                                                                        <subviews>
-                                                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Yax-Ez-SEN">
-                                                                                                <rect key="frame" x="0.0" y="0.0" width="40" height="50"/>
-                                                                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                                                <constraints>
-                                                                                                    <constraint firstAttribute="width" constant="40" id="PKD-au-3rQ"/>
-                                                                                                </constraints>
-                                                                                                <color key="tintColor" name="stroke"/>
-                                                                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                                                                <state key="normal" image="eye.slash.fill" catalog="system"/>
-                                                                                                <state key="selected" image="eye" catalog="system"/>
-                                                                                            </button>
-                                                                                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="center" contentVerticalAlignment="center" placeholder="أكد كلمة المرور الخاصة بك" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="2c5-Q0-5hb">
-                                                                                                <rect key="frame" x="50" y="0.0" width="283" height="50"/>
-                                                                                                <color key="textColor" name="deactive"/>
-                                                                                                <fontDescription key="fontDescription" name="LamaSans-Medium" family="Lama Sans" pointSize="12"/>
-                                                                                                <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
-                                                                                            </textField>
-                                                                                        </subviews>
-                                                                                    </stackView>
-                                                                                </subviews>
                                                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                                 <constraints>
-                                                                                    <constraint firstItem="Mrm-B8-pMF" firstAttribute="leading" secondItem="kw0-fw-F0V" secondAttribute="leading" constant="15" id="EB1-xj-EIM"/>
-                                                                                    <constraint firstAttribute="bottom" secondItem="Mrm-B8-pMF" secondAttribute="bottom" constant="10" id="W2R-U4-dQl"/>
-                                                                                    <constraint firstAttribute="trailing" secondItem="Mrm-B8-pMF" secondAttribute="trailing" constant="15" id="XnR-Nc-wtA"/>
-                                                                                    <constraint firstAttribute="height" constant="70" id="hJO-3G-I57"/>
-                                                                                    <constraint firstItem="Mrm-B8-pMF" firstAttribute="top" secondItem="kw0-fw-F0V" secondAttribute="top" constant="10" id="nOq-Jn-tNL"/>
+                                                                                    <constraint firstAttribute="height" constant="70" id="uZg-f0-Ujm"/>
                                                                                 </constraints>
                                                                                 <userDefinedRuntimeAttributes>
-                                                                                    <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                                                                        <real key="value" value="2"/>
+                                                                                    <userDefinedRuntimeAttribute type="string" keyPath="titleKey" value="signup_confirmpassword_title"/>
+                                                                                    <userDefinedRuntimeAttribute type="string" keyPath="subtitleKey" value="Signup_subtitle"/>
+                                                                                    <userDefinedRuntimeAttribute type="color" keyPath="titleColor">
+                                                                                        <color key="value" name="mainBlue"/>
                                                                                     </userDefinedRuntimeAttribute>
-                                                                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                                                        <real key="value" value="35"/>
+                                                                                    <userDefinedRuntimeAttribute type="color" keyPath="subtitleColor">
+                                                                                        <color key="value" name="SecondaryMain"/>
                                                                                     </userDefinedRuntimeAttribute>
-                                                                                    <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                                                                        <color key="value" name="stroke"/>
-                                                                                    </userDefinedRuntimeAttribute>
+                                                                                    <userDefinedRuntimeAttribute type="string" keyPath="placeholderKey" value="signup_confirmpassword_placeholder"/>
+                                                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="isPasswordField" value="YES"/>
                                                                                 </userDefinedRuntimeAttributes>
                                                                             </view>
                                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4YC-9I-Wjw">
@@ -572,19 +471,16 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="BtnName" destination="SqK-4t-WL7" id="VB7-gb-CuT"/>
-                        <outlet property="BtnPassword" destination="veT-GY-mgU" id="qVy-Ol-K76"/>
-                        <outlet property="BtnPasswordConfirm" destination="Yax-Ez-SEN" id="DJc-Jb-Ucl"/>
-                        <outlet property="BtnPhone" destination="mqt-sM-qWM" id="Mne-BT-0AE"/>
+                        <outlet property="BtnBack" destination="86l-av-FkS" id="6Os-0w-gZC"/>
+                        <outlet property="BtnLogin" destination="bXk-tl-nzS" id="AIl-ni-n6H"/>
                         <outlet property="BtnRegister" destination="I4R-f8-SFg" id="8JQ-Z8-beq"/>
-                        <outlet property="TFName" destination="Coa-L3-2vZ" id="wQo-lh-ite"/>
-                        <outlet property="TFPassword" destination="KtT-t0-f13" id="edL-pn-QRD"/>
-                        <outlet property="TFPasswordConfirm" destination="2c5-Q0-5hb" id="cdm-3T-l5Y"/>
-                        <outlet property="TFPhone" destination="PPb-IG-2N7" id="e3E-Z0-pcC"/>
-                        <outlet property="ViewName" destination="AaM-2f-0gd" id="MJI-DD-Zkr"/>
-                        <outlet property="ViewPassword" destination="BFg-st-g02" id="rt6-m2-dd6"/>
-                        <outlet property="ViewPasswordConfirm" destination="kw0-fw-F0V" id="dCE-dh-jjy"/>
-                        <outlet property="ViewPhoneNum" destination="kKC-th-hxW" id="Jty-rV-al0"/>
+                        <outlet property="ContainerView" destination="lF3-eE-4mg" id="s79-Ys-pkl"/>
+                        <outlet property="LaHaveAccount" destination="5ty-iA-95q" id="WyV-HK-V4y"/>
+                        <outlet property="STHaveAccount" destination="txj-a8-ZXv" id="6xd-Tx-gXi"/>
+                        <outlet property="TFName" destination="wvy-jn-9u1" id="SkP-Sy-ub0"/>
+                        <outlet property="TFPassword" destination="43h-ur-whi" id="fKh-EP-tDC"/>
+                        <outlet property="TFPasswordConfirm" destination="Xif-Qa-UwW" id="TMx-1x-AAd"/>
+                        <outlet property="TFPhone" destination="5c9-Sh-JTy" id="FaP-mJ-Krn"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Di5-CE-HRe" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -640,7 +536,7 @@
                                                                 <rect key="frame" x="0.0" y="0.0" width="363" height="582"/>
                                                                 <subviews>
                                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="edK-q0-3sU">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="363" height="560"/>
+                                                                        <rect key="frame" x="0.0" y="0.0" width="363" height="590"/>
                                                                         <subviews>
                                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Lmz-LB-59q">
                                                                                 <rect key="frame" x="0.0" y="0.0" width="363" height="0.0"/>
@@ -684,11 +580,11 @@
                                                                                     </userDefinedRuntimeAttribute>
                                                                                 </userDefinedRuntimeAttributes>
                                                                             </view>
-                                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1ks-xj-5Gw" customClass="CustomTextField" customModule="Sehaty" customModuleProvider="target">
-                                                                                <rect key="frame" x="0.0" y="300" width="363" height="50"/>
+                                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1ks-xj-5Gw" customClass="CustomInputField" customModule="Sehaty" customModuleProvider="target">
+                                                                                <rect key="frame" x="0.0" y="300" width="363" height="70"/>
                                                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                                 <constraints>
-                                                                                    <constraint firstAttribute="height" constant="50" id="gdU-6P-uRx"/>
+                                                                                    <constraint firstAttribute="height" constant="70" id="gdU-6P-uRx"/>
                                                                                 </constraints>
                                                                                 <userDefinedRuntimeAttributes>
                                                                                     <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="ادخل رقم الموبايل الخاص بك"/>
@@ -722,11 +618,11 @@
                                                                                     <userDefinedRuntimeAttribute type="string" keyPath="titleKey" value="login_mobile_title"/>
                                                                                 </userDefinedRuntimeAttributes>
                                                                             </view>
-                                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ckG-ni-Ogf" customClass="CustomTextField" customModule="Sehaty" customModuleProvider="target">
-                                                                                <rect key="frame" x="0.0" y="370" width="363" height="60"/>
+                                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ckG-ni-Ogf" customClass="CustomInputField" customModule="Sehaty" customModuleProvider="target">
+                                                                                <rect key="frame" x="0.0" y="390" width="363" height="70"/>
                                                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                                 <constraints>
-                                                                                    <constraint firstAttribute="height" constant="60" id="UWv-MY-bWT"/>
+                                                                                    <constraint firstAttribute="height" constant="70" id="UWv-MY-bWT"/>
                                                                                 </constraints>
                                                                                 <userDefinedRuntimeAttributes>
                                                                                     <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="ادخل كلمة المرور"/>
@@ -757,98 +653,8 @@
                                                                                     </userDefinedRuntimeAttribute>
                                                                                 </userDefinedRuntimeAttributes>
                                                                             </view>
-                                                                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bhH-Mb-Rzt">
-                                                                                <rect key="frame" x="0.0" y="360" width="363" height="70"/>
-                                                                                <subviews>
-                                                                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="BeD-Zk-qwl">
-                                                                                        <rect key="frame" x="15" y="10" width="333" height="50"/>
-                                                                                        <subviews>
-                                                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uFm-5u-7w8">
-                                                                                                <rect key="frame" x="0.0" y="0.0" width="40" height="50"/>
-                                                                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                                                <constraints>
-                                                                                                    <constraint firstAttribute="width" constant="40" id="chn-tW-shf"/>
-                                                                                                </constraints>
-                                                                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                                                                <state key="normal" image="true"/>
-                                                                                            </button>
-                                                                                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="center" contentVerticalAlignment="center" placeholder="ادخل رقم الموبايل الخاص بك" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="IGj-e5-pQg">
-                                                                                                <rect key="frame" x="50" y="0.0" width="283" height="50"/>
-                                                                                                <color key="textColor" name="deactive"/>
-                                                                                                <fontDescription key="fontDescription" name="LamaSans-Medium" family="Lama Sans" pointSize="12"/>
-                                                                                                <textInputTraits key="textInputTraits" keyboardType="ASCIICapableNumberPad"/>
-                                                                                            </textField>
-                                                                                        </subviews>
-                                                                                    </stackView>
-                                                                                </subviews>
-                                                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                                <constraints>
-                                                                                    <constraint firstAttribute="bottom" secondItem="BeD-Zk-qwl" secondAttribute="bottom" constant="10" id="3HH-9N-N74"/>
-                                                                                    <constraint firstAttribute="trailing" secondItem="BeD-Zk-qwl" secondAttribute="trailing" constant="15" id="fNX-C1-oH8"/>
-                                                                                    <constraint firstAttribute="height" constant="70" id="qBy-26-I11"/>
-                                                                                    <constraint firstItem="BeD-Zk-qwl" firstAttribute="top" secondItem="bhH-Mb-Rzt" secondAttribute="top" constant="10" id="tBX-0a-jIr"/>
-                                                                                    <constraint firstItem="BeD-Zk-qwl" firstAttribute="leading" secondItem="bhH-Mb-Rzt" secondAttribute="leading" constant="15" id="zM9-aC-u4i"/>
-                                                                                </constraints>
-                                                                                <userDefinedRuntimeAttributes>
-                                                                                    <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                                                                        <real key="value" value="2"/>
-                                                                                    </userDefinedRuntimeAttribute>
-                                                                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                                                        <real key="value" value="35"/>
-                                                                                    </userDefinedRuntimeAttribute>
-                                                                                    <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                                                                        <color key="value" name="stroke"/>
-                                                                                    </userDefinedRuntimeAttribute>
-                                                                                </userDefinedRuntimeAttributes>
-                                                                            </view>
-                                                                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xcH-Kk-rxt">
-                                                                                <rect key="frame" x="0.0" y="360" width="363" height="70"/>
-                                                                                <subviews>
-                                                                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Vxj-pT-ZmC">
-                                                                                        <rect key="frame" x="15" y="10" width="333" height="50"/>
-                                                                                        <subviews>
-                                                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Pzn-cW-gq3">
-                                                                                                <rect key="frame" x="0.0" y="0.0" width="40" height="50"/>
-                                                                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                                                <constraints>
-                                                                                                    <constraint firstAttribute="width" constant="40" id="MCW-7G-fUA"/>
-                                                                                                </constraints>
-                                                                                                <color key="tintColor" name="stroke"/>
-                                                                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                                                                <state key="normal" image="eye.slash.fill" catalog="system"/>
-                                                                                                <state key="selected" image="eye" catalog="system"/>
-                                                                                            </button>
-                                                                                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="center" contentVerticalAlignment="center" placeholder="ادخل كلمة المرور" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="euG-K0-xBZ">
-                                                                                                <rect key="frame" x="50" y="0.0" width="283" height="50"/>
-                                                                                                <color key="textColor" name="deactive"/>
-                                                                                                <fontDescription key="fontDescription" name="LamaSans-Medium" family="Lama Sans" pointSize="12"/>
-                                                                                                <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
-                                                                                            </textField>
-                                                                                        </subviews>
-                                                                                    </stackView>
-                                                                                </subviews>
-                                                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                                <constraints>
-                                                                                    <constraint firstAttribute="trailing" secondItem="Vxj-pT-ZmC" secondAttribute="trailing" constant="15" id="7VS-mg-7iR"/>
-                                                                                    <constraint firstAttribute="bottom" secondItem="Vxj-pT-ZmC" secondAttribute="bottom" constant="10" id="9p5-Hw-owq"/>
-                                                                                    <constraint firstItem="Vxj-pT-ZmC" firstAttribute="top" secondItem="xcH-Kk-rxt" secondAttribute="top" constant="10" id="rAC-Ua-sqF"/>
-                                                                                    <constraint firstItem="Vxj-pT-ZmC" firstAttribute="leading" secondItem="xcH-Kk-rxt" secondAttribute="leading" constant="15" id="rCP-NG-Qdu"/>
-                                                                                    <constraint firstAttribute="height" constant="70" id="riS-7A-qvT"/>
-                                                                                </constraints>
-                                                                                <userDefinedRuntimeAttributes>
-                                                                                    <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                                                                        <real key="value" value="2"/>
-                                                                                    </userDefinedRuntimeAttribute>
-                                                                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                                                        <real key="value" value="35"/>
-                                                                                    </userDefinedRuntimeAttribute>
-                                                                                    <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                                                                        <color key="value" name="stroke"/>
-                                                                                    </userDefinedRuntimeAttribute>
-                                                                                </userDefinedRuntimeAttributes>
-                                                                            </view>
                                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="trailing" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Ig-ic-iWC">
-                                                                                <rect key="frame" x="0.0" y="450" width="363" height="40"/>
+                                                                                <rect key="frame" x="0.0" y="480" width="363" height="40"/>
                                                                                 <constraints>
                                                                                     <constraint firstAttribute="height" constant="40" id="DBd-ZC-4ZR"/>
                                                                                 </constraints>
@@ -862,7 +668,7 @@
                                                                                 </connections>
                                                                             </button>
                                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bWG-XP-Cta">
-                                                                                <rect key="frame" x="0.0" y="510" width="363" height="50"/>
+                                                                                <rect key="frame" x="0.0" y="540" width="363" height="50"/>
                                                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                                 <nil key="textColor"/>
                                                                                 <nil key="highlightedColor"/>
@@ -873,12 +679,6 @@
                                                                             <constraint firstAttribute="trailing" secondItem="Lmz-LB-59q" secondAttribute="trailing" id="kge-Dt-IMz"/>
                                                                             <constraint firstItem="Lmz-LB-59q" firstAttribute="leading" secondItem="edK-q0-3sU" secondAttribute="leading" id="oCF-cs-SQF"/>
                                                                         </constraints>
-                                                                        <variation key="default">
-                                                                            <mask key="subviews">
-                                                                                <exclude reference="bhH-Mb-Rzt"/>
-                                                                                <exclude reference="xcH-Kk-rxt"/>
-                                                                            </mask>
-                                                                        </variation>
                                                                     </stackView>
                                                                 </subviews>
                                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1005,8 +805,11 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="BtnCreateAccount" destination="Luf-V9-apB" id="jLM-uf-unG"/>
                         <outlet property="BtnForgetPassword" destination="1Ig-ic-iWC" id="A5D-13-ZrW"/>
                         <outlet property="BtnLogin" destination="xnA-Jw-hDh" id="9KF-y9-PFR"/>
+                        <outlet property="LaDontHaveAccount" destination="tIO-WF-La0" id="mkc-8c-ovS"/>
+                        <outlet property="STDontHaveAccount" destination="MVr-fT-f4o" id="L7r-yC-kI5"/>
                         <outlet property="TFMobile" destination="1ks-xj-5Gw" id="8hE-oW-x0F"/>
                         <outlet property="TFPassword" destination="ckG-ni-Ogf" id="pxo-ur-l5B"/>
                     </connections>
@@ -7099,6 +6902,7 @@
         <image name="Al-Nada-Logo" width="595.280029296875" height="841.8900146484375"/>
         <image name="Dictation" width="15" height="25"/>
         <image name="back" width="31" height="31"/>
+        <image name="backRight" width="31" height="31"/>
         <image name="bell" width="18" height="21"/>
         <image name="bellwhite" width="18" height="21"/>
         <image name="chevron.down" catalog="system" width="128" height="70"/>
@@ -7117,12 +6921,12 @@
         <image name="radiofill" width="14" height="14"/>
         <image name="search-icn" width="17" height="16"/>
         <image name="signup_person" width="12" height="14"/>
+        <image name="signup_phone" width="17" height="16"/>
         <image name="startscreen" width="375" height="501"/>
         <image name="tab1" width="25" height="25"/>
         <image name="tab2" width="25" height="30"/>
         <image name="tab4" width="26" height="27"/>
         <image name="tab5" width="25" height="25"/>
-        <image name="true" width="21" height="22"/>
         <image name="workout-data" width="332" height="332"/>
         <namedColor name="06AD2B">
             <color red="0.024000000208616257" green="0.67799997329711914" blue="0.16899999976158142" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

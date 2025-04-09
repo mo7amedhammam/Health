@@ -10,7 +10,6 @@ import UIKit
 class CustomInputField: UIView {
 
     // MARK: - Outlets
-    // MARK: - Outlets
        @IBOutlet weak var titleLabel: UILabel!
        @IBOutlet weak var contentStackView: UIStackView!
        @IBOutlet weak var textFieldStack: UIStackView!
@@ -65,7 +64,7 @@ class CustomInputField: UIView {
            didSet { updateErrorState() }
        }
        
-       private var isValid: Bool = true {
+    var isValid: Bool = true {
            didSet { updateErrorState() }
        }
        
@@ -124,7 +123,10 @@ class CustomInputField: UIView {
         addSubview(view)
         setupViews()
     }
-    
+    override func didMoveToWindow() {
+        super.didMoveToWindow()
+        updateLayoutDirection()
+    }
     
     // MARK: - Setup
        private func setupViews() {
@@ -196,9 +198,10 @@ class CustomInputField: UIView {
                $0.removeFromSuperview()
            }
            
-               textFieldStack.addArrangedSubview(passwordToggleButton)
-               textFieldStack.addArrangedSubview(textField)
-               textFieldStack.addArrangedSubview(iconImageView)
+//                textFieldStack.addArrangedSubview(passwordToggleButton)
+                textFieldStack.addArrangedSubview(textField)
+                textFieldStack.addArrangedSubview(passwordToggleButton)
+                textFieldStack.addArrangedSubview(iconImageView)
 
            // Set constraints
            NSLayoutConstraint.activate([
@@ -207,10 +210,8 @@ class CustomInputField: UIView {
            ])
        }
        
-    override func didMoveToWindow() {
-        super.didMoveToWindow()
-        updateLayoutDirection()
-    }
+ 
+    
        private func updateTextAlignment() {
            let isRTL = LocalizationManager.shared.currentLanguage == "ar"
 

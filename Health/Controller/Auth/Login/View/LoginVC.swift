@@ -9,12 +9,16 @@ import UIKit
 
 final class LoginVC: UIViewController {
     
-    @IBOutlet weak var TFMobile: CustomTextField!
-    @IBOutlet weak var TFPassword: CustomTextField!
+    @IBOutlet weak var TFMobile: CustomInputField!
+    @IBOutlet weak var TFPassword: CustomInputField!
 
     @IBOutlet weak var BtnForgetPassword: UIButton!
     @IBOutlet private weak var BtnLogin: UIButton!
 
+    @IBOutlet weak var STDontHaveAccount: UIStackView!
+    @IBOutlet weak var LaDontHaveAccount: UILabel!
+   
+    @IBOutlet weak var BtnCreateAccount: UIButton!
     private var isMobileValid = false
     private var isPasswordValid = false
 
@@ -55,16 +59,21 @@ final class LoginVC: UIViewController {
         hideKeyboardWhenTappedAround()
     }
     private func refreshLocalization() {
+        let isRTL = Helper.shared.getLanguage() == "ar"
            // Refresh all localizable elements
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {[self] in
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {[self] in
 
             BtnLogin.setTitle("login_signin_btn".localized, for: .normal)
             BtnForgetPassword.setTitle("login_forget_Password".localized, for: .normal)
-
-            // Force update layout for RTL/LTR if needed
+        LaDontHaveAccount.text = "login_not_signin".localized
+        BtnCreateAccount.setTitle("login_signup_btn".localized, for: .normal)
+        
+            BtnForgetPassword.semanticContentAttribute = !isRTL ? .forceRightToLeft : .forceLeftToRight
+            STDontHaveAccount.semanticContentAttribute = !isRTL ? .forceRightToLeft : .forceLeftToRight
+            
             view.setNeedsLayout()
             view.layoutIfNeeded()
-        })
+//        })
        }
     
     private func setupValidation() {
@@ -101,7 +110,7 @@ final class LoginVC: UIViewController {
       }
     @objc private func mobileFieldDidChange() {
          // Enforce 11 character limit
-         if let text = TFMobile.text(), text.count > 11 {
+        if let text = TFMobile.textField.text, text.count > 11 {
              TFMobile.textField.text = (String(text.prefix(11)))
          }
 //         TFMobile.validateField()
@@ -115,7 +124,7 @@ final class LoginVC: UIViewController {
         }
     
         @IBAction func BUForgetPassword(_ sender: Any) {
-            if TFMobile.text() != ""{
+            if TFMobile.textField.text != ""{
                 SendOtp()
             } else {
                 SimpleAlert.shared.showAlert(title: "اكتب رقم موبايل الأول", message: "", viewController: self)
@@ -131,8 +140,8 @@ final class LoginVC: UIViewController {
         }
     
     private func login() {
-        viewModel.mobile = TFMobile.text()
-        viewModel.password = TFPassword.text()
+        viewModel.mobile = TFMobile.textField.text
+        viewModel.password = TFPassword.textField.text
         
         DispatchQueue.main.async {
             ActivityIndicatorView.shared.startLoading(in: self.view)
@@ -161,7 +170,7 @@ final class LoginVC: UIViewController {
     }
     
         func SendOtp() {
-            otpViewModel.mobile = TFMobile.text()
+            otpViewModel.mobile = TFMobile.textField.text
     
             otpViewModel.SendOtp{[weak self] state in
                 guard let self = self else{return}
@@ -178,7 +187,7 @@ final class LoginVC: UIViewController {
                     print(state)
                     //        guard let seconds = viewModel.responseModel?.secondsCount else {return}
                     guard let vc = initiateViewController(storyboardName: .main, viewControllerIdentifier: OtpVC.self) else{return}
-                    vc.Phonenumber = TFMobile.text()
+                    vc.Phonenumber = TFMobile.textField.text
                     vc.second =  otpViewModel.responseModel?.secondsCount ?? 60
                     Shared.shared.remainingSeconds = otpViewModel.responseModel?.secondsCount ?? 60
                     vc.otp = "استخدم \(otpViewModel.responseModel?.otp ?? 00)"

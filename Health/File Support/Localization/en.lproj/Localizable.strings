@@ -47,4 +47,12 @@
 
 "signup_name_title" = "Full Name";
 "signup_name_placeholder" = "Enter Your Full Name";
-
+"signup_mobile_title" = "Mobile Number";
+"signup_mobile_placeholder" = "Enter Mobile Number";
+"signup_password_title" = "Password";
+"signup_password_placeholder" = "Enter Your Password";
+"signup_confirmpassword_title" = "Confirm Password";
+"signup_confirmpassword_placeholder" = "Enter Your Password";
+"signup_signup_btn" = "Create";
+"signup_have_account" = "Already have an account?";
+"signup_signin_btn" = "Login";
