@@ -68,7 +68,7 @@ struct OnboardingView: View {
     }
     
     func SkipSplash() {
-        Helper.shared.changeRootVC(newroot: LoginVC.self,transitionFrom: .fromLeft)
+        Helper.shared.changeRootVC(newroot: LoginVC.self,transitionFrom: .fromRight)
     }
 }
 

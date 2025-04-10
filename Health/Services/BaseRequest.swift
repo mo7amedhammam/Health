@@ -17,6 +17,9 @@ func buildparameter(paramaters:parameterType)->([String:Any],ParameterEncoding){
         return(Parameters,Encoding)
     case .BodyparameterRequest(Parameters: let Parameters, Encoding: let Encoding):
         return(Parameters,Encoding)
+        
+    case .parameterdGetRequest(Parameters: let Parameters, Encoding: let Encoding):
+        return(Parameters,Encoding)
 
     }
 }
@@ -62,15 +65,14 @@ final class BaseNetwork{
         guard Helper.shared.isConnectedToNetwork() else {
             throw NetworkError.noConnection
         }
-        
         let parameters = buildparameter(paramaters: target.parameter)
         let headers: HTTPHeaders? = Alamofire.HTTPHeaders(target.headers ?? [:])
-        print(parameters)
-
-        print(headers ?? [:])
-
         let (requestURL, method, parametersarr, encoding) = (target.requestURL, target.method, parameters.0, parameters.1)
         
+        print("\(requestURL)",parameters,method,headers ?? [:])
+//        print(parameters)
+//        print(headers ?? [:])
+
         let response = try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<M, Error>) in
             AF.request(requestURL, method: method, parameters: parametersarr, encoding: encoding, headers: headers)
                 .responseDecodable(of: M.self, decoder: JSONDecoder()) { dataResponse in
@@ -78,7 +80,6 @@ final class BaseNetwork{
                         guard let responsecode = dataResponse.response?.statusCode else {
                             throw NetworkError.unknown(code: 0, error: "No response code")
                         }
-                        
                         switch dataResponse.result {
                         case .success(let model):
                             continuation.resume(returning: model)
@@ -113,7 +114,11 @@ final class BaseNetwork{
         
         let parameters = buildparameter(paramaters: target.parameter)
         let headers: HTTPHeaders? = Alamofire.HTTPHeaders(target.headers ?? [:])
-        print(headers ?? [:])
+        
+        print("requestURL",target.requestURL)
+        print("headers",headers ?? [:])
+        print("parameters",parameters)
+        print("--Target--",target)
 
         AF.request(target.requestURL, method: target.method, parameters: parameters.0, encoding: parameters.1, headers: headers)
             .responseDecodable(of: M.self, decoder: JSONDecoder()) { response in
@@ -130,6 +135,63 @@ final class BaseNetwork{
                 }
                 
             }
+    }
+    
+    private let session: Session
+        
+        private init() {
+            let configuration = URLSessionConfiguration.default
+            configuration.timeoutIntervalForRequest = 30
+            configuration.timeoutIntervalForResource = 30
+            self.session = Session(configuration: configuration)
+        }
+    
+
+    func request<T: TargetType, M: Codable>(_ target: T, _ Model: M.Type) async throws -> M {
+        guard Helper.shared.isConnectedToNetwork() else {
+            throw NetworkError.noConnection
+        }
+        
+        let url = try target.asURL()
+        
+        let parameters = buildparameter(paramaters: target.parameter)
+        let headers: HTTPHeaders? = Alamofire.HTTPHeaders(target.headers ?? [:])
+        
+        print(target.requestURL)
+        print(target.method)
+        print(parameters)
+        print(headers ?? [:])
+
+        let response = try await session.request(
+            url,
+            method: target.method,
+            parameters: parameters.0,
+            encoding: parameters.1,
+            headers: headers
+        )
+        .validate(statusCode: 200..<502) // Validate status codes in the 200 range
+        .serializingDecodable(M.self) // Decode to BaseResponse
+        .value
+        
+        print("response : \n", response)
+        
+        // Check the success property of the BaseResponse
+//        if let success = response.success, success == false {
+//            throw NetworkError.unknown(
+//                code: response.messageCode ?? 0,
+//                error: response.message ?? "Unknown error"
+//            )
+//        }
+        
+        // Return the data if there's no error
+//        guard let data = response.data else {
+//            throw NetworkError.unknown(
+//                code: response.messageCode ?? 0,
+//                error: response.message ?? "No data received"
+//            )
+//        }
+        
+        return response
     }
     
     

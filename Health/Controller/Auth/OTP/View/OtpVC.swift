@@ -7,10 +7,16 @@
 
 import UIKit
 
+enum otpCases {
+case CreateAccount , forgetPassword
+}
 class OtpVC: UIViewController , UITextFieldDelegate {
     
+    @IBOutlet weak var ContainerView: UIView!
+
+    @IBOutlet weak var LaToMessage: UILabel!
     @IBOutlet weak var LaToNum: UILabel!
-    
+
     @IBOutlet weak var TFIndex1: UITextField!
     @IBOutlet weak var TFIndex2: UITextField!
     @IBOutlet weak var TFIndex3: UITextField!
@@ -24,20 +30,67 @@ class OtpVC: UIViewController , UITextFieldDelegate {
     @IBOutlet weak var ViewTF4: UIView!
     @IBOutlet weak var ViewTF5: UIView!
     @IBOutlet weak var ViewTF6: UIView!
+    
+    @IBOutlet weak var DidntGetCode: UILabel!
     @IBOutlet weak var BtnResend: UIButton!
     var Phonenumber:String?
     
     @IBOutlet weak var SecondsCount: UILabel!
     @IBOutlet weak var ShowOtp: UILabel!
-    
+    @IBOutlet weak var LaSeconds: UILabel!
+
+    @IBOutlet weak var BtnBack: UIButton!
     var timer: Timer?
     var second = 0
     var otp    = ""
-
+    var verivyFor:otpCases = .CreateAccount
     let viewModel = OtpVM()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        SetupUI()
+        clearOtp()
+        startTimer(remainingSeconds: second)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        RefreshLocalization()
         
+        TFIndex1.becomeFirstResponder()
+//        clearOtp()
+//        startTimer(remainingSeconds: second)
+//        ShowOtp.text = otp
+        
+        timer?.invalidate()
+        timer = nil
+        
+        if Shared.shared.remainingSeconds > 0 {
+            startTimer(remainingSeconds: Shared.shared.remainingSeconds)
+        } else {
+            // Time's up, enable the button and invalidate the timer
+            SecondsCount.text = ""
+            BtnResend.isEnabled(true)
+//            self.BtnResend.isEnabled = true
+//            self.BtnResend.alpha     = 1
+        }
+        
+    }
+            
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        timer?.invalidate()
+        timer = nil
+     
+    }
+    
+    func SetupUI(){
+        ShowOtp.text = otp
+        LaToNum.text = Phonenumber
+        hideKeyboardWhenTappedAround()
+        
+        ShowOtp.text = "استخدم \(viewModel.responseModel?.otp ?? 00)"
+
         // Do any additional setup after loading the view.
         self.TFIndex1.delegate = self
         self.TFIndex2.delegate = self
@@ -53,47 +106,14 @@ class OtpVC: UIViewController , UITextFieldDelegate {
         self.TFIndex4.addTarget(self, action: #selector(textFieldDidChange(textField:)), for: UIControl.Event.editingChanged)
         self.TFIndex5.addTarget(self, action: #selector(textFieldDidChange(textField:)), for: UIControl.Event.editingChanged)
         self.TFIndex6.addTarget(self, action: #selector(textFieldDidChange(textField:)), for: UIControl.Event.editingChanged)
-
-        LaToNum.text = Phonenumber
-        self.BtnResend.isEnabled = false
-        
-        hideKeyboardWhenTappedAround()
-        
-        
-        clearOtp()
-        startTimer(remainingSeconds: second)
-        ShowOtp.text = otp
+    }
+    func RefreshLocalization(){
+        let isRTL = Helper.shared.getLanguage() == "ar"
+        ContainerView.semanticContentAttribute = isRTL ? .forceLeftToRight : .forceRightToLeft
+        BtnBack.setImage(UIImage(resource:isRTL ? .backRight : .backLeft), for: .normal)
         
     }
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        TFIndex1.becomeFirstResponder()
-//        clearOtp()
-//        startTimer(remainingSeconds: second)
-//        ShowOtp.text = otp
-        
-        timer?.invalidate()
-        timer = nil
-        
-        if Shared.shared.remainingSeconds > 0 {
-            startTimer(remainingSeconds: Shared.shared.remainingSeconds)
-        } else {
-            // Time's up, enable the button and invalidate the timer
-            SecondsCount.text        = ""
-            self.BtnResend.isEnabled = true
-            self.BtnResend.alpha     = 1
-        }
-        
-        
-    }
-        
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        timer?.invalidate()
-        timer = nil
-     
-    }
     @IBAction func BUBack(_ sender: Any) {
         navigationController?.popViewController(animated: true)
     }
@@ -224,9 +244,6 @@ class OtpVC: UIViewController , UITextFieldDelegate {
 
     }
     
-    @IBAction func BUDontReceive(_ sender: Any) {
-    }
-    
     @IBAction func BUResend(_ sender: Any) {
         SendOtp()
     }
@@ -284,7 +301,7 @@ extension OtpVC{
         guard let otp1 = TFIndex1.text ,let otp2 = TFIndex2.text,let otp3 = TFIndex3.text,let otp4 = TFIndex4.text,let otp5 = TFIndex5.text,let otp6 = TFIndex6.text else {return}
         let fullotp = otp1+otp2+otp3+otp4+otp5+otp6
         viewModel.EnteredOtp = fullotp
-        viewModel.VerifyOtp{[weak self] state in
+        viewModel.VerifyOtp(otpfor: verivyFor){[weak self] state in
             guard let self = self else{return}
             guard let state = state else{
                 return
@@ -297,7 +314,13 @@ extension OtpVC{
             case .success:
                 Hud.dismiss(from: self.view)
                 print(state)
-                gotoResetPassword()
+                switch verivyFor {
+                case .CreateAccount:
+                    // got to success creating account
+                    accountCreated()
+                case .forgetPassword:
+                    gotoResetPassword()
+                }
             case .error(_,let error):
                 Hud.dismiss(from: self.view)
                 SimpleAlert.shared.showAlert(title:error ?? "",message:"", viewController: self,completion: {
@@ -314,6 +337,18 @@ extension OtpVC{
         guard let vc = initiateViewController(storyboardName: .main, viewControllerIdentifier: ForgetPasswordVC.self) else{return}
         vc.Phonenumber = Phonenumber
          navigationController?.pushViewController(vc, animated: true)
+    }
+
+    func accountCreated()  {
+        if let viewDone:ViewDone = showView(fromNib: ViewDone.self, in: self) {
+            viewDone.title = "تم إنشاء حسابك بنجاح!".localized
+            viewDone.imgStr = "successicon"
+            viewDone.action = {
+                viewDone.removeFromSuperview()
+                self.navigationController?.popViewController(animated: true)
+                Helper.shared.changeRootVC(newroot: LoginVC.self,transitionFrom: .fromLeft)
+            }
+        }
     }
     
     private func clearOtp(){
@@ -340,25 +375,30 @@ extension OtpVC{
     
     func startTimer(remainingSeconds:Int) {
         timer?.invalidate()
+        self.BtnResend.isEnabled(false)
+//        self.BtnResend.alpha = 0.5
+
         var remainingSeconds = remainingSeconds
         timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] timer in
             guard let self = self else { return }
-            
-            
-            
+                        
             if remainingSeconds > 0 {
                 remainingSeconds -= 1
                 self.SecondsCount.text = "\(timeString(time: TimeInterval(remainingSeconds))) "
                 // Still have time, enable the button and invalidate the timer
-                self.BtnResend.isEnabled = false
-                self.BtnResend.alpha = 0.5
+//                self.BtnResend.isEnabled = false
+//                self.BtnResend.alpha = 0.5
+                self.BtnResend.isEnabled(false)
+
                 Shared.shared.remainingSeconds = remainingSeconds
                 print("Shared.shared.remainingSeconds :::::: \(Shared.shared.remainingSeconds)")
 
             } else {
                 // Time's up, enable the button and invalidate the timer
-                self.BtnResend.isEnabled = true
-                self.BtnResend.alpha = 1
+//                self.BtnResend.isEnabled = true
+//                self.BtnResend.alpha = 1
+                self.BtnResend.isEnabled(true)
+
                 timer.invalidate()
             }
             // Check for background execution and request more time if needed

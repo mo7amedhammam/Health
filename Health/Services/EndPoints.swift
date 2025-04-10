@@ -8,8 +8,8 @@
 import Foundation
 
 enum apiType:String{
-//    case testing = "https://alnada-devsehatyapi.azurewebsites.net/"
-    case testing = "https://alnada-sehatyapi.azurewebsites.net/"
+    case testing = "https://alnada-devsehatyapi.azurewebsites.net/"
+//    case testing = "https://alnada-sehatyapi.azurewebsites.net/"
     
     case production = "https://api.sehatyapi.app/"
 }
@@ -33,7 +33,8 @@ struct Constants {
 
 enum EndPoints: String {
     // MARK: - Auth
-    case Register = "RegisterRequest/Create"
+    case Register = "Customer/Create"
+    case VerifyUser = "Customer/VerifyUser"
     case Login = "Customer/Login"
 
     case sendOTP = "Customer/SendOTP"

@@ -9,7 +9,7 @@ import Alamofire
 
 // The protocol used to define the specifications necessary for a `MoyaProvider`.
 public protocol TargetType {
-
+    
     /// The target's base `URL`.
     var baseURL: URL { get }
 
@@ -37,29 +37,92 @@ public extension TargetType {
         return URL(string: Constants.apiURL)!
     }
     // MARK: - Request URL
-    var requestURL: URL {
-        return baseURL.appendingPathComponent(path)
+    var requestURL: URL{
+//                    return baseURL.appendingPathComponent(path)
+
+        switch parameter {
+            
+//        case .plainRequest:
+//            return baseURL.appendingPathComponent(path)
+//        case .parameterRequest(let parameters, _):
+//            var components = URLComponents(url: baseURL.appendingPathComponent(path), resolvingAgainstBaseURL: false)!
+//            let queryItems = parameters.map { key, value in
+//                URLQueryItem(name: key, value: "\(value)")
+//            }
+//            components.queryItems = queryItems
+//            return components.url!
+//        case .BodyparameterRequest(_, _):
+//            // For URLEncoding, parameters will be included in the request body
+//            return baseURL.appendingPathComponent(path)
+            
+        case .plainRequest,.parameterRequest,.BodyparameterRequest:
+            return baseURL.appendingPathComponent(path)
+
+            
+        case .parameterdGetRequest(let parameters, _):
+            // For GET requests with parameters in the URL
+            var components = URLComponents(url: baseURL.appendingPathComponent(path), resolvingAgainstBaseURL: false)!
+            let queryItems = parameters.map { key, value in
+                URLQueryItem(name: key, value: "\(value)")
+            }
+            components.queryItems = queryItems
+            return components.url!
+        }
+    }
+    
+    // MARK: - Request URL
+    func asURL() throws -> URL{
+        switch parameter {
+        case .plainRequest,.parameterRequest,.BodyparameterRequest:
+            return baseURL.appendingPathComponent(path)
+
+            
+        case .parameterdGetRequest(let parameters, _):
+            // For GET requests with parameters in the URL
+            var components = URLComponents(url: baseURL.appendingPathComponent(path), resolvingAgainstBaseURL: false)!
+            let queryItems = parameters.map { key, value in
+                URLQueryItem(name: key, value: "\(value)")
+            }
+            components.queryItems = queryItems
+//            return components.url!
+            
+            guard let url = components.url else {
+                throw NetworkError.badURL("Invalid URL")
+            }
+            
+            return url
+        }
     }
     var headers: [String: String]? {
         var header = [String: String]()
-        header["Content-Type"] = "application/json"
-        header ["Accept"] = "multipart/form-data"
+//
+//                header["Content-Type"] = "multipart/form-data"
+//                header ["Accept"] = "text/plain"
+
+        
+//        header["Content-Type"] = "application/json"
+//        header ["Accept"] = "text/plain"
+        
+        
+        header["Accept"] = "application/json"
+
         if let token = Helper.shared.getUser()?.token {
         header["Authorization"] = "Bearer " + token
         }
         return header
     }
-    
     /// The type of validation to perform on the request. Default is `.none`.
     var validationType: ValidationType { .none }
-
 }
+
 public enum parameterType{
     case plainRequest
     case parameterRequest(Parameters:[String:Any],Encoding:ParameterEncoding)
     case BodyparameterRequest(Parameters:[String:Any],Encoding:ParameterEncoding)
+    case parameterdGetRequest(Parameters: [String: Any], Encoding: URLEncoding)
 
 }
+
 
 /// Represents the status codes to validate through Alamofire.
 public enum ValidationType {

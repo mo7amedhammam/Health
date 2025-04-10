@@ -8,15 +8,13 @@
 import Foundation
 import Alamofire
 
-//enum OTPVerificationType{
-//    case Registeration, ResetingPassword
-//}
+
 enum Authintications {
     case Register(parameters : [String:Any])
     case Login(parameters : [String:Any])
     
     case SendOtp(parameters : [String:Any])
-    case VerifyOtp(parameters : [String:Any])
+    case VerifyOtp(otpfor:otpCases,parameters : [String:Any])
     
     case GetDistricts,GetGenders
     
@@ -48,8 +46,15 @@ extension Authintications : TargetType {
         case .SendOtp:
             return EndPoints.sendOTP.rawValue
 
-        case .VerifyOtp:
-            return EndPoints.VerifyOTP.rawValue
+        case .VerifyOtp(let otpfor,_):
+            switch otpfor {
+            case .CreateAccount:
+                return EndPoints.VerifyUser.rawValue
+
+            case .forgetPassword:
+                return EndPoints.VerifyOTP.rawValue
+        }
+            
 
         case .GetDistricts:
             return EndPoints.GetAllDistricts.rawValue
@@ -110,7 +115,7 @@ extension Authintications : TargetType {
         switch self {
         case .Register(let parameters),
                 .Login(let parameters),
-                .VerifyOtp(parameters: let parameters),
+                .VerifyOtp( _ ,parameters: let parameters),
                 .SendOtp(parameters: let parameters),
                 .ResetPassword(parameters: let parameters),
                 .ChangePassword(parameters: let parameters),

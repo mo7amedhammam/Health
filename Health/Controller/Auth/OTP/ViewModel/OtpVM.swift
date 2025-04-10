@@ -48,7 +48,7 @@ class OtpVM {
         }
     }
     
-    func VerifyOtp(completion: @escaping (EventHandler?) -> Void) {
+    func VerifyOtp(otpfor:otpCases,completion: @escaping (EventHandler?) -> Void) {
         guard let otp = EnteredOtp ,let mobile = mobile else {
             // Handle missing username or password
             return
@@ -56,7 +56,7 @@ class OtpVM {
         let parametersarr : [String : Any] =  ["otp" : otp,"mobile" : mobile ]
         completion(.loading)
         // Create your API request with the username and password
-        let target = Authintications.VerifyOtp(parameters: parametersarr)
+        let target = Authintications.VerifyOtp(otpfor: otpfor,parameters: parametersarr)
 
         // Make the API call using your APIManager or networking code
         BaseNetwork.callApi(target, BaseResponse<OtpM>.self) {[weak self] result in

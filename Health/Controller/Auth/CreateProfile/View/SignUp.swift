@@ -135,43 +135,74 @@ class SignUp: UIViewController {
     }
     
     @IBAction func BUSignUp(_ sender: Any) {
-        SendJoinRequest()
+        CreateAccount()
     }
     
-    private func SendJoinRequest() {
-        ViewModel.name = TFName.textField.text
-        ViewModel.mobile = TFPhone.textField.text
-        ViewModel.password = TFPassword.textField.text
-        
-        ViewModel.SignUp { [weak self] state in
-            guard let self = self, let state = state else { return }
-            
-            switch state {
-            case .loading:
+//    private func CreateAccount() {
+//        ViewModel.name = TFName.textField.text
+//        ViewModel.mobile = TFPhone.textField.text
+//        ViewModel.password = TFPassword.textField.text
+//        
+//        ViewModel.SignUp { [weak self] state in
+//            guard let self = self, let state = state else { return }
+//            
+//            switch state {
+//            case .loading:
+//                Hud.showHud(in: self.view)
+//            case .stopLoading:
+//                Hud.dismiss(from: self.view)
+//            case .success:
+//                Hud.dismiss(from: self.view)
+//                self.GoToOTPVerification()
+//            case .error(_, let error):
+//                Hud.dismiss(from: self.view)
+//                SimpleAlert.shared.showAlert(title: error ?? "", message: "", viewController: self)
+//            case .none:
+//                break
+//            }
+//        }
+//    }
+
+    
+    func CreateAccount(){
+                ViewModel.name = TFName.textField.text
+                ViewModel.mobile = TFPhone.textField.text
+                ViewModel.password = TFPassword.textField.text
+        Task {
+            do{
                 Hud.showHud(in: self.view)
-            case .stopLoading:
+                try await ViewModel.CreateAccount()
+                // Handle success async operations
                 Hud.dismiss(from: self.view)
-            case .success:
+//                TVScreen.reloadData()
+                self.GoToOTPVerification()
+                
+            }catch {
+                // Handle any errors that occur during the async operations
+                print("Error: \(error)")
                 Hud.dismiss(from: self.view)
-                self.JoinRequestSent()
-            case .error(_, let error):
-                Hud.dismiss(from: self.view)
-                SimpleAlert.shared.showAlert(title: error ?? "", message: "", viewController: self)
-            case .none:
-                break
+                SimpleAlert.shared.showAlert(title:error.localizedDescription,message:"", viewController: self)
             }
         }
     }
     
-    private func JoinRequestSent() {
-        if let viewDone: ViewDone = showView(fromNib: ViewDone.self, in: self) {
-            viewDone.title = "تم إرسال طلب انضمامك بنجاح"
-            viewDone.imgStr = "keyicon"
-            viewDone.action = {
-                viewDone.removeFromSuperview()
-                Helper.shared.changeRootVC(newroot: LoginVC.self, transitionFrom: .fromLeft)
-            }
-        }
+    private func GoToOTPVerification() {
+        guard let vc = initiateViewController(storyboardName: .main, viewControllerIdentifier: OtpVC.self) else{return}
+        vc.Phonenumber = TFPhone.textField.text
+        vc.otp = String(ViewModel.responseModel?.otp ?? 0)
+        vc.second =  ViewModel.responseModel?.secondsCount ?? 60
+        Shared.shared.remainingSeconds = ViewModel.responseModel?.secondsCount ?? 60
+        vc.otp = "استخدم \(ViewModel.responseModel?.otp ?? 00)"
+        navigationController?.pushViewController(vc, animated: true)
+        
+//        if let viewDone: ViewDone = showView(fromNib: ViewDone.self, in: self) {
+//            viewDone.title = "تم إرسال طلب انضمامك بنجاح"
+//            viewDone.imgStr = "keyicon"
+//            viewDone.action = {
+//                viewDone.removeFromSuperview()
+//                Helper.shared.changeRootVC(newroot: LoginVC.self, transitionFrom: .fromLeft)
+//            }
+//        }
     }
 }
 
