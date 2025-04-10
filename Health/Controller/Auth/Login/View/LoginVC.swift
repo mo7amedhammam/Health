@@ -189,8 +189,9 @@ final class LoginVC: UIViewController {
                     guard let vc = initiateViewController(storyboardName: .main, viewControllerIdentifier: OtpVC.self) else{return}
                     vc.Phonenumber = TFMobile.textField.text
                     vc.second =  otpViewModel.responseModel?.secondsCount ?? 60
+                    vc.otp = otpViewModel.responseModel?.otp ?? 00
                     Shared.shared.remainingSeconds = otpViewModel.responseModel?.secondsCount ?? 60
-                    vc.otp = "استخدم \(otpViewModel.responseModel?.otp ?? 00)"
+                    vc.verivyFor = .forgetPassword
                     navigationController?.pushViewController(vc, animated: true)
                 case .error(let code,let error):
                     Hud.dismiss(from: self.view)

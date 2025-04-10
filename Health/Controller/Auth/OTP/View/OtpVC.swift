@@ -42,7 +42,7 @@ class OtpVC: UIViewController , UITextFieldDelegate {
     @IBOutlet weak var BtnBack: UIButton!
     var timer: Timer?
     var second = 0
-    var otp    = ""
+    var otp    = 0
     var verivyFor:otpCases = .CreateAccount
     let viewModel = OtpVM()
     
@@ -56,7 +56,6 @@ class OtpVC: UIViewController , UITextFieldDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         RefreshLocalization()
-        
         TFIndex1.becomeFirstResponder()
 //        clearOtp()
 //        startTimer(remainingSeconds: second)
@@ -70,9 +69,7 @@ class OtpVC: UIViewController , UITextFieldDelegate {
         } else {
             // Time's up, enable the button and invalidate the timer
             SecondsCount.text = ""
-            BtnResend.isEnabled(true)
-//            self.BtnResend.isEnabled = true
-//            self.BtnResend.alpha     = 1
+            canResend(true)
         }
         
     }
@@ -81,15 +78,14 @@ class OtpVC: UIViewController , UITextFieldDelegate {
         super.viewWillDisappear(animated)
         timer?.invalidate()
         timer = nil
-     
     }
     
     func SetupUI(){
-        ShowOtp.text = otp
+//        ShowOtp.text = String(otp)
         LaToNum.text = Phonenumber
         hideKeyboardWhenTappedAround()
         
-        ShowOtp.text = "استخدم \(viewModel.responseModel?.otp ?? 00)"
+        ShowOtp.text = "استخدم \(otp)"
 
         // Do any additional setup after loading the view.
         self.TFIndex1.delegate = self
@@ -111,7 +107,6 @@ class OtpVC: UIViewController , UITextFieldDelegate {
         let isRTL = Helper.shared.getLanguage() == "ar"
         ContainerView.semanticContentAttribute = isRTL ? .forceLeftToRight : .forceRightToLeft
         BtnBack.setImage(UIImage(resource:isRTL ? .backRight : .backLeft), for: .normal)
-        
     }
     
     @IBAction func BUBack(_ sender: Any) {
@@ -254,12 +249,16 @@ class OtpVC: UIViewController , UITextFieldDelegate {
 //        vc.modalPresentationStyle = .fullScreen
 //        self.present(vc, animated: false, completion: nil)
     }
-    
+    fileprivate func canResend( _ canResend:Bool) {
+        self.BtnResend.isEnabled = canResend
+        self.BtnResend.alpha     = canResend ? 1 : 0.7
+    }
 }
 
 
 //MARK: ---- functions -----
 extension OtpVC{
+    
     func SendOtp() {
         viewModel.mobile = Phonenumber
         
@@ -375,8 +374,7 @@ extension OtpVC{
     
     func startTimer(remainingSeconds:Int) {
         timer?.invalidate()
-        self.BtnResend.isEnabled(false)
-//        self.BtnResend.alpha = 0.5
+        canResend(false)
 
         var remainingSeconds = remainingSeconds
         timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] timer in
@@ -386,18 +384,14 @@ extension OtpVC{
                 remainingSeconds -= 1
                 self.SecondsCount.text = "\(timeString(time: TimeInterval(remainingSeconds))) "
                 // Still have time, enable the button and invalidate the timer
-//                self.BtnResend.isEnabled = false
-//                self.BtnResend.alpha = 0.5
-                self.BtnResend.isEnabled(false)
+                canResend(false)
 
                 Shared.shared.remainingSeconds = remainingSeconds
                 print("Shared.shared.remainingSeconds :::::: \(Shared.shared.remainingSeconds)")
 
             } else {
                 // Time's up, enable the button and invalidate the timer
-//                self.BtnResend.isEnabled = true
-//                self.BtnResend.alpha = 1
-                self.BtnResend.isEnabled(true)
+                canResend(true)
 
                 timer.invalidate()
             }

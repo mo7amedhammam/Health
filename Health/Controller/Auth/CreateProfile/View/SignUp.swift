@@ -189,10 +189,10 @@ class SignUp: UIViewController {
     private func GoToOTPVerification() {
         guard let vc = initiateViewController(storyboardName: .main, viewControllerIdentifier: OtpVC.self) else{return}
         vc.Phonenumber = TFPhone.textField.text
-        vc.otp = String(ViewModel.responseModel?.otp ?? 0)
+        vc.otp = ViewModel.responseModel?.otp ?? 0
         vc.second =  ViewModel.responseModel?.secondsCount ?? 60
         Shared.shared.remainingSeconds = ViewModel.responseModel?.secondsCount ?? 60
-        vc.otp = "استخدم \(ViewModel.responseModel?.otp ?? 00)"
+        vc.verivyFor = .CreateAccount
         navigationController?.pushViewController(vc, animated: true)
         
 //        if let viewDone: ViewDone = showView(fromNib: ViewDone.self, in: self) {
