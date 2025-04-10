@@ -12,11 +12,13 @@ case CreateAccount , forgetPassword
 }
 class OtpVC: UIViewController , UITextFieldDelegate {
     
-    @IBOutlet weak var ContainerView: UIView!
+    @IBOutlet weak var NavBarView: UIView!
 
     @IBOutlet weak var LaToMessage: UILabel!
     @IBOutlet weak var LaToNum: UILabel!
-
+    
+    @IBOutlet weak var STMsgSent: UIStackView!
+    
     @IBOutlet weak var TFIndex1: UITextField!
     @IBOutlet weak var TFIndex2: UITextField!
     @IBOutlet weak var TFIndex3: UITextField!
@@ -30,14 +32,18 @@ class OtpVC: UIViewController , UITextFieldDelegate {
     @IBOutlet weak var ViewTF4: UIView!
     @IBOutlet weak var ViewTF5: UIView!
     @IBOutlet weak var ViewTF6: UIView!
+    @IBOutlet weak var STOTP: UIStackView!
     
     @IBOutlet weak var DidntGetCode: UILabel!
     @IBOutlet weak var BtnResend: UIButton!
+    @IBOutlet weak var STReseend: UIStackView!
     var Phonenumber:String?
     
     @IBOutlet weak var SecondsCount: UILabel!
-    @IBOutlet weak var ShowOtp: UILabel!
     @IBOutlet weak var LaSeconds: UILabel!
+    @IBOutlet weak var STRemainigSec: UIStackView!
+
+    @IBOutlet weak var ShowOtp: UILabel!
 
     @IBOutlet weak var BtnBack: UIButton!
     var timer: Timer?
@@ -82,10 +88,9 @@ class OtpVC: UIViewController , UITextFieldDelegate {
     
     func SetupUI(){
 //        ShowOtp.text = String(otp)
-        LaToNum.text = Phonenumber
-        hideKeyboardWhenTappedAround()
         
-        ShowOtp.text = "استخدم \(otp)"
+        hideKeyboardWhenTappedAround()
+//        LaToNum.localized(string: Phonenumber ?? "")
 
         // Do any additional setup after loading the view.
         self.TFIndex1.delegate = self
@@ -105,8 +110,27 @@ class OtpVC: UIViewController , UITextFieldDelegate {
     }
     func RefreshLocalization(){
         let isRTL = Helper.shared.getLanguage() == "ar"
-        ContainerView.semanticContentAttribute = isRTL ? .forceLeftToRight : .forceRightToLeft
+        
+        [NavBarView,STOTP,STReseend,STRemainigSec,LaToNum,BtnResend,LaToNum,LaSeconds].forEach{view in
+            view?.localizedview()
+        }
+        let otpmsg = "code_sentmsg".localized + " \((Phonenumber ?? ""))"
+        LaToMessage.text =  otpmsg
+        STOTP.semanticContentAttribute = isRTL ? .forceRightToLeft : .forceLeftToRight
+        DidntGetCode.localized(string: "didnt_get_code")
+        BtnResend.setTitle("resend_code".localized, for: .normal)
+        BtnResend.semanticContentAttribute = isRTL ? .forceRightToLeft : .forceLeftToRight
+        BtnResend.contentHorizontalAlignment = .leading
+
+        LaSeconds.localized(string: "remain_sec")
+        
+        LaSeconds.textAlignment = isRTL ? .right : .left
+        ShowOtp.text = "استخدم ".localized + "\(otp)"
+        LaToNum.localized(string: "")
+        
         BtnBack.setImage(UIImage(resource:isRTL ? .backRight : .backLeft), for: .normal)
+        view.setNeedsLayout()
+        view.layoutIfNeeded()
     }
     
     @IBAction func BUBack(_ sender: Any) {
@@ -149,8 +173,8 @@ class OtpVC: UIViewController , UITextFieldDelegate {
             switch textField{
             case self.TFIndex1:
                 if !TFIndex1.text!.isEmpty {
-                    TFIndex1.textColor = .white
-                    ViewTF1.backgroundColor = UIColor(named: "main")
+                    TFIndex1.textColor = UIColor(named: "main")
+//                    ViewTF1.backgroundColor = UIColor(named: "main")
                     self.TFIndex2.becomeFirstResponder()
                 } else {
                     ViewTF1.backgroundColor = .clear
@@ -159,8 +183,8 @@ class OtpVC: UIViewController , UITextFieldDelegate {
                 
             case self.TFIndex2:
                 if !TFIndex2.text!.isEmpty {
-                    TFIndex2.textColor = .white
-                    ViewTF2.backgroundColor = UIColor(named: "main")
+                    TFIndex2.textColor = UIColor(named: "main")
+//                    ViewTF2.backgroundColor = UIColor(named: "main")
                     self.TFIndex3.becomeFirstResponder()
                 } else {
                     ViewTF2.backgroundColor = .clear
@@ -168,8 +192,8 @@ class OtpVC: UIViewController , UITextFieldDelegate {
 
             case self.TFIndex3:
                 if !TFIndex3.text!.isEmpty {
-                    TFIndex3.textColor = .white
-                    ViewTF3.backgroundColor = UIColor(named: "main")
+                    TFIndex3.textColor = UIColor(named: "main")
+//                    ViewTF3.backgroundColor = UIColor(named: "main")
                     self.TFIndex4.becomeFirstResponder()
                 } else {
                     ViewTF3.backgroundColor = .clear
@@ -177,16 +201,16 @@ class OtpVC: UIViewController , UITextFieldDelegate {
  
             case self.TFIndex4:
                 if !TFIndex4.text!.isEmpty {
-                    TFIndex4.textColor = .white
-                    ViewTF4.backgroundColor = UIColor(named: "main")
+                    TFIndex4.textColor = UIColor(named: "main")
+//                    ViewTF4.backgroundColor = UIColor(named: "main")
                     self.TFIndex5.becomeFirstResponder()
                 } else {
                     ViewTF4.backgroundColor = .clear
                 }
             case self.TFIndex5:
                 if !TFIndex5.text!.isEmpty {
-                    TFIndex5.textColor = .white
-                    ViewTF5.backgroundColor = UIColor(named: "main")
+                    TFIndex5.textColor = UIColor(named: "main")
+//                    ViewTF5.backgroundColor = UIColor(named: "main")
                     self.TFIndex6.becomeFirstResponder()
                 } else {
                     ViewTF5.backgroundColor = .clear
@@ -194,8 +218,8 @@ class OtpVC: UIViewController , UITextFieldDelegate {
 
             case self.TFIndex6:
                 if !TFIndex6.text!.isEmpty {
-                    TFIndex6.textColor = .white
-                    ViewTF6.backgroundColor = UIColor(named: "main")
+                    TFIndex6.textColor = UIColor(named: "main")
+//                    ViewTF6.backgroundColor = UIColor(named: "main")
                     
                     //Make verification action when complete 6 digits
                     VerifyOtp()
@@ -340,7 +364,11 @@ extension OtpVC{
 
     func accountCreated()  {
         if let viewDone:ViewDone = showView(fromNib: ViewDone.self, in: self) {
-            viewDone.title = "تم إنشاء حسابك بنجاح!".localized
+            viewDone.title = "created_title"
+            viewDone.subtitle1 = "created_subtitle1"
+            viewDone.subtitle2 = "created_subtitle2"
+            viewDone.ButtonTitle = "created_btn"
+
             viewDone.imgStr = "successicon"
             viewDone.action = {
                 viewDone.removeFromSuperview()
@@ -382,7 +410,8 @@ extension OtpVC{
                         
             if remainingSeconds > 0 {
                 remainingSeconds -= 1
-                self.SecondsCount.text = "\(timeString(time: TimeInterval(remainingSeconds))) "
+                self.SecondsCount.localized(string: "\(timeString(time: TimeInterval(remainingSeconds))) ")
+//                self.SecondsCount.text = "\(timeString(time: TimeInterval(remainingSeconds))) "
                 // Still have time, enable the button and invalidate the timer
                 canResend(false)
 
@@ -401,6 +430,7 @@ extension OtpVC{
                    }
         }
     }
+ 
     func timeString(time:TimeInterval) -> String {
     let minutes = Int(time) / 60 % 60
     let seconds = Int(time) % 60
@@ -428,5 +458,46 @@ extension OtpVC{
 //            UIApplication.shared.endBackgroundTask(backgroundTask)
 //            backgroundTask = .invalid
 //        }
+    }
+}
+
+extension UIView{
+    func localizedview(){
+        let isRTL = Helper.shared.getLanguage() == "ar"
+//        let view = self
+//        UIView.appearance().semanticContentAttribute = !isRTL ? .forceLeftToRight : .forceRightToLeft
+
+        self.semanticContentAttribute = isRTL ? .forceLeftToRight : .forceRightToLeft
+//        view = isRTL ? .left : .right
+//        return view
+        
+        // Also flip the subviews' alignment if needed (e.g., UIStackView)
+//        if let stack = self as? UIStackView {
+//            stack.semanticContentAttribute = !isRTL ? .forceLeftToRight : .forceRightToLeft
+//            
+//            if !isRTL {
+//                        // Reverse the order of arranged subviews for RTL
+//                        let reversedSubviews = stack.arrangedSubviews.reversed()
+//                        for view in reversedSubviews {
+//                            stack.removeArrangedSubview(view)
+//                            stack.addArrangedSubview(view)
+//                        }
+//                    }
+//            
+//        }
+//        for subview in subviews {
+//                  subview.localizedview()
+//              }
+    }
+}
+extension UILabel{
+    func localized(string: String){
+        let isRTL = Helper.shared.getLanguage() == "ar"
+//        let view = self
+        self.semanticContentAttribute = isRTL ? .forceLeftToRight : .forceRightToLeft
+        self.textAlignment = isRTL ? .left : .right
+        self.text = string.localized
+//        return self
+        
     }
 }

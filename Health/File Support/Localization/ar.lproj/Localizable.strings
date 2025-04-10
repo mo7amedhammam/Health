@@ -56,3 +56,30 @@
 "signup_signup_btn" = "إنشاء";
 "signup_have_account" = "لديك حساب بالفعل؟";
 "signup_signin_btn" = "تسجيل الدخول";
+
+//--- otp ----
+"main_title" = "رمز التحقق";
+"code_sentmsg" = "تم إرسال رمز المصادقة إلى";
+"didnt_get_code" = "لم تحصل عليه بعد؟";
+"resend_code" = "اعد ارسال الرمز";
+"remain_sec" = "ثانيه متبقيه";
+
+//--- Account Created ----
+"created_title" = "تم إنشاء حسابك بنجاح!";
+"created_subtitle1" = "يرجى التحقق من صندوق الوارد الخاص بك للتحقق من رحلتك.";
+"created_subtitle2" = "تم ربطه سريعًا بخدمات البريد الإلكتروني الشائعة.";
+"created_btn" = "Done";
+
+//--- paswword reset ----
+"reset_title" = "تم إعادة ضبط كلمة المرور بنجاح!";
+"reset_subtitle1" = "يرجى التحقق من صندوق الوارد الخاص بك للتحقق من رحلتك.";
+"reset_subtitle2" = "تم ربطه سريعًا بخدمات البريد الإلكتروني الشائعة.";
+"reset_btn" = "تم";
+
+//--- paswword changed ----
+"changed_title" = "تم تغيير كلمة المرور بنجاح!";
+"changed_subtitle1" = "يرجى التحقق من صندوق الوارد الخاص بك للتحقق من رحلتك.";
+"changed_subtitle2" = "تم ربطه سريعًا بخدمات البريد الإلكتروني الشائعة.";
+"changed_btn" = "تم";
+
+

@@ -8,30 +8,49 @@
 import UIKit
 
 class ViewDone: UIView {
-  
+    
     @IBOutlet weak var IVPhoto: UIImageView!
     
     @IBOutlet weak var LaTitle: UILabel!
+    
+    @IBOutlet weak var LaSubtitle1: UILabel!
+    @IBOutlet weak var LaSubtitle2: UILabel!
     
     @IBOutlet weak var BtnDone: UIButton!
     var imgStr:String?{
         didSet{
             if let imageName = imgStr {
-                         IVPhoto.image = UIImage(named: imageName)
-                     }
+                IVPhoto.image = UIImage(named: imageName)
+            }
         }
     }
     var title:String?{
         didSet{
-            LaTitle.text = title
+            LaTitle.text = title?.localized
         }
     }
     
-     var action: (()->Void)?
-       @IBAction func buttonPressed(_ sender: UIButton) {
-           action?()
-       }
-
-   
+    var subtitle1:String?{
+        didSet{
+            LaSubtitle1.text = subtitle1?.localized
+        }
+    }
+    var subtitle2:String?{
+        didSet{
+            LaSubtitle2.text = subtitle2?.localized
+        }
+    }
+  
+    var ButtonTitle:String?{
+        didSet{
+            BtnDone.setTitle(ButtonTitle?.localized, for: .normal)
+        }
+    }
+    var action: (()->Void)?
+    @IBAction func buttonPressed(_ sender: UIButton) {
+        action?()
+    }
+    
+    
 }
 

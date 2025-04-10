@@ -114,9 +114,7 @@ class ChangePasswordVC: UIViewController  , UITextFieldDelegate {
                 sender.isSelected = false
                 TFRe_Password.isSecureTextEntry = true
             }
-            
         }
-        
         
     }
     
@@ -156,12 +154,16 @@ extension ChangePasswordVC {
     }
     func PassChangedDone()  {
         if let viewDone:ViewDone = showView(fromNib: ViewDone.self, in: self) {
-            viewDone.title = "تم تغيير ضبط كلمة المرور بنجاح"
-            viewDone.imgStr = "keyicon"
+            viewDone.title = "changed_title"
+            viewDone.subtitle1 = "changed_subtitle1"
+            viewDone.subtitle2 = "changed_subtitle2"
+            viewDone.ButtonTitle = "changed_btn"
+            
+            viewDone.imgStr = "successicon"
             viewDone.action = {
                 viewDone.removeFromSuperview()
-                self.navigationController?.popViewController(animated: true)
-//                Helper.shared.changeRootVC(newroot: LoginVC.self,transitionFrom: .fromLeft)
+//                self.navigationController?.popViewController(animated: true)
+                Helper.shared.changeRootVC(newroot: LoginVC.self,transitionFrom: .fromLeft)
             }
         }
     }

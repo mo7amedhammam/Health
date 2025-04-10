@@ -127,7 +127,15 @@ final class LoginVC: UIViewController {
             if TFMobile.textField.text != ""{
                 SendOtp()
             } else {
-                SimpleAlert.shared.showAlert(title: "اكتب رقم موبايل الأول", message: "", viewController: self)
+                SimpleAlert.shared.showAlert(title: "اكتب رقم موبايل الأول", message: "", viewController: self){[ self] in
+                    guard let vc = initiateViewController(storyboardName: .main, viewControllerIdentifier: OtpVC.self) else{return}
+                    vc.Phonenumber = TFMobile.textField.text
+                    vc.second =  otpViewModel.responseModel?.secondsCount ?? 60
+                    vc.otp = otpViewModel.responseModel?.otp ?? 00
+                    Shared.shared.remainingSeconds = otpViewModel.responseModel?.secondsCount ?? 60
+                    vc.verivyFor = .forgetPassword
+                    navigationController?.pushViewController(vc, animated: true)
+                }
                 return
             }
         }

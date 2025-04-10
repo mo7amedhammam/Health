@@ -150,8 +150,12 @@ extension ForgetPasswordVC {
     }
     func PassResetDone()  {
         if let viewDone:ViewDone = showView(fromNib: ViewDone.self, in: self) {
-            viewDone.title = "تم إعادة ضبط كلمة المرور بنجاح"
-            viewDone.imgStr = "keyicon"
+            viewDone.title = "reset_title"
+            viewDone.subtitle1 = "reset_subtitle1"
+            viewDone.subtitle2 = "reset_subtitle2"
+            viewDone.ButtonTitle = "reset_btn"
+
+            viewDone.imgStr = "successicon"
             viewDone.action = {
                 viewDone.removeFromSuperview()
                 Helper.shared.changeRootVC(newroot: LoginVC.self,transitionFrom: .fromLeft)
