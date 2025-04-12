@@ -17,10 +17,10 @@ class LocalizationManager : ObservableObject{
     private init() {}
     
     func setLanguage(_ language: String, completion: @escaping (Bool) -> Void) {
-//        ReloadRootForRTL()
         print("setLanguage",language)
 
         currentLanguage = language
+        UIView.appearance().semanticContentAttribute = language == "ar" ? .forceRightToLeft:.forceLeftToRight
         Helper.shared.setLanguage(currentLanguage: language)
         Helper.shared.languageSelected(opened: true)
         fetchTranslations { success in
@@ -142,12 +142,12 @@ class LocalizationManager : ObservableObject{
         }
     }
     
-    func ReloadRootForRTL() {
-        // Reload the root view controller
-           let storyboard = UIStoryboard(name: "Main", bundle: nil)
-           let newRootVC = storyboard.instantiateInitialViewController()
-           UIApplication.shared.windows.first?.rootViewController = newRootVC
-    }
+//    func ReloadRootForRTL() {
+//        // Reload the root view controller
+//           let storyboard = UIStoryboard(name: "Main", bundle: nil)
+//           let newRootVC = storyboard.instantiateInitialViewController()
+//           UIApplication.shared.windows.first?.rootViewController = newRootVC
+//    }
 }
 
 import Foundation

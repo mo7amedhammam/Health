@@ -210,7 +210,10 @@ class CustomInputField: UIView {
            ])
        }
        
- 
+    // MARK: - Public Methods
+    func text() -> String? {
+        return textField.text
+    }
     
        private func updateTextAlignment() {
            let isRTL = LocalizationManager.shared.currentLanguage == "ar"

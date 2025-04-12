@@ -7,115 +7,67 @@
 
 import UIKit
 
-class ChangePasswordVC: UIViewController  , UITextFieldDelegate {
+class ChangePasswordVC: UIViewController {
     
-    
-    @IBOutlet weak var ViewPassword: UIView!
-    @IBOutlet weak var TFPassword: UITextField!
-    
-    @IBOutlet weak var ViewNewPassword: UIView!
-    @IBOutlet weak var TFNewPassword: UITextField!
-    
-    @IBOutlet weak var ViewRe_Password: UIView!
-    @IBOutlet weak var TFRe_Password: UITextField!
-    
+    @IBOutlet weak var LaNavTitle: UILabel!
+    @IBOutlet weak var TFPassword: CustomInputField!
+    @IBOutlet weak var TFNewPassword: CustomInputField!
+    @IBOutlet weak var TFRe_Password: CustomInputField!
     @IBOutlet weak var BtnChange: UIButton!
+    
+    @IBOutlet weak var BtnBack: UIButton!
     
     let ViewModel = ChangePasswordVM()
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // Do any additional setup after loading the view.
-        TFPassword.delegate = self
-        TFNewPassword.delegate = self
-        TFRe_Password.delegate = self
-        TFPassword.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
-        TFNewPassword.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
-        TFRe_Password.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
-        
-        TFPassword.addTarget(self, action: #selector(didTapTFPassword), for: .editingDidEndOnExit)
-        TFNewPassword.addTarget(self, action: #selector(didTapTFNewPassword), for: .editingDidEndOnExit)
-        TFRe_Password.addTarget(self, action: #selector(didTapTFRe_Password), for: .editingDidEndOnExit)
-        
+        setupUI()
+        setupPasswordValidations()
+    }
+    
+    func setupUI(){
         BtnChange.isEnabled(false)
         hideKeyboardWhenTappedAround()
-    }
-    
-    @objc func didTapTFPassword() {
-        // Resign the first responder from the UITextField.
-        TFNewPassword.becomeFirstResponder()
-    }
-    
-    @objc func didTapTFNewPassword() {
-        // Resign the first responder from the UITextField.
-        TFRe_Password.becomeFirstResponder()
-    }
-    
-    @objc func didTapTFRe_Password() {
-        // Resign the first responder from the UITextField.
-//        ChangePassword()
-        self.view.endEditing(true)
-    }
-    
-    
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        
-        if textField == TFPassword {
-            TFPassword.textColor = UIColor(named: "main")
-            ViewPassword.borderColor = UIColor(named: "stroke")
-        } else if textField == TFNewPassword {
-            TFNewPassword.borderColor = UIColor(named: "stroke")
-            TFNewPassword.textColor = UIColor(named: "main")
-        } else if textField == TFRe_Password {
-            ViewRe_Password.borderColor = UIColor(named: "stroke")
-            TFRe_Password.textColor = UIColor(named: "main")
-        } else {
-            
-        }
-    }
-    
-    @objc func textFieldDidChange(_ textField: UITextField) {
-        let isPasswordValid = TFPassword.text?.count ?? 0 >= 5 // Check if TFPhone has 11 digits
-        let isNewPasswordValid = TFNewPassword.text?.count ?? 0 >= 5 // Check if TFPassword is not empty
-        let isRePasswordValid = TFRe_Password.hasText // Check if TFCode is not empty
-        let isNewPasswordMatched = (TFNewPassword.text == TFRe_Password.text)
-        let isValidForm = isPasswordValid && isNewPasswordValid && isRePasswordValid && isNewPasswordMatched
-        BtnChange.isEnabled(isValidForm)
+
+        LaNavTitle.text = "change_sc_title".localized
+
+        BtnChange.setTitle("change_sc_btn_title".localized(with: "Localizable"), for: .normal)
+        BtnBack.setImage(UIImage(resource:.backLeft).flippedIfRTL, for: .normal)
     }
 
+    private func setupPasswordValidations() {
+        // Set minimum 6 characters for old password
+        TFPassword.validationRule = { text in
+            guard let text = text else { return false }
+            return text.count >= 6
+        }
+        
+        // Set minimum 6 characters for password
+        TFNewPassword.validationRule = { text in
+            guard let text = text else { return false }
+            return text.count >= 6
+        }
+        
+        // Set confirmation must match password and have 6+ chars
+        TFRe_Password.validationRule = { [weak self] text in
+            guard let self = self, let text = text else { return false }
+            return text.count >= 6 && text == self.TFNewPassword.text()
+        }
+        
+        // Handle validation changes
+        [TFPassword,TFNewPassword,TFRe_Password].forEach{$0.onValidationChanged = { [weak self] isValid in
+            self?.validateForm()
+        }}
+    }
+    
+    private func validateForm() {
+        let isPasswordValid = TFPassword.textField.hasText && TFPassword.isValid
+        let isNewPasswordValid = TFNewPassword.textField.hasText && TFNewPassword.isValid
+        let isConfirmationValid = TFRe_Password.textField.hasText && TFRe_Password.isValid
+        
+        BtnChange.isEnabled(isPasswordValid && isNewPasswordValid && isConfirmationValid)
+    }
     @IBAction func BUBack(_ sender: Any) {
         self.navigationController?.popViewController(animated: true)
-    }
-
-    
-    
-    @IBAction func BUShowPassword(_ sender: UIButton) {
-        if sender.tag == 0 {
-            if sender.isSelected == false {
-                sender.isSelected = true
-                TFPassword.isSecureTextEntry = false
-            } else {
-                sender.isSelected = false
-                TFPassword.isSecureTextEntry = true
-            }
-        } else if sender.tag == 1 {
-            if sender.isSelected == false {
-                sender.isSelected = true
-                TFNewPassword.isSecureTextEntry = false
-            } else {
-                sender.isSelected = false
-                TFNewPassword.isSecureTextEntry = true
-            }
-        } else {
-            if sender.isSelected == false {
-                sender.isSelected = true
-                TFRe_Password.isSecureTextEntry = false
-            } else {
-                sender.isSelected = false
-                TFRe_Password.isSecureTextEntry = true
-            }
-        }
-        
     }
     
     @IBAction func BUChange(_ sender: Any) {
@@ -126,8 +78,8 @@ class ChangePasswordVC: UIViewController  , UITextFieldDelegate {
 
 extension ChangePasswordVC {
     func ChangePassword(){
-        ViewModel.oldPassword = TFPassword.text
-        ViewModel.newPassword = TFRe_Password.text
+        ViewModel.oldPassword = TFPassword.text()
+        ViewModel.newPassword = TFRe_Password.text()
         
         ViewModel.ChangePassword{[weak self] state in
             guard let self = self else{return}

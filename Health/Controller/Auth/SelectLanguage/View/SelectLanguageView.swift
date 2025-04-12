@@ -61,7 +61,10 @@ struct SelectLanguageView : View {
                 let rootVC = UIHostingController(rootView: OnboardingView())
                 rootVC.navigationController?.isNavigationBarHidden = true
                 rootVC.navigationController?.toolbar.isHidden = true
-                Helper.shared.changeRootVC(newroot: rootVC, transitionFrom: .fromRight)
+//                Helper.shared.changeRootVC(newroot: rootVC, transitionFrom: .fromRight)
+                
+                Helper.shared.changeRootVC(newroot: ChangePasswordVC.self, transitionFrom: .fromRight)
+
             }
         }
         .localizeView()

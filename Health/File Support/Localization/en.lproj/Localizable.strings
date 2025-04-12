@@ -64,20 +64,42 @@
 "resend_code" = "Resend OTP";
 "remain_sec" = "sec Left";
 
-//--- Account Created ----
+//--- Account Created popup ----
 "created_title" = "Account Created successfully";
 "created_subtitle1" = "يرجى التحقق من صندوق الوارد الخاص بك للتحقق من رحلتك.";
 "created_subtitle2" = "تم ربطه سريعًا بخدمات البريد الإلكتروني الشائعة.";
 "created_btn" = "Done";
 
-//--- paswword reset ----
+//--- paswword reset popup ----
 "reset_title" = "Password Reset successfully!";
 "reset_subtitle1" = "يرجى التحقق من صندوق الوارد الخاص بك للتحقق من رحلتك.";
 "reset_subtitle2" = "تم ربطه سريعًا بخدمات البريد الإلكتروني الشائعة.";
 "reset_btn" = "Done";
 
-//--- paswword changed ----
+//--- paswword changed popup ----
 "changed_title" = "Password Changed successfully!";
 "changed_subtitle1" = "يرجى التحقق من صندوق الوارد الخاص بك للتحقق من رحلتك.";
 "changed_subtitle2" = "تم ربطه سريعًا بخدمات البريد الإلكتروني الشائعة.";
 "changed_btn" = "Done";
+
+
+//--- paswword forget ----
+"forget_title" = "Reset Password";
+"forget_subtitle" = "Password Changed successfully!";
+"forget_pass_title" = "New Password";
+"forget_pass_placeholder" = "Type your New Passowrd";
+"forget_repass_title" = "Confirm New Password";
+"forget_repass_placeholder" = "ReType your New Passowrd";
+"forget_btn_title" = "Reset Password";
+
+
+//--- paswword change screen ----
+"change_sc_title" = "Reset Password";
+"change_sc_oldpass_title" = "Old Password";
+"change_sc_oldpass_placeholder" = "Type your Old Passowrd";
+"change_sc_pass_title" = "New Password";
+"change_sc_pass_placeholder" = "Type your New Passowrd";
+"change_sc_repass_title" = "Confirm New Password";
+"change_sc_repass_placeholder" = "ReType your New Passowrd";
+"change_sc_btn_title" = "Change Password";
+

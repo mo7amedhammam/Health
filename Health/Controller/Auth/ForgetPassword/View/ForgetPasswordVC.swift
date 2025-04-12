@@ -7,85 +7,66 @@
 
 import UIKit
 
-class ForgetPasswordVC: UIViewController , UITextFieldDelegate , UIGestureRecognizerDelegate {
+class ForgetPasswordVC: UIViewController  , UIGestureRecognizerDelegate {
+    @IBOutlet weak var LaNavTitle: UILabel!
     
-    @IBOutlet weak var ViewPassword: UIView!
-    @IBOutlet weak var TFPassword: UITextField!
+    @IBOutlet weak var LaSubtitle: UILabel!
     
-    @IBOutlet weak var ViewRe_Password: UIView!
-    @IBOutlet weak var TFRe_Password: UITextField!
+    @IBOutlet weak var TFPassword: CustomInputField!
+    @IBOutlet weak var TFRe_Password: CustomInputField!
     
     @IBOutlet weak var BtnReset: UIButton!
+    @IBOutlet weak var BtnBack: UIButton!
     var Phonenumber : String?
     let ViewModel = ForgetPasswordVM()
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
-        TFPassword.delegate = self
-        TFRe_Password.delegate = self
-        TFPassword.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
-        TFRe_Password.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
-        BtnReset.isEnabled(false)
-        
-        TFPassword.addTarget(self, action: #selector(didTapTFPassword), for: .editingDidEndOnExit)
-        TFRe_Password.addTarget(self, action: #selector(didTapTFRe_Password), for: .editingDidEndOnExit)
-
+        setupUI()
         hideKeyboardWhenTappedAround()
-        navigationController?.interactivePopGestureRecognizer?.delegate = self
+        setupPasswordValidations()
 
     }
-    
-    @objc func didTapTFPassword() {
-        // Resign the first responder from the UITextField.
-        TFRe_Password.becomeFirstResponder()
-    }
+    func setupUI(){
+        BtnReset.isEnabled(false)
 
-    @objc func didTapTFRe_Password() {
-        // Resign the first responder from the UITextField.
-//        ResetPassword()
-        self.view.endEditing(true)
+        LaNavTitle.text = "forget_title".localized
+        LaSubtitle.text = "forget_subtitle".localized
+
+        BtnReset.setTitle("forget_btn_title".localized(with: "Localizable"), for: .normal)
+        BtnBack.setImage(UIImage(resource:.backLeft).flippedIfRTL, for: .normal)
+        LaSubtitle.font = UIFont(name: fontsenum.medium.rawValue, size: 16)
+    }
+    private func setupPasswordValidations() {
+        // Set minimum 6 characters for password
+        TFPassword.validationRule = { text in
+            guard let text = text else { return false }
+            return text.count >= 6
+        }
+        
+        // Set confirmation must match password and have 6+ chars
+        TFRe_Password.validationRule = { [weak self] text in
+            guard let self = self, let text = text else { return false }
+            return text.count >= 6 && text == self.TFPassword.text()
+        }
+        
+        // Handle validation changes
+        [TFPassword,TFRe_Password].forEach{$0.onValidationChanged = { [weak self] isValid in
+            self?.validateForm()
+        }}
     }
     
+    private func validateForm() {
+        let isPasswordValid = TFPassword.textField.hasText && TFPassword.isValid
+        let isConfirmationValid = TFRe_Password.textField.hasText && TFRe_Password.isValid
+        
+        BtnReset.isEnabled(isPasswordValid && isConfirmationValid)
+    }
     
     func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
         return false
     }
-    
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        
-        if textField == TFPassword {
-            TFPassword.textColor = UIColor(named: "main")
-            ViewPassword.borderColor = UIColor(named: "stroke")
-            
-        } else if textField == TFRe_Password {
-            ViewRe_Password.borderColor = UIColor(named: "stroke")
-            TFRe_Password.textColor = UIColor(named: "main")
-        } else {
-            
-        }
-    }
-    @objc func textFieldDidChange(_ textField: UITextField) {
-        let isPasswordValid = TFPassword.text?.count ?? 0 >= 5 // Check if TFPhone has 11 digits
-        let isRePasswordValid = TFRe_Password.hasText // Check if TFPassword is not empty
-        let isMatched = (TFPassword.text == TFRe_Password.text)
-        let isValidForm = isPasswordValid && isRePasswordValid && isMatched
-        BtnReset.isEnabled(isValidForm)
-    }
-    
-    //      func textFieldDidEndEditing(_ textField: UITextField) {
-    //
-    //          if textField == TFPassword {
-    //              if TFPassword.text?.count == 0 {
-    //              } else {
-    //              }
-    //
-    //          }  else {
-    //          }
-    //
-    //      }
-    
-    
     
     @IBAction func BURe_Set(_ sender: Any) {
         ResetPassword()
@@ -93,37 +74,13 @@ class ForgetPasswordVC: UIViewController , UITextFieldDelegate , UIGestureRecogn
     
     @IBAction func BUBack(_ sender: Any) {
         self.navigationController?.popToRootViewController(animated: true)
-    }    
-    
-    @IBAction func BUShowPassword(_ sender: UIButton) {
-        
-        if sender.tag == 0 {
-            if sender.isSelected == false {
-                sender.isSelected = true
-                TFPassword.isSecureTextEntry = false
-            } else {
-                sender.isSelected = false
-                TFPassword.isSecureTextEntry = true
-            }
-        } else {
-            if sender.isSelected == false {
-                sender.isSelected = true
-                TFRe_Password.isSecureTextEntry = false
-            } else {
-                sender.isSelected = false
-                TFRe_Password.isSecureTextEntry = true
-            }
-            
-        }
-        
-        
     }
 }
 
 extension ForgetPasswordVC {
     func ResetPassword(){
         ViewModel.mobile = Phonenumber
-        ViewModel.newPassword = TFRe_Password.text
+        ViewModel.newPassword = TFPassword.text()
         
         ViewModel.ResetPassword{[weak self] state in
             guard let self = self else{return}
@@ -163,3 +120,4 @@ extension ForgetPasswordVC {
         }
     }
 }
+

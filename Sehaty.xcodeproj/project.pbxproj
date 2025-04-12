@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		80575AC14FA23A70DAA7BBEA /* Pods_Sehaty.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0BF0C90049FC1EFFEE4F4C0 /* Pods_Sehaty.framework */; };
+		900B50B82DAAC4E300EABA67 /* ExUiImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 900B50B72DAAC4E300EABA67 /* ExUiImage.swift */; };
 		903667062D82E0A40040AE29 /* LocalizationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 903667052D82E08E0040AE29 /* LocalizationManager.swift */; };
 		903667082D82E1410040AE29 /* AppKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 903667072D82E1370040AE29 /* AppKeys.swift */; };
 		9057A6132DA4232B0090C34A /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9057A6122DA4232B0090C34A /* CustomTextField.swift */; };
@@ -227,6 +228,7 @@
 		42F3AA86B832A0938AF1F883 /* Pods-Health.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Health.release.xcconfig"; path = "Target Support Files/Pods-Health/Pods-Health.release.xcconfig"; sourceTree = "<group>"; };
 		4CFC129D8CF33907DFF2B706 /* Pods-Sehaty.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sehaty.debug.xcconfig"; path = "Target Support Files/Pods-Sehaty/Pods-Sehaty.debug.xcconfig"; sourceTree = "<group>"; };
 		89D6D697015359A8CFB74DC2 /* Pods-Sehaty.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sehaty.release.xcconfig"; path = "Target Support Files/Pods-Sehaty/Pods-Sehaty.release.xcconfig"; sourceTree = "<group>"; };
+		900B50B72DAAC4E300EABA67 /* ExUiImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExUiImage.swift; sourceTree = "<group>"; };
 		903667052D82E08E0040AE29 /* LocalizationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationManager.swift; sourceTree = "<group>"; };
 		903667072D82E1370040AE29 /* AppKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppKeys.swift; sourceTree = "<group>"; };
 		9057A6122DA4232B0090C34A /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
@@ -974,6 +976,7 @@
 		BBBDFFF22A730F8800F066DF /* Extentions */ = {
 			isa = PBXGroup;
 			children = (
+				900B50B72DAAC4E300EABA67 /* ExUiImage.swift */,
 				90B67BE02D9ED2AD00C1FD31 /* exColors.swift */,
 				BBBD00012A73101300F066DF /* AES.swift */,
 				BBBD00052A73101500F066DF /* CardView.swift */,
@@ -1743,6 +1746,7 @@
 				BB14DAEB2A7B041C00389B96 /* ProfileTVCellHeader.swift in Sources */,
 				C889958A2AA9F770002AD812 /* ForgetPasswordVM.swift in Sources */,
 				C88995822AA9EDFE002AD812 /* Strings.swift in Sources */,
+				900B50B82DAAC4E300EABA67 /* ExUiImage.swift in Sources */,
 				C82DCAAF2AACB41600322B55 /* MedicationScheduleDetailsM.swift in Sources */,
 				90842F382DA16A3700B02D02 /* SelectLanguageView.swift in Sources */,
 				BB218A582ADF1CA90061FF81 /* ViewNoData.swift in Sources */,
