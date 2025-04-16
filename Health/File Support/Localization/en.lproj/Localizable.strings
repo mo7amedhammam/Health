@@ -103,3 +103,18 @@
 "change_sc_repass_placeholder" = "ReType your New Passowrd";
 "change_sc_btn_title" = "Change Password";
 
+
+
+//MARK: --- Home Screen ----
+ "home_navtitle" = "Home";
+"home_Welcome" = "Welcome, ";
+
+"home_subtitle1" = "Sehaty With AlNada";
+"home_subtitle2" = "Consultations with nutrition experts to help you achieve your goals.";
+
+"home_lastMes" = "Last Measurments";
+"home_newadv" = "New Advices";
+"home_mostviewedadv" = "Most Viewed Advices";
+"mes_inDate" = "Date: ";
+
+"mesurement_det_title" = "mesurement of ";

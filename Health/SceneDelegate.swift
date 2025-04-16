@@ -27,9 +27,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Optional: force layout direction
         let selectedLang = Helper.shared.getLanguage()
         UIView.appearance().semanticContentAttribute = selectedLang == "ar" ? .forceRightToLeft : .forceLeftToRight
-        
-        
-        if Helper.shared.isLanguageSelected(){ //swiftui
+        UITableView.appearance().semanticContentAttribute = selectedLang == "ar" ? .forceRightToLeft : .forceLeftToRight
+        UITabBar.appearance().semanticContentAttribute = selectedLang == "ar" ? .forceRightToLeft : .forceLeftToRight
+    
+        if !Helper.shared.isLanguageSelected(){ //swiftui
             let vc = UIHostingController(rootView: SelectLanguageView())
             let nav = UINavigationController(rootViewController: vc)
             nav.navigationBar.isHidden = true
@@ -42,13 +43,32 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             window?.rootViewController = nav
             
         } else { //uikit
-            let initialVC: UIViewController = Helper.shared.CheckIfLoggedIn()
-            ? initiateViewController(storyboardName: .main, viewControllerIdentifier: HTBC.self)!
-            : initiateViewController(storyboardName: .main, viewControllerIdentifier: LoginVC.self)!
             
+            if Helper.shared.CheckIfLoggedIn(){ //swiftui
+//                let vc = UIHostingController(rootView: NewTabView())
+//                let nav = UINavigationController(rootViewController: vc)
+//                nav.navigationBar.isHidden = true
+//                window?.rootViewController = nav
+            
+            
+                let initialVC: UIViewController = initiateViewController(storyboardName: .main, viewControllerIdentifier: HTBC.self)!
+
             let nav = UINavigationController(rootViewController: initialVC)
             nav.navigationBar.isHidden = true
             window?.rootViewController = nav
+            
+            }else  { //swiftui
+//                let initialVC: UIViewController = Helper.shared.CheckIfLoggedIn()
+//                ? initiateViewController(storyboardName: .main, viewControllerIdentifier: HTBC.self)!
+//                : initiateViewController(storyboardName: .main, viewControllerIdentifier: LoginVC.self)!
+                
+                
+                let initialVC: UIViewController = initiateViewController(storyboardName: .main, viewControllerIdentifier: LoginVC.self)!
+                
+                let nav = UINavigationController(rootViewController: initialVC)
+                nav.navigationBar.isHidden = true
+                window?.rootViewController = nav
+            }
         }
         
         window?.makeKeyAndVisible()
@@ -83,7 +103,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // to restore the scene back to its current state.
     }
     
-    
 }
 
 extension SceneDelegate {
@@ -93,11 +112,11 @@ extension SceneDelegate {
             let window = UIWindow(windowScene: windowScene)
             window.overrideUserInterfaceStyle = .light
             
-            // Optional: force layout direction
-            let selectedLang = Helper.shared.getLanguage()
-            UIView.appearance().semanticContentAttribute = selectedLang == "ar" ? .forceRightToLeft : .forceLeftToRight
+            // Configure RTL/LTR direction for the entire app
+            self.configureAppWideSemanticContentAttributes()
+
             
-            if Helper.shared.isLanguageSelected() {
+            if !Helper.shared.isLanguageSelected() {
                 let vc = UIHostingController(rootView: SelectLanguageView())
                 let nav = UINavigationController(rootViewController: vc)
                 nav.navigationBar.isHidden = true
@@ -109,18 +128,59 @@ extension SceneDelegate {
                 nav.navigationBar.isHidden = true
                 window.rootViewController = nav
             } else {
-                let initialVC: UIViewController = Helper.shared.CheckIfLoggedIn()
-                ? initiateViewController(storyboardName: .main, viewControllerIdentifier: HTBC.self)!
-                : initiateViewController(storyboardName: .main, viewControllerIdentifier: LoginVC.self)!
+                if Helper.shared.CheckIfLoggedIn(){ //swiftui
+                    //                let vc = UIHostingController(rootView: NewTabView())
+                    //                let nav = UINavigationController(rootViewController: vc)
+                    //                nav.navigationBar.isHidden = true
+                    //                window?.rootViewController = nav
+                    
+                    
+                    let initialVC: UIViewController = initiateViewController(storyboardName: .main, viewControllerIdentifier: HTBC.self)!
+                    
+                    let nav = UINavigationController(rootViewController: initialVC)
+                    nav.navigationBar.isHidden = true
+                    window.rootViewController = nav
+                    
+                }else  { //swiftui
+                    //                let initialVC: UIViewController = Helper.shared.CheckIfLoggedIn()
+                    //                ? initiateViewController(storyboardName: .main, viewControllerIdentifier: HTBC.self)!
+                    //                : initiateViewController(storyboardName: .main, viewControllerIdentifier: LoginVC.self)!
+                    
+                    
+                    let initialVC: UIViewController = initiateViewController(storyboardName: .main, viewControllerIdentifier: LoginVC.self)!
+                    
+                    let nav = UINavigationController(rootViewController: initialVC)
+                    nav.navigationBar.isHidden = true
+                    window.rootViewController = nav
+                }
                 
-                let nav = UINavigationController(rootViewController: initialVC)
-                nav.navigationBar.isHidden = true
-                window.rootViewController = nav
             }
-            
             self.window = window
             window.makeKeyAndVisible()
         }
+    }
+    
+    private func configureAppWideSemanticContentAttributes() {
+        let isRTL = Helper.shared.getLanguage() == "ar"
+        let semanticAttribute: UISemanticContentAttribute = isRTL ? .forceRightToLeft : .forceLeftToRight
+        
+        // Apply to all UI components
+        UIView.appearance().semanticContentAttribute = semanticAttribute
+        UIWindow.appearance().semanticContentAttribute = semanticAttribute
+        UINavigationBar.appearance().semanticContentAttribute = semanticAttribute
+        UITabBar.appearance().semanticContentAttribute = semanticAttribute
+        UIToolbar.appearance().semanticContentAttribute = semanticAttribute
+        UITableView.appearance().semanticContentAttribute = semanticAttribute
+        UICollectionView.appearance().semanticContentAttribute = semanticAttribute
+        UIScrollView.appearance().semanticContentAttribute = semanticAttribute
+        
+        // Text alignment for labels and text fields
+        UILabel.appearance().textAlignment = isRTL ? .right : .left
+        UITextField.appearance().textAlignment = isRTL ? .right : .left
+        UITextView.appearance().textAlignment = isRTL ? .right : .left
+        
+        // For segmented control
+        UISegmentedControl.appearance().semanticContentAttribute = semanticAttribute
     }
 }
 

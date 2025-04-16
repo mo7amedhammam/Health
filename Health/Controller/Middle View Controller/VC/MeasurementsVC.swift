@@ -11,34 +11,36 @@ class MeasurementsVC: UIViewController {
     
     
     @IBOutlet weak var CollectionScreen: UICollectionView!
-    @IBOutlet weak var LaName: UILabel!
-    @IBOutlet weak var IVPhoto: UIImageView!
-    @IBOutlet weak var IVPhotoOnLine: UIImageView!
+//    @IBOutlet weak var LaName: UILabel!
+//    @IBOutlet weak var IVPhoto: UIImageView!
+//    @IBOutlet weak var IVPhotoOnLine: UIImageView!
 
+    @IBOutlet weak var LaNavTitle: UILabel!
     let ViewModel = MyMeasurementsStatsVM()
     
-    let ViewModelProfile = ProfileVM()
+//    let ViewModelProfile = ProfileVM()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        LaNavTitle.textAlignment = .center
         CollectionScreen.dataSource = self
         CollectionScreen.delegate = self
         CollectionScreen.registerCell(cellClass: MeasurementsCVCell.self)
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical //.horizontal
-        layout.minimumLineSpacing      = 0
+        layout.minimumLineSpacing      = 10
         layout.minimumInteritemSpacing = 0
-        CollectionScreen.semanticContentAttribute = .forceRightToLeft
+//        CollectionScreen.semanticContentAttribute = .forceRightToLeft
         CollectionScreen.setCollectionViewLayout(layout, animated: true)
-        LaName.text = "\(Helper.shared.getUser()?.name ?? "")"
+//        LaName.text = "\(Helper.shared.getUser()?.name ?? "")"
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         DispatchQueue.main.async {
             self.getData()
-            self.GetMyProfile()
+//            self.GetMyProfile()
         }
     }
     
@@ -49,33 +51,33 @@ class MeasurementsVC: UIViewController {
 }
 
 extension MeasurementsVC {
-    func GetMyProfile() {
-        ViewModelProfile.GetMyProfile {[weak self] state in
-            guard let self = self else{return}
-            guard let state = state else{
-                return
-            }
-            switch state {
-            case .loading:
-//                Hud.showHud(in: self.view,text: "")
-                print("loading")
-            case .stopLoading:
-                Hud.dismiss(from: self.view)
-            case .success:
-                Hud.dismiss(from: self.view)
-                print(state)
-                if let user = ViewModelProfile.responseModel{
-                    LaName.text  = user.name
-                }
-            case .error(_,let error):
-                Hud.dismiss(from: self.view)
-//                SimpleAlert.shared.showAlert(title:error ?? "",message:"", viewController: self)
-                print(error ?? "")
-            case .none:
-                print("")
-            }
-        }
-    }
+//    func GetMyProfile() {
+//        ViewModelProfile.GetMyProfile {[weak self] state in
+//            guard let self = self else{return}
+//            guard let state = state else{
+//                return
+//            }
+//            switch state {
+//            case .loading:
+////                Hud.showHud(in: self.view,text: "")
+//                print("loading")
+//            case .stopLoading:
+//                Hud.dismiss(from: self.view)
+//            case .success:
+//                Hud.dismiss(from: self.view)
+//                print(state)
+//                if let user = ViewModelProfile.responseModel{
+//                    LaName.text  = user.name
+//                }
+//            case .error(_,let error):
+//                Hud.dismiss(from: self.view)
+////                SimpleAlert.shared.showAlert(title:error ?? "",message:"", viewController: self)
+//                print(error ?? "")
+//            case .none:
+//                print("")
+//            }
+//        }
+//    }
 }
 
 
@@ -142,7 +144,7 @@ extension MeasurementsVC : UICollectionViewDataSource , UICollectionViewDelegate
                 
         if let img = model.image {
             //                let processor = SVGImgProcessor() // if receive svg image
-            cell.ImgMeasurement.kf.setImage(with: URL(string:Constants.baseURL + img.validateSlashs()), placeholder: UIImage(named: "defaultLogo"), options: nil, progressBlock: nil)
+            cell.ImgMeasurement.kf.setImage(with: URL(string:Constants.imagesURL + img.validateSlashs()), placeholder: UIImage(named: "defaultLogo"), options: nil, progressBlock: nil)
         }
 
         return cell
@@ -150,7 +152,7 @@ extension MeasurementsVC : UICollectionViewDataSource , UICollectionViewDelegate
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: ((collectionView.bounds.width - 15) / 2), height: 220)
+        return CGSize(width: ((collectionView.bounds.width - 15) / 2), height: 110)
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {

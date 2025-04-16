@@ -227,8 +227,11 @@ extension ProfileVC : UITableViewDataSource , UITableViewDelegate {
         } else if indexPath.row == 6 { // - "المساعده "-
             selected = 6
             TVscreen.reloadData()
-            PushTo(destination: HelpVC.self)
-            
+//            PushTo(destination: HelpVC.self)
+            LocalizationManager.shared.setLanguage(Helper.shared.getLanguage() == "ar" ? "en" : "ar"){_ in}
+            if let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate {
+                sceneDelegate.reloadRootView()
+            }
         }  else if indexPath.row == 7 { // - "الشروط والأحكام" -
             selected = 7
             TVscreen.reloadData()

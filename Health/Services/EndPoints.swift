@@ -24,7 +24,7 @@ struct Constants {
 
     static var baseURL:String = apiType.rawValue
     static var apiURL:String {return "\(baseURL)api/"}
-//    static var imagesURL:String {return "http://wecareback.wecancity.com/"}
+    static var imagesURL:String {return "https://alnada-sehatyapi.azurewebsites.net/"}
 
 //var TermsAndConditionsURL =  "https://camelgate.app/terms.html"
 

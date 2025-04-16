@@ -494,8 +494,8 @@ extension UILabel{
     func localized(string: String){
         let isRTL = Helper.shared.getLanguage() == "ar"
 //        let view = self
-        self.semanticContentAttribute = isRTL ? .forceLeftToRight : .forceRightToLeft
-        self.textAlignment = isRTL ? .left : .right
+        self.semanticContentAttribute = isRTL ? .forceRightToLeft : .forceLeftToRight
+        self.textAlignment = isRTL ? .right : .left
         self.text = string.localized
 //        return self
         

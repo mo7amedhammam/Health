@@ -28,9 +28,9 @@ class HTBC: UITabBarController  , UITabBarControllerDelegate {
             items[1].selectedImage = UIImage(named: "tab2selected")?.withRenderingMode(.alwaysOriginal)
             
             items[2].title = ""
-            items[2].image = UIImage(named: "tab3")
-            items[2].selectedImage = UIImage(named: "")
-            
+//            items[2].image = UIImage(named: "tab3")?.withRenderingMode(.alwaysOriginal)
+//            items[2].selectedImage = UIImage(named: "tab3selected")?.withRenderingMode(.alwaysOriginal)
+                
             items[3].title = ""
             items[3].image = UIImage(named: "tab4")
             items[3].selectedImage = UIImage(named: "tab4selected")?.withRenderingMode(.alwaysOriginal)
@@ -78,20 +78,31 @@ class HTBC: UITabBarController  , UITabBarControllerDelegate {
                 }
             }
     }
-    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        UIView.appearance().semanticContentAttribute = Helper.shared.getLanguage() == "ar" ? .forceRightToLeft : .forceLeftToRight
+
+    }
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        UIView.appearance().semanticContentAttribute = Helper.shared.getLanguage() == "ar" ? .forceRightToLeft : .forceLeftToRight
+
+    }
     override func viewDidLayoutSubviews() {
         super.viewWillLayoutSubviews()
         tabBar.frame.size.height = UIDevice.current.hasNotch ? 90 : 65
         tabBar.frame.origin.y = view.frame.height - (UIDevice.current.hasNotch ? 75 : 65)
     }
- 
+   
+}
+extension HTBC{
     func setupMiddleButton() {
         middleBtn = UIButton(frame: CGRect(x: (self.view.bounds.width / 2)-25, y: -20, width: 50, height: 50))
         //STYLE THE BUTTON YOUR OWN WAY
-        middleBtn.backgroundColor = .blue
+//        middleBtn.backgroundColor = .blue
         middleBtn.layer.cornerRadius = (middleBtn.layer.frame.width / 2)
 //        middleBtn.backgroundColor = UIColor(named: "second")
-        middleBtn.setImage(UIImage(named: "btnCenter"), for: .normal)
+        middleBtn.setImage(UIImage(named: "tab3"), for: .normal)
         //add to the tabbar and add click event
         self.tabBar.addSubview(middleBtn)
         middleBtn.addTarget(self, action: #selector(self.menuButtonAction), for: .touchUpInside)
@@ -101,7 +112,7 @@ class HTBC: UITabBarController  , UITabBarControllerDelegate {
     // MARK: - Actions
     @objc private func menuButtonAction(sender: UIButton) {
         selectedIndex = 2
-        middleBtn.setImage(UIImage(named: "btnCenterSelected"), for: .normal)
+        middleBtn.setImage(UIImage(named: "tab3selected"), for: .normal)
     }
     
     func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
@@ -110,14 +121,13 @@ class HTBC: UITabBarController  , UITabBarControllerDelegate {
             print("Selected tab bar item at index \(index)")
             // Perform any actions you want in response to the selection
             Hud.dismiss(from: self.view)
-            middleBtn.setImage(UIImage(named: "btnCenter"), for: .normal)
+            middleBtn.setImage(UIImage(named: "tab3"), for: .normal)
             if index == 2 {
                 selectedIndex = 2
-                middleBtn.setImage(UIImage(named: "btnCenterSelected"), for: .normal)
+                middleBtn.setImage(UIImage(named: "tab3selected"), for: .normal)
             }
         }
     }
-    
 }
 
 

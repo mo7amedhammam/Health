@@ -101,3 +101,18 @@
 "change_sc_repass_title" = "تأكيد كلمة المرور الجديدة ";
 "change_sc_repass_placeholder" = "أكد كلمة المرور الجديدة";
 "change_sc_btn_title" = "تغيير";
+
+//MARK: --- Home Screen ----
+
+"home_navtitle" = "الصفحة الرئيسية";
+"home_Welcome" = "مرحباً,";
+
+"home_subtitle1" = "تطبيق صحتي مع الندى!";
+"home_subtitle2" = "استشارات مع خبراء تغذية لمساعدتك على تحقيق أهدافك.";
+
+"home_lastMes" = "قياساتك الأخيرة";
+"home_newadv" = "نصائح حديثة";
+"home_mostviewedadv" = "النصائح الأكثر مشاهدة";
+"mes_inDate" = "بتاريخ: ";
+
+"mesurement_det_title" = "قياس ";

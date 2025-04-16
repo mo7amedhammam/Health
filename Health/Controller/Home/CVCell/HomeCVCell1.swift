@@ -14,7 +14,6 @@ class HomeCVCell1: UICollectionViewCell {
     @IBOutlet weak var LaCount: UILabel!
     @IBOutlet weak var LaDate: UILabel!
     
-    
     @IBOutlet weak var SVViewDate: UIStackView!
     
     @IBOutlet weak var ViewDate: UIView!
@@ -34,7 +33,7 @@ class HomeCVCell1: UICollectionViewCell {
             
             if let img = model.image {
                 //                let processor = SVGImgProcessor() // if receive svg image
-                ImgMeasurement.kf.setImage(with: URL(string:Constants.baseURL + img.validateSlashs()), placeholder: UIImage(named: "defaultLogo"), options: nil, progressBlock: nil)
+                ImgMeasurement.kf.setImage(with: URL(string:Constants.imagesURL + img.validateSlashs()), placeholder: UIImage(named: "defaultLogo"), options: nil, progressBlock: nil)
             }
             
         }

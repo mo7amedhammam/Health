@@ -9,7 +9,8 @@ import UIKit
 
 class HomeVC: UIViewController {
     
-    @IBOutlet weak var LaName: UILabel!
+    @IBOutlet weak var LaWelcome: UILabel!
+//    @IBOutlet weak var LaName: UILabel!
     @IBOutlet weak var ImgUser: UIImageView!
     @IBOutlet weak var TVScreen: UITableView!
     let refreshControl = UIRefreshControl()
@@ -21,7 +22,7 @@ class HomeVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        SetUserHeader()
+        
         TVScreen.dataSource = self
         TVScreen.delegate   = self
         TVScreen.registerCellNib(cellClass: HomeTVCell0.self)
@@ -38,9 +39,18 @@ class HomeVC: UIViewController {
         return .lightContent
     }
     
-    
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        setupUI()
+
+    }
     override func viewWillAppear(_ animated: Bool) {
-        
+        super.viewWillAppear(animated)
+//        UIView.appearance().semanticContentAttribute = Helper.shared.getLanguage() == "ar" ? .forceRightToLeft : .forceLeftToRight
+
+//        setupUI()
+
+
 //        if Shared.shared.IsMeasurementAdded == false {
 //        } else {
 //            if let arrStat = ViewModelMeasurements.ArrStats {
@@ -63,10 +73,23 @@ class HomeVC: UIViewController {
         ViewModelMeasurements.ArrStats     = []
         TVScreen.reloadData()
         
-        
-        
         getTipsCategories()
         GetMyProfile()
+    }
+    
+    func setupUI() {
+        let text = "home_Welcome".localized + (Helper.shared.getUser()?.name ?? "M7md")
+        print(Helper.shared.getLanguage())
+        LaWelcome.text = text
+//        LaName.text = "hammam"
+        LaWelcome.font  = UIFont(name: fontsenum.boldEn.rawValue , size: 16)!
+        [LaWelcome].forEach{$0.textAlignment = .natural}
+        ImgUser.makeRounded()
+
+//        if let img = Helper.shared.getUser()?.image {
+//            //                let processor = SVGImgProcessor() // if receive svg image
+//            ImgUser.kf.setImage(with: URL(string:Constants.baseURL + img.validateSlashs()), placeholder: UIImage(named: "defaultLogo"), options: nil, progressBlock: nil)
+//        }
     }
  
 }
@@ -110,7 +133,7 @@ extension HomeVC : UITableViewDataSource , UITableViewDelegate {
                     cell.CollectionHome.reloadData()
                     
                     cell.BtnMore.isHidden   = true
-                    cell.LaTitle.text = "قياساتك الأخيرة"
+                    cell.LaTitle.text = "home_lastMes".localized
                     return cell
                 }
 
@@ -132,7 +155,7 @@ extension HomeVC : UITableViewDataSource , UITableViewDelegate {
                     cell.CollectionHome.reloadData()
                     
                     cell.BtnMore.isHidden   = true
-                    cell.LaTitle.text = "الأدوية التي قاربت على الإنتهاء"
+                    cell.LaTitle.text = "home_lastMes".localized
                     return cell
                 }
 
@@ -155,7 +178,7 @@ extension HomeVC : UITableViewDataSource , UITableViewDelegate {
                     
 
                     cell.BtnMore.isHidden   = false
-                    cell.LaTitle.text = "نصائح حديثة"
+                    cell.LaTitle.text = "home_newadv".localized
                     return cell
                 }
                 
@@ -177,7 +200,7 @@ extension HomeVC : UITableViewDataSource , UITableViewDelegate {
                     cell.CollectionHome.scrollToItem(at: IndexPath(row: 0 , section: 0), at: .centeredHorizontally , animated: false)
                     
                     cell.BtnMore.isHidden   = false
-                    cell.LaTitle.text = "النصائح الأكثر مشاهدة"
+                    cell.LaTitle.text = "home_mostviewedadv".localized
                     return cell
                 }
             }
@@ -203,7 +226,9 @@ extension HomeVC {
                 Hud.dismiss(from: self.view)
                 print(state)
                 if let user = ViewModelProfile.responseModel{
-                    LaName.text  = user.name
+//                    LaName.text  = user.name
+                    LaWelcome.text = "Welcome".localized + "\(user.name ?? "M7md")"
+
                 }
             case .error(_,let error):
                 Hud.dismiss(from: self.view)
@@ -219,14 +244,7 @@ extension HomeVC {
 
 //--Functions--
 extension HomeVC{
-    func SetUserHeader(){
-        LaName.text = "\(Helper.shared.getUser()?.name ?? "")"
-//        if let img = Helper.shared.getUser()?.image {
-//            //                let processor = SVGImgProcessor() // if receive svg image
-//            ImgUser.kf.setImage(with: URL(string:Constants.baseURL + img.validateSlashs()), placeholder: UIImage(named: "defaultLogo"), options: nil, progressBlock: nil)
-//        }
 
-    }
     func getTipsCategories(){
         Task {
             do{

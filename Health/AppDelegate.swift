@@ -159,11 +159,11 @@ extension AppDelegate {
 
         LocalizationManager.shared.setLanguage(Helper.shared.getLanguage()) { _ in
             // Ensure this code is executed on the main thread
-            DispatchQueue.main.async {
-                if let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate {
-                    sceneDelegate.reloadRootView()
-                }
-            }
+//            DispatchQueue.main.async {
+//                if let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate {
+//                    sceneDelegate.reloadRootView()
+//                }
+//            }
         }
 
         // Uncomment the following if you need to fetch translations

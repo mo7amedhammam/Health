@@ -27,13 +27,20 @@ class HomeTVCell1: UITableViewCell {
         super.awakeFromNib()
         // Initialization code
             DataSourseDeledate()
+        setupui()
     }
-
+    override func layoutSubviews() {
+    // handle RTL/LTr
+    }
+    
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         // Configure the view for the selected state
     }
-    
+        
+    func setupui(){
+        LaTitle.localized(string: "home_lastMes")
+    }
     @IBAction func BUMore(_ sender: Any) {
 //            vc.dataArray = dataArray
 
@@ -114,9 +121,10 @@ extension HomeTVCell1 : UICollectionViewDataSource , UICollectionViewDelegate , 
         if indexx == 1 {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "HomeCVCell1", for: indexPath) as! HomeCVCell1
             collectionView.isScrollEnabled = false
-            if let model = ViewModelMeasurements?.ArrStats?[indexPath.row]{
+            guard let model = ViewModelMeasurements?.ArrStats?[indexPath.row] else { return cell }
+//            if let model = ViewModelMeasurements?.ArrStats?[indexPath.row]{
                 cell.model = model
-            }
+//            }
             
             return cell
         } else if indexx == 2 {

@@ -32,7 +32,7 @@ class TipsCategories2CVCell: UICollectionViewCell {
             
             if let img = model.image {
                 //                let processor = SVGImgProcessor() // if receive svg image
-                ImgTipCategory.kf.setImage(with: URL(string:Constants.baseURL + img.validateSlashs()), placeholder: UIImage(named: "defaultLogo"), options: nil, progressBlock: nil)
+                ImgTipCategory.kf.setImage(with: URL(string:Constants.imagesURL + img.validateSlashs()), placeholder: UIImage(named: "defaultLogo"), options: nil, progressBlock: nil)
             }
 
         }

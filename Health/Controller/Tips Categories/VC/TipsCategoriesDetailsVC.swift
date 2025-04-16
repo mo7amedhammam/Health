@@ -16,7 +16,7 @@ class TipsCategoriesDetailsVC: UIViewController {
     @IBOutlet weak var LaDate: UILabel!
 //    @IBOutlet weak var CVDrugGroups: UICollectionView!
     
-    @IBOutlet weak var ViewFirst: UIView!
+//    @IBOutlet weak var ViewFirst: UIView!
     @IBOutlet weak var ViewSecond: UIView!
 
     @IBOutlet weak var ViewImage: UIView!
@@ -75,7 +75,7 @@ extension TipsCategoriesDetailsVC {
         guard let model = model else{return}
         if let img = model.image {
             //                let processor = SVGImgProcessor() // if receive svg image
-            ImgTipDetails.kf.setImage(with: URL(string:Constants.baseURL + img.validateSlashs()), placeholder: UIImage(named: "defaultLogo"), options: nil, progressBlock: nil)
+            ImgTipDetails.kf.setImage(with: URL(string:Constants.imagesURL + img.validateSlashs()), placeholder: UIImage(named: "defaultLogo"), options: nil, progressBlock: nil)
         }
 
         LaTitle.text = model.title
@@ -116,11 +116,11 @@ extension TipsCategoriesDetailsVC {
     
     fileprivate func setInits() {
         
-        ViewSecond.cornerRadius = 50
-        ViewSecond.layer.maskedCorners = [.layerMinXMaxYCorner ]
+        ViewSecond.cornerRadius = 20
+        ViewSecond.layer.maskedCorners = [.layerMinXMaxYCorner,.layerMaxXMaxYCorner ]
         
-        ViewFirst.cornerRadius = 50
-        ViewFirst.layer.maskedCorners = [.layerMinXMaxYCorner ]
+//        ViewFirst.cornerRadius = 50
+//        ViewFirst.layer.maskedCorners = [.layerMinXMaxYCorner ]
   
     }
     

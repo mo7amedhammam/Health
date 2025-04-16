@@ -9,6 +9,7 @@ import Foundation
 
 // MARK: - ModelMyMeasurementsStats
 struct ModelMyMeasurementsStats: Codable {
+    
     var medicalMeasurementID: Int?
     var image, title: String?
     var measurementsCount: Int?

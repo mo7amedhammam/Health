@@ -53,7 +53,7 @@ class MeasureDetailsVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        ImgMeasurement.kf.setImage(with: URL(string:Constants.baseURL + imgMeasurement.validateSlashs()), placeholder: UIImage(named: "defaultLogo"), options: nil, progressBlock: nil)
+        ImgMeasurement.kf.setImage(with: URL(string:Constants.imagesURL + imgMeasurement.validateSlashs()), placeholder: UIImage(named: "defaultLogo"), options: nil, progressBlock: nil)
         
         
         TVDescription.placeholderText = "إضافة تعليق"
@@ -76,7 +76,8 @@ class MeasureDetailsVC: UIViewController {
         
         ViewSelectDate.isHidden     = true
         ViewAddMeasurement.isHidden = true
-        LaTitle.text = TitleMeasurement
+        LaTitle.text = "mesurement_det_title".localized + TitleMeasurement
+        LaTitle.textAlignment = .center
         ViewNoMeasurements.isHidden = true
         
         ViewModel.medicalMeasurementId = id
