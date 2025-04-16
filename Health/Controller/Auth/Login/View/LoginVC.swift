@@ -155,6 +155,26 @@ final class LoginVC: UIViewController {
         DispatchQueue.main.async {
             ActivityIndicatorView.shared.startLoading(in: self.view)
         }
+        
+//            Task {
+//                do{
+//                    Hud.showHud(in: self.view)
+//                    try await viewModel.login()
+//                    // Handle success async operations
+//                    Hud.dismiss(from: self.view)
+//    //                TVScreen.reloadData()
+//                    Helper.shared.saveUser(user: self.viewModel.usermodel ?? LoginM())
+//                    Helper.shared.changeRootVC(newroot: HTBC.self, transitionFrom: .fromLeft)
+//                    
+//                }catch {
+//                    // Handle any errors that occur during the async operations
+//                    print("Error: \(error)")
+//                    Hud.dismiss(from: self.view)
+//                    SimpleAlert.shared.showAlert(title:error.localizedDescription,message:"", viewController: self)
+//                }
+//            }
+        
+        
         viewModel.login { [weak self] result in
             guard let self = self else { return }
    

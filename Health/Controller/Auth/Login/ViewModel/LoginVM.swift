@@ -99,7 +99,7 @@ protocol LoginViewModelProtocol {
     var usermodel: LoginM? { get }
     
     func login(completion: @escaping (Result<Void, Error>) -> Void)
-    func registerFirebaseDeviceToken(completion: @escaping (Result<Void, Error>) -> Void)
+//    func registerFirebaseDeviceToken(completion: @escaping (Result<Void, Error>) -> Void)
 }
 
 final class LoginViewModel: LoginViewModelProtocol {
@@ -139,26 +139,46 @@ final class LoginViewModel: LoginViewModelProtocol {
                 }
         }
     }
+//    func login() async throws{
+//                guard let mobile = mobile, let password = password else {
+////                    completion(.failure(LoginError.invalidCredentials))
+//                    throw LoginError.invalidCredentials
+//                }
+//        
+//                let parameters: [String: Any] = ["mobile": mobile, "password": password]
+//        
+//                let target = NewAuthontications.Login(parameters: parameters)
+//        do{
+//                    let response = try await BaseNetwork.shared.request(target, BaseResponse<LoginM>.self)
+//                    
+//                    guard let model = response.data else {
+//                        throw NetworkError.unknown(code: response.messageCode ?? 0, error: response.message ?? "")
+//                    }
+//                    usermodel = model
+//                } catch {
+//                    throw error
+//                }
+//        }
     
-    func registerFirebaseDeviceToken(completion: @escaping (Result<Void, Error>) -> Void) {
-        getDeviceToken { [weak self] token in
-            let target = NewAuthontications.SendFireBaseDeviceToken(parameters: ["customerDeviceToken": token])
-            
-            self?.networkService.request(target, responseType: BaseResponse<MFirebase>.self) {[weak self] result in
-                guard let self = self else { return }
-                switch result {
-                case .success(let response):
-                    if response.messageCode == 200 {
-                        completion(.success(()))
-                    } else {
-                        completion(.failure(LoginError.serverError(message: response.message ?? "Unknown error")))
-                    }
-                case .failure(let error):
-                    completion(.failure(error))
-                }
-            }
-        }
-    }
+//    func registerFirebaseDeviceToken(completion: @escaping (Result<Void, Error>) -> Void) {
+//        getDeviceToken { [weak self] token in
+//            let target = NewAuthontications.SendFireBaseDeviceToken(parameters: ["customerDeviceToken": token])
+//            
+//            self?.networkService.request(target, responseType: BaseResponse<MFirebase>.self) {[weak self] result in
+//                guard let self = self else { return }
+//                switch result {
+//                case .success(let response):
+//                    if response.messageCode == 200 {
+//                        completion(.success(()))
+//                    } else {
+//                        completion(.failure(LoginError.serverError(message: response.message ?? "Unknown error")))
+//                    }
+//                case .failure(let error):
+//                    completion(.failure(error))
+//                }
+//            }
+//        }
+//    }
     
     func getDeviceToken(completion: @escaping (String) -> Void) {
         if let token = Messaging.messaging().fcmToken {

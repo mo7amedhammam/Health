@@ -23,7 +23,7 @@ struct Constants {
 //    static var liveBaseURL:String {return "https://myhealthapi.azurewebsites.net/"} //LIVE
 
     static var baseURL:String = apiType.rawValue
-    static var apiURL:String {return "\(baseURL)api/"}
+    static var apiURL:String {return "\(baseURL)api/\(Helper.shared.getLanguage())/"}
     static var imagesURL:String {return "https://alnada-sehatyapi.azurewebsites.net/"}
 
 //var TermsAndConditionsURL =  "https://camelgate.app/terms.html"

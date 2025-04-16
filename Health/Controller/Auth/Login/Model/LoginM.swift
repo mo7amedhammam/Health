@@ -8,20 +8,25 @@
 //import Foundation
 
 // MARK: - LoginModel
-struct LoginM: Codable{
-    var name, mobile: String?
+struct LoginM: Codable {
+    var token: String?
+    var id: Int?
+    var code, pharmacistName: String?
+    var pharmacistID: Int?
+    var genderTitle, createdby, name, mobile: String?
     var genderID, districtID: Int?
     var address, pharmacyCode: String?
-    var id: Int?
-    var code, genderTitle, token: String?
-    
+
     enum CodingKeys: String, CodingKey {
-        case name, mobile
+        case token, id, code, pharmacistName
+        case pharmacistID = "pharmacistId"
+        case genderTitle, createdby, name, mobile
         case genderID = "genderId"
         case districtID = "districtId"
-        case address, pharmacyCode, id, code, genderTitle, token
+        case address, pharmacyCode
     }
 }
+
 
 
 struct MFirebase: Codable {
