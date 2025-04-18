@@ -17,7 +17,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="TipsCategoriesTVCell0" rowHeight="275" id="KGk-i7-Jjw" customClass="TipsCategoriesTVCell0" customModule="Sehaty" customModuleProvider="target">
+        <tableViewCell contentMode="center" selectionStyle="none" indentationWidth="10" reuseIdentifier="TipsCategoriesTVCell0" rowHeight="275" id="KGk-i7-Jjw" customClass="TipsCategoriesTVCell0" customModule="Sehaty" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="343" height="275"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
@@ -31,19 +31,19 @@
                                 <rect key="frame" x="0.0" y="0.0" width="343" height="255"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="o23-SN-579">
-                                        <rect key="frame" x="0.0" y="0.0" width="343" height="60"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="343" height="55"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="22r-PT-ol8">
-                                                <rect key="frame" x="0.0" y="0.0" width="333" height="60"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="333" height="55"/>
                                                 <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="تصنيفات النصائح" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YlR-hw-5YN">
-                                                        <rect key="frame" x="0.0" y="0.0" width="263" height="60"/>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="تصنيفات النصائح" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YlR-hw-5YN">
+                                                        <rect key="frame" x="0.0" y="0.0" width="263" height="55"/>
                                                         <fontDescription key="fontDescription" name="LamaSans-SemiBold" family="Lama Sans" pointSize="22"/>
                                                         <color key="textColor" name="main"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DsV-Tk-WgX">
-                                                        <rect key="frame" x="273" y="0.0" width="60" height="60"/>
+                                                        <rect key="frame" x="273" y="0.0" width="60" height="55"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="60" id="FOV-7d-hnw"/>
                                                         </constraints>
@@ -62,17 +62,17 @@
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstItem="22r-PT-ol8" firstAttribute="top" secondItem="o23-SN-579" secondAttribute="top" id="XVj-EV-ZKy"/>
-                                            <constraint firstAttribute="height" constant="60" id="jmp-A9-RdW"/>
+                                            <constraint firstAttribute="height" constant="55" id="jmp-A9-RdW"/>
                                             <constraint firstAttribute="trailing" secondItem="22r-PT-ol8" secondAttribute="trailing" constant="10" id="qi0-Ph-gVx"/>
                                             <constraint firstAttribute="bottom" secondItem="22r-PT-ol8" secondAttribute="bottom" id="s72-vH-tNE"/>
                                             <constraint firstItem="22r-PT-ol8" firstAttribute="leading" secondItem="o23-SN-579" secondAttribute="leading" id="vnQ-Ex-6Pz"/>
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="43d-RG-bhg">
-                                        <rect key="frame" x="0.0" y="60" width="343" height="195"/>
+                                        <rect key="frame" x="0.0" y="55" width="343" height="200"/>
                                         <subviews>
                                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="8W1-b0-lFC">
-                                                <rect key="frame" x="0.0" y="0.0" width="333" height="195"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="333" height="200"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="qEl-Gz-qfc">
                                                     <size key="itemSize" width="128" height="128"/>

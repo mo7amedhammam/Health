@@ -20,7 +20,7 @@ class LocalizationManager : ObservableObject{
         print("setLanguage",language)
 
         currentLanguage = language
-        UIView.appearance().semanticContentAttribute = language == "ar" ? .forceRightToLeft:.forceLeftToRight
+//        UIView.appearance().semanticContentAttribute = language == "ar" ? .forceRightToLeft:.forceLeftToRight
         Helper.shared.setLanguage(currentLanguage: language)
         Helper.shared.languageSelected(opened: true)
         fetchTranslations { success in
@@ -31,7 +31,8 @@ class LocalizationManager : ObservableObject{
     
     func localizedString(forKey key: String) -> String {
         queue.sync {
-            return translations[key] ?? key
+            
+            return translations[key] ?? NSLocalizedString(key, comment: "")
         }
     }
     
@@ -56,37 +57,39 @@ class LocalizationManager : ObservableObject{
 //    }
     
     private func loadDefaultTranslations(for language: String) -> [String: String] {
-        // 1. Try to load the specific language file first
-        if let path = Bundle.main.path(forResource: language, ofType: "lproj"),
-           let bundle = Bundle(path: path),
-           let path = bundle.path(forResource: "Localizable", ofType: "strings"),
-           let dictionary = NSDictionary(contentsOfFile: path) as? [String: String] {
+//        UserDefaults.standard.removeObject(forKey: "cachedTranslations_\(language)")
+        if let cachedTranslations = loadCachedTranslations(for: language){
+            self.updateTranslations(cachedTranslations)
+//            completion(true)
+            return cachedTranslations
+        }else{
+            
+            // 1. Try to load the specific language file first
+            if let path = Bundle.main.path(forResource: "ar", ofType: "lproj"),
+               let bundle = Bundle(path: path),
+               let path = bundle.path(forResource: "Localizable", ofType: "strings"),
+               let dictionary = NSDictionary(contentsOfFile: path) as? [String: String] {
+                return dictionary
+            }
+            
+            // 2. Fall back to base localization (English)
+            guard let path = Bundle.main.path(forResource: "en", ofType: "lproj"),
+                  let bundle = Bundle(path: path),
+                  let path = bundle.path(forResource: "Localizable", ofType: "strings"),
+                  let dictionary = NSDictionary(contentsOfFile: path) as? [String: String] else {
+                return [:] // Final fallback
+            }
+            
             return dictionary
         }
-        
-        // 2. Fall back to base localization (English)
-        guard let path = Bundle.main.path(forResource: "Base", ofType: "lproj"),
-              let bundle = Bundle(path: path),
-              let path = bundle.path(forResource: "Localizable", ofType: "strings"),
-              let dictionary = NSDictionary(contentsOfFile: path) as? [String: String] else {
-            return [:] // Final fallback
-        }
-        
-        return dictionary
     }
     
      func fetchTranslations(completion: @escaping (Bool) -> Void) {
-//        if let cachedTranslations = loadCachedTranslations(for: currentLanguage){
-//            self.updateTranslations(cachedTranslations)
-//            completion(true)
-//            return
-//        }
 
         let urlString = "https://alnada-devmrsapi.azurewebsites.net/api/\(currentLanguage ?? "ar")/Translations/GetTranslationFile/ios 66"
         
         guard let url = URL(string: urlString) else {
             print("Invalid URL")
-//            self.updateTranslations(self.loadDefaultTranslations())
             self.updateTranslations(self.loadDefaultTranslations(for: currentLanguage ?? "ar"))
 
             completion(false)
@@ -96,7 +99,6 @@ class LocalizationManager : ObservableObject{
          URLSession.shared.dataTask(with: url) { [self] data, response, error in
             if let error = error {
                 print("Error fetching translations: \(error.localizedDescription)")
-//                self.updateTranslations(self.loadDefaultTranslations())
                 self.updateTranslations(self.loadDefaultTranslations(for: currentLanguage ?? "ar"))
 
                 completion(false)
@@ -105,7 +107,6 @@ class LocalizationManager : ObservableObject{
             
             guard let data = data else {
                 print("No data received")
-//                self.updateTranslations(self.loadDefaultTranslations())
                 self.updateTranslations(self.loadDefaultTranslations(for: currentLanguage ?? "ar"))
 
                 completion(false)
@@ -115,12 +116,11 @@ class LocalizationManager : ObservableObject{
             do {
                 if let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: String] {
                     print("Localization updated for : \(self.currentLanguage ?? "ar")")
-                    self.updateTranslations(json)
-                    self.cacheTranslations(json, for: self.currentLanguage ?? "ar")
+//                    self.updateTranslations(json)
+//                    self.cacheTranslations(json, for: self.currentLanguage ?? "ar")
                     completion(true)
                 } else {
                     print("Invalid JSON format")
-//                    self.updateTranslations(self.loadDefaultTranslations())
                     self.updateTranslations(self.loadDefaultTranslations(for: currentLanguage ?? "ar"))
 
                     completion(false)

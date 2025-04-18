@@ -9,6 +9,7 @@ import UIKit
 
 class MeasureDetailsVC: UIViewController {
     
+    @IBOutlet weak var BtnBack: UIButton!
     @IBOutlet weak var ImgMeasurement: UIImageView!
     @IBOutlet weak var LaNum: UILabel!
     
@@ -79,7 +80,7 @@ class MeasureDetailsVC: UIViewController {
         LaTitle.text = "mesurement_det_title".localized + TitleMeasurement
         LaTitle.textAlignment = .center
         ViewNoMeasurements.isHidden = true
-        
+        BtnBack.setImage(UIImage(resource: .backLeft).flippedIfRTL, for: .normal)
         ViewModel.medicalMeasurementId = id
         getDataNormalRange()
 

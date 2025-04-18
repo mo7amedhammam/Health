@@ -9,6 +9,7 @@ import UIKit
 
 final class LoginVC: UIViewController {
     
+    @IBOutlet weak var HeaderView: CustomHeader!
     @IBOutlet weak var TFMobile: CustomInputField!
     @IBOutlet weak var TFPassword: CustomInputField!
 
@@ -40,18 +41,22 @@ final class LoginVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         refreshLocalization()
-
         setupUI()
 //        setupBindings()
         setupValidation()
-//        refreshLocalization
-        
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
         refreshLocalization()
     }
+    
+//    override func viewWillAppear(_ animated: Bool) {
+//        super.viewWillAppear(animated)
+////        refreshLocalization()
+//    }
+    
+//    override func viewWillLayoutSubviews() {
+//        super.viewWillLayoutSubviews()
+//        refreshLocalization()
+//        setupUI()
+//    }
     
     private func setupUI() {
         BtnForgetPassword.underlineCurrentTitle()
@@ -59,22 +64,31 @@ final class LoginVC: UIViewController {
         hideKeyboardWhenTappedAround()
     }
     private func refreshLocalization() {
-        let isRTL = Helper.shared.getLanguage() == "ar"
+//        let isRTL = Helper.shared.getLanguage() == "ar"
            // Refresh all localizable elements
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {[self] in
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {[self] in
+            HeaderView.titleKey = "login_title"
+            HeaderView.subtitleKey = "login_subtitle"
+          
+            TFMobile.titleKey = "login_mobile_title"
+            TFMobile.placeholderKey = "login_mobile_placeholder"
+          
+            TFPassword.titleKey = "login_password_title"
+            TFPassword.placeholderKey = "login_password_placeholder"
 
-            BtnLogin.setTitle("login_signin_btn".localized, for: .normal)
-            BtnForgetPassword.setTitle("login_forget_Password".localized, for: .normal)
-        LaDontHaveAccount.text = "login_not_signin".localized
-        BtnCreateAccount.setTitle("login_signup_btn".localized, for: .normal)
-        
-            BtnForgetPassword.semanticContentAttribute = !isRTL ? .forceRightToLeft : .forceLeftToRight
-            STDontHaveAccount.semanticContentAttribute = !isRTL ? .forceRightToLeft : .forceLeftToRight
-            
+            BtnForgetPassword.localized(key: "login_forget_Password")
+            BtnLogin.localized(key: "login_signin_btn")
+            LaDontHaveAccount.text = "login_not_signin".localized
+            BtnCreateAccount.localized(key: "login_signup_btn")
+
             view.setNeedsLayout()
             view.layoutIfNeeded()
-//        })
+        })
        }
+//    override func viewDidLayoutSubviews() {
+//        super.viewDidLayoutSubviews()
+//        refreshLocalization()
+//    }
     
     private func setupValidation() {
          // Mobile Validation

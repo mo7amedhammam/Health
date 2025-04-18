@@ -17,14 +17,14 @@ class TipsCategoriesCVCell0: UICollectionViewCell {
             LaTitleTipCategory.text = model.title
             if let img = model.image {
                 //                let processor = SVGImgProcessor() // if receive svg image
-                ImgTipCategory.kf.setImage(with: URL(string:Constants.baseURL + img.validateSlashs()), placeholder: UIImage(named: "defaultLogo"), options: nil, progressBlock: nil)
+                ImgTipCategory.kf.setImage(with: URL(string:Constants.imagesURL  + img.validateSlashs()), placeholder: UIImage(named: "defaultLogo"), options: nil, progressBlock: nil)
             }
         }
     }
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        contentView.transform = CGAffineTransform(scaleX: -1, y: 1) // second tip for mirroring Cell content
+//        contentView.transform = CGAffineTransform(scaleX: -1, y: 1) // second tip for mirroring Cell content
         
     }
     

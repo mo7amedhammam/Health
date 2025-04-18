@@ -30,8 +30,8 @@ class TipsCategoriesTVCell1: UITableViewCell {
         CollectionCat.dataSource = self
         CollectionCat.delegate = self
         CollectionCat.registerCell(cellClass: TipsCategoriesCVCell1.self)
-//        CollectionCat.semanticContentAttribute = .forceRightToLeft
-        CollectionCat.transform = CGAffineTransform(scaleX: -1, y: 1) //first tip mirror effect for x -> second in cell
+//        CollectionCat.semanticContentAttribute = Helper.shared.getLanguage() == "ar" ? .forceRightToLeft : .forceLeftToRight
+//        CollectionCat.transform = CGAffineTransform(scaleX: -1, y: 1) //first tip mirror effect for x -> second in cell
 
     }
 

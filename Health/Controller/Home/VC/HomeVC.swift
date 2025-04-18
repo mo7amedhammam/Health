@@ -8,7 +8,7 @@
 import UIKit
 
 class HomeVC: UIViewController {
-    
+
     @IBOutlet weak var LaWelcome: UILabel!
 //    @IBOutlet weak var LaName: UILabel!
     @IBOutlet weak var ImgUser: UIImageView!
@@ -64,14 +64,14 @@ class HomeVC: UIViewController {
         ViewModel.skipCount             = 0
         ViewModelHome.skipCount         = 0
         ViewModelMeasurements.skipCount = 0
-        ViewModel.allTipsResModel?.items = []
-        ViewModel.interestingTipsArr     = []
-        ViewModel.newestTipsArr          = []
-        ViewModel.mostViewedTipsArr      = []
-        ViewModelHome.responseModel        = nil
-        ViewModelHome.responseModel?.items = []
-        ViewModelMeasurements.ArrStats     = []
-        TVScreen.reloadData()
+//        ViewModel.allTipsResModel?.items = []
+//        ViewModel.interestingTipsArr     = []
+//        ViewModel.newestTipsArr          = []
+//        ViewModel.mostViewedTipsArr      = []
+//        ViewModelHome.responseModel        = nil
+//        ViewModelHome.responseModel?.items = []
+//        ViewModelMeasurements.ArrStats     = []
+//        TVScreen.reloadData()
         
         getTipsCategories()
         GetMyProfile()
@@ -131,7 +131,7 @@ extension HomeVC : UITableViewDataSource , UITableViewDelegate {
                     }
                     cell.ViewModelMeasurements = ViewModelMeasurements
                     cell.CollectionHome.reloadData()
-                    
+
                     cell.BtnMore.isHidden   = true
                     cell.LaTitle.text = "home_lastMes".localized
                     return cell
@@ -174,7 +174,7 @@ extension HomeVC : UITableViewDataSource , UITableViewDelegate {
                     cell.ViewModel = ViewModel
                     cell.CollectionHome.reloadData()
                     
-                    cell.CollectionHome.scrollToItem(at: IndexPath(row: 0, section: 0), at: .centeredHorizontally , animated: false)
+//                    cell.CollectionHome.scrollToItem(at: IndexPath(row: 0, section: 0), at: .centeredHorizontally , animated: false)
                     
 
                     cell.BtnMore.isHidden   = false
@@ -197,7 +197,7 @@ extension HomeVC : UITableViewDataSource , UITableViewDelegate {
                     cell.ViewModel = ViewModel
                     cell.CollectionHome.reloadData()
                     
-                    cell.CollectionHome.scrollToItem(at: IndexPath(row: 0 , section: 0), at: .centeredHorizontally , animated: false)
+//                    cell.CollectionHome.scrollToItem(at: IndexPath(row: 0 , section: 0), at: .centeredHorizontally , animated: false)
                     
                     cell.BtnMore.isHidden   = false
                     cell.LaTitle.text = "home_mostviewedadv".localized
@@ -254,6 +254,7 @@ extension HomeVC{
                 ViewModelMeasurements.ArrStats = try await ViewModelMeasurements.asyncGetMeasurementsStats()
                 try await ViewModelHome.getHomeAlmostFinish()
                 Hud.dismiss(from: self.view)
+            
                 TVScreen.reloadData()
 
                 print("all",ViewModel.allTipsResModel?.items ?? [])

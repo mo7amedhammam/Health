@@ -25,7 +25,7 @@ class TipsCategories3TVCell: UITableViewCell  {
         let numberOfItems = model?.drugGroups?.count // Number of items in UICollectionView
         let itemsPerRow   =  calculateItemsPerRow (for: CVDrugGroups)// Number of items per row (if applicable)
         let itemHeight    =  21.0 // Height of each item in UICollectionView
-        let numberOfRows = ceil(Double(numberOfItems!) / Double(itemsPerRow))
+        let numberOfRows = ceil(Double(numberOfItems ?? 0) / Double(itemsPerRow))
         let collectionViewHeight = numberOfRows * itemHeight
         return collectionViewHeight
     }
@@ -61,15 +61,13 @@ class TipsCategories3TVCell: UITableViewCell  {
 //        CVDrugGroups.dataSource = self
 //        CVDrugGroups.delegate = self
 //        CVDrugGroups.registerCell(cellClass: TipDetailsDrugGroup.self)
-
-        
       
 
         CVDrugGroups.dataSource = self
         CVDrugGroups.delegate   = self
         CVDrugGroups.registerCell(cellClass: TipsCVCell.self)
         CVDrugGroups.registerCell(cellClass: TipDetailsDrugGroup.self)
-        CVDrugGroups.transform = CGAffineTransform(scaleX: -1, y: 1) //first tip mirror effect for x -> second in cell
+//        CVDrugGroups.transform = CGAffineTransform(scaleX: -1, y: 1) //first tip mirror effect for x -> second in cell
      
         let alignedFlowLayout = AlignedCollectionViewFlowLayout(horizontalAlignment: .left, verticalAlignment: .top)
         alignedFlowLayout.estimatedItemSize = AlignedCollectionViewFlowLayout.automaticSize
@@ -98,6 +96,9 @@ extension TipsCategories3TVCell:UICollectionViewDataSource,UICollectionViewDeleg
         return model?.drugGroups?.count ?? 0
     }
     
+//    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+//            return 20
+//        }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
 //        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TipDetailsDrugGroup", for: indexPath) as! TipDetailsDrugGroup
@@ -108,7 +109,7 @@ extension TipsCategories3TVCell:UICollectionViewDataSource,UICollectionViewDeleg
 //        return cell
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TipsCVCell", for: indexPath) as! TipsCVCell
-        cell.LaTitle.transform = CGAffineTransform(scaleX: -1, y: 1)
+//        cell.LaTitle.transform = CGAffineTransform(scaleX: -1, y: 1)
 
         let model = model?.drugGroups?[indexPath.row]
         cell.LaTitle.text = model?.title

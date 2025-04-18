@@ -14,6 +14,8 @@ enum enumTipsCategories {
     case MostViewed
 }
 class TipsCategoriesVC2: UIViewController {
+    
+    @IBOutlet weak var BtnBack: UIButton!
     @IBOutlet weak var LaTitleBare: UILabel!
     @IBOutlet weak var CollectionScreen: UICollectionView!
     let refreshControl = UIRefreshControl()
@@ -74,7 +76,7 @@ extension TipsCategoriesVC2 : UICollectionViewDataSource , UICollectionViewDeleg
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: (collectionView.frame.size.width / 2) - 10  , height: 253)
+        return CGSize(width: (collectionView.frame.size.width / 2) - 20  , height: 250)
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -128,12 +130,13 @@ extension TipsCategoriesVC2{
         layout.scrollDirection         = .vertical
         layout.minimumLineSpacing      = 0
         layout.minimumInteritemSpacing = 0
-        layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 10) // Adjust the insets as needed
+        layout.sectionInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10) // Adjust the insets as needed
         CollectionScreen.collectionViewLayout = layout
         CollectionScreen.dataSource = self
         CollectionScreen.delegate = self
         CollectionScreen.registerCell(cellClass: TipsCategories2CVCell.self)
-        CollectionScreen.transform = CGAffineTransform(scaleX: -1, y: 1) //first tip mirror effect for x -> second in cell
+        BtnBack.setImage(UIImage(resource: .backLeft).flippedIfRTL, for: .normal)
+//        CollectionScreen.transform = CGAffineTransform(scaleX: -1, y: 1) //first tip mirror effect for x -> second in cell
         
         LaTitleBare.text = LaTitle
 

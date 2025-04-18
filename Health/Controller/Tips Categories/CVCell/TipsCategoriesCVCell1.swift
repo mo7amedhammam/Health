@@ -32,7 +32,7 @@ class TipsCategoriesCVCell1: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        contentView.transform = CGAffineTransform(scaleX: -1, y: 1) //first tip mirror effect for x -> second in cell
+//        contentView.transform = CGAffineTransform(scaleX: -1, y: 1) //first tip mirror effect for x -> second in cell
 
     }
 

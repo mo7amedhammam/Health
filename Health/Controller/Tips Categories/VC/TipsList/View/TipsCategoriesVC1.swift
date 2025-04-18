@@ -8,7 +8,8 @@
 import UIKit
 
 class TipsCategoriesVC1: UIViewController {
-    
+
+    @IBOutlet weak var BtnBack: UIButton!
     @IBOutlet weak var TVScreen: UITableView!
     let refreshControl = UIRefreshControl()
     
@@ -25,6 +26,7 @@ class TipsCategoriesVC1: UIViewController {
         refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
            // Add the refresh control to the table view
         TVScreen.addSubview(refreshControl)
+        BtnBack.setImage(UIImage(resource: .backLeft).flippedIfRTL, for: .normal)
 
     }
     

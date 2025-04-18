@@ -117,7 +117,7 @@ extension SplashScreenVC : UICollectionViewDataSource , UICollectionViewDelegate
             SkipSplash()
         }else{
             let indexPath = IndexPath(item: currentPage+1, section: 0)
-            CollectionSplash.scrollToItem(at: indexPath , at: .centeredHorizontally, animated: true)
+//            CollectionSplash.scrollToItem(at: indexPath , at: .centeredHorizontally, animated: true)
         }
         currentPage += 1 // Update the currentPage property
 

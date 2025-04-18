@@ -111,24 +111,24 @@ class OtpVC: UIViewController , UITextFieldDelegate {
     func RefreshLocalization(){
         let isRTL = Helper.shared.getLanguage() == "ar"
         
-        [NavBarView,STOTP,STReseend,STRemainigSec,LaToNum,BtnResend,LaToNum,LaSeconds].forEach{view in
+        [LaToNum,BtnResend,LaToNum,LaSeconds].forEach{view in
             view?.localizedview()
         }
         let otpmsg = "code_sentmsg".localized + " \((Phonenumber ?? ""))"
         LaToMessage.text =  otpmsg
-        STOTP.semanticContentAttribute = isRTL ? .forceRightToLeft : .forceLeftToRight
-        DidntGetCode.localized(string: "didnt_get_code")
+//        STOTP.semanticContentAttribute = isRTL ? .forceRightToLeft : .forceLeftToRight
+        DidntGetCode.reverselocalized(string: "didnt_get_code")
         BtnResend.setTitle("resend_code".localized, for: .normal)
-        BtnResend.semanticContentAttribute = isRTL ? .forceRightToLeft : .forceLeftToRight
+//        BtnResend.semanticContentAttribute = isRTL ? .forceRightToLeft : .forceLeftToRight
         BtnResend.contentHorizontalAlignment = .leading
 
-        LaSeconds.localized(string: "remain_sec")
-        
+        LaSeconds.reverselocalized(string: "remain_sec")
+        SecondsCount.reverselocalizedview()
         LaSeconds.textAlignment = isRTL ? .right : .left
         ShowOtp.text = "استخدم ".localized + "\(otp)"
         LaToNum.localized(string: "")
         
-        BtnBack.setImage(UIImage(resource:isRTL ? .backRight : .backLeft), for: .normal)
+        BtnBack.setImage(UIImage(resource: .backRight).flippedIfRTL, for: .normal)
         view.setNeedsLayout()
         view.layoutIfNeeded()
     }
@@ -410,7 +410,7 @@ extension OtpVC{
                         
             if remainingSeconds > 0 {
                 remainingSeconds -= 1
-                self.SecondsCount.localized(string: "\(timeString(time: TimeInterval(remainingSeconds))) ")
+                self.SecondsCount.reverselocalized(string: "\(timeString(time: TimeInterval(remainingSeconds))) ")
 //                self.SecondsCount.text = "\(timeString(time: TimeInterval(remainingSeconds))) "
                 // Still have time, enable the button and invalidate the timer
                 canResend(false)
@@ -467,10 +467,11 @@ extension UIView{
 //        let view = self
 //        UIView.appearance().semanticContentAttribute = !isRTL ? .forceLeftToRight : .forceRightToLeft
 
-        self.semanticContentAttribute = isRTL ? .forceLeftToRight : .forceRightToLeft
-//        view = isRTL ? .left : .right
-//        return view
-        
+        self.semanticContentAttribute = isRTL ? .forceRightToLeft : .forceLeftToRight
+        if let label = self as? UILabel {
+            label.textAlignment = isRTL ? .right : .left
+            //        return view
+        }
         // Also flip the subviews' alignment if needed (e.g., UIStackView)
 //        if let stack = self as? UIStackView {
 //            stack.semanticContentAttribute = !isRTL ? .forceLeftToRight : .forceRightToLeft
@@ -489,10 +490,50 @@ extension UIView{
 //                  subview.localizedview()
 //              }
     }
+    func reverselocalizedview(){
+        let isRTL = Helper.shared.getLanguage() == "en"
+//        let view = self
+//        UIView.appearance().semanticContentAttribute = !isRTL ? .forceLeftToRight : .forceRightToLeft
+
+        self.semanticContentAttribute = isRTL ? .forceRightToLeft : .forceLeftToRight
+        if let label = self as? UILabel {
+            label.textAlignment = isRTL ? .right : .left
+            //        return view
+        }
+//        view = isRTL ? .left : .right
+//        return view
+        
+        // Also flip the subviews' alignment if needed (e.g., UIStackView)
+//        if let stack = self as? UIStackView {
+//            stack.semanticContentAttribute = !isRTL ? .forceLeftToRight : .forceRightToLeft
+//
+//            if !isRTL {
+//                        // Reverse the order of arranged subviews for RTL
+//                        let reversedSubviews = stack.arrangedSubviews.reversed()
+//                        for view in reversedSubviews {
+//                            stack.removeArrangedSubview(view)
+//                            stack.addArrangedSubview(view)
+//                        }
+//                    }
+//
+//        }
+//        for subview in subviews {
+//                  subview.localizedview()
+//              }
+    }
 }
 extension UILabel{
     func localized(string: String){
         let isRTL = Helper.shared.getLanguage() == "ar"
+//        let view = self
+        self.semanticContentAttribute = isRTL ? .forceRightToLeft : .forceLeftToRight
+        self.textAlignment = isRTL ? .right : .left
+        self.text = string.localized
+//        return self
+        
+    }
+    func reverselocalized(string: String){
+        let isRTL = Helper.shared.getLanguage() == "en"
 //        let view = self
         self.semanticContentAttribute = isRTL ? .forceRightToLeft : .forceLeftToRight
         self.textAlignment = isRTL ? .right : .left

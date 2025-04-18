@@ -30,4 +30,17 @@ extension UIButton {
 
            self.setAttributedTitle(attributedString, for: .normal)
        }
+    
+    func localized(key:String){
+        self.setTitle(key.localized, for: .normal)
+        let isRTL = Helper.shared.getLanguage() == "ar"
+        self.semanticContentAttribute = isRTL ? .forceRightToLeft : .forceLeftToRight
+
+    }
+    func reverselocalized(key:String){
+        self.setTitle(key.localized, for: .normal)
+        let isRTL = Helper.shared.getLanguage() == "en"
+        self.semanticContentAttribute = isRTL ? .forceRightToLeft : .forceLeftToRight
+
+    }
 }

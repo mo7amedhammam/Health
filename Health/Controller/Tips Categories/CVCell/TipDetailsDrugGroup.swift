@@ -13,7 +13,7 @@ class TipDetailsDrugGroup: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        contentView.transform = CGAffineTransform(scaleX: -1, y: 1) // second tip for mirroring Cell content
+//        contentView.transform = CGAffineTransform(scaleX: -1, y: 1) // second tip for mirroring Cell content
         // Make the label text underlined
 //        let attributedText = NSAttributedString(string: LaDrugTitle.text ?? "",
 //                                               attributes: [.underlineStyle: NSUnderlineStyle.single.rawValue])

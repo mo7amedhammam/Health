@@ -15,6 +15,7 @@ class TipsCategoriesTVCell0: UITableViewCell {
     var ViewModel:TipsVM = TipsVM(){
         didSet{
             CollectionTips.reloadData()
+//            CollectionTips.scrollToItem(at: IndexPath(item: 0, section: 0), at: .centeredHorizontally, animated: true)
         }
     }
     
@@ -25,12 +26,13 @@ class TipsCategoriesTVCell0: UITableViewCell {
         layout.scrollDirection         = .horizontal
         layout.minimumLineSpacing      = 20
         layout.minimumInteritemSpacing = 0
+
         CollectionTips.collectionViewLayout = layout
         CollectionTips.dataSource = self
         CollectionTips.delegate = self
         CollectionTips.registerCell(cellClass: TipsCategoriesCVCell0.self)
-        CollectionTips.transform = CGAffineTransform(scaleX: -1, y: 1) //first tip mirror effect for x -> second in cell
         
+        scrollToFirst()
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -38,7 +40,12 @@ class TipsCategoriesTVCell0: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    
+    func scrollToFirst() {
+        if CollectionTips.numberOfSections > 0 && CollectionTips.numberOfItems(inSection: 0) > 0 {
+            let firstIndexPath = IndexPath(item: 0, section: 0)
+            CollectionTips.scrollToItem(at: firstIndexPath, at: .centeredHorizontally, animated: true)
+        }
+    }
     @IBAction func BUMore(_ sender: Any) {
         guard let vc = initiateViewController(storyboardName: .main, viewControllerIdentifier: TipsCategoriesVC2.self) else {return}
         vc.hidesBottomBarWhenPushed = true
@@ -67,7 +74,7 @@ extension TipsCategoriesTVCell0 : UICollectionViewDataSource , UICollectionViewD
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 140, height: 180)
+        return CGSize(width: 120, height: 180)
     }
     
     
@@ -107,6 +114,8 @@ extension TipsCategoriesTVCell0{
                 // Handle success async operations
                 Hud.dismiss(from: self.self.CollectionTips)
                 CollectionTips.reloadData()
+                scrollToFirst()
+//                CollectionTips.scrollToItem(at: IndexPath(item: 0, section: 0), at: .centeredHorizontally, animated: true)
 
             }catch {
                 // Handle any errors that occur during the async operations

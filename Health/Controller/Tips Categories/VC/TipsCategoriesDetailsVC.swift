@@ -10,6 +10,7 @@ import WebKit
 
 class TipsCategoriesDetailsVC: UIViewController {
     
+    @IBOutlet weak var BtnBack: UIButton!
     @IBOutlet weak var ImgTipDetails: UIImageView!
     @IBOutlet weak var LaTitle: UILabel!
     @IBOutlet weak var LaType: UILabel!
@@ -115,7 +116,8 @@ extension TipsCategoriesDetailsVC {
     }
     
     fileprivate func setInits() {
-        
+        BtnBack.setImage(UIImage(resource: .backLeft).flippedIfRTL, for: .normal)
+        LaDate.reverselocalizedview()
         ViewSecond.cornerRadius = 20
         ViewSecond.layer.maskedCorners = [.layerMinXMaxYCorner,.layerMaxXMaxYCorner ]
         

@@ -9,8 +9,8 @@ import UIKit
 import AVFoundation
 
 
-@IBDesignable class CardView: UIView {
-
+@IBDesignable
+class CardView: UIView {
         
     var CornerRadius : CGFloat = 12
     var ofsetWidth : CGFloat = 0

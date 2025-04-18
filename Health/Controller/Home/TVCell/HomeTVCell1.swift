@@ -18,6 +18,12 @@ class HomeTVCell1: UITableViewCell {
     var nav : UINavigationController?
     var ViewModelHome : AlmostFinishedVM?
     var ViewModelMeasurements : MyMeasurementsStatsVM?
+//    {
+//        didSet {
+//            scrolltoFirst()
+////            CollectionHome.reloadData()
+//        }
+//    }
     var ViewModel : TipsVM?
     var Num = 0
     let layout = UICollectionViewFlowLayout()
@@ -27,7 +33,7 @@ class HomeTVCell1: UITableViewCell {
         super.awakeFromNib()
         // Initialization code
             DataSourseDeledate()
-        setupui()
+            setupui()
     }
     override func layoutSubviews() {
     // handle RTL/LTr
@@ -40,6 +46,14 @@ class HomeTVCell1: UITableViewCell {
         
     func setupui(){
         LaTitle.localized(string: "home_lastMes")
+//        CollectionHome.semanticContentAttribute = Helper.shared.getLanguage() == "ar" ? .forceRightToLeft : .forceLeftToRight
+    }
+    
+    func scrolltoFirst() {
+        if CollectionHome.numberOfSections > 0 && CollectionHome.numberOfItems(inSection: 0) > 0 {
+            let firstIndexPath = IndexPath(item: 0, section: 0)
+            CollectionHome.scrollToItem(at: firstIndexPath, at: .centeredHorizontally, animated: true)
+        }
     }
     @IBAction func BUMore(_ sender: Any) {
 //            vc.dataArray = dataArray
@@ -93,7 +107,7 @@ class HomeTVCell1: UITableViewCell {
         CollectionHome.registerCell(cellClass: HomeCVCell2.self)
         CollectionHome.registerCell(cellClass: HomeCVCell3.self)
         CollectionHome.registerCell(cellClass: TipsCategoriesCVCell1.self)
-        CollectionHome.transform = CGAffineTransform(scaleX: -1, y: 1) //first tip mirror effect for x -> second in cell
+//        CollectionHome.transform = CGAffineTransform(scaleX: -1, y: 1) //first tip mirror effect for x -> second in cell
 //        CollectionHome.reloadData()
 
     }

@@ -15,11 +15,15 @@ class CustomHeader: UIView {
     
     // MARK: - Localizable Properties
     @IBInspectable var titleKey: String = "" {
-        didSet { LaTitle.text = titleKey.localized }
+        didSet {
+            LaTitle.text = titleKey.localized
+        }
     }
     
     @IBInspectable var subtitleKey: String = "" {
-        didSet { LaSubtitle.text = subtitleKey.localized }
+        didSet {
+            LaSubtitle.text = subtitleKey.localized
+        }
     }
     
     // MARK: - Title Customization
@@ -100,7 +104,14 @@ class CustomHeader: UIView {
         let isRTL = LocalizationManager.shared.currentLanguage == "ar"
         LaTitle.textAlignment = isRTL ? .right : .left
         LaSubtitle.textAlignment = isRTL ? .right : .left
+//        LaTitle.text = titleKey.localized
+//        LaSubtitle.text = subtitleKey.localized
+
     }
+//    override func setNeedsLayout() {
+//        super.setNeedsLayout()
+//
+//    }
     
 #if TARGET_INTERFACE_BUILDER
 override func prepareForInterfaceBuilder() {

@@ -9,6 +9,7 @@ import UIKit
 
 class TipsCategoriesVC3: UIViewController {
     
+    @IBOutlet weak var BtnBack: UIButton!
     @IBOutlet weak var LaTitleBare: UILabel!
     @IBOutlet weak var TVScreen: UITableView!
     let refreshControl = UIRefreshControl()
@@ -27,7 +28,7 @@ class TipsCategoriesVC3: UIViewController {
 
         refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
         TVScreen.addSubview(refreshControl)
-        
+        BtnBack.setImage(UIImage(resource: .backLeft).flippedIfRTL, for: .normal)
         ViewModel.skipCount = 0
         ViewModel.tipsByCategoryRes?.items?.removeAll()
         TVScreen.reloadData()
@@ -73,10 +74,10 @@ extension TipsCategoriesVC3 : UITableViewDataSource , UITableViewDelegate {
         
         cell.LaTitle.text = model?.title
         cell.LaTitle.setLineSpacing(5.0)
-        cell.LaTitle.textAlignment = .right
+
         cell.LaDAte.text = model?.date?.ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "dd / MM / yyyy hh:mm a")
         if let img = model?.image {
-            cell.ImgTipCategory.kf.setImage(with: URL(string:Constants.baseURL + img.validateSlashs()), placeholder: UIImage(named: "defaultLogo"), options: nil, progressBlock: nil)
+            cell.ImgTipCategory.kf.setImage(with: URL(string:Constants.imagesURL + img.validateSlashs()), placeholder: UIImage(named: "defaultLogo"), options: nil, progressBlock: nil)
         }
         
 //        let contentSize = cell.CVDrugGroups.collectionViewLayout.collectionViewContentSize.height
@@ -101,6 +102,9 @@ extension TipsCategoriesVC3 : UITableViewDataSource , UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
+    }
+     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return 33
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
@@ -171,4 +175,41 @@ class CustomCollectionView: UICollectionView {
     override var intrinsicContentSize: CGSize {
         return contentSize
     }
+}
+
+@IBDesignable
+class CardView1: UIView {
+
+    @IBInspectable override var cornerRadius: CGFloat {
+        get {
+            return layer.cornerRadius
+        }
+        set {
+            layer.cornerRadius = newValue
+            layer.shadowRadius = newValue
+            layer.masksToBounds = false
+        }
+    }
+
+    @IBInspectable override var shadowOpacity: Float {
+        get {
+            return layer.shadowOpacity
+        }
+        set {
+            layer.shadowOpacity = newValue
+            layer.shadowColor = UIColor.darkGray.cgColor
+        }
+    }
+
+    @IBInspectable override var shadowOffset: CGSize {
+        get {
+            return layer.shadowOffset
+        }
+        set {
+            layer.shadowOffset = newValue
+            layer.shadowColor = UIColor.black.cgColor
+            layer.masksToBounds = false
+        }
+    }
+
 }

@@ -111,15 +111,15 @@ class SignUp: UIViewController {
     }
     
     private func refreshLocalization() {
-        let isRTL = Helper.shared.getLanguage() == "ar"
-        ContainerView.semanticContentAttribute = isRTL ? .forceLeftToRight : .forceRightToLeft
-        BtnBack.setImage(UIImage(resource:isRTL ? .backRight : .backLeft), for: .normal)
+//        let isRTL = Helper.shared.getLanguage() == "ar"
+//        ContainerView.semanticContentAttribute = isRTL ? .forceLeftToRight : .forceRightToLeft
+        BtnBack.setImage(UIImage(resource:  .backLeft).flippedIfRTL, for: .normal)
         BtnRegister.setTitle("signup_signup_btn".localized, for: .normal)
         LaHaveAccount.text = "signup_have_account".localized()
         BtnLogin.setTitle("signup_signin_btn".localized, for: .normal)
 //        termsLabel.text = "signup_accept_terms".localized()
         
-        STHaveAccount.semanticContentAttribute = isRTL ? .forceLeftToRight : .forceRightToLeft
+//        STHaveAccount.semanticContentAttribute = isRTL ? .forceLeftToRight : .forceRightToLeft
         
         view.setNeedsLayout()
         view.layoutIfNeeded()

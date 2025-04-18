@@ -9,6 +9,7 @@ import UIKit
 
 class MeasurementsDetailsFiltterVC: UIViewController {
     
+    @IBOutlet weak var BtnBack: UIButton!
     @IBOutlet weak var LaTitleBare: UILabel!
     @IBOutlet weak var TVScreen: UITableView!
     @IBOutlet weak var LaFrom: UILabel!
@@ -35,7 +36,8 @@ class MeasurementsDetailsFiltterVC: UIViewController {
         LaFrom.text = "\(NormalFrom)"
         LaTo.text   = "\(NormalTo)"
         LaTitleBare.text = TitleMeasurement
-
+        BtnBack.setImage(UIImage(resource: .backLeft).flippedIfRTL, for: .normal)
+        LaFrom.reverselocalizedview()
         if From != "" && To != "" {
             // date from to
             ViewModel.medicalMeasurementId = id
