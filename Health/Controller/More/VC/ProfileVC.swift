@@ -1,10 +1,3 @@
-//
-//  ProfileVC.swift
-//  Health
-//
-//  Created by Hamza on 03/08/2023.
-//
-
 import UIKit
 import Alamofire
 import SwiftyJSON
@@ -13,291 +6,290 @@ class ProfileVC: UIViewController {
     
     @IBOutlet weak var TVscreen: UITableView!
     
-    let ViewModel = ProfileVM()
-    var selected = 0
+    let viewModel = ProfileVM()
+    var selectedIndex: Int?
+    
+    private enum Section {
+        case profileHeader
+        case mainOptions
+        case separator
+        case settings
+        case logout
+    }
+    
+     struct MenuItem {
+        let title: String
+        let imageName: String
+        let action: (() -> Void)?
+    }
+    
+    private var sections: [Section] = [.profileHeader, .mainOptions, .separator, .settings, .logout]
+    private var mainOptions: [MenuItem] = []
+    private var settingsOptions: [MenuItem] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // Do any additional setup after loading the view.
+        setupTableView()
+        configureMenuItems()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        selectedIndex = nil
+        TVscreen.reloadData()
+        getMyProfile()
+    }
+    
+    private func setupTableView() {
         TVscreen.dataSource = self
-        TVscreen.delegate   = self
+        TVscreen.delegate = self
         TVscreen.registerCellNib(cellClass: ProfileTVCellLine.self)
         TVscreen.registerCellNib(cellClass: ProfileTVCellHeader.self)
         TVscreen.registerCellNib(cellClass: ProfileTVCellMiddle.self)
         TVscreen.registerCellNib(cellClass: ProfileTVCellLogout.self)
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        selected = 0
-        TVscreen.reloadData()
-        GetMyProfile()
-//        ReturnCustomerFirebaseToken()
-    }
+    private func configureMenuItems() {
+          mainOptions = [
+              MenuItem(title: "نصائح طبية", imageName: "instruction") { [weak self] in
+                  self?.selectedIndex = 0
+                  self?.pushTo(TipsCategoriesVC1.self)
+              },
+              MenuItem(title: "Inbody", imageName: "newInbody") { [weak self] in
+                  self?.selectedIndex = 1
+                  self?.pushTo(INBodyVC.self)
+              }
+          ]
+          
+          settingsOptions = [
+              MenuItem(title: "تغيير كلمة المرور", imageName: "changepass") { [weak self] in
+                  self?.selectedIndex = 2
+                  self?.pushTo(ChangePasswordVC.self)
+              },
+              MenuItem(title: "تغيير اللغة", imageName: "changelang") { [weak self] in
+                  self?.selectedIndex = 3
+                  self?.handleLanguageChange()
+              },
+              MenuItem(title: "الحماية والخصوصية", imageName: "privacyprotection") { [weak self] in
+                  self?.selectedIndex = 4
+                  // Handle privacy action
+              },
+              MenuItem(title: "المساعدة", imageName: "play") { [weak self] in
+                  self?.selectedIndex = 5
+                  self?.pushTo(HelpVC.self)
+              },
+              MenuItem(title: "الشروط والأحكام", imageName: "termscondition") { [weak self] in
+                  self?.selectedIndex = 6
+                  self?.pushTo(TermsConditionsVC.self)
+              }
+          ]
+      }
     
-//    func ReturnCustomerFirebaseToken() {
-//           // API endpoint URL
-//           let apiUrl = Constants.apiURL + "Customer/ReturnCustomerFirebaseToken"
-//           let headers: HTTPHeaders = ["Authorization" : "Bearer \(Helper.shared.getUser()?.token ?? "" )"]
-//           print("url : \(apiUrl)")
-//           print("headers : \(headers)")
-//
-//           // Sending the POST request
-//           AF.request(apiUrl,
-//                      method: .get,
-//                      parameters: nil,
-//                      encoding: JSONEncoding.default,
-//                      headers: headers)
-//               .responseJSON { response in
-//                   // remember me to change responseJSON to responseDecodable
-//                   switch response.result {
-//                   case .success(let value):
-//                       let json = JSON(value)
-//                       print("ReturnCustomerFirebaseToken : \(json)")
-//
-//
-//                   case .failure(let error):
-//                       print("Error: \(error)")
-//                   }
-//               }
-//       }
-    
-}
-
-
-extension ProfileVC : UITableViewDataSource , UITableViewDelegate {
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        return 12
-        return 9
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+//    private func handleLanguageChange() {
+//        LocalizationManager.shared.setLanguage(Helper.shared.getLanguage() == "ar" ? "en" : "ar") { _ in
+//            if let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate {
+//                sceneDelegate.reloadRootView()
+//            }
+//        }
+//    }
+    private func handleLanguageChange() {
+        let newLanguage = Helper.shared.getLanguage() == "ar" ? "en" : "ar"
         
-        if indexPath.row == 0 {
-            
-            let cell = tableView.dequeueReusableCell(withIdentifier: "ProfileTVCellHeader", for: indexPath) as! ProfileTVCellHeader
-            if let user = ViewModel.responseModel{
-                cell.LaName.text  = user.name
-                cell.LaPhone.text = user.mobile
-            }
-            return cell
-            
-//        } else if indexPath.row == 1 {
-//
-//            let cell = tableView.dequeueReusableCell(withIdentifier: "ProfileTVCellMiddle", for: indexPath) as! ProfileTVCellMiddle
-//            cell.LaTitle.text = "الرئيسية"
-//            cell.IVPhoto.image = UIImage(named: "user")
-//            return cell
-//
-//        } else if indexPath.row == 2 {
-//
-//            let cell = tableView.dequeueReusableCell(withIdentifier: "ProfileTVCellMiddle", for: indexPath) as! ProfileTVCellMiddle
-//            cell.LaTitle.text = "قياساتي"
-//            cell.IVPhoto.image = UIImage(named: "measurement")
-//            return cell
-//
-//        } else if indexPath.row == 3 {
-//
-//            let cell = tableView.dequeueReusableCell(withIdentifier: "ProfileTVCellMiddle", for: indexPath) as! ProfileTVCellMiddle
-//            cell.LaTitle.text = "جداول الأدوية الشهرية"
-//            cell.IVPhoto.image = UIImage(named: "table")
-//            return cell
-//
-//        } else if indexPath.row == 4 {
-//
-//            let cell = tableView.dequeueReusableCell(withIdentifier: "ProfileTVCellMiddle", for: indexPath) as! ProfileTVCellMiddle
-//            cell.LaTitle.text = "تنبيهات الأدوية"
-//            cell.IVPhoto.image = UIImage(named: "noti")
-//            return cell
-            
-        } else if indexPath.row == 1 {
-            
-            let cell = tableView.dequeueReusableCell(withIdentifier: "ProfileTVCellMiddle", for: indexPath) as! ProfileTVCellMiddle
-            cell.LaTitle.text = "نصائح طبية"
-            cell.IVPhoto.image = UIImage(named: "instruction")
-            if selected == 1 {
-                cell.ViewColor.backgroundColor = UIColor(named: "secondary")
-            } else {
-                cell.ViewColor.backgroundColor = .clear
-            }
-            return cell
-            
-        } else if indexPath.row == 2 {
-            
-            let cell = tableView.dequeueReusableCell(withIdentifier: "ProfileTVCellMiddle", for: indexPath) as! ProfileTVCellMiddle
-            cell.LaTitle.text = "Inbody"
-            cell.IVPhoto.image = UIImage(named: "newInbody")
-            
-            if selected == 2 {
-                cell.ViewColor.backgroundColor = UIColor(named: "secondary")
-            } else {
-                cell.ViewColor.backgroundColor = .clear
-            }
-            return cell
-            
-        } else if indexPath.row == 3 {
-            
-            let cell = tableView.dequeueReusableCell(withIdentifier: "ProfileTVCellLine", for: indexPath) as! ProfileTVCellLine
-            return cell
-            
-        } else if indexPath.row == 4 {
-            
-            let cell = tableView.dequeueReusableCell(withIdentifier: "ProfileTVCellMiddle", for: indexPath) as! ProfileTVCellMiddle
-            cell.LaTitle.text = "تغيير كلمة المرور"
-            cell.IVPhoto.image = UIImage(named: "changepass")
-            if selected == 4 {
-                cell.ViewColor.backgroundColor = UIColor(named: "secondary")
-            } else {
-                cell.ViewColor.backgroundColor = .clear
-            }
-            return cell
-            
-        } else if indexPath.row == 5 {
-            
-            let cell = tableView.dequeueReusableCell(withIdentifier: "ProfileTVCellMiddle", for: indexPath) as! ProfileTVCellMiddle
-            cell.LaTitle.text = "الحماية والخصوصية"
-            cell.IVPhoto.image = UIImage(named: "privacyprotection")
-            if selected == 5 {
-                cell.ViewColor.backgroundColor = UIColor(named: "secondary")
-            } else {
-                cell.ViewColor.backgroundColor = .clear
-            }
-            return cell
-            
-        } else if indexPath.row == 6 {
-            
-            let cell = tableView.dequeueReusableCell(withIdentifier: "ProfileTVCellMiddle", for: indexPath) as! ProfileTVCellMiddle
-            cell.LaTitle.text = "المساعدة"
-            cell.IVPhoto.image = UIImage(named: "playmain")
-            if selected == 6 {
-                cell.ViewColor.backgroundColor = UIColor(named: "secondary")
-            } else {
-                cell.ViewColor.backgroundColor = .clear
-            }
-            return cell
-            
-        } else if indexPath.row == 7 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "ProfileTVCellMiddle", for: indexPath) as! ProfileTVCellMiddle
-            cell.LaTitle.text = "الشروط والأحكام"
-            cell.IVPhoto.image = UIImage(named: "termscondition")
-            if selected == 7 {
-                cell.ViewColor.backgroundColor = UIColor(named: "secondary")
-            } else {
-                cell.ViewColor.backgroundColor = .clear
-            }
-            return cell
-        } else  {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "ProfileTVCellLogout", for: indexPath) as! ProfileTVCellLogout
-            return cell
-        }
-        
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        if indexPath.row == 0 { // -- user image --
-            
-//        } else if indexPath.row == 1 { // - "الرئيسية" -
-//
-//        } else if indexPath.row == 2 { // - قياساتى -
-//
-//        } else if indexPath.row == 3 { // - "جداول الأدوية الشهرية" -
-//
-//        } else if indexPath.row == 4 { // - medecines notifications -
+        // Show loading indicator if needed
+        Hud.showHud(in: self.view, text: "Changing language...")
 
-        } else if indexPath.row == 1 { // - "نصائح طبية" -
-            selected = 1
-            TVscreen.reloadData()
-            PushTo(destination: TipsCategoriesVC1.self)
-        } else if indexPath.row == 2 { // - inbody -
-            selected = 2
-            TVscreen.reloadData()
-            PushTo(destination: INBodyVC.self)
-        } else if indexPath.row == 3 { // - ProfileTVCellLine -
-            
-        } else if indexPath.row == 4 { // - "تغيير كلمة المرور" -
-            selected = 4
-            TVscreen.reloadData()
-            PushTo(destination: ChangePasswordVC.self)
-        } else if indexPath.row == 5 { // - "الحماية والخصوصية" -
-            selected = 5
-            TVscreen.reloadData()
-        } else if indexPath.row == 6 { // - "المساعده "-
-            selected = 6
-            TVscreen.reloadData()
-//            PushTo(destination: HelpVC.self)
-            LocalizationManager.shared.setLanguage(Helper.shared.getLanguage() == "ar" ? "en" : "ar"){_ in}
-            if let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate {
-                sceneDelegate.reloadRootView()
-            }
-        }  else if indexPath.row == 7 { // - "الشروط والأحكام" -
-            selected = 7
-            TVscreen.reloadData()
-            PushTo(destination: TermsConditionsVC.self)
-        }else { // -- تسجيل خروج --
-            
-            let actionSheet  = UIAlertController(title: "هل أنت متأكد بأنك تريد تسجيل الخروج؟", message: "", preferredStyle: .alert)
-            let alertAction = UIAlertAction(title: "تسجيل الخروج", style: .default, handler: { (_) in
-                Helper.shared.logout()
-                Helper.shared.changeRootVC(newroot: StartScreenVC.self,transitionFrom: .fromLeft)
-            })
-            actionSheet.addAction(alertAction)
-            
-            let alertAction1 = UIAlertAction(title: "إلغاء", style: .destructive, handler: { (_) in
-                self.dismiss(animated: true, completion: nil)
-            })
-            actionSheet.addAction(alertAction1)
-            
-            // valide ipad action sheet
-            if let popoverController = actionSheet.popoverPresentationController {
-                popoverController.sourceRect = CGRect(x: UIScreen.main.bounds.width / 2, y: UIScreen.main.bounds.height / 2, width: 0, height: 0)
-                popoverController.sourceView = self.view
-                popoverController.permittedArrowDirections = UIPopoverArrowDirection(rawValue: 0)
-            }
-            //------------------------
-            present(actionSheet, animated: true, completion: nil)
+        LocalizationManager.shared.setLanguage(newLanguage) { [weak self] success in
+            guard let self = self else { return }
+            DispatchQueue.main.async {
+                Hud.dismiss(from: self.view)
+                
+                
+                if success{
+                    if let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate {
+                        sceneDelegate.reloadRootView()
+                    }
                     
+                }else{
+                    self.showLanguageChangeError()
+                }
+            }
         }
-        
+    }
+
+    private func showLanguageChangeError() {
+        let alert = UIAlertController(
+            title: "Language Change Failed",
+            message: "Language Change Failed",
+            preferredStyle: .alert
+        )
+        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        present(alert, animated: true)
     }
     
-    func PushTo(destination:UIViewController.Type){
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2 , execute: {
-            guard let vc = initiateViewController(storyboardName: .main, viewControllerIdentifier: destination.self)else{return}
+    private func showLogoutConfirmation() {
+        let actionSheet = UIAlertController(
+            title: "هل أنت متأكد بأنك تريد تسجيل الخروج؟",
+            message: "",
+            preferredStyle: .alert
+        )
+        
+        let logoutAction = UIAlertAction(title: "تسجيل الخروج", style: .default) { _ in
+            Helper.shared.logout()
+            Helper.shared.changeRootVC(newroot: StartScreenVC.self, transitionFrom: .fromLeft)
+        }
+        
+        let cancelAction = UIAlertAction(title: "إلغاء", style: .destructive)
+        
+        actionSheet.addAction(logoutAction)
+        actionSheet.addAction(cancelAction)
+        
+        // iPad support
+        if let popoverController = actionSheet.popoverPresentationController {
+            popoverController.sourceRect = CGRect(x: UIScreen.main.bounds.width / 2,
+                                                 y: UIScreen.main.bounds.height / 2,
+                                                 width: 0, height: 0)
+            popoverController.sourceView = view
+            popoverController.permittedArrowDirections = UIPopoverArrowDirection(rawValue: 0)
+        }
+        
+        present(actionSheet, animated: true)
+    }
+    
+    private func pushTo(_ destination: UIViewController.Type) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+            guard let vc = initiateViewController(storyboardName: .main, viewControllerIdentifier: destination) else { return }
             vc.hidesBottomBarWhenPushed = true
             self.navigationController?.pushViewController(vc, animated: true)
-        })
+        }
     }
-}
-
-// -- functions --
-extension ProfileVC {
-    func GetMyProfile(){
-        ViewModel.GetMyProfile {[weak self] state in
-            guard let self = self else{return}
-            guard let state = state else{
-                return
-            }
+    
+    private func getMyProfile() {
+        viewModel.GetMyProfile{ [weak self] state in
+            guard let self = self, let state = state else { return }
+            
             switch state {
             case .loading:
-//                Hud.showHud(in: self.view,text: "")
                 print("loading")
             case .stopLoading:
                 Hud.dismiss(from: self.view)
             case .success:
                 Hud.dismiss(from: self.view)
-                print(state)
-//                TVscreen.reloadData()
-                TVscreen.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
-            case .error(_,let error):
+                self.TVscreen.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
+            case .error(_, let error):
                 Hud.dismiss(from: self.view)
-//                SimpleAlert.shared.showAlert(title:error ?? "",message:"", viewController: self)
                 print(error ?? "")
             case .none:
-                print("")
+                break
             }
         }
     }
 }
+extension ProfileVC: UITableViewDataSource, UITableViewDelegate {
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return sections.count
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        switch sections[section] {
+        case .profileHeader: return 1
+        case .mainOptions: return mainOptions.count
+        case .separator: return 1
+        case .settings: return settingsOptions.count
+        case .logout: return 1
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        switch sections[indexPath.section] {
+        case .profileHeader:
+            let cell = tableView.dequeueReusableCell(withIdentifier: "ProfileTVCellHeader", for: indexPath) as! ProfileTVCellHeader
+            if let user = viewModel.responseModel {
+                cell.LaName.text = user.name
+                cell.LaPhone.text = user.mobile
+            }
+            return cell
+            
+        case .mainOptions:
+            let cell = tableView.dequeueReusableCell(withIdentifier: "ProfileTVCellMiddle", for: indexPath) as! ProfileTVCellMiddle
+            let item = mainOptions[indexPath.row]
+            cell.configure(with: item, isSelected: selectedIndex == indexPath.row)
+            return cell
+            
+        case .separator:
+            return tableView.dequeueReusableCell(withIdentifier: "ProfileTVCellLine", for: indexPath) as! ProfileTVCellLine
+            
+        case .settings:
+            let cell = tableView.dequeueReusableCell(withIdentifier: "ProfileTVCellMiddle", for: indexPath) as! ProfileTVCellMiddle
+            let item = settingsOptions[indexPath.row]
+            // Offset by mainOptions count + 1 (for separator) when checking selection
+            cell.configure(with: item, isSelected: false)
+            return cell
+            
+        case .logout:
+            return tableView.dequeueReusableCell(withIdentifier: "ProfileTVCellLogout", for: indexPath) as! ProfileTVCellLogout
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        
+        switch sections[indexPath.section] {
+        case .profileHeader, .separator:
+            break
+            
+        case .mainOptions:
+//            selectedIndex = indexPath.row
+            mainOptions[indexPath.row].action?()
+            
+        case .settings:
+            // Offset by mainOptions count + 1 (for separator)
+//            selectedIndex = indexPath.row + 1 + mainOptions.count
+            settingsOptions[indexPath.row].action?()
+            
+        case .logout:
+            showLogoutConfirmation()
+        }
+        
+        tableView.reloadData()
+    }
+    
+//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+//        switch sections[indexPath.section] {
+//        case .profileHeader: return 180
+//        case .separator: return 1 // or whatever height your separator should be
+//        default: return UITableView.automaticDimension
+//        }
+//    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+          switch sections[section] {
+          case .profileHeader:
+              return 0.1 // Minimal height for first section
+          case .mainOptions, .separator, .settings:
+              return 8 // Custom spacing between sections
+          case .logout:
+              return 0.1 // Extra space before logout button
+          }
+      }
+      
+      func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+          return 0.1 // Minimal footer height for all sections
+      }
+      
+      func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+          let header = UIView()
+          header.backgroundColor = .clear
+          return header
+      }
+      
+      func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+          let footer = UIView()
+          footer.backgroundColor = .clear
+          return footer
+      }
+    
+    
+}
+
+

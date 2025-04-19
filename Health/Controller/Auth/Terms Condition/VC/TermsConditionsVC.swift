@@ -10,11 +10,13 @@ import WebKit
 
 class TermsConditionsVC: UIViewController {
     
+    @IBOutlet weak var BtnBack: UIButton!
     @IBOutlet weak var LaTitleBare: UILabel!
     @IBOutlet weak var webView: WKWebView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        BtnBack.setImage(UIImage(resource: .backLeft).flippedIfRTL, for: .normal)
         
         // Do any additional setup after loading the view.
         //https://sehaty.alnadapharmacies.com/Terms.html

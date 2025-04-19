@@ -175,7 +175,7 @@ extension SceneDelegate {
         UIScrollView.appearance().semanticContentAttribute = semanticAttribute
         
         // Text alignment for labels and text fields
-        UILabel.appearance().textAlignment = isRTL ? .right : .left
+//        UILabel.appearance().textAlignment = isRTL ? .right : .left
         UITextField.appearance().textAlignment = isRTL ? .right : .left
         UITextView.appearance().textAlignment = isRTL ? .right : .left
         

@@ -26,4 +26,13 @@ class ProfileTVCellMiddle: UITableViewCell {
         // Configure the view for the selected state
     }
     
+    
+}
+
+extension ProfileTVCellMiddle {
+    func configure(with item: ProfileVC.MenuItem, isSelected: Bool) {
+        LaTitle.text = item.title
+        IVPhoto.image = UIImage(named: item.imageName)?.withRenderingMode(.alwaysTemplate)
+        ViewColor.backgroundColor = isSelected ? UIColor(named: "secondary") : .clear
+    }
 }

@@ -1936,9 +1936,10 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CxJ-3B-QBo">
                                 <rect key="frame" x="0.0" y="118" width="393" height="617"/>
                                 <subviews>
-                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="h7v-KD-PPA">
+                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="-1" sectionFooterHeight="18" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="h7v-KD-PPA">
                                         <rect key="frame" x="0.0" y="0.0" width="393" height="617"/>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="backgroundColor" red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <inset key="separatorInset" minX="25" minY="0.0" maxX="25" maxY="0.0"/>
                                     </tableView>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1951,7 +1952,7 @@
                             </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="bfJ-JX-Nvj"/>
-                        <color key="backgroundColor" name="main"/>
+                        <color key="backgroundColor" name="bg"/>
                         <constraints>
                             <constraint firstItem="CxJ-3B-QBo" firstAttribute="trailing" secondItem="bfJ-JX-Nvj" secondAttribute="trailing" id="8UE-k3-R4X"/>
                             <constraint firstItem="CxJ-3B-QBo" firstAttribute="bottom" secondItem="bfJ-JX-Nvj" secondAttribute="bottom" id="Yjx-HW-Zhf"/>
@@ -2009,7 +2010,7 @@
                                                                             </button>
                                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="نصائح طبية" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gaj-p4-RIN">
                                                                                 <rect key="frame" x="56.333333333333343" y="0.0" width="256.66666666666663" height="30"/>
-                                                                                <fontDescription key="fontDescription" name="LamaSans-SemiBold" family="Lama Sans" pointSize="35"/>
+                                                                                <fontDescription key="fontDescription" name="LamaSans-SemiBold" family="Lama Sans" pointSize="20"/>
                                                                                 <color key="textColor" name="main"/>
                                                                                 <nil key="highlightedColor"/>
                                                                             </label>
@@ -2187,7 +2188,7 @@
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="50" id="jAP-wS-3JY"/>
                                                                 </constraints>
-                                                                <fontDescription key="fontDescription" name="LamaSans-Bold" family="Lama Sans" pointSize="24"/>
+                                                                <fontDescription key="fontDescription" name="LamaSans-Bold" family="Lama Sans" pointSize="20"/>
                                                                 <color key="textColor" red="0.1764705882352941" green="0.1764705882352941" blue="0.69803921568627447" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
@@ -2662,8 +2663,8 @@
                                                                 </connections>
                                                             </button>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="جداول الأدوية الشهرية" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HgK-XA-IKq">
-                                                                <rect key="frame" x="78" y="31.666666666666664" width="217" height="18.333333333333336"/>
-                                                                <fontDescription key="fontDescription" name="LamaSans-Bold" family="Lama Sans" pointSize="18"/>
+                                                                <rect key="frame" x="78" y="29.666666666666664" width="217" height="20.333333333333336"/>
+                                                                <fontDescription key="fontDescription" name="LamaSans-Bold" family="Lama Sans" pointSize="20"/>
                                                                 <color key="textColor" name="main"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
@@ -5122,12 +5123,16 @@
                                                     <stackView opaque="NO" contentMode="scaleToFill" alignment="bottom" spacing="28" translatesAutoresizingMaskIntoConstraints="NO" id="hFq-nI-S4U">
                                                         <rect key="frame" x="10" y="30" width="373" height="50"/>
                                                         <subviews>
-                                                            <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h22-6E-0Ql">
-                                                                <rect key="frame" x="0.0" y="16" width="50" height="34"/>
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rn1-NX-K3e">
+                                                                <rect key="frame" x="0.0" y="19" width="50" height="31"/>
                                                                 <constraints>
-                                                                    <constraint firstAttribute="width" constant="50" id="jOz-4x-ab9"/>
+                                                                    <constraint firstAttribute="width" constant="50" id="pfa-7K-LBa"/>
                                                                 </constraints>
                                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                                <state key="normal" image="backLeft"/>
+                                                                <connections>
+                                                                    <action selector="BUBack:" destination="QMU-mP-4YG" eventType="touchUpInside" id="hdN-fY-IS6"/>
+                                                                </connections>
                                                             </button>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u0N-iL-2rD">
                                                                 <rect key="frame" x="78" y="0.0" width="217" height="50"/>
@@ -5135,16 +5140,12 @@
                                                                 <color key="textColor" name="main"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
-                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rn1-NX-K3e">
-                                                                <rect key="frame" x="323" y="19" width="50" height="31"/>
+                                                            <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h22-6E-0Ql">
+                                                                <rect key="frame" x="323" y="16" width="50" height="34"/>
                                                                 <constraints>
-                                                                    <constraint firstAttribute="width" constant="50" id="pfa-7K-LBa"/>
+                                                                    <constraint firstAttribute="width" constant="50" id="jOz-4x-ab9"/>
                                                                 </constraints>
                                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                                <state key="normal" image="back"/>
-                                                                <connections>
-                                                                    <action selector="BUBack:" destination="QMU-mP-4YG" eventType="touchUpInside" id="hdN-fY-IS6"/>
-                                                                </connections>
                                                             </button>
                                                         </subviews>
                                                         <constraints>
@@ -5214,6 +5215,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="BtnBack" destination="Rn1-NX-K3e" id="mJ6-4c-HRt"/>
                         <outlet property="LaTitleBare" destination="u0N-iL-2rD" id="oiy-hT-uXP"/>
                         <outlet property="webView" destination="wZs-Ph-pUl" id="w3u-oe-4Bh"/>
                     </connections>
