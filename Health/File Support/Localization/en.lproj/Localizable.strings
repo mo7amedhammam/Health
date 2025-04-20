@@ -118,3 +118,13 @@
 "mes_inDate" = "Date: ";
 
 "mesurement_det_title" = "mesurement of ";
+
+
+//MARK: --- notification ---
+"notfication_active" = "فعّال";
+"notfication_inactive" = "inactive";
+
+
+//MARK: --- measurments ---
+"mesurement_recorded" = "Recorded";
+"mesurement_JusMesurment" = "Just Records";

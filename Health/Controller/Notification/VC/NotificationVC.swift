@@ -23,7 +23,9 @@ class NotificationVC: UIViewController  {
     @IBOutlet weak var TFNumDrug: UITextField!
     @IBOutlet weak var TFNumDays: UITextField!
     @IBOutlet weak var TFEndDate: UITextField!
-    
+    @IBOutlet weak var LaFor: UILabel!
+    @IBOutlet weak var LaDays: UILabel!
+
     @IBOutlet weak var ViewSelectDate: UIView!
     @IBOutlet weak var PickerDate: UIDatePicker!
                    
@@ -92,6 +94,7 @@ class NotificationVC: UIViewController  {
         // Load your initial data here (e.g., fetchData())
 //        refreshData()
 //        getDrugs()
+        setupUI()
         
     }
     
@@ -107,6 +110,15 @@ class NotificationVC: UIViewController  {
         ArrDrugStringSearch.removeAll()
         getDrugs()
 
+    }
+    
+    func setupUI(){
+        let isRTL = Helper.shared.getLanguage() == "ar"
+        if isRTL {
+            LaDays.reverselocalizedview()
+        }else{
+            LaFor.reverselocalizedview()
+        }
     }
     
     @objc func EditingChanged (_ textField: UITextField) {
@@ -421,6 +433,10 @@ class NotificationVC: UIViewController  {
         ViewAddNewNotification.isHidden = false
     }
     
+    @IBAction func BUHideAddNewNoti(_ sender: Any) {
+        ViewAddNewNotification.isHidden = true
+    }
+    
 }
 
 extension NotificationVC {
@@ -589,67 +605,84 @@ extension NotificationVC : UITableViewDataSource , UITableViewDelegate {
         let cell = tableView.dequeueReusableCell(withIdentifier: "NotificationTVCell", for: indexPath) as! NotificationTVCell
         
         let model = ViewModel.ArrNotifications?.items![indexPath.row]
-        if model?.active == true {
+//        if model?.active == true {
             
-            cell.ViewColor.backgroundColor = UIColor(named: "main")
-            cell.View1.backgroundColor = UIColor(named: "secondary")
-            cell.View2.backgroundColor = UIColor(named: "secondary")
-            cell.View3.backgroundColor = UIColor(named: "secondary")
-            cell.View4.backgroundColor = UIColor(named: "secondary")
-            cell.View5.backgroundColor = UIColor(named: "secondary")
-            cell.LaStatus.textColor    = UIColor(named: "secondary")
-            //
-            cell.ViewLine1.backgroundColor = .white
-            cell.ViewLine2.backgroundColor = .white
-            cell.ViewLine3.backgroundColor = .white
-            cell.ViewLine4.backgroundColor = .white
-            //
-            cell.LaTitle.textColor = .white
-            cell.LaClock.textColor = .white
-            cell.LaEvery.textColor = .white
-            cell.LaStartDate.textColor = .white
-            cell.LaEndDate.textColor = .white
-            cell.LaPeriod.textColor = .white
-            cell.LLocClock.textColor = .white
-            cell.LLocEvery.textColor = .white
-            cell.LLocStartDate.textColor = .white
-            cell.LLocEndDate.textColor = .white
-            cell.LLocPeriod.textColor = .white
-            cell.LaStatus.text = "فعّال"
+            cell.ViewColor.backgroundColor = UIColor(named: model?.active == true ? "bg":"FFE1E1")
+            [cell.View1,cell.View2,cell.View3,cell.View4,cell.View5].forEach{$0.backgroundColor = UIColor(named: model?.active == true ? "secondary":"wrong")}
+        
+        cell.LaStatus.textColor = UIColor(named: model?.active == true ? "secondary":"wrong")
 
-            cell.IVPhotoTitle.tintColor = .white
-            
-        } else {
-            
-            cell.ViewColor.backgroundColor = UIColor(named: "FFE1E1")
-            cell.View1.backgroundColor = UIColor(named: "wrong")
-            cell.View2.backgroundColor = UIColor(named: "wrong")
-            cell.View3.backgroundColor = UIColor(named: "wrong")
-            cell.View4.backgroundColor = UIColor(named: "wrong")
-            cell.View5.backgroundColor = UIColor(named: "wrong")
-            cell.LaStatus.textColor    = UIColor(named: "wrong")
+//            cell.View1.backgroundColor = UIColor(named: "secondary")
+//            cell.View2.backgroundColor = UIColor(named: "secondary")
+//            cell.View3.backgroundColor = UIColor(named: "secondary")
+//            cell.View4.backgroundColor = UIColor(named: "secondary")
+//            cell.View5.backgroundColor = UIColor(named: "secondary")
+//            cell.LaStatus.textColor    = UIColor(named: "secondary")
             //
-            cell.ViewLine1.backgroundColor = UIColor(named: "halfwrong")
-            cell.ViewLine2.backgroundColor = UIColor(named: "halfwrong")
-            cell.ViewLine3.backgroundColor = UIColor(named: "halfwrong")
-            cell.ViewLine4.backgroundColor = UIColor(named: "halfwrong")
-            //
-            cell.LaTitle.textColor = UIColor(named: "wrong")
-            cell.LaClock.textColor = UIColor(named: "wrong")
-            cell.LaEvery.textColor = UIColor(named: "wrong")
-            cell.LaStartDate.textColor = UIColor(named: "wrong")
-            cell.LaEndDate.textColor = UIColor(named: "wrong")
-            cell.LaPeriod.textColor = UIColor(named: "wrong")
-            cell.LLocClock.textColor = UIColor(named: "wrong")
-            cell.LLocEvery.textColor = UIColor(named: "wrong")
-            cell.LLocStartDate.textColor = UIColor(named: "wrong")
-            cell.LLocEndDate.textColor = UIColor(named: "wrong")
-            cell.LLocPeriod.textColor = UIColor(named: "wrong")
-            
-            cell.LaStatus.text = "مُنتهي"
-            cell.IVPhotoTitle.tintColor = UIColor(named: "wrong")
+//            cell.ViewLine1.backgroundColor = .white
+//            cell.ViewLine2.backgroundColor = .white
+//            cell.ViewLine3.backgroundColor = .white
+//            cell.ViewLine4.backgroundColor = .white
+        [cell.ViewLine1,cell.ViewLine2,cell.ViewLine3,cell.ViewLine4].forEach{$0.backgroundColor = UIColor(named: "main")?.withAlphaComponent(0.1)}
 
-        }
+            //
+//            cell.LaTitle.textColor = .white
+//            cell.LaClock.textColor = .white
+//            cell.LaEvery.textColor = .white
+//            cell.LaStartDate.textColor = .white
+//            cell.LaEndDate.textColor = .white
+//            cell.LaPeriod.textColor = .white
+//            cell.LLocClock.textColor = .white
+//            cell.LLocEvery.textColor = .white
+//            cell.LLocStartDate.textColor = .white
+//            cell.LLocEndDate.textColor = .white
+//            cell.LLocPeriod.textColor = .white
+            [cell.LaTitle,cell.LaClock,cell.LaEvery,cell.LaStartDate,
+             cell.LaPeriod,
+             cell.LLocClock,
+             cell.LLocEvery,
+             cell.LLocStartDate,
+             cell.LLocPeriod,
+             cell.LaEndDate
+            ].forEach{$0.textColor = UIColor(named:model?.active == true ? "main":"wrong")}
+
+        cell.LaStatus.text = model?.active == true ? "notfication_active".localized : "notfication_inactive".localized
+
+            cell.IVPhotoTitle.tintColor = UIColor(named:model?.active == true ? "secondary":"wrong")
+            
+            
+            
+//        } else {
+//            
+//            cell.ViewColor.backgroundColor = UIColor(named: "FFE1E1")
+//            cell.View1.backgroundColor = UIColor(named: "wrong")
+//            cell.View2.backgroundColor = UIColor(named: "wrong")
+//            cell.View3.backgroundColor = UIColor(named: "wrong")
+//            cell.View4.backgroundColor = UIColor(named: "wrong")
+//            cell.View5.backgroundColor = UIColor(named: "wrong")
+//            cell.LaStatus.textColor    = UIColor(named: "wrong")
+//            //
+//            cell.ViewLine1.backgroundColor = UIColor(named: "halfwrong")
+//            cell.ViewLine2.backgroundColor = UIColor(named: "halfwrong")
+//            cell.ViewLine3.backgroundColor = UIColor(named: "halfwrong")
+//            cell.ViewLine4.backgroundColor = UIColor(named: "halfwrong")
+//            //
+//            cell.LaTitle.textColor = UIColor(named: "wrong")
+//            cell.LaClock.textColor = UIColor(named: "wrong")
+//            cell.LaEvery.textColor = UIColor(named: "wrong")
+//            cell.LaStartDate.textColor = UIColor(named: "wrong")
+//            cell.LaEndDate.textColor = UIColor(named: "wrong")
+//            cell.LaPeriod.textColor = UIColor(named: "wrong")
+//            cell.LLocClock.textColor = UIColor(named: "wrong")
+//            cell.LLocEvery.textColor = UIColor(named: "wrong")
+//            cell.LLocStartDate.textColor = UIColor(named: "wrong")
+//            cell.LLocEndDate.textColor = UIColor(named: "wrong")
+//            cell.LLocPeriod.textColor = UIColor(named: "wrong")
+//            
+//            cell.LaStatus.text = "مُنتهي"
+//            cell.IVPhotoTitle.tintColor = UIColor(named: "wrong")
+//
+//        }
         print(":::::: \(model?.timeIsOver) \(model?.active)")
         cell.LaTitle.text = model?.drugTitle
         cell.LaEvery.text =  "\(model?.count ?? 0 ) \(model?.doseTimeTitle ?? "" )"

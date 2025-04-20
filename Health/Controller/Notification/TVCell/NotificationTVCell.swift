@@ -43,6 +43,7 @@ class NotificationTVCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        [LaStartDate,LaClock,LaEvery,LaPeriod,LaEndDate].forEach{$0?.reverselocalizedview()}
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

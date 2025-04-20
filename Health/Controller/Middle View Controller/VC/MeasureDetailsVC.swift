@@ -32,6 +32,8 @@ class MeasureDetailsVC: UIViewController {
     @IBOutlet weak var ViewSecondValue: UIView!
     @IBOutlet weak var TFSecondValue: UITextField!
     
+    @IBOutlet weak var LaRecorded: UILabel!
+    @IBOutlet weak var LaJustMeasurment: UILabel!
     @IBOutlet weak var ViewNoMeasurements: UIView!
     
     var imgMeasurement = ""
@@ -55,7 +57,6 @@ class MeasureDetailsVC: UIViewController {
         super.viewDidLoad()
         
         ImgMeasurement.kf.setImage(with: URL(string:Constants.imagesURL + imgMeasurement.validateSlashs()), placeholder: UIImage(named: "defaultLogo"), options: nil, progressBlock: nil)
-        
         
         TVDescription.placeholderText = "إضافة تعليق"
         PickerDate.minimumDate = nil
@@ -127,6 +128,14 @@ class MeasureDetailsVC: UIViewController {
         
     }
     
+    func setupUI(){
+        LaTitle.textAlignment = .center
+
+        LaRecorded.localized(string: "mesurement_recorded")
+        LaNum.textAlignment = .center
+        LaJustMeasurment.localized(string: "mesurement_JusMesurment")
+
+    }
     
     func getDataNormalRange() {
         

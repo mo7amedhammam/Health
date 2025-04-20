@@ -84,15 +84,15 @@
                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="UeG-0e-CcO">
                                                 <rect key="frame" x="50.666666666666657" y="7.3333333333333437" width="85" height="10.333333333333336"/>
                                                 <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" 27/6/2022" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XYD-E3-zbx">
-                                                        <rect key="frame" x="0.0" y="0.0" width="51" height="10.333333333333334"/>
-                                                        <fontDescription key="fontDescription" name="LamaSans-Regular" family="Lama Sans" pointSize="10"/>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="بتاريخ: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="chH-l9-eyT">
+                                                        <rect key="frame" x="0.0" y="0.0" width="29" height="10.333333333333334"/>
+                                                        <fontDescription key="fontDescription" name="LamaSans-SemiBold" family="Lama Sans" pointSize="10"/>
                                                         <color key="textColor" name="mainBlue"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="بتاريخ: " textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="chH-l9-eyT">
-                                                        <rect key="frame" x="56" y="0.0" width="29" height="10.333333333333334"/>
-                                                        <fontDescription key="fontDescription" name="LamaSans-SemiBold" family="Lama Sans" pointSize="10"/>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" 27/6/2022" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XYD-E3-zbx">
+                                                        <rect key="frame" x="34.000000000000007" y="0.0" width="50.999999999999993" height="10.333333333333334"/>
+                                                        <fontDescription key="fontDescription" name="LamaSans-Regular" family="Lama Sans" pointSize="10"/>
                                                         <color key="textColor" name="mainBlue"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>

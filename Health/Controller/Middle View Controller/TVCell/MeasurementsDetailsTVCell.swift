@@ -17,6 +17,7 @@ class MeasurementsDetailsTVCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        LaDate.reverselocalizedview()
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

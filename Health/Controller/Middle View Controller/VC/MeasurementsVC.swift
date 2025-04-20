@@ -34,6 +34,7 @@ class MeasurementsVC: UIViewController {
 //        CollectionScreen.semanticContentAttribute = .forceRightToLeft
         CollectionScreen.setCollectionViewLayout(layout, animated: true)
 //        LaName.text = "\(Helper.shared.getUser()?.name ?? "")"
+        LaNavTitle.textAlignment = .center
     }
     
     override func viewWillAppear(_ animated: Bool) {

@@ -116,3 +116,12 @@
 "mes_inDate" = "بتاريخ: ";
 
 "mesurement_det_title" = "قياس ";
+
+
+//MARK: --- notification ---
+"notfication_active" = "active";
+"notfication_inactive" = "مُنتهي";
+
+//MARK: --- measurments ---
+"mesurement_recorded" = "تم تسجيل";
+"mesurement_JusMesurment" = "قياس فقط";
