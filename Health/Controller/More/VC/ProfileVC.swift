@@ -102,16 +102,18 @@ class ProfileVC: UIViewController {
             guard let self = self else { return }
             DispatchQueue.main.async {
                 Hud.dismiss(from: self.view)
-                
-                
-                if success{
-                    if let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate {
-                        sceneDelegate.reloadRootView()
-                    }
-                    
-                }else{
-                    self.showLanguageChangeError()
+                if let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate {
+                    sceneDelegate.reloadRootView()
                 }
+                
+//                if success{
+////                    if let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate {
+////                        sceneDelegate.reloadRootView()
+////                    }
+//                    
+//                }else{
+//                    self.showLanguageChangeError()
+//                }
             }
         }
     }

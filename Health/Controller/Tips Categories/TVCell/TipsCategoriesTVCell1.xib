@@ -25,13 +25,13 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KnE-Vm-Bjs">
-                        <rect key="frame" x="0.0" y="0.0" width="343" height="318"/>
+                        <rect key="frame" x="10" y="0.0" width="333" height="318"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="83f-Th-my8">
-                                <rect key="frame" x="0.0" y="0.0" width="343" height="318"/>
+                                <rect key="frame" x="0.0" y="0.0" width="333" height="318"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GHJ-Aj-sVA">
-                                        <rect key="frame" x="0.0" y="0.0" width="343" height="60"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="333" height="60"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="skS-7D-VBX">
                                                 <rect key="frame" x="0.0" y="0.0" width="333" height="60"/>
@@ -61,15 +61,15 @@
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
-                                            <constraint firstAttribute="trailing" secondItem="skS-7D-VBX" secondAttribute="trailing" constant="10" id="00G-Oj-9ty"/>
                                             <constraint firstItem="skS-7D-VBX" firstAttribute="top" secondItem="GHJ-Aj-sVA" secondAttribute="top" id="6Fb-yl-eHV"/>
                                             <constraint firstAttribute="height" constant="60" id="BKt-eF-kYG"/>
                                             <constraint firstAttribute="bottom" secondItem="skS-7D-VBX" secondAttribute="bottom" id="CKN-wx-5bR"/>
                                             <constraint firstItem="skS-7D-VBX" firstAttribute="leading" secondItem="GHJ-Aj-sVA" secondAttribute="leading" id="Ki2-nk-whw"/>
+                                            <constraint firstAttribute="trailing" secondItem="skS-7D-VBX" secondAttribute="trailing" id="nfu-3f-zgp"/>
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eag-xU-cEy">
-                                        <rect key="frame" x="0.0" y="60" width="343" height="258"/>
+                                        <rect key="frame" x="0.0" y="60" width="333" height="258"/>
                                         <subviews>
                                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="Juu-23-bUO">
                                                 <rect key="frame" x="0.0" y="0.0" width="333" height="258"/>
@@ -87,7 +87,7 @@
                                             <constraint firstItem="Juu-23-bUO" firstAttribute="leading" secondItem="eag-xU-cEy" secondAttribute="leading" id="Nlq-y9-aqb"/>
                                             <constraint firstItem="Juu-23-bUO" firstAttribute="top" secondItem="eag-xU-cEy" secondAttribute="top" id="bUS-qE-1HW"/>
                                             <constraint firstAttribute="bottom" secondItem="Juu-23-bUO" secondAttribute="bottom" id="fLK-dL-VHN"/>
-                                            <constraint firstAttribute="trailing" secondItem="Juu-23-bUO" secondAttribute="trailing" constant="10" id="ghI-oP-xaI"/>
+                                            <constraint firstAttribute="trailing" secondItem="Juu-23-bUO" secondAttribute="trailing" id="ghI-oP-xaI"/>
                                         </constraints>
                                     </view>
                                 </subviews>
@@ -105,7 +105,7 @@
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="trailing" secondItem="KnE-Vm-Bjs" secondAttribute="trailing" id="HNq-QC-XWj"/>
-                    <constraint firstItem="KnE-Vm-Bjs" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="TqU-k4-VMz"/>
+                    <constraint firstItem="KnE-Vm-Bjs" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="TqU-k4-VMz"/>
                     <constraint firstAttribute="bottom" secondItem="KnE-Vm-Bjs" secondAttribute="bottom" id="XiG-MV-Crz"/>
                     <constraint firstItem="KnE-Vm-Bjs" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="YLP-nz-kyZ"/>
                 </constraints>

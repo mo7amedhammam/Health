@@ -35,7 +35,8 @@ class MeasurementsDetailsFiltterVC: UIViewController {
         
         LaFrom.text = "\(NormalFrom)"
         LaTo.text   = "\(NormalTo)"
-        LaTitleBare.text = TitleMeasurement
+        LaTitleBare.text = "mesurement_det_title".localized + TitleMeasurement
+        LaTitleBare.textAlignment = .center
         BtnBack.setImage(UIImage(resource: .backLeft).flippedIfRTL, for: .normal)
         LaFrom.reverselocalizedview()
         if From != "" && To != "" {

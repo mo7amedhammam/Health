@@ -48,7 +48,7 @@
                                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="Sor-Pu-DWt">
                                                                 <rect key="frame" x="0.0" y="19.333333333333336" width="97" height="31.666666666666664"/>
                                                                 <subviews>
-                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="السكر" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="euO-MM-bTo">
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="السكر" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="euO-MM-bTo">
                                                                         <rect key="frame" x="0.0" y="0.0" width="97" height="16.333333333333332"/>
                                                                         <fontDescription key="fontDescription" name="LamaSans-SemiBold" family="Lama Sans" pointSize="16"/>
                                                                         <color key="textColor" name="mainBlue"/>
@@ -63,7 +63,7 @@
                                                                                 <color key="textColor" name="mainBlue"/>
                                                                                 <nil key="highlightedColor"/>
                                                                             </label>
-                                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="نتيجة قياس متاحة" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QDN-Xg-bYl">
+                                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="نتيجة قياس متاحة" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QDN-Xg-bYl">
                                                                                 <rect key="frame" x="20.666666666666664" y="0.0" width="76.333333333333343" height="10.333333333333334"/>
                                                                                 <fontDescription key="fontDescription" name="LamaSans-Regular" family="Lama Sans" pointSize="10"/>
                                                                                 <color key="textColor" name="mainBlue"/>
@@ -129,13 +129,13 @@
                                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="ar6-3i-r7F">
                                                         <rect key="frame" x="0.0" y="0.0" width="74.666666666666671" height="20"/>
                                                         <subviews>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="آخر قياس :" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5pi-65-sOg">
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="آخر قياس :" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5pi-65-sOg">
                                                                 <rect key="frame" x="0.0" y="0.0" width="48.666666666666664" height="20"/>
                                                                 <fontDescription key="fontDescription" name="LamaSans-Regular" family="Lama Sans" pointSize="11"/>
                                                                 <color key="textColor" name="mainBlue"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="240" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZqR-Yr-Y8x">
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="240" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZqR-Yr-Y8x">
                                                                 <rect key="frame" x="53.666666666666671" y="0.0" width="21" height="20"/>
                                                                 <fontDescription key="fontDescription" name="LamaSans-Bold" family="Lama Sans" pointSize="11"/>
                                                                 <color key="textColor" name="secondary"/>
@@ -159,13 +159,13 @@
                                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="GiU-0R-aZH">
                                                         <rect key="frame" x="8" y="0.0" width="85" height="20"/>
                                                         <subviews>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="بتاريخ: " textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8rJ-yG-qzp">
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="بتاريخ: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8rJ-yG-qzp">
                                                                 <rect key="frame" x="0.0" y="0.0" width="29" height="20"/>
                                                                 <fontDescription key="fontDescription" name="LamaSans-SemiBold" family="Lama Sans" pointSize="10"/>
                                                                 <color key="textColor" name="mainBlue"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" 27/6/2022" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="s2L-SW-ffG">
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" 27/6/2022" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="s2L-SW-ffG">
                                                                 <rect key="frame" x="34" y="0.0" width="51" height="20"/>
                                                                 <fontDescription key="fontDescription" name="LamaSans-Regular" family="Lama Sans" pointSize="10"/>
                                                                 <color key="textColor" name="mainBlue"/>

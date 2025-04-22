@@ -84,6 +84,12 @@ class OtpVC: UIViewController , UITextFieldDelegate {
         super.viewWillDisappear(animated)
         timer?.invalidate()
         timer = nil
+        
+    }
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        timer?.invalidate()
+        timer = nil
     }
     
     func SetupUI(){

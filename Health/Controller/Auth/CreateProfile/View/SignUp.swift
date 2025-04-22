@@ -48,6 +48,7 @@ class SignUp: UIViewController {
        }
     private func setupUI() {
         BtnRegister.isEnabled(false)
+        BtnBack.setImage(UIImage(resource:  .backRight).flippedIfRTL, for: .normal)
         hideKeyboardWhenTappedAround()
     }
     
@@ -113,7 +114,6 @@ class SignUp: UIViewController {
     private func refreshLocalization() {
 //        let isRTL = Helper.shared.getLanguage() == "ar"
 //        ContainerView.semanticContentAttribute = isRTL ? .forceLeftToRight : .forceRightToLeft
-        BtnBack.setImage(UIImage(resource:  .backLeft).flippedIfRTL, for: .normal)
         BtnRegister.setTitle("signup_signup_btn".localized, for: .normal)
         LaHaveAccount.text = "signup_have_account".localized()
         BtnLogin.setTitle("signup_signin_btn".localized, for: .normal)
