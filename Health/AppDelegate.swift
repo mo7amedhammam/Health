@@ -155,6 +155,11 @@ extension AppDelegate : UNUserNotificationCenterDelegate {
 // MARK: --- Localization ---
 extension AppDelegate {
     func LocalizationInit() {
+        UIFont.familyNames.forEach({ familyName in
+            let fontNames = UIFont.fontNames(forFamilyName: familyName)
+            print("familyName, fontNames",familyName, fontNames)
+        })
+        
         print("Helper Language is:", Helper.shared.getLanguage())
 
         LocalizationManager.shared.setLanguage(Helper.shared.getLanguage()) { _ in

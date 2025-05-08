@@ -641,7 +641,7 @@ extension NotificationVC : UITableViewDataSource , UITableViewDelegate {
              cell.LaPeriod,
              cell.LLocClock,
              cell.LLocEvery,
-             cell.LLocStartDate,
+             cell.LLocStartDate,cell.LLocEndDate,
              cell.LLocPeriod,
              cell.LaEndDate
             ].forEach{$0.textColor = UIColor(named:model?.active == true ? "main":"wrong")}

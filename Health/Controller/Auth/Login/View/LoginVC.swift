@@ -92,8 +92,8 @@ final class LoginVC: UIViewController {
     
     private func setupValidation() {
          // Mobile Validation
-         TFMobile.validationRule = { [weak self] text in
-             guard let self = self , let text = text else { return false }
+         TFMobile.validationRule = {  text in
+             guard let text = text else { return false }
              let isValid = text.count == 11 && text.starts(with: "01")
              return isValid
          }
@@ -103,8 +103,8 @@ final class LoginVC: UIViewController {
         }
           
         // Example of advanced password validation
-        TFPassword.validationRule = {[weak self] text in
-            guard let self = self, let text = text else { return false }
+        TFPassword.validationRule = {text in
+            guard let text = text else { return false }
             // At least 6 characters, with 1 uppercase, 1 digit
 //            let passwordTest = NSPredicate(format: "SELF MATCHES %@", "^(?=.*[A-Z])(?=.*\\d).{6,}$")
 //            return passwordTest.evaluate(with: text)

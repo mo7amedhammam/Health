@@ -33,13 +33,13 @@
                                         <rect key="frame" x="0.0" y="0.0" width="250" height="50"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="تسجيل الخروج" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ar3-9u-83V">
-                                                <rect key="frame" x="76" y="16.666666666666671" width="98.333333333333314" height="16.333333333333329"/>
-                                                <fontDescription key="fontDescription" name="LamaSans-Medium" family="Lama Sans" pointSize="16"/>
+                                                <rect key="frame" x="82" y="17.666666666666671" width="86" height="14.333333333333336"/>
+                                                <fontDescription key="fontDescription" name="LamaSans-Medium" family="Lama Sans" pointSize="14"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logout" translatesAutoresizingMaskIntoConstraints="NO" id="z9n-A4-O0N">
-                                                <rect key="frame" x="56" y="16" width="18" height="18"/>
+                                                <rect key="frame" x="62" y="16" width="18" height="18"/>
                                             </imageView>
                                         </subviews>
                                         <color key="backgroundColor" name="secondary"/>
@@ -85,6 +85,9 @@
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <connections>
+                <outlet property="LaTitle" destination="ar3-9u-83V" id="1sY-ze-8Nk"/>
+            </connections>
             <point key="canvasLocation" x="-90.07633587786259" y="52.464788732394368"/>
         </tableViewCell>
     </objects>

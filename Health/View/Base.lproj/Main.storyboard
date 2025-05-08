@@ -11,9 +11,6 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
-        <array key="Almarai-Bold.ttf">
-            <string>Almarai-Bold</string>
-        </array>
         <array key="LamaSans-Bold.ttf">
             <string>LamaSans-Bold</string>
         </array>
@@ -25,6 +22,9 @@
         </array>
         <array key="LamaSans-SemiBold.ttf">
             <string>LamaSans-SemiBold</string>
+        </array>
+        <array key="TimesNewRoman.ttf">
+            <string>.SFUI-Regular</string>
         </array>
     </customFonts>
     <scenes>
@@ -43,18 +43,15 @@
                                         <rect key="frame" x="0.0" y="0.0" width="393" height="240"/>
                                         <subviews>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="mjm-i8-tuX">
-                                                <rect key="frame" x="86.666666666666686" y="85" width="220" height="155"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="155" id="Vah-OL-Kem"/>
-                                                    <constraint firstAttribute="width" constant="220" id="es0-mt-AfW"/>
-                                                </constraints>
+                                                <rect key="frame" x="86.666666666666671" y="85" width="219.66666666666663" height="155"/>
                                             </imageView>
                                         </subviews>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
-                                            <constraint firstAttribute="bottom" secondItem="mjm-i8-tuX" secondAttribute="bottom" id="SFJ-Rh-aTC"/>
-                                            <constraint firstAttribute="height" constant="240" id="kQG-Ui-39Z"/>
-                                            <constraint firstItem="mjm-i8-tuX" firstAttribute="centerX" secondItem="SG0-02-YoN" secondAttribute="centerX" id="rMj-oN-Loc"/>
+                                            <constraint firstItem="mjm-i8-tuX" firstAttribute="top" secondItem="SG0-02-YoN" secondAttribute="top" constant="85" id="MIV-vL-n9G"/>
+                                            <constraint firstAttribute="bottom" secondItem="mjm-i8-tuX" secondAttribute="bottom" id="Tdo-Fb-KoK"/>
+                                            <constraint firstItem="mjm-i8-tuX" firstAttribute="leading" secondItem="SG0-02-YoN" secondAttribute="leading" constant="86.666666666666686" id="WvP-a0-7x8"/>
+                                            <constraint firstItem="mjm-i8-tuX" firstAttribute="centerX" secondItem="SG0-02-YoN" secondAttribute="centerX" id="qi3-4f-W8f"/>
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="40l-hS-Oug">
@@ -66,22 +63,25 @@
                                         </subviews>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
-                                            <constraint firstItem="M46-hm-doc" firstAttribute="leading" secondItem="40l-hS-Oug" secondAttribute="leading" id="JZN-Yk-z5o"/>
-                                            <constraint firstAttribute="trailing" secondItem="M46-hm-doc" secondAttribute="trailing" id="fv2-rA-cac"/>
-                                            <constraint firstAttribute="bottom" secondItem="M46-hm-doc" secondAttribute="bottom" id="ovt-12-Ijn"/>
-                                            <constraint firstItem="M46-hm-doc" firstAttribute="top" secondItem="40l-hS-Oug" secondAttribute="top" id="pt4-8l-L7w"/>
+                                            <constraint firstItem="M46-hm-doc" firstAttribute="leading" secondItem="40l-hS-Oug" secondAttribute="leading" id="1FI-dj-p2x"/>
+                                            <constraint firstAttribute="trailing" secondItem="M46-hm-doc" secondAttribute="trailing" id="htb-AU-OCh"/>
+                                            <constraint firstItem="M46-hm-doc" firstAttribute="top" secondItem="40l-hS-Oug" secondAttribute="top" id="mPI-b3-5UL"/>
+                                            <constraint firstAttribute="bottom" secondItem="M46-hm-doc" secondAttribute="bottom" id="mbW-p3-NWH"/>
                                         </constraints>
                                     </view>
                                 </subviews>
+                                <constraints>
+                                    <constraint firstItem="40l-hS-Oug" firstAttribute="top" secondItem="KxX-Dc-Sji" secondAttribute="top" constant="240" id="9Em-T2-vdW"/>
+                                </constraints>
                             </stackView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="jHb-hb-M5x"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstAttribute="bottom" secondItem="KxX-Dc-Sji" secondAttribute="bottom" id="FK8-HQ-sNP"/>
-                            <constraint firstAttribute="trailing" secondItem="KxX-Dc-Sji" secondAttribute="trailing" id="f8S-eb-uL0"/>
-                            <constraint firstItem="KxX-Dc-Sji" firstAttribute="top" secondItem="jHb-hb-M5x" secondAttribute="top" id="khs-0A-a0t"/>
-                            <constraint firstItem="KxX-Dc-Sji" firstAttribute="leading" secondItem="jHb-hb-M5x" secondAttribute="leading" id="xlz-1M-vbW"/>
+                            <constraint firstAttribute="bottom" secondItem="KxX-Dc-Sji" secondAttribute="bottom" id="Jkx-KL-EUA"/>
+                            <constraint firstAttribute="trailing" secondItem="KxX-Dc-Sji" secondAttribute="trailing" id="MMf-b6-VAJ"/>
+                            <constraint firstItem="KxX-Dc-Sji" firstAttribute="top" secondItem="jHb-hb-M5x" secondAttribute="top" id="fNc-cb-LG6"/>
+                            <constraint firstItem="KxX-Dc-Sji" firstAttribute="leading" secondItem="q5z-jk-ONu" secondAttribute="leading" id="sgb-Yt-hAA"/>
                         </constraints>
                     </view>
                 </viewController>
@@ -407,7 +407,7 @@
                                                                 </state>
                                                                 <userDefinedRuntimeAttributes>
                                                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                                        <real key="value" value="30"/>
+                                                                        <real key="value" value="3"/>
                                                                     </userDefinedRuntimeAttribute>
                                                                 </userDefinedRuntimeAttributes>
                                                                 <connections>
@@ -423,7 +423,7 @@
                                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="قمت بالانضمام بالفعل؟ " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5ty-iA-95q">
                                                                                 <rect key="frame" x="0.0" y="6" width="159.33333333333334" height="16.333333333333332"/>
                                                                                 <fontDescription key="fontDescription" name="LamaSans-Medium" family="Lama Sans" pointSize="16"/>
-                                                                                <color key="textColor" name="171433"/>
+                                                                                <color key="textColor" name="main"/>
                                                                                 <nil key="highlightedColor"/>
                                                                             </label>
                                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="trailing" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bXk-tl-nzS">
@@ -545,7 +545,7 @@
                                                                 <rect key="frame" x="0.0" y="0.0" width="363" height="582"/>
                                                                 <subviews>
                                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="edK-q0-3sU">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="363" height="590"/>
+                                                                        <rect key="frame" x="0.0" y="0.0" width="363" height="575"/>
                                                                         <subviews>
                                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Lmz-LB-59q">
                                                                                 <rect key="frame" x="0.0" y="0.0" width="363" height="0.0"/>
@@ -602,14 +602,6 @@
                                                                                         <color key="value" name="mainBlue"/>
                                                                                     </userDefinedRuntimeAttribute>
                                                                                     <userDefinedRuntimeAttribute type="string" keyPath="iconName" value="phoneIcon"/>
-                                                                                    <userDefinedRuntimeAttribute type="number" keyPath="titleFontSize">
-                                                                                        <real key="value" value="16"/>
-                                                                                    </userDefinedRuntimeAttribute>
-                                                                                    <userDefinedRuntimeAttribute type="number" keyPath="textFontSize">
-                                                                                        <real key="value" value="12"/>
-                                                                                    </userDefinedRuntimeAttribute>
-                                                                                    <userDefinedRuntimeAttribute type="string" keyPath="titleFontName" value="LamaSans-Bold"/>
-                                                                                    <userDefinedRuntimeAttribute type="string" keyPath="textFontName" value="LamaSans-Regular"/>
                                                                                     <userDefinedRuntimeAttribute type="color" keyPath="textColor">
                                                                                         <color key="value" name="mainBlue"/>
                                                                                     </userDefinedRuntimeAttribute>
@@ -640,14 +632,6 @@
                                                                                     <userDefinedRuntimeAttribute type="color" keyPath="titleColor">
                                                                                         <color key="value" name="mainBlue"/>
                                                                                     </userDefinedRuntimeAttribute>
-                                                                                    <userDefinedRuntimeAttribute type="number" keyPath="titleFontSize">
-                                                                                        <real key="value" value="16"/>
-                                                                                    </userDefinedRuntimeAttribute>
-                                                                                    <userDefinedRuntimeAttribute type="number" keyPath="textFontSize">
-                                                                                        <real key="value" value="12"/>
-                                                                                    </userDefinedRuntimeAttribute>
-                                                                                    <userDefinedRuntimeAttribute type="string" keyPath="titleFontName" value="LamaSans-Bold"/>
-                                                                                    <userDefinedRuntimeAttribute type="string" keyPath="textFontName" value="LamaSans-Regular"/>
                                                                                     <userDefinedRuntimeAttribute type="color" keyPath="textColor">
                                                                                         <color key="value" name="mainBlue"/>
                                                                                     </userDefinedRuntimeAttribute>
@@ -663,11 +647,11 @@
                                                                                 </userDefinedRuntimeAttributes>
                                                                             </view>
                                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Ig-ic-iWC">
-                                                                                <rect key="frame" x="0.0" y="480" width="363" height="40"/>
+                                                                                <rect key="frame" x="0.0" y="480" width="363" height="25"/>
                                                                                 <constraints>
-                                                                                    <constraint firstAttribute="height" constant="40" id="DBd-ZC-4ZR"/>
+                                                                                    <constraint firstAttribute="height" constant="25" id="DBd-ZC-4ZR"/>
                                                                                 </constraints>
-                                                                                <fontDescription key="fontDescription" name="LamaSans-Medium" family="Lama Sans" pointSize="15"/>
+                                                                                <fontDescription key="fontDescription" name="LamaSans-Medium" family="Lama Sans" pointSize="14"/>
                                                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                                                 <state key="normal">
                                                                                     <color key="titleColor" name="SecondaryMain"/>
@@ -677,7 +661,7 @@
                                                                                 </connections>
                                                                             </button>
                                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bWG-XP-Cta">
-                                                                                <rect key="frame" x="0.0" y="540" width="363" height="50"/>
+                                                                                <rect key="frame" x="0.0" y="525" width="363" height="50"/>
                                                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                                 <nil key="textColor"/>
                                                                                 <nil key="highlightedColor"/>
@@ -741,7 +725,7 @@
                                                                 </state>
                                                                 <userDefinedRuntimeAttributes>
                                                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                                        <real key="value" value="30"/>
+                                                                        <real key="value" value="3"/>
                                                                     </userDefinedRuntimeAttribute>
                                                                 </userDefinedRuntimeAttributes>
                                                                 <connections>
@@ -757,7 +741,7 @@
                                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="لم تقم بالانضمام حتى الآن؟ " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tIO-WF-La0">
                                                                                 <rect key="frame" x="0.0" y="6" width="184.66666666666666" height="16.333333333333332"/>
                                                                                 <fontDescription key="fontDescription" name="LamaSans-Medium" family="Lama Sans" pointSize="16"/>
-                                                                                <color key="textColor" name="171433"/>
+                                                                                <color key="textColor" name="main"/>
                                                                                 <nil key="highlightedColor"/>
                                                                             </label>
                                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="trailing" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Luf-V9-apB">
@@ -1396,44 +1380,44 @@
                                                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kkz-zU-TxY">
                                                                 <rect key="frame" x="0.0" y="0.0" width="363" height="712"/>
                                                                 <subviews>
-                                                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="8cc-2V-yea">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="363" height="655"/>
+                                                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="8cc-2V-yea">
+                                                                        <rect key="frame" x="0.0" y="0.0" width="363" height="595"/>
                                                                         <subviews>
                                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VL9-pD-cNC">
-                                                                                <rect key="frame" x="0.0" y="0.0" width="363" height="300"/>
+                                                                                <rect key="frame" x="0.0" y="0.0" width="363" height="310"/>
                                                                                 <subviews>
                                                                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="otpVerify" translatesAutoresizingMaskIntoConstraints="NO" id="N8l-Gt-mG5">
-                                                                                        <rect key="frame" x="0.0" y="0.0" width="363" height="300"/>
+                                                                                        <rect key="frame" x="0.0" y="0.0" width="363" height="310"/>
                                                                                     </imageView>
                                                                                 </subviews>
                                                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                                 <constraints>
                                                                                     <constraint firstItem="N8l-Gt-mG5" firstAttribute="top" secondItem="VL9-pD-cNC" secondAttribute="top" id="4Er-uv-P1B"/>
-                                                                                    <constraint firstAttribute="height" constant="300" id="8J5-DI-6Ki"/>
+                                                                                    <constraint firstAttribute="height" constant="310" id="8J5-DI-6Ki"/>
                                                                                     <constraint firstAttribute="trailing" secondItem="N8l-Gt-mG5" secondAttribute="trailing" id="LAJ-OC-dHs"/>
                                                                                     <constraint firstItem="N8l-Gt-mG5" firstAttribute="leading" secondItem="VL9-pD-cNC" secondAttribute="leading" id="S5i-sw-KY2"/>
                                                                                     <constraint firstAttribute="bottom" secondItem="N8l-Gt-mG5" secondAttribute="bottom" id="eOu-uU-Fmi"/>
                                                                                 </constraints>
                                                                             </view>
                                                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="Lpk-7y-Zj6">
-                                                                                <rect key="frame" x="0.0" y="320" width="363" height="55"/>
+                                                                                <rect key="frame" x="0.0" y="325" width="363" height="40"/>
                                                                                 <subviews>
                                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="01101201322" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0kl-kD-Jc0">
                                                                                         <rect key="frame" x="0.0" y="0.0" width="179" height="55"/>
                                                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                                                        <fontDescription key="fontDescription" name="LamaSans-Medium" family="Lama Sans" pointSize="16"/>
-                                                                                        <color key="textColor" name="main"/>
+                                                                                        <fontDescription key="fontDescription" name="LamaSans-Medium" family="Lama Sans" pointSize="14"/>
+                                                                                        <color key="textColor" name="secondary"/>
                                                                                         <nil key="highlightedColor"/>
                                                                                     </label>
                                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="تم إرسال رمز المصادقة إلى" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vpy-Zl-GZI">
-                                                                                        <rect key="frame" x="0.0" y="0.0" width="363" height="55"/>
-                                                                                        <fontDescription key="fontDescription" name="LamaSans-Medium" family="Lama Sans" pointSize="16"/>
-                                                                                        <color key="textColor" name="main"/>
+                                                                                        <rect key="frame" x="0.0" y="0.0" width="363" height="40"/>
+                                                                                        <fontDescription key="fontDescription" name="LamaSans-Medium" family="Lama Sans" pointSize="14"/>
+                                                                                        <color key="textColor" name="secondary"/>
                                                                                         <nil key="highlightedColor"/>
                                                                                     </label>
                                                                                 </subviews>
                                                                                 <constraints>
-                                                                                    <constraint firstAttribute="height" constant="55" id="Gfh-db-1f1"/>
+                                                                                    <constraint firstAttribute="height" constant="40" id="Gfh-db-1f1"/>
                                                                                 </constraints>
                                                                                 <variation key="default">
                                                                                     <mask key="subviews">
@@ -1442,22 +1426,22 @@
                                                                                 </variation>
                                                                             </stackView>
                                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nV9-5x-qjh">
-                                                                                <rect key="frame" x="0.0" y="395" width="363" height="80"/>
+                                                                                <rect key="frame" x="0.0" y="380" width="363" height="50"/>
                                                                                 <subviews>
                                                                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="QsN-Mc-9yj">
-                                                                                        <rect key="frame" x="30" y="0.0" width="303" height="80"/>
+                                                                                        <rect key="frame" x="46.666666666666657" y="0.0" width="270" height="50"/>
                                                                                         <subviews>
                                                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jK6-WW-gCE">
-                                                                                                <rect key="frame" x="0.0" y="0.0" width="50.666666666666664" height="80"/>
+                                                                                                <rect key="frame" x="0.0" y="0.0" width="45" height="50"/>
                                                                                                 <subviews>
                                                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uSE-gz-J2G">
-                                                                                                        <rect key="frame" x="5.3333333333333357" y="20" width="40" height="40"/>
+                                                                                                        <rect key="frame" x="2.3333333333333357" y="5" width="40" height="40"/>
                                                                                                         <subviews>
-                                                                                                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="uBZ-cA-qXB">
+                                                                                                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="center" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="uBZ-cA-qXB">
                                                                                                                 <rect key="frame" x="0.0" y="0.0" width="40" height="40"/>
                                                                                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                                                                 <color key="textColor" name="main"/>
-                                                                                                                <fontDescription key="fontDescription" name="LamaSans-Medium" family="Lama Sans" pointSize="30"/>
+                                                                                                                <fontDescription key="fontDescription" name="LamaSans-Medium" family="Lama Sans" pointSize="14"/>
                                                                                                                 <textInputTraits key="textInputTraits" keyboardType="ASCIICapableNumberPad"/>
                                                                                                             </textField>
                                                                                                         </subviews>
@@ -1478,7 +1462,7 @@
                                                                                                                 <color key="value" name="main"/>
                                                                                                             </userDefinedRuntimeAttribute>
                                                                                                             <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                                                                                <real key="value" value="5"/>
+                                                                                                                <real key="value" value="3"/>
                                                                                                             </userDefinedRuntimeAttribute>
                                                                                                         </userDefinedRuntimeAttributes>
                                                                                                     </view>
@@ -1486,20 +1470,22 @@
                                                                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                                                 <constraints>
                                                                                                     <constraint firstItem="uSE-gz-J2G" firstAttribute="centerY" secondItem="jK6-WW-gCE" secondAttribute="centerY" id="6ig-k7-5Fa"/>
+                                                                                                    <constraint firstAttribute="trailing" secondItem="uSE-gz-J2G" secondAttribute="trailing" constant="2.5" id="QYp-cH-7SN"/>
                                                                                                     <constraint firstItem="uSE-gz-J2G" firstAttribute="centerX" secondItem="jK6-WW-gCE" secondAttribute="centerX" id="u6O-Yj-vvL"/>
+                                                                                                    <constraint firstItem="uSE-gz-J2G" firstAttribute="leading" secondItem="jK6-WW-gCE" secondAttribute="leading" constant="2.5" id="x8z-Dh-MEe"/>
                                                                                                 </constraints>
                                                                                             </view>
                                                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zQI-CE-E38">
-                                                                                                <rect key="frame" x="50.666666666666671" y="0.0" width="50.333333333333329" height="80"/>
+                                                                                                <rect key="frame" x="45" y="0.0" width="45" height="50"/>
                                                                                                 <subviews>
                                                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aXs-dl-dvx">
-                                                                                                        <rect key="frame" x="5" y="20" width="40" height="40"/>
+                                                                                                        <rect key="frame" x="2.3333333333333286" y="5" width="40" height="40"/>
                                                                                                         <subviews>
-                                                                                                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="OcQ-dH-PHD">
+                                                                                                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="center" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="OcQ-dH-PHD">
                                                                                                                 <rect key="frame" x="0.0" y="0.0" width="40" height="40"/>
                                                                                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                                                                 <color key="textColor" name="main"/>
-                                                                                                                <fontDescription key="fontDescription" name="LamaSans-Medium" family="Lama Sans" pointSize="30"/>
+                                                                                                                <fontDescription key="fontDescription" name="LamaSans-Medium" family="Lama Sans" pointSize="14"/>
                                                                                                                 <textInputTraits key="textInputTraits" keyboardType="ASCIICapableNumberPad"/>
                                                                                                             </textField>
                                                                                                         </subviews>
@@ -1520,7 +1506,7 @@
                                                                                                                 <color key="value" name="main"/>
                                                                                                             </userDefinedRuntimeAttribute>
                                                                                                             <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                                                                                <real key="value" value="5"/>
+                                                                                                                <real key="value" value="3"/>
                                                                                                             </userDefinedRuntimeAttribute>
                                                                                                         </userDefinedRuntimeAttributes>
                                                                                                     </view>
@@ -1532,16 +1518,16 @@
                                                                                                 </constraints>
                                                                                             </view>
                                                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jdw-4U-ufs">
-                                                                                                <rect key="frame" x="101" y="0.0" width="50.666666666666657" height="80"/>
+                                                                                                <rect key="frame" x="90" y="0.0" width="45" height="50"/>
                                                                                                 <subviews>
                                                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2sF-Ru-rzf">
-                                                                                                        <rect key="frame" x="5.3333333333333428" y="20" width="40" height="40"/>
+                                                                                                        <rect key="frame" x="2.3333333333333428" y="5" width="40" height="40"/>
                                                                                                         <subviews>
-                                                                                                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="zg8-pW-O6s">
+                                                                                                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="center" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="zg8-pW-O6s">
                                                                                                                 <rect key="frame" x="0.0" y="0.0" width="40" height="40"/>
                                                                                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                                                                 <color key="textColor" name="main"/>
-                                                                                                                <fontDescription key="fontDescription" name="LamaSans-Medium" family="Lama Sans" pointSize="30"/>
+                                                                                                                <fontDescription key="fontDescription" name="LamaSans-Medium" family="Lama Sans" pointSize="14"/>
                                                                                                                 <textInputTraits key="textInputTraits" keyboardType="ASCIICapableNumberPad"/>
                                                                                                             </textField>
                                                                                                         </subviews>
@@ -1562,7 +1548,7 @@
                                                                                                                 <color key="value" name="main"/>
                                                                                                             </userDefinedRuntimeAttribute>
                                                                                                             <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                                                                                <real key="value" value="5"/>
+                                                                                                                <real key="value" value="3"/>
                                                                                                             </userDefinedRuntimeAttribute>
                                                                                                         </userDefinedRuntimeAttributes>
                                                                                                     </view>
@@ -1574,16 +1560,16 @@
                                                                                                 </constraints>
                                                                                             </view>
                                                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JvZ-jR-QRY">
-                                                                                                <rect key="frame" x="151.66666666666666" y="0.0" width="50.333333333333343" height="80"/>
+                                                                                                <rect key="frame" x="135" y="0.0" width="45" height="50"/>
                                                                                                 <subviews>
                                                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="h5T-YM-cIV">
-                                                                                                        <rect key="frame" x="5" y="20" width="40" height="40"/>
+                                                                                                        <rect key="frame" x="2.3333333333333428" y="5" width="40" height="40"/>
                                                                                                         <subviews>
-                                                                                                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="qR5-2m-YcY">
+                                                                                                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="center" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="qR5-2m-YcY">
                                                                                                                 <rect key="frame" x="0.0" y="0.0" width="40" height="40"/>
                                                                                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                                                                 <color key="textColor" name="main"/>
-                                                                                                                <fontDescription key="fontDescription" name="LamaSans-Medium" family="Lama Sans" pointSize="30"/>
+                                                                                                                <fontDescription key="fontDescription" name="LamaSans-Medium" family="Lama Sans" pointSize="14"/>
                                                                                                                 <textInputTraits key="textInputTraits" keyboardType="ASCIICapableNumberPad"/>
                                                                                                             </textField>
                                                                                                         </subviews>
@@ -1604,7 +1590,7 @@
                                                                                                                 <color key="value" name="main"/>
                                                                                                             </userDefinedRuntimeAttribute>
                                                                                                             <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                                                                                <real key="value" value="5"/>
+                                                                                                                <real key="value" value="3"/>
                                                                                                             </userDefinedRuntimeAttribute>
                                                                                                         </userDefinedRuntimeAttributes>
                                                                                                     </view>
@@ -1616,16 +1602,16 @@
                                                                                                 </constraints>
                                                                                             </view>
                                                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="56u-Er-cbT">
-                                                                                                <rect key="frame" x="202" y="0.0" width="50.666666666666657" height="80"/>
+                                                                                                <rect key="frame" x="180" y="0.0" width="45" height="50"/>
                                                                                                 <subviews>
                                                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SvQ-f2-1QF">
-                                                                                                        <rect key="frame" x="5.3333333333333428" y="20" width="40" height="40"/>
+                                                                                                        <rect key="frame" x="2.3333333333333428" y="5" width="40" height="40"/>
                                                                                                         <subviews>
-                                                                                                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="bMK-rN-9Wq">
+                                                                                                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="center" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="bMK-rN-9Wq">
                                                                                                                 <rect key="frame" x="0.0" y="0.0" width="40" height="40"/>
                                                                                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                                                                 <color key="textColor" name="main"/>
-                                                                                                                <fontDescription key="fontDescription" name="LamaSans-Medium" family="Lama Sans" pointSize="30"/>
+                                                                                                                <fontDescription key="fontDescription" name="LamaSans-Medium" family="Lama Sans" pointSize="14"/>
                                                                                                                 <textInputTraits key="textInputTraits" keyboardType="ASCIICapableNumberPad"/>
                                                                                                             </textField>
                                                                                                         </subviews>
@@ -1646,7 +1632,7 @@
                                                                                                                 <color key="value" name="main"/>
                                                                                                             </userDefinedRuntimeAttribute>
                                                                                                             <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                                                                                <real key="value" value="5"/>
+                                                                                                                <real key="value" value="3"/>
                                                                                                             </userDefinedRuntimeAttribute>
                                                                                                         </userDefinedRuntimeAttributes>
                                                                                                     </view>
@@ -1658,16 +1644,16 @@
                                                                                                 </constraints>
                                                                                             </view>
                                                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oOI-OI-H8e">
-                                                                                                <rect key="frame" x="252.66666666666671" y="0.0" width="50.333333333333343" height="80"/>
+                                                                                                <rect key="frame" x="225.00000000000003" y="0.0" width="44.999999999999972" height="50"/>
                                                                                                 <subviews>
                                                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="irB-Jp-6Kx">
-                                                                                                        <rect key="frame" x="5" y="20" width="40" height="40"/>
+                                                                                                        <rect key="frame" x="2.3333333333333144" y="5" width="40" height="40"/>
                                                                                                         <subviews>
-                                                                                                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="JWn-c7-m2X">
+                                                                                                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="center" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="JWn-c7-m2X">
                                                                                                                 <rect key="frame" x="0.0" y="0.0" width="40" height="40"/>
                                                                                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                                                                 <color key="textColor" name="main"/>
-                                                                                                                <fontDescription key="fontDescription" name="LamaSans-Medium" family="Lama Sans" pointSize="30"/>
+                                                                                                                <fontDescription key="fontDescription" name="LamaSans-Medium" family="Lama Sans" pointSize="14"/>
                                                                                                                 <textInputTraits key="textInputTraits" keyboardType="ASCIICapableNumberPad"/>
                                                                                                             </textField>
                                                                                                         </subviews>
@@ -1688,7 +1674,7 @@
                                                                                                                 <color key="value" name="main"/>
                                                                                                             </userDefinedRuntimeAttribute>
                                                                                                             <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                                                                                <real key="value" value="5"/>
+                                                                                                                <real key="value" value="3"/>
                                                                                                             </userDefinedRuntimeAttribute>
                                                                                                         </userDefinedRuntimeAttributes>
                                                                                                     </view>
@@ -1704,11 +1690,10 @@
                                                                                 </subviews>
                                                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                                 <constraints>
-                                                                                    <constraint firstAttribute="height" constant="80" id="HNd-uQ-a0s"/>
-                                                                                    <constraint firstAttribute="bottom" secondItem="QsN-Mc-9yj" secondAttribute="bottom" id="YvP-xl-k1X"/>
-                                                                                    <constraint firstItem="QsN-Mc-9yj" firstAttribute="top" secondItem="nV9-5x-qjh" secondAttribute="top" id="bUs-2y-XXG"/>
-                                                                                    <constraint firstItem="QsN-Mc-9yj" firstAttribute="leading" secondItem="nV9-5x-qjh" secondAttribute="leading" constant="30" id="blK-xV-0wC"/>
-                                                                                    <constraint firstAttribute="trailing" secondItem="QsN-Mc-9yj" secondAttribute="trailing" constant="30" id="r3i-j4-thU"/>
+                                                                                    <constraint firstItem="QsN-Mc-9yj" firstAttribute="centerY" secondItem="nV9-5x-qjh" secondAttribute="centerY" id="CyP-I2-PTq"/>
+                                                                                    <constraint firstAttribute="height" constant="50" id="HNd-uQ-a0s"/>
+                                                                                    <constraint firstItem="QsN-Mc-9yj" firstAttribute="centerX" secondItem="nV9-5x-qjh" secondAttribute="centerX" id="Kn9-wn-QTD"/>
+                                                                                    <constraint firstItem="QsN-Mc-9yj" firstAttribute="top" secondItem="nV9-5x-qjh" secondAttribute="top" id="NJU-hp-jtm"/>
                                                                                 </constraints>
                                                                                 <userDefinedRuntimeAttributes>
                                                                                     <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
@@ -1717,7 +1702,7 @@
                                                                                 </userDefinedRuntimeAttributes>
                                                                             </view>
                                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QeV-sc-n9n">
-                                                                                <rect key="frame" x="0.0" y="495" width="363" height="70"/>
+                                                                                <rect key="frame" x="0.0" y="445" width="363" height="70"/>
                                                                                 <subviews>
                                                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="u6C-ZG-kkg">
                                                                                         <rect key="frame" x="0.0" y="0.0" width="363" height="70"/>
@@ -1726,20 +1711,20 @@
                                                                                                 <rect key="frame" x="0.0" y="0.0" width="363" height="16.666666666666668"/>
                                                                                                 <subviews>
                                                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="right" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="لم تحصل عليه بعد؟" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SMW-lU-4cS">
-                                                                                                        <rect key="frame" x="0.0" y="0.0" width="186.66666666666666" height="16.333333333333332"/>
-                                                                                                        <fontDescription key="fontDescription" name="LamaSans-Medium" family="Lama Sans" pointSize="16"/>
+                                                                                                        <rect key="frame" x="0.0" y="0.0" width="186.66666666666666" height="13.333333333333334"/>
+                                                                                                        <fontDescription key="fontDescription" name="LamaSans-Medium" family="Lama Sans" pointSize="13"/>
                                                                                                         <color key="textColor" name="SecondaryMain"/>
                                                                                                         <nil key="highlightedColor"/>
                                                                                                     </label>
                                                                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="trailing" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Sk6-LM-x3e">
-                                                                                                        <rect key="frame" x="176.66666666666663" y="-3.6666666666666288" width="186.33333333333337" height="20.333333333333332"/>
+                                                                                                        <rect key="frame" x="176.66666666666663" y="-4" width="186.33333333333337" height="20.666666666666668"/>
                                                                                                         <fontDescription key="fontDescription" name="LamaSans-Medium" family="Lama Sans" pointSize="16"/>
                                                                                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                                                                         <state key="normal" title="إعادة إرسال الرمز">
                                                                                                             <color key="titleColor" name="secondary"/>
                                                                                                         </state>
                                                                                                         <buttonConfiguration key="configuration" style="plain" title=" أعد إرسال OTP">
-                                                                                                            <fontDescription key="titleFontDescription" name="LamaSans-Medium" family="Lama Sans" pointSize="16"/>
+                                                                                                            <fontDescription key="titleFontDescription" name="LamaSans-Medium" family="Lama Sans" pointSize="13"/>
                                                                                                             <color key="baseForegroundColor" name="mainBlue"/>
                                                                                                         </buttonConfiguration>
                                                                                                         <connections>
@@ -1753,13 +1738,13 @@
                                                                                                 <subviews>
                                                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="right" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:49" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XhL-xF-mIX">
                                                                                                         <rect key="frame" x="0.0" y="0.0" width="179" height="16.666666666666668"/>
-                                                                                                        <fontDescription key="fontDescription" name="Almarai-Bold" family="Almarai" pointSize="18"/>
+                                                                                                        <fontDescription key="fontDescription" name=".SFUI-Regular" family=".AppleSystemUIFont" pointSize="14"/>
                                                                                                         <color key="textColor" name="mainBlue"/>
                                                                                                         <nil key="highlightedColor"/>
                                                                                                     </label>
                                                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="sec left" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="85A-A9-skp">
                                                                                                         <rect key="frame" x="184" y="0.0" width="179" height="16.666666666666668"/>
-                                                                                                        <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="17"/>
+                                                                                                        <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="14"/>
                                                                                                         <color key="textColor" name="SecondaryMain"/>
                                                                                                         <nil key="highlightedColor"/>
                                                                                                     </label>
@@ -1767,7 +1752,7 @@
                                                                                             </stackView>
                                                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="otp is" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PYc-Un-jJ6">
                                                                                                 <rect key="frame" x="0.0" y="53.333333333333371" width="363" height="16.666666666666671"/>
-                                                                                                <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                                                                                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="19"/>
                                                                                                 <color key="textColor" name="FF8F15"/>
                                                                                                 <nil key="highlightedColor"/>
                                                                                             </label>
@@ -1817,13 +1802,13 @@
                                                                                 </constraints>
                                                                             </view>
                                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wae-Rr-1s6">
-                                                                                <rect key="frame" x="0.0" y="585" width="363" height="50"/>
+                                                                                <rect key="frame" x="0.0" y="530" width="363" height="50"/>
                                                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                                 <nil key="textColor"/>
                                                                                 <nil key="highlightedColor"/>
                                                                             </label>
                                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sYz-vI-15c">
-                                                                                <rect key="frame" x="0.0" y="655" width="363" height="0.0"/>
+                                                                                <rect key="frame" x="0.0" y="595" width="363" height="0.0"/>
                                                                                 <fontDescription key="fontDescription" name="LamaSans-Medium" family="Lama Sans" pointSize="16"/>
                                                                                 <color key="textColor" name="main"/>
                                                                                 <nil key="highlightedColor"/>
@@ -1933,9 +1918,8 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CxJ-3B-QBo">
                                 <rect key="frame" x="0.0" y="118" width="393" height="617"/>
                                 <subviews>
-                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="-1" sectionFooterHeight="18" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="h7v-KD-PPA">
+                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="insetGrouped" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="-1" sectionFooterHeight="18" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="h7v-KD-PPA">
                                         <rect key="frame" x="0.0" y="0.0" width="393" height="617"/>
-                                        <color key="backgroundColor" red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <inset key="separatorInset" minX="25" minY="0.0" maxX="25" maxY="0.0"/>
                                     </tableView>
                                 </subviews>
@@ -2191,9 +2175,8 @@
                                                             </label>
                                                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="PcF-df-jpO">
                                                                 <rect key="frame" x="0.0" y="60" width="373" height="782"/>
-                                                                <color key="backgroundColor" name="bg"/>
                                                                 <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="c10-wH-PLG">
-                                                                    <size key="itemSize" width="128" height="128"/>
+                                                                    <size key="itemSize" width="128" height="100"/>
                                                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
@@ -4719,17 +4702,25 @@
                                                 <rect key="frame" x="0.0" y="90" width="393" height="50"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="نتائج قياساتك السابقة" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FyC-q4-K2r">
-                                                        <rect key="frame" x="10" y="0.0" width="373" height="50"/>
-                                                        <fontDescription key="fontDescription" name="LamaSans-SemiBold" family="Lama Sans" pointSize="22"/>
+                                                        <rect key="frame" x="121" y="0.0" width="151" height="50"/>
+                                                        <fontDescription key="fontDescription" name="LamaSans-SemiBold" family="Lama Sans" pointSize="16"/>
                                                         <color key="textColor" name="main"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
+                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="lastMesImg" translatesAutoresizingMaskIntoConstraints="NO" id="gNz-qF-ukK">
+                                                        <rect key="frame" x="102" y="17.666666666666671" width="15" height="15"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="15" id="tNC-xN-KKi"/>
+                                                            <constraint firstAttribute="width" constant="15" id="uXa-h4-tAK"/>
+                                                        </constraints>
+                                                    </imageView>
                                                 </subviews>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
+                                                    <constraint firstItem="gNz-qF-ukK" firstAttribute="centerY" secondItem="B6L-HU-CAh" secondAttribute="centerY" id="21i-cA-K6E"/>
                                                     <constraint firstAttribute="bottom" secondItem="FyC-q4-K2r" secondAttribute="bottom" id="2RF-se-kIK"/>
-                                                    <constraint firstAttribute="trailing" secondItem="FyC-q4-K2r" secondAttribute="trailing" constant="10" id="5lg-FK-Jlu"/>
-                                                    <constraint firstItem="FyC-q4-K2r" firstAttribute="leading" secondItem="B6L-HU-CAh" secondAttribute="leading" constant="10" id="NtL-mG-5e4"/>
+                                                    <constraint firstItem="gNz-qF-ukK" firstAttribute="trailing" secondItem="FyC-q4-K2r" secondAttribute="leading" constant="-4" id="DfB-KW-AIb"/>
+                                                    <constraint firstItem="FyC-q4-K2r" firstAttribute="centerX" secondItem="B6L-HU-CAh" secondAttribute="centerX" id="L3e-3j-thr"/>
                                                     <constraint firstItem="FyC-q4-K2r" firstAttribute="top" secondItem="B6L-HU-CAh" secondAttribute="top" id="pMo-vx-Vd3"/>
                                                     <constraint firstAttribute="height" constant="50" id="rEV-bT-ljF"/>
                                                 </constraints>
@@ -4751,7 +4742,7 @@
                                                                                 <subviews>
                                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="المعدل الطبيعي" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fyT-Sg-And">
                                                                                         <rect key="frame" x="0.0" y="0.0" width="167.66666666666666" height="20"/>
-                                                                                        <fontDescription key="fontDescription" name="LamaSans-Bold" family="Lama Sans" pointSize="16"/>
+                                                                                        <fontDescription key="fontDescription" name="LamaSans-Bold" family="Lama Sans" pointSize="14"/>
                                                                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                                         <nil key="highlightedColor"/>
                                                                                     </label>
@@ -4760,7 +4751,7 @@
                                                                                         <subviews>
                                                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="100" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="r8H-9W-WS7">
                                                                                                 <rect key="frame" x="0.0" y="0.0" width="128.66666666666666" height="20"/>
-                                                                                                <fontDescription key="fontDescription" name="LamaSans-Medium" family="Lama Sans" pointSize="14"/>
+                                                                                                <fontDescription key="fontDescription" name="LamaSans-Medium" family="Lama Sans" pointSize="12"/>
                                                                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                                                 <nil key="highlightedColor"/>
                                                                                             </label>
@@ -4772,7 +4763,7 @@
                                                                                             </label>
                                                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="100" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qym-0E-hYV">
                                                                                                 <rect key="frame" x="141.66666666666666" y="0.0" width="25.666666666666657" height="20"/>
-                                                                                                <fontDescription key="fontDescription" name="LamaSans-Medium" family="Lama Sans" pointSize="14"/>
+                                                                                                <fontDescription key="fontDescription" name="LamaSans-Medium" family="Lama Sans" pointSize="12"/>
                                                                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                                                 <nil key="highlightedColor"/>
                                                                                             </label>
@@ -4826,7 +4817,7 @@
                                                                                                     </view>
                                                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ضمن المعدل الطبيعي" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aZm-eZ-oCA">
                                                                                                         <rect key="frame" x="35" y="0.0" width="308" height="20"/>
-                                                                                                        <fontDescription key="fontDescription" name="LamaSans-Medium" family="Lama Sans" pointSize="14"/>
+                                                                                                        <fontDescription key="fontDescription" name="LamaSans-Medium" family="Lama Sans" pointSize="12"/>
                                                                                                         <color key="textColor" name="06AD2B"/>
                                                                                                         <nil key="highlightedColor"/>
                                                                                                     </label>
@@ -4862,7 +4853,7 @@
                                                                                                     </view>
                                                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="خارج المعدل الطبيعي" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XaI-XB-1cj">
                                                                                                         <rect key="frame" x="35" y="0.0" width="308" height="20"/>
-                                                                                                        <fontDescription key="fontDescription" name="LamaSans-Medium" family="Lama Sans" pointSize="14"/>
+                                                                                                        <fontDescription key="fontDescription" name="LamaSans-Medium" family="Lama Sans" pointSize="12"/>
                                                                                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                                                         <nil key="highlightedColor"/>
                                                                                                     </label>
@@ -5958,7 +5949,7 @@
                                                                                                                                                     <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vhz-B4-Gz8">
                                                                                                                                                         <rect key="frame" x="2" y="2" width="89" height="46"/>
                                                                                                                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                                                                                                        <fontDescription key="fontDescription" name="LamaSans-Medium" family="Lama Sans" pointSize="13"/>
+                                                                                                                                                        <fontDescription key="fontDescription" name="LamaSans-Regular" family="Lama Sans" pointSize="13"/>
                                                                                                                                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                                                                                                                         <state key="normal" title="آخر سنة">
                                                                                                                                                             <color key="titleColor" name="secondary"/>
@@ -5973,6 +5964,7 @@
                                                                                                                                                         </userDefinedRuntimeAttributes>
                                                                                                                                                         <connections>
                                                                                                                                                             <action selector="BUYearMonthDay:" destination="MNH-St-usK" eventType="touchUpInside" id="tAR-Hs-SrH"/>
+                                                                                                                                                            <action selector="BtnLastYear:" destination="xXc-IA-AQv" eventType="touchUpInside" id="P2R-s0-Cye"/>
                                                                                                                                                         </connections>
                                                                                                                                                     </button>
                                                                                                                                                 </subviews>
@@ -6902,6 +6894,7 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Qjl-cR-tSZ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <exit id="xXc-IA-AQv" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="1609.9236641221373" y="2869.7183098591549"/>
         </scene>
@@ -6919,6 +6912,7 @@
         <image name="delete-icn" width="20" height="20"/>
         <image name="fromdateicon" width="56" height="52"/>
         <image name="key-vector2" width="247" height="247"/>
+        <image name="lastMesImg" width="15" height="15"/>
         <image name="logo" width="255" height="178"/>
         <image name="online" width="14" height="13"/>
         <image name="otpVerify" width="330" height="310"/>
@@ -6939,9 +6933,6 @@
         <image name="workout-data" width="332" height="332"/>
         <namedColor name="06AD2B">
             <color red="0.024000000208616257" green="0.67799997329711914" blue="0.16899999976158142" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
-        <namedColor name="171433">
-            <color red="0.090000003576278687" green="0.078000001609325409" blue="0.20000000298023224" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="BtnDisabledTxt">
             <color red="0.70980392156862748" green="0.70980392156862748" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

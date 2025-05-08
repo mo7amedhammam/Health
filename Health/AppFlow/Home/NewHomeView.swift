@@ -1,0 +1,579 @@
+//
+//  NewHomeView.swift
+//  Sehaty
+//
+//  Created by mohamed hammam on 13/04/2025.
+//
+
+import SwiftUI
+
+struct NewHomeView: View {
+        
+    init() {
+     // Large Navigation Title
+     UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor: UIColor.purple]
+     // Inline Navigation Title
+        UINavigationBar.appearance().titleTextAttributes = [.foregroundColor: UIColor(resource: .mainBlue)]
+   }
+    var body: some View {
+        NavigationView(){
+            VStack{
+                TitleBar(title: "home_navtitle")
+                
+                ScrollView{
+                    HeaderView()
+                    
+                    VStack(alignment:.leading){
+                        
+                        SectionHeader(image: Image(.newnxtsessionicon),title: "home_nextSession"){
+//                            go to last mes package
+                        }
+                        
+                        ZStack(alignment: .bottomTrailing){
+                            HStack {
+                                Image(.nextsessionbg)
+                                Spacer()
+                            }.padding(8)
+                            
+                            VStack{
+                                HStack{
+                                    VStack{
+                                        // Title
+                                        Text("pack_name".localized)
+                                            .font(.semiBold(size: 14))
+                                            .foregroundStyle(Color.white)
+                                            .frame(maxWidth: .infinity, alignment: .leading)
+                                            .padding(.bottom,1)
+                                        // Title
+                                        Text("pack_name")
+                                            .font(.medium(size: 10))
+                                            .foregroundStyle(Color.white)
+                                            .frame(maxWidth: .infinity, alignment: .leading)
+                                        
+                                        
+                                        
+                                    }
+                                    
+                                    Spacer()
+                                    
+                                    HStack(alignment:.top) {
+
+                                    VStack(){
+                                        // Title
+                                            Text("08/05/2025")
+                                                .font(.regular(size: 12))
+                                                .foregroundStyle(Color.white)
+                                                .frame(maxWidth: .infinity, alignment: .trailing)
+                                                .padding(.bottom,1)
+                                       
+                                        // Title
+                                        Text("03:15 PM")
+                                            .font(.regular(size: 12))
+                                            .foregroundStyle(Color.white)
+                                            .frame(maxWidth: .infinity, alignment: .trailing)
+                                        
+                                    }
+                                        Image(.newcal)
+
+                                    }
+
+                                    
+                                }
+                                
+                                Spacer()
+
+                                
+                                HStack{
+                                    VStack{
+                                        // Title
+                                        Text("Doctor".localized)
+                                            .font(.regular(size: 12))
+                                            .foregroundStyle(Color.white)
+                                            .frame(maxWidth: .infinity, alignment: .leading)
+                                            .padding(.bottom,1)
+                                        // Title
+                                        Text("Doctor Name")
+                                            .font(.semiBold(size: 16))
+                                            .foregroundStyle(Color.white)
+                                            .frame(maxWidth: .infinity, alignment: .leading)
+                                    }
+                                    
+                                    Spacer()
+                                    
+                                    HStack(alignment:.top,spacing:3) {
+
+                                        VStack(){
+                                        // Title
+                                            Text("2")
+                                                .font(.medium(size: 14))
+                                                .foregroundStyle(Color.white)
+                                                .frame(width: 31, height: 31)
+                                                .background{Color(.secondaryMain)}
+                                                .cardStyle( cornerRadius: 3)
+                                       
+                                        // Title
+                                        Text("Days".localized)
+                                            .font(.regular(size: 8))
+                                            .foregroundStyle(Color.white)
+                                            .minimumScaleFactor(0.5)
+                                            .lineLimit(1)
+                                        
+                                    }
+                                        
+                                        Text(":")
+                                            .font(.regular(size: 12))
+                                            .foregroundStyle(Color.white)
+                                            .offset(y:10)
+                                        
+                                        VStack(){
+                                            // Title
+                                                Text("11")
+                                                    .font(.medium(size: 14))
+                                                    .foregroundStyle(Color.white)
+                                                    .frame(width: 31, height: 31)
+                                                    .background{Color(.secondaryMain)}
+                                                    .cardStyle( cornerRadius: 3)
+                                           
+                                            // Title
+                                            Text("Hours".localized)
+                                                .font(.regular(size: 8))
+                                                .foregroundStyle(Color.white)
+                                                .minimumScaleFactor(0.5)
+                                                .lineLimit(1)
+
+                                            
+                                        }
+                                            
+                                            Text(":")
+                                                .font(.regular(size: 12))
+                                                .foregroundStyle(Color.white)
+                                                .offset(y:10)
+
+                                        VStack(){
+                                            // Title
+                                                Text("31")
+                                                    .font(.medium(size: 14))
+                                                    .foregroundStyle(Color.white)
+                                                    .frame(width: 31, height: 31)
+                                                    .background{Color(.secondaryMain)}
+                                                    .cardStyle( cornerRadius: 3)
+                                           
+                                            // Title
+                                            Text("Minutes".localized)
+                                                .font(.regular(size: 8))
+                                                .foregroundStyle(Color.white)
+                                                .minimumScaleFactor(0.5)
+                                                .lineLimit(1)
+                                                
+                                            
+                                        }
+                                            
+
+                                    }
+                                    Spacer()
+
+                                   
+                                    
+                                    
+                                }
+                                
+                                Spacer()
+                                
+                                HStack(alignment:.bottom,spacing:3) {
+
+                                    Button(action: {
+                                        
+                                    }){
+                                        HStack(alignment: .center){
+                                            Image(.newmoreicon)
+                                                .renderingMode(.template)
+                                                .foregroundStyle(Color.white)
+                                            
+                                            Text("more_detail".localized)
+                                                .font(.bold(size: 12))
+                                                .foregroundStyle(Color.white)
+                                            
+                                        }
+//                                        .padding(.horizontal,30)
+                                        .frame(maxWidth: .infinity)
+                                        .padding(.vertical,15)
+                                        .background{Color(.secondaryMain)}
+                                        .cardStyle( cornerRadius: 3)
+                                    }
+                                           
+                                    Spacer()
+                                    
+                                    Button(action: {
+                                        
+                                    }){
+                                        HStack(alignment: .bottom){
+                                            Image(.newreschedual)
+                                                .renderingMode(.template)
+                                                .foregroundStyle(Color.white)
+                                            
+                                            Text("reSchedual".localized)
+                                                .underline()
+                                                .font(.bold(size: 12))
+                                                .foregroundStyle(Color.white)
+                                            
+                                        }
+                                        .padding(.horizontal,10)
+                                        .padding(.bottom,5)
+                                        .frame(alignment:.bottom)
+                                    }
+                                        
+
+                                }
+                                
+                            }
+                            .padding()
+                        }
+                        .frame(maxWidth: .infinity, maxHeight: 200)
+                        .background(Color.mainBlue)
+                        .cardStyle(cornerRadius: 4,shadowOpacity: 0.4)
+                        .padding(.bottom,5)
+                        
+                        
+                        MainCategoriesSection()
+                        
+                        LastMesurmentsSection()
+                        
+                        VipPackagesSection()
+                        
+                    }
+                    
+                    Spacer()
+                    
+                    Spacer().frame(height: 40)
+                    
+                }
+                .padding(.horizontal)
+            }
+        }
+    }
+}
+
+#Preview {
+//    NewHomeView()
+    NewTabView()
+
+}
+
+struct TitleBar: View {
+    @Environment(\.dismiss) private var dismiss
+
+    var title: String = ""
+    var hasbackBtn:Bool = false
+    
+    var rightImage: Image?
+    var rightBtnAction: (() -> Void)?
+    
+    var body: some View {
+        HStack {
+            // Left Button
+            if hasbackBtn {
+                Button(action:{
+                    dismiss()
+                }) {
+                    Image(.backLeft)
+                        .resizable()
+//                        .foregroundStyle(Color.mainBlue)
+                        
+                }
+                .frame(width: 24,height: 24)
+            } else {
+                Spacer().frame(width: 24) // Reserve space if needed
+            }
+            
+            // Title
+            Text(title.localized)
+                .font(.bold(size: 18))
+                .foregroundStyle(Color.mainBlue)
+                .frame(maxWidth: .infinity, alignment: .center)
+            
+            // Right Button
+            if let rightImage {
+                Button(action: rightBtnAction ?? {}) {
+                    rightImage
+                        .resizable()
+//                        .foregroundStyle(Color.mainBlue)
+                }
+                .frame(width: 24,height: 24)
+
+            } else {
+                Spacer().frame(width: 24) // Reserve space if needed
+            }
+        }
+        .padding(.horizontal)
+    }
+}
+
+
+/// A View in which content reflects all behind it
+struct BackdropView: UIViewRepresentable {
+
+    func makeUIView(context: Context) -> UIVisualEffectView {
+        let view = UIVisualEffectView()
+        let blur = UIBlurEffect()
+        let animator = UIViewPropertyAnimator()
+        animator.addAnimations { view.effect = blur }
+        animator.fractionComplete = 0
+        animator.stopAnimation(false)
+        animator.finishAnimation(at: .current)
+        return view
+    }
+    
+    func updateUIView(_ uiView: UIVisualEffectView, context: Context) { }
+    
+}
+
+/// A transparent View that blurs its background
+struct BlurView: View {
+    
+    let radius: CGFloat
+    
+    @ViewBuilder
+    var body: some View {
+        BackdropView()
+//            .blur(radius: radius)
+            .blur(radius: radius, opaque: true)
+    }
+}
+
+struct HeaderView: View {
+    var body: some View {
+        ZStack(alignment: .bottomTrailing) {
+            VStack{
+                HStack{
+                    Image(.logo)
+                        .frame(width: 50, height: 50)
+                        .clipShape(Circle())
+                        .aspectRatio(contentMode: .fit)
+                    
+                    (Text("home_Welcome".localized) + Text("بلال"))
+                        .font(.bold(size: 20))
+                        .foregroundStyle(Color.mainBlue)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                }
+                
+                VStack{
+                    Text("home_subtitle1".localized)
+                        .font(.bold(size: 20))
+                        .foregroundStyle(Color.mainBlue)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    
+                    Text("home_subtitle2".localized)
+                        .font(.medium(size: 12))
+                        .foregroundStyle(Color(.secondaryMain))
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(.vertical,4)
+                }
+                .padding(.vertical)
+            }
+            
+            Image(.sehatylogobg)
+        }
+    }
+}
+
+struct SectionHeader: View {
+    var image: Image?
+    var title: String = ""
+
+    var hasMoreBtn: Bool = true
+    var MoreBtnAction: (() -> Void)?
+
+    var body: some View {
+        HStack {
+            if let image = image{
+                image
+            }
+            Text(title.localized)
+                .font(.semiBold(size: 16))
+                .foregroundStyle(Color(.mainBlue))
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.vertical,4)
+            
+            if hasMoreBtn{
+                Button(action: MoreBtnAction ?? {}){
+                    Image(.newmoreicon)
+                }
+            }
+        }
+    }
+}
+
+struct MainCategoriesSection: View {
+    var body: some View {
+        VStack(spacing:5){
+            SectionHeader(image: Image(.newcategicon),title: "home_maincat"){
+                //                            go to last mes package
+            }
+        
+            ScrollView(.horizontal,showsIndicators:false){
+                HStack(spacing:12){
+                    ForEach(0...7, id: \.self) { item in
+                        Button(action: {
+                            
+                        }, label: {
+                            ZStack(alignment: .bottom){
+                                Image(.onboarding2)
+                                    .resizable()
+                                    .frame(width: 166, height: 221)
+                                
+                                    
+                                    VStack(alignment: .leading){
+                                        Text("اليوريك أسيد")
+                                            .font(.semiBold(size: 14))
+                                            .foregroundStyle(Color.white)
+                                            .frame(maxWidth: .infinity,alignment:.leading)
+                                        
+                                        HStack{
+                                            HStack(spacing:0){
+                                                Image(.newsubmaincaticon)
+                                                    .resizable()
+                                                    .frame(width: 9,height:9)
+                                                    .scaledToFit()
+                                                
+                                                ( Text(" 6 ") + Text("subcategory".localized))
+                                                    .font(.medium(size: 8))
+                                                
+                                            }
+                                            .foregroundStyle(Color.white)
+                                            
+                                            Spacer()
+                                          
+                                            HStack(spacing:0){
+                                                
+                                                Image("newvippackicon")
+                                                    .renderingMode(.template)
+                                                    .resizable()
+                                                    .frame(width: 8,height:9)
+                                                    .scaledToFit()
+                                                    .foregroundStyle(.white)
+
+                                                ( Text(" 14 ") + Text("package".localized))
+                                                    .font(.medium(size: 8))
+
+                                            }
+                                            .foregroundStyle(Color.white)
+
+                                        }
+                                      
+                                    }
+                                    .padding([.vertical,.horizontal],5)
+                                    .background{
+                                        BlurView(radius: 6)
+                                    }
+                            }
+                            
+                        })
+                        .cardStyle(cornerRadius: 6)
+                        
+                    }
+                }
+                .padding(.vertical,5)
+                .padding(.bottom,5)
+
+            }
+            
+        }
+    }
+}
+
+struct LastMesurmentsSection: View {
+    let columns = [
+           GridItem(.flexible()),
+           GridItem(.flexible()),
+           GridItem(.flexible()),
+           GridItem(.flexible())
+       ]
+    var body: some View {
+        VStack{
+            SectionHeader(image: Image(.newlastmesicon),title: "home_lastMes"){
+                //                            go to last mes package
+            }
+            LazyVGrid(columns: columns, spacing: 10) {
+                ForEach(0...7, id: \.self) { item in
+                    VStack{
+                        Text("اليوريك أسيد")
+                            .font(.bold(size: 12))
+                            .foregroundStyle(Color.mainBlue)
+                            .frame(maxWidth: .infinity)
+                        
+                        Image(.sugarMeasurement1)
+                            .resizable()
+                            .frame(width: 30, height: 30)
+                            .aspectRatio(contentMode: .fit)
+                        
+                        Text("240")
+                            .font(.bold(size: 10))
+                            .foregroundStyle(Color(.secondaryMain))
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical,1)
+                        
+                        (Text("mes_inDate".localized) .font(.bold(size: 7))
+                         + Text( "27/6/2022"))
+                        .font(.semiBold(size: 7))
+                        .foregroundStyle(Color.mainBlue)
+                        .frame(maxWidth: .infinity)
+                    }
+                    .frame(width: UIScreen.main.bounds.width/4.7, height: 95)
+                    .cardStyle(cornerRadius: 5,shadowOpacity:0.09)
+                }
+                
+            }
+
+        }
+    }
+}
+
+
+
+
+struct VipPackagesSection: View {
+    var body: some View {
+        VStack{
+            SectionHeader(image: Image(.newvippackicon),title: "home_vippackages"){
+                //                            go to last mes package
+            }
+            
+            ScrollView(.horizontal,showsIndicators:false){
+                HStack{
+                    ForEach(0...7, id: \.self) { item in
+                        Button(action: {
+                            
+                        }, label: {
+                            ZStack(alignment: .bottom){
+                                Image(.onboarding1)
+                                    .resizable()
+                                    .frame(width: 166, height: 221)
+                                
+                                VStack(alignment: .leading){
+                                    
+                                    ( Text( "أمراض الجلد") + Text(".").font(.system(size: 20))
+                                      + Text("23 / 7 / 2023"))
+                                    .font(.semiBold(size: 7))
+                                    .foregroundStyle(Color.white)
+                                    .frame(maxWidth: .infinity,alignment:.leading)
+                                    
+                                    Text("اليوريك أسيد")
+                                        .font(.bold(size: 18))
+                                        .foregroundStyle(Color.white)
+                                        .frame(maxWidth: .infinity,alignment:.leading)
+                                }
+                                .padding([.bottom,.horizontal],5)
+                            }
+                            
+                        })
+                        .cardStyle(cornerRadius: 6)
+                    }
+                }
+                .padding(.vertical,5)
+                .padding(.bottom,5)
+
+            }
+        }
+        
+    }
+}

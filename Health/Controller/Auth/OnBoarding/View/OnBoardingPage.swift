@@ -25,39 +25,42 @@ struct OnboardingPage: View {
                 Text(title.localized)
                     .font(Font.bold(size: 30))
                     .multilineTextAlignment(.center)
-                    .padding(.top, 10)
+//                    .padding(.top, 10)
                     .padding(.horizontal)
                     .foregroundStyle(Color(.mainBlue))
                     .lineSpacing(8)
+                    .frame(maxHeight: .infinity)
                 
                 Text(description.localized)
-                    .font(Font.semiBold(size: 16))
+                    .font(Font.regular(size: 16))
                     .multilineTextAlignment(.center)
                     .padding(.horizontal)
                     .foregroundStyle(Color(.wrong))
                     .lineSpacing(4)
-//                Spacer()
+               
+                Spacer()
+                
                 Button(action: {
                     buttonaction()
                 }, label: {
                     Text(buttontitle.localized)
                         .font(Font.bold(size: 18))
                         .multilineTextAlignment(.center)
-                        .padding(.top, 10)
                         .foregroundColor(Color(.white))
                     
                         .frame(maxWidth: .infinity)
                         .frame(height: 55)
                         .background(Color(.mainBlue))
-                        .cornerRadius(8)
-                        .padding(.horizontal,22)
+                        .cornerRadius(3)
+                        .padding(.horizontal,13)
                 })
                
+//                .padding(.bottom,10)
             }
-            .padding(.top,33)
-            .padding(.bottom,22)
+            .padding(.top,25)
+            .padding(.bottom,13)
             .frame(height:280)
-            .cardStyle()
+            .cardStyle(cornerRadius: 12)
             .padding(.horizontal,33)
             
             Spacer()

@@ -24,7 +24,7 @@ class TipsCategoriesTVCell1: UITableViewCell {
         // Initialization code
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection         = .horizontal
-        layout.minimumLineSpacing      = 30
+        layout.minimumLineSpacing      = 15
         layout.minimumInteritemSpacing = 0
         CollectionCat.collectionViewLayout = layout
         CollectionCat.dataSource = self
@@ -80,7 +80,7 @@ extension TipsCategoriesTVCell1 : UICollectionViewDataSource , UICollectionViewD
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-            return CGSize(width: 250, height: 253)
+            return CGSize(width: 180, height: 153)
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {

@@ -20,30 +20,30 @@
         <tableViewCell contentMode="center" selectionStyle="none" indentationWidth="10" reuseIdentifier="TipsCategoriesTVCell1" rowHeight="318" id="KGk-i7-Jjw" customClass="TipsCategoriesTVCell1" customModule="Sehaty" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="343" height="318"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
                 <rect key="frame" x="0.0" y="0.0" width="343" height="318"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KnE-Vm-Bjs">
-                        <rect key="frame" x="10" y="0.0" width="333" height="318"/>
+                        <rect key="frame" x="10" y="0.0" width="333" height="200"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="83f-Th-my8">
-                                <rect key="frame" x="0.0" y="0.0" width="333" height="318"/>
+                                <rect key="frame" x="0.0" y="0.0" width="333" height="200"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GHJ-Aj-sVA">
-                                        <rect key="frame" x="0.0" y="0.0" width="333" height="60"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="333" height="40"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="skS-7D-VBX">
-                                                <rect key="frame" x="0.0" y="0.0" width="333" height="60"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="313" height="40"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="تصنيفات النصائح" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a59-zK-tgn">
-                                                        <rect key="frame" x="0.0" y="0.0" width="263" height="60"/>
-                                                        <fontDescription key="fontDescription" name="LamaSans-SemiBold" family="Lama Sans" pointSize="22"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="243" height="40"/>
+                                                        <fontDescription key="fontDescription" name="LamaSans-SemiBold" family="Lama Sans" pointSize="16"/>
                                                         <color key="textColor" name="main"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aed-cS-D84">
-                                                        <rect key="frame" x="273" y="0.0" width="60" height="60"/>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="trailing" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aed-cS-D84">
+                                                        <rect key="frame" x="253" y="0.0" width="60" height="40"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="60" id="3Py-tS-tLm"/>
                                                         </constraints>
@@ -62,17 +62,17 @@
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstItem="skS-7D-VBX" firstAttribute="top" secondItem="GHJ-Aj-sVA" secondAttribute="top" id="6Fb-yl-eHV"/>
-                                            <constraint firstAttribute="height" constant="60" id="BKt-eF-kYG"/>
+                                            <constraint firstAttribute="height" constant="40" id="BKt-eF-kYG"/>
                                             <constraint firstAttribute="bottom" secondItem="skS-7D-VBX" secondAttribute="bottom" id="CKN-wx-5bR"/>
                                             <constraint firstItem="skS-7D-VBX" firstAttribute="leading" secondItem="GHJ-Aj-sVA" secondAttribute="leading" id="Ki2-nk-whw"/>
-                                            <constraint firstAttribute="trailing" secondItem="skS-7D-VBX" secondAttribute="trailing" id="nfu-3f-zgp"/>
+                                            <constraint firstAttribute="trailing" secondItem="skS-7D-VBX" secondAttribute="trailing" constant="20" id="nfu-3f-zgp"/>
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eag-xU-cEy">
-                                        <rect key="frame" x="0.0" y="60" width="333" height="258"/>
+                                        <rect key="frame" x="0.0" y="40" width="333" height="160"/>
                                         <subviews>
                                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="Juu-23-bUO">
-                                                <rect key="frame" x="0.0" y="0.0" width="333" height="258"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="333" height="160"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="G3d-u4-V4y">
                                                     <size key="itemSize" width="128" height="128"/>
@@ -99,7 +99,7 @@
                             <constraint firstAttribute="trailing" secondItem="83f-Th-my8" secondAttribute="trailing" id="Lh8-30-K0D"/>
                             <constraint firstItem="83f-Th-my8" firstAttribute="leading" secondItem="KnE-Vm-Bjs" secondAttribute="leading" id="cRr-Hr-2V7"/>
                             <constraint firstAttribute="bottom" secondItem="83f-Th-my8" secondAttribute="bottom" id="g2T-pO-lHv"/>
-                            <constraint firstAttribute="height" constant="318" id="hZI-0a-TXZ"/>
+                            <constraint firstAttribute="height" constant="200" id="hZI-0a-TXZ"/>
                         </constraints>
                     </view>
                 </subviews>

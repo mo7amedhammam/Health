@@ -119,9 +119,16 @@
 
 
 //MARK: --- notification ---
-"notfication_active" = "active";
+"notfication_active" = "فعّال";
 "notfication_inactive" = "مُنتهي";
 
 //MARK: --- measurments ---
 "mesurement_recorded" = "تم تسجيل";
 "mesurement_JusMesurment" = "قياس فقط";
+
+
+//------------------new ---
+
+"home_maincat" = "التصنيفات الرئيسية";
+"home_nextSession" = "السيشن القادمة";
+"home_vippackages" = "الباقات المتميزة";

@@ -34,7 +34,7 @@ class CustomInputField: UIView {
        }
        
        // MARK: - Font Properties
-    @IBInspectable var titleFontName: String = fontsenum.boldEn.rawValue {
+    @IBInspectable var titleFontName: String = fontsenum.semiBold.rawValue {
            didSet { updateTitleFont() }
        }
        

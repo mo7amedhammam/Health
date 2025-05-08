@@ -47,39 +47,42 @@ class ProfileVC: UIViewController {
         TVscreen.registerCellNib(cellClass: ProfileTVCellHeader.self)
         TVscreen.registerCellNib(cellClass: ProfileTVCellMiddle.self)
         TVscreen.registerCellNib(cellClass: ProfileTVCellLogout.self)
+        // In your viewDidLoad()
+        TVscreen.backgroundColor = UIColor(.white).withAlphaComponent(0.5)
     }
     
     private func configureMenuItems() {
           mainOptions = [
               MenuItem(title: "نصائح طبية", imageName: "instruction") { [weak self] in
-                  self?.selectedIndex = 0
+//                  self?.selectedIndex = 0
                   self?.pushTo(TipsCategoriesVC1.self)
               },
               MenuItem(title: "Inbody", imageName: "newInbody") { [weak self] in
-                  self?.selectedIndex = 1
+//                  self?.selectedIndex = 1
                   self?.pushTo(INBodyVC.self)
               }
           ]
           
           settingsOptions = [
               MenuItem(title: "تغيير كلمة المرور", imageName: "changepass") { [weak self] in
-                  self?.selectedIndex = 2
+//                  self?.selectedIndex = 2
                   self?.pushTo(ChangePasswordVC.self)
               },
               MenuItem(title: "تغيير اللغة", imageName: "changelang") { [weak self] in
-                  self?.selectedIndex = 3
+//                  self?.selectedIndex = 3
                   self?.handleLanguageChange()
               },
               MenuItem(title: "الحماية والخصوصية", imageName: "privacyprotection") { [weak self] in
-                  self?.selectedIndex = 4
+//                  self?.selectedIndex = 4
                   // Handle privacy action
+                  self?.pushTo(TermsConditionsVC.self)
               },
               MenuItem(title: "المساعدة", imageName: "play") { [weak self] in
-                  self?.selectedIndex = 5
+//                  self?.selectedIndex = 5
                   self?.pushTo(HelpVC.self)
               },
               MenuItem(title: "الشروط والأحكام", imageName: "termscondition") { [weak self] in
-                  self?.selectedIndex = 6
+//                  self?.selectedIndex = 6
                   self?.pushTo(TermsConditionsVC.self)
               }
           ]
@@ -268,8 +271,10 @@ extension ProfileVC: UITableViewDataSource, UITableViewDelegate {
           switch sections[section] {
           case .profileHeader:
               return 0.1 // Minimal height for first section
-          case .mainOptions, .separator, .settings:
+          case .mainOptions , .settings:
               return 8 // Custom spacing between sections
+          case .separator:
+              return 10
           case .logout:
               return 0.1 // Extra space before logout button
           }
@@ -291,7 +296,68 @@ extension ProfileVC: UITableViewDataSource, UITableViewDelegate {
           return footer
       }
     
+//    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+//           // Apply card styling to main options and settings sections
+//           switch sections[indexPath.section] {
+//           case .mainOptions, .settings:
+//               let isFirst = indexPath.row == 0
+//               let isLast = indexPath.row == tableView.numberOfRows(inSection: indexPath.section) - 1
+//               cell.applyCardStyle(isFirst: isFirst, isLast: isLast)
+//           default:
+//               break
+//           }
+//       }
+ 
     
 }
 
+extension UITableViewCell {
+    func applyCardStyle(isFirst: Bool, isLast: Bool) {
+        // Clear background
+        backgroundColor = .clear
+        contentView.backgroundColor = .white
+        
+        // Corner radius
+        var maskedCorners: CACornerMask = []
+        if isFirst {
+                  maskedCorners.insert(.layerMinXMinYCorner) // topLeft
+                  maskedCorners.insert(.layerMaxXMinYCorner) // topRight
+              }
+              if isLast {
+                  maskedCorners.insert(.layerMinXMaxYCorner) // bottomLeft
+                  maskedCorners.insert(.layerMaxXMaxYCorner) // bottomRight
+              }
 
+        contentView.layer.cornerRadius = 12
+        contentView.layer.maskedCorners = maskedCorners
+        contentView.layer.masksToBounds = true
+        
+        // Shadow
+        layer.shadowColor = UIColor.black.cgColor
+        layer.shadowOffset = CGSize(width: 0, height: 2)
+        layer.shadowRadius = 4
+        layer.shadowOpacity = 0.1
+        layer.masksToBounds = false
+        layer.shadowPath = UIBezierPath(roundedRect: bounds, cornerRadius: contentView.layer.cornerRadius).cgPath
+    }
+}
+
+
+extension UIView {
+    func makeCardStyle() {
+        self.backgroundColor = .white
+        self.layer.cornerRadius = 12
+        self.layer.shadowColor = UIColor.black.cgColor
+        self.layer.shadowOpacity = 0.1
+        self.layer.shadowOffset = CGSize(width: 0, height: 2)
+        self.layer.shadowRadius = 4
+        self.layer.masksToBounds = false
+    }
+}
+extension UIView {
+    func roundCorners(_ corners: CACornerMask, radius: CGFloat) {
+        self.layer.maskedCorners = corners
+        self.layer.cornerRadius = radius
+        self.layer.masksToBounds = true
+    }
+}

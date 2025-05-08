@@ -116,7 +116,7 @@ extension SplashScreenVC : UICollectionViewDataSource , UICollectionViewDelegate
         if currentPage == 2{
             SkipSplash()
         }else{
-            let indexPath = IndexPath(item: currentPage+1, section: 0)
+//            let indexPath = IndexPath(item: currentPage+1, section: 0)
 //            CollectionSplash.scrollToItem(at: indexPath , at: .centeredHorizontally, animated: true)
         }
         currentPage += 1 // Update the currentPage property
@@ -198,13 +198,13 @@ class CustomPageControl: UIView {
     }
     
     private func updateIndicators() {
-        for (index, indicatorView) in indicators.enumerated() {
-            indicatorView.backgroundColor = indicatorColor
-        }
+//        for (index, indicatorView) in indicators.enumerated() {
+//            indicatorView.backgroundColor = indicatorColor
+//        }
         
-        if currentPage < indicators.count {
-            let currentIndicatorView = indicators[currentPage]
-            currentIndicatorView.backgroundColor = currentIndicatorColor
-        }
+//        if currentPage < indicators.count {
+//            let currentIndicatorView = indicators[currentPage]
+//            currentIndicatorView.backgroundColor = currentIndicatorColor
+//        }
     }
 }

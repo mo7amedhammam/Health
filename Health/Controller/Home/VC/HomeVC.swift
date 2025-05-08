@@ -82,7 +82,7 @@ class HomeVC: UIViewController {
         print(Helper.shared.getLanguage())
         LaWelcome.text = text
 //        LaName.text = "hammam"
-        LaWelcome.font  = UIFont(name: fontsenum.boldEn.rawValue , size: 16)!
+        LaWelcome.font  = UIFont(name: fontsenum.bold.rawValue , size: 16)!
         [LaWelcome].forEach{$0.textAlignment = .natural}
         ImgUser.makeRounded()
 

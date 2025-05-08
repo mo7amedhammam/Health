@@ -121,10 +121,17 @@
 
 
 //MARK: --- notification ---
-"notfication_active" = "فعّال";
+"notfication_active" = "active";
 "notfication_inactive" = "inactive";
 
 
 //MARK: --- measurments ---
 "mesurement_recorded" = "Recorded";
 "mesurement_JusMesurment" = "Just Records";
+
+
+
+//------------------new ---
+"home_maincat" = "main Categories";
+"home_nextSession" = "next Session";
+"home_vippackages" = "Vip Packages";

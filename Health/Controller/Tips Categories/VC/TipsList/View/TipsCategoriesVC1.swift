@@ -28,19 +28,22 @@ class TipsCategoriesVC1: UIViewController {
         TVScreen.addSubview(refreshControl)
         BtnBack.setImage(UIImage(resource: .backLeft).flippedIfRTL, for: .normal)
 
+        getData()
+
     }
     
+
     override func viewWillAppear(_ animated: Bool) {
         
-        ViewModel.skipCount = 0
-        ViewModel.allTipsResModel = nil
-        ViewModel.allTipsResModel?.items?.removeAll()
-        ViewModel.interestingTipsArr?.removeAll()
-        ViewModel.mostViewedTipsArr?.removeAll()
-        ViewModel.newestTipsArr?.removeAll()
-        TVScreen.reloadData()
+//        ViewModel.skipCount = 0
+//        ViewModel.allTipsResModel = nil
+//        ViewModel.allTipsResModel?.items?.removeAll()
+//        ViewModel.interestingTipsArr?.removeAll()
+//        ViewModel.mostViewedTipsArr?.removeAll()
+//        ViewModel.newestTipsArr?.removeAll()
+//        TVScreen.reloadData()
         
-        getTipsCategories()
+//        getTipsCategories()
     }
     
 //    override func viewDidAppear(_ animated: Bool) {
@@ -158,8 +161,8 @@ extension TipsCategoriesVC1{
                 Hud.showHud(in: self.view)
                 try await ViewModel.getAllTips()
                 // Handle success async operations
-                Hud.dismiss(from: self.view)
                 TVScreen.reloadData()
+                Hud.dismiss(from: self.view)
 
                 print("all",ViewModel.allTipsResModel?.items ?? [])
                 print("interesting",ViewModel.interestingTipsArr ?? [])
@@ -175,7 +178,11 @@ extension TipsCategoriesVC1{
     }
     
     @objc func refreshData() {
-        
+        getData()
+        // When the refresh operation is complete, endRefreshing() to hide the refresh control
+        refreshControl.endRefreshing()
+    }
+    func getData() {
         ViewModel.skipCount = 0
         ViewModel.allTipsResModel = nil
         ViewModel.allTipsResModel?.items?.removeAll()
@@ -185,8 +192,6 @@ extension TipsCategoriesVC1{
         TVScreen.reloadData()
         // Place your refresh logic here, for example, fetch new data from your data source
         getTipsCategories()
-        // When the refresh operation is complete, endRefreshing() to hide the refresh control
-        refreshControl.endRefreshing()
     }
 }
 

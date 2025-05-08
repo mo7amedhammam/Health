@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct OnboardingView: View {
-    @State private var currentPage = 0
+    @State private var currentPage = 1
     
     let pages = [
         OnboardingPageData(image: "onboarding1", title: "bord1_tilte", description: "bord1_subtilte", buttontitle: "bord_btn_next"),
@@ -32,36 +32,38 @@ struct OnboardingView: View {
                                 SkipSplash()
                             }
                         }
-                        Spacer()
+//                        Spacer()
                         
-                        HStack {
-                            Button(action: {
-                                //'go home'
-                                Helper.shared.onBoardOpened(opened: true)
-                                SkipSplash()
-                            }) {
-                                Text("bord_btn_skip".localized)
-                                    .font(.semiBold(size: 14))
-                                    .foregroundColor(.blue)
-                            }
-                            .padding()
-
-                            Spacer()
-
-                            if index > 0 {
-                                Button(action: {
-                                    currentPage -= 1
-                                }) {
-                                    
-                                    Image(LocalizationManager.shared.currentLanguage == "ar" ?  .previousRight :  .previousLeft)
-                                }
-                                .padding()
-                            }
-                        }
                     }
                     .tag(index)
                 }
             }
+            HStack {
+                Button(action: {
+                    //'go home'
+                    Helper.shared.onBoardOpened(opened: true)
+                    SkipSplash()
+                }) {
+                    Text("bord_btn_skip".localized)
+                        .font(.semiBold(size: 14))
+                        .foregroundColor(.blue)
+                }
+                .padding()
+
+                Spacer()
+
+                if currentPage > 0 {
+                    Button(action: {
+                        currentPage -= 1
+                    }) {
+                        
+                        Image(LocalizationManager.shared.currentLanguage == "ar" ?  .previousRight :  .previousLeft)
+                    }
+                    .padding()
+                }
+            }
+            .padding(.top)
+
         }
         .localizeView()
         .edgesIgnoringSafeArea(.top)

@@ -31,7 +31,7 @@ class CustomHeader: UIView {
         didSet { LaTitle.textColor = titleColor }
     }
     
-    @IBInspectable var titleFontName: String = fontsenum.boldEn.rawValue {
+    @IBInspectable var titleFontName: String = fontsenum.bold.rawValue {
         didSet { updateTitleFont() }
     }
     

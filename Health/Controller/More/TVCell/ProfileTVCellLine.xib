@@ -27,7 +27,7 @@
                         <rect key="frame" x="0.0" y="7" width="334" height="55"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MUP-jP-UsX">
-                                <rect key="frame" x="12" y="0.0" width="309" height="55"/>
+                                <rect key="frame" x="2" y="0.0" width="330" height="55"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tuR-Wh-Sdu">
                                         <rect key="frame" x="5" y="0.0" width="99.666666666666671" height="55"/>
@@ -77,8 +77,8 @@
                         <constraints>
                             <constraint firstAttribute="height" constant="55" id="08F-Uw-3Ld"/>
                             <constraint firstItem="MUP-jP-UsX" firstAttribute="top" secondItem="Iuz-uZ-xMy" secondAttribute="top" id="J5z-wg-XuU"/>
-                            <constraint firstItem="MUP-jP-UsX" firstAttribute="leading" secondItem="Iuz-uZ-xMy" secondAttribute="leading" constant="12" id="P01-9h-U5N"/>
-                            <constraint firstAttribute="trailing" secondItem="MUP-jP-UsX" secondAttribute="trailing" constant="13" id="VH5-wQ-17J"/>
+                            <constraint firstItem="MUP-jP-UsX" firstAttribute="leading" secondItem="Iuz-uZ-xMy" secondAttribute="leading" constant="2" id="P01-9h-U5N"/>
+                            <constraint firstAttribute="trailing" secondItem="MUP-jP-UsX" secondAttribute="trailing" constant="2" id="VH5-wQ-17J"/>
                             <constraint firstAttribute="bottom" secondItem="MUP-jP-UsX" secondAttribute="bottom" id="iH1-zC-ajR"/>
                         </constraints>
                     </view>
@@ -91,6 +91,9 @@
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <connections>
+                <outlet property="LaTitle" destination="tcx-bQ-wPH" id="8XS-sE-MXV"/>
+            </connections>
             <point key="canvasLocation" x="-77.862595419847324" y="13.028169014084508"/>
         </tableViewCell>
     </objects>

@@ -486,6 +486,39 @@
 			path = Localization;
 			sourceTree = "<group>";
 		};
+		904748312DCCAF550016C3DC /* AppFlow */ = {
+			isa = PBXGroup;
+			children = (
+				904748332DCCAF770016C3DC /* Home */,
+				904748322DCCAF6B0016C3DC /* TabBar */,
+			);
+			path = AppFlow;
+			sourceTree = "<group>";
+		};
+		904748322DCCAF6B0016C3DC /* TabBar */ = {
+			isa = PBXGroup;
+			children = (
+				904748342DCCAF820016C3DC /* View */,
+			);
+			path = TabBar;
+			sourceTree = "<group>";
+		};
+		904748332DCCAF770016C3DC /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				90D628782DABE62F008D303E /* NewHomeView.swift */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		904748342DCCAF820016C3DC /* View */ = {
+			isa = PBXGroup;
+			children = (
+				90D6287A2DAE86FE008D303E /* NewTabView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		90842F352DA16A0600B02D02 /* SelectLanguage */ = {
 			isa = PBXGroup;
 			children = (
@@ -537,30 +570,6 @@
 				90B67BD92D9EC7A900C1FD31 /* OnBoardingPage.swift */,
 			);
 			path = View;
-			sourceTree = "<group>";
-		};
-		90D628762DABE5EE008D303E /* NewHome */ = {
-			isa = PBXGroup;
-			children = (
-				90D628772DABE603008D303E /* View */,
-			);
-			path = NewHome;
-			sourceTree = "<group>";
-		};
-		90D628772DABE603008D303E /* View */ = {
-			isa = PBXGroup;
-			children = (
-				90D628782DABE62F008D303E /* NewHomeView.swift */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		90D6287C2DAE87F2008D303E /* NewTabView */ = {
-			isa = PBXGroup;
-			children = (
-				90D6287A2DAE86FE008D303E /* NewTabView.swift */,
-			);
-			path = NewTabView;
 			sourceTree = "<group>";
 		};
 		BB006DDE2B34A91E0006E417 /* Terms Condition */ = {
@@ -814,7 +823,6 @@
 		BB546DD42AC9D47F008A4F8C /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				90D628762DABE5EE008D303E /* NewHome */,
 				BB546DD82AC9D4CC008A4F8C /* View Model */,
 				BB546DD72AC9D4C2008A4F8C /* Model */,
 				BB546DD62AC9D4AD008A4F8C /* CVCell */,
@@ -1041,7 +1049,6 @@
 			children = (
 				BB5A26612B2E1D570005C9B8 /* Help */,
 				BB30E6122A7859FE0045569D /* HTBC.swift */,
-				90D6287C2DAE87F2008D303E /* NewTabView */,
 				BB546DD42AC9D47F008A4F8C /* Home */,
 				BB1ECAB02AD473D9009BF2DE /* WillExpire */,
 				BB518CCE2A9A10EC00242FAD /* Tips Categories */,
@@ -1119,6 +1126,7 @@
 				BBBDFFF62A730F9800F066DF /* Services */,
 				BBBDFFF52A730F9400F066DF /* Model */,
 				BBBDFFF42A730F9000F066DF /* View */,
+				904748312DCCAF550016C3DC /* AppFlow */,
 				BBBDFFF32A730F8C00F066DF /* Controller */,
 				BBBDFFF22A730F8800F066DF /* Extentions */,
 				BBBDFFF12A730F8400F066DF /* File Support */,
@@ -2107,7 +2115,7 @@
 				CODE_SIGN_ENTITLEMENTS = Sehaty.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2.1.4;
+				CURRENT_PROJECT_VERSION = 2.1.5;
 				DEVELOPMENT_TEAM = M7AX57X8LV;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Health/Info.plist;
@@ -2128,7 +2136,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.1.1;
+				MARKETING_VERSION = 2.1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.AlNadaPharmacies.Health;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2151,7 +2159,7 @@
 				CODE_SIGN_ENTITLEMENTS = Sehaty.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2.1.4;
+				CURRENT_PROJECT_VERSION = 2.1.5;
 				DEVELOPMENT_TEAM = M7AX57X8LV;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Health/Info.plist;
@@ -2172,7 +2180,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.1.1;
+				MARKETING_VERSION = 2.1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.AlNadaPharmacies.Health;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

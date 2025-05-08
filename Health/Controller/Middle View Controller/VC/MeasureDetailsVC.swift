@@ -134,6 +134,7 @@ class MeasureDetailsVC: UIViewController {
         LaRecorded.localized(string: "mesurement_recorded")
         LaNum.textAlignment = .center
         LaJustMeasurment.localized(string: "mesurement_JusMesurment")
+        [BtnDay,BtnMonth,BtnYear,btnAll].forEach{$0.titleLabel?.font = UIFont(name: fontsenum.semiBold.rawValue, size: 12)}
 
     }
     

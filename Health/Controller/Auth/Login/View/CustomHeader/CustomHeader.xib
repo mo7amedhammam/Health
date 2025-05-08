@@ -31,19 +31,19 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Z1f-as-hlz">
-                    <rect key="frame" x="15" y="15" width="530" height="100"/>
+                    <rect key="frame" x="0.0" y="15" width="560" height="100"/>
                     <subviews>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="ewo-Yz-Dp9">
-                            <rect key="frame" x="0.0" y="0.0" width="530" height="100"/>
+                            <rect key="frame" x="0.0" y="0.0" width="560" height="100"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="إنشاء حساب" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e8v-0r-bLk">
-                                    <rect key="frame" x="0.0" y="0.0" width="530" height="47.666666666666664"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="560" height="47.666666666666664"/>
                                     <fontDescription key="fontDescription" name="LamaSans-Bold" family="Lama Sans" pointSize="32"/>
                                     <color key="textColor" name="main"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ادخل بياناتك ثم اضغط على “إنشاء”" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="n6Q-gX-w8i">
-                                    <rect key="frame" x="0.0" y="52.666666666666671" width="530" height="47.333333333333329"/>
+                                    <rect key="frame" x="0.0" y="52.666666666666671" width="560" height="47.333333333333329"/>
                                     <fontDescription key="fontDescription" name="LamaSans-Medium" family="Lama Sans" pointSize="16"/>
                                     <color key="textColor" name="SecondaryMain"/>
                                     <nil key="highlightedColor"/>
@@ -66,8 +66,8 @@
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
                 <constraint firstAttribute="bottom" secondItem="Z1f-as-hlz" secondAttribute="bottom" constant="15" id="1tP-qs-Hje"/>
-                <constraint firstItem="Z1f-as-hlz" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="15" id="Etk-tt-Q69"/>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="Z1f-as-hlz" secondAttribute="trailing" constant="15" id="eOM-N9-AmF"/>
+                <constraint firstItem="Z1f-as-hlz" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="Etk-tt-Q69"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="Z1f-as-hlz" secondAttribute="trailing" id="eOM-N9-AmF"/>
                 <constraint firstItem="Z1f-as-hlz" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="15" id="uhc-Nf-4oY"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
