@@ -20,231 +20,33 @@ struct NewHomeView: View {
             VStack{
                 TitleBar(title: "home_navtitle")
                 
-                ScrollView{
+                ScrollView(showsIndicators: false){
                     HeaderView()
                     
                     VStack(alignment:.leading){
                         
-                        SectionHeader(image: Image(.newnxtsessionicon),title: "home_nextSession"){
-//                            go to last mes package
-                        }
-                        
-                        ZStack(alignment: .bottomTrailing){
-                            HStack {
-                                Image(.nextsessionbg)
-                                Spacer()
-                            }.padding(8)
-                            
-                            VStack{
-                                HStack{
-                                    VStack{
-                                        // Title
-                                        Text("pack_name".localized)
-                                            .font(.semiBold(size: 14))
-                                            .foregroundStyle(Color.white)
-                                            .frame(maxWidth: .infinity, alignment: .leading)
-                                            .padding(.bottom,1)
-                                        // Title
-                                        Text("pack_name")
-                                            .font(.medium(size: 10))
-                                            .foregroundStyle(Color.white)
-                                            .frame(maxWidth: .infinity, alignment: .leading)
-                                        
-                                        
-                                        
-                                    }
-                                    
-                                    Spacer()
-                                    
-                                    HStack(alignment:.top) {
-
-                                    VStack(){
-                                        // Title
-                                            Text("08/05/2025")
-                                                .font(.regular(size: 12))
-                                                .foregroundStyle(Color.white)
-                                                .frame(maxWidth: .infinity, alignment: .trailing)
-                                                .padding(.bottom,1)
-                                       
-                                        // Title
-                                        Text("03:15 PM")
-                                            .font(.regular(size: 12))
-                                            .foregroundStyle(Color.white)
-                                            .frame(maxWidth: .infinity, alignment: .trailing)
-                                        
-                                    }
-                                        Image(.newcal)
-
-                                    }
-
-                                    
-                                }
-                                
-                                Spacer()
-
-                                
-                                HStack{
-                                    VStack{
-                                        // Title
-                                        Text("Doctor".localized)
-                                            .font(.regular(size: 12))
-                                            .foregroundStyle(Color.white)
-                                            .frame(maxWidth: .infinity, alignment: .leading)
-                                            .padding(.bottom,1)
-                                        // Title
-                                        Text("Doctor Name")
-                                            .font(.semiBold(size: 16))
-                                            .foregroundStyle(Color.white)
-                                            .frame(maxWidth: .infinity, alignment: .leading)
-                                    }
-                                    
-                                    Spacer()
-                                    
-                                    HStack(alignment:.top,spacing:3) {
-
-                                        VStack(){
-                                        // Title
-                                            Text("2")
-                                                .font(.medium(size: 14))
-                                                .foregroundStyle(Color.white)
-                                                .frame(width: 31, height: 31)
-                                                .background{Color(.secondaryMain)}
-                                                .cardStyle( cornerRadius: 3)
-                                       
-                                        // Title
-                                        Text("Days".localized)
-                                            .font(.regular(size: 8))
-                                            .foregroundStyle(Color.white)
-                                            .minimumScaleFactor(0.5)
-                                            .lineLimit(1)
-                                        
-                                    }
-                                        
-                                        Text(":")
-                                            .font(.regular(size: 12))
-                                            .foregroundStyle(Color.white)
-                                            .offset(y:10)
-                                        
-                                        VStack(){
-                                            // Title
-                                                Text("11")
-                                                    .font(.medium(size: 14))
-                                                    .foregroundStyle(Color.white)
-                                                    .frame(width: 31, height: 31)
-                                                    .background{Color(.secondaryMain)}
-                                                    .cardStyle( cornerRadius: 3)
-                                           
-                                            // Title
-                                            Text("Hours".localized)
-                                                .font(.regular(size: 8))
-                                                .foregroundStyle(Color.white)
-                                                .minimumScaleFactor(0.5)
-                                                .lineLimit(1)
-
-                                            
-                                        }
-                                            
-                                            Text(":")
-                                                .font(.regular(size: 12))
-                                                .foregroundStyle(Color.white)
-                                                .offset(y:10)
-
-                                        VStack(){
-                                            // Title
-                                                Text("31")
-                                                    .font(.medium(size: 14))
-                                                    .foregroundStyle(Color.white)
-                                                    .frame(width: 31, height: 31)
-                                                    .background{Color(.secondaryMain)}
-                                                    .cardStyle( cornerRadius: 3)
-                                           
-                                            // Title
-                                            Text("Minutes".localized)
-                                                .font(.regular(size: 8))
-                                                .foregroundStyle(Color.white)
-                                                .minimumScaleFactor(0.5)
-                                                .lineLimit(1)
+                        NextSessionSection()
                                                 
-                                            
-                                        }
-                                            
-
-                                    }
-                                    Spacer()
-
-                                   
-                                    
-                                    
-                                }
-                                
-                                Spacer()
-                                
-                                HStack(alignment:.bottom,spacing:3) {
-
-                                    Button(action: {
-                                        
-                                    }){
-                                        HStack(alignment: .center){
-                                            Image(.newmoreicon)
-                                                .renderingMode(.template)
-                                                .foregroundStyle(Color.white)
-                                            
-                                            Text("more_detail".localized)
-                                                .font(.bold(size: 12))
-                                                .foregroundStyle(Color.white)
-                                            
-                                        }
-//                                        .padding(.horizontal,30)
-                                        .frame(maxWidth: .infinity)
-                                        .padding(.vertical,15)
-                                        .background{Color(.secondaryMain)}
-                                        .cardStyle( cornerRadius: 3)
-                                    }
-                                           
-                                    Spacer()
-                                    
-                                    Button(action: {
-                                        
-                                    }){
-                                        HStack(alignment: .bottom){
-                                            Image(.newreschedual)
-                                                .renderingMode(.template)
-                                                .foregroundStyle(Color.white)
-                                            
-                                            Text("reSchedual".localized)
-                                                .underline()
-                                                .font(.bold(size: 12))
-                                                .foregroundStyle(Color.white)
-                                            
-                                        }
-                                        .padding(.horizontal,10)
-                                        .padding(.bottom,5)
-                                        .frame(alignment:.bottom)
-                                    }
-                                        
-
-                                }
-                                
-                            }
-                            .padding()
-                        }
-                        .frame(maxWidth: .infinity, maxHeight: 200)
-                        .background(Color.mainBlue)
-                        .cardStyle(cornerRadius: 4,shadowOpacity: 0.4)
-                        .padding(.bottom,5)
-                        
-                        
                         MainCategoriesSection()
+                        
+                        Image(.adsbg)
+                            .resizable()
+                            .frame(height: 137)
                         
                         LastMesurmentsSection()
                         
                         VipPackagesSection()
                         
+                        Image(.adsbg2)
+                            .resizable()
+                            .frame(height: 229)
+
+                        
                     }
                     
                     Spacer()
                     
-                    Spacer().frame(height: 40)
+                    Spacer().frame(height: 55)
                     
                 }
                 .padding(.horizontal)
@@ -420,7 +222,6 @@ struct MainCategoriesSection: View {
                                 Image(.onboarding2)
                                     .resizable()
                                     .frame(width: 166, height: 221)
-                                
                                     
                                     VStack(alignment: .leading){
                                         Text("اليوريك أسيد")
@@ -472,12 +273,13 @@ struct MainCategoriesSection: View {
                         
                     }
                 }
-                .padding(.vertical,5)
-                .padding(.bottom,5)
 
             }
             
         }
+        .padding(.vertical,5)
+        .padding(.bottom,5)
+
     }
 }
 
@@ -525,10 +327,12 @@ struct LastMesurmentsSection: View {
             }
 
         }
+        .padding(.vertical,5)
+            .padding(.bottom,5)
+
+        
     }
 }
-
-
 
 
 struct VipPackagesSection: View {
@@ -547,7 +351,7 @@ struct VipPackagesSection: View {
                             ZStack(alignment: .bottom){
                                 Image(.onboarding1)
                                     .resizable()
-                                    .frame(width: 166, height: 221)
+//                                    .frame(width: 166, height: 221)
                                 
                                 VStack(alignment: .leading){
                                     
@@ -567,13 +371,252 @@ struct VipPackagesSection: View {
                             
                         })
                         .cardStyle(cornerRadius: 6)
+                        .frame(width: 200, height: 356)
+
                     }
                 }
-                .padding(.vertical,5)
-                .padding(.bottom,5)
-
             }
+
         }
-        
+        .padding(.vertical,5)
+        .padding(.bottom,5)
+    }
+}
+
+struct NextSessionSection: View {
+    var canJoin = true
+
+    var body: some View {
+        VStack{
+            SectionHeader(image: Image(.newnxtsessionicon),title: "home_nextSession"){
+                //                            go to last mes package
+            }
+           
+            ZStack(alignment: .bottomTrailing){
+                HStack {
+                    Image(.nextsessionbg)
+                    Spacer()
+                }.padding(8)
+                
+                VStack{
+                    HStack{
+                        VStack{
+                            // Title
+                            Text("pack_name".localized)
+                                .font(.semiBold(size: 14))
+                                .foregroundStyle(Color.white)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                                .padding(.bottom,1)
+                            // Title
+                            Text("pack_name")
+                                .font(.medium(size: 10))
+                                .foregroundStyle(Color.white)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                            
+                            
+                            
+                        }
+                        
+                        Spacer()
+                        
+                        HStack(alignment:.top) {
+
+                        VStack(){
+                            // Title
+                                Text("08/05/2025")
+                                    .font(.regular(size: 12))
+                                    .foregroundStyle(Color.white)
+                                    .frame(maxWidth: .infinity, alignment: .trailing)
+                                    .padding(.bottom,1)
+                           
+                            // Title
+                            Text("03:15 PM")
+                                .font(.regular(size: 12))
+                                .foregroundStyle(Color.white)
+                                .frame(maxWidth: .infinity, alignment: .trailing)
+                            
+                        }
+                            Image(.newcal)
+
+                        }
+
+                        
+                    }
+                    
+                    Spacer()
+
+                    
+                    HStack{
+                        VStack{
+                            // Title
+                            Text("Doctor".localized)
+                                .font(.regular(size: 12))
+                                .foregroundStyle(Color.white)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                                .padding(.bottom,1)
+                            // Title
+                            Text("Doctor Name")
+                                .font(.semiBold(size: 16))
+                                .foregroundStyle(Color.white)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                        }
+                        
+                        Spacer()
+                        
+                        if canJoin{
+                            Button(action: {
+                                
+                            }){
+                                HStack(alignment: .center){
+                                    Image(.newjoinicon)
+                                        .renderingMode(.template)
+                                        .foregroundStyle(Color.mainBlue)
+                                    
+                                    Text("Join_now".localized)
+                                        .font(.bold(size: 12))
+                                        .foregroundStyle(Color.mainBlue)
+                                    
+                                }
+                                .padding(.horizontal,13)
+                                .frame(height: 30)
+//                                            .padding(.vertical,15)
+                                .background{Color(.white)}
+                                .cardStyle( cornerRadius: 3)
+                            }
+                            
+                        }else{
+                            
+                            HStack(alignment:.top,spacing:3) {
+                                
+                                VStack(){
+                                    // Title
+                                    Text("2")
+                                        .font(.medium(size: 14))
+                                        .foregroundStyle(Color.white)
+                                        .frame(width: 31, height: 31)
+                                        .background{Color(.secondaryMain)}
+                                        .cardStyle( cornerRadius: 3)
+                                    
+                                    // Title
+                                    Text("Days".localized)
+                                        .font(.regular(size: 8))
+                                        .foregroundStyle(Color.white)
+                                        .minimumScaleFactor(0.5)
+                                        .lineLimit(1)
+                                }
+                                
+                                Text(":")
+                                    .font(.regular(size: 12))
+                                    .foregroundStyle(Color.white)
+                                    .offset(y:10)
+                                
+                                VStack(){
+                                    // Title
+                                    Text("11")
+                                        .font(.medium(size: 14))
+                                        .foregroundStyle(Color.white)
+                                        .frame(width: 31, height: 31)
+                                        .background{Color(.secondaryMain)}
+                                        .cardStyle( cornerRadius: 3)
+                                    
+                                    // Title
+                                    Text("Hours".localized)
+                                        .font(.regular(size: 8))
+                                        .foregroundStyle(Color.white)
+                                        .minimumScaleFactor(0.5)
+                                        .lineLimit(1)
+                                }
+                                
+                                Text(":")
+                                    .font(.regular(size: 12))
+                                    .foregroundStyle(Color.white)
+                                    .offset(y:10)
+                                
+                                VStack(){
+                                    // Title
+                                    Text("31")
+                                        .font(.medium(size: 14))
+                                        .foregroundStyle(Color.white)
+                                        .frame(width: 31, height: 31)
+                                        .background{Color(.secondaryMain)}
+                                        .cardStyle( cornerRadius: 3)
+                                    
+                                    // Title
+                                    Text("Minutes".localized)
+                                        .font(.regular(size: 8))
+                                        .foregroundStyle(Color.white)
+                                        .minimumScaleFactor(0.5)
+                                        .lineLimit(1)
+                                }
+                                
+                                
+                            }
+                        }
+                        Spacer()
+
+                       
+                        
+                        
+                    }
+                    
+                    Spacer()
+                    
+                    HStack(alignment:.bottom,spacing:3) {
+
+                        Button(action: {
+                            
+                        }){
+                            HStack(alignment: .center){
+                                Image(.newmoreicon)
+                                    .renderingMode(.template)
+                                    .foregroundStyle(Color.white)
+                                
+                                Text("more_detail".localized)
+                                    .font(.bold(size: 12))
+                                    .foregroundStyle(Color.white)
+                                
+                            }
+//                                        .padding(.horizontal,30)
+                            .frame(maxWidth: .infinity)
+                            .frame(height: 30)
+                            .background{Color(.secondaryMain)}
+                            .cardStyle( cornerRadius: 3)
+                        }
+                               
+                        Spacer()
+                        
+                        Button(action: {
+                            
+                        }){
+                            HStack(alignment: .bottom){
+                                Image(.newreschedual)
+                                    .renderingMode(.template)
+                                    .foregroundStyle(Color.white)
+                                
+                                Text("reSchedual".localized)
+                                    .underline()
+                                    .font(.regular(size: 12))
+                                    .foregroundStyle(Color.white)
+                                
+                            }
+                            .padding(.horizontal,10)
+                            .padding(.bottom,5)
+                            .frame(alignment:.bottom)
+                        }
+                            
+                    }
+                    
+                }
+                .padding()
+            }
+            .frame(maxWidth: .infinity, maxHeight: 200)
+            .background(Color.mainBlue)
+            .cardStyle(cornerRadius: 4,shadowOpacity: 0.4)
+            .padding(.bottom,5)
+
+        }
+        .padding(.vertical,5)
+        .padding(.bottom,5)
+
     }
 }
