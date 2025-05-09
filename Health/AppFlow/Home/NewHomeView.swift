@@ -8,13 +8,13 @@
 import SwiftUI
 
 struct NewHomeView: View {
-        
+    
     init() {
-     // Large Navigation Title
-     UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor: UIColor.purple]
-     // Inline Navigation Title
+        // Large Navigation Title
+        UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor: UIColor.purple]
+        // Inline Navigation Title
         UINavigationBar.appearance().titleTextAttributes = [.foregroundColor: UIColor(resource: .mainBlue)]
-   }
+    }
     var body: some View {
         NavigationView(){
             VStack{
@@ -26,7 +26,7 @@ struct NewHomeView: View {
                     VStack(alignment:.leading){
                         
                         NextSessionSection()
-                                                
+                        
                         MainCategoriesSection()
                         
                         Image(.adsbg)
@@ -40,7 +40,8 @@ struct NewHomeView: View {
                         Image(.adsbg2)
                             .resizable()
                             .frame(height: 229)
-
+                        
+                        MostViewedBooked()
                         
                     }
                     
@@ -56,14 +57,14 @@ struct NewHomeView: View {
 }
 
 #Preview {
-//    NewHomeView()
+    //    NewHomeView()
     NewTabView()
-
+    
 }
 
 struct TitleBar: View {
     @Environment(\.dismiss) private var dismiss
-
+    
     var title: String = ""
     var hasbackBtn:Bool = false
     
@@ -79,8 +80,8 @@ struct TitleBar: View {
                 }) {
                     Image(.backLeft)
                         .resizable()
-//                        .foregroundStyle(Color.mainBlue)
-                        
+                    //                        .foregroundStyle(Color.mainBlue)
+                    
                 }
                 .frame(width: 24,height: 24)
             } else {
@@ -98,10 +99,10 @@ struct TitleBar: View {
                 Button(action: rightBtnAction ?? {}) {
                     rightImage
                         .resizable()
-//                        .foregroundStyle(Color.mainBlue)
+                    //                        .foregroundStyle(Color.mainBlue)
                 }
                 .frame(width: 24,height: 24)
-
+                
             } else {
                 Spacer().frame(width: 24) // Reserve space if needed
             }
@@ -113,7 +114,7 @@ struct TitleBar: View {
 
 /// A View in which content reflects all behind it
 struct BackdropView: UIViewRepresentable {
-
+    
     func makeUIView(context: Context) -> UIVisualEffectView {
         let view = UIVisualEffectView()
         let blur = UIBlurEffect()
@@ -137,7 +138,7 @@ struct BlurView: View {
     @ViewBuilder
     var body: some View {
         BackdropView()
-//            .blur(radius: radius)
+        //            .blur(radius: radius)
             .blur(radius: radius, opaque: true)
     }
 }
@@ -181,10 +182,10 @@ struct HeaderView: View {
 struct SectionHeader: View {
     var image: Image?
     var title: String = ""
-
+    
     var hasMoreBtn: Bool = true
     var MoreBtnAction: (() -> Void)?
-
+    
     var body: some View {
         HStack {
             if let image = image{
@@ -205,193 +206,15 @@ struct SectionHeader: View {
     }
 }
 
-struct MainCategoriesSection: View {
-    var body: some View {
-        VStack(spacing:5){
-            SectionHeader(image: Image(.newcategicon),title: "home_maincat"){
-                //                            go to last mes package
-            }
-        
-            ScrollView(.horizontal,showsIndicators:false){
-                HStack(spacing:12){
-                    ForEach(0...7, id: \.self) { item in
-                        Button(action: {
-                            
-                        }, label: {
-                            ZStack(alignment: .bottom){
-                                Image(.onboarding2)
-                                    .resizable()
-                                    .frame(width: 166, height: 221)
-                                    
-                                    VStack(alignment: .leading){
-                                        Text("اليوريك أسيد")
-                                            .font(.semiBold(size: 14))
-                                            .foregroundStyle(Color.white)
-                                            .frame(maxWidth: .infinity,alignment:.leading)
-                                        
-                                        HStack{
-                                            HStack(spacing:0){
-                                                Image(.newsubmaincaticon)
-                                                    .resizable()
-                                                    .frame(width: 9,height:9)
-                                                    .scaledToFit()
-                                                
-                                                ( Text(" 6 ") + Text("subcategory".localized))
-                                                    .font(.medium(size: 8))
-                                                
-                                            }
-                                            .foregroundStyle(Color.white)
-                                            
-                                            Spacer()
-                                          
-                                            HStack(spacing:0){
-                                                
-                                                Image("newvippackicon")
-                                                    .renderingMode(.template)
-                                                    .resizable()
-                                                    .frame(width: 8,height:9)
-                                                    .scaledToFit()
-                                                    .foregroundStyle(.white)
-
-                                                ( Text(" 14 ") + Text("package".localized))
-                                                    .font(.medium(size: 8))
-
-                                            }
-                                            .foregroundStyle(Color.white)
-
-                                        }
-                                      
-                                    }
-                                    .padding([.vertical,.horizontal],5)
-                                    .background{
-                                        BlurView(radius: 6)
-                                    }
-                            }
-                            
-                        })
-                        .cardStyle(cornerRadius: 6)
-                        
-                    }
-                }
-
-            }
-            
-        }
-        .padding(.vertical,5)
-        .padding(.bottom,5)
-
-    }
-}
-
-struct LastMesurmentsSection: View {
-    let columns = [
-           GridItem(.flexible()),
-           GridItem(.flexible()),
-           GridItem(.flexible()),
-           GridItem(.flexible())
-       ]
-    var body: some View {
-        VStack{
-            SectionHeader(image: Image(.newlastmesicon),title: "home_lastMes"){
-                //                            go to last mes package
-            }
-            LazyVGrid(columns: columns, spacing: 10) {
-                ForEach(0...7, id: \.self) { item in
-                    VStack{
-                        Text("اليوريك أسيد")
-                            .font(.bold(size: 12))
-                            .foregroundStyle(Color.mainBlue)
-                            .frame(maxWidth: .infinity)
-                        
-                        Image(.sugarMeasurement1)
-                            .resizable()
-                            .frame(width: 30, height: 30)
-                            .aspectRatio(contentMode: .fit)
-                        
-                        Text("240")
-                            .font(.bold(size: 10))
-                            .foregroundStyle(Color(.secondaryMain))
-                            .frame(maxWidth: .infinity)
-                            .padding(.vertical,1)
-                        
-                        (Text("mes_inDate".localized) .font(.bold(size: 7))
-                         + Text( "27/6/2022"))
-                        .font(.semiBold(size: 7))
-                        .foregroundStyle(Color.mainBlue)
-                        .frame(maxWidth: .infinity)
-                    }
-                    .frame(width: UIScreen.main.bounds.width/4.7, height: 95)
-                    .cardStyle(cornerRadius: 5,shadowOpacity:0.09)
-                }
-                
-            }
-
-        }
-        .padding(.vertical,5)
-            .padding(.bottom,5)
-
-        
-    }
-}
-
-
-struct VipPackagesSection: View {
-    var body: some View {
-        VStack{
-            SectionHeader(image: Image(.newvippackicon),title: "home_vippackages"){
-                //                            go to last mes package
-            }
-            
-            ScrollView(.horizontal,showsIndicators:false){
-                HStack{
-                    ForEach(0...7, id: \.self) { item in
-                        Button(action: {
-                            
-                        }, label: {
-                            ZStack(alignment: .bottom){
-                                Image(.onboarding1)
-                                    .resizable()
-//                                    .frame(width: 166, height: 221)
-                                
-                                VStack(alignment: .leading){
-                                    
-                                    ( Text( "أمراض الجلد") + Text(".").font(.system(size: 20))
-                                      + Text("23 / 7 / 2023"))
-                                    .font(.semiBold(size: 7))
-                                    .foregroundStyle(Color.white)
-                                    .frame(maxWidth: .infinity,alignment:.leading)
-                                    
-                                    Text("اليوريك أسيد")
-                                        .font(.bold(size: 18))
-                                        .foregroundStyle(Color.white)
-                                        .frame(maxWidth: .infinity,alignment:.leading)
-                                }
-                                .padding([.bottom,.horizontal],5)
-                            }
-                            
-                        })
-                        .cardStyle(cornerRadius: 6)
-                        .frame(width: 200, height: 356)
-
-                    }
-                }
-            }
-
-        }
-        .padding(.vertical,5)
-        .padding(.bottom,5)
-    }
-}
-
 struct NextSessionSection: View {
     var canJoin = true
-
+    
     var body: some View {
         VStack{
             SectionHeader(image: Image(.newnxtsessionicon),title: "home_nextSession"){
                 //                            go to last mes package
             }
-           
+            
             ZStack(alignment: .bottomTrailing){
                 HStack {
                     Image(.nextsessionbg)
@@ -420,31 +243,31 @@ struct NextSessionSection: View {
                         Spacer()
                         
                         HStack(alignment:.top) {
-
-                        VStack(){
-                            // Title
+                            
+                            VStack(){
+                                // Title
                                 Text("08/05/2025")
                                     .font(.regular(size: 12))
                                     .foregroundStyle(Color.white)
                                     .frame(maxWidth: .infinity, alignment: .trailing)
                                     .padding(.bottom,1)
-                           
-                            // Title
-                            Text("03:15 PM")
-                                .font(.regular(size: 12))
-                                .foregroundStyle(Color.white)
-                                .frame(maxWidth: .infinity, alignment: .trailing)
+                                
+                                // Title
+                                Text("03:15 PM")
+                                    .font(.regular(size: 12))
+                                    .foregroundStyle(Color.white)
+                                    .frame(maxWidth: .infinity, alignment: .trailing)
+                                
+                            }
+                            Image(.newcal)
                             
                         }
-                            Image(.newcal)
-
-                        }
-
+                        
                         
                     }
                     
                     Spacer()
-
+                    
                     
                     HStack{
                         VStack{
@@ -479,7 +302,7 @@ struct NextSessionSection: View {
                                 }
                                 .padding(.horizontal,13)
                                 .frame(height: 30)
-//                                            .padding(.vertical,15)
+                                //                                            .padding(.vertical,15)
                                 .background{Color(.white)}
                                 .cardStyle( cornerRadius: 3)
                             }
@@ -553,8 +376,8 @@ struct NextSessionSection: View {
                             }
                         }
                         Spacer()
-
-                       
+                        
+                        
                         
                         
                     }
@@ -562,7 +385,7 @@ struct NextSessionSection: View {
                     Spacer()
                     
                     HStack(alignment:.bottom,spacing:3) {
-
+                        
                         Button(action: {
                             
                         }){
@@ -576,13 +399,13 @@ struct NextSessionSection: View {
                                     .foregroundStyle(Color.white)
                                 
                             }
-//                                        .padding(.horizontal,30)
+                            //                                        .padding(.horizontal,30)
                             .frame(maxWidth: .infinity)
                             .frame(height: 30)
                             .background{Color(.secondaryMain)}
                             .cardStyle( cornerRadius: 3)
                         }
-                               
+                        
                         Spacer()
                         
                         Button(action: {
@@ -603,7 +426,7 @@ struct NextSessionSection: View {
                             .padding(.bottom,5)
                             .frame(alignment:.bottom)
                         }
-                            
+                        
                     }
                     
                 }
@@ -613,10 +436,395 @@ struct NextSessionSection: View {
             .background(Color.mainBlue)
             .cardStyle(cornerRadius: 4,shadowOpacity: 0.4)
             .padding(.bottom,5)
-
+            
         }
         .padding(.vertical,5)
         .padding(.bottom,5)
+        
+    }
+}
 
+struct MainCategoriesSection: View {
+    var body: some View {
+        VStack(spacing:5){
+            SectionHeader(image: Image(.newcategicon),title: "home_maincat"){
+                //                            go to last mes package
+            }
+            
+            ScrollView(.horizontal,showsIndicators:false){
+                HStack(spacing:12){
+                    ForEach(0...7, id: \.self) { item in
+                        Button(action: {
+                            
+                        }, label: {
+                            ZStack(alignment: .bottom){
+                                Image(.onboarding2)
+                                    .resizable()
+                                    .frame(width: 166, height: 221)
+                                
+                                VStack(alignment: .leading){
+                                    Text("اليوريك أسيد")
+                                        .font(.semiBold(size: 14))
+                                        .foregroundStyle(Color.white)
+                                        .frame(maxWidth: .infinity,alignment:.leading)
+                                    
+                                    HStack{
+                                        HStack(spacing:0){
+                                            Image(.newsubmaincaticon)
+                                                .resizable()
+                                                .frame(width: 9,height:9)
+                                                .scaledToFit()
+                                            
+                                            ( Text(" 6 ") + Text("subcategory".localized))
+                                                .font(.medium(size: 8))
+                                            
+                                        }
+                                        .foregroundStyle(Color.white)
+                                        
+                                        Spacer()
+                                        
+                                        HStack(spacing:0){
+                                            
+                                            Image("newvippackicon")
+                                                .renderingMode(.template)
+                                                .resizable()
+                                                .frame(width: 8,height:9)
+                                                .scaledToFit()
+                                                .foregroundStyle(.white)
+                                            
+                                            ( Text(" 14 ") + Text("package".localized))
+                                                .font(.medium(size: 8))
+                                            
+                                        }
+                                        .foregroundStyle(Color.white)
+                                        
+                                    }
+                                    
+                                }
+                                .padding([.vertical,.horizontal],5)
+                                .background{
+                                    BlurView(radius: 6)
+                                }
+                            }
+                            
+                        })
+                        .cardStyle(cornerRadius: 6)
+                        
+                    }
+                }
+                
+            }
+            
+        }
+        .padding(.vertical,5)
+        .padding(.bottom,5)
+        
+    }
+}
+
+struct LastMesurmentsSection: View {
+    let columns = [
+        GridItem(.flexible()),
+        GridItem(.flexible()),
+        GridItem(.flexible()),
+        GridItem(.flexible())
+    ]
+    var body: some View {
+        VStack{
+            SectionHeader(image: Image(.newlastmesicon),title: "home_lastMes"){
+                //                            go to last mes package
+            }
+            LazyVGrid(columns: columns, spacing: 10) {
+                ForEach(0...7, id: \.self) { item in
+                    VStack{
+                        Text("اليوريك أسيد")
+                            .font(.bold(size: 12))
+                            .foregroundStyle(Color.mainBlue)
+                            .frame(maxWidth: .infinity)
+                        
+                        Image(.sugarMeasurement1)
+                            .resizable()
+                            .frame(width: 30, height: 30)
+                            .aspectRatio(contentMode: .fit)
+                        
+                        Text("240")
+                            .font(.bold(size: 10))
+                            .foregroundStyle(Color(.secondaryMain))
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical,1)
+                        
+                        (Text("mes_inDate".localized) .font(.bold(size: 7))
+                         + Text( "27/6/2022"))
+                        .font(.semiBold(size: 7))
+                        .foregroundStyle(Color.mainBlue)
+                        .frame(maxWidth: .infinity)
+                    }
+                    .frame(width: UIScreen.main.bounds.width/4.7, height: 95)
+                    .cardStyle(cornerRadius: 5,shadowOpacity:0.09)
+                }
+                
+            }
+            
+        }
+        .padding(.vertical,5)
+        .padding(.bottom,5)
+        
+        
+    }
+}
+
+
+struct VipPackagesSection: View {
+    var body: some View {
+        VStack{
+            SectionHeader(image: Image(.newvippackicon),title: "home_vippackages"){
+                //                            go to last mes package
+            }
+            
+            ScrollView(.horizontal,showsIndicators:false){
+                HStack{
+                    ForEach(0...7, id: \.self) { item in
+                        Button(action: {
+                            
+                        }, label: {
+                            ZStack(alignment: .bottom){
+                                Image(.onboarding1)
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fill)
+                                //                                    .frame(width: 166, height: 221)
+                                    .frame(width: 200, height: 356)
+                                
+                                VStack {
+                                    HStack(alignment:.top){
+                                        // Title
+                                        HStack (spacing:3){
+                                            Image(.newconversationicon)
+                                                .resizable()
+                                                .frame(width: 16, height: 9)
+                                            Text("4 ").font(.semiBold(size: 16))
+                                            
+                                            Text("sessions".localized)
+                                        }
+                                        .font(.regular(size: 10))
+                                        .foregroundStyle(Color.white)
+                                        .frame(height:32)
+                                        .padding(.horizontal,10)
+                                        .background{Color(.secondaryMain)}
+                                        .cardStyle( cornerRadius: 3)
+                                        
+                                        Spacer()
+                                        Button(action: {
+                                            
+                                        }, label: {
+                                            Image(.newlikeicon)
+                                        })
+                                        
+                                    }
+                                    .frame(maxWidth: .infinity,alignment:.leading)
+                                    .padding()
+                                    
+                                    Spacer()
+                                    
+                                    VStack(alignment: .leading,spacing: 10){
+                                        Text("pack_Name".localized)
+                                            .font(.semiBold(size: 16))
+                                            .foregroundStyle(Color.white)
+                                            .frame(maxWidth: .infinity,alignment:.leading)
+                                        
+                                        HStack(alignment: .center,spacing: 5){
+                                            Text( "أمراض الجلد")
+                                            Circle().fill(Color(.white))
+                                                .frame(width: 4, height: 4)
+                                            Text("23 / 7 / 2023")
+                                        }
+                                        .font(.regular(size: 10))
+                                        .foregroundStyle(Color.white)
+                                        .frame(maxWidth: .infinity,alignment:.leading)
+                                        
+                                        Text("90 " + "EGP".localized)
+                                            .font(.semiBold(size: 12))
+                                            .foregroundStyle(Color.white)
+                                            .frame(maxWidth: .infinity,alignment:.leading)
+                                        
+                                        HStack{
+                                            Text("140 " + "EGP".localized).strikethrough().foregroundStyle(Color(.secondary))
+                                                .font(.semiBold(size: 12))
+                                            
+                                            (Text("(".localized + "Discount" ) + Text( " 20" + "%".localized + ")".localized))
+                                                .font(.semiBold(size: 12))
+                                                .foregroundStyle(Color.white)
+                                        }
+                                        .frame(maxWidth: .infinity,alignment:.leading)
+                                        
+                                    }
+                                    .padding(.top,5)
+                                    .padding([.bottom,.horizontal],10)
+                                    .background{
+                                        BlurView(radius: 5)
+                                        LinearGradient(gradient: Gradient(colors: [.clear, .black.opacity(0.8)]), startPoint: .top, endPoint: .bottom)
+                                    }
+                                }
+                            }
+                            
+                        })
+                        .cardStyle(cornerRadius: 3)
+                        .frame(width: 200, height: 356)
+                        
+                    }
+                }
+            }
+            
+        }
+        .padding(.vertical,5)
+        .padding(.bottom,5)
+    }
+}
+
+#Preview(body: {
+    MostViewedBooked()
+})
+
+
+struct MostViewedBooked: View {
+    private enum mostcases {
+        case mostviewed
+        case mostbooked
+    }
+    @State private var currentcase:mostcases = .mostviewed
+    
+    var body: some View {
+        
+        HStack{
+            HStack(alignment:.top, spacing:20){
+                Button(action: {
+                    currentcase = .mostbooked
+                }){
+                    VStack {
+                        Text("Most_Booked".localized)
+                            .foregroundStyle(currentcase == .mostbooked ? Color(.secondary) : Color(.btnDisabledTxt))
+                            .minimumScaleFactor(0.5)
+                            .lineLimit(1)
+                            .fixedSize() // Prevents layout issues after rotation
+                        Circle().fill(currentcase == .mostbooked ? Color(.secondary) : .clear)
+                            .frame(width: 8, height: 8)
+                    }
+                }
+                
+                Button(action: {
+                    currentcase = .mostviewed
+                    
+                }){
+                    VStack {
+                        Text("Most_Viewed".localized)
+                            .foregroundStyle(currentcase == .mostviewed ? Color(.secondary) : Color(.btnDisabledTxt))
+                            .minimumScaleFactor(0.5)
+                            .lineLimit(1)
+                            .fixedSize() // Prevents layout issues after rotation
+                        
+                        Circle().fill(currentcase == .mostviewed ? Color(.secondary) : .clear)
+                            .frame(width: 8, height: 8)
+                    }
+                }
+            }
+            .rotationEffect(.degrees(-90))
+            .frame(width: 60)
+            .font(.bold(size: 22))
+            
+            ScrollView(.horizontal,showsIndicators:false){
+                HStack{
+                    ForEach(0...7, id: \.self) { item in
+                        Button(action: {
+                            
+                        }, label: {
+                            ZStack(alignment: .bottom){
+                                Image(.onboarding1)
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fill)
+                                //                                    .frame(width: 166, height: 221)
+                                    .frame(width: 200, height: 356)
+                                
+                                VStack {
+                                    HStack(alignment:.top){
+                                        // Title
+                                        HStack (spacing:3){
+                                            Image(.newconversationicon)
+                                                .resizable()
+                                                .frame(width: 16, height: 9)
+                                            Text("4 ").font(.semiBold(size: 16))
+                                            
+                                            Text("sessions".localized)
+                                        }
+                                        .font(.regular(size: 10))
+                                        .foregroundStyle(Color.white)
+                                        .frame(height:32)
+                                        .padding(.horizontal,10)
+                                        .background{Color(.secondaryMain)}
+                                        .cardStyle( cornerRadius: 3)
+                                        
+                                        Spacer()
+                                        Button(action: {
+                                            
+                                        }, label: {
+                                            Image(.newlikeicon)
+                                        })
+                                        
+                                    }
+                                    .frame(maxWidth: .infinity,alignment:.leading)
+                                    .padding()
+                                    
+                                    Spacer()
+                                    
+                                    VStack(alignment: .leading,spacing: 10){
+                                        Text("pack_Name".localized)
+                                            .font(.semiBold(size: 16))
+                                            .foregroundStyle(Color.white)
+                                            .frame(maxWidth: .infinity,alignment:.leading)
+                                        
+                                        HStack(alignment: .center,spacing: 5){
+                                            Text( "أمراض الجلد")
+                                            Circle().fill(Color(.white))
+                                                .frame(width: 4, height: 4)
+                                            Text("23 / 7 / 2023")
+                                        }
+                                        .font(.regular(size: 10))
+                                        .foregroundStyle(Color.white)
+                                        .frame(maxWidth: .infinity,alignment:.leading)
+                                        
+                                        Text("90 " + "EGP".localized)
+                                            .font(.semiBold(size: 12))
+                                            .foregroundStyle(Color.white)
+                                            .frame(maxWidth: .infinity,alignment:.leading)
+                                        
+                                        HStack{
+                                            Text("140 " + "EGP".localized).strikethrough().foregroundStyle(Color(.secondary))
+                                                .font(.semiBold(size: 12))
+                                            
+                                            (Text("(".localized + "Discount" ) + Text( " 20" + "%".localized + ")".localized))
+                                                .font(.semiBold(size: 12))
+                                                .foregroundStyle(Color.white)
+                                        }
+                                        .frame(maxWidth: .infinity,alignment:.leading)
+                                        
+                                    }
+                                    .padding(.top,5)
+                                    .padding([.bottom,.horizontal],10)
+                                    .background{
+                                        BlurView(radius: 5)
+                                        LinearGradient(gradient: Gradient(colors: [.clear, .black.opacity(0.8)]), startPoint: .top, endPoint: .bottom)
+                                    }
+                                }
+                            }
+                            
+                        })
+                        .cardStyle(cornerRadius: 3)
+                        .frame(width: 200, height: 356)
+                        
+                    }
+                }
+            }
+        }
+        .padding(.vertical,10)
+        .padding(.bottom,5)
+        
     }
 }
