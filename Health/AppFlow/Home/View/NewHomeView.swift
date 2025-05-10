@@ -11,9 +11,9 @@ struct NewHomeView: View {
     
     init() {
         // Large Navigation Title
-        UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor: UIColor.purple]
-        // Inline Navigation Title
-        UINavigationBar.appearance().titleTextAttributes = [.foregroundColor: UIColor(resource: .mainBlue)]
+//        UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor: UIColor.purple]
+//        // Inline Navigation Title
+//        UINavigationBar.appearance().titleTextAttributes = [.foregroundColor: UIColor(resource: .mainBlue)]
     }
     var body: some View {
         NavigationView(){
@@ -190,6 +190,10 @@ struct SectionHeader: View {
         HStack {
             if let image = image{
                 image
+                    .resizable()
+                    .frame(width: 16, height: 16)
+                    .scaledToFill()
+
             }
             Text(title.localized)
                 .font(.semiBold(size: 16))
@@ -200,6 +204,9 @@ struct SectionHeader: View {
             if hasMoreBtn{
                 Button(action: MoreBtnAction ?? {}){
                     Image(.newmoreicon)
+                        .resizable()
+                        .frame(width: 15, height: 15)
+                        .scaledToFill()
                 }
             }
         }
@@ -236,8 +243,6 @@ struct NextSessionSection: View {
                                 .foregroundStyle(Color.white)
                                 .frame(maxWidth: .infinity, alignment: .leading)
                             
-                            
-                            
                         }
                         
                         Spacer()
@@ -260,6 +265,9 @@ struct NextSessionSection: View {
                                 
                             }
                             Image(.newcal)
+                                .resizable()
+                                .frame(width: 15, height: 15)
+
                             
                         }
                         
@@ -292,12 +300,12 @@ struct NextSessionSection: View {
                             }){
                                 HStack(alignment: .center){
                                     Image(.newjoinicon)
-                                        .renderingMode(.template)
-                                        .foregroundStyle(Color.mainBlue)
+                                        .resizable()
+                                        .frame(width: 15, height: 15)
                                     
                                     Text("Join_now".localized)
                                         .font(.bold(size: 12))
-                                        .foregroundStyle(Color.mainBlue)
+                                        .foregroundStyle(Color(.secondary))
                                     
                                 }
                                 .padding(.horizontal,13)
@@ -392,7 +400,10 @@ struct NextSessionSection: View {
                             HStack(alignment: .center){
                                 Image(.newmoreicon)
                                     .renderingMode(.template)
+                                    .resizable()
+                                    .frame(width: 15, height: 15)
                                     .foregroundStyle(Color.white)
+                                
                                 
                                 Text("more_detail".localized)
                                     .font(.bold(size: 12))
@@ -414,6 +425,9 @@ struct NextSessionSection: View {
                             HStack(alignment: .bottom){
                                 Image(.newreschedual)
                                     .renderingMode(.template)
+                                    .resizable()
+                                    .frame(width: 15, height: 15)
+
                                     .foregroundStyle(Color.white)
                                 
                                 Text("reSchedual".localized)
@@ -617,6 +631,9 @@ struct VipPackagesSection: View {
                                             
                                         }, label: {
                                             Image(.newlikeicon)
+                                                .resizable()
+                                                .frame(width: 20, height: 20)
+
                                         })
                                         
                                     }
@@ -650,7 +667,7 @@ struct VipPackagesSection: View {
                                             Text("140 " + "EGP".localized).strikethrough().foregroundStyle(Color(.secondary))
                                                 .font(.semiBold(size: 12))
                                             
-                                            (Text("(".localized + "Discount" ) + Text( " 20" + "%".localized + ")".localized))
+                                            (Text("(".localized + "Discount".localized ) + Text( " 20" + "%".localized + ")".localized))
                                                 .font(.semiBold(size: 12))
                                                 .foregroundStyle(Color.white)
                                         }

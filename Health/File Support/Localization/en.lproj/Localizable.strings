@@ -135,3 +135,13 @@
 "home_maincat" = "main Categories";
 "home_nextSession" = "next Session";
 "home_vippackages" = "Vip Packages";
+"Discount" = "Discount";
+
+//MARK: --- packages ---
+"pack_subcat" = "sub Categories";
+"pack_packages" = "Packages";
+"avilable_doc" = "avilable doctor";
+
+//MARK: --- packages Details ---
+"available_doc" = "Available Doctor";
+

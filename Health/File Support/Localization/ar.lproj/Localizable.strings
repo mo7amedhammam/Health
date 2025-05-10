@@ -132,3 +132,12 @@
 "home_maincat" = "التصنيفات الرئيسية";
 "home_nextSession" = "السيشن القادمة";
 "home_vippackages" = "الباقات المتميزة";
+"Discount" = "خصم";
+
+//MARK: --- packages ---
+"pack_subcat" = "التصنيفات الفرعية";
+"pack_packages" = "الباقات";
+"avilable_doc" = "دكتور متاح";
+
+//MARK: --- packages Details ---
+"available_doc" = "دكتور متاح";
