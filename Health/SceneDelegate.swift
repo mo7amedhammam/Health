@@ -45,17 +45,17 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         } else { //uikit
             
             if Helper.shared.CheckIfLoggedIn(){ //swiftui
-//                let vc = UIHostingController(rootView: NewTabView())
-//                let nav = UINavigationController(rootViewController: vc)
-//                nav.navigationBar.isHidden = true
-//                window?.rootViewController = nav
+                let vc = UIHostingController(rootView: NewTabView())
+                let nav = UINavigationController(rootViewController: vc)
+                nav.navigationBar.isHidden = true
+                window?.rootViewController = nav
             
             
-                let initialVC: UIViewController = initiateViewController(storyboardName: .main, viewControllerIdentifier: HTBC.self)!
-
-            let nav = UINavigationController(rootViewController: initialVC)
-            nav.navigationBar.isHidden = true
-            window?.rootViewController = nav
+//                let initialVC: UIViewController = initiateViewController(storyboardName: .main, viewControllerIdentifier: HTBC.self)!
+//
+//            let nav = UINavigationController(rootViewController: initialVC)
+//            nav.navigationBar.isHidden = true
+//            window?.rootViewController = nav
             
             }else  { //swiftui
 //                let initialVC: UIViewController = Helper.shared.CheckIfLoggedIn()
@@ -127,19 +127,21 @@ extension SceneDelegate {
                 let nav = UINavigationController(rootViewController: vc)
                 nav.navigationBar.isHidden = true
                 window.rootViewController = nav
+                
             } else {
                 if Helper.shared.CheckIfLoggedIn(){ //swiftui
-                    //                let vc = UIHostingController(rootView: NewTabView())
-                    //                let nav = UINavigationController(rootViewController: vc)
-                    //                nav.navigationBar.isHidden = true
-                    //                window?.rootViewController = nav
-                    
-                    
-                    let initialVC: UIViewController = initiateViewController(storyboardName: .main, viewControllerIdentifier: HTBC.self)!
-                    
-                    let nav = UINavigationController(rootViewController: initialVC)
+                                    
+                    let vc = UIHostingController(rootView: NewTabView())
+                    let nav = UINavigationController(rootViewController: vc)
                     nav.navigationBar.isHidden = true
                     window.rootViewController = nav
+                    
+                    
+//                    let initialVC: UIViewController = initiateViewController(storyboardName: .main, viewControllerIdentifier: HTBC.self)!
+//                    
+//                    let nav = UINavigationController(rootViewController: initialVC)
+//                    nav.navigationBar.isHidden = true
+//                    window.rootViewController = nav
                     
                 }else  { //swiftui
                     //                let initialVC: UIViewController = Helper.shared.CheckIfLoggedIn()

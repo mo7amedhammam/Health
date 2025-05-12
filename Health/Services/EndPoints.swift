@@ -87,3 +87,21 @@ enum EndPoints: String {
     
     ///api/Customer/UpdateFirebaseDeviceToken
 }
+
+enum newEndPoints : String{
+    
+//    MARK: -- Home
+    case GetCustomerUpcomingSession =  "Home/GetCustomerUpcomingSession"
+    case GetAllHomeCategory = "Home/GetAllHomeCategory"
+    case GetMyMeasurementsStats = "Home/GetMyMeasurementsStats"
+    case FeaturedPackageList = "Home/FeaturedPackageList"
+    case MostBookedPackage = "Home/MostBookedPackage"
+    case MostViewedPackage = "Home/MostViewedPackage"
+
+//   MARK: -- Explore Package
+    case GetMainCategoryById = "Home/GetMainCategoryById"
+    case GetSubCategoryByParentId = "Home/GetSubCategoryByParentId"
+    case GetPackageByCategoryId = "Home/GetPackageByCategoryId"
+
+    case AddOrRemoveToWishList = "Home/AddOrRemoveToWishList"
+}

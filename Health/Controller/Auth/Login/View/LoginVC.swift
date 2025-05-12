@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SwiftUI
 
 final class LoginVC: UIViewController {
     
@@ -199,7 +200,12 @@ final class LoginVC: UIViewController {
                     ActivityIndicatorView.shared.stopLoading()
 
                     Helper.shared.saveUser(user: self.viewModel.usermodel ?? LoginM())
-                    Helper.shared.changeRootVC(newroot: HTBC.self, transitionFrom: .fromLeft)
+//                    Helper.shared.changeRootVC(newroot: HTBC.self, transitionFrom: .fromLeft)
+                    
+                    let newHome = UIHostingController(rootView: NewTabView())
+//                    let nav = UINavigationController(rootViewController: vc)
+
+                    Helper.shared.changeRootVC(newroot: newHome, transitionFrom: .fromLeft)
                 }
             case .failure(let error):
                 print(error)

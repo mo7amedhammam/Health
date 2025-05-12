@@ -27,10 +27,35 @@ struct NewTabView: View {
             Group {
                 switch selectedTab {
                 case 0: NewHomeView()
-                case 1: Color.green.opacity(0.1).ignoresSafeArea()
-                case 2: Color.blue.opacity(0.1).ignoresSafeArea()
-                case 3: Color.orange.opacity(0.1).ignoresSafeArea()
-                case 4: Color.purple.opacity(0.1).ignoresSafeArea()
+                case 1:
+                    UIKitViewControllerWrapper(makeViewController: {
+                    let VC: UIViewController = initiateViewController(storyboardName: .main, viewControllerIdentifier: MedicationScheduleVC.self)!
+                    return VC
+                })
+                .ignoresSafeArea()
+                    
+                case 2:
+                    UIKitViewControllerWrapper(makeViewController: {
+                    let VC: UIViewController = initiateViewController(storyboardName: .main, viewControllerIdentifier: MeasurementsVC.self)!
+                    return VC
+                })
+                .ignoresSafeArea()
+                    
+                case 3:
+                    UIKitViewControllerWrapper(makeViewController: {
+                    let VC: UIViewController = initiateViewController(storyboardName: .main, viewControllerIdentifier: NotificationVC.self)!
+                    return VC
+                })
+                    .ignoresSafeArea()
+                    
+                case 4:
+//                    MARK: -- uikit --
+                    UIKitViewControllerWrapper(makeViewController: {
+                    let VC: UIViewController = initiateViewController(storyboardName: .main, viewControllerIdentifier: ProfileVC.self)!
+                    return VC
+                })
+                    .ignoresSafeArea()
+                    
                 default: EmptyView()
                 }
             }
@@ -240,5 +265,29 @@ struct TabBarShape: Shape {
         path.addLine(to: CGPoint(x: rect.minX, y: rect.maxY))
         
         return path
+    }
+}
+
+//------------
+
+
+import SwiftUI
+import UIKit
+
+struct UIKitViewControllerWrapper<VC: UIViewController>: UIViewControllerRepresentable {
+    let makeViewController: () -> VC
+    let update: ((VC) -> Void)?
+
+    init(makeViewController: @escaping () -> VC, update: ((VC) -> Void)? = nil) {
+        self.makeViewController = makeViewController
+        self.update = update
+    }
+
+    func makeUIViewController(context: Context) -> VC {
+        return makeViewController()
+    }
+
+    func updateUIViewController(_ uiViewController: VC, context: Context) {
+        update?(uiViewController)
     }
 }

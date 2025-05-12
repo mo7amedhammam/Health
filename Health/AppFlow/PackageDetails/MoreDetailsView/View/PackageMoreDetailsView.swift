@@ -101,28 +101,9 @@ struct PackageMoreDetailsView: View {
                     VStack(alignment:.leading){
                         
                     HStack(alignment: .bottom){
-                        VStack(alignment: .center,spacing: 5){
-                            Group{
-                                Text("90 " )
-                                Text( "EGP".localized)
-                            }
-                                .font(.semiBold(size: 16))
-                                .foregroundStyle(Color.white)
-                            
-//                            HStack{
-                                Text("140 " + "EGP".localized).strikethrough().foregroundStyle(Color(.secondary))
-                                    .font(.semiBold(size: 12))
-                                
-                                (Text("(".localized + "Discount".localized ) + Text( " 20" + "%".localized + ")".localized))
-                                    .font(.semiBold(size: 12))
-                                    .foregroundStyle(Color.white)
-//                            }
-//                            .padding(.top,2)
-                        }
                         
-                        Spacer()
                         
-                        VStack(alignment:.trailing,spacing: 2.5){
+                        VStack(alignment:.leading,spacing: 8){
                             Text("pack_Name".localized + ":")
                                 .font(.regular(size: 13))
                                 .foregroundStyle(Color.white)
@@ -183,6 +164,27 @@ struct PackageMoreDetailsView: View {
 //                            .background{Color(.secondaryMain)}
 //                            .cardStyle( cornerRadius: 3)
                         }
+                        
+                        Spacer()
+                        
+                        VStack(alignment: .center,spacing: 4){
+                            Group{
+                                Text("90 " )
+                                Text( "EGP".localized)
+                            }
+                                .font(.semiBold(size: 16))
+                                .foregroundStyle(Color.white)
+                            
+//                            HStack{
+                                Text("140 " + "EGP".localized).strikethrough().foregroundStyle(Color(.secondary))
+                                    .font(.semiBold(size: 12))
+                                
+                                (Text("(".localized + "Discount".localized ) + Text( " 20" + "%".localized + ")".localized))
+                                    .font(.semiBold(size: 12))
+                                    .foregroundStyle(Color.white)
+//                            }
+//                            .padding(.top,2)
+                        }
 
                     }
 //                    .offset(y:-12)
@@ -192,7 +194,6 @@ struct PackageMoreDetailsView: View {
                     .cardStyle( cornerRadius: 3)
 
                         
-                        AvailableDoctorsListView()
                         
                     }
                     .padding([.horizontal,.top],10)

@@ -17,19 +17,33 @@ class HelpVC: UIViewController {
     let ViewModelProfile = ProfileVM()
     var currentIndex = -1
     var Play         = false
-        
+ 
+    private var selectedVideoIndex: Int?
+    private var webViewHeights: [Int: CGFloat] = [:]
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
-        TVScreen.dataSource = self
-        TVScreen.delegate  = self
-        TVScreen.registerCellNib(cellClass: HelpTVCell.self)
-        
+//        TVScreen.dataSource = self
+//        TVScreen.delegate  = self
+//        TVScreen.registerCellNib(cellClass: HelpTVCell.self)
+        setupTableView()
+
         getHelp()
-        GetMyProfile()
+//        GetMyProfile()
         
     }
+    // MARK: - Setup
+       private func setupTableView() {
+           TVScreen.dataSource = self
+           TVScreen.delegate = self
+           TVScreen.registerCellNib(cellClass: HelpTVCell.self)
+           
+//           TVScreen.rowHeight = UITableView.automaticDimension
+//           TVScreen.estimatedRowHeight = 200
+//           TVScreen.separatorStyle = .none
+       }
     
     @IBAction func BUBack(_ sender: Any) {
         navigationController?.popViewController(animated: true)
@@ -94,10 +108,7 @@ class HelpVC: UIViewController {
             }
         }
     }
-    
 }
-
-
 
 extension HelpVC : UITableViewDataSource , UITableViewDelegate {
     
@@ -108,41 +119,30 @@ extension HelpVC : UITableViewDataSource , UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "HelpTVCell", for: indexPath) as! HelpTVCell
-        let model = ViewModel.ArrHelp?[indexPath.row]
-        
-        if indexPath.row == 0 {
-            cell.ViewLine.isHidden = true
-        } else {
-            cell.ViewLine.isHidden = false
-        }
-
-        cell.LaTitle1.text = model?.title
-        cell.LaTitle2.text = model?.title
-        
-        // Load the YouTube video URL
-        if let youtubeURL = URL(string: model?.videoURL ?? "") {
-            let request = URLRequest(url: youtubeURL)
-            cell.webView.load(request)
-            cell.SuperWebView.load(request)
-        }
-              
-        if currentIndex == indexPath.row {
-            if Play == true {
-                cell.SuperWebView.isHidden = false
-            } else {
-                cell.SuperWebView.isHidden = true
+        guard let model = ViewModel.ArrHelp?[indexPath.row]else {return cell}
+            
+            cell.LaTitle1.text = model.title
+            
+            // Load the YouTube video URL
+            if let youtubeURL = URL(string: model.videoURL ?? "") {
+                let request = URLRequest(url: youtubeURL)
+                cell.webView.load(request)
             }
-        } else {
-            cell.SuperWebView.isHidden = true
-        }
-        
-        return cell
+            if indexPath.row == selectedVideoIndex {
+                cell.configure(with : model, play: true)
+            }
+            
+            return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        currentIndex = indexPath.row
-        Play         = true
-        TVScreen.reloadData()
+//        currentIndex = indexPath.row
+        selectedVideoIndex = indexPath.row
+
+//        Play         = true
+//        TVScreen.reloadData()
+        tableView.reloadRows(at: [indexPath], with: .automatic)
+
     }
     
 }

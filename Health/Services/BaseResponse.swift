@@ -8,14 +8,14 @@
 import Foundation
     
 struct BaseResponse<T:Codable> : Codable {
-        let id : String?
+//        let id : String?
         let message: String?
         let messageCode: Int?
         let data: T?
         let success: Bool?
 
         enum CodingKeys: String, CodingKey {
-            case id = "id"
+//            case id = "id"
             case message = "message"
             case messageCode = "messageCode"
             case data = "data"
@@ -23,7 +23,7 @@ struct BaseResponse<T:Codable> : Codable {
         }
     
     init() {
-        self.id = ""
+//        self.id = ""
         self.message = ""
         self.messageCode = 0
         self.success = false
