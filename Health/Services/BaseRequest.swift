@@ -439,7 +439,7 @@ extension TargetType1 {
 }
 
 protocol NetworkServiceProtocol {
-    func request<T: Decodable>(_ target: TargetType1, responseType: T.Type, completion: @escaping (Result<T, NetworkError>) -> Void)
+    func request<T: Decodable>(_ target: TargetType1, responseType: T.Type, completion: @escaping (Result<T, NetworkError>) -> Void) //closure
 }
 
 final class NetworkService1: NetworkServiceProtocol {
@@ -552,3 +552,146 @@ final class NetworkService1: NetworkServiceProtocol {
     }
 }
 
+protocol AsyncAwaitNetworkServiceProtocol {
+    func request<T: Codable>(_ target: TargetType1, responseType: T.Type) async throws -> T? //async/await
+}
+//
+final class AsyncAwaitNetworkService: AsyncAwaitNetworkServiceProtocol {
+    static let shared = AsyncAwaitNetworkService()
+    private init() {}
+
+    func request<T: Codable>(_ target: TargetType1, responseType: T.Type) async throws -> T? {
+        // Check network connectivity
+        guard Helper.shared.isConnectedToNetwork() else {
+            throw NetworkError.noConnection
+        }
+
+        // Construct URL
+        let url = target.baseURL.appendingPathComponent(target.path)
+        var request = URLRequest(url: url)
+        request.httpMethod = target.method.rawValue
+
+        // Set headers
+        if let headers = target.headers {
+            for (key, value) in headers {
+                request.setValue(value, forHTTPHeaderField: key)
+            }
+        }
+
+        // Add Authorization
+        if let token = Helper.shared.getUser()?.token {
+            request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        }
+
+        // Add parameters
+        if let parameters = target.parameters {
+            switch target.method {
+            case .get:
+                if var urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false) {
+                    urlComponents.queryItems = parameters.map { URLQueryItem(name: $0.key, value: "\($0.value)") }
+                    request.url = urlComponents.url
+                }
+            case .post, .put, .patch:
+                request.httpBody = try JSONSerialization.data(withJSONObject: parameters, options: [])
+                request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            default:
+                break
+            }
+        }
+
+        logRequest(request)
+
+        do {
+            let (data, response) = try await URLSession.shared.data(for: request)
+
+            guard let httpResponse = response as? HTTPURLResponse else {
+                throw NetworkError.invalidJSON("Invalid response object")
+            }
+
+            logResponse(httpResponse, data: data)
+
+            switch httpResponse.statusCode {
+            case 200..<300:
+                do {
+//                    print("httpResponse",httpResponse)
+//                    print("data",data)
+//                    print("JSONDecoder().decode(T.self, from: data)",try JSONDecoder().decode(T.self, from: data))
+                    
+                                              // First try to decode as ApiResponse
+                                              if let wrapper = try? JSONDecoder().decode(BaseResponse<T>.self, from: data) {
+                                                  return wrapper.data
+                                              }
+                    
+                                              // Fall back to direct decoding if not wrapped
+                                              return try JSONDecoder().decode(T.self, from: data)
+                    
+//                    ------------------------------
+//                    // First try to decode as BaseResponse
+//                     if let wrapper = try? JSONDecoder().decode(BaseResponse<T>.self, from: data) {
+//                         // Safely handle the optional data property
+//                         guard let responseData = wrapper.data else {
+//                             throw NetworkError.invalidJSON("Response data is nil")
+//                         }
+//                         return responseData
+//                     }
+//                     
+//                     // Fall back to direct decoding if not wrapped
+//                     do {
+//                         let directResult = try JSONDecoder().decode(T.self, from: data)
+//                         print("Direct decoding result:", directResult)
+//                         return directResult
+//                     } catch {
+//                         print("Direct decoding failed:", error)
+//                         throw NetworkError.unableToParseData("Failed to decode response: \(error.localizedDescription)")
+//                     }
+//                    -------------------------------
+                } catch {
+                          print("Decoding error details:", error)
+                          throw NetworkError.unableToParseData(error.localizedDescription)
+                      }
+
+            case 401:
+                throw NetworkError.unauthorized(code: httpResponse.statusCode, error: "Unauthorized")
+
+            case 400..<500:
+                throw NetworkError.unknown(code: httpResponse.statusCode, error: "Client Error")
+
+            case 500..<600:
+                throw NetworkError.serverError(code: httpResponse.statusCode, error: "Server Error")
+
+            default:
+                throw NetworkError.unknown(code: httpResponse.statusCode, error: "Unhandled status code")
+            }
+        } catch {
+            if let error = error as? NetworkError {
+                throw error
+            } else {
+                throw NetworkError.unknown(code: -1, error: error.localizedDescription)
+            }
+        }
+    }
+
+    // MARK: - Logging
+    private func logRequest(_ request: URLRequest) {
+        print("=== Request ===")
+        print("URL: \(request.url?.absoluteString ?? "Invalid URL")")
+        print("Method: \(request.httpMethod ?? "No Method")")
+        print("Headers: \(request.allHTTPHeaderFields ?? [:])")
+        print("parameters: \(request.allHTTPHeaderFields ?? [:])")
+
+        if let body = request.httpBody, let bodyString = String(data: body, encoding: .utf8) {
+            print("Body: \(bodyString)")
+        }
+        print("===============")
+    }
+
+    private func logResponse(_ response: HTTPURLResponse, data: Data?) {
+        print("=== Response ===")
+        print("Status Code: \(response.statusCode)")
+        print("Headers: \(response.allHeaderFields)")
+        if let data = data, let dataString = String(data: data, encoding: .utf8) {
+            print("Body: \(dataString)")
+        }
+        print("================")
+    }
+}

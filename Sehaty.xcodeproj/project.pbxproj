@@ -14,6 +14,9 @@
 		9047483F2DCF63530016C3DC /* PackagesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9047483E2DCF63530016C3DC /* PackagesView.swift */; };
 		904748452DCF8EF80016C3DC /* PackageDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 904748442DCF8EF80016C3DC /* PackageDetailsView.swift */; };
 		9047484C2DCFA4000016C3DC /* PackageMoreDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9047484A2DCFA4000016C3DC /* PackageMoreDetailsView.swift */; };
+		9047484E2DD34CF80016C3DC /* NewHomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9047484D2DD34CF80016C3DC /* NewHomeViewModel.swift */; };
+		904748502DD34D2D0016C3DC /* NewHomeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9047484F2DD34D2D0016C3DC /* NewHomeModel.swift */; };
+		904748532DD34EF60016C3DC /* HomeServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 904748522DD34EE50016C3DC /* HomeServices.swift */; };
 		9057A6132DA4232B0090C34A /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9057A6122DA4232B0090C34A /* CustomTextField.swift */; };
 		9057A61C2DA430470090C34A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9057A61A2DA430470090C34A /* Localizable.strings */; };
 		90842F382DA16A3700B02D02 /* SelectLanguageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90842F372DA16A2200B02D02 /* SelectLanguageView.swift */; };
@@ -239,6 +242,9 @@
 		9047483E2DCF63530016C3DC /* PackagesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackagesView.swift; sourceTree = "<group>"; };
 		904748442DCF8EF80016C3DC /* PackageDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackageDetailsView.swift; sourceTree = "<group>"; };
 		9047484A2DCFA4000016C3DC /* PackageMoreDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackageMoreDetailsView.swift; sourceTree = "<group>"; };
+		9047484D2DD34CF80016C3DC /* NewHomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewHomeViewModel.swift; sourceTree = "<group>"; };
+		9047484F2DD34D2D0016C3DC /* NewHomeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewHomeModel.swift; sourceTree = "<group>"; };
+		904748522DD34EE50016C3DC /* HomeServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeServices.swift; sourceTree = "<group>"; };
 		9057A6122DA4232B0090C34A /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		9057A61B2DA430470090C34A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		9057A61D2DA430E90090C34A /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -550,6 +556,7 @@
 		904748392DCF63150016C3DC /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				9047484D2DD34CF80016C3DC /* NewHomeViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -557,6 +564,7 @@
 		9047483A2DCF631D0016C3DC /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				9047484F2DD34D2D0016C3DC /* NewHomeModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -654,6 +662,14 @@
 				9047484A2DCFA4000016C3DC /* PackageMoreDetailsView.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		904748512DD34ECE0016C3DC /* NewServices */ = {
+			isa = PBXGroup;
+			children = (
+				904748522DD34EE50016C3DC /* HomeServices.swift */,
+			);
+			path = NewServices;
 			sourceTree = "<group>";
 		};
 		90842F352DA16A0600B02D02 /* SelectLanguage */ = {
@@ -1220,6 +1236,7 @@
 		BBBDFFF62A730F9800F066DF /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				904748512DD34ECE0016C3DC /* NewServices */,
 				C80DA9E92AA4D37800F10808 /* HealthServices */,
 				C80DA9E12AA4D11300F10808 /* BaseResponse.swift */,
 				C80DA9E32AA4D29500F10808 /* EndPoints.swift */,
@@ -1955,6 +1972,7 @@
 				BB518CD52A9A113900242FAD /* TipsCategoriesVC2.swift in Sources */,
 				C82FBA192AB0ACD70029F151 /* PDFPickerHelper.swift in Sources */,
 				BBBD000F2A73101700F066DF /* RoundedImage.swift in Sources */,
+				904748502DD34D2D0016C3DC /* NewHomeModel.swift in Sources */,
 				C8C7339C2AA6757800185698 /* SignUpVM.swift in Sources */,
 				BBBD00192A73101700F066DF /* Cesar.swift in Sources */,
 				BBBD000D2A73101700F066DF /* Style.swift in Sources */,
@@ -1990,8 +2008,10 @@
 				BB546DEA2AC9E467008A4F8C /* HomeTVCell1.swift in Sources */,
 				90842F3A2DA1748800B02D02 /* CustomButton.swift in Sources */,
 				BB518CEE2A9A129500242FAD /* TipsCategories3TVCell.swift in Sources */,
+				904748532DD34EF60016C3DC /* HomeServices.swift in Sources */,
 				BBBD003F2A731B7B00F066DF /* SplashScreenTVCell3.swift in Sources */,
 				BB5A266B2B2E1E0B0005C9B8 /* ModelHelp.swift in Sources */,
+				9047484E2DD34CF80016C3DC /* NewHomeViewModel.swift in Sources */,
 				BB546DE62AC9D565008A4F8C /* HomeCVCell2.swift in Sources */,
 				9047483F2DCF63530016C3DC /* PackagesView.swift in Sources */,
 				BB1B2FF72A7E9B5E001677FD /* INBodyTVCell.swift in Sources */,

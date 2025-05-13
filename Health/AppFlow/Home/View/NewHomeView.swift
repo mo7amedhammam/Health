@@ -8,7 +8,8 @@
 import SwiftUI
 
 struct NewHomeView: View {
-    
+    @StateObject private var viewModel = NewHomeViewModel()
+
     init() {
         // Large Navigation Title
 //        UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor: UIColor.purple]
@@ -25,9 +26,14 @@ struct NewHomeView: View {
                     
                     VStack(alignment:.leading){
                         
-                        NextSessionSection()
-                        
-                        MainCategoriesSection()
+                        NextSessionSection(upcomingSession: viewModel.upcomingSession)
+                            .task {
+                                await viewModel.getUpcomingSession()
+                            }
+                        MainCategoriesSection(categories: viewModel.homeCategories)
+                            .task {
+                               await viewModel.getHomeCategories()
+                            }
                         
                         Image(.adsbg)
                             .resizable()
@@ -53,13 +59,14 @@ struct NewHomeView: View {
                 .padding(.horizontal)
             }
         }
+        
+        
     }
 }
 
 #Preview {
     //    NewHomeView()
     NewTabView()
-    
 }
 
 struct TitleBar: View {
@@ -214,6 +221,7 @@ struct SectionHeader: View {
 }
 
 struct NextSessionSection: View {
+    var upcomingSession: UpcomingSessionM?
     var canJoin = true
     
     var body: some View {
@@ -238,7 +246,7 @@ struct NextSessionSection: View {
                                 .frame(maxWidth: .infinity, alignment: .leading)
                                 .padding(.bottom,1)
                             // Title
-                            Text("pack_name")
+                            Text(upcomingSession?.packageName ?? "")
                                 .font(.medium(size: 10))
                                 .foregroundStyle(Color.white)
                                 .frame(maxWidth: .infinity, alignment: .leading)
@@ -251,7 +259,7 @@ struct NextSessionSection: View {
                             
                             VStack(){
                                 // Title
-                                Text("08/05/2025")
+                                Text(upcomingSession?.sessionDate ?? "")
                                     .font(.regular(size: 12))
                                     .foregroundStyle(Color.white)
                                     .frame(maxWidth: .infinity, alignment: .trailing)
@@ -286,7 +294,7 @@ struct NextSessionSection: View {
                                 .frame(maxWidth: .infinity, alignment: .leading)
                                 .padding(.bottom,1)
                             // Title
-                            Text("Doctor Name")
+                            Text(upcomingSession?.doctorName ?? "")
                                 .font(.semiBold(size: 16))
                                 .foregroundStyle(Color.white)
                                 .frame(maxWidth: .infinity, alignment: .leading)
@@ -459,6 +467,7 @@ struct NextSessionSection: View {
 }
 
 struct MainCategoriesSection: View {
+     var categories: HomeCategoryM?
     var body: some View {
         VStack(spacing:5){
             SectionHeader(image: Image(.newcategicon),title: "home_maincat"){
@@ -467,7 +476,11 @@ struct MainCategoriesSection: View {
             
             ScrollView(.horizontal,showsIndicators:false){
                 HStack(spacing:12){
-                    ForEach(0...7, id: \.self) { item in
+                     let categories = categories?.items ?? []
+//                    else {
+//                        return Text("No_Categories_yet".localized)
+//                    }
+                    ForEach(categories, id: \.self) { item in
                         Button(action: {
                             
                         }, label: {
@@ -477,7 +490,7 @@ struct MainCategoriesSection: View {
                                     .frame(width: 166, height: 221)
                                 
                                 VStack(alignment: .leading){
-                                    Text("اليوريك أسيد")
+                                    Text(item.title ?? "")
                                         .font(.semiBold(size: 14))
                                         .foregroundStyle(Color.white)
                                         .frame(maxWidth: .infinity,alignment:.leading)
@@ -489,7 +502,7 @@ struct MainCategoriesSection: View {
                                                 .frame(width: 9,height:9)
                                                 .scaledToFit()
                                             
-                                            ( Text(" 6 ") + Text("subcategory".localized))
+                                            ( Text(" \(item.subCategoryCount ?? 0) ") + Text("subcategory".localized))
                                                 .font(.medium(size: 8))
                                             
                                         }
@@ -506,33 +519,26 @@ struct MainCategoriesSection: View {
                                                 .scaledToFit()
                                                 .foregroundStyle(.white)
                                             
-                                            ( Text(" 14 ") + Text("package".localized))
+                                            ( Text(" \(item.packageCount ?? 0) ") + Text("package".localized))
                                                 .font(.medium(size: 8))
-                                            
                                         }
                                         .foregroundStyle(Color.white)
-                                        
                                     }
-                                    
                                 }
                                 .padding([.vertical,.horizontal],5)
                                 .background{
                                     BlurView(radius: 6)
                                 }
                             }
-                            
                         })
+                        .buttonStyle(.plain)
                         .cardStyle(cornerRadius: 6)
-                        
                     }
                 }
-                
             }
-            
         }
         .padding(.vertical,5)
         .padding(.bottom,5)
-        
     }
 }
 
@@ -783,6 +789,8 @@ struct MostViewedBooked: View {
                                             
                                         }, label: {
                                             Image(.newlikeicon)
+                                                .resizable()
+                                                .frame(width: 20, height: 20)
                                         })
                                         
                                     }
