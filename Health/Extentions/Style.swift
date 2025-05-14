@@ -627,17 +627,17 @@ public extension String {
         map.forEach { str = str.replacingOccurrences(of: $0, with: $1) }
         return str
     }
-    func ChangeDateFormat( FormatFrom:String, FormatTo:String, local:String? = "en" ) -> String {
-         var newdate = ""
-         let formatter = DateFormatter()
-//         formatter.locale = Locale(identifier: local ?? "ar")
-         formatter.dateFormat = FormatFrom
-         if let date = formatter.date(from: self) {
-             formatter.dateFormat = FormatTo
-             newdate = formatter.string(from: date)
-         }
-      return newdate
-       }
+//    func ChangeDateFormat( FormatFrom:String, FormatTo:String, local:String? = "en" ) -> String {
+//         var newdate = ""
+//         let formatter = DateFormatter()
+////         formatter.locale = Locale(identifier: local ?? "ar")
+//         formatter.dateFormat = FormatFrom
+//         if let date = formatter.date(from: self) {
+//             formatter.dateFormat = FormatTo
+//             newdate = formatter.string(from: date)
+//         }
+//      return newdate
+//       }
   
     
     

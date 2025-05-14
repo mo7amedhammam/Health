@@ -35,3 +35,65 @@ struct HomeCategoryItemM: Codable,Hashable {
     var title, homeImage, imagePath: String?
     var subCategoryCount, packageCount: Int?
 }
+
+
+// MARK: - MyMeasurementsStatsM
+struct MyMeasurementsStatsM: Codable,Hashable {
+    var medicalMeasurementID: Int?
+    var image, title: String?
+    var measurementsCount: Int?
+    var lastMeasurementValue, lastMeasurementDate, formatValue, regExpression: String?
+    var normalRangValue: String?
+
+    enum CodingKeys: String, CodingKey {
+        case medicalMeasurementID = "medicalMeasurementId"
+        case image, title, measurementsCount, lastMeasurementValue, lastMeasurementDate, formatValue, regExpression, normalRangValue
+    }
+}
+
+// MARK: - FeaturedPackages
+struct FeaturedPackagesM: Codable {
+    var items: [FeaturedPackageItemM]?
+    var totalCount: Int?
+}
+
+// MARK: - FeaturedPackageItemM
+struct FeaturedPackageItemM: Codable,Hashable {
+    var id: Int?
+    var name: String?
+    var mainCategoryID, subCategoryID: Int?
+    var categoryName: String?
+    var sessionCount: Int?
+    var isWishlist: Bool?
+    var priceBeforeDiscount, discount, priceAfterDiscount: Int?
+    var homeImage, imagePath: String?
+    var doctorCount: Int?
+
+    enum CodingKeys: String, CodingKey {
+        case id, name
+        case mainCategoryID = "mainCategoryId"
+        case subCategoryID = "subCategoryId"
+        case categoryName, sessionCount, isWishlist, priceBeforeDiscount, discount, priceAfterDiscount, homeImage, imagePath, doctorCount
+    }
+}
+
+// MARK: - MostBookedPackagesM -
+//struct MostBookedPackagesM: Codable ,Hashable{
+//    var id: Int?
+//    var name: String?
+//    var mainCategoryID, subCategoryID: Int?
+//    var categoryName: String?
+//    var sessionCount: Int?
+//    var isWishlist: Bool?
+//    var priceBeforeDiscount, discount, priceAfterDiscount: Int?
+//    var homeImage, imagePath: String?
+//    var doctorCount: Int?
+//
+//    enum CodingKeys: String, CodingKey {
+//        case id, name
+//        case mainCategoryID = "mainCategoryId"
+//        case subCategoryID = "subCategoryId"
+//        case categoryName, sessionCount, isWishlist, priceBeforeDiscount, discount, priceAfterDiscount, homeImage, imagePath, doctorCount
+//    }
+//}
+

@@ -9,12 +9,12 @@ import SwiftUI
 
 struct NewHomeView: View {
     @StateObject private var viewModel = NewHomeViewModel()
-
+    
     init() {
         // Large Navigation Title
-//        UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor: UIColor.purple]
-//        // Inline Navigation Title
-//        UINavigationBar.appearance().titleTextAttributes = [.foregroundColor: UIColor(resource: .mainBlue)]
+        //        UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor: UIColor.purple]
+        //        // Inline Navigation Title
+        //        UINavigationBar.appearance().titleTextAttributes = [.foregroundColor: UIColor(resource: .mainBlue)]
     }
     var body: some View {
         NavigationView(){
@@ -23,31 +23,41 @@ struct NewHomeView: View {
                 
                 ScrollView(showsIndicators: false){
                     HeaderView()
-                    
+                        .padding(.horizontal)
+
                     VStack(alignment:.leading){
-                        
-                        NextSessionSection(upcomingSession: viewModel.upcomingSession)
-                            .task {
-                                await viewModel.getUpcomingSession()
+                        Group{
+                            if let nextsession = viewModel.upcomingSession{
+                                NextSessionSection(upcomingSession: nextsession)
                             }
+                        }
+                        .task {
+                            await viewModel.getUpcomingSession()
+                        }
                         MainCategoriesSection(categories: viewModel.homeCategories)
                             .task {
-                               await viewModel.getHomeCategories()
+                                await viewModel.getHomeCategories()
                             }
                         
                         Image(.adsbg)
                             .resizable()
                             .frame(height: 137)
+                            .padding(.horizontal)
+
+                        LastMesurmentsSection(measurements: viewModel.myMeasurements)
+                            .task {
+                                await viewModel.getMyMeasurements()
+                            }
                         
-                        LastMesurmentsSection()
-                        
-                        VipPackagesSection()
+                        VipPackagesSection(packaces: viewModel.featuredPackages?.items)
                         
                         Image(.adsbg2)
                             .resizable()
                             .frame(height: 229)
+                            .padding(.horizontal)
                         
                         MostViewedBooked()
+                            .environmentObject(viewModel)
                         
                     }
                     
@@ -56,7 +66,7 @@ struct NewHomeView: View {
                     Spacer().frame(height: 55)
                     
                 }
-                .padding(.horizontal)
+                //                .padding(.horizontal)
             }
         }
         
@@ -200,7 +210,7 @@ struct SectionHeader: View {
                     .resizable()
                     .frame(width: 16, height: 16)
                     .scaledToFill()
-
+                
             }
             Text(title.localized)
                 .font(.semiBold(size: 16))
@@ -275,7 +285,7 @@ struct NextSessionSection: View {
                             Image(.newcal)
                                 .resizable()
                                 .frame(width: 15, height: 15)
-
+                            
                             
                         }
                         
@@ -435,7 +445,7 @@ struct NextSessionSection: View {
                                     .renderingMode(.template)
                                     .resizable()
                                     .frame(width: 15, height: 15)
-
+                                
                                     .foregroundStyle(Color.white)
                                 
                                 Text("reSchedual".localized)
@@ -467,26 +477,30 @@ struct NextSessionSection: View {
 }
 
 struct MainCategoriesSection: View {
-     var categories: HomeCategoryM?
+    var categories: HomeCategoryM?
     var body: some View {
         VStack(spacing:5){
             SectionHeader(image: Image(.newcategicon),title: "home_maincat"){
                 //                            go to last mes package
             }
             
+            .padding(.horizontal)
+            
+            
             ScrollView(.horizontal,showsIndicators:false){
                 HStack(spacing:12){
-                     let categories = categories?.items ?? []
-//                    else {
-//                        return Text("No_Categories_yet".localized)
-//                    }
+                    let categories = categories?.items ?? []
+                    
                     ForEach(categories, id: \.self) { item in
                         Button(action: {
                             
                         }, label: {
                             ZStack(alignment: .bottom){
-                                Image(.onboarding2)
-                                    .resizable()
+                                //                                Image(.onboarding2)
+                                //                                    .resizable()
+                                //                                    .frame(width: 166, height: 221)
+                                
+                                KFImageLoader(url:URL(string:Constants.imagesURL + (item.homeImage?.validateSlashs() ?? "")),placeholder: Image("logo"),placeholderSize: CGSize(width: 166, height: 221), shouldRefetch: true)
                                     .frame(width: 166, height: 221)
                                 
                                 VStack(alignment: .leading){
@@ -528,6 +542,7 @@ struct MainCategoriesSection: View {
                                 .padding([.vertical,.horizontal],5)
                                 .background{
                                     BlurView(radius: 6)
+                                    LinearGradient(gradient: Gradient(colors: [.clear, .black.opacity(0.4)]), startPoint: .top, endPoint: .bottom)
                                 }
                             }
                         })
@@ -535,6 +550,8 @@ struct MainCategoriesSection: View {
                         .cardStyle(cornerRadius: 6)
                     }
                 }
+                .padding(.horizontal)
+                .padding(.vertical,5)
             }
         }
         .padding(.vertical,5)
@@ -543,6 +560,7 @@ struct MainCategoriesSection: View {
 }
 
 struct LastMesurmentsSection: View {
+    var measurements : [MyMeasurementsStatsM]?
     let columns = [
         GridItem(.flexible()),
         GridItem(.flexible()),
@@ -554,149 +572,72 @@ struct LastMesurmentsSection: View {
             SectionHeader(image: Image(.newlastmesicon),title: "home_lastMes"){
                 //                            go to last mes package
             }
+            .padding(.horizontal)
+            
             LazyVGrid(columns: columns, spacing: 10) {
-                ForEach(0...7, id: \.self) { item in
+                ForEach(measurements ?? [], id: \.self) { item in
                     VStack{
-                        Text("اليوريك أسيد")
+                        Text(item.title ?? "")
                             .font(.bold(size: 12))
                             .foregroundStyle(Color.mainBlue)
                             .frame(maxWidth: .infinity)
                         
-                        Image(.sugarMeasurement1)
-                            .resizable()
-                            .frame(width: 30, height: 30)
-                            .aspectRatio(contentMode: .fit)
+                        //                        Image(.sugarMeasurement1)
+                        //                            .resizable()
+                        //                            .frame(width: 30, height: 30)
+                        //                            .aspectRatio(contentMode: .fit)
                         
-                        Text("240")
+                        KFImageLoader(url:URL(string:Constants.imagesURL + (item.image?.validateSlashs() ?? "")),placeholder: Image("logo"), shouldRefetch: true)
+                            .frame(width: 30, height: 30)
+                        
+                        Text(item.lastMeasurementValue ?? "")
                             .font(.bold(size: 10))
                             .foregroundStyle(Color(.secondaryMain))
                             .frame(maxWidth: .infinity)
                             .padding(.vertical,1)
                         
-                        (Text("mes_inDate".localized) .font(.bold(size: 7))
-                         + Text( "27/6/2022"))
-                        .font(.semiBold(size: 7))
+                        let date = (item.lastMeasurementDate ?? "").ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo:"dd MMM yyyy")
+                        
+                        (Text("mes_inDate".localized).font(.semiBold(size: 6))
+                         + Text( date ))
+                        .font(.regular(size: 6))
                         .foregroundStyle(Color.mainBlue)
                         .frame(maxWidth: .infinity)
+                        
                     }
                     .frame(width: UIScreen.main.bounds.width/4.7, height: 95)
                     .cardStyle(cornerRadius: 5,shadowOpacity:0.09)
                 }
-                
             }
+            .padding(.horizontal)
+            .padding(.vertical,5)
             
         }
         .padding(.vertical,5)
         .padding(.bottom,5)
-        
-        
     }
 }
 
 
 struct VipPackagesSection: View {
+    var packaces: [FeaturedPackageItemM]?
     var body: some View {
         VStack{
             SectionHeader(image: Image(.newvippackicon),title: "home_vippackages"){
                 //                            go to last mes package
             }
+            .padding(.horizontal)
             
             ScrollView(.horizontal,showsIndicators:false){
                 HStack{
-                    ForEach(0...7, id: \.self) { item in
-                        Button(action: {
-                            
-                        }, label: {
-                            ZStack(alignment: .bottom){
-                                Image(.onboarding1)
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fill)
-                                //                                    .frame(width: 166, height: 221)
-                                    .frame(width: 200, height: 356)
-                                
-                                VStack {
-                                    HStack(alignment:.top){
-                                        // Title
-                                        HStack (spacing:3){
-                                            Image(.newconversationicon)
-                                                .resizable()
-                                                .frame(width: 16, height: 9)
-                                            Text("4 ").font(.semiBold(size: 16))
-                                            
-                                            Text("sessions".localized)
-                                        }
-                                        .font(.regular(size: 10))
-                                        .foregroundStyle(Color.white)
-                                        .frame(height:32)
-                                        .padding(.horizontal,10)
-                                        .background{Color(.secondaryMain)}
-                                        .cardStyle( cornerRadius: 3)
-                                        
-                                        Spacer()
-                                        Button(action: {
-                                            
-                                        }, label: {
-                                            Image(.newlikeicon)
-                                                .resizable()
-                                                .frame(width: 20, height: 20)
-
-                                        })
-                                        
-                                    }
-                                    .frame(maxWidth: .infinity,alignment:.leading)
-                                    .padding()
-                                    
-                                    Spacer()
-                                    
-                                    VStack(alignment: .leading,spacing: 10){
-                                        Text("pack_Name".localized)
-                                            .font(.semiBold(size: 16))
-                                            .foregroundStyle(Color.white)
-                                            .frame(maxWidth: .infinity,alignment:.leading)
-                                        
-                                        HStack(alignment: .center,spacing: 5){
-                                            Text( "أمراض الجلد")
-                                            Circle().fill(Color(.white))
-                                                .frame(width: 4, height: 4)
-                                            Text("23 / 7 / 2023")
-                                        }
-                                        .font(.regular(size: 10))
-                                        .foregroundStyle(Color.white)
-                                        .frame(maxWidth: .infinity,alignment:.leading)
-                                        
-                                        Text("90 " + "EGP".localized)
-                                            .font(.semiBold(size: 12))
-                                            .foregroundStyle(Color.white)
-                                            .frame(maxWidth: .infinity,alignment:.leading)
-                                        
-                                        HStack{
-                                            Text("140 " + "EGP".localized).strikethrough().foregroundStyle(Color(.secondary))
-                                                .font(.semiBold(size: 12))
-                                            
-                                            (Text("(".localized + "Discount".localized ) + Text( " 20" + "%".localized + ")".localized))
-                                                .font(.semiBold(size: 12))
-                                                .foregroundStyle(Color.white)
-                                        }
-                                        .frame(maxWidth: .infinity,alignment:.leading)
-                                        
-                                    }
-                                    .padding(.top,5)
-                                    .padding([.bottom,.horizontal],10)
-                                    .background{
-                                        BlurView(radius: 5)
-                                        LinearGradient(gradient: Gradient(colors: [.clear, .black.opacity(0.8)]), startPoint: .top, endPoint: .bottom)
-                                    }
-                                }
-                            }
-                            
-                        })
-                        .cardStyle(cornerRadius: 3)
-                        .frame(width: 200, height: 356)
-                        
+                    ForEach(packaces ?? [], id: \.self) { item in
+                        VipPackageCellView(item: item)
                     }
                 }
+                .padding(.horizontal)
+                .padding(.vertical,5)
+                
             }
-            
         }
         .padding(.vertical,5)
         .padding(.bottom,5)
@@ -707,13 +648,115 @@ struct VipPackagesSection: View {
     MostViewedBooked()
 })
 
+struct VipPackageCellView: View {
+    var item : FeaturedPackageItemM
+    
+    var body: some View {
+        Button(action: {
+            
+        }, label: {
+            ZStack(alignment: .bottom){
+                //                                Image(.onboarding1)
+                //                                    .resizable()
+                //                                    .aspectRatio(contentMode: .fill)
+                //                                //                                    .frame(width: 166, height: 221)
+                //                                    .frame(width: 200, height: 356)
+                
+                KFImageLoader(url:URL(string:Constants.imagesURL + (item.homeImage?.validateSlashs() ?? "")),placeholder: Image("logo"),placeholderSize: CGSize(width: 200, height: 356), shouldRefetch: true)
+                    .frame(width: 200, height: 356)
+                
+                VStack {
+                    HStack(alignment:.top){
+                        // Title
+                        HStack (spacing:3){
+                            Image(.newconversationicon)
+                                .resizable()
+                                .frame(width: 16, height: 9)
+                            
+                            Text("\(item.sessionCount ?? 0) ").font(.semiBold(size: 16))
+                            
+                            Text("sessions".localized)
+                        }
+                        .font(.regular(size: 10))
+                        .foregroundStyle(Color.white)
+                        .frame(height:32)
+                        .padding(.horizontal,10)
+                        .background{Color(.secondaryMain)}
+                        .cardStyle( cornerRadius: 3)
+                        
+                        Spacer()
+                        Button(action: {
+                            
+                        }, label: {
+                            Image(.newlikeicon)
+                                .resizable()
+                                .frame(width: 20, height: 20)
+                        })
+                    }
+                    .frame(maxWidth: .infinity,alignment:.leading)
+                    .padding()
+                    
+                    Spacer()
+                    
+                    VStack(alignment: .leading,spacing: 10){
+                        Text(item.name ?? "pack_Name".localized)
+                            .font(.semiBold(size: 16))
+                            .foregroundStyle(Color.white)
+                            .frame(maxWidth: .infinity,alignment:.leading)
+                        
+                        HStack(alignment: .center,spacing: 5){
+                            Text( item.categoryName ?? "")
+                            Circle().fill(Color(.white))
+                                .frame(width: 4, height: 4)
+                            Text("23 / 7 / 2023")
+                        }
+                        .font(.regular(size: 10))
+                        .foregroundStyle(Color.white)
+                        .frame(maxWidth: .infinity,alignment:.leading)
+                        
+                        Text("\(item.priceAfterDiscount ?? 0) " + "EGP".localized)
+                            .font(.semiBold(size: 12))
+                            .foregroundStyle(Color.white)
+                            .frame(maxWidth: .infinity,alignment:.leading)
+                        
+                        HStack{
+                            Text("\(item.priceBeforeDiscount ?? 0) " + "EGP".localized).strikethrough().foregroundStyle(Color(.secondary))
+                                .font(.semiBold(size: 12))
+                            
+                            (Text("(".localized + "Discount".localized ) + Text( " \(item.discount ?? 0)" + "%".localized + ")".localized))
+                                .font(.semiBold(size: 12))
+                                .foregroundStyle(Color.white)
+                        }
+                        .frame(maxWidth: .infinity,alignment:.leading)
+                        
+                    }
+                    .padding(.top,5)
+                    .padding([.bottom,.horizontal],10)
+                    .background{
+                        BlurView(radius: 5)
+                        LinearGradient(gradient: Gradient(colors: [.clear, .black.opacity(0.8)]), startPoint: .top, endPoint: .bottom)
+                    }
+                }
+            }
+            
+        })
+        .cardStyle(cornerRadius: 3)
+        .frame(width: 200, height: 356)    }
+}
+
+#Preview {
+    VipPackageCellView(item: .init())
+}
 
 struct MostViewedBooked: View {
+    @EnvironmentObject var viewModel : NewHomeViewModel
+    
     private enum mostcases {
         case mostviewed
         case mostbooked
     }
     @State private var currentcase:mostcases = .mostviewed
+    @State var packaces: [FeaturedPackageItemM]?
     
     var body: some View {
         
@@ -721,6 +764,7 @@ struct MostViewedBooked: View {
             HStack(alignment:.top, spacing:20){
                 Button(action: {
                     currentcase = .mostbooked
+                    getFeaturedPackages()
                 }){
                     VStack {
                         Text("Most_Booked".localized)
@@ -735,7 +779,7 @@ struct MostViewedBooked: View {
                 
                 Button(action: {
                     currentcase = .mostviewed
-                    
+                    getFeaturedPackages()
                 }){
                     VStack {
                         Text("Most_Viewed".localized)
@@ -750,106 +794,36 @@ struct MostViewedBooked: View {
                 }
             }
             .rotationEffect(.degrees(-90))
-            .frame(width: 60)
+            .frame(width: 30)
             .font(.bold(size: 22))
+            .padding(.leading)
             
             ScrollView(.horizontal,showsIndicators:false){
                 HStack{
-                    ForEach(0...7, id: \.self) { item in
-                        Button(action: {
-                            
-                        }, label: {
-                            ZStack(alignment: .bottom){
-                                Image(.onboarding1)
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fill)
-                                //                                    .frame(width: 166, height: 221)
-                                    .frame(width: 200, height: 356)
-                                
-                                VStack {
-                                    HStack(alignment:.top){
-                                        // Title
-                                        HStack (spacing:3){
-                                            Image(.newconversationicon)
-                                                .resizable()
-                                                .frame(width: 16, height: 9)
-                                            Text("4 ").font(.semiBold(size: 16))
-                                            
-                                            Text("sessions".localized)
-                                        }
-                                        .font(.regular(size: 10))
-                                        .foregroundStyle(Color.white)
-                                        .frame(height:32)
-                                        .padding(.horizontal,10)
-                                        .background{Color(.secondaryMain)}
-                                        .cardStyle( cornerRadius: 3)
-                                        
-                                        Spacer()
-                                        Button(action: {
-                                            
-                                        }, label: {
-                                            Image(.newlikeicon)
-                                                .resizable()
-                                                .frame(width: 20, height: 20)
-                                        })
-                                        
-                                    }
-                                    .frame(maxWidth: .infinity,alignment:.leading)
-                                    .padding()
-                                    
-                                    Spacer()
-                                    
-                                    VStack(alignment: .leading,spacing: 10){
-                                        Text("pack_Name".localized)
-                                            .font(.semiBold(size: 16))
-                                            .foregroundStyle(Color.white)
-                                            .frame(maxWidth: .infinity,alignment:.leading)
-                                        
-                                        HStack(alignment: .center,spacing: 5){
-                                            Text( "أمراض الجلد")
-                                            Circle().fill(Color(.white))
-                                                .frame(width: 4, height: 4)
-                                            Text("23 / 7 / 2023")
-                                        }
-                                        .font(.regular(size: 10))
-                                        .foregroundStyle(Color.white)
-                                        .frame(maxWidth: .infinity,alignment:.leading)
-                                        
-                                        Text("90 " + "EGP".localized)
-                                            .font(.semiBold(size: 12))
-                                            .foregroundStyle(Color.white)
-                                            .frame(maxWidth: .infinity,alignment:.leading)
-                                        
-                                        HStack{
-                                            Text("140 " + "EGP".localized).strikethrough().foregroundStyle(Color(.secondary))
-                                                .font(.semiBold(size: 12))
-                                            
-                                            (Text("(".localized + "Discount" ) + Text( " 20" + "%".localized + ")".localized))
-                                                .font(.semiBold(size: 12))
-                                                .foregroundStyle(Color.white)
-                                        }
-                                        .frame(maxWidth: .infinity,alignment:.leading)
-                                        
-                                    }
-                                    .padding(.top,5)
-                                    .padding([.bottom,.horizontal],10)
-                                    .background{
-                                        BlurView(radius: 5)
-                                        LinearGradient(gradient: Gradient(colors: [.clear, .black.opacity(0.8)]), startPoint: .top, endPoint: .bottom)
-                                    }
-                                }
-                            }
-                            
-                        })
-                        .cardStyle(cornerRadius: 3)
-                        .frame(width: 200, height: 356)
-                        
+                    ForEach(packaces ?? [], id: \.self) { item in
+                        VipPackageCellView(item: item)
                     }
                 }
+                .padding(.horizontal)
+                .padding(.vertical,5)
+                
             }
         }
         .padding(.vertical,10)
         .padding(.bottom,5)
-        
+        .task {
+            getFeaturedPackages()
+        }
+    }
+    func getFeaturedPackages() {
+        Task() {
+            switch currentcase {
+            case .mostviewed:
+                await viewModel.getMostBookedOrViewedPackages(forcase: .MostViewed)
+            case .mostbooked:
+                await viewModel.getMostBookedOrViewedPackages(forcase: .MostBooked)
+            }
+            packaces = currentcase == .mostbooked ? viewModel.mostBookedPackages : viewModel.mostViewedPackages
+        }
     }
 }

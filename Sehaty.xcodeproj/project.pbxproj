@@ -17,6 +17,7 @@
 		9047484E2DD34CF80016C3DC /* NewHomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9047484D2DD34CF80016C3DC /* NewHomeViewModel.swift */; };
 		904748502DD34D2D0016C3DC /* NewHomeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9047484F2DD34D2D0016C3DC /* NewHomeModel.swift */; };
 		904748532DD34EF60016C3DC /* HomeServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 904748522DD34EE50016C3DC /* HomeServices.swift */; };
+		904748552DD4C7F90016C3DC /* KFImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 904748542DD4C7F90016C3DC /* KFImageLoader.swift */; };
 		9057A6132DA4232B0090C34A /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9057A6122DA4232B0090C34A /* CustomTextField.swift */; };
 		9057A61C2DA430470090C34A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9057A61A2DA430470090C34A /* Localizable.strings */; };
 		90842F382DA16A3700B02D02 /* SelectLanguageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90842F372DA16A2200B02D02 /* SelectLanguageView.swift */; };
@@ -245,6 +246,7 @@
 		9047484D2DD34CF80016C3DC /* NewHomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewHomeViewModel.swift; sourceTree = "<group>"; };
 		9047484F2DD34D2D0016C3DC /* NewHomeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewHomeModel.swift; sourceTree = "<group>"; };
 		904748522DD34EE50016C3DC /* HomeServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeServices.swift; sourceTree = "<group>"; };
+		904748542DD4C7F90016C3DC /* KFImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KFImageLoader.swift; sourceTree = "<group>"; };
 		9057A6122DA4232B0090C34A /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		9057A61B2DA430470090C34A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		9057A61D2DA430E90090C34A /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -1151,6 +1153,7 @@
 		BBBDFFF12A730F8400F066DF /* File Support */ = {
 			isa = PBXGroup;
 			children = (
+				904748542DD4C7F90016C3DC /* KFImageLoader.swift */,
 				9057A6122DA4232B0090C34A /* CustomTextField.swift */,
 				90B67BE62D9EE20B00C1FD31 /* customModifiers.swift */,
 				903667042D82E0700040AE29 /* Localization */,
@@ -2026,6 +2029,7 @@
 				BBBD00372A731B5E00F066DF /* SplashScreenTVCell1.swift in Sources */,
 				BB518CD32A9A112C00242FAD /* TipsCategoriesVC1.swift in Sources */,
 				BB48F8A32A7482480051F12C /* OtpVC.swift in Sources */,
+				904748552DD4C7F90016C3DC /* KFImageLoader.swift in Sources */,
 				BBBD001A2A73101700F066DF /* ImageFromGallary.swift in Sources */,
 				C8918D9C2ACD61F20070A1D3 /* ExUiButtons.swift in Sources */,
 				BBBD00112A73101700F066DF /* RecieveImageVC.swift in Sources */,
