@@ -18,6 +18,8 @@
 		904748502DD34D2D0016C3DC /* NewHomeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9047484F2DD34D2D0016C3DC /* NewHomeModel.swift */; };
 		904748532DD34EF60016C3DC /* HomeServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 904748522DD34EE50016C3DC /* HomeServices.swift */; };
 		904748552DD4C7F90016C3DC /* KFImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 904748542DD4C7F90016C3DC /* KFImageLoader.swift */; };
+		904748572DD61BFE0016C3DC /* PackagesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 904748562DD61BFE0016C3DC /* PackagesViewModel.swift */; };
+		904748592DD6233E0016C3DC /* SubCategoriesM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 904748582DD6233E0016C3DC /* SubCategoriesM.swift */; };
 		9057A6132DA4232B0090C34A /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9057A6122DA4232B0090C34A /* CustomTextField.swift */; };
 		9057A61C2DA430470090C34A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9057A61A2DA430470090C34A /* Localizable.strings */; };
 		90842F382DA16A3700B02D02 /* SelectLanguageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90842F372DA16A2200B02D02 /* SelectLanguageView.swift */; };
@@ -247,6 +249,8 @@
 		9047484F2DD34D2D0016C3DC /* NewHomeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewHomeModel.swift; sourceTree = "<group>"; };
 		904748522DD34EE50016C3DC /* HomeServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeServices.swift; sourceTree = "<group>"; };
 		904748542DD4C7F90016C3DC /* KFImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KFImageLoader.swift; sourceTree = "<group>"; };
+		904748562DD61BFE0016C3DC /* PackagesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackagesViewModel.swift; sourceTree = "<group>"; };
+		904748582DD6233E0016C3DC /* SubCategoriesM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubCategoriesM.swift; sourceTree = "<group>"; };
 		9057A6122DA4232B0090C34A /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		9057A61B2DA430470090C34A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		9057A61D2DA430E90090C34A /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -582,6 +586,7 @@
 		9047483C2DCF63270016C3DC /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				904748562DD61BFE0016C3DC /* PackagesViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -589,6 +594,7 @@
 		9047483D2DCF632A0016C3DC /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				904748582DD6233E0016C3DC /* SubCategoriesM.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1983,6 +1989,7 @@
 				C85F28532ABC7F500093ADFF /* EXUiDevice.swift in Sources */,
 				C85996772AA7556400533C87 /* Alert.swift in Sources */,
 				C8F100DF2ADAC7F70085E508 /* ExWkWebView.swift in Sources */,
+				904748572DD61BFE0016C3DC /* PackagesViewModel.swift in Sources */,
 				C8F418D82AC19A5100E7A370 /* TipDetailsDrugGroup.swift in Sources */,
 				BB1ECAB52AD4741F009BF2DE /* WillExpireTVCell.swift in Sources */,
 				BB1B2FFB2A7EA364001677FD /* INBodyDetailsTVCell.swift in Sources */,
@@ -2011,6 +2018,7 @@
 				BB546DEA2AC9E467008A4F8C /* HomeTVCell1.swift in Sources */,
 				90842F3A2DA1748800B02D02 /* CustomButton.swift in Sources */,
 				BB518CEE2A9A129500242FAD /* TipsCategories3TVCell.swift in Sources */,
+				904748592DD6233E0016C3DC /* SubCategoriesM.swift in Sources */,
 				904748532DD34EF60016C3DC /* HomeServices.swift in Sources */,
 				BBBD003F2A731B7B00F066DF /* SplashScreenTVCell3.swift in Sources */,
 				BB5A266B2B2E1E0B0005C9B8 /* ModelHelp.swift in Sources */,

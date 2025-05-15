@@ -1,5 +1,5 @@
 //
-//  Packages.swift
+//  PackagesView.swift
 //  Sehaty
 //
 //  Created by mohamed hammam on 10/05/2025.
@@ -7,9 +7,12 @@
 
 import SwiftUI
 
-struct Packages: View {
-    
-    init() {
+struct PackagesView: View {
+    var mainCategory:HomeCategoryItemM
+    @StateObject private var viewModel = PackagesViewModel()
+
+    init(mainCategory:HomeCategoryItemM) {
+        self.mainCategory = mainCategory
     }
 
     var body: some View {
@@ -23,7 +26,7 @@ struct Packages: View {
                     
                     HStack{
                         VStack{
-                            Text("pack_name")
+                            Text(mainCategory.title ?? "")
                                 .font(.bold(size: 18))
                                 .foregroundStyle(.white)
                             
@@ -33,12 +36,10 @@ struct Packages: View {
                                     .frame(width: 11,height:11)
                                     .scaledToFit()
                                 
-                                ( Text(" 6 ") + Text("subcategory".localized))
+                                ( Text(" \(mainCategory.subCategoryCount ?? 0) ") + Text("subcategory".localized))
                                     .font(.medium(size: 12))
-                                
                             }
                             .foregroundStyle(Color.white)
-                                
                         }
                         Spacer()
                         
@@ -50,36 +51,39 @@ struct Packages: View {
                                 .scaledToFit()
                                 .foregroundStyle(.white)
                             
-                            ( Text(" 14 ") + Text("package".localized))
+                            ( Text(" \(mainCategory.packageCount ?? 0) ") + Text("package".localized))
                                 .font(.semiBold(size: 14))
-                            
                         }
                         .foregroundStyle(Color.white)
-                        
                     }
                     .padding(10)
                     .background{
                         BlurView(radius: 6)
                         LinearGradient(gradient: Gradient(colors: [.clear, .black.opacity(0.5)]), startPoint: .top, endPoint: .bottom)
-
                     }
-                    
                 }
                 .background{
-                    Image(.adsbg2)
-                        .resizable()
+                    KFImageLoader(url:URL(string:Constants.imagesURL + (mainCategory.imagePath?.validateSlashs() ?? "")),placeholder: Image("logo"),placeholderSize: CGSize(width: UIScreen.main.bounds.width, height: 195), shouldRefetch: true)
+                        .frame( height: 195)
+//                    Image(.adsbg2)
+//                        .resizable()
                 }
                 .frame(height: 195)
                 
-                
                 ScrollView(showsIndicators: false){
-                    
                     VStack(alignment:.leading){
+                        SubCategoriesSection(categories:viewModel.subCategories){subCategoryId in
+                            Task{
+                                await viewModel.getPackages(categoryId: subCategoryId)
+                            }
+                        }
+                            .task {
+                                guard let mainCategoryId = self.mainCategory.id else { return }
+                                await viewModel.getSubCategories(mainCategoryId: mainCategoryId)
+                                await viewModel.getPackages(categoryId: mainCategoryId)
+                            }
                         
-                        SubCategoriesSection()
-                        
-                        PackagesListView()
-                        
+                        PackagesListView(packaces: viewModel.packages?.items)
                     }
                     .padding([.horizontal,.top],10)
                     
@@ -93,11 +97,13 @@ struct Packages: View {
 }
 
 #Preview {
-    Packages()
+    PackagesView(mainCategory: .init())
 }
 
 struct SubCategoriesSection: View {
-    @State var selectedid = 0
+    @State var selectedid = SubCategoryItemM.init()
+    var categories: SubCategoriesM?
+    var action: ((Int) -> Void)?
     var body: some View {
         VStack(spacing:5){
             SectionHeader(image: Image(.newcategicon),title: "pack_subcat"){
@@ -106,9 +112,13 @@ struct SubCategoriesSection: View {
             
             ScrollView(.horizontal,showsIndicators:false){
                 HStack(spacing:12){
-                    ForEach(0...7, id: \.self) { item in
+                    let categories = categories?.items ?? []
+
+                    ForEach(categories, id: \.self) { item in
                         Button(action: {
                             selectedid = item
+                            guard let id = item.id else { return }
+                            action?(id)
                         }, label: {
 //                            ZStack(){
 //                                Image(.onboarding2)
@@ -117,12 +127,16 @@ struct SubCategoriesSection: View {
 
                             HStack(spacing:0){
                                                        
-                                    Image(.packsubcat)
-                                        .resizable()
-                                        .frame(width: 48, height: 38)
+//                                    Image(.packsubcat)
+//                                        .resizable()
+//                                        .frame(width: 48, height: 38)
+                                
+                                KFImageLoader(url:URL(string:Constants.imagesURL + (item.image?.validateSlashs() ?? "")),placeholder: Image("logo"),placeholderSize: CGSize(width: 48, height: 38), shouldRefetch: true)
+                                    .frame(width: 48, height: 38)
+
 
                                     VStack(alignment: .leading){
-                                        Text("اليوريك أسيد")
+                                        Text(item.name ?? "")
                                             .font(.semiBold(size: 14))
                                             .foregroundStyle(Color.white)
                                             .frame(maxWidth: .infinity,alignment:.leading)
@@ -141,7 +155,7 @@ struct SubCategoriesSection: View {
                                                     .scaledToFit()
                                                     .foregroundStyle(.white)
                                                 
-                                                ( Text(" 14 ") + Text("package".localized))
+                                                ( Text(" \(item.packageCount ?? 0) ") + Text("package".localized))
                                                     .font(.medium(size: 8))
                                                     .frame(maxWidth: .infinity,alignment:.leading)
 
@@ -175,7 +189,10 @@ struct SubCategoriesSection: View {
 
                                 .frame(width: 140, height: 60)
                                 .background{
-                                    item == selectedid ? Color(.secondary) : Color(.btnDisabledTxt).opacity(0.5)
+
+                                    item == selectedid ? LinearGradient(gradient: Gradient(colors: [.mainBlue, Color(.secondary)]), startPoint: .leading, endPoint: .trailing) : LinearGradient(gradient: Gradient(colors: [Color(.btnDisabledTxt).opacity(0.5), Color(.btnDisabledTxt).opacity(0.5)]), startPoint: .leading, endPoint: .trailing)
+
+//                                    item == selectedid ? Color(.secondary) : Color(.btnDisabledTxt).opacity(0.5)
                                 }
 
                                 
@@ -201,6 +218,8 @@ struct SubCategoriesSection: View {
 
 
 struct PackagesListView: View {
+    var packaces: [FeaturedPackageItemM]?
+
     var body: some View {
         VStack{
             SectionHeader(image: Image(.newvippackicon),title: "pack_packages"){
@@ -209,7 +228,7 @@ struct PackagesListView: View {
             
 //            ScrollView(.horizontal,showsIndicators:false){
             ScrollView{
-                    ForEach(0...7, id: \.self) { item in
+                    ForEach(packaces ?? [], id: \.self) { item in
                         Button(action: {
                             
                         }, label: {
@@ -227,7 +246,7 @@ struct PackagesListView: View {
                                             Image(.newconversationicon)
                                                 .resizable()
                                                 .frame(width: 16, height: 9)
-                                            Text("4 ").font(.semiBold(size: 16))
+                                            Text("\(item.sessionCount ?? 0) ").font(.semiBold(size: 16))
                                             
                                             Text("sessions".localized)
                                         }
@@ -256,7 +275,7 @@ struct PackagesListView: View {
                                     
                                     HStack(){
                                         VStack(alignment:.leading) {
-                                            Text("pack_Name".localized)
+                                            Text(item.name ?? "pack_Name".localized)
                                                 .font(.semiBold(size: 16))
                                                 .foregroundStyle(Color.white)
 //                                                .frame(maxWidth: .infinity,alignment:.leading)
@@ -271,7 +290,7 @@ struct PackagesListView: View {
                                                         .padding(3)
                                                         .background(Color(.secondary))
                                                     
-                                                    ( Text(" 35 ") + Text("avilable_doc".localized))
+                                                    ( Text(" \(item.doctorCount ?? 0) ") + Text("avilable_doc".localized))
                                                         .font(.regular(size: 10))
                                                         .frame(maxWidth: .infinity,alignment:.leading)
                                             }
@@ -283,15 +302,15 @@ struct PackagesListView: View {
                                         Spacer()
                                         
                                         VStack(alignment: .leading){
-                                            Text("90 " + "EGP".localized)
+                                            Text("\(item.priceAfterDiscount ?? 0) " + "EGP".localized)
                                                 .font(.semiBold(size: 12))
                                                 .foregroundStyle(Color.white)
                                             
                                             HStack{
-                                                Text("140 " + "EGP".localized).strikethrough().foregroundStyle(Color(.secondary))
+                                                Text("\(item.priceBeforeDiscount ?? 0) " + "EGP".localized).strikethrough().foregroundStyle(Color(.secondary))
                                                     .font(.semiBold(size: 12))
                                                 
-                                                (Text("(".localized + "Discount".localized ) + Text( " 20" + "%".localized + ")".localized))
+                                                (Text("(".localized + "Discount".localized ) + Text( " \(item.discount ?? 0)" + "%".localized + ")".localized))
                                                     .font(.semiBold(size: 12))
                                                     .foregroundStyle(Color.white)
                                             }

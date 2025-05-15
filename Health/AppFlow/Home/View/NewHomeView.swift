@@ -11,11 +11,15 @@ struct NewHomeView: View {
     @StateObject private var viewModel = NewHomeViewModel()
     
     init() {
-        // Large Navigation Title
-        //        UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor: UIColor.purple]
-        //        // Inline Navigation Title
-        //        UINavigationBar.appearance().titleTextAttributes = [.foregroundColor: UIColor(resource: .mainBlue)]
     }
+    
+    @State var destination = AnyView(EmptyView())
+    @State var isactive: Bool = false
+    func pushTo(destination: any View) {
+        self.destination = AnyView(destination)
+        self.isactive = true
+    }
+    
     var body: some View {
         NavigationView(){
             VStack{
@@ -34,7 +38,9 @@ struct NewHomeView: View {
                         .task {
                             await viewModel.getUpcomingSession()
                         }
-                        MainCategoriesSection(categories: viewModel.homeCategories)
+                        MainCategoriesSection(categories: viewModel.homeCategories){category in
+                            pushTo(destination: PackagesView(mainCategory: category))
+                        }
                             .task {
                                 await viewModel.getHomeCategories()
                             }
@@ -70,8 +76,10 @@ struct NewHomeView: View {
             }
         }
         
+        NavigationLink( "", destination: destination, isActive: $isactive)
         
     }
+
 }
 
 #Preview {
@@ -397,14 +405,9 @@ struct NextSessionSection: View {
                                         .minimumScaleFactor(0.5)
                                         .lineLimit(1)
                                 }
-                                
-                                
                             }
                         }
                         Spacer()
-                        
-                        
-                        
                         
                     }
                     
@@ -478,14 +481,13 @@ struct NextSessionSection: View {
 
 struct MainCategoriesSection: View {
     var categories: HomeCategoryM?
+    var action: ((HomeCategoryItemM) -> Void)?
     var body: some View {
         VStack(spacing:5){
             SectionHeader(image: Image(.newcategicon),title: "home_maincat"){
                 //                            go to last mes package
             }
-            
             .padding(.horizontal)
-            
             
             ScrollView(.horizontal,showsIndicators:false){
                 HStack(spacing:12){
@@ -493,7 +495,7 @@ struct MainCategoriesSection: View {
                     
                     ForEach(categories, id: \.self) { item in
                         Button(action: {
-                            
+                            action?(item)
                         }, label: {
                             ZStack(alignment: .bottom){
                                 //                                Image(.onboarding2)
