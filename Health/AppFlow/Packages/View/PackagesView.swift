@@ -11,6 +11,13 @@ struct PackagesView: View {
     var mainCategory:HomeCategoryItemM
     @StateObject private var viewModel = PackagesViewModel()
 
+    @State var destination = AnyView(EmptyView())
+    @State var isactive: Bool = false
+    func pushTo(destination: any View) {
+        self.destination = AnyView(destination)
+        self.isactive = true
+    }
+    
     init(mainCategory:HomeCategoryItemM) {
         self.mainCategory = mainCategory
     }
@@ -62,13 +69,13 @@ struct PackagesView: View {
                         LinearGradient(gradient: Gradient(colors: [.clear, .black.opacity(0.5)]), startPoint: .top, endPoint: .bottom)
                     }
                 }
+                .frame(height: 195)
                 .background{
-                    KFImageLoader(url:URL(string:Constants.imagesURL + (mainCategory.imagePath?.validateSlashs() ?? "")),placeholder: Image("logo"),placeholderSize: CGSize(width: UIScreen.main.bounds.width, height: 195), shouldRefetch: true)
+                    KFImageLoader(url:URL(string:Constants.imagesURL + (mainCategory.imagePath?.validateSlashs() ?? "")),placeholder: Image("logo"), shouldRefetch: true)
                         .frame( height: 195)
 //                    Image(.adsbg2)
 //                        .resizable()
                 }
-                .frame(height: 195)
                 
                 ScrollView(showsIndicators: false){
                     VStack(alignment:.leading){
@@ -83,7 +90,9 @@ struct PackagesView: View {
                                 await viewModel.getPackages(categoryId: mainCategoryId)
                             }
                         
-                        PackagesListView(packaces: viewModel.packages?.items)
+                        PackagesListView(packaces: viewModel.packages?.items){package in
+                            pushTo(destination: PackageDetailsView(package: package))
+                        }
                     }
                     .padding([.horizontal,.top],10)
                     
@@ -93,6 +102,9 @@ struct PackagesView: View {
                 }
             }
             .edgesIgnoringSafeArea([.top,.horizontal])
+        
+        NavigationLink( "", destination: destination, isActive: $isactive)
+
     }
 }
 
@@ -134,7 +146,6 @@ struct SubCategoriesSection: View {
                                 KFImageLoader(url:URL(string:Constants.imagesURL + (item.image?.validateSlashs() ?? "")),placeholder: Image("logo"),placeholderSize: CGSize(width: 48, height: 38), shouldRefetch: true)
                                     .frame(width: 48, height: 38)
 
-
                                     VStack(alignment: .leading){
                                         Text(item.name ?? "")
                                             .font(.semiBold(size: 14))
@@ -145,7 +156,6 @@ struct SubCategoriesSection: View {
                                         Spacer()
                                         
                                         HStack{
-                                            
                                             HStack(spacing:0){
                                                 
                                                 Image("newvippackicon")
@@ -161,26 +171,21 @@ struct SubCategoriesSection: View {
 
 //                                                Spacer()
                                                 
-                                                Button(action:{
-                                                }) {
+//                                                Button(action:{
+//                                                }) {
                                                     
                                                     Image(systemName: "chevron.forward")
                                                         .foregroundStyle(Color.white)
                                                         .padding(4)
                                                         .font(.system(size: 8))
                                                         .background(Color.white.opacity(0.2).cornerRadius(1))
-                                                }
-                                                
+//                                                }
                                             }
                                             .foregroundStyle(Color.white)
-                                            
                                         }
                                         .padding(.leading,4)
-                                        
                                     }
                                     .padding(.vertical,5)
-
-
                                 }
                                 .padding([.vertical,.horizontal],5)
 //                                .padding(.horizontal,5)
@@ -191,24 +196,14 @@ struct SubCategoriesSection: View {
                                 .background{
 
                                     item == selectedid ? LinearGradient(gradient: Gradient(colors: [.mainBlue, Color(.secondary)]), startPoint: .leading, endPoint: .trailing) : LinearGradient(gradient: Gradient(colors: [Color(.btnDisabledTxt).opacity(0.5), Color(.btnDisabledTxt).opacity(0.5)]), startPoint: .leading, endPoint: .trailing)
-
-//                                    item == selectedid ? Color(.secondary) : Color(.btnDisabledTxt).opacity(0.5)
                                 }
 
-                                
-//                                    .frame(width: 140, height: 60)
-
-//                            }
-
-                            
                         })
                         .cardStyle(cornerRadius: 6)
                         
                     }
                 }
-                
             }
-            
         }
         .padding(.vertical,5)
         .padding(.bottom,5)
@@ -219,6 +214,7 @@ struct SubCategoriesSection: View {
 
 struct PackagesListView: View {
     var packaces: [FeaturedPackageItemM]?
+    var action: ((FeaturedPackageItemM) -> Void)?
 
     var body: some View {
         VStack{
@@ -230,14 +226,18 @@ struct PackagesListView: View {
             ScrollView{
                     ForEach(packaces ?? [], id: \.self) { item in
                         Button(action: {
-                            
+                            action?(item)
                         }, label: {
                             ZStack(alignment: .bottom){
-                                Image(.onboarding1)
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fill)
-                                //                                    .frame(width: 166, height: 221)
+                                KFImageLoader(url:URL(string:Constants.imagesURL + (item.imagePath?.validateSlashs() ?? "")),placeholder: Image("logo"), shouldRefetch: true)
                                     .frame( height: 180)
+
+                                
+//                                Image(.onboarding1)
+//                                    .resizable()
+//                                    .aspectRatio(contentMode: .fill)
+//                                //                                    .frame(width: 166, height: 221)
+//                                    .frame( height: 180)
                                 
                                 VStack {
                                     HStack(alignment:.top){

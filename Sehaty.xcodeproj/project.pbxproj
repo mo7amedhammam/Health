@@ -20,6 +20,8 @@
 		904748552DD4C7F90016C3DC /* KFImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 904748542DD4C7F90016C3DC /* KFImageLoader.swift */; };
 		904748572DD61BFE0016C3DC /* PackagesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 904748562DD61BFE0016C3DC /* PackagesViewModel.swift */; };
 		904748592DD6233E0016C3DC /* SubCategoriesM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 904748582DD6233E0016C3DC /* SubCategoriesM.swift */; };
+		9047485B2DD8B22A0016C3DC /* AvailableDoctorsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9047485A2DD8B22A0016C3DC /* AvailableDoctorsModel.swift */; };
+		9047485D2DD8B2750016C3DC /* AvailableDoctorsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9047485C2DD8B2750016C3DC /* AvailableDoctorsViewModel.swift */; };
 		9057A6132DA4232B0090C34A /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9057A6122DA4232B0090C34A /* CustomTextField.swift */; };
 		9057A61C2DA430470090C34A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9057A61A2DA430470090C34A /* Localizable.strings */; };
 		90842F382DA16A3700B02D02 /* SelectLanguageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90842F372DA16A2200B02D02 /* SelectLanguageView.swift */; };
@@ -251,6 +253,8 @@
 		904748542DD4C7F90016C3DC /* KFImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KFImageLoader.swift; sourceTree = "<group>"; };
 		904748562DD61BFE0016C3DC /* PackagesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackagesViewModel.swift; sourceTree = "<group>"; };
 		904748582DD6233E0016C3DC /* SubCategoriesM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubCategoriesM.swift; sourceTree = "<group>"; };
+		9047485A2DD8B22A0016C3DC /* AvailableDoctorsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvailableDoctorsModel.swift; sourceTree = "<group>"; };
+		9047485C2DD8B2750016C3DC /* AvailableDoctorsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvailableDoctorsViewModel.swift; sourceTree = "<group>"; };
 		9057A6122DA4232B0090C34A /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		9057A61B2DA430470090C34A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		9057A61D2DA430E90090C34A /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -619,6 +623,7 @@
 		904748422DCF8EDA0016C3DC /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				9047485C2DD8B2750016C3DC /* AvailableDoctorsViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -626,6 +631,7 @@
 		904748432DCF8EDE0016C3DC /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				9047485A2DD8B22A0016C3DC /* AvailableDoctorsModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1975,6 +1981,7 @@
 				BBAE725E2AD3291F0089512D /* EmptyTVCell.swift in Sources */,
 				C8A1509B2AB1C62A00511B1F /* ProfileM.swift in Sources */,
 				BBD2B03A2AAA84D500C0A807 /* ModelMyMeasurementsStats.swift in Sources */,
+				9047485B2DD8B22A0016C3DC /* AvailableDoctorsModel.swift in Sources */,
 				C824CED62AD418AA0051E491 /* AlmostFinishedPrescriptionM.swift in Sources */,
 				C8346E5A2AA5EEA800C3C3EE /* LoginM.swift in Sources */,
 				C88995922AAA02BE002AD812 /* ChangePasswordVM.swift in Sources */,
@@ -2068,6 +2075,7 @@
 				BB6095702ADF24C9006582F3 /* ControllViews.swift in Sources */,
 				BBBD000E2A73101700F066DF /* ImageViewer.swift in Sources */,
 				C8542D5C2AA8B42600ACE480 /* OtpVM.swift in Sources */,
+				9047485D2DD8B2750016C3DC /* AvailableDoctorsViewModel.swift in Sources */,
 				BBBD00182A73101700F066DF /* CardView.swift in Sources */,
 				BB1AEAA02A955B450078683A /* NotificationTVCell.swift in Sources */,
 				C893A9B32AB5BA070054F171 /* TipsM.swift in Sources */,

@@ -90,18 +90,28 @@ enum EndPoints: String {
 
 enum newEndPoints : String{
     
-//    MARK: -- Home
+    //    MARK: -- Home
     case GetCustomerUpcomingSession =  "Home/GetCustomerUpcomingSession"
     case GetAllHomeCategory = "Home/GetAllHomeCategory"
     case GetMyMeasurementsStats = "Home/GetMyMeasurementsStats"
     case FeaturedPackageList = "Home/FeaturedPackageList"
     case MostBookedPackage = "Home/MostBookedPackage"
     case MostViewedPackage = "Home/MostViewedPackage"
-
-//   MARK: -- Explore Package
+    
+    //   MARK: -- Explore Package
     case GetMainCategoryById = "Home/GetMainCategoryById"
     case GetSubCategoryByParentId = "Home/GetSubCategoryByParentId"
     case GetPackageByCategoryId = "Home/GetPackageByCategoryId"
-
+    
     case AddOrRemoveToWishList = "Home/AddOrRemoveToWishList"
+    
+    //    --------
+    case GetBydIdPb                    = "Package/GetBydIdPb"
+    case GetAvailableShiftDoctors      = "CustomerPackage/GetAvailableShiftDoctors"
+    case GetDoctorPackageById          = "CustomerPackage/GetDoctorPackageById"
+    case GetDoctorAvailableDayList     = "CustomerPackage/GetDoctorAvailableDayList"
+    case GetTimeShiftScheduleList      = "TimeShiftSchedule/GetTimeShiftScheduleList"
+    case GetAvailableDoctorSchedule    = "CustomerPackage/GetAvailableDoctorSchedule"
+    case GetBookingSession             = "CustomerPackage/GetBookingSession"
+    case CreateCustomerPackage         = "CustomerPackage/CreateCustomerPackage"
 }

@@ -45,11 +45,12 @@ struct KFImageLoader: View {
                     placeholder
                         .resizable()
                         .aspectRatio(contentMode: .fit)
-                        .frame(width: placeholderSize?.width, height: placeholderSize?.height) // Set the placeholder size
+//                        .frame(width: placeholderSize?.width, height: placeholderSize?.height) // Set the placeholder size
 
                 }
             }
             .resizable()
+            .frame(maxWidth:.infinity ,maxHeight: .infinity)
             .aspectRatio(contentMode: .fit)
             .cornerRadius(8)
         

@@ -8,8 +8,10 @@
 import SwiftUI
 
 struct PackageMoreDetailsView: View {
-    
-    init() {
+    var doctor: AvailabeDoctorsItemM
+
+    init(doctor: AvailabeDoctorsItemM) {
+        self.doctor = doctor
     }
 
     var body: some View {
@@ -121,23 +123,6 @@ struct PackageMoreDetailsView: View {
                                 .font(.medium(size: 10))
                                 .foregroundStyle(Color.white)
                                 
-
-                                
-    //                            HStack(spacing:0){
-    //                                Image(.newsubmaincaticon)
-    //                                    .resizable()
-    //                                    .frame(width: 11,height:11)
-    //                                    .scaledToFit()
-    //
-    //                                ( Text(" 6 ") + Text("subcategory".localized))
-    //                                    .font(.medium(size: 12))
-    //
-    //                            }
-    //                            .foregroundStyle(Color.white)
-                                
-                            
-//                            Spacer()
-
                             // Title
                             HStack (spacing:0){
                                 Image(.newconversationicon)
@@ -185,15 +170,12 @@ struct PackageMoreDetailsView: View {
 //                            }
 //                            .padding(.top,2)
                         }
-
                     }
 //                    .offset(y:-12)
                     .padding()
                     .frame(height: 101)
                     .background(Color.mainBlue)
                     .cardStyle( cornerRadius: 3)
-
-                        
                         
                     }
                     .padding([.horizontal,.top],10)
@@ -208,7 +190,7 @@ struct PackageMoreDetailsView: View {
 }
 
 #Preview {
-    PackageMoreDetailsView()
+    PackageMoreDetailsView(doctor: .init())
 }
 
 

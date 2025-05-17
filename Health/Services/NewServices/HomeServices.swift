@@ -23,6 +23,18 @@ enum HomeServices{
     case GetPackageByCategoryId(parameters : [String:Any]) //post
 
     case AddOrRemoveToWishList(parameters : [String:Any]) //get
+    
+
+    
+//    case GetBydIdPb(parameters : [String:Any])
+    case GetAvailableShiftDoctors(parameters : [String:Any])
+//    GetDoctorPackageById
+//    GetDoctorAvailableDayList
+//    GetTimeShiftScheduleList
+//    GetAvailableDoctorSchedule
+//    GetBookingSession
+//    CreateCustomerPackage
+    
 }
 
 extension HomeServices : TargetType1 {
@@ -57,6 +69,9 @@ extension HomeServices : TargetType1 {
             
         case .AddOrRemoveToWishList:
             return newEndPoints.AddOrRemoveToWishList.rawValue
+            
+        case .GetAvailableShiftDoctors:
+            return newEndPoints.GetAvailableShiftDoctors.rawValue
         }
     }
     
@@ -65,14 +80,17 @@ extension HomeServices : TargetType1 {
         case
                 .GetAllHomeCategory,
                 .FeaturedPackageList,
-                .GetSubCategoryByParentId,.GetPackageByCategoryId:
+                .GetSubCategoryByParentId,.GetPackageByCategoryId,
+                .GetAvailableShiftDoctors
+            :
             return .post
             
         case
                 .GetUpcomingSession,
                 .GetMyMeasurementsStats,
                 .MostBookedPackage,.MostViewedPackage,
-                .GetMainCategoryById,.AddOrRemoveToWishList:
+                .GetMainCategoryById,.AddOrRemoveToWishList
+            :
             return .get
         }
     }
@@ -84,7 +102,9 @@ extension HomeServices : TargetType1 {
             .FeaturedPackageList(parameters: let parameter),
             .MostBookedPackage(parameters: let parameter), .MostViewedPackage(parameters: let parameter),
             .GetSubCategoryByParentId(parameters: let parameter),.GetPackageByCategoryId(parameters: let parameter),
-            .GetMainCategoryById(parameters: let parameter),.AddOrRemoveToWishList(parameters: let parameter):
+            .GetMainCategoryById(parameters: let parameter),.AddOrRemoveToWishList(parameters: let parameter),
+            .GetAvailableShiftDoctors(parameters: let parameter)
+            :
 //            return .parameterRequest(Parameters: parameters, Encoding: encoding)
             return  parameter
 

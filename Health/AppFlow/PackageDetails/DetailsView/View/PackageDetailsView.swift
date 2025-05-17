@@ -8,8 +8,17 @@
 import SwiftUI
 
 struct PackageDetailsView: View {
+    @StateObject var viewmodel = AvailableDoctorsViewModel()
+    var package: FeaturedPackageItemM
     
-    init() {
+    @State var destination = AnyView(EmptyView())
+    @State var isactive: Bool = false
+    func pushTo(destination: any View) {
+        self.destination = AnyView(destination)
+        self.isactive = true
+    }
+    init(package: FeaturedPackageItemM) {
+        self.package = package
     }
 
     var body: some View {
@@ -23,12 +32,12 @@ struct PackageDetailsView: View {
                     
 //                    HStack{
                         VStack{
-                            Text("pack_name".localized)
+                            Text(package.name ?? "pack_name".localized)
                                 .font(.bold(size: 20))
                                 .foregroundStyle(.white)
                             
                             HStack(alignment: .center,spacing: 5){
-                                Text( "التغذية العلاجية")
+                                Text(package.categoryName ?? "التغذية العلاجية")
                                 Circle().fill(Color(.white))
                                     .frame(width: 4, height: 4)
                                 Text("صحة عامة")
@@ -36,61 +45,34 @@ struct PackageDetailsView: View {
                             .font(.regular(size: 12))
                             .foregroundStyle(Color.white)
                             .frame(maxWidth: .infinity,alignment:.center)
-//                            HStack(spacing:0){
-//                                Image(.newsubmaincaticon)
-//                                    .resizable()
-//                                    .frame(width: 11,height:11)
-//                                    .scaledToFit()
-//                                
-//                                ( Text(" 6 ") + Text("subcategory".localized))
-//                                    .font(.medium(size: 12))
-//                                
-//                            }
-//                            .foregroundStyle(Color.white)
-                                
+
                         }
-//                        Spacer()
-                        
-//                        VStack(){
-//                            Image("newvippackicon")
-//                                .renderingMode(.template)
-//                                .resizable()
-//                                .frame(width: 13,height:15)
-//                                .scaledToFit()
-//                                .foregroundStyle(.white)
-//                            
-//                            ( Text(" 14 ") + Text("package".localized))
-//                                .font(.semiBold(size: 14))
-//                            
-//                        }
-//                        .foregroundStyle(Color.white)
-                        
-//                    }
                     .padding(10)
                     .background{
                         BlurView(radius: 6)
                         LinearGradient(gradient: Gradient(colors: [.clear, .black.opacity(0.5)]), startPoint: .top, endPoint: .bottom)
-
                     }
-                    
                 }
                 .background{
-                    Image(.adsbg2)
-                        .resizable()
+                    KFImageLoader(url:URL(string:Constants.imagesURL + (package.imagePath?.validateSlashs() ?? "")),placeholder: Image("logo"), shouldRefetch: true)
+                        .frame( height: 195)
+
+//                    Image(.adsbg2)
+//                        .resizable()
                 }
                 .frame(height: 195)
                 
             HStack(alignment: .bottom){
                 VStack(alignment: .leading){
-                    Text("90 " + "EGP".localized)
+                    Text("\(package.priceAfterDiscount ?? 0) " + "EGP".localized)
                         .font(.semiBold(size: 16))
                         .foregroundStyle(Color.white)
                     
                     HStack{
-                        Text("140 " + "EGP".localized).strikethrough().foregroundStyle(Color(.secondary))
+                        Text("\(package.priceBeforeDiscount ?? 0) " + "EGP".localized).strikethrough().foregroundStyle(Color(.secondary))
                             .font(.semiBold(size: 12))
                         
-                        (Text("(".localized + "Discount".localized ) + Text( " 20" + "%".localized + ")".localized))
+                        (Text("(".localized + "Discount".localized ) + Text( " \(package.discount ?? 0)" + "%".localized + ")".localized))
                             .font(.semiBold(size: 12))
                             .foregroundStyle(Color.white)
                     }
@@ -115,7 +97,7 @@ struct PackageDetailsView: View {
                         Image(.newconversationicon)
                             .resizable()
                             .frame(width: 16, height: 9)
-                        Text("4 ").font(.semiBold(size: 16))
+                        Text("\(package.sessionCount ?? 0) ").font(.semiBold(size: 16))
                         
                         Text("sessions".localized)
                     }
@@ -126,19 +108,17 @@ struct PackageDetailsView: View {
                     .background{Color(.secondaryMain)}
                     .cardStyle( cornerRadius: 3)
                 }
-
             }
             .offset(y:-12)
             .padding()
             .frame(height: 69)
             .background(Color.mainBlue)
-                
                 ScrollView(showsIndicators: false){
-                    
                     VStack(alignment:.leading){
-                        
-                        AvailableDoctorsListView()
-                        
+                        AvailableDoctorsListView(){doctor in
+                            pushTo(destination: PackageMoreDetailsView(doctor: doctor))
+                        }
+                            .environmentObject(viewmodel)
                     }
                     .padding([.horizontal,.top],10)
                     
@@ -146,46 +126,61 @@ struct PackageDetailsView: View {
                     
                     Spacer().frame(height: 55)
                 }
+            
             }
             .edgesIgnoringSafeArea([.top,.horizontal])
+            .task {
+                guard let packageId  = package.id else {return}
+                await viewmodel.getAvailableDoctors(PackageId: packageId)
+            }
+        NavigationLink( "", destination: destination, isActive: $isactive)
+
     }
 }
 
 #Preview {
-    PackageDetailsView()
+    PackageDetailsView(package: .init())
 }
 
-
 struct AvailableDoctorsListView: View {
+    @EnvironmentObject var viewmodel : AvailableDoctorsViewModel
+
+//    var doctors:[AvailabeDoctorsItemM]?
+    var action: ((AvailabeDoctorsItemM) -> Void)?
     var body: some View {
         VStack{
             
-            SectionHeader(image: Image(.newdocicon),title: "\("22") \("available_doc".localized)"){
+            SectionHeader(image: Image(.newdocicon),title: "\(viewmodel.availableDoctors?.totalCount ?? 0) \("available_doc".localized)"){
                 //                            go to last mes package
             }
             
 //            ScrollView(.horizontal,showsIndicators:false){
             ScrollView{
-                    ForEach(0...7, id: \.self) { item in
+//                let doctors: [AvailabeDoctorsItemM]? = viewmodel.availableDoctors?.items
+                    ForEach(viewmodel.availableDoctors?.items ?? [], id: \.self) { item in
                         Button(action: {
                             
                         }, label: {
                             VStack{
-                                    Image(.onboarding1)
-                                        .resizable()
-                                        .frame( height: 160)
-                                        .aspectRatio(contentMode: .fill)
-                                        .cardStyle(cornerRadius: 3)
+//                                    Image(.onboarding1)
+//                                        .resizable()
+//                                        .frame( height: 160)
+//                                        .aspectRatio(contentMode: .fill)
+//                                        .cardStyle(cornerRadius: 3)
                                 
+                                KFImageLoader(url:URL(string:Constants.imagesURL + (item.doctorImage?.validateSlashs() ?? "")),placeholder: Image("logo") , shouldRefetch: true)
+                                    .frame(height: 160)
+                                    .frame(maxWidth:.infinity)
+                                    .cardStyle(cornerRadius: 3,shadowOpacity: 0.1)
                                 
                                 HStack(alignment: .center,spacing: 5){
-                                    Text("doc".localized + "/".localized + "name")
+                                    (Text("doc".localized + "/".localized) + Text(item.doctorName ?? "name"))
                                        .font(.bold(size: 16))
                                        .frame(maxWidth: .infinity,alignment:.leading)
                                        .foregroundStyle(Color.mainBlue)
 
                                     HStack(spacing:2) {
-                                        Text("speciality")
+                                        Text(item.speciality ?? "")
                                            .font(.medium(size: 10))
 //                                           .frame(maxWidth: .infinity,alignment:.leading)
                                            .foregroundStyle(Color.mainBlue)
@@ -208,7 +203,7 @@ struct AvailableDoctorsListView: View {
                                    .padding(.bottom,2)
                                 
                                 Button(action: {
-                                    
+                                    action?(item)
                                 }){
                                     HStack (spacing:5){
                                         Image(.newmoreicon)
@@ -223,7 +218,7 @@ struct AvailableDoctorsListView: View {
                                     .frame(height:36)
                                     .frame(maxWidth: .infinity)
                                     .padding(.horizontal,10)
-                                    .background{Color(.secondaryMain)}
+                                    .background{LinearGradient(gradient: Gradient(colors: [.mainBlue, Color(.secondary)]), startPoint: .leading, endPoint: .trailing)}
 //                                    .cardStyle( cornerRadius: 3)
                                     .cornerRadius(3)
                                 }
@@ -247,14 +242,12 @@ struct AvailableDoctorsListView: View {
                         .cardStyle(cornerRadius: 3)
 
                     }
-                    .padding(.top,10)
-                            .padding(.horizontal,10)
+                    .padding(10)
 
 //                    .cardStyle(cornerRadius: 3)
 
             }
-            .padding(.horizontal,-10)
-            .padding(.top,-10)
+            .padding(-10)
 
         }
 //        .padding(.vertical,5)

@@ -9,7 +9,9 @@ import SwiftUI
 
 struct NewHomeView: View {
     @StateObject private var viewModel = NewHomeViewModel()
-    
+
+    @State var selectedPackage : FeaturedPackageItemM?
+
     init() {
     }
     
@@ -21,7 +23,7 @@ struct NewHomeView: View {
     }
     
     var body: some View {
-        NavigationView(){
+//        NavigationView(){
             VStack{
                 TitleBar(title: "home_navtitle")
                 
@@ -55,15 +57,20 @@ struct NewHomeView: View {
                                 await viewModel.getMyMeasurements()
                             }
                         
-                        VipPackagesSection(packaces: viewModel.featuredPackages?.items)
+                        VipPackagesSection(packaces: viewModel.featuredPackages?.items,selectedPackage: $selectedPackage){packageId in
+//                            add to wishlist
+                        }
                         
                         Image(.adsbg2)
                             .resizable()
                             .frame(height: 229)
                             .padding(.horizontal)
                         
-                        MostViewedBooked()
+                        MostViewedBooked(selectedPackage: $selectedPackage){packageId in
+                            //                            add to wishlist
+                        }
                             .environmentObject(viewModel)
+                        
                         
                     }
                     
@@ -74,7 +81,11 @@ struct NewHomeView: View {
                 }
                 //                .padding(.horizontal)
             }
-        }
+            .onChange(of: selectedPackage){ newval in
+                guard let selectedPackage = newval else { return }
+                pushTo(destination: PackageDetailsView(package: selectedPackage))
+            }
+//        }
         
         NavigationLink( "", destination: destination, isActive: $isactive)
         
@@ -623,6 +634,11 @@ struct LastMesurmentsSection: View {
 
 struct VipPackagesSection: View {
     var packaces: [FeaturedPackageItemM]?
+      @Binding var selectedPackage : FeaturedPackageItemM?
+
+//    var action : ((FeaturedPackageItemM) -> Void)?
+    var likeAction : ((Int) -> Void)?
+
     var body: some View {
         VStack{
             SectionHeader(image: Image(.newvippackicon),title: "home_vippackages"){
@@ -633,7 +649,10 @@ struct VipPackagesSection: View {
             ScrollView(.horizontal,showsIndicators:false){
                 HStack{
                     ForEach(packaces ?? [], id: \.self) { item in
-                        VipPackageCellView(item: item)
+                        VipPackageCellView(item: item,action:{
+                            selectedPackage = item
+                        },likeAction:{
+                            likeAction?(item.id ?? 0)})
                     }
                 }
                 .padding(.horizontal)
@@ -647,15 +666,16 @@ struct VipPackagesSection: View {
 }
 
 #Preview(body: {
-    MostViewedBooked()
+    MostViewedBooked( selectedPackage: .constant(nil))
 })
 
 struct VipPackageCellView: View {
     var item : FeaturedPackageItemM
-    
+    var action : (() -> Void)?
+    var likeAction : (() -> Void)?
     var body: some View {
         Button(action: {
-            
+            action?()
         }, label: {
             ZStack(alignment: .bottom){
                 //                                Image(.onboarding1)
@@ -688,7 +708,7 @@ struct VipPackageCellView: View {
                         
                         Spacer()
                         Button(action: {
-                            
+                            likeAction?()
                         }, label: {
                             Image(.newlikeicon)
                                 .resizable()
@@ -759,7 +779,9 @@ struct MostViewedBooked: View {
     }
     @State private var currentcase:mostcases = .mostviewed
     @State var packaces: [FeaturedPackageItemM]?
-    
+    @Binding var selectedPackage : FeaturedPackageItemM?
+    var likeAction : ((Int) -> Void)?
+
     var body: some View {
         
         HStack{
@@ -803,7 +825,10 @@ struct MostViewedBooked: View {
             ScrollView(.horizontal,showsIndicators:false){
                 HStack{
                     ForEach(packaces ?? [], id: \.self) { item in
-                        VipPackageCellView(item: item)
+                        VipPackageCellView(item: item,action:{
+                            selectedPackage = item
+                        },likeAction:{
+                            likeAction?(item.id ?? 0)})
                     }
                 }
                 .padding(.horizontal)
@@ -811,6 +836,7 @@ struct MostViewedBooked: View {
                 
             }
         }
+        .frame(height:356)
         .padding(.vertical,10)
         .padding(.bottom,5)
         .task {
