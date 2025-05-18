@@ -217,26 +217,34 @@ struct HeaderView: View {
 
 struct SectionHeader: View {
     var image: Image?
+    var imageForground: Color?
     var title: String = ""
-    
+    var subTitle: (any View)?
+
     var hasMoreBtn: Bool = true
     var MoreBtnAction: (() -> Void)?
     
     var body: some View {
-        HStack {
+        HStack(alignment: .firstTextBaseline) {
             if let image = image{
                 image
+                    .renderingMode(imageForground != nil ? .template:.original)
                     .resizable()
                     .frame(width: 16, height: 16)
                     .scaledToFill()
-                
+                    .foregroundStyle(imageForground ?? .white)
             }
-            Text(title.localized)
-                .font(.semiBold(size: 16))
-                .foregroundStyle(Color(.mainBlue))
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(.vertical,4)
-            
+            VStack{
+                Text(title.localized)
+                    .font(.semiBold(size: 16))
+                    .foregroundStyle(Color(.mainBlue))
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.vertical,4)
+                
+                if let subTitle = subTitle {
+                    AnyView(subTitle)
+                }
+            }
             if hasMoreBtn{
                 Button(action: MoreBtnAction ?? {}){
                     Image(.newmoreicon)

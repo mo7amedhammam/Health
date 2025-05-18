@@ -22,6 +22,8 @@
 		904748592DD6233E0016C3DC /* SubCategoriesM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 904748582DD6233E0016C3DC /* SubCategoriesM.swift */; };
 		9047485B2DD8B22A0016C3DC /* AvailableDoctorsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9047485A2DD8B22A0016C3DC /* AvailableDoctorsModel.swift */; };
 		9047485D2DD8B2750016C3DC /* AvailableDoctorsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9047485C2DD8B2750016C3DC /* AvailableDoctorsViewModel.swift */; };
+		904748612DD9CEBE0016C3DC /* PackageMoreDetailsM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 904748602DD9CEBE0016C3DC /* PackageMoreDetailsM.swift */; };
+		904748632DD9CF230016C3DC /* PackageMoreDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 904748622DD9CF230016C3DC /* PackageMoreDetailsViewModel.swift */; };
 		9057A6132DA4232B0090C34A /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9057A6122DA4232B0090C34A /* CustomTextField.swift */; };
 		9057A61C2DA430470090C34A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9057A61A2DA430470090C34A /* Localizable.strings */; };
 		90842F382DA16A3700B02D02 /* SelectLanguageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90842F372DA16A2200B02D02 /* SelectLanguageView.swift */; };
@@ -255,6 +257,8 @@
 		904748582DD6233E0016C3DC /* SubCategoriesM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubCategoriesM.swift; sourceTree = "<group>"; };
 		9047485A2DD8B22A0016C3DC /* AvailableDoctorsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvailableDoctorsModel.swift; sourceTree = "<group>"; };
 		9047485C2DD8B2750016C3DC /* AvailableDoctorsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvailableDoctorsViewModel.swift; sourceTree = "<group>"; };
+		904748602DD9CEBE0016C3DC /* PackageMoreDetailsM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackageMoreDetailsM.swift; sourceTree = "<group>"; };
+		904748622DD9CF230016C3DC /* PackageMoreDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackageMoreDetailsViewModel.swift; sourceTree = "<group>"; };
 		9057A6122DA4232B0090C34A /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		9057A61B2DA430470090C34A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		9057A61D2DA430E90090C34A /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -659,6 +663,7 @@
 		904748482DCFA4000016C3DC /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				904748602DD9CEBE0016C3DC /* PackageMoreDetailsM.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -666,6 +671,7 @@
 		904748492DCFA4000016C3DC /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				904748622DD9CF230016C3DC /* PackageMoreDetailsViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -2027,6 +2033,7 @@
 				BB518CEE2A9A129500242FAD /* TipsCategories3TVCell.swift in Sources */,
 				904748592DD6233E0016C3DC /* SubCategoriesM.swift in Sources */,
 				904748532DD34EF60016C3DC /* HomeServices.swift in Sources */,
+				904748612DD9CEBE0016C3DC /* PackageMoreDetailsM.swift in Sources */,
 				BBBD003F2A731B7B00F066DF /* SplashScreenTVCell3.swift in Sources */,
 				BB5A266B2B2E1E0B0005C9B8 /* ModelHelp.swift in Sources */,
 				9047484E2DD34CF80016C3DC /* NewHomeViewModel.swift in Sources */,
@@ -2080,6 +2087,7 @@
 				BB1AEAA02A955B450078683A /* NotificationTVCell.swift in Sources */,
 				C893A9B32AB5BA070054F171 /* TipsM.swift in Sources */,
 				C80DA9EB2AA4D3B300F10808 /* Authintications.swift in Sources */,
+				904748632DD9CF230016C3DC /* PackageMoreDetailsViewModel.swift in Sources */,
 				C82FBA172AB08F200029F151 /* imagePickerHelper.swift in Sources */,
 				904748452DCF8EF80016C3DC /* PackageDetailsView.swift in Sources */,
 				BB67C0912B247A6200F04266 /* AlignedCollectionView.swift in Sources */,

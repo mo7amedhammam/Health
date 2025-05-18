@@ -28,12 +28,12 @@ enum HomeServices{
     
 //    case GetBydIdPb(parameters : [String:Any])
     case GetAvailableShiftDoctors(parameters : [String:Any])
-//    GetDoctorPackageById
-//    GetDoctorAvailableDayList
-//    GetTimeShiftScheduleList
-//    GetAvailableDoctorSchedule
-//    GetBookingSession
-//    CreateCustomerPackage
+    case GetDoctorPackageById(parameters : [String:Any])
+//    case GetDoctorAvailableDayList
+//    case GetTimeShiftScheduleList
+//    case GetAvailableDoctorSchedule
+//    case GetBookingSession
+//    case CreateCustomerPackage
     
 }
 
@@ -72,6 +72,9 @@ extension HomeServices : TargetType1 {
             
         case .GetAvailableShiftDoctors:
             return newEndPoints.GetAvailableShiftDoctors.rawValue
+        case .GetDoctorPackageById:
+            return newEndPoints.GetDoctorPackageById.rawValue
+
         }
     }
     
@@ -89,7 +92,8 @@ extension HomeServices : TargetType1 {
                 .GetUpcomingSession,
                 .GetMyMeasurementsStats,
                 .MostBookedPackage,.MostViewedPackage,
-                .GetMainCategoryById,.AddOrRemoveToWishList
+                .GetMainCategoryById,.AddOrRemoveToWishList,
+                .GetDoctorPackageById
             :
             return .get
         }
@@ -103,7 +107,8 @@ extension HomeServices : TargetType1 {
             .MostBookedPackage(parameters: let parameter), .MostViewedPackage(parameters: let parameter),
             .GetSubCategoryByParentId(parameters: let parameter),.GetPackageByCategoryId(parameters: let parameter),
             .GetMainCategoryById(parameters: let parameter),.AddOrRemoveToWishList(parameters: let parameter),
-            .GetAvailableShiftDoctors(parameters: let parameter)
+            .GetAvailableShiftDoctors(parameters: let parameter),
+            .GetDoctorPackageById(parameters: let parameter)
             :
 //            return .parameterRequest(Parameters: parameters, Encoding: encoding)
             return  parameter
