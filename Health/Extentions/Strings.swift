@@ -53,22 +53,21 @@ extension String {
             }
         }
     func ChangeDateFormat(FormatFrom: String, FormatTo: String, inputLocal: SupportedLocale? = LocalizationManager.shared.currentLanguage == "en" ? .english:.arabic,outputLocal: SupportedLocale? = LocalizationManager.shared.currentLanguage == "en" ? .english:.arabic , inputTimeZone: TimeZone? = TimeZone(identifier: "Africa/Cairo") ?? TimeZone.current, outputTimeZone: TimeZone? = TimeZone(identifier: "Africa/Cairo") ?? TimeZone.current) -> String {
-//        let formatter = DateFormatter()
+        //        let formatter = DateFormatter()
         let formatter = DateFormatter.cachedFormatter
-
+        
         formatter.locale = inputLocal?.locale ?? .current
         formatter.timeZone = inputTimeZone ?? .current
         formatter.dateFormat = FormatFrom
         
-//        print("Original String: \(self)")
-//        print("Formatter Locale: \(formatter.locale?.identifier ?? "nil")")
-//        print("Formatter TimeZone: \(formatter.timeZone?.identifier ?? "nil")")
-        
         // Add this to help parsing ambiguous/invalid DST dates
         formatter.isLenient = true
-
+        
         guard let date = formatter.date(from: self) else {
-            print("Failed to parse date")
+            print("⚠️ FAILED - Could not parse '\(self)' with:")
+            print("Format: \(FormatFrom)")
+            print("Locale: \(formatter.locale.identifier)")
+            print("TimeZone: \(formatter.timeZone.identifier)")
             return self
         }
         
@@ -76,7 +75,7 @@ extension String {
         formatter.timeZone = outputTimeZone ?? .current
         formatter.dateFormat = FormatTo
         let newDate = formatter.string(from: date)
-//        print("Formatted Date: \(newDate)")
+        //        print("Formatted Date: \(newDate)")
         return newDate
     }
 }

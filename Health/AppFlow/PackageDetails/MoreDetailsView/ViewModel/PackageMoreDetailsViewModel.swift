@@ -14,12 +14,15 @@ class PackageMoreDetailsViewModel:ObservableObject {
     private let networkService: AsyncAwaitNetworkServiceProtocol
     
     // -- Get List --
-    var maxResultCount: Int? = 5
-    var skipCount: Int?      = 0
+    var maxResultCount: Int?              = 5
+    var skipCount: Int?                   = 0
+    
+    var doctor:AvailabeDoctorsItemM                      = .init()
+    @Published var selectedDate           = Date()
     
     // Published properties
     @Published var packageDetails: PackageMoreDetailsM?
-//    @Published var packages: FeaturedPackagesM?
+    @Published var availableDays: [AvailableDayM]?
 
     @Published var isLoading = false
     @Published var errorMessage: String? = nil
@@ -34,16 +37,16 @@ class PackageMoreDetailsViewModel:ObservableObject {
 extension PackageMoreDetailsViewModel{
     
     @MainActor
-    func getAvailableDoctors(doctorId:Int) async {
+    func getDoctorPackageDetails() async {
         isLoading = true
         defer { isLoading = false }
-//        guard let maxResultCount = maxResultCount, let skipCount = skipCount else {
+        guard let doctorPackageId = doctor.packageDoctorID else {
 //            // Handle missings
 //            self.errorMessage = "check inputs"
 //            //            throw NetworkError.unknown(code: 0, error: "check inputs")
-//            return
-//        }
-        let parametersarr : [String : Any] =  ["Id":doctorId]
+            return
+        }
+        let parametersarr : [String : Any] =  ["Id":doctorPackageId ]
         
         let target = HomeServices.GetDoctorPackageById(parameters: parametersarr)
         do {
@@ -58,30 +61,30 @@ extension PackageMoreDetailsViewModel{
         }
     }
 
-//    @MainActor
-//    func getPackages(categoryId:Int) async {
-//        isLoading = true
-//        defer { isLoading = false }
-//        guard let maxResultCount = maxResultCount, let skipCount = skipCount else {
+    @MainActor
+    func getAvailableDays() async {
+        isLoading = true
+        defer { isLoading = false }
+        guard let doctorId = doctor.doctorID  else {
 //            // Handle missings
 //            self.errorMessage = "check inputs"
 //            //            throw NetworkError.unknown(code: 0, error: "check inputs")
-//            return
-//        }
-//        let parametersarr : [String : Any] =  ["categoryId":categoryId,"maxResultCount" : maxResultCount ,"skipCount" : skipCount]
-//
-//        let target = HomeServices.GetPackageByCategoryId(parameters: parametersarr)
-//        do {
-//            self.errorMessage = nil // Clear previous errors
-//            let response = try await networkService.request(
-//                target,
-//                responseType: FeaturedPackagesM.self
-//            )
-//            self.packages = response
-//        } catch {
-//            self.errorMessage = error.localizedDescription
-//        }
-//    }
+            return
+        }
+        let parametersarr : [String : Any] =  ["Date":"\(selectedDate.formatted(.customDateFormat("YYYY-MM-dd")))","DoctorId":doctorId]
+
+        let target = HomeServices.GetDoctorAvailableDayList(parameters: parametersarr)
+        do {
+            self.errorMessage = nil // Clear previous errors
+            let response = try await networkService.request(
+                target,
+                responseType: [AvailableDayM].self
+            )
+            self.availableDays = response
+        } catch {
+            self.errorMessage = error.localizedDescription
+        }
+    }
     
     
 }

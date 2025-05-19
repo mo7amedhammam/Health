@@ -36,3 +36,15 @@ struct PackageData: Codable {
         case packageName, mainCategoryName, categoryName, sessionCount, duration, priceBeforeDiscount, discount, priceAfterDiscount
     }
 }
+
+//----
+// MARK: -- AvailableDayM --
+struct AvailableDayM: Codable,Hashable {
+    var dayId: Int?
+    var date,dayName: String?
+ 
+    enum CodingKeys: String, CodingKey {
+        case dayId = "dayId"
+        case date,dayName
+    }
+}

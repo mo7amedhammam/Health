@@ -68,7 +68,7 @@ extension SignUpVM {
 //            return
         }
         var parametersarr : [String : Any]
-        parametersarr = ["name" : name,"mobile" : mobile ,"password" : password]
+        parametersarr = ["name" : name,"mobile" : mobile ,"password" : password,"countryId" : 1]
 
         let target = Authintications.Register(parameters: parametersarr)
                 do{

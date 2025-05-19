@@ -40,6 +40,7 @@
 		90B67BE72D9EE21B00C1FD31 /* customModifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90B67BE62D9EE20B00C1FD31 /* customModifiers.swift */; };
 		90D628792DABE62F008D303E /* NewHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90D628782DABE62F008D303E /* NewHomeView.swift */; };
 		90D6287B2DAE86FE008D303E /* NewTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90D6287A2DAE86FE008D303E /* NewTabView.swift */; };
+		90FDD2FE2DDBE14F00C3BABB /* CustomSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90FDD2FD2DDBE14F00C3BABB /* CustomSheet.swift */; };
 		BB006DE12B34A9510006E417 /* TermsConditionsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB006DE02B34A9510006E417 /* TermsConditionsVC.swift */; };
 		BB0512482B60313C004CAB83 /* ModelResponseFirebase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0512472B60313C004CAB83 /* ModelResponseFirebase.swift */; };
 		BB10D9112B1E774100751AAE /* StartScreenVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB10D9102B1E774100751AAE /* StartScreenVC.swift */; };
@@ -276,6 +277,7 @@
 		90B67BE62D9EE20B00C1FD31 /* customModifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = customModifiers.swift; sourceTree = "<group>"; };
 		90D628782DABE62F008D303E /* NewHomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewHomeView.swift; sourceTree = "<group>"; };
 		90D6287A2DAE86FE008D303E /* NewTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTabView.swift; sourceTree = "<group>"; };
+		90FDD2FD2DDBE14F00C3BABB /* CustomSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSheet.swift; sourceTree = "<group>"; };
 		BB006DE02B34A9510006E417 /* TermsConditionsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsConditionsVC.swift; sourceTree = "<group>"; };
 		BB0512472B60313C004CAB83 /* ModelResponseFirebase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelResponseFirebase.swift; sourceTree = "<group>"; };
 		BB10D9102B1E774100751AAE /* StartScreenVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartScreenVC.swift; sourceTree = "<group>"; };
@@ -1171,6 +1173,7 @@
 		BBBDFFF12A730F8400F066DF /* File Support */ = {
 			isa = PBXGroup;
 			children = (
+				90FDD2FD2DDBE14F00C3BABB /* CustomSheet.swift */,
 				904748542DD4C7F90016C3DC /* KFImageLoader.swift */,
 				9057A6122DA4232B0090C34A /* CustomTextField.swift */,
 				90B67BE62D9EE20B00C1FD31 /* customModifiers.swift */,
@@ -2001,6 +2004,7 @@
 				BBBD00132A73101700F066DF /* ExtentionLocalize.swift in Sources */,
 				C85F28532ABC7F500093ADFF /* EXUiDevice.swift in Sources */,
 				C85996772AA7556400533C87 /* Alert.swift in Sources */,
+				90FDD2FE2DDBE14F00C3BABB /* CustomSheet.swift in Sources */,
 				C8F100DF2ADAC7F70085E508 /* ExWkWebView.swift in Sources */,
 				904748572DD61BFE0016C3DC /* PackagesViewModel.swift in Sources */,
 				C8F418D82AC19A5100E7A370 /* TipDetailsDrugGroup.swift in Sources */,

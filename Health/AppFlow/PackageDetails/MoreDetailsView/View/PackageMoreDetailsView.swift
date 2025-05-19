@@ -8,20 +8,20 @@
 import SwiftUI
 
 struct PackageMoreDetailsView: View {
-    var doctorId: Int
+    var doctor: AvailabeDoctorsItemM
     @StateObject var viewModel = PackageMoreDetailsViewModel.shared
     
     @State private var showingDatePicker = false
     @State private var selectedDate = Date()
     
-    private func formattedDate(_ date: Date) -> String {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "MMM - yyyy"
-        return formatter.string(from: date)
-    }
+//    private func formattedDate(_ date: Date) -> String {
+//        let formatter = DateFormatter()
+//        formatter.dateFormat = "MMM - yyyy"
+//        return formatter.string(from: date)
+//    }
     
-    init(doctorId: Int) {
-        self.doctorId = doctorId
+    init(doctor: AvailabeDoctorsItemM) {
+        self.doctor = doctor
     }
 
     var body: some View {
@@ -177,10 +177,8 @@ struct PackageMoreDetailsView: View {
                     }
                     .padding()
                     
-                    
 //                    YearMonthPickerView(selectedDate: $selectedDate)
-                    
-                    
+                                        
                     HStack{
                         Button(action: {
                             showingDatePicker = true
@@ -205,6 +203,8 @@ struct PackageMoreDetailsView: View {
                                     .frame(maxHeight: .infinity) // Adjust height
                                 Button(action: {
                                     showingDatePicker = false
+                                    guard selectedDate != viewModel.selectedDate else {return}
+                                    viewModel.selectedDate = selectedDate
                                 }) {
                                     Text("Done".localized)
                                         .font(.bold(size: 16))
@@ -217,25 +217,30 @@ struct PackageMoreDetailsView: View {
                                 .padding(.horizontal, 20)
                                 .padding(.bottom, 10)
                             }
+
                         })
+                        .task(id: viewModel.selectedDate){
+                                await viewModel.getAvailableDays()
+                        }
                         
                     }
                     .frame(maxWidth:.infinity,alignment: .leading)
                     .padding(.horizontal)
                     
                     ScrollView(.horizontal,showsIndicators: false){
+                        
                         HStack{
-                            ForEach(0...16,id: \.self){day in
+                            ForEach(viewModel.availableDays ?? [],id: \.self){day in
                                 Button(action: {
                                     
                                 }, label: {
                                     VStack{
-                                        Text(day,format: .number)
+
+                                        Text("\(day.date ?? "")".ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "dd"))
                                             .font(.semiBold(size: 14))
 
-                                        Text("السبت")
+                                        Text(day.dayName ?? "")
                                             .font(.medium(size: 10))
-
                                     }
                                     .frame(width: 40, height: 50)
                                 })
@@ -249,163 +254,64 @@ struct PackageMoreDetailsView: View {
                     }
                     .padding(.horizontal)
                     
-                    
                     Spacer().frame(height: 55)
                 }
             }
             .edgesIgnoringSafeArea([.top,.horizontal])
             .task{
-                await viewModel.getAvailableDoctors(doctorId: doctorId)
+                viewModel.doctor = doctor
+                await viewModel.getDoctorPackageDetails()
             }
     }
 }
 
 #Preview {
-    PackageMoreDetailsView(doctorId: 0)
+    PackageMoreDetailsView(doctor: .init())
 }
 
-//
-//struct YearMonthPickerView: View {
-//    @Binding var selectedDate: Date
+//struct CustomDateFormat: FormatStyle {
+//    let format: String
+//    let locale: Locale
 //    
-//    private let months: [String]
-//    private let columns = [
-//        GridItem(.adaptive(minimum: 80))
-//    ]
-//    
-//    init(selectedDate: Binding<Date>, locale: Locale = .current) {
-//        self._selectedDate = selectedDate
-//        let calendar = Calendar.current
-//        var tempMonths = calendar.shortMonthSymbols
-//        // Ensure we have exactly 12 months
-//        self.months = Array(tempMonths.prefix(12))
-//    }
-//    
-//    var body: some View {
-//        VStack(spacing: 16) {
-//            // Year picker
-//            yearPickerView()
-//                .padding(.horizontal)
-//            
-//            // Month picker
-//            monthGridView()
-//                .padding(.horizontal)
-//        }
-//        .padding(.vertical)
-//    }
-//    
-//    private func yearPickerView() -> some View {
-//        let currentYear = Calendar.current.component(.year, from: Date())
-//        let selectedYear = Calendar.current.component(.year, from: selectedDate)
+//    func format(_ value: Date) -> String {
+//        let formatter = DateFormatter.cachedFormatter
 //        
-//        return HStack(spacing: 16) {
-//            Button {
-//                changeYear(by: -1)
-//            } label: {
-//                Image(systemName: "chevron.left")
-//                    .frame(width: 24, height: 24)
-//                    .foregroundColor(selectedYear <= currentYear ? .gray : .blue)
-//            }
-//            .disabled(selectedYear <= currentYear)
-//            
-//            Text(selectedDate, format: .dateTime.year())
-//                .font(.semiBold(size: 16))
-//                .frame(height: 30)
-//                .frame(maxWidth: .infinity)
-//                .foregroundStyle(Color(.main))
-//            
-//            Button {
-//                changeYear(by: 1)
-//            } label: {
-//                Image(systemName: "chevron.right")
-//                    .frame(width: 24, height: 24)
-//                    .foregroundColor(.blue)
-//            }
-//        }
-//        .buttonStyle(.plain)
-//    }
-//    
-//    private func monthGridView() -> some View {
-//        LazyVGrid(columns: columns, spacing: 12) {
-//            ForEach(0..<12, id: \.self) { monthIndex in
-//                let monthName = months[monthIndex]
-//                let isSelected = Calendar.current.component(.month, from: selectedDate) == monthIndex + 1
-//
-//                Button {
-//                    selectMonth(monthIndex + 1)
-//                } label: {
-//                    Text(monthName)
-//                        .font(.semiBold(size: 16))
-//                        .frame(height: 30)
-//                        .frame(maxWidth: .infinity)
-//                        .padding(10)
-//                        .background(isSelected ? Color(.secondary) : Color(.main))
-//                        .foregroundColor(.white)
-//                        .cornerRadius(8)
-//                }
-//                .buttonStyle(.plain)
-//            }
-//        }
-//    }
-//    
-//    private func changeYear(by delta: Int) {
-//        let calendar = Calendar.current
-//        let currentYear = calendar.component(.year, from: selectedDate)
-//        let newYear = currentYear + delta
-//        
-//        var components = calendar.dateComponents([.year, .month, .day], from: selectedDate)
-//        components.year = newYear
-//        
-//        if let newDate = calendar.date(from: components) {
-//            selectedDate = newDate
-//        }
-//    }
-//    
-//    private func selectMonth(_ month: Int) {
-//        let calendar = Calendar.current
-//        var components = calendar.dateComponents([.year, .month, .day], from: selectedDate)
-//        components.month = month
-//        
-//        if let newDate = calendar.date(from: components) {
-//            selectedDate = newDate
-//        }
+//        formatter.dateFormat = format
+//        formatter.locale = locale
+//        return formatter.string(from: value)
 //    }
 //}
 //
-//// Preview
-//struct YearMonthPickerView_Previews: PreviewProvider {
-//    @State static var date = Date()
-//    
-//    static var previews: some View {
-//        YearMonthPickerView(selectedDate: $date)
-//            .previewLayout(.sizeThatFits)
+//extension FormatStyle where Self == CustomDateFormat {
+//    static func customDateFormat(_ format: String, locale: Locale = .current) -> CustomDateFormat {
+//        CustomDateFormat(format: format, locale: locale)
 //    }
 //}
 
-
-struct CustomDateFormat: FormatStyle {
+struct CustomDateFormat: FormatStyle, Sendable {
     let format: String
     let locale: Locale
+    let timeZone: TimeZone
     
     func format(_ value: Date) -> String {
-        let formatter = DateFormatter()
+        let formatter = DateFormatter.cachedFormatter
         formatter.dateFormat = format
         formatter.locale = locale
+        formatter.timeZone = timeZone
         return formatter.string(from: value)
     }
 }
 
 extension FormatStyle where Self == CustomDateFormat {
-    static func customDateFormat(_ format: String, locale: Locale = .current) -> CustomDateFormat {
-        CustomDateFormat(format: format, locale: locale)
+    static func customDateFormat(
+        _ format: String,
+        locale: Locale = .current,
+        timeZone: TimeZone = .current
+    ) -> CustomDateFormat {
+        CustomDateFormat(format: format, locale: locale, timeZone: timeZone)
     }
 }
 
-
-
-
-
-import SwiftUI
 
 struct MonthYearPicker: UIViewRepresentable {
     @Binding var date: Date
@@ -417,7 +323,9 @@ struct MonthYearPicker: UIViewRepresentable {
             var components = Calendar.current.dateComponents([.year, .month], from: date)
             components.year = year
             components.month = month
+            components.timeZone = TimeZone(secondsFromGMT: 0)  // Force UTC
             date = Calendar.current.date(from: components) ?? date
+            print("new date: \(date)")
         }
         return picker
     }
@@ -691,43 +599,3 @@ extension MonthYearWheelPicker: UIPickerViewDelegate, UIPickerViewDataSource {
     
 }
 
-
-struct CustomHeightSheetModifier<SheetContent: View>: ViewModifier {
-    @Binding var isPresented: Bool
-    var height: CGFloat?
-    var radius: CGFloat?
-
-    let sheetContent: () -> SheetContent
-
-    @ViewBuilder
-    func sheetBody() -> some View {
-        if #available(iOS 16.4, *) {
-            sheetContent()
-                .presentationDetents([.height(height ?? 300)])
-                .presentationCornerRadius(radius ?? 12)
-        } else {
-            sheetContent()
-                .frame(height: height)
-                .cornerRadius(radius ?? 12)
-        }
-    }
-
-    func body(content: Content) -> some View {
-        content.sheet(isPresented: $isPresented) {
-            sheetBody()
-        }
-        .background(Color(.systemBackground))
-
-    }
-}
-
-extension View {
-    func customSheet<Content: View>(
-        isPresented: Binding<Bool>,
-        height: CGFloat? = nil,
-        radius: CGFloat? = nil,
-        @ViewBuilder content: @escaping () -> Content
-    ) -> some View {
-        self.modifier(CustomHeightSheetModifier(isPresented: isPresented, height: height,radius: radius, sheetContent: content))
-    }
-}

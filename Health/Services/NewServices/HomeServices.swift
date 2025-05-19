@@ -29,7 +29,7 @@ enum HomeServices{
 //    case GetBydIdPb(parameters : [String:Any])
     case GetAvailableShiftDoctors(parameters : [String:Any])
     case GetDoctorPackageById(parameters : [String:Any])
-//    case GetDoctorAvailableDayList
+    case GetDoctorAvailableDayList(parameters : [String:Any])
 //    case GetTimeShiftScheduleList
 //    case GetAvailableDoctorSchedule
 //    case GetBookingSession
@@ -75,6 +75,8 @@ extension HomeServices : TargetType1 {
         case .GetDoctorPackageById:
             return newEndPoints.GetDoctorPackageById.rawValue
 
+        case .GetDoctorAvailableDayList:
+            return newEndPoints.GetDoctorAvailableDayList.rawValue
         }
     }
     
@@ -83,7 +85,8 @@ extension HomeServices : TargetType1 {
         case
                 .GetAllHomeCategory,
                 .FeaturedPackageList,
-                .GetSubCategoryByParentId,.GetPackageByCategoryId,
+                .GetSubCategoryByParentId,
+                .GetPackageByCategoryId,
                 .GetAvailableShiftDoctors
             :
             return .post
@@ -91,9 +94,12 @@ extension HomeServices : TargetType1 {
         case
                 .GetUpcomingSession,
                 .GetMyMeasurementsStats,
-                .MostBookedPackage,.MostViewedPackage,
-                .GetMainCategoryById,.AddOrRemoveToWishList,
-                .GetDoctorPackageById
+                .MostBookedPackage,
+                .MostViewedPackage,
+                .GetMainCategoryById,
+                .AddOrRemoveToWishList,
+                .GetDoctorPackageById,
+                .GetDoctorAvailableDayList
             :
             return .get
         }
@@ -104,11 +110,15 @@ extension HomeServices : TargetType1 {
         case
             .GetAllHomeCategory(parameters: let parameter),
             .FeaturedPackageList(parameters: let parameter),
-            .MostBookedPackage(parameters: let parameter), .MostViewedPackage(parameters: let parameter),
-            .GetSubCategoryByParentId(parameters: let parameter),.GetPackageByCategoryId(parameters: let parameter),
-            .GetMainCategoryById(parameters: let parameter),.AddOrRemoveToWishList(parameters: let parameter),
+            .MostBookedPackage(parameters: let parameter),
+            .MostViewedPackage(parameters: let parameter),
+            .GetSubCategoryByParentId(parameters: let parameter),
+            .GetPackageByCategoryId(parameters: let parameter),
+            .GetMainCategoryById(parameters: let parameter),
+            .AddOrRemoveToWishList(parameters: let parameter),
             .GetAvailableShiftDoctors(parameters: let parameter),
-            .GetDoctorPackageById(parameters: let parameter)
+            .GetDoctorPackageById(parameters: let parameter),
+            .GetDoctorAvailableDayList(parameters: let parameter)
             :
 //            return .parameterRequest(Parameters: parameters, Encoding: encoding)
             return  parameter

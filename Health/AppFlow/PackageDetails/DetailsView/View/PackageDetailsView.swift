@@ -116,8 +116,8 @@ struct PackageDetailsView: View {
                 ScrollView(showsIndicators: false){
                     VStack(alignment:.leading){
                         AvailableDoctorsListView(){doctor in
-                            guard let doctorId  = doctor.packageDoctorID else {return}
-                            pushTo(destination: PackageMoreDetailsView(doctorId: doctorId))
+//                            guard let doctor  = doctor else {return}
+                            pushTo(destination: PackageMoreDetailsView(doctor: doctor))
                         }
                             .environmentObject(viewmodel)
                     }
