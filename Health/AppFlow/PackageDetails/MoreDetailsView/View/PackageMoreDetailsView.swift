@@ -284,6 +284,21 @@ struct PackageMoreDetailsView: View {
                     SshedualsGrid(scheduals:viewModel.availableScheduals,selectedschedual:$viewModel.selectedSchedual)
                         .padding(.top)
                     
+                    Button(action: {
+
+                    }){
+                            //
+                            Text("Continue_".localized)
+                        .font(.bold(size: 18))
+                        .foregroundStyle(Color.white)
+                        .frame(height:50)
+                        .frame(maxWidth: .infinity)
+                        .padding(.horizontal,10)
+                        .background{LinearGradient(gradient: Gradient(colors: [.mainBlue, Color(.secondary)]), startPoint: .leading, endPoint: .trailing)}
+                        .cornerRadius(3)
+                    }
+                    .padding()
+                    
                     Spacer().frame(height: 55)
                 }
             }
