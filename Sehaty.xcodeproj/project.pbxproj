@@ -41,6 +41,11 @@
 		90D628792DABE62F008D303E /* NewHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90D628782DABE62F008D303E /* NewHomeView.swift */; };
 		90D6287B2DAE86FE008D303E /* NewTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90D6287A2DAE86FE008D303E /* NewTabView.swift */; };
 		90FDD2FE2DDBE14F00C3BABB /* CustomSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90FDD2FD2DDBE14F00C3BABB /* CustomSheet.swift */; };
+		90FDD3012DDDF7F900C3BABB /* MonthYearPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90FDD3002DDDF7F900C3BABB /* MonthYearPicker.swift */; };
+		90FDD3032DDDF80F00C3BABB /* CustomDateFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90FDD3022DDDF80F00C3BABB /* CustomDateFormat.swift */; };
+		90FDD3092DDF2B6E00C3BABB /* TicketView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90FDD3082DDF2B6E00C3BABB /* TicketView.swift */; };
+		90FDD3152DDF686300C3BABB /* TicketM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90FDD3142DDF686300C3BABB /* TicketM.swift */; };
+		90FDD3172DDF698400C3BABB /* TicketViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90FDD3162DDF698400C3BABB /* TicketViewModel.swift */; };
 		BB006DE12B34A9510006E417 /* TermsConditionsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB006DE02B34A9510006E417 /* TermsConditionsVC.swift */; };
 		BB0512482B60313C004CAB83 /* ModelResponseFirebase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0512472B60313C004CAB83 /* ModelResponseFirebase.swift */; };
 		BB10D9112B1E774100751AAE /* StartScreenVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB10D9102B1E774100751AAE /* StartScreenVC.swift */; };
@@ -278,6 +283,11 @@
 		90D628782DABE62F008D303E /* NewHomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewHomeView.swift; sourceTree = "<group>"; };
 		90D6287A2DAE86FE008D303E /* NewTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTabView.swift; sourceTree = "<group>"; };
 		90FDD2FD2DDBE14F00C3BABB /* CustomSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSheet.swift; sourceTree = "<group>"; };
+		90FDD3002DDDF7F900C3BABB /* MonthYearPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthYearPicker.swift; sourceTree = "<group>"; };
+		90FDD3022DDDF80F00C3BABB /* CustomDateFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDateFormat.swift; sourceTree = "<group>"; };
+		90FDD3082DDF2B6E00C3BABB /* TicketView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketView.swift; sourceTree = "<group>"; };
+		90FDD3142DDF686300C3BABB /* TicketM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketM.swift; sourceTree = "<group>"; };
+		90FDD3162DDF698400C3BABB /* TicketViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketViewModel.swift; sourceTree = "<group>"; };
 		BB006DE02B34A9510006E417 /* TermsConditionsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsConditionsVC.swift; sourceTree = "<group>"; };
 		BB0512472B60313C004CAB83 /* ModelResponseFirebase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelResponseFirebase.swift; sourceTree = "<group>"; };
 		BB10D9102B1E774100751AAE /* StartScreenVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartScreenVC.swift; sourceTree = "<group>"; };
@@ -612,6 +622,7 @@
 		904748402DCF8ECA0016C3DC /* PackageDetails */ = {
 			isa = PBXGroup;
 			children = (
+				90FDD3042DDF2B1300C3BABB /* Ticket */,
 				904748472DCFA3F30016C3DC /* MoreDetailsView */,
 				904748462DCFA3DC0016C3DC /* DetailsView */,
 			);
@@ -745,6 +756,49 @@
 				90B67BD92D9EC7A900C1FD31 /* OnBoardingPage.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		90FDD2FF2DDDF7E000C3BABB /* DatePicker */ = {
+			isa = PBXGroup;
+			children = (
+				90FDD3022DDDF80F00C3BABB /* CustomDateFormat.swift */,
+				90FDD3002DDDF7F900C3BABB /* MonthYearPicker.swift */,
+			);
+			path = DatePicker;
+			sourceTree = "<group>";
+		};
+		90FDD3042DDF2B1300C3BABB /* Ticket */ = {
+			isa = PBXGroup;
+			children = (
+				90FDD3072DDF2B2A00C3BABB /* Model */,
+				90FDD3062DDF2B2700C3BABB /* ViewModel */,
+				90FDD3052DDF2B2400C3BABB /* View */,
+			);
+			path = Ticket;
+			sourceTree = "<group>";
+		};
+		90FDD3052DDF2B2400C3BABB /* View */ = {
+			isa = PBXGroup;
+			children = (
+				90FDD3082DDF2B6E00C3BABB /* TicketView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		90FDD3062DDF2B2700C3BABB /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				90FDD3162DDF698400C3BABB /* TicketViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		90FDD3072DDF2B2A00C3BABB /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				90FDD3142DDF686300C3BABB /* TicketM.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		BB006DDE2B34A91E0006E417 /* Terms Condition */ = {
@@ -1173,6 +1227,7 @@
 		BBBDFFF12A730F8400F066DF /* File Support */ = {
 			isa = PBXGroup;
 			children = (
+				90FDD2FF2DDDF7E000C3BABB /* DatePicker */,
 				90FDD2FD2DDBE14F00C3BABB /* CustomSheet.swift */,
 				904748542DD4C7F90016C3DC /* KFImageLoader.swift */,
 				9057A6122DA4232B0090C34A /* CustomTextField.swift */,
@@ -1971,6 +2026,7 @@
 				BB1AEAA32A955B710078683A /* NotificationVC.swift in Sources */,
 				BBBD001C2A73101700F066DF /* Shared.swift in Sources */,
 				90B67BE52D9ED7D200C1FD31 /* fontsenum.swift in Sources */,
+				90FDD3092DDF2B6E00C3BABB /* TicketView.swift in Sources */,
 				BB518CE62A9A123200242FAD /* TipsCategoriesCVCell1.swift in Sources */,
 				BBBEB1BF2B56F4D700502D3E /* TipsCVCell.swift in Sources */,
 				BB14DAE32A7AFA0700389B96 /* MeasurementsVC.swift in Sources */,
@@ -1989,6 +2045,7 @@
 				BBC7B45B2A72CC820079355E /* AppDelegate.swift in Sources */,
 				BBAE725E2AD3291F0089512D /* EmptyTVCell.swift in Sources */,
 				C8A1509B2AB1C62A00511B1F /* ProfileM.swift in Sources */,
+				90FDD3172DDF698400C3BABB /* TicketViewModel.swift in Sources */,
 				BBD2B03A2AAA84D500C0A807 /* ModelMyMeasurementsStats.swift in Sources */,
 				9047485B2DD8B22A0016C3DC /* AvailableDoctorsModel.swift in Sources */,
 				C824CED62AD418AA0051E491 /* AlmostFinishedPrescriptionM.swift in Sources */,
@@ -2035,6 +2092,7 @@
 				BB546DEA2AC9E467008A4F8C /* HomeTVCell1.swift in Sources */,
 				90842F3A2DA1748800B02D02 /* CustomButton.swift in Sources */,
 				BB518CEE2A9A129500242FAD /* TipsCategories3TVCell.swift in Sources */,
+				90FDD3152DDF686300C3BABB /* TicketM.swift in Sources */,
 				904748592DD6233E0016C3DC /* SubCategoriesM.swift in Sources */,
 				904748532DD34EF60016C3DC /* HomeServices.swift in Sources */,
 				904748612DD9CEBE0016C3DC /* PackageMoreDetailsM.swift in Sources */,
@@ -2086,6 +2144,7 @@
 				BB6095702ADF24C9006582F3 /* ControllViews.swift in Sources */,
 				BBBD000E2A73101700F066DF /* ImageViewer.swift in Sources */,
 				C8542D5C2AA8B42600ACE480 /* OtpVM.swift in Sources */,
+				90FDD3012DDDF7F900C3BABB /* MonthYearPicker.swift in Sources */,
 				9047485D2DD8B2750016C3DC /* AvailableDoctorsViewModel.swift in Sources */,
 				BBBD00182A73101700F066DF /* CardView.swift in Sources */,
 				BB1AEAA02A955B450078683A /* NotificationTVCell.swift in Sources */,
@@ -2095,6 +2154,7 @@
 				C82FBA172AB08F200029F151 /* imagePickerHelper.swift in Sources */,
 				904748452DCF8EF80016C3DC /* PackageDetailsView.swift in Sources */,
 				BB67C0912B247A6200F04266 /* AlignedCollectionView.swift in Sources */,
+				90FDD3032DDDF80F00C3BABB /* CustomDateFormat.swift in Sources */,
 				BB14DAF72A7B047400389B96 /* ProfileTVCellLine.swift in Sources */,
 				C80DA9E22AA4D11300F10808 /* BaseResponse.swift in Sources */,
 				C80DA9EF2AA4F6B000F10808 /* UiWindow.swift in Sources */,

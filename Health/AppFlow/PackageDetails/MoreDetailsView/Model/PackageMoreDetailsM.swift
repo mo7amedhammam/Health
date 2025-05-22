@@ -48,3 +48,28 @@ struct AvailableDayM: Codable,Hashable {
         case date,dayName
     }
 }
+
+// MARK: -- AvailableTimeShiftM --
+struct AvailableTimeShiftM: Codable,Hashable {
+    var id: Int?
+    var name,timeFrom,timeTo: String?
+ 
+    enum CodingKeys: String, CodingKey {
+        case id
+        case name,timeFrom,timeTo
+    }
+}
+
+
+// MARK: -- AvailableTimeShiftM --
+struct AvailableSchedualsM: Codable,Hashable {
+    var booked: Bool?
+    var timefrom,timeTo: String?
+
+    enum CodingKeys: String, CodingKey {
+        case booked
+        case timefrom,timeTo
+    }
+}
+
+

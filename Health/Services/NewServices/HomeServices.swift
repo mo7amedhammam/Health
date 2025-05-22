@@ -30,8 +30,8 @@ enum HomeServices{
     case GetAvailableShiftDoctors(parameters : [String:Any])
     case GetDoctorPackageById(parameters : [String:Any])
     case GetDoctorAvailableDayList(parameters : [String:Any])
-//    case GetTimeShiftScheduleList
-//    case GetAvailableDoctorSchedule
+    case GetTimeShiftScheduleList
+    case GetAvailableDoctorSchedule(parameters : [String:Any])
 //    case GetBookingSession
 //    case CreateCustomerPackage
     
@@ -77,6 +77,10 @@ extension HomeServices : TargetType1 {
 
         case .GetDoctorAvailableDayList:
             return newEndPoints.GetDoctorAvailableDayList.rawValue
+        case .GetTimeShiftScheduleList:
+            return newEndPoints.GetTimeShiftScheduleList.rawValue
+        case .GetAvailableDoctorSchedule:
+            return newEndPoints.GetAvailableShiftDoctors.rawValue
         }
     }
     
@@ -87,7 +91,8 @@ extension HomeServices : TargetType1 {
                 .FeaturedPackageList,
                 .GetSubCategoryByParentId,
                 .GetPackageByCategoryId,
-                .GetAvailableShiftDoctors
+                .GetAvailableShiftDoctors,
+                .GetAvailableDoctorSchedule
             :
             return .post
             
@@ -99,7 +104,8 @@ extension HomeServices : TargetType1 {
                 .GetMainCategoryById,
                 .AddOrRemoveToWishList,
                 .GetDoctorPackageById,
-                .GetDoctorAvailableDayList
+                .GetDoctorAvailableDayList,
+                .GetTimeShiftScheduleList
             :
             return .get
         }
@@ -118,7 +124,8 @@ extension HomeServices : TargetType1 {
             .AddOrRemoveToWishList(parameters: let parameter),
             .GetAvailableShiftDoctors(parameters: let parameter),
             .GetDoctorPackageById(parameters: let parameter),
-            .GetDoctorAvailableDayList(parameters: let parameter)
+            .GetDoctorAvailableDayList(parameters: let parameter),
+            .GetAvailableDoctorSchedule(parameters: let parameter)
             :
 //            return .parameterRequest(Parameters: parameters, Encoding: encoding)
             return  parameter
@@ -130,7 +137,9 @@ extension HomeServices : TargetType1 {
 //                .GetDistricts,
 //                .GetGenders,
                 .GetUpcomingSession,
-                .GetMyMeasurementsStats:
+                .GetMyMeasurementsStats,
+                .GetTimeShiftScheduleList
+            :
             return nil
         }
     }
