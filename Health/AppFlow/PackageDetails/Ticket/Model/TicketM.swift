@@ -8,7 +8,11 @@
 import Foundation
 
 // MARK: - TicketM
-struct TicketM: Codable {
+struct TicketM: Codable,Equatable {
+    static func == (lhs: TicketM, rhs: TicketM) -> Bool {
+      return lhs.doctorData == rhs.doctorData && lhs.packageData == rhs.packageData && lhs.bookedTimming == rhs.bookedTimming
+    }
+    
     var doctorData: DoctorData?
     var packageData: PackageData?
     var bookedTimming: BookedTimming?
@@ -16,7 +20,7 @@ struct TicketM: Codable {
 }
 
 // MARK: - BookedTimming
-struct BookedTimming: Codable {
+struct BookedTimming: Codable,Equatable {
     var booked: Bool?
     var timefrom, timeTo, dayName, date: String?
 }

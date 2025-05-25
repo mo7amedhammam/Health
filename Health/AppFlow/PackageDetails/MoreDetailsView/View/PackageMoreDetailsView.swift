@@ -13,13 +13,13 @@ struct PackageMoreDetailsView: View {
     
     @State private var showingDatePicker = false
     @State private var selectedDate = Date()
-    
-//    private func formattedDate(_ date: Date) -> String {
-//        let formatter = DateFormatter()
-//        formatter.dateFormat = "MMM - yyyy"
-//        return formatter.string(from: date)
-//    }
-    
+
+    @State var destination = AnyView(EmptyView())
+    @State var isactive: Bool = false
+    func pushTo(destination: any View) {
+        self.destination = AnyView(destination)
+        self.isactive = true
+    }
     init(doctorPackageId: Int) {
         self.doctorPackageId = doctorPackageId
     }
@@ -205,6 +205,13 @@ struct PackageMoreDetailsView: View {
                                     showingDatePicker = false
                                     guard selectedDate != viewModel.newDate else {return}
                                     viewModel.newDate = selectedDate
+                                    
+                                    guard viewModel.selectedShift != nil,viewModel.availableDays?.count ?? 0 > 0 else { return
+                                    }
+                                    Task{
+                                        await viewModel.getAvailableScheduals()
+                                    }
+
                                 }) {
                                     Text("Done".localized)
                                         .font(.bold(size: 16))
@@ -217,7 +224,6 @@ struct PackageMoreDetailsView: View {
                                 .padding(.horizontal, 20)
                                 .padding(.bottom, 10)
                             }
-
                         })
                         .task(id: viewModel.newDate){
                                 await viewModel.getAvailableDays()
@@ -261,6 +267,9 @@ struct PackageMoreDetailsView: View {
                                 ForEach(viewModel.availableShifts ?? [],id: \.self){shift in
                                     Button(action: {
                                         viewModel.selectedShift = shift
+                                        Task{
+                                          await viewModel.getAvailableScheduals()
+                                        }
                                     }, label: {
                                         VStack(spacing: 5){
                                             Text(shift.name ?? "")
@@ -280,14 +289,16 @@ struct PackageMoreDetailsView: View {
                         }
                         .padding(.horizontal)
                     }
-                    
-                    SshedualsGrid(scheduals:viewModel.availableScheduals,selectedschedual:$viewModel.selectedSchedual)
-                        .padding(.top)
+                    if let scheduals = viewModel.availableScheduals,scheduals.count > 0{
+                        SshedualsGrid(scheduals:scheduals,selectedschedual:$viewModel.selectedSchedual)
+                            .padding(.top)
+                    }
                     
                     Button(action: {
-
+                        Task{
+                          await viewModel.getBookingSession()
+                        }
                     }){
-                            //
                             Text("Continue_".localized)
                         .font(.bold(size: 18))
                         .foregroundStyle(Color.white)
@@ -298,17 +309,25 @@ struct PackageMoreDetailsView: View {
                         .cornerRadius(3)
                     }
                     .padding()
+                    .padding(.top)
                     
                     Spacer().frame(height: 55)
                 }
             }
             .edgesIgnoringSafeArea([.top,.horizontal])
             .task{
-//                viewModel.doctor = doctor
-                await viewModel.getDoctorPackageDetails(doctorPackageId: doctorPackageId)
+                viewModel.doctorPackageId = doctorPackageId
+                await viewModel.getDoctorPackageDetails()
                 await viewModel.getAvailableDays()
                 await viewModel.getAvailableShifts()
             }
+            .onChange(of: viewModel.ticketData){newval in
+                guard newval != nil else {return}
+                pushTo(destination: TicketView(ticketData: viewModel.ticketData,parameters: viewModel.prepareParamters()))
+            }
+        
+        NavigationLink( "", destination: destination, isActive: $isactive)
+
     }
 }
 

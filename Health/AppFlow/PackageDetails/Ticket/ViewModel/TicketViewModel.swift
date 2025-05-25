@@ -39,10 +39,10 @@ class TicketViewModel:ObservableObject {
 }
 
 //MARK: -- Functions --
-//extension TicketViewModel{
-//    
+extension TicketViewModel{
+    
 //    @MainActor
-//    func getDoctorPackageDetails(doctorPackageId:Int) async {
+//    func createCustomerPackage(doctorPackageId:Int) async {
 //        isLoading = true
 //        defer { isLoading = false }
 ////        guard let doctorPackageId = doctor.packageDoctorID else {
@@ -60,12 +60,12 @@ class TicketViewModel:ObservableObject {
 //                target,
 //                responseType: PackageMoreDetailsM.self
 //            )
-//            self.packageDetails = response
+////            self.packageDetails = response
 //        } catch {
 //            self.errorMessage = error.localizedDescription
 //        }
 //    }
-//
+
 //    @MainActor
 //    func getAvailableDays() async {
 //        isLoading = true
@@ -90,7 +90,7 @@ class TicketViewModel:ObservableObject {
 //            self.errorMessage = error.localizedDescription
 //        }
 //    }
-//
+
 //    @MainActor
 //    func getAvailableShifts() async {
 //        isLoading = true
@@ -115,7 +115,7 @@ class TicketViewModel:ObservableObject {
 //            self.errorMessage = error.localizedDescription
 //        }
 //    }
-//    
+    
 //    @MainActor
 //    func getAvailableScheduals() async {
 //        isLoading = true
@@ -140,5 +140,44 @@ class TicketViewModel:ObservableObject {
 //            self.errorMessage = error.localizedDescription
 //        }
 //    }
-//    
-//}
+    
+    
+    @MainActor
+    func createCustomerPackage(paramters:[String:Any]?) async {
+        isLoading = true
+        defer { isLoading = false }
+        guard let paramters = paramters else {
+//            // Handle missings
+//            self.errorMessage = "check inputs"
+//            //            throw NetworkError.unknown(code: 0, error: "check inputs")
+            return
+        }
+        var parametersarr : [String : Any] = paramters
+        if let doctorName = ticketData?.doctorData?.doctorName {
+            parametersarr["doctorName"] = doctorName
+        }
+        
+print(parametersarr)
+        let target = HomeServices.GetBookingSession(parameters: parametersarr)
+        do {
+            self.errorMessage = nil // Clear previous errors
+            let response = try await networkService.request(
+                target,
+                responseType: TicketM.self
+            )
+            self.ticketData = response
+        } catch {
+            self.errorMessage = error.localizedDescription
+        }
+    }
+    
+//    func prepareParamters()->[String : Any]? {
+//        guard let packageId = packageDetails?.packageData?.packageID  ,let doctorId = packageDetails?.doctorData?.doctorID,let shiftId = selectedShift?.id,let doctorPackageId = doctorPackageId ,let totalAfterDiscount = packageDetails?.packageData?.priceAfterDiscount , let timeFrom = selectedSchedual?.timefrom ,let timeTo = selectedSchedual?.timeTo  else {
+////            // Handle missings
+////            self.errorMessage = "check inputs"
+////            //            throw NetworkError.unknown(code: 0, error: "check inputs")
+//            return nil
+//        }
+//     return ["date":"\(newDate.formatted(.customDateFormat("YYYY-MM-dd")))","packageId":packageId,"doctorId":doctorId,"doctorPackageId":doctorPackageId,"shiftId":shiftId,"totalAfterDiscount":totalAfterDiscount,"timeFrom":timeFrom,"timeTo":timeTo]
+//    }
+}

@@ -9,9 +9,10 @@ import SwiftUI
 
 struct TicketView: View {
     @StateObject var viewmodel = TicketViewModel()
-    var day:AvailableDayM?
-    var schedual:AvailableSchedualsM?
-
+//    var day:AvailableDayM?
+    var ticketData:TicketM?
+    var parameters:[String:Any]?
+    
     var body: some View {
         VStack {
             TitleBar(title: "ticket_confirm_title",hasbackBtn: true)
@@ -131,7 +132,6 @@ struct TicketView: View {
                         }
                         .padding(.vertical)
                         
-                        
                         let doctorData = viewmodel.ticketData?.doctorData ?? .init()
 
                         VStack{
@@ -164,7 +164,6 @@ struct TicketView: View {
                                    .font(.regular(size: 14))
                                    .foregroundStyle(Color(.secondary))
                                     .frame(maxWidth: .infinity,alignment:.leading)
-
                                     
                                     HStack(spacing:2) {
                                         Text("egyption_".localized)
@@ -321,11 +320,14 @@ struct TicketView: View {
                 }
             
         }
+        .task {
+            viewmodel.ticketData = ticketData
+        }
     }
 }
 
 #Preview {
-    TicketView()
+    TicketView( ticketData: .init())
 }
 
 struct TicketShape: Shape {

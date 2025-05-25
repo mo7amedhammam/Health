@@ -14,7 +14,8 @@ struct PackageMoreDetailsM: Codable {
 }
 
 // MARK: - DoctorData
-struct DoctorData: Codable {
+struct DoctorData: Codable,Equatable {
+    
     var doctorID: Int?
     var doctorName,doctorImage, speciality: String?
 
@@ -25,7 +26,7 @@ struct DoctorData: Codable {
 }
 
 // MARK: - PackageData
-struct PackageData: Codable {
+struct PackageData: Codable,Equatable {
     var packageID: Int?
     var packageName, mainCategoryName, categoryName: String?
     var sessionCount, duration, priceBeforeDiscount, discount: Int?

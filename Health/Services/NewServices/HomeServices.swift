@@ -32,8 +32,8 @@ enum HomeServices{
     case GetDoctorAvailableDayList(parameters : [String:Any])
     case GetTimeShiftScheduleList
     case GetAvailableDoctorSchedule(parameters : [String:Any])
-//    case GetBookingSession
-//    case CreateCustomerPackage
+    case GetBookingSession(parameters : [String:Any])
+    case CreateCustomerPackage(parameters : [String:Any])
     
 }
 
@@ -80,7 +80,12 @@ extension HomeServices : TargetType1 {
         case .GetTimeShiftScheduleList:
             return newEndPoints.GetTimeShiftScheduleList.rawValue
         case .GetAvailableDoctorSchedule:
-            return newEndPoints.GetAvailableShiftDoctors.rawValue
+            return newEndPoints.GetAvailableDoctorSchedule.rawValue
+        case .GetBookingSession:
+            return newEndPoints.GetBookingSession.rawValue
+        case .CreateCustomerPackage:
+            return newEndPoints.CreateCustomerPackage.rawValue
+
         }
     }
     
@@ -92,7 +97,9 @@ extension HomeServices : TargetType1 {
                 .GetSubCategoryByParentId,
                 .GetPackageByCategoryId,
                 .GetAvailableShiftDoctors,
-                .GetAvailableDoctorSchedule
+                .GetAvailableDoctorSchedule,
+                .GetBookingSession,
+                .CreateCustomerPackage
             :
             return .post
             
@@ -125,7 +132,9 @@ extension HomeServices : TargetType1 {
             .GetAvailableShiftDoctors(parameters: let parameter),
             .GetDoctorPackageById(parameters: let parameter),
             .GetDoctorAvailableDayList(parameters: let parameter),
-            .GetAvailableDoctorSchedule(parameters: let parameter)
+            .GetAvailableDoctorSchedule(parameters: let parameter),
+            .GetBookingSession(parameters: let parameter),
+            .CreateCustomerPackage(parameters: let parameter)
             :
 //            return .parameterRequest(Parameters: parameters, Encoding: encoding)
             return  parameter
