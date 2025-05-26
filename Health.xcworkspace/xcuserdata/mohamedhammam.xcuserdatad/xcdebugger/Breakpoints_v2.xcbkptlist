@@ -7,32 +7,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "BF8B1167-6E1C-4705-B809-8D73DCE9895F"
+            uuid = "B93AC4E0-2968-4136-8756-B9FFDB957A4A"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Health/AppFlow/PackageDetails/MoreDetailsView/ViewModel/PackageMoreDetailsViewModel.swift"
+            filePath = "Health/AppFlow/PackageDetails/Ticket/ViewModel/TicketViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "154"
-            endingLineNumber = "154"
-            landmarkName = "getBookingSession()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "5D1725E2-722E-4AB5-B0BC-40394F3038B8"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Health/AppFlow/PackageDetails/MoreDetailsView/ViewModel/PackageMoreDetailsViewModel.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "158"
-            endingLineNumber = "158"
-            landmarkName = "getBookingSession()"
+            startingLineNumber = "151"
+            endingLineNumber = "151"
+            landmarkName = "createCustomerPackage(paramters:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

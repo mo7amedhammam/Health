@@ -205,12 +205,6 @@ struct PackageMoreDetailsView: View {
                                     showingDatePicker = false
                                     guard selectedDate != viewModel.newDate else {return}
                                     viewModel.newDate = selectedDate
-                                    
-                                    guard viewModel.selectedShift != nil,viewModel.availableDays?.count ?? 0 > 0 else { return
-                                    }
-                                    Task{
-                                        await viewModel.getAvailableScheduals()
-                                    }
 
                                 }) {
                                     Text("Done".localized)
@@ -239,9 +233,18 @@ struct PackageMoreDetailsView: View {
                             ForEach(viewModel.availableDays ?? [],id: \.self){day in
                                 Button(action: {
                                     viewModel.selectedDay = day
+                                    viewModel.selectedShift = nil
+                                    viewModel.selectedSchedual = nil
+                                    Task{
+                                        await viewModel.getAvailableShifts()
+                                    }
+//                                    guard viewModel.selectedShift != nil else { return
+//                                    }
+//                                    Task{
+//                                        await viewModel.getAvailableScheduals()
+//                                    }
                                 }, label: {
                                     VStack{
-
                                         Text("\(day.date ?? "")".ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "dd"))
                                             .font(.semiBold(size: 14))
 
@@ -251,7 +254,7 @@ struct PackageMoreDetailsView: View {
                                     .frame(width: 40, height: 50)
                                 })
                                 .foregroundStyle(Color.white)
-                                .background(Color(.mainBlue))
+                                .background(viewModel.selectedDay == day ? Color(.secondary) : Color(.mainBlue))
                                 .cardStyle(cornerRadius: 2)
                                 .padding(2)
                             }
@@ -267,6 +270,7 @@ struct PackageMoreDetailsView: View {
                                 ForEach(viewModel.availableShifts ?? [],id: \.self){shift in
                                     Button(action: {
                                         viewModel.selectedShift = shift
+                                        viewModel.selectedSchedual = nil
                                         Task{
                                           await viewModel.getAvailableScheduals()
                                         }
@@ -278,7 +282,6 @@ struct PackageMoreDetailsView: View {
                                             (Text("\(shift.timeFrom ?? "")".ChangeDateFormat(FormatFrom: "HH:mm:ss", FormatTo: "hh:mm a")) + Text(" - ") + Text("\(shift.timeTo ?? "")".ChangeDateFormat(FormatFrom: "HH:mm:ss", FormatTo: "hh:mm a")))
                                                 .font(.medium(size: 9))
                                         }
-                                        
                                     })
                                     .frame( height: 36)
                                     .frame(width: (geometry.size.width/3) - 15)
@@ -319,7 +322,7 @@ struct PackageMoreDetailsView: View {
                 viewModel.doctorPackageId = doctorPackageId
                 await viewModel.getDoctorPackageDetails()
                 await viewModel.getAvailableDays()
-                await viewModel.getAvailableShifts()
+//                await viewModel.getAvailableShifts()
             }
             .onChange(of: viewModel.ticketData){newval in
                 guard newval != nil else {return}

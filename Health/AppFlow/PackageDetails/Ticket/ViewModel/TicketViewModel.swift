@@ -158,14 +158,14 @@ extension TicketViewModel{
         }
         
 print(parametersarr)
-        let target = HomeServices.GetBookingSession(parameters: parametersarr)
+        let target = HomeServices.CreateCustomerPackage(parameters: parametersarr)
         do {
             self.errorMessage = nil // Clear previous errors
             let response = try await networkService.request(
                 target,
                 responseType: TicketM.self
             )
-            self.ticketData = response
+//            self.ticketData = response
         } catch {
             self.errorMessage = error.localizedDescription
         }
