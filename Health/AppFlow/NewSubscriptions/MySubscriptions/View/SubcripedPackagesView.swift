@@ -58,7 +58,7 @@ struct SubcripedPackagesView: View {
                 .horizontalGradientBackground()
                 
                         SubcripedPackagesListView(packaces: viewModel.subscripedPackages?.items){package in
-//                            pushTo(destination: PackageDetailsView(package: package))
+                            pushTo(destination: SubcripedPackageDetailsView(package: package))
                         }
 //                    .padding(.horizontal)
 
@@ -128,7 +128,7 @@ struct SubcripedPackagesListView: View {
 //                                                    .fill(Color(.white))
                                                     .frame(width: 5, height: 5)
                                                 
-                                                Text("active".localized)
+                                                Text(item.status ?? "Active")
                                             }
                                             .font(.medium(size: 10))
                                             .foregroundStyle(Color.white)
