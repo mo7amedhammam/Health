@@ -53,35 +53,42 @@ class ProfileVC: UIViewController {
     
     private func configureMenuItems() {
           mainOptions = [
-              MenuItem(title: "نصائح طبية", imageName: "instruction") { [weak self] in
+            MenuItem(title: "اشتراكاتي".localized, imageName: "more_subscriptions") { [weak self] in
+//                  self?.selectedIndex = 0
+                let destination = SubcripedPackagesView(onBack:{
+                    self?.navigationController?.popViewController(animated: true)
+                })
+                self?.pushTo(destination)
+            },
+            MenuItem(title: "نصائح طبية".localized, imageName: "instruction") { [weak self] in
 //                  self?.selectedIndex = 0
                   self?.pushTo(TipsCategoriesVC1.self)
               },
-              MenuItem(title: "Inbody", imageName: "newInbody") { [weak self] in
+            MenuItem(title: "Inbody".localized, imageName: "newInbody") { [weak self] in
 //                  self?.selectedIndex = 1
                   self?.pushTo(INBodyVC.self)
               }
           ]
           
           settingsOptions = [
-              MenuItem(title: "تغيير كلمة المرور", imageName: "changepass") { [weak self] in
+            MenuItem(title: "تغيير كلمة المرور".localized, imageName: "changepass") { [weak self] in
 //                  self?.selectedIndex = 2
                   self?.pushTo(ChangePasswordVC.self)
               },
-              MenuItem(title: "تغيير اللغة", imageName: "changelang") { [weak self] in
+            MenuItem(title: "تغيير اللغة".localized, imageName: "changelang") { [weak self] in
 //                  self?.selectedIndex = 3
                   self?.handleLanguageChange()
               },
-              MenuItem(title: "الحماية والخصوصية", imageName: "privacyprotection") { [weak self] in
+            MenuItem(title: "الحماية والخصوصية".localized, imageName: "privacyprotection") { [weak self] in
 //                  self?.selectedIndex = 4
                   // Handle privacy action
                   self?.pushTo(TermsConditionsVC.self)
               },
-              MenuItem(title: "المساعدة", imageName: "play") { [weak self] in
+            MenuItem(title: "المساعدة".localized, imageName: "play") { [weak self] in
 //                  self?.selectedIndex = 5
                   self?.pushTo(HelpVC.self)
               },
-              MenuItem(title: "الشروط والأحكام", imageName: "termscondition") { [weak self] in
+            MenuItem(title: "الشروط والأحكام".localized, imageName: "termscondition") { [weak self] in
 //                  self?.selectedIndex = 6
                   self?.pushTo(TermsConditionsVC.self)
               }
@@ -127,23 +134,23 @@ class ProfileVC: UIViewController {
             message: "Language Change Failed",
             preferredStyle: .alert
         )
-        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        alert.addAction(UIAlertAction(title: "OK".localized, style: .default))
         present(alert, animated: true)
     }
     
     private func showLogoutConfirmation() {
         let actionSheet = UIAlertController(
-            title: "هل أنت متأكد بأنك تريد تسجيل الخروج؟",
+            title: "هل أنت متأكد بأنك تريد تسجيل الخروج؟".localized,
             message: "",
             preferredStyle: .alert
         )
         
-        let logoutAction = UIAlertAction(title: "تسجيل الخروج", style: .default) { _ in
+        let logoutAction = UIAlertAction(title: "تسجيل الخروج".localized, style: .default) { _ in
             Helper.shared.logout()
             Helper.shared.changeRootVC(newroot: StartScreenVC.self, transitionFrom: .fromLeft)
         }
         
-        let cancelAction = UIAlertAction(title: "إلغاء", style: .destructive)
+        let cancelAction = UIAlertAction(title: "إلغاء".localized, style: .destructive)
         
         actionSheet.addAction(logoutAction)
         actionSheet.addAction(cancelAction)
@@ -361,3 +368,21 @@ extension UIView {
         self.layer.masksToBounds = true
     }
 }
+
+import SwiftUI
+
+extension UIViewController {
+    /// Pushes a SwiftUI view onto the navigation stack
+    func pushTo<Content: View>(_ swiftUIView: Content, hidesBottomBar: Bool = true) {
+        let hostingController = UIHostingController(rootView:
+            swiftUIView
+                .navigationBarHidden(true) // Hide the native nav bar from SwiftUI
+        )
+        hostingController.hidesBottomBarWhenPushed = hidesBottomBar
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+            self.navigationController?.pushViewController(hostingController, animated: true)
+        }
+    }
+}
+

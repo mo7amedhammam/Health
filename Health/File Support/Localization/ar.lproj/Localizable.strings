@@ -141,3 +141,10 @@
 
 //MARK: --- packages Details ---
 "available_doc" = "دكتور متاح";
+
+
+
+//MARK: --- subsriptions ---
+"subscriped_title" = "اشتراكاتي";
+"subscriped_packages" = "الباقات المشترك بها";
+"subscriped_no_packages" = "لا يوجد أي باقات مشترك بها حتى الآن";

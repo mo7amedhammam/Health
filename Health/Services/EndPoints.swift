@@ -115,3 +115,18 @@ enum newEndPoints : String{
     case GetBookingSession             = "CustomerPackage/GetBookingSession"
     case CreateCustomerPackage         = "CustomerPackage/CreateCustomerPackage"
 }
+
+
+enum SubscriptionEndPoints : String{
+//--------  Subscription -------
+case GetCustomerPackageList              = "Subscription/GetCustomerPackageList"
+case GetCustomerPackageById              = "CustomerPackage/GetCustomerPackageById"
+case GetDoctorById                       = "Doctor/GetDoctorById"
+case GetCustomerUpComingSession          = "Home/GetCustomerUpComingSession"
+case GetCustomerPackageSessionList       = "Subscription/GetCustomerPackageSessionList"
+case FileType                            = "Lookups/FileType"
+case GetCustomerPackageInstructionByCPId = "Subscription/GetCustomerPackageInstructionByCPId"
+case CreateDoctorMessage                 = "CustomerPackageMessage/CreateDoctorMessage"
+case CreateCustomerMessage               = "CustomerPackageMessage/CreateCustomerMessage"
+case GetMessage                          = "CustomerPackageMessage/GetMessage"
+}

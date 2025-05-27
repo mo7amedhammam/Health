@@ -46,6 +46,10 @@
 		90FDD3092DDF2B6E00C3BABB /* TicketView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90FDD3082DDF2B6E00C3BABB /* TicketView.swift */; };
 		90FDD3152DDF686300C3BABB /* TicketM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90FDD3142DDF686300C3BABB /* TicketM.swift */; };
 		90FDD3172DDF698400C3BABB /* TicketViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90FDD3162DDF698400C3BABB /* TicketViewModel.swift */; };
+		90FDD3212DE4B58E00C3BABB /* SubcripedPackagesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90FDD3202DE4B58E00C3BABB /* SubcripedPackagesView.swift */; };
+		90FDD3332DE5CE0000C3BABB /* SubscriptionServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90FDD3322DE5CE0000C3BABB /* SubscriptionServices.swift */; };
+		90FDD3352DE5D5C700C3BABB /* SubcripedPackagesM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90FDD3342DE5D5C700C3BABB /* SubcripedPackagesM.swift */; };
+		90FDD3372DE5D78700C3BABB /* SubcripedPackagesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90FDD3362DE5D78700C3BABB /* SubcripedPackagesViewModel.swift */; };
 		BB006DE12B34A9510006E417 /* TermsConditionsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB006DE02B34A9510006E417 /* TermsConditionsVC.swift */; };
 		BB0512482B60313C004CAB83 /* ModelResponseFirebase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0512472B60313C004CAB83 /* ModelResponseFirebase.swift */; };
 		BB10D9112B1E774100751AAE /* StartScreenVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB10D9102B1E774100751AAE /* StartScreenVC.swift */; };
@@ -288,6 +292,10 @@
 		90FDD3082DDF2B6E00C3BABB /* TicketView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketView.swift; sourceTree = "<group>"; };
 		90FDD3142DDF686300C3BABB /* TicketM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketM.swift; sourceTree = "<group>"; };
 		90FDD3162DDF698400C3BABB /* TicketViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketViewModel.swift; sourceTree = "<group>"; };
+		90FDD3202DE4B58E00C3BABB /* SubcripedPackagesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubcripedPackagesView.swift; sourceTree = "<group>"; };
+		90FDD3322DE5CE0000C3BABB /* SubscriptionServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionServices.swift; sourceTree = "<group>"; };
+		90FDD3342DE5D5C700C3BABB /* SubcripedPackagesM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubcripedPackagesM.swift; sourceTree = "<group>"; };
+		90FDD3362DE5D78700C3BABB /* SubcripedPackagesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubcripedPackagesViewModel.swift; sourceTree = "<group>"; };
 		BB006DE02B34A9510006E417 /* TermsConditionsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsConditionsVC.swift; sourceTree = "<group>"; };
 		BB0512472B60313C004CAB83 /* ModelResponseFirebase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelResponseFirebase.swift; sourceTree = "<group>"; };
 		BB10D9102B1E774100751AAE /* StartScreenVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartScreenVC.swift; sourceTree = "<group>"; };
@@ -527,10 +535,8 @@
 		904748312DCCAF550016C3DC /* AppFlow */ = {
 			isa = PBXGroup;
 			children = (
-				904748402DCF8ECA0016C3DC /* PackageDetails */,
-				904748372DCF62EC0016C3DC /* Packages */,
-				904748332DCCAF770016C3DC /* Home */,
-				904748322DCCAF6B0016C3DC /* TabBar */,
+				90FDD31B2DE4A4BB00C3BABB /* NewSubscriptions */,
+				90FDD31A2DE4A49800C3BABB /* NewHome */,
 			);
 			path = AppFlow;
 			sourceTree = "<group>";
@@ -700,6 +706,7 @@
 		904748512DD34ECE0016C3DC /* NewServices */ = {
 			isa = PBXGroup;
 			children = (
+				90FDD3322DE5CE0000C3BABB /* SubscriptionServices.swift */,
 				904748522DD34EE50016C3DC /* HomeServices.swift */,
 			);
 			path = NewServices;
@@ -797,6 +804,59 @@
 			isa = PBXGroup;
 			children = (
 				90FDD3142DDF686300C3BABB /* TicketM.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		90FDD31A2DE4A49800C3BABB /* NewHome */ = {
+			isa = PBXGroup;
+			children = (
+				904748402DCF8ECA0016C3DC /* PackageDetails */,
+				904748372DCF62EC0016C3DC /* Packages */,
+				904748332DCCAF770016C3DC /* Home */,
+				904748322DCCAF6B0016C3DC /* TabBar */,
+			);
+			path = NewHome;
+			sourceTree = "<group>";
+		};
+		90FDD31B2DE4A4BB00C3BABB /* NewSubscriptions */ = {
+			isa = PBXGroup;
+			children = (
+				90FDD31C2DE4A4E000C3BABB /* MySubscriptions */,
+			);
+			path = NewSubscriptions;
+			sourceTree = "<group>";
+		};
+		90FDD31C2DE4A4E000C3BABB /* MySubscriptions */ = {
+			isa = PBXGroup;
+			children = (
+				90FDD31F2DE4A4FA00C3BABB /* Model */,
+				90FDD31E2DE4A4F400C3BABB /* ViewModel */,
+				90FDD31D2DE4A4F000C3BABB /* View */,
+			);
+			path = MySubscriptions;
+			sourceTree = "<group>";
+		};
+		90FDD31D2DE4A4F000C3BABB /* View */ = {
+			isa = PBXGroup;
+			children = (
+				90FDD3202DE4B58E00C3BABB /* SubcripedPackagesView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		90FDD31E2DE4A4F400C3BABB /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				90FDD3362DE5D78700C3BABB /* SubcripedPackagesViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		90FDD31F2DE4A4FA00C3BABB /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				90FDD3342DE5D5C700C3BABB /* SubcripedPackagesM.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -2062,13 +2122,16 @@
 				C85F28532ABC7F500093ADFF /* EXUiDevice.swift in Sources */,
 				C85996772AA7556400533C87 /* Alert.swift in Sources */,
 				90FDD2FE2DDBE14F00C3BABB /* CustomSheet.swift in Sources */,
+				90FDD3352DE5D5C700C3BABB /* SubcripedPackagesM.swift in Sources */,
 				C8F100DF2ADAC7F70085E508 /* ExWkWebView.swift in Sources */,
 				904748572DD61BFE0016C3DC /* PackagesViewModel.swift in Sources */,
 				C8F418D82AC19A5100E7A370 /* TipDetailsDrugGroup.swift in Sources */,
 				BB1ECAB52AD4741F009BF2DE /* WillExpireTVCell.swift in Sources */,
+				90FDD3332DE5CE0000C3BABB /* SubscriptionServices.swift in Sources */,
 				BB1B2FFB2A7EA364001677FD /* INBodyDetailsTVCell.swift in Sources */,
 				C88995902AAA02A2002AD812 /* ChangePasswordM.swift in Sources */,
 				C80DA9F12AA4F73400F10808 /* LoginModel.swift in Sources */,
+				90FDD3372DE5D78700C3BABB /* SubcripedPackagesViewModel.swift in Sources */,
 				BBC7B45D2A72CC820079355E /* SceneDelegate.swift in Sources */,
 				BB913AD72A9BE04900003AC5 /* TipsCategoriesTVCell1.swift in Sources */,
 				BBA1DA162AB11C3A0042713A /* NotificationServices.swift in Sources */,
@@ -2080,6 +2143,7 @@
 				90D6287B2DAE86FE008D303E /* NewTabView.swift in Sources */,
 				BB1B30012A7EA8BF001677FD /* ViewDone.swift in Sources */,
 				BB006DE12B34A9510006E417 /* TermsConditionsVC.swift in Sources */,
+				90FDD3212DE4B58E00C3BABB /* SubcripedPackagesView.swift in Sources */,
 				BBBD00162A73101700F066DF /* UiCollectionView+Extension.swift in Sources */,
 				BBBD00262A7311E400F066DF /* ForgetPasswordVC.swift in Sources */,
 				BBBD000B2A73101700F066DF /* SalmanLocalize.swift in Sources */,

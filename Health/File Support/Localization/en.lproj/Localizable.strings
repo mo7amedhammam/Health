@@ -145,3 +145,10 @@
 //MARK: --- packages Details ---
 "available_doc" = "Available Doctor";
 
+
+
+
+//MARK: --- subsriptions ---
+"subscriped_title" = "my subscriptions";
+"subscriped_packages" = "subscriped packages";
+"subscriped_no_packages" = "no subscriped packages for now";
