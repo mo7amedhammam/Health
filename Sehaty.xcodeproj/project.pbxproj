@@ -51,6 +51,8 @@
 		90FDD3352DE5D5C700C3BABB /* SubcripedPackagesM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90FDD3342DE5D5C700C3BABB /* SubcripedPackagesM.swift */; };
 		90FDD3372DE5D78700C3BABB /* SubcripedPackagesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90FDD3362DE5D78700C3BABB /* SubcripedPackagesViewModel.swift */; };
 		90FDD33D2DE6751200C3BABB /* SubcripedPackageDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90FDD33C2DE6751200C3BABB /* SubcripedPackageDetailsView.swift */; };
+		90FDD33F2DE7792300C3BABB /* SubcripedSessionsListM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90FDD33E2DE7792300C3BABB /* SubcripedSessionsListM.swift */; };
+		90FDD3412DE7882300C3BABB /* SubcripedPackageDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90FDD3402DE7882300C3BABB /* SubcripedPackageDetailsViewModel.swift */; };
 		BB006DE12B34A9510006E417 /* TermsConditionsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB006DE02B34A9510006E417 /* TermsConditionsVC.swift */; };
 		BB0512482B60313C004CAB83 /* ModelResponseFirebase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0512472B60313C004CAB83 /* ModelResponseFirebase.swift */; };
 		BB10D9112B1E774100751AAE /* StartScreenVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB10D9102B1E774100751AAE /* StartScreenVC.swift */; };
@@ -298,6 +300,8 @@
 		90FDD3342DE5D5C700C3BABB /* SubcripedPackagesM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubcripedPackagesM.swift; sourceTree = "<group>"; };
 		90FDD3362DE5D78700C3BABB /* SubcripedPackagesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubcripedPackagesViewModel.swift; sourceTree = "<group>"; };
 		90FDD33C2DE6751200C3BABB /* SubcripedPackageDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubcripedPackageDetailsView.swift; sourceTree = "<group>"; };
+		90FDD33E2DE7792300C3BABB /* SubcripedSessionsListM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubcripedSessionsListM.swift; sourceTree = "<group>"; };
+		90FDD3402DE7882300C3BABB /* SubcripedPackageDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubcripedPackageDetailsViewModel.swift; sourceTree = "<group>"; };
 		BB006DE02B34A9510006E417 /* TermsConditionsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsConditionsVC.swift; sourceTree = "<group>"; };
 		BB0512472B60313C004CAB83 /* ModelResponseFirebase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelResponseFirebase.swift; sourceTree = "<group>"; };
 		BB10D9102B1E774100751AAE /* StartScreenVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartScreenVC.swift; sourceTree = "<group>"; };
@@ -885,6 +889,7 @@
 		90FDD33A2DE6735200C3BABB /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				90FDD3402DE7882300C3BABB /* SubcripedPackageDetailsViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -892,6 +897,7 @@
 		90FDD33B2DE6735500C3BABB /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				90FDD33E2DE7792300C3BABB /* SubcripedSessionsListM.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -2107,6 +2113,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				90FDD33F2DE7792300C3BABB /* SubcripedSessionsListM.swift in Sources */,
 				90B67BE12D9ED2B600C1FD31 /* exColors.swift in Sources */,
 				BB1B30052A7EB1B7001677FD /* XibViews.swift in Sources */,
 				BB14DAEB2A7B041C00389B96 /* ProfileTVCellHeader.swift in Sources */,
@@ -2124,6 +2131,7 @@
 				90FDD3092DDF2B6E00C3BABB /* TicketView.swift in Sources */,
 				BB518CE62A9A123200242FAD /* TipsCategoriesCVCell1.swift in Sources */,
 				BBBEB1BF2B56F4D700502D3E /* TipsCVCell.swift in Sources */,
+				90FDD3412DE7882300C3BABB /* SubcripedPackageDetailsViewModel.swift in Sources */,
 				BB14DAE32A7AFA0700389B96 /* MeasurementsVC.swift in Sources */,
 				9088CFCB2DA5AE6C0036EE0E /* CustomInputField.swift in Sources */,
 				90B67BDA2D9EC7B400C1FD31 /* OnBoardingPage.swift in Sources */,

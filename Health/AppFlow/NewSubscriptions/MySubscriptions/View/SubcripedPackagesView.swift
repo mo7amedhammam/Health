@@ -92,7 +92,7 @@ struct SubcripedPackagesListView: View {
             GeometryReader { gr in
                 ScrollView{
                     
-                    if let packages = packaces{
+                    if let packages = packaces,packages.count > 0{
                         
                         ForEach(packages, id: \.self) { item in
                             Button(action: {
@@ -134,7 +134,7 @@ struct SubcripedPackagesListView: View {
                                             .foregroundStyle(Color.white)
                                             .frame(height:22)
                                             .padding(.horizontal,10)
-                                            .background{Color(.active)}
+                                            .background{Color(item.canCancel ?? false ? .active:.notActive)}
                                             .cardStyle( cornerRadius: 3)
                                         }
                                         .frame(maxWidth: .infinity,alignment:.leading)
@@ -145,7 +145,7 @@ struct SubcripedPackagesListView: View {
                                         
                                         Spacer()
                                         
-                                        VStack(spacing:12){
+                                        VStack(spacing:8){
                                             HStack{
                                                 VStack{
                                                     Text(item.packageName ?? "pack_Name".localized)
@@ -201,13 +201,18 @@ struct SubcripedPackagesListView: View {
                                                             .frame(maxWidth: .infinity,alignment:.leading)
                                                         
                                                         Button(action: {
+                                                            if item.canRenew ?? false{
+                                                                
+                                                            }else if item.canCancel ?? false{
+                                                                
+                                                            }
                                                             
                                                         },label:{
                                                             HStack(spacing:3){
-                                                                Image("newreschedual")
+                                                                Image(item.canRenew ?? false ? "newreschedual" : "cancelsubscription")
                                                                     .resizable()
                                                                     .frame(width: 10, height: 8.5)
-                                                                Text("renew_subscription".localized)
+                                                                Text(item.canRenew ?? false ? "renew_subscription".localized: "cancel_subscription".localized)
                                                                     .underline()
                                                             }
                                                             .foregroundStyle(Color.white)
@@ -222,7 +227,8 @@ struct SubcripedPackagesListView: View {
                                                 }
 
                                         }
-                                        .padding(12)
+                                        .padding(.horizontal,8)
+                                        .padding(.vertical,4)
 //                                        .padding([.bottom,.horizontal],10)
                                         
                                         .background{

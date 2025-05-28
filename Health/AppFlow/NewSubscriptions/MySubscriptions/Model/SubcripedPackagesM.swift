@@ -20,11 +20,16 @@ struct SubcripedPackageItemM: Codable,Hashable {
     var categoryName, mainCategoryName, doctorName, docotrID: String?
     var sessionCount, attendedSessionCount: Int?
     var packageImage: String?
-
+    var doctorSpeciality,doctorNationality,doctorImage :String?
+    var canCancel, canRenew:Bool?
+    
     enum CodingKeys: String, CodingKey {
         case customerPackageID = "customerPackageId"
         case status, subscriptionDate, lastSessionDate, packageName, categoryName, mainCategoryName, doctorName
         case docotrID = "docotrId"
         case sessionCount, attendedSessionCount, packageImage
+        case doctorSpeciality,doctorNationality,doctorImage
+        case canCancel,canRenew
     }
 }
+

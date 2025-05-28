@@ -14,7 +14,7 @@ enum SubscriptionServices{
 //    case GetCustomerPackageById(parameters : [String:Any])
 //    case GetDoctorById(parameters : [String:Any])
 //    case GetCustomerUpComingSession
-//    case GetCustomerPackageSessionList
+    case GetCustomerPackageSessionList(parameters : [String:Any])
     case FileType
 //    case GetCustomerPackageInstructionByCPId
 //    case CreateDoctorMessage
@@ -34,8 +34,8 @@ extension SubscriptionServices : TargetType1 {
 //            return SubscriptionEndPoints.GetDoctorById.rawValue
 //        case .GetCustomerUpComingSession:
 //            return SubscriptionEndPoints.GetCustomerUpComingSession.rawValue
-//        case .GetCustomerPackageSessionList:
-//            return SubscriptionEndPoints.GetCustomerPackageSessionList.rawValue
+        case .GetCustomerPackageSessionList:
+            return SubscriptionEndPoints.GetCustomerPackageSessionList.rawValue
         case .FileType:
             return SubscriptionEndPoints.FileType.rawValue
 //        case .GetCustomerPackageInstructionByCPId:
@@ -52,7 +52,8 @@ extension SubscriptionServices : TargetType1 {
     var method: HTTPMethod {
         switch self {
         case
-                .GetCustomerPackageList
+                .GetCustomerPackageList,
+                .GetCustomerPackageSessionList
             :
             return .post
             
@@ -66,7 +67,8 @@ extension SubscriptionServices : TargetType1 {
     var parameters: [String:Any]? {
         switch self {
         case
-                .GetCustomerPackageList(parameters: let parameter)
+                .GetCustomerPackageList(parameters: let parameter),
+                .GetCustomerPackageSessionList(parameters: let parameter)
             :
 //            return .parameterRequest(Parameters: parameters, Encoding: encoding)
             return  parameter
