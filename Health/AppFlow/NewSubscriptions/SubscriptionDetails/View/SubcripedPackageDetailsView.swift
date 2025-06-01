@@ -132,8 +132,8 @@ struct SubcripedPackageDetailsView: View {
                     .foregroundStyle(Color.white)
                     .frame(height:22)
                     .padding(.horizontal,10)
-                    .background{Color(.active)}
-                    .cardStyle(cornerRadius: 3)
+                    .background{Color(package.canCancel ?? false ? .active:.notActive)}
+                    .cardStyle( cornerRadius: 3)
                     .offset(y:-11)
                 }
             }
@@ -151,6 +151,15 @@ struct SubcripedPackageDetailsView: View {
                         Button(action: {
                             //                                 button.action?()
                             selectedSection = button
+                            switch button {
+                            case .chats:
+                                break
+                            case .sessions:
+                                break
+                            case .files:
+                                guard let customerPackageID = package.customerPackageID else { return }
+                                pushTo(destination: PackageFilesView(CustomerPackageId: customerPackageID) )
+                            }
                         }) {
                             VStack(spacing:7) {
                                 //                                     Image(.chats)
@@ -176,7 +185,6 @@ struct SubcripedPackageDetailsView: View {
                             Spacer()
                         }
                     }
-                    
                     
                 }
                 .padding(.vertical)

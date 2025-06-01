@@ -70,26 +70,36 @@ struct NewHomeView: View {
                             //                            add to wishlist
                         }
                             .environmentObject(viewModel)
-                        
-                        
                     }
                     
                     Spacer()
                     
-                    Spacer().frame(height: 55)
+                    Spacer().frame(height: 77)
                     
                 }
                 //                .padding(.horizontal)
             }
-            .onChange(of: selectedPackage){ newval in
-                guard let selectedPackage = newval else { return }
+            .reversLocalizeView()
+        
+//            .onChange(of: selectedPackage){ newval in
+//                guard let selectedPackage = newval else { return }
+//                pushTo(destination: PackageDetailsView(package: selectedPackage))
+//            }
+            .onAppear{
+                selectedPackage = nil
+            }
+            .task(id: selectedPackage){
+                guard let selectedPackage = selectedPackage else { return }
                 pushTo(destination: PackageDetailsView(package: selectedPackage))
             }
+
+        
 //        }
         
         NavigationLink( "", destination: destination, isActive: $isactive)
         
     }
+    
 
 }
 
@@ -195,20 +205,23 @@ struct HeaderView: View {
                         .clipShape(Circle())
                         .aspectRatio(contentMode: .fit)
                     
-                    (Text("home_Welcome".localized) + Text("بلال"))
-                        .font(.bold(size: 20))
+                    (Text("home_Welcome".localized)
+                        .font(.medium(size: 24))
+
+                     + Text(" \("بلال")"))
+                        .font(.bold(size: 24))
                         .foregroundStyle(Color.mainBlue)
                         .frame(maxWidth: .infinity, alignment: .leading)
                 }
                 
                 VStack{
                     Text("home_subtitle1".localized)
-                        .font(.bold(size: 20))
+                        .font(.semiBold(size: 18))
                         .foregroundStyle(Color.mainBlue)
                         .frame(maxWidth: .infinity, alignment: .leading)
                     
                     Text("home_subtitle2".localized)
-                        .font(.medium(size: 12))
+                        .font(.medium(size: 14))
                         .foregroundStyle(Color(.secondaryMain))
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding(.vertical,4)
@@ -236,13 +249,13 @@ struct SectionHeader: View {
                 image
                     .renderingMode(imageForground != nil ? .template:.original)
                     .resizable()
-                    .frame(width: 16, height: 16)
+                    .frame(width: 18, height: 18)
                     .scaledToFill()
                     .foregroundStyle(imageForground ?? .white)
             }
             VStack{
                 Text(title.localized)
-                    .font(.semiBold(size: 16))
+                    .font(.bold(size: 22))
                     .foregroundStyle(Color(.mainBlue))
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(.vertical,4)
@@ -255,7 +268,7 @@ struct SectionHeader: View {
                 Button(action: MoreBtnAction ?? {}){
                     Image(.newmoreicon)
                         .resizable()
-                        .frame(width: 15, height: 15)
+                        .frame(width: 18, height: 18)
                         .scaledToFill()
                 }
             }
@@ -491,6 +504,7 @@ struct NextSessionSection: View {
 struct MainCategoriesSection: View {
     var categories: HomeCategoryM?
     var action: ((HomeCategoryItemM) -> Void)?
+    
     var body: some View {
         VStack(spacing:5){
             SectionHeader(image: Image(.newcategicon),title: "home_maincat"){
@@ -511,31 +525,33 @@ struct MainCategoriesSection: View {
                                 //                                    .resizable()
                                 //                                    .frame(width: 166, height: 221)
                                 
-                                KFImageLoader(url:URL(string:Constants.imagesURL + (item.homeImage?.validateSlashs() ?? "")),placeholder: Image("logo"),placeholderSize: CGSize(width: 166, height: 221), shouldRefetch: true)
+//                                KFImageLoader(url:URL(string:Constants.imagesURL + (item.homeImage?.validateSlashs() ?? "")),placeholder: Image("logo"),placeholderSize: CGSize(width: 166, height: 221), shouldRefetch: true)
+                                KFImageLoader(url:URL(string:Constants.imagesURL + (item.homeImage?.validateSlashs() ?? "")),placeholder: Image("logo"), shouldRefetch: true)
+
                                     .frame(width: 166, height: 221)
                                 
                                 VStack(alignment: .leading){
                                     Text(item.title ?? "")
-                                        .font(.semiBold(size: 14))
+                                        .font(.semiBold(size: 18))
                                         .foregroundStyle(Color.white)
                                         .frame(maxWidth: .infinity,alignment:.leading)
                                     
                                     HStack{
-                                        HStack(spacing:0){
+                                        HStack(spacing:2){
                                             Image(.newsubmaincaticon)
                                                 .resizable()
                                                 .frame(width: 9,height:9)
                                                 .scaledToFit()
                                             
-                                            ( Text(" \(item.subCategoryCount ?? 0) ") + Text("subcategory".localized))
-                                                .font(.medium(size: 8))
+                                            ( Text(" \(item.subCategoryCount ?? 0) ") + Text("sub_category".localized))
+                                                .font(.medium(size: 12))
                                             
                                         }
                                         .foregroundStyle(Color.white)
                                         
                                         Spacer()
                                         
-                                        HStack(spacing:0){
+                                        HStack(spacing:2){
                                             
                                             Image("newvippackicon")
                                                 .renderingMode(.template)
@@ -544,13 +560,13 @@ struct MainCategoriesSection: View {
                                                 .scaledToFit()
                                                 .foregroundStyle(.white)
                                             
-                                            ( Text(" \(item.packageCount ?? 0) ") + Text("package".localized))
-                                                .font(.medium(size: 8))
+                                            ( Text(" \(item.packageCount ?? 0) ") + Text("package_".localized))
+                                                .font(.medium(size: 12))
                                         }
                                         .foregroundStyle(Color.white)
                                     }
                                 }
-                                .padding([.vertical,.horizontal],5)
+                                .padding([.vertical,.horizontal],10)
                                 .background{
                                     BlurView(radius: 5)
                                         .horizontalGradientBackground().opacity(0.89)
@@ -558,7 +574,7 @@ struct MainCategoriesSection: View {
                             }
                         })
                         .buttonStyle(.plain)
-                        .cardStyle(cornerRadius: 6)
+                        .cardStyle(cornerRadius: 3)
                     }
                 }
                 .padding(.horizontal)
@@ -575,7 +591,7 @@ struct LastMesurmentsSection: View {
     let columns = [
         GridItem(.flexible()),
         GridItem(.flexible()),
-        GridItem(.flexible()),
+//        GridItem(.flexible()),
         GridItem(.flexible())
     ]
     var body: some View {
@@ -585,11 +601,11 @@ struct LastMesurmentsSection: View {
             }
             .padding(.horizontal)
             
-            LazyVGrid(columns: columns, spacing: 10) {
+            LazyVGrid(columns: columns, spacing: 5) {
                 ForEach(measurements ?? [], id: \.self) { item in
                     VStack{
                         Text(item.title ?? "")
-                            .font(.bold(size: 12))
+                            .font(.bold(size: 16))
                             .foregroundStyle(Color.mainBlue)
                             .frame(maxWidth: .infinity)
                         
@@ -602,22 +618,26 @@ struct LastMesurmentsSection: View {
                             .frame(width: 30, height: 30)
                         
                         Text(item.lastMeasurementValue ?? "")
-                            .font(.bold(size: 10))
+                            .font(.bold(size: 16))
                             .foregroundStyle(Color(.secondaryMain))
                             .frame(maxWidth: .infinity)
-                            .padding(.vertical,1)
+                            .padding(.vertical,0)
                         
                         let date = (item.lastMeasurementDate ?? "").ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo:"dd MMM yyyy")
                         
-                        (Text("mes_inDate".localized).font(.semiBold(size: 6))
-                         + Text( date ))
-                        .font(.regular(size: 6))
+//                        (Text("mes_inDate".localized).font(.semiBold(size: 6))
+//                         +
+                         Text( date )
+//                        Text("27/6/2022" )
+
+//                        )
+                        .font(.medium(size: 10))
                         .foregroundStyle(Color.mainBlue)
                         .frame(maxWidth: .infinity)
                         
                     }
-                    .frame(width: UIScreen.main.bounds.width/4.7, height: 95)
-                    .cardStyle(cornerRadius: 5,shadowOpacity:0.09)
+                    .frame(width: UIScreen.main.bounds.width/3.3, height: 112)
+                    .cardStyle(cornerRadius: 3,shadowOpacity:0.08)
                 }
             }
             .padding(.horizontal)
@@ -628,7 +648,6 @@ struct LastMesurmentsSection: View {
         .padding(.bottom,5)
     }
 }
-
 
 struct VipPackagesSection: View {
     var packaces: [FeaturedPackageItemM]?
@@ -691,13 +710,13 @@ struct VipPackageCellView: View {
                         HStack (spacing:3){
                             Image(.newconversationicon)
                                 .resizable()
-                                .frame(width: 16, height: 9)
+                                .frame(width: 16, height: 8)
                             
-                            Text("\(item.sessionCount ?? 0) ").font(.semiBold(size: 16))
+                            Text("\(item.sessionCount ?? 0) ").font(.semiBold(size: 18))
                             
-                            Text("sessions".localized)
+                            Text("sessions".localized)                        .font(.regular(size: 12))
+
                         }
-                        .font(.regular(size: 10))
                         .foregroundStyle(Color.white)
                         .frame(height:32)
                         .padding(.horizontal,10)
@@ -715,33 +734,39 @@ struct VipPackageCellView: View {
                     }
                     .frame(maxWidth: .infinity,alignment:.leading)
                     .padding()
+                    .background(
+                        LinearGradient(gradient: Gradient(colors: [.black.opacity(0.5),.clear]), startPoint: .top, endPoint: .bottom)
+                    )
                     
                     Spacer()
                     
                     VStack(alignment: .leading,spacing: 10){
                         Text(item.name ?? "pack_Name".localized)
-                            .font(.semiBold(size: 16))
+                            .font(.semiBold(size: 20))
                             .foregroundStyle(Color.white)
                             .frame(maxWidth: .infinity,alignment:.leading)
                         
-                        HStack(alignment: .center,spacing: 5){
+//                        HStack(alignment: .center,spacing: 5){
+                        VStack{
                             Text( item.categoryName ?? "")
-                            Circle().fill(Color(.white))
-                                .frame(width: 4, height: 4)
-                            Text("23 / 7 / 2023")
+                            Text( item.mainCategoryName ?? "")
+
+//                            Circle().fill(Color(.white))
+//                                .frame(width: 4, height: 4)
+//                            Text("23 / 7 / 2023")
                         }
-                        .font(.regular(size: 10))
+                        .font(.medium(size: 12))
                         .foregroundStyle(Color.white)
                         .frame(maxWidth: .infinity,alignment:.leading)
                         
                         Text("\(item.priceAfterDiscount ?? 0) " + "EGP".localized)
-                            .font(.semiBold(size: 12))
+                            .font(.semiBold(size: 16))
                             .foregroundStyle(Color.white)
                             .frame(maxWidth: .infinity,alignment:.leading)
                         
                         HStack{
                             Text("\(item.priceBeforeDiscount ?? 0) " + "EGP".localized).strikethrough().foregroundStyle(Color(.secondary))
-                                .font(.semiBold(size: 12))
+                                .font(.medium(size: 12))
                             
                             (Text("(".localized + "Discount".localized ) + Text( " \(item.discount ?? 0)" + "%".localized + ")".localized))
                                 .font(.semiBold(size: 12))

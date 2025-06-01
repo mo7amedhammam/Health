@@ -24,7 +24,9 @@ struct Constants {
 
     static var baseURL:String = apiType.rawValue
     static var apiURL:String {return "\(baseURL)api/\(Helper.shared.getLanguage())/"}
-    static var imagesURL:String {return "https://alnada-sehatyapi.azurewebsites.net/"}
+//    static var imagesURL:String {return "https://alnada-sehatyapi.azurewebsites.net/"}
+    static var imagesURL:String {return baseURL}
+
 
 //var TermsAndConditionsURL =  "https://camelgate.app/terms.html"
 

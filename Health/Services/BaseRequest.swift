@@ -414,6 +414,8 @@ protocol TargetType1 {
     var method: HTTPMethod { get }
     var headers: [String: String]? { get }
     var parameters: [String: Any]? { get }
+    var timeoutInterval: TimeInterval? { get }  // Add this line
+
 }
 extension TargetType1 {
     var baseURL: URL {
@@ -552,38 +554,250 @@ final class NetworkService1: NetworkServiceProtocol {
     }
 }
 
+//protocol AsyncAwaitNetworkServiceProtocol {
+//    func request<T: Codable>(_ target: TargetType1, responseType: T.Type) async throws -> T? //async/await
+//}
+//
+//final class AsyncAwaitNetworkService: AsyncAwaitNetworkServiceProtocol {
+//    static let shared = AsyncAwaitNetworkService()
+//    private init() {}
+//
+//    func request<T: Codable>(_ target: TargetType1, responseType: T.Type) async throws -> T? {
+//        // Check network connectivity
+//        guard Helper.shared.isConnectedToNetwork() else {
+//            throw NetworkError.noConnection
+//        }
+//
+//        // Construct URL
+//        let url = target.baseURL.appendingPathComponent(target.path)
+//        var request = URLRequest(url: url)
+//        request.httpMethod = target.method.rawValue
+//
+//        // Set headers
+//        if let headers = target.headers {
+//            for (key, value) in headers {
+//                request.setValue(value, forHTTPHeaderField: key)
+//            }
+//        }
+//
+//        // Add Authorization
+//        if let token = Helper.shared.getUser()?.token {
+//            request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+//        }
+//
+//        // Add parameters
+//        if let parameters = target.parameters {
+//            switch target.method {
+//            case .get:
+//                if var urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false) {
+//                    urlComponents.queryItems = parameters.map { URLQueryItem(name: $0.key, value: "\($0.value)") }
+//                    request.url = urlComponents.url
+//                }
+//            case .post, .put, .patch:
+//                request.httpBody = try JSONSerialization.data(withJSONObject: parameters, options: [])
+//                request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+//            default:
+//                break
+//            }
+//        }
+//
+//        logRequest(request)
+//
+//        do {
+//            let (data, response) = try await URLSession.shared.data(for: request)
+//
+//            guard let httpResponse = response as? HTTPURLResponse else {
+//                throw NetworkError.invalidJSON("Invalid response object")
+//            }
+//
+//            logResponse(httpResponse, data: data)
+//
+//            switch httpResponse.statusCode {
+//            case 200..<300:
+//                do {
+////                    print("httpResponse",httpResponse)
+////                    print("data",data)
+////                    print("JSONDecoder().decode(T.self, from: data)",try JSONDecoder().decode(T.self, from: data))
+//                    
+//                                              // First try to decode as ApiResponse
+//                                              if let wrapper = try? JSONDecoder().decode(BaseResponse<T>.self, from: data) {
+//                                                  return wrapper.data
+//                                              }
+//                    
+//                                              // Fall back to direct decoding if not wrapped
+//                                              return try JSONDecoder().decode(T.self, from: data)
+//                    
+////                    ------------------------------
+////                    // First try to decode as BaseResponse
+////                     if let wrapper = try? JSONDecoder().decode(BaseResponse<T>.self, from: data) {
+////                         // Safely handle the optional data property
+////                         guard let responseData = wrapper.data else {
+////                             throw NetworkError.invalidJSON("Response data is nil")
+////                         }
+////                         return responseData
+////                     }
+////                     
+////                     // Fall back to direct decoding if not wrapped
+////                     do {
+////                         let directResult = try JSONDecoder().decode(T.self, from: data)
+////                         print("Direct decoding result:", directResult)
+////                         return directResult
+////                     } catch {
+////                         print("Direct decoding failed:", error)
+////                         throw NetworkError.unableToParseData("Failed to decode response: \(error.localizedDescription)")
+////                     }
+////                    -------------------------------
+//                } catch {
+//                          print("Decoding error details:", error)
+//                          throw NetworkError.unableToParseData(error.localizedDescription)
+//                      }
+//
+//            case 401:
+//                throw NetworkError.unauthorized(code: httpResponse.statusCode, error: "Unauthorized")
+//
+//            case 400..<500:
+//                throw NetworkError.unknown(code: httpResponse.statusCode, error: "Client Error")
+//
+//            case 500..<600:
+//                throw NetworkError.serverError(code: httpResponse.statusCode, error: "Server Error")
+//
+//            default:
+//                throw NetworkError.unknown(code: httpResponse.statusCode, error: "Unhandled status code")
+//            }
+//        } catch {
+//            if let error = error as? NetworkError {
+//                throw error
+//            } else {
+//                throw NetworkError.unknown(code: -1, error: error.localizedDescription)
+//            }
+//        }
+//    }
+//
+//    // MARK: - Logging
+//    private func logRequest(_ request: URLRequest) {
+//        print("=== Request ===")
+//        print("URL: \(request.url?.absoluteString ?? "Invalid URL")")
+//        print("Method: \(request.httpMethod ?? "No Method")")
+//        print("Headers: \(request.allHTTPHeaderFields ?? [:])")
+//        print("parameters: \(request.allHTTPHeaderFields ?? [:])")
+//
+//        if let body = request.httpBody, let bodyString = String(data: body, encoding: .utf8) {
+//            print("Body: \(bodyString)")
+//        }
+//        print("===============")
+//    }
+//
+//    private func logResponse(_ response: HTTPURLResponse, data: Data?) {
+//        print("=== Response ===")
+//        print("Status Code: \(response.statusCode)")
+//        print("Headers: \(response.allHeaderFields)")
+//        if let data = data, let dataString = String(data: data, encoding: .utf8) {
+//            print("Body: \(dataString)")
+//        }
+//        print("================")
+//    }
+//}
+
+
+import Foundation
+import os.log
 protocol AsyncAwaitNetworkServiceProtocol {
     func request<T: Codable>(_ target: TargetType1, responseType: T.Type) async throws -> T? //async/await
 }
-//
 final class AsyncAwaitNetworkService: AsyncAwaitNetworkServiceProtocol {
+  
+    
     static let shared = AsyncAwaitNetworkService()
     private init() {}
 
-    func request<T: Codable>(_ target: TargetType1, responseType: T.Type) async throws -> T? {
-        // Check network connectivity
+    private let logger = Logger(subsystem: "com.sehaty.network", category: "networking")
+    private let defaultTimeout: TimeInterval = 30.0
+    private let maxRetryCount = 2
+
+//    func request<T: Decodable>(_ target: TargetType1, responseType: T.Type) async throws -> T {
+        func request<T: Codable>(_ target: TargetType1, responseType: T.Type) async throws -> T? {
+
         guard Helper.shared.isConnectedToNetwork() else {
             throw NetworkError.noConnection
         }
 
-        // Construct URL
         let url = target.baseURL.appendingPathComponent(target.path)
-        var request = URLRequest(url: url)
-        request.httpMethod = target.method.rawValue
+        var request = try buildRequest(for: target, url: url)
 
-        // Set headers
-        if let headers = target.headers {
-            for (key, value) in headers {
-                request.setValue(value, forHTTPHeaderField: key)
+        var lastError: Error?
+
+        for attempt in 1...maxRetryCount {
+            logRequest(request, attempt: attempt)
+
+            do {
+                let startTime = Date()
+                let (data, response) = try await URLSession.shared.data(for: request)
+                let duration = Date().timeIntervalSince(startTime)
+
+                guard let httpResponse = response as? HTTPURLResponse else {
+                    throw NetworkError.invalidJSON("Invalid response object")
+                }
+
+                logResponse(httpResponse, data: data, duration: duration)
+
+                guard let contentType = httpResponse.value(forHTTPHeaderField: "Content-Type"),
+                      contentType.contains("application/json") else {
+                    throw NetworkError.invalidJSON("Unexpected content type")
+                }
+
+                switch httpResponse.statusCode {
+                case 200..<300:
+                    return try decodeResponse(data, responseType)
+
+                case 401 where attempt == 1:
+                    // Placeholder for token refresh logic
+                    // if let newToken = try? await AuthManager.shared.refreshToken() {
+                    //     request.setValue("Bearer \(newToken)", forHTTPHeaderField: "Authorization")
+                    //     continue
+                    // }
+                    throw NetworkError.unauthorized(code: httpResponse.statusCode, error: "Unauthorized")
+
+                case 400..<500:
+                    throw NetworkError.unknown(code: httpResponse.statusCode, error: "Client Error")
+
+                case 500..<600:
+                    throw NetworkError.serverError(code: httpResponse.statusCode, error: "Server Error")
+
+                default:
+                    throw NetworkError.unknown(code: httpResponse.statusCode, error: "Unhandled status code")
+                }
+
+            } catch let error as NetworkError {
+                throw error
+            } catch {
+                lastError = error
+                logger.warning("Attempt \(attempt) failed with error: \(error.localizedDescription)")
+                if attempt == maxRetryCount {
+                    throw NetworkError.unknown(code: -1, error: error.localizedDescription)
+                }
             }
         }
 
-        // Add Authorization
+        throw lastError ?? NetworkError.unknown(code: -1, error: "Unknown failure")
+    }
+
+    // MARK: - Build Request
+
+    private func buildRequest(for target: TargetType1, url: URL) throws -> URLRequest {
+        var request = URLRequest(url: url)
+        request.httpMethod = target.method.rawValue
+        request.timeoutInterval = target.timeoutInterval ?? defaultTimeout
+
+        // Headers
+        var headers = target.headers ?? [:]
         if let token = Helper.shared.getUser()?.token {
-            request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+            headers["Authorization"] = "Bearer \(token)"
+        }
+        for (key, value) in headers {
+            request.setValue(value, forHTTPHeaderField: key)
         }
 
-        // Add parameters
+        // Parameters
         if let parameters = target.parameters {
             switch target.method {
             case .get:
@@ -599,99 +813,46 @@ final class AsyncAwaitNetworkService: AsyncAwaitNetworkServiceProtocol {
             }
         }
 
-        logRequest(request)
+        return request
+    }
 
-        do {
-            let (data, response) = try await URLSession.shared.data(for: request)
+    // MARK: - Decode
 
-            guard let httpResponse = response as? HTTPURLResponse else {
-                throw NetworkError.invalidJSON("Invalid response object")
-            }
-
-            logResponse(httpResponse, data: data)
-
-            switch httpResponse.statusCode {
-            case 200..<300:
-                do {
-//                    print("httpResponse",httpResponse)
-//                    print("data",data)
-//                    print("JSONDecoder().decode(T.self, from: data)",try JSONDecoder().decode(T.self, from: data))
-                    
-                                              // First try to decode as ApiResponse
-                                              if let wrapper = try? JSONDecoder().decode(BaseResponse<T>.self, from: data) {
-                                                  return wrapper.data
-                                              }
-                    
-                                              // Fall back to direct decoding if not wrapped
-                                              return try JSONDecoder().decode(T.self, from: data)
-                    
-//                    ------------------------------
-//                    // First try to decode as BaseResponse
-//                     if let wrapper = try? JSONDecoder().decode(BaseResponse<T>.self, from: data) {
-//                         // Safely handle the optional data property
-//                         guard let responseData = wrapper.data else {
-//                             throw NetworkError.invalidJSON("Response data is nil")
-//                         }
-//                         return responseData
-//                     }
-//                     
-//                     // Fall back to direct decoding if not wrapped
-//                     do {
-//                         let directResult = try JSONDecoder().decode(T.self, from: data)
-//                         print("Direct decoding result:", directResult)
-//                         return directResult
-//                     } catch {
-//                         print("Direct decoding failed:", error)
-//                         throw NetworkError.unableToParseData("Failed to decode response: \(error.localizedDescription)")
-//                     }
-//                    -------------------------------
-                } catch {
-                          print("Decoding error details:", error)
-                          throw NetworkError.unableToParseData(error.localizedDescription)
-                      }
-
-            case 401:
-                throw NetworkError.unauthorized(code: httpResponse.statusCode, error: "Unauthorized")
-
-            case 400..<500:
-                throw NetworkError.unknown(code: httpResponse.statusCode, error: "Client Error")
-
-            case 500..<600:
-                throw NetworkError.serverError(code: httpResponse.statusCode, error: "Server Error")
-
-            default:
-                throw NetworkError.unknown(code: httpResponse.statusCode, error: "Unhandled status code")
-            }
-        } catch {
-            if let error = error as? NetworkError {
-                throw error
-            } else {
-                throw NetworkError.unknown(code: -1, error: error.localizedDescription)
-            }
+    private func decodeResponse<T: Codable>(_ data: Data, _ type: T.Type) throws -> T {
+        if let wrapper = try? JSONDecoder().decode(BaseResponse<T>.self, from: data),
+           let result = wrapper.data {
+            return result
         }
+
+        return try JSONDecoder().decode(T.self, from: data)
     }
 
     // MARK: - Logging
-    private func logRequest(_ request: URLRequest) {
-        print("=== Request ===")
+
+    private func logRequest(_ request: URLRequest, attempt: Int) {
+        #if DEBUG
+        print("=== Request Attempt \(attempt) ===")
         print("URL: \(request.url?.absoluteString ?? "Invalid URL")")
         print("Method: \(request.httpMethod ?? "No Method")")
-        print("Headers: \(request.allHTTPHeaderFields ?? [:])")
-        print("parameters: \(request.allHTTPHeaderFields ?? [:])")
-
+        let safeHeaders = request.allHTTPHeaderFields?.filter { $0.key.lowercased() != "authorization" }
+        print("Headers: \(safeHeaders ?? [:])")
         if let body = request.httpBody, let bodyString = String(data: body, encoding: .utf8) {
             print("Body: \(bodyString)")
         }
-        print("===============")
+        print("=============================")
+        #endif
     }
 
-    private func logResponse(_ response: HTTPURLResponse, data: Data?) {
+    private func logResponse(_ response: HTTPURLResponse, data: Data?, duration: TimeInterval) {
+        #if DEBUG
         print("=== Response ===")
         print("Status Code: \(response.statusCode)")
+        print("Duration: \(duration)s")
         print("Headers: \(response.allHeaderFields)")
         if let data = data, let dataString = String(data: data, encoding: .utf8) {
-            print("Body: \(dataString)")
+            print("Body: \(dataString.prefix(1000))...") // Limit output
         }
         print("================")
+        #endif
     }
 }

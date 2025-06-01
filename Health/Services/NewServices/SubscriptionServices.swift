@@ -16,13 +16,17 @@ enum SubscriptionServices{
 //    case GetCustomerUpComingSession
     case GetCustomerPackageSessionList(parameters : [String:Any])
     case FileType
-//    case GetCustomerPackageInstructionByCPId
+    case GetCustomerPackageInstructionByCPId(parameters : [String:Any])
 //    case CreateDoctorMessage
 //    case CreateCustomerMessage
 //    case GetMessage
 }
 
 extension SubscriptionServices : TargetType1 {
+    var timeoutInterval: TimeInterval? {
+        return nil
+    }
+    
     var path: String {
         switch self {
             
@@ -38,8 +42,8 @@ extension SubscriptionServices : TargetType1 {
             return SubscriptionEndPoints.GetCustomerPackageSessionList.rawValue
         case .FileType:
             return SubscriptionEndPoints.FileType.rawValue
-//        case .GetCustomerPackageInstructionByCPId:
-//            return SubscriptionEndPoints.GetCustomerPackageInstructionByCPId.rawValue
+        case .GetCustomerPackageInstructionByCPId:
+            return SubscriptionEndPoints.GetCustomerPackageInstructionByCPId.rawValue
 //        case .CreateDoctorMessage:
 //            return SubscriptionEndPoints.CreateDoctorMessage.rawValue
 //        case .CreateCustomerMessage:
@@ -58,7 +62,8 @@ extension SubscriptionServices : TargetType1 {
             return .post
             
         case
-                .FileType
+                .FileType,
+                .GetCustomerPackageInstructionByCPId
             :
             return .get
         }
@@ -68,7 +73,8 @@ extension SubscriptionServices : TargetType1 {
         switch self {
         case
                 .GetCustomerPackageList(parameters: let parameter),
-                .GetCustomerPackageSessionList(parameters: let parameter)
+                .GetCustomerPackageSessionList(parameters: let parameter),
+                .GetCustomerPackageInstructionByCPId(parameters: let parameter)
             :
 //            return .parameterRequest(Parameters: parameters, Encoding: encoding)
             return  parameter

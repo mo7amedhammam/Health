@@ -38,6 +38,9 @@ enum HomeServices{
 }
 
 extension HomeServices : TargetType1 {
+    var timeoutInterval: TimeInterval? {
+        return nil
+    }
     var path: String {
         switch self {
         case .GetUpcomingSession:

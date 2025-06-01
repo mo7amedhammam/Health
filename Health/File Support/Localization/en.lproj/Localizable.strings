@@ -119,6 +119,8 @@
 
 "mesurement_det_title" = "mesurement of ";
 
+"sub_category" = "subcategory";
+"package_" = "package";
 
 //MARK: --- notification ---
 "notfication_active" = "active";
@@ -153,3 +155,7 @@
 "subscriped_packages" = "subscriped packages";
 "subscriped_no_packages" = "no subscriped packages for now";
 "subscription_nextSessions" = "Next Sessions";
+
+
+//MARK: --- Package Files ---
+"package_no_files" = "no files for now";

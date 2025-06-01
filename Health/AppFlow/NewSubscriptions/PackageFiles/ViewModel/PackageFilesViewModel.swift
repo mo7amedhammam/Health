@@ -1,13 +1,14 @@
 //
-//  PackageMoreDetailsViewModel.swift
+//  PackageFilesViewModel.swift
 //  Sehaty
 //
-//  Created by mohamed hammam on 27/05/2025.
+//  Created by mohamed hammam on 31/05/2025.
 //
+
 import Foundation
 
-class SubcripedPackagesViewModel:ObservableObject {
-    static let shared = SubcripedPackagesViewModel()
+class PackageFilesViewModel:ObservableObject {
+    static let shared = PackageFilesViewModel()
     // Injected service
     private let networkService: AsyncAwaitNetworkServiceProtocol
     
@@ -19,12 +20,13 @@ class SubcripedPackagesViewModel:ObservableObject {
 //    var doctorPackageId:Int?
 //    @Published var newDate                = Date()
     
+    var CustomerPackageId : Int?
     // Published properties
-    @Published var subscripedPackages: SubcripedPackagesM? 
+    @Published var packageFiles: [PackageFileM]?
 //    @Published var availableDays: [AvailableDayM]?
 //    @Published var availableShifts: [AvailableTimeShiftM]?
-//    @Published var availableScheduals: [AvailableSchedualsM]? 
-//    
+//    @Published var availableScheduals: [AvailableSchedualsM]?
+//
 //    @Published var selectedDay: AvailableDayM?
 //    @Published var selectedShift: AvailableTimeShiftM?
 //    @Published var selectedSchedual: AvailableSchedualsM?
@@ -40,28 +42,28 @@ class SubcripedPackagesViewModel:ObservableObject {
 }
 
 //MARK: -- Functions --
-extension SubcripedPackagesViewModel{
+extension PackageFilesViewModel{
     
     @MainActor
-    func getSubscripedPackages() async {
+    func getSubscripedPackageFiles() async {
         isLoading = true
         defer { isLoading = false }
-        guard let maxResultCount = maxResultCount,let skipCount = skipCount else {
+        guard let CustomerPackageId = CustomerPackageId else {
 //            // Handle missings
 //            self.errorMessage = "check inputs"
 //            //            throw NetworkError.unknown(code: 0, error: "check inputs")
             return
         }
-        let parametersarr : [String : Any] =  ["maxResultCount":maxResultCount,"skipCount":skipCount]
+        let parametersarr : [String : Any] =  ["CustomerPackageId":CustomerPackageId]
         
-        let target = SubscriptionServices.GetCustomerPackageList(parameters: parametersarr)
+        let target = SubscriptionServices.GetCustomerPackageInstructionByCPId(parameters: parametersarr)
         do {
             self.errorMessage = nil // Clear previous errors
             let response = try await networkService.request(
                 target,
-                responseType: SubcripedPackagesM.self
+                responseType: [PackageFileM].self
             )
-            self.subscripedPackages = response
+            self.packageFiles = response
         } catch {
             self.errorMessage = error.localizedDescription
         }

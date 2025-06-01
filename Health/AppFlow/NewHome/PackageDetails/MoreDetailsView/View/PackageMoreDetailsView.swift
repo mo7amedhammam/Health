@@ -7,7 +7,15 @@
 
 import SwiftUI
 
+enum bookingCase {
+    case create
+    case renew
+    case cancel
+}
+
 struct PackageMoreDetailsView: View {
+   
+    var currentcase:bookingCase = .create
     var doctorPackageId: Int
     @StateObject var viewModel = PackageMoreDetailsViewModel.shared
     
@@ -20,7 +28,8 @@ struct PackageMoreDetailsView: View {
         self.destination = AnyView(destination)
         self.isactive = true
     }
-    init(doctorPackageId: Int) {
+    init(doctorPackageId: Int,currentcase:bookingCase = .create) {
+        self.currentcase = currentcase
         self.doctorPackageId = doctorPackageId
     }
 

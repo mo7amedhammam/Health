@@ -62,7 +62,7 @@ extension NewHomeViewModel{
             //            throw NetworkError.unknown(code: 0, error: "check inputs")
             return
         }
-        let parametersarr : [String : Any] =  ["maxResultCount" : maxResultCount ,"skipCount" : skipCount]
+        let parametersarr : [String : Any] =  ["maxResultCount" : maxResultCount ,"skipCount" : skipCount,"appCountryId":1]
         
         let target = HomeServices.GetAllHomeCategory(parameters: parametersarr)
         do {

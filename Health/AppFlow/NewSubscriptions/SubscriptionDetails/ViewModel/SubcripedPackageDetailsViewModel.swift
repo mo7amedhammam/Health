@@ -21,7 +21,7 @@ class SubcripedPackageDetailsViewModel:ObservableObject {
 //    @Published var newDate                = Date()
     
     // Published properties
-    @Published var subscripedSessions: SubcripedSessionsListM? = .init(items: [.init()])
+    @Published var subscripedSessions: SubcripedSessionsListM?
 //    @Published var availableDays: [AvailableDayM]?
 //    @Published var availableShifts: [AvailableTimeShiftM]?
 //    @Published var availableScheduals: [AvailableSchedualsM]? 

@@ -18,6 +18,7 @@ class PackagesViewModel:ObservableObject {
     
     // Published properties
     @Published var subCategories: SubCategoriesM?
+    @Published var selectedSubCategory: SubCategoryItemM?
     @Published var packages: FeaturedPackagesM?
 
     @Published var isLoading = false

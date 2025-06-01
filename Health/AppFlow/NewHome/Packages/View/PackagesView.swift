@@ -43,7 +43,7 @@ struct PackagesView: View {
                                     .frame(width: 11,height:11)
                                     .scaledToFit()
                                 
-                                ( Text(" \(mainCategory.subCategoryCount ?? 0) ") + Text("subcategory".localized))
+                                ( Text(" \(mainCategory.subCategoryCount ?? 0) ") + Text("sub_category".localized))
                                     .font(.medium(size: 12))
                             }
                             .foregroundStyle(Color.white)
@@ -58,7 +58,7 @@ struct PackagesView: View {
                                 .scaledToFit()
                                 .foregroundStyle(.white)
                             
-                            ( Text(" \(mainCategory.packageCount ?? 0) ") + Text("package".localized))
+                            ( Text(" \(mainCategory.packageCount ?? 0) ") + Text("package_".localized))
                                 .font(.semiBold(size: 14))
                         }
                         .foregroundStyle(Color.white)
@@ -79,7 +79,7 @@ struct PackagesView: View {
                 
                 ScrollView(showsIndicators: false){
                     VStack(alignment:.leading){
-                        SubCategoriesSection(categories:viewModel.subCategories){subCategoryId in
+                        SubCategoriesSection(categories:viewModel.subCategories,selectedSubCategory:$viewModel.selectedSubCategory){subCategoryId in
                             Task{
                                 await viewModel.getPackages(categoryId: subCategoryId)
                             }
@@ -87,12 +87,21 @@ struct PackagesView: View {
                             .task {
                                 guard let mainCategoryId = self.mainCategory.id else { return }
                                 await viewModel.getSubCategories(mainCategoryId: mainCategoryId)
-                                await viewModel.getPackages(categoryId: mainCategoryId)
+//                                await viewModel.getPackages(categoryId: mainCategoryId)
+                                guard let subCategoryId = viewModel.subCategories?.items?.first?.id else { return }
+
+                                await viewModel.getPackages(categoryId: subCategoryId)
+
                             }
                         
                         PackagesListView(packaces: viewModel.packages?.items){package in
                             pushTo(destination: PackageDetailsView(package: package))
                         }
+//                        .task {
+//                            guard let subCategoryId = viewModel.subCategories?.items?.first?.id else { return }
+//                            await viewModel.getPackages(categoryId: subCategoryId)
+//                        }
+                        
                     }
                     .padding([.horizontal,.top],10)
                     
@@ -113,8 +122,8 @@ struct PackagesView: View {
 }
 
 struct SubCategoriesSection: View {
-    @State var selectedid = SubCategoryItemM.init()
     var categories: SubCategoriesM?
+    @Binding var selectedSubCategory : SubCategoryItemM?
     var action: ((Int) -> Void)?
     var body: some View {
         VStack(spacing:5){
@@ -128,7 +137,7 @@ struct SubCategoriesSection: View {
 
                     ForEach(categories, id: \.self) { item in
                         Button(action: {
-                            selectedid = item
+                            selectedSubCategory = item
                             guard let id = item.id else { return }
                             action?(id)
                         }, label: {
@@ -165,7 +174,7 @@ struct SubCategoriesSection: View {
                                                     .scaledToFit()
                                                     .foregroundStyle(.white)
                                                 
-                                                ( Text(" \(item.packageCount ?? 0) ") + Text("package".localized))
+                                                ( Text(" \(item.packageCount ?? 0) ") + Text("package_".localized))
                                                     .font(.medium(size: 8))
                                                     .frame(maxWidth: .infinity,alignment:.leading)
 
@@ -195,7 +204,7 @@ struct SubCategoriesSection: View {
                                 .frame(width: 140, height: 60)
                                 .background{
 
-                                    item == selectedid ? LinearGradient(gradient: Gradient(colors: [.mainBlue, Color(.secondary)]), startPoint: .leading, endPoint: .trailing) : LinearGradient(gradient: Gradient(colors: [Color(.btnDisabledTxt).opacity(0.5), Color(.btnDisabledTxt).opacity(0.5)]), startPoint: .leading, endPoint: .trailing)
+                                    item == selectedSubCategory ? LinearGradient(gradient: Gradient(colors: [.mainBlue, Color(.secondary)]), startPoint: .leading, endPoint: .trailing) : LinearGradient(gradient: Gradient(colors: [Color(.btnDisabledTxt).opacity(0.5), Color(.btnDisabledTxt).opacity(0.5)]), startPoint: .leading, endPoint: .trailing)
                                 }
 
                         })
@@ -270,6 +279,10 @@ struct PackagesListView: View {
                                     }
                                     .frame(maxWidth: .infinity,alignment:.leading)
                                     .padding()
+                                    .background(
+                                        LinearGradient(gradient: Gradient(colors: [.black.opacity(0.5),.clear]), startPoint: .top, endPoint: .bottom)
+                                    )
+                                    
                                     
                                     Spacer()
                                     
@@ -328,6 +341,7 @@ struct PackagesListView: View {
                             }
                         })
                         .cardStyle(cornerRadius: 3)
+                        .horizontalGradientBackground()
 //                        .frame(width: 200, height: 356)
                     }
             }

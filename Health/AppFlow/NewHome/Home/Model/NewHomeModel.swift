@@ -62,7 +62,7 @@ struct FeaturedPackageItemM: Codable,Hashable {
     var id: Int?
     var name: String?
     var mainCategoryID, subCategoryID: Int?
-    var categoryName: String?
+    var categoryName,mainCategoryName: String?
     var sessionCount: Int?
     var isWishlist: Bool?
     var priceBeforeDiscount, discount, priceAfterDiscount: Int?
@@ -73,7 +73,7 @@ struct FeaturedPackageItemM: Codable,Hashable {
         case id, name
         case mainCategoryID = "mainCategoryId"
         case subCategoryID = "subCategoryId"
-        case categoryName, sessionCount, isWishlist, priceBeforeDiscount, discount, priceAfterDiscount, homeImage, imagePath, doctorCount
+        case categoryName,mainCategoryName, sessionCount, isWishlist, priceBeforeDiscount, discount, priceAfterDiscount, homeImage, imagePath, doctorCount
     }
 }
 

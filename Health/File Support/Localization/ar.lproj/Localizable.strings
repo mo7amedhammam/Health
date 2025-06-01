@@ -117,6 +117,9 @@
 
 "mesurement_det_title" = "قياس ";
 
+"sub_category" =  "تصنيف فرعي";
+"package_" =  "باقة";
+
 
 //MARK: --- notification ---
 "notfication_active" = "فعّال";
@@ -149,3 +152,7 @@
 "subscriped_packages" = "الباقات المشترك بها";
 "subscriped_no_packages" = "لا يوجد أي باقات مشترك بها حتى الآن";
 "subscription_nextSessions" = "السيشنز القادمة";
+
+
+//MARK: --- Package Files ---
+"package_no_files" = "لا يوجد أي ملفات";

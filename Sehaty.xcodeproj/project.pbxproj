@@ -53,6 +53,10 @@
 		90FDD33D2DE6751200C3BABB /* SubcripedPackageDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90FDD33C2DE6751200C3BABB /* SubcripedPackageDetailsView.swift */; };
 		90FDD33F2DE7792300C3BABB /* SubcripedSessionsListM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90FDD33E2DE7792300C3BABB /* SubcripedSessionsListM.swift */; };
 		90FDD3412DE7882300C3BABB /* SubcripedPackageDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90FDD3402DE7882300C3BABB /* SubcripedPackageDetailsViewModel.swift */; };
+		90FDD3472DEB0D2200C3BABB /* PackageFilesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90FDD3462DEB0D2200C3BABB /* PackageFilesView.swift */; };
+		90FDD3492DEB105A00C3BABB /* PackageFileM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90FDD3482DEB105A00C3BABB /* PackageFileM.swift */; };
+		90FDD34B2DEB1CE100C3BABB /* PackageFilesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90FDD34A2DEB1CD400C3BABB /* PackageFilesViewModel.swift */; };
+		90FDD3512DEC462F00C3BABB /* CancelSubscriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90FDD3502DEC462F00C3BABB /* CancelSubscriptionView.swift */; };
 		BB006DE12B34A9510006E417 /* TermsConditionsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB006DE02B34A9510006E417 /* TermsConditionsVC.swift */; };
 		BB0512482B60313C004CAB83 /* ModelResponseFirebase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0512472B60313C004CAB83 /* ModelResponseFirebase.swift */; };
 		BB10D9112B1E774100751AAE /* StartScreenVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB10D9102B1E774100751AAE /* StartScreenVC.swift */; };
@@ -302,6 +306,10 @@
 		90FDD33C2DE6751200C3BABB /* SubcripedPackageDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubcripedPackageDetailsView.swift; sourceTree = "<group>"; };
 		90FDD33E2DE7792300C3BABB /* SubcripedSessionsListM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubcripedSessionsListM.swift; sourceTree = "<group>"; };
 		90FDD3402DE7882300C3BABB /* SubcripedPackageDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubcripedPackageDetailsViewModel.swift; sourceTree = "<group>"; };
+		90FDD3462DEB0D2200C3BABB /* PackageFilesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackageFilesView.swift; sourceTree = "<group>"; };
+		90FDD3482DEB105A00C3BABB /* PackageFileM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackageFileM.swift; sourceTree = "<group>"; };
+		90FDD34A2DEB1CD400C3BABB /* PackageFilesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackageFilesViewModel.swift; sourceTree = "<group>"; };
+		90FDD3502DEC462F00C3BABB /* CancelSubscriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CancelSubscriptionView.swift; sourceTree = "<group>"; };
 		BB006DE02B34A9510006E417 /* TermsConditionsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsConditionsVC.swift; sourceTree = "<group>"; };
 		BB0512472B60313C004CAB83 /* ModelResponseFirebase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelResponseFirebase.swift; sourceTree = "<group>"; };
 		BB10D9102B1E774100751AAE /* StartScreenVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartScreenVC.swift; sourceTree = "<group>"; };
@@ -828,6 +836,8 @@
 		90FDD31B2DE4A4BB00C3BABB /* NewSubscriptions */ = {
 			isa = PBXGroup;
 			children = (
+				90FDD34C2DEC45EC00C3BABB /* CancelSubscription */,
+				90FDD3422DEB0CC700C3BABB /* PackageFiles */,
 				90FDD3382DE6731300C3BABB /* SubscriptionDetails */,
 				90FDD31C2DE4A4E000C3BABB /* MySubscriptions */,
 			);
@@ -898,6 +908,72 @@
 			isa = PBXGroup;
 			children = (
 				90FDD33E2DE7792300C3BABB /* SubcripedSessionsListM.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		90FDD3422DEB0CC700C3BABB /* PackageFiles */ = {
+			isa = PBXGroup;
+			children = (
+				90FDD3452DEB0CD800C3BABB /* Model */,
+				90FDD3442DEB0CD500C3BABB /* ViewModel */,
+				90FDD3432DEB0CD200C3BABB /* View */,
+			);
+			path = PackageFiles;
+			sourceTree = "<group>";
+		};
+		90FDD3432DEB0CD200C3BABB /* View */ = {
+			isa = PBXGroup;
+			children = (
+				90FDD3462DEB0D2200C3BABB /* PackageFilesView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		90FDD3442DEB0CD500C3BABB /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				90FDD34A2DEB1CD400C3BABB /* PackageFilesViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		90FDD3452DEB0CD800C3BABB /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				90FDD3482DEB105A00C3BABB /* PackageFileM.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		90FDD34C2DEC45EC00C3BABB /* CancelSubscription */ = {
+			isa = PBXGroup;
+			children = (
+				90FDD34F2DEC460D00C3BABB /* Model */,
+				90FDD34E2DEC460900C3BABB /* ViewModel */,
+				90FDD34D2DEC460600C3BABB /* View */,
+			);
+			path = CancelSubscription;
+			sourceTree = "<group>";
+		};
+		90FDD34D2DEC460600C3BABB /* View */ = {
+			isa = PBXGroup;
+			children = (
+				90FDD3502DEC462F00C3BABB /* CancelSubscriptionView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		90FDD34E2DEC460900C3BABB /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		90FDD34F2DEC460D00C3BABB /* Model */ = {
+			isa = PBXGroup;
+			children = (
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -2135,6 +2211,7 @@
 				BB14DAE32A7AFA0700389B96 /* MeasurementsVC.swift in Sources */,
 				9088CFCB2DA5AE6C0036EE0E /* CustomInputField.swift in Sources */,
 				90B67BDA2D9EC7B400C1FD31 /* OnBoardingPage.swift in Sources */,
+				90FDD3512DEC462F00C3BABB /* CancelSubscriptionView.swift in Sources */,
 				9088CFC32DA559290036EE0E /* CustomHeader.swift in Sources */,
 				BB546DDE2AC9D53A008A4F8C /* HomeTVCell0.swift in Sources */,
 				C8A1509D2AB1C63500511B1F /* ProfileVM.swift in Sources */,
@@ -2146,6 +2223,7 @@
 				BBC3C3ED2ACC912400805524 /* HomeCVCell3.swift in Sources */,
 				BB5A26712B2E1F000005C9B8 /* HelpVM.swift in Sources */,
 				BBC7B45B2A72CC820079355E /* AppDelegate.swift in Sources */,
+				90FDD34B2DEB1CE100C3BABB /* PackageFilesViewModel.swift in Sources */,
 				BBAE725E2AD3291F0089512D /* EmptyTVCell.swift in Sources */,
 				C8A1509B2AB1C62A00511B1F /* ProfileM.swift in Sources */,
 				90FDD3172DDF698400C3BABB /* TicketViewModel.swift in Sources */,
@@ -2184,6 +2262,7 @@
 				BB5116D22A829B4900CF5D11 /* MeasurementsCVCell.swift in Sources */,
 				C80DA9ED2AA4F65300F10808 /* Navigations.swift in Sources */,
 				90D6287B2DAE86FE008D303E /* NewTabView.swift in Sources */,
+				90FDD3472DEB0D2200C3BABB /* PackageFilesView.swift in Sources */,
 				BB1B30012A7EA8BF001677FD /* ViewDone.swift in Sources */,
 				BB006DE12B34A9510006E417 /* TermsConditionsVC.swift in Sources */,
 				90FDD3212DE4B58E00C3BABB /* SubcripedPackagesView.swift in Sources */,
@@ -2285,6 +2364,7 @@
 				C8542D5A2AA8B3EC00ACE480 /* OtpM.swift in Sources */,
 				C85671C02AAF5AEE00E02D75 /* InbodyVM.swift in Sources */,
 				BB546DE22AC9D558008A4F8C /* HomeCVCell1.swift in Sources */,
+				90FDD3492DEB105A00C3BABB /* PackageFileM.swift in Sources */,
 				C88974052ABAF2AD00C2A948 /* TipsDetailsVM.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
