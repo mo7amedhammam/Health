@@ -22,15 +22,18 @@ struct BaseResponse<T:Codable> : Codable {
             case success = "success"
         }
     
-    init() {
-//        self.id = ""
-        self.message = ""
-        self.messageCode = 0
-        self.success = false
-        self.data = T.self as? T
-    }
+//    init() {
+////        self.id = ""
+//        self.message = ""
+//        self.messageCode = 0
+//        self.success = false
+//        self.data = T.self as? T
+//    }
 }
 
+struct ServerErrorResponse: Decodable {
+    let message: String
+}
 
 public enum EventHandler:Equatable {
     case none

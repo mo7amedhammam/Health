@@ -88,7 +88,9 @@ struct PackagesView: View {
                                 guard let mainCategoryId = self.mainCategory.id else { return }
                                 await viewModel.getSubCategories(mainCategoryId: mainCategoryId)
 //                                await viewModel.getPackages(categoryId: mainCategoryId)
-                                guard let subCategoryId = viewModel.subCategories?.items?.first?.id else { return }
+                                viewModel.selectedSubCategory = viewModel.subCategories?.items?.first
+
+                                guard let subCategory =  viewModel.selectedSubCategory ,let subCategoryId = subCategory.id else { return }
 
                                 await viewModel.getPackages(categoryId: subCategoryId)
 

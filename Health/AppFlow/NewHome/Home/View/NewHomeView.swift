@@ -8,7 +8,8 @@
 import SwiftUI
 
 struct NewHomeView: View {
-    @StateObject private var viewModel = NewHomeViewModel()
+    @StateObject private var viewModel = NewHomeViewModel.shared
+    @State private var refreshTask: Task<Void, Never>?
 
     @State var selectedPackage : FeaturedPackageItemM?
 
@@ -32,20 +33,21 @@ struct NewHomeView: View {
                         .padding(.horizontal)
 
                     VStack(alignment:.leading){
-                        Group{
+//                        Group{
                             if let nextsession = viewModel.upcomingSession{
                                 NextSessionSection(upcomingSession: nextsession)
+                                    .padding(.horizontal)
                             }
-                        }
-                        .task {
-                            await viewModel.getUpcomingSession()
-                        }
+//                        }
+//                        .task {
+//                            await viewModel.getUpcomingSession()
+//                        }
                         MainCategoriesSection(categories: viewModel.homeCategories){category in
                             pushTo(destination: PackagesView(mainCategory: category))
                         }
-                            .task {
-                                await viewModel.getHomeCategories()
-                            }
+//                            .task {
+//                                await viewModel.getHomeCategories()
+//                            }
                         
                         Image(.adsbg)
                             .resizable()
@@ -53,13 +55,27 @@ struct NewHomeView: View {
                             .padding(.horizontal)
 
                         LastMesurmentsSection(measurements: viewModel.myMeasurements)
-                            .task {
-                                await viewModel.getMyMeasurements()
-                            }
+//                            .task {
+//                                await viewModel.getMyMeasurements()
+//                            }
+//                            .onAppear(perform: {
+//                                Task{
+//                                    await viewModel.getMyMeasurements()
+//                                }
+//                            })
                         
                         VipPackagesSection(packaces: viewModel.featuredPackages?.items,selectedPackage: $selectedPackage){packageId in
 //                            add to wishlist
                         }
+//                        .task {
+//                            await viewModel.getFeaturedPackages()
+//
+//                        }
+//                        .onAppear(perform: {
+//                            Task{
+//                                await viewModel.getFeaturedPackages()
+//                            }
+//                        })
                         
                         Image(.adsbg2)
                             .resizable()
@@ -70,6 +86,14 @@ struct NewHomeView: View {
                             //                            add to wishlist
                         }
                             .environmentObject(viewModel)
+//                            .onAppear(perform: {
+//                                Task{
+//                                    await viewModel.getFeaturedPackages()
+//                                }
+//                            })
+//                            .task {
+//                                await viewModel.getFeaturedPackages()
+//                            }
                     }
                     
                     Spacer()
@@ -80,21 +104,25 @@ struct NewHomeView: View {
                 //                .padding(.horizontal)
             }
             .reversLocalizeView()
-        
-//            .onChange(of: selectedPackage){ newval in
-//                guard let selectedPackage = newval else { return }
-//                pushTo(destination: PackageDetailsView(package: selectedPackage))
-//            }
+            .showHud(isShowing:  $viewModel.isLoading)
+            .errorAlert(isPresented: .constant(viewModel.errorMessage != nil), message: viewModel.errorMessage)
+
             .onAppear{
                 selectedPackage = nil
             }
+//            .task {
+//                await viewModel.refresh()
+//            }
             .task(id: selectedPackage){
                 guard let selectedPackage = selectedPackage else { return }
                 pushTo(destination: PackageDetailsView(package: selectedPackage))
             }
-
-        
-//        }
+            .refreshable {
+                await viewModel.refresh()
+            }
+            .onDisappear {
+                refreshTask?.cancel()
+            }
         
         NavigationLink( "", destination: destination, isActive: $isactive)
         
@@ -160,6 +188,7 @@ struct TitleBar: View {
             }
         }
         .padding(.horizontal)
+        .localizeView()
     }
 }
 
@@ -863,9 +892,9 @@ struct MostViewedBooked: View {
         .frame(height:356)
         .padding(.vertical,10)
         .padding(.bottom,5)
-        .task {
-            getFeaturedPackages()
-        }
+//        .task {
+//            getFeaturedPackages()
+//        }
     }
     func getFeaturedPackages() {
         Task() {

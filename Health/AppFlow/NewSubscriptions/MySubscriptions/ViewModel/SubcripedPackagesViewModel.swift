@@ -10,27 +10,16 @@ class SubcripedPackagesViewModel:ObservableObject {
     static let shared = SubcripedPackagesViewModel()
     // Injected service
     private let networkService: AsyncAwaitNetworkServiceProtocol
-    
     // -- Get List --
     var maxResultCount: Int?              = 5
     var skipCount: Int?                   = 0
-    
-//    var doctorId:Int                      = 0
-//    var doctorPackageId:Int?
-//    @Published var newDate                = Date()
+
     
     // Published properties
-    @Published var subscripedPackages: SubcripedPackagesM? 
-//    @Published var availableDays: [AvailableDayM]?
-//    @Published var availableShifts: [AvailableTimeShiftM]?
-//    @Published var availableScheduals: [AvailableSchedualsM]? 
-//    
-//    @Published var selectedDay: AvailableDayM?
-//    @Published var selectedShift: AvailableTimeShiftM?
-//    @Published var selectedSchedual: AvailableSchedualsM?
-//    @Published var ticketData: TicketM?
+    @Published var subscripedPackages: SubcripedPackagesM?
     
-    @Published var isLoading = false
+    @Published var isLoading:Bool? = false
+    @Published var canLoadMore:Bool? = false
     @Published var errorMessage: String? = nil
     
     // Init with DI
@@ -61,10 +50,45 @@ extension SubcripedPackagesViewModel{
                 target,
                 responseType: SubcripedPackagesM.self
             )
-            self.subscripedPackages = response
+
+            if skipCount == 0 {
+                // Fresh load
+                self.subscripedPackages = response
+            } else {
+                // Append for pagination
+                if var existing = self.subscripedPackages,
+                   let newItems = response?.items {
+                    existing.items?.append(contentsOf: newItems)
+                    existing.totalCount = response?.totalCount
+                    self.subscripedPackages = existing
+                }
+            }
+            canLoadMore = response?.items?.count ?? 0 < response?.totalCount ?? 0
+
         } catch {
             self.errorMessage = error.localizedDescription
         }
     }
     
+}
+
+extension SubcripedPackagesViewModel {
+    
+    @MainActor
+    func refresh() async {
+        skipCount = 0
+        await getSubscripedPackages()
+    }
+
+    @MainActor
+    func loadMoreIfNeeded() async {
+        guard !(isLoading ?? false),
+              let currentCount = subscripedPackages?.items?.count,
+              let totalCount = subscripedPackages?.totalCount,
+              currentCount < totalCount,
+              let maxResultCount = maxResultCount else { return }
+
+        skipCount = (skipCount ?? 0) + maxResultCount
+        await getSubscripedPackages()
+    }
 }

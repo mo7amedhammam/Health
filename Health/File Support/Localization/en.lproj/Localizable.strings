@@ -159,3 +159,8 @@
 
 //MARK: --- Package Files ---
 "package_no_files" = "no files for now";
+
+//MARK: --- alert ---
+"OK" = "OK";
+"login_expired" = "you need to login again";
+"no_connection" = "you are not connected to the internet";

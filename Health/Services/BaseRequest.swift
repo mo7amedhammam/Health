@@ -352,93 +352,7 @@ final class BaseNetwork{
 
 
 
-public enum NetworkError: Error, Equatable {
-    case expiredTokenMsg
-    case badURL(_ error: String)
-    case apiError(code: Int, error: String)
-    case invalidJSON(_ error: String)
-    case unauthorized(code: Int, error: String)
-    case badRequest(code: Int, error: String)
-    case serverError(code: Int, error: String)
-    case noResponse(_ error: String)
-    case unableToParseData(_ error: String)
-    case unknown(code: Int, error: String)
-    case noConnection
-}
 
-extension NetworkError: LocalizedError {
-    public var errorDescription: String? {
-        switch self {
-        case .badURL(let errorMsg):
-            return NSLocalizedString("Bad Url", comment: errorMsg)
-        case .apiError(_, let errorMsg):
-            return errorMsg
-        case .invalidJSON(let errorMsg):
-            return NSLocalizedString("00", comment: errorMsg)
-        case .unauthorized(_, let errorMsg):
-            return errorMsg
-        case .badRequest(_, let errorMsg):
-            return errorMsg
-        case .serverError(_, let errorMsg):
-            return errorMsg
-        case .noResponse(let errorMsg):
-            return errorMsg
-        case .unableToParseData(let errorMsg):
-            return errorMsg
-        case .unknown(_, let errorMsg):
-            return errorMsg
-        case .expiredTokenMsg:
-            return " يجب تسجيل دخول من جديد"
-        case .noConnection:
-            return "لا يوجد إتصال بالإنترنت"
-
-        }
-    }
-}
-
-struct BGDecoder {
-
-    static func decode<T: Codable>(data: Data) throws -> T {
-        let decoder = JSONDecoder()
-        return try decoder.decode(T.self, from: data)
-    }
-
-}
-
-
-// ----------------------------
-
-protocol TargetType1 {
-    var baseURL: URL { get }
-    var path: String { get }
-    var method: HTTPMethod { get }
-    var headers: [String: String]? { get }
-    var parameters: [String: Any]? { get }
-    var timeoutInterval: TimeInterval? { get }  // Add this line
-
-}
-extension TargetType1 {
-    var baseURL: URL {
-        return URL(string: Constants.apiURL)!
-    }
-    // MARK: - Request URL
-    var requestURL: URL {
-        return baseURL.appendingPathComponent(path)
-    }
-    var headers: [String: String]? {
-        var header = [String: String]()
-        header["Content-Type"] = "application/json"
-        header ["Accept"] = "multipart/form-data"
-        if let token = Helper.shared.getUser()?.token {
-        header["Authorization"] = "Bearer " + token
-        }
-        return header
-    }
-    
-    /// The type of validation to perform on the request. Default is `.none`.
-    var validationType: ValidationType { .none }
-
-}
 
 protocol NetworkServiceProtocol {
     func request<T: Decodable>(_ target: TargetType1, responseType: T.Type, completion: @escaping (Result<T, NetworkError>) -> Void) //closure
@@ -699,14 +613,251 @@ final class NetworkService1: NetworkServiceProtocol {
 //}
 
 
+//import Foundation
+//import os.log
+//protocol AsyncAwaitNetworkServiceProtocol {
+//    func request<T: Codable>(_ target: TargetType1, responseType: T.Type) async throws -> T? //async/await
+//}
+//final class AsyncAwaitNetworkService: AsyncAwaitNetworkServiceProtocol {
+//  
+//    
+//    static let shared = AsyncAwaitNetworkService()
+//    private init() {}
+//
+//    private let logger = Logger(subsystem: "com.sehaty.network", category: "networking")
+//    private let defaultTimeout: TimeInterval = 30.0
+//    private let maxRetryCount = 2
+//
+////    func request<T: Decodable>(_ target: TargetType1, responseType: T.Type) async throws -> T {
+//        func request<T: Codable>(_ target: TargetType1, responseType: T.Type) async throws -> T? {
+//
+//        guard Helper.shared.isConnectedToNetwork() else {
+//            throw NetworkError.noConnection
+//        }
+//
+//        let url = target.baseURL.appendingPathComponent(target.path)
+//        var request = try buildRequest(for: target, url: url)
+//
+//        var lastError: Error?
+//
+//        for attempt in 1...maxRetryCount {
+//            logRequest(request, attempt: attempt)
+//
+//            do {
+//                let startTime = Date()
+//                let (data, response) = try await URLSession.shared.data(for: request)
+//                let duration = Date().timeIntervalSince(startTime)
+//
+//                guard let httpResponse = response as? HTTPURLResponse else {
+//                    throw NetworkError.invalidJSON("Invalid response object")
+//                }
+//
+//                logResponse(httpResponse, data: data, duration: duration)
+//
+//                guard let contentType = httpResponse.value(forHTTPHeaderField: "Content-Type"),
+//                      contentType.contains("application/json") else {
+//                    throw NetworkError.invalidJSON("Unexpected content type")
+//                }
+//
+//                switch httpResponse.statusCode {
+//                case 200..<300:
+//                    return try decodeResponse(data, responseType)
+//
+//                case 401 where attempt == 1:
+//                    // Placeholder for token refresh logic
+//                    // if let newToken = try? await AuthManager.shared.refreshToken() {
+//                    //     request.setValue("Bearer \(newToken)", forHTTPHeaderField: "Authorization")
+//                    //     continue
+//                    // }
+//                    throw NetworkError.unauthorized(code: httpResponse.statusCode, error: "Unauthorized")
+//
+//                case 400..<500:
+//                    throw NetworkError.unknown(code: httpResponse.statusCode, error: "Client Error")
+//
+//                case 500..<600:
+//                    throw NetworkError.serverError(code: httpResponse.statusCode, error: "Server Error")
+//
+//                default:
+//                    throw NetworkError.unknown(code: httpResponse.statusCode, error: "Unhandled status code")
+//                }
+//
+//            } catch let error as NetworkError {
+//                throw error
+//            } catch {
+//                lastError = error
+//                logger.warning("Attempt \(attempt) failed with error: \(error.localizedDescription)")
+//                if attempt == maxRetryCount {
+//                    throw NetworkError.unknown(code: -1, error: error.localizedDescription)
+//                }
+//            }
+//        }
+//
+//        throw lastError ?? NetworkError.unknown(code: -1, error: "Unknown failure")
+//    }
+//
+//    // MARK: - Build Request
+//
+//    private func buildRequest(for target: TargetType1, url: URL) throws -> URLRequest {
+//        var request = URLRequest(url: url)
+//        request.httpMethod = target.method.rawValue
+//        request.timeoutInterval = target.timeoutInterval ?? defaultTimeout
+//
+//        // Headers
+//        var headers = target.headers ?? [:]
+//        if let token = Helper.shared.getUser()?.token {
+//            headers["Authorization"] = "Bearer \(token)"
+//        }
+//        for (key, value) in headers {
+//            request.setValue(value, forHTTPHeaderField: key)
+//        }
+//
+//        // Parameters
+//        if let parameters = target.parameters {
+//            switch target.method {
+//            case .get:
+//                if var urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false) {
+//                    urlComponents.queryItems = parameters.map { URLQueryItem(name: $0.key, value: "\($0.value)") }
+//                    request.url = urlComponents.url
+//                }
+//            case .post, .put, .patch:
+//                request.httpBody = try JSONSerialization.data(withJSONObject: parameters, options: [])
+//                request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+//            default:
+//                break
+//            }
+//        }
+//
+//        return request
+//    }
+//
+//    // MARK: - Decode
+//
+//    private func decodeResponse<T: Codable>(_ data: Data, _ type: T.Type) throws -> T {
+//        if let wrapper = try? JSONDecoder().decode(BaseResponse<T>.self, from: data),
+//           let result = wrapper.data {
+//            return result
+//        }
+//
+//        return try JSONDecoder().decode(T.self, from: data)
+//    }
+//
+//    // MARK: - Logging
+//
+//    private func logRequest(_ request: URLRequest, attempt: Int) {
+//        #if DEBUG
+//        print("=== Request Attempt \(attempt) ===")
+//        print("URL: \(request.url?.absoluteString ?? "Invalid URL")")
+//        print("Method: \(request.httpMethod ?? "No Method")")
+//        let safeHeaders = request.allHTTPHeaderFields?.filter { $0.key.lowercased() != "authorization" }
+//        print("Headers: \(safeHeaders ?? [:])")
+//        if let body = request.httpBody, let bodyString = String(data: body, encoding: .utf8) {
+//            print("Body: \(bodyString)")
+//        }
+//        print("=============================")
+//        #endif
+//    }
+//
+//    private func logResponse(_ response: HTTPURLResponse, data: Data?, duration: TimeInterval) {
+//        #if DEBUG
+//        print("=== Response ===")
+//        print("Status Code: \(response.statusCode)")
+//        print("Duration: \(duration)s")
+//        print("Headers: \(response.allHeaderFields)")
+//        if let data = data, let dataString = String(data: data, encoding: .utf8) {
+//            print("Body: \(dataString.prefix(1000))...") // Limit output
+//        }
+//        print("================")
+//        #endif
+//    }
+//}
+
+
+
+
+public enum NetworkError: Error, Equatable {
+    case expiredTokenMsg
+    case badURL(_ error: String)
+    case apiError(code: Int, error: String)
+    case invalidJSON(_ error: String)
+    case unauthorized(code: Int, error: String)
+    case badRequest(code: Int, error: String)
+    case serverError(code: Int, error: String)
+    case noResponse(_ error: String)
+    case unableToParseData(_ error: String)
+    case unknown(code: Int, error: String)
+    case noConnection
+}
+
+extension NetworkError: LocalizedError {
+    public var errorDescription: String? {
+        switch self {
+        case .badURL(let errorMsg):
+            return NSLocalizedString("Bad Url", comment: errorMsg)
+        case .apiError(_, let errorMsg):
+            return errorMsg
+        case .invalidJSON(let errorMsg):
+            return NSLocalizedString("00", comment: errorMsg)
+        case .unauthorized(_, let errorMsg):
+            return errorMsg
+        case .badRequest(_, let errorMsg):
+            return errorMsg
+        case .serverError(_, let errorMsg):
+            return errorMsg
+        case .noResponse(let errorMsg):
+            return errorMsg
+        case .unableToParseData(let errorMsg):
+            return errorMsg
+        case .unknown(_, let errorMsg):
+            return errorMsg
+        case .expiredTokenMsg:
+            return "login_expired"
+        case .noConnection:
+            return "no_connection"
+
+        }
+    }
+}
+
+// ----------------------------
+
+protocol TargetType1 {
+    var baseURL: URL { get }
+    var path: String { get }
+    var method: HTTPMethod { get }
+    var headers: [String: String]? { get }
+    var parameters: [String: Any]? { get }
+    var timeoutInterval: TimeInterval? { get }  // Add this line
+
+}
+extension TargetType1 {
+    var baseURL: URL {
+        return URL(string: Constants.apiURL)!
+    }
+    // MARK: - Request URL
+    var requestURL: URL {
+        return baseURL.appendingPathComponent(path)
+    }
+    var headers: [String: String]? {
+        var header = [String: String]()
+        header["Content-Type"] = "application/json"
+        header ["Accept"] = "multipart/form-data"
+        if let token = Helper.shared.getUser()?.token {
+        header["Authorization"] = "Bearer " + token
+        }
+        return header
+    }
+
+}
+
 import Foundation
 import os.log
+
 protocol AsyncAwaitNetworkServiceProtocol {
-    func request<T: Codable>(_ target: TargetType1, responseType: T.Type) async throws -> T? //async/await
+    func request<T: Codable>(_ target: TargetType1, responseType: T.Type) async throws -> T?
 }
+
 final class AsyncAwaitNetworkService: AsyncAwaitNetworkServiceProtocol {
-  
-    
+
     static let shared = AsyncAwaitNetworkService()
     private init() {}
 
@@ -714,15 +865,13 @@ final class AsyncAwaitNetworkService: AsyncAwaitNetworkServiceProtocol {
     private let defaultTimeout: TimeInterval = 30.0
     private let maxRetryCount = 2
 
-//    func request<T: Decodable>(_ target: TargetType1, responseType: T.Type) async throws -> T {
-        func request<T: Codable>(_ target: TargetType1, responseType: T.Type) async throws -> T? {
-
+    func request<T: Codable>(_ target: TargetType1, responseType: T.Type) async throws -> T? {
         guard Helper.shared.isConnectedToNetwork() else {
             throw NetworkError.noConnection
         }
 
         let url = target.baseURL.appendingPathComponent(target.path)
-        var request = try buildRequest(for: target, url: url)
+        let request = try buildRequest(for: target, url: url)
 
         var lastError: Error?
 
@@ -730,9 +879,9 @@ final class AsyncAwaitNetworkService: AsyncAwaitNetworkServiceProtocol {
             logRequest(request, attempt: attempt)
 
             do {
-                let startTime = Date()
+                let start = Date()
                 let (data, response) = try await URLSession.shared.data(for: request)
-                let duration = Date().timeIntervalSince(startTime)
+                let duration = Date().timeIntervalSince(start)
 
                 guard let httpResponse = response as? HTTPURLResponse else {
                     throw NetworkError.invalidJSON("Invalid response object")
@@ -740,38 +889,46 @@ final class AsyncAwaitNetworkService: AsyncAwaitNetworkServiceProtocol {
 
                 logResponse(httpResponse, data: data, duration: duration)
 
-                guard let contentType = httpResponse.value(forHTTPHeaderField: "Content-Type"),
-                      contentType.contains("application/json") else {
-                    throw NetworkError.invalidJSON("Unexpected content type")
+                guard let contentType = httpResponse.value(forHTTPHeaderField: "Content-Type") else {
+                    throw NetworkError.invalidJSON("Missing Content-Type header")
                 }
+
+                guard contentType.contains("application/json") else {
+                    throw NetworkError.invalidJSON("Unexpected Content-Type: \(contentType)")
+                }
+
 
                 switch httpResponse.statusCode {
                 case 200..<300:
                     return try decodeResponse(data, responseType)
-
-                case 401 where attempt == 1:
-                    // Placeholder for token refresh logic
-                    // if let newToken = try? await AuthManager.shared.refreshToken() {
-                    //     request.setValue("Bearer \(newToken)", forHTTPHeaderField: "Authorization")
-                    //     continue
-                    // }
+                case 401:
+                    // Handle token refresh in future
                     throw NetworkError.unauthorized(code: httpResponse.statusCode, error: "Unauthorized")
-
                 case 400..<500:
-                    throw NetworkError.unknown(code: httpResponse.statusCode, error: "Client Error")
+//                        throw NetworkError.unknown(code: httpResponse.statusCode, error: "client error")
+                    let serverMessage: String
 
+                       do {
+                           let errorResponse = try JSONDecoder().decode(ServerErrorResponse.self, from: data)
+                           serverMessage = errorResponse.message
+                       } catch {
+                           serverMessage = String(data: data, encoding: .utf8) ?? "Unknown client error"
+                       }
+
+                       throw NetworkError.unknown(code: httpResponse.statusCode, error: serverMessage)
+                    
                 case 500..<600:
-                    throw NetworkError.serverError(code: httpResponse.statusCode, error: "Server Error")
-
+                    throw NetworkError.serverError(code: httpResponse.statusCode, error: "Server error")
                 default:
                     throw NetworkError.unknown(code: httpResponse.statusCode, error: "Unhandled status code")
                 }
+       
 
             } catch let error as NetworkError {
                 throw error
             } catch {
                 lastError = error
-                logger.warning("Attempt \(attempt) failed with error: \(error.localizedDescription)")
+                logger.warning("Attempt \(attempt) failed: \(error.localizedDescription)")
                 if attempt == maxRetryCount {
                     throw NetworkError.unknown(code: -1, error: error.localizedDescription)
                 }
@@ -781,8 +938,7 @@ final class AsyncAwaitNetworkService: AsyncAwaitNetworkServiceProtocol {
         throw lastError ?? NetworkError.unknown(code: -1, error: "Unknown failure")
     }
 
-    // MARK: - Build Request
-
+    // MARK: - Request Building
     private func buildRequest(for target: TargetType1, url: URL) throws -> URLRequest {
         var request = URLRequest(url: url)
         request.httpMethod = target.method.rawValue
@@ -793,17 +949,15 @@ final class AsyncAwaitNetworkService: AsyncAwaitNetworkServiceProtocol {
         if let token = Helper.shared.getUser()?.token {
             headers["Authorization"] = "Bearer \(token)"
         }
-        for (key, value) in headers {
-            request.setValue(value, forHTTPHeaderField: key)
-        }
+        headers.forEach { request.setValue($0.value, forHTTPHeaderField: $0.key) }
 
         // Parameters
         if let parameters = target.parameters {
             switch target.method {
             case .get:
-                if var urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false) {
-                    urlComponents.queryItems = parameters.map { URLQueryItem(name: $0.key, value: "\($0.value)") }
-                    request.url = urlComponents.url
+                if var components = URLComponents(url: url, resolvingAgainstBaseURL: false) {
+                    components.queryItems = parameters.map { URLQueryItem(name: $0.key, value: "\($0.value)") }
+                    request.url = components.url
                 }
             case .post, .put, .patch:
                 request.httpBody = try JSONSerialization.data(withJSONObject: parameters, options: [])
@@ -816,30 +970,31 @@ final class AsyncAwaitNetworkService: AsyncAwaitNetworkServiceProtocol {
         return request
     }
 
-    // MARK: - Decode
-
+    // MARK: - Decoding
     private func decodeResponse<T: Codable>(_ data: Data, _ type: T.Type) throws -> T {
+        // Try BaseResponse wrapper
         if let wrapper = try? JSONDecoder().decode(BaseResponse<T>.self, from: data),
            let result = wrapper.data {
             return result
         }
 
+        // Fallback to direct decoding
         return try JSONDecoder().decode(T.self, from: data)
     }
 
     // MARK: - Logging
-
     private func logRequest(_ request: URLRequest, attempt: Int) {
         #if DEBUG
-        print("=== Request Attempt \(attempt) ===")
-        print("URL: \(request.url?.absoluteString ?? "Invalid URL")")
-        print("Method: \(request.httpMethod ?? "No Method")")
+        print("=== Request [Attempt \(attempt)] ===")
+        print("URL: \(request.url?.absoluteString ?? "nil")")
+        print("Method: \(request.httpMethod ?? "nil")")
         let safeHeaders = request.allHTTPHeaderFields?.filter { $0.key.lowercased() != "authorization" }
         print("Headers: \(safeHeaders ?? [:])")
-        if let body = request.httpBody, let bodyString = String(data: body, encoding: .utf8) {
+        if let body = request.httpBody,
+           let bodyString = String(data: body, encoding: .utf8) {
             print("Body: \(bodyString)")
         }
-        print("=============================")
+        print("=========================")
         #endif
     }
 
@@ -847,12 +1002,13 @@ final class AsyncAwaitNetworkService: AsyncAwaitNetworkServiceProtocol {
         #if DEBUG
         print("=== Response ===")
         print("Status Code: \(response.statusCode)")
-        print("Duration: \(duration)s")
+        print("Duration: \(String(format: "%.2f", duration))s")
         print("Headers: \(response.allHeaderFields)")
-        if let data = data, let dataString = String(data: data, encoding: .utf8) {
-            print("Body: \(dataString.prefix(1000))...") // Limit output
+        if let data = data, let body = String(data: data, encoding: .utf8) {
+            print("Body: \(body.prefix(1000))...") // Truncate long body
         }
         print("================")
         #endif
     }
 }
+

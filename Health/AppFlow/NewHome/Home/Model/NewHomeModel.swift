@@ -68,15 +68,18 @@ struct FeaturedPackageItemM: Codable,Hashable {
     var priceBeforeDiscount, discount, priceAfterDiscount: Int?
     var homeImage, imagePath: String?
     var doctorCount: Int?
-
+    var appCountryPackageId: Int?
+    
     enum CodingKeys: String, CodingKey {
         case id, name
         case mainCategoryID = "mainCategoryId"
         case subCategoryID = "subCategoryId"
         case categoryName,mainCategoryName, sessionCount, isWishlist, priceBeforeDiscount, discount, priceAfterDiscount, homeImage, imagePath, doctorCount
+        case appCountryPackageId
     }
 }
 
+    
 // MARK: - MostBookedPackagesM -
 //struct MostBookedPackagesM: Codable ,Hashable{
 //    var id: Int?

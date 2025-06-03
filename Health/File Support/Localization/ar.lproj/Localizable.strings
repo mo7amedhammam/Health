@@ -156,3 +156,9 @@
 
 //MARK: --- Package Files ---
 "package_no_files" = "لا يوجد أي ملفات";
+
+
+//MARK: --- alert ---
+"OK" = "موافق";
+"login_expired" = "تحتاج الي تسجيل دخول جديد";
+"no_connection" = "لست متصل بالانترنت";

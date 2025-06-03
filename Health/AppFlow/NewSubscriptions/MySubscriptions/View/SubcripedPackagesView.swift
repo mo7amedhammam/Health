@@ -70,10 +70,23 @@ struct SubcripedPackagesView: View {
                     // sheet for cancel subscription
                     showCancel = true
                 }
+            },loadMore: {
+//                guard viewModel.canLoadMore else { return }
+                Task {
+                    await viewModel.loadMoreIfNeeded()
+                }
+                
             })
+            .refreshable {
+                await viewModel.refresh()
+            }
             
             Spacer().frame(height: 55)
+            
         }
+//        .loadingOverlay(isLoading: $viewModel.isLoading)
+        .showHud(isShowing:  $viewModel.isLoading)
+        .errorAlert(isPresented: .constant(viewModel.errorMessage != nil), message: viewModel.errorMessage)
         .edgesIgnoringSafeArea([.top,.horizontal])
         .task {
             await viewModel.getSubscripedPackages()
@@ -86,6 +99,8 @@ struct SubcripedPackagesView: View {
                 print("cancelled dismiss")
             })
         }
+
+        
     }
 }
 
@@ -97,7 +112,8 @@ struct SubcripedPackagesListView: View {
     var packaces: [SubcripedPackageItemM]?
     var selectAction: ((SubcripedPackageItemM) -> Void)?
     var buttonAction: ((SubcripedPackageItemM) -> Void)?
-    
+    var loadMore: (() -> Void)?
+
     var body: some View {
         VStack(spacing:0){
             SectionHeader(image: Image(.newvippackicon),title: "subscriped_packages"){
@@ -237,6 +253,7 @@ struct SubcripedPackagesListView: View {
                                                         .font(.regular(size: 10))
                                                         
                                                     })
+                                                    .buttonStyle(.plain)
                                                     
                                                 }
                                                 .font(.regular(size: 10))
@@ -258,6 +275,17 @@ struct SubcripedPackagesListView: View {
                             //                        .frame(width: 200, height: 356)
                             .padding(.horizontal)
                             .padding(.top,8)
+
+                            .onAppear {
+                                // Detect when the last item appears
+                                if item == packages.last {
+                                    loadMore?()
+//                                    Task {
+//                                        
+//                                        await viewModel.loadMoreIfNeeded()
+//                                    }
+                                }
+                            }
                         }
                         //                        .padding(.horizontal,10)
                         //                        .padding(.top,5)
@@ -308,5 +336,78 @@ struct HorizontalGradientBackground: ViewModifier {
 extension View {
     func horizontalGradientBackground(colors: [Color] = [.mainBlue, Color(.secondary)]) -> some View {
         self.modifier(HorizontalGradientBackground(colors: colors))
+    }
+}
+
+
+//struct CustomLoadingView: View {
+//    var body: some View {
+//        ZStack {
+//            Color.black.opacity(0.4)
+//                .ignoresSafeArea()
+//            ProgressView("Loading...")
+//                .progressViewStyle(CircularProgressViewStyle(tint: .white))
+//                .padding(20)
+//                .background(Color.black.opacity(0.7))
+//                .cornerRadius(12)
+//                .foregroundColor(.white)
+//        }
+//    }
+//}
+
+struct LoadingOverlayModifier: ViewModifier {
+    @Binding var isLoading: Bool?
+
+    func body(content: Content) -> some View {
+        ZStack {
+            content
+
+            if isLoading == false {
+                ZStack {
+                    Color.black.opacity(0.3)
+                        .ignoresSafeArea()
+                    
+                    ProgressView()
+                        .progressViewStyle(CircularProgressViewStyle(tint: .white))
+                        .scaleEffect(1.5)
+                        .padding(20)
+                        .background(Color.black.opacity(0.7))
+                        .cornerRadius(10)
+                        .foregroundColor(.white)
+                }
+                .transition(.opacity)
+                .zIndex(1)
+            }
+        }
+    }
+}
+
+extension View {
+    func loadingOverlay(isLoading: Binding<Bool?>) -> some View {
+        self.modifier(LoadingOverlayModifier(isLoading: isLoading))
+    }
+}
+
+
+struct ErrorAlertModifier: ViewModifier {
+    @Binding var isPresented: Bool
+    let message: String?
+    let title: String?
+
+    func body(content: Content) -> some View {
+        content
+            .alert(isPresented: $isPresented) {
+                Alert(
+                    title: Text(title?.localized ?? ""),
+                    message: Text(message?.localized ?? ""),
+                    dismissButton: .default(Text("OK".localized))
+                )
+            }
+    }
+}
+
+extension View {
+    func errorAlert(isPresented: Binding<Bool>, message: String? , title: String? = nil) -> some View {
+        self.modifier(ErrorAlertModifier(isPresented: isPresented, message: message, title: title))
     }
 }

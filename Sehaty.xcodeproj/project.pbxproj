@@ -57,6 +57,8 @@
 		90FDD3492DEB105A00C3BABB /* PackageFileM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90FDD3482DEB105A00C3BABB /* PackageFileM.swift */; };
 		90FDD34B2DEB1CE100C3BABB /* PackageFilesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90FDD34A2DEB1CD400C3BABB /* PackageFilesViewModel.swift */; };
 		90FDD3512DEC462F00C3BABB /* CancelSubscriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90FDD3502DEC462F00C3BABB /* CancelSubscriptionView.swift */; };
+		90FDD3542DEE179D00C3BABB /* HudView2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90FDD3532DEE179D00C3BABB /* HudView2.swift */; };
+		90FDD3562DEE17BB00C3BABB /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90FDD3552DEE17BB00C3BABB /* AlertView.swift */; };
 		BB006DE12B34A9510006E417 /* TermsConditionsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB006DE02B34A9510006E417 /* TermsConditionsVC.swift */; };
 		BB0512482B60313C004CAB83 /* ModelResponseFirebase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0512472B60313C004CAB83 /* ModelResponseFirebase.swift */; };
 		BB10D9112B1E774100751AAE /* StartScreenVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB10D9102B1E774100751AAE /* StartScreenVC.swift */; };
@@ -310,6 +312,8 @@
 		90FDD3482DEB105A00C3BABB /* PackageFileM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackageFileM.swift; sourceTree = "<group>"; };
 		90FDD34A2DEB1CD400C3BABB /* PackageFilesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackageFilesViewModel.swift; sourceTree = "<group>"; };
 		90FDD3502DEC462F00C3BABB /* CancelSubscriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CancelSubscriptionView.swift; sourceTree = "<group>"; };
+		90FDD3532DEE179D00C3BABB /* HudView2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HudView2.swift; sourceTree = "<group>"; };
+		90FDD3552DEE17BB00C3BABB /* AlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
 		BB006DE02B34A9510006E417 /* TermsConditionsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsConditionsVC.swift; sourceTree = "<group>"; };
 		BB0512472B60313C004CAB83 /* ModelResponseFirebase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelResponseFirebase.swift; sourceTree = "<group>"; };
 		BB10D9102B1E774100751AAE /* StartScreenVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartScreenVC.swift; sourceTree = "<group>"; };
@@ -978,6 +982,15 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		90FDD3522DEE179100C3BABB /* CustomSwiftuiViews */ = {
+			isa = PBXGroup;
+			children = (
+				90FDD3552DEE17BB00C3BABB /* AlertView.swift */,
+				90FDD3532DEE179D00C3BABB /* HudView2.swift */,
+			);
+			path = CustomSwiftuiViews;
+			sourceTree = "<group>";
+		};
 		BB006DDE2B34A91E0006E417 /* Terms Condition */ = {
 			isa = PBXGroup;
 			children = (
@@ -1404,6 +1417,7 @@
 		BBBDFFF12A730F8400F066DF /* File Support */ = {
 			isa = PBXGroup;
 			children = (
+				90FDD3522DEE179100C3BABB /* CustomSwiftuiViews */,
 				90FDD2FF2DDDF7E000C3BABB /* DatePicker */,
 				90FDD2FD2DDBE14F00C3BABB /* CustomSheet.swift */,
 				904748542DD4C7F90016C3DC /* KFImageLoader.swift */,
@@ -2201,6 +2215,7 @@
 				BB218A582ADF1CA90061FF81 /* ViewNoData.swift in Sources */,
 				C893A9B72AB5BE450054F171 /* TipsCategoryServices.swift in Sources */,
 				BB1B2FFE2A7EA379001677FD /* INBodyDetailsVC.swift in Sources */,
+				90FDD3562DEE17BB00C3BABB /* AlertView.swift in Sources */,
 				BB1AEAA32A955B710078683A /* NotificationVC.swift in Sources */,
 				BBBD001C2A73101700F066DF /* Shared.swift in Sources */,
 				90B67BE52D9ED7D200C1FD31 /* fontsenum.swift in Sources */,
@@ -2262,6 +2277,7 @@
 				BB5116D22A829B4900CF5D11 /* MeasurementsCVCell.swift in Sources */,
 				C80DA9ED2AA4F65300F10808 /* Navigations.swift in Sources */,
 				90D6287B2DAE86FE008D303E /* NewTabView.swift in Sources */,
+				90FDD3542DEE179D00C3BABB /* HudView2.swift in Sources */,
 				90FDD3472DEB0D2200C3BABB /* PackageFilesView.swift in Sources */,
 				BB1B30012A7EA8BF001677FD /* ViewDone.swift in Sources */,
 				BB006DE12B34A9510006E417 /* TermsConditionsVC.swift in Sources */,
