@@ -163,9 +163,9 @@ struct TitleBar: View {
                     //                        .foregroundStyle(Color.mainBlue)
                     
                 }
-                .frame(width: 24,height: 24)
+                .frame(width: 31,height: 31)
             } else {
-                Spacer().frame(width: 24) // Reserve space if needed
+                Spacer().frame(width: 31) // Reserve space if needed
             }
             
             // Title
@@ -181,10 +181,10 @@ struct TitleBar: View {
                         .resizable()
                     //                        .foregroundStyle(Color.mainBlue)
                 }
-                .frame(width: 24,height: 24)
+                .frame(width: 31,height: 31)
                 
             } else {
-                Spacer().frame(width: 24) // Reserve space if needed
+                Spacer().frame(width: 31) // Reserve space if needed
             }
         }
         .padding(.horizontal)

@@ -54,5 +54,7 @@
 		<string>processing</string>
 		<string>remote-notification</string>
 	</array>
+    <key>NSMicrophoneUsageDescription</key>
+    <string>This app needs access to the microphone to record audio messages.</string>
 </dict>
 </plist>

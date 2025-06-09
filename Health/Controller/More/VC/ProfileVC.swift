@@ -55,9 +55,10 @@ class ProfileVC: UIViewController {
           mainOptions = [
             MenuItem(title: "اشتراكاتي".localized, imageName: "more_subscriptions") { [weak self] in
 //                  self?.selectedIndex = 0
-                let destination = SubcripedPackagesView(onBack:{
-                    self?.navigationController?.popViewController(animated: true)
-                })
+//                let destination = SubcripedPackagesView(onBack:{
+//                    self?.navigationController?.popViewController(animated: true)
+//                })
+                let destination = ChatsView(CustomerPackageId: 0)
                 self?.pushTo(destination)
             },
             MenuItem(title: "نصائح طبية".localized, imageName: "instruction") { [weak self] in

@@ -153,7 +153,8 @@ struct SubcripedPackageDetailsView: View {
                             selectedSection = button
                             switch button {
                             case .chats:
-                                break
+                                guard let customerPackageID = package.customerPackageID else { return }
+                                pushTo(destination: ChatsView(CustomerPackageId: customerPackageID) )
                             case .sessions:
                                 break
                             case .files:

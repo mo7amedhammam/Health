@@ -17,9 +17,9 @@ enum SubscriptionServices{
     case GetCustomerPackageSessionList(parameters : [String:Any])
     case FileType
     case GetCustomerPackageInstructionByCPId(parameters : [String:Any])
-//    case CreateDoctorMessage
-//    case CreateCustomerMessage
-//    case GetMessage
+    case CreateDoctorMessage(parameters : [String:Any])
+    case CreateCustomerMessage(parameters : [String:Any])
+    case GetMessage(parameters : [String:Any])
 }
 
 extension SubscriptionServices : TargetType1 {
@@ -44,12 +44,12 @@ extension SubscriptionServices : TargetType1 {
             return SubscriptionEndPoints.FileType.rawValue
         case .GetCustomerPackageInstructionByCPId:
             return SubscriptionEndPoints.GetCustomerPackageInstructionByCPId.rawValue
-//        case .CreateDoctorMessage:
-//            return SubscriptionEndPoints.CreateDoctorMessage.rawValue
-//        case .CreateCustomerMessage:
-//            return SubscriptionEndPoints.CreateCustomerMessage.rawValue
-//        case .GetMessage:
-//            return SubscriptionEndPoints.GetMessage.rawValue
+        case .CreateDoctorMessage:
+            return SubscriptionEndPoints.CreateDoctorMessage.rawValue
+        case .CreateCustomerMessage:
+            return SubscriptionEndPoints.CreateCustomerMessage.rawValue
+        case .GetMessage:
+            return SubscriptionEndPoints.GetMessage.rawValue
         }
     }
     
@@ -57,13 +57,16 @@ extension SubscriptionServices : TargetType1 {
         switch self {
         case
                 .GetCustomerPackageList,
-                .GetCustomerPackageSessionList
+                .GetCustomerPackageSessionList,
+                .CreateDoctorMessage,
+                .CreateCustomerMessage
             :
             return .post
             
         case
                 .FileType,
-                .GetCustomerPackageInstructionByCPId
+                .GetCustomerPackageInstructionByCPId,
+                .GetMessage
             :
             return .get
         }
@@ -74,7 +77,10 @@ extension SubscriptionServices : TargetType1 {
         case
                 .GetCustomerPackageList(parameters: let parameter),
                 .GetCustomerPackageSessionList(parameters: let parameter),
-                .GetCustomerPackageInstructionByCPId(parameters: let parameter)
+                .GetCustomerPackageInstructionByCPId(parameters: let parameter),
+                .CreateDoctorMessage(parameters: let parameter),
+                .CreateCustomerMessage(parameters: let parameter),
+                .GetMessage(parameters: let parameter)
             :
 //            return .parameterRequest(Parameters: parameters, Encoding: encoding)
             return  parameter

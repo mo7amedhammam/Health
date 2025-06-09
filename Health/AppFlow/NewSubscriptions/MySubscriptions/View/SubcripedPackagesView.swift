@@ -72,6 +72,7 @@ struct SubcripedPackagesView: View {
                 }
             },loadMore: {
 //                guard viewModel.canLoadMore else { return }
+                
                 Task {
                     await viewModel.loadMoreIfNeeded()
                 }
@@ -81,10 +82,9 @@ struct SubcripedPackagesView: View {
                 await viewModel.refresh()
             }
             
-            Spacer().frame(height: 55)
+//            Spacer().frame(height: 55)
             
         }
-//        .loadingOverlay(isLoading: $viewModel.isLoading)
         .showHud(isShowing:  $viewModel.isLoading)
         .errorAlert(isPresented: .constant(viewModel.errorMessage != nil), message: viewModel.errorMessage)
         .edgesIgnoringSafeArea([.top,.horizontal])
@@ -123,7 +123,7 @@ struct SubcripedPackagesListView: View {
             
             //            ScrollView(.horizontal,showsIndicators:false){
             GeometryReader { gr in
-                ScrollView{
+                List{
                     
                     if let packages = packaces,packages.count > 0{
                         
@@ -271,20 +271,26 @@ struct SubcripedPackagesListView: View {
                                     }
                                 }
                             })
+                            .buttonStyle(.plain)
+                            .listRowSpacing(0)
+                            .listRowSeparator(.hidden)
+                            .listRowBackground(Color.clear)
+
                             .cardStyle(cornerRadius: 3)
                             //                        .frame(width: 200, height: 356)
-                            .padding(.horizontal)
+//                            .padding(.horizontal)
                             .padding(.top,8)
-
                             .onAppear {
                                 // Detect when the last item appears
-                                if item == packages.last {
+                                guard item == packages.last else {return}
+
+//                                if item == packages.last {
                                     loadMore?()
 //                                    Task {
 //                                        
 //                                        await viewModel.loadMoreIfNeeded()
 //                                    }
-                                }
+//                                }
                             }
                         }
                         //                        .padding(.horizontal,10)
@@ -308,10 +314,10 @@ struct SubcripedPackagesListView: View {
                         
                     }
                 }
+                .listStyle(.plain)
+
             }
         }
-        //        .padding(.vertical,5)
-        //        .padding(.bottom,5)
         
     }
 }
@@ -340,53 +346,7 @@ extension View {
 }
 
 
-//struct CustomLoadingView: View {
-//    var body: some View {
-//        ZStack {
-//            Color.black.opacity(0.4)
-//                .ignoresSafeArea()
-//            ProgressView("Loading...")
-//                .progressViewStyle(CircularProgressViewStyle(tint: .white))
-//                .padding(20)
-//                .background(Color.black.opacity(0.7))
-//                .cornerRadius(12)
-//                .foregroundColor(.white)
-//        }
-//    }
-//}
 
-struct LoadingOverlayModifier: ViewModifier {
-    @Binding var isLoading: Bool?
-
-    func body(content: Content) -> some View {
-        ZStack {
-            content
-
-            if isLoading == false {
-                ZStack {
-                    Color.black.opacity(0.3)
-                        .ignoresSafeArea()
-                    
-                    ProgressView()
-                        .progressViewStyle(CircularProgressViewStyle(tint: .white))
-                        .scaleEffect(1.5)
-                        .padding(20)
-                        .background(Color.black.opacity(0.7))
-                        .cornerRadius(10)
-                        .foregroundColor(.white)
-                }
-                .transition(.opacity)
-                .zIndex(1)
-            }
-        }
-    }
-}
-
-extension View {
-    func loadingOverlay(isLoading: Binding<Bool?>) -> some View {
-        self.modifier(LoadingOverlayModifier(isLoading: isLoading))
-    }
-}
 
 
 struct ErrorAlertModifier: ViewModifier {

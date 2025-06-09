@@ -59,6 +59,10 @@
 		90FDD3512DEC462F00C3BABB /* CancelSubscriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90FDD3502DEC462F00C3BABB /* CancelSubscriptionView.swift */; };
 		90FDD3542DEE179D00C3BABB /* HudView2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90FDD3532DEE179D00C3BABB /* HudView2.swift */; };
 		90FDD3562DEE17BB00C3BABB /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90FDD3552DEE17BB00C3BABB /* AlertView.swift */; };
+		90FDD35A2DEF37AD00C3BABB /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90FDD3592DEF37AD00C3BABB /* ProfileView.swift */; };
+		90FDD3602DF74D4000C3BABB /* ChatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90FDD35F2DF74D4000C3BABB /* ChatsView.swift */; };
+		90FDD3622DF74D5100C3BABB /* ChatsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90FDD3612DF74D5100C3BABB /* ChatsViewModel.swift */; };
+		90FDD3642DF74DC800C3BABB /* ChatsMessageM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90FDD3632DF74DC800C3BABB /* ChatsMessageM.swift */; };
 		BB006DE12B34A9510006E417 /* TermsConditionsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB006DE02B34A9510006E417 /* TermsConditionsVC.swift */; };
 		BB0512482B60313C004CAB83 /* ModelResponseFirebase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0512472B60313C004CAB83 /* ModelResponseFirebase.swift */; };
 		BB10D9112B1E774100751AAE /* StartScreenVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB10D9102B1E774100751AAE /* StartScreenVC.swift */; };
@@ -314,6 +318,10 @@
 		90FDD3502DEC462F00C3BABB /* CancelSubscriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CancelSubscriptionView.swift; sourceTree = "<group>"; };
 		90FDD3532DEE179D00C3BABB /* HudView2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HudView2.swift; sourceTree = "<group>"; };
 		90FDD3552DEE17BB00C3BABB /* AlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
+		90FDD3592DEF37AD00C3BABB /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		90FDD35F2DF74D4000C3BABB /* ChatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatsView.swift; sourceTree = "<group>"; };
+		90FDD3612DF74D5100C3BABB /* ChatsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatsViewModel.swift; sourceTree = "<group>"; };
+		90FDD3632DF74DC800C3BABB /* ChatsMessageM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatsMessageM.swift; sourceTree = "<group>"; };
 		BB006DE02B34A9510006E417 /* TermsConditionsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsConditionsVC.swift; sourceTree = "<group>"; };
 		BB0512472B60313C004CAB83 /* ModelResponseFirebase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelResponseFirebase.swift; sourceTree = "<group>"; };
 		BB10D9102B1E774100751AAE /* StartScreenVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartScreenVC.swift; sourceTree = "<group>"; };
@@ -553,6 +561,7 @@
 		904748312DCCAF550016C3DC /* AppFlow */ = {
 			isa = PBXGroup;
 			children = (
+				90FDD3572DEF378D00C3BABB /* Profile */,
 				90FDD31B2DE4A4BB00C3BABB /* NewSubscriptions */,
 				90FDD31A2DE4A49800C3BABB /* NewHome */,
 			);
@@ -840,6 +849,7 @@
 		90FDD31B2DE4A4BB00C3BABB /* NewSubscriptions */ = {
 			isa = PBXGroup;
 			children = (
+				90FDD35B2DF74D0700C3BABB /* Chats */,
 				90FDD34C2DEC45EC00C3BABB /* CancelSubscription */,
 				90FDD3422DEB0CC700C3BABB /* PackageFiles */,
 				90FDD3382DE6731300C3BABB /* SubscriptionDetails */,
@@ -989,6 +999,56 @@
 				90FDD3532DEE179D00C3BABB /* HudView2.swift */,
 			);
 			path = CustomSwiftuiViews;
+			sourceTree = "<group>";
+		};
+		90FDD3572DEF378D00C3BABB /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				90FDD3582DEF379900C3BABB /* View */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
+		90FDD3582DEF379900C3BABB /* View */ = {
+			isa = PBXGroup;
+			children = (
+				90FDD3592DEF37AD00C3BABB /* ProfileView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		90FDD35B2DF74D0700C3BABB /* Chats */ = {
+			isa = PBXGroup;
+			children = (
+				90FDD35E2DF74D1E00C3BABB /* Model */,
+				90FDD35D2DF74D1600C3BABB /* ViewModel */,
+				90FDD35C2DF74D1300C3BABB /* View */,
+			);
+			path = Chats;
+			sourceTree = "<group>";
+		};
+		90FDD35C2DF74D1300C3BABB /* View */ = {
+			isa = PBXGroup;
+			children = (
+				90FDD35F2DF74D4000C3BABB /* ChatsView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		90FDD35D2DF74D1600C3BABB /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				90FDD3612DF74D5100C3BABB /* ChatsViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		90FDD35E2DF74D1E00C3BABB /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				90FDD3632DF74DC800C3BABB /* ChatsMessageM.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		BB006DDE2B34A91E0006E417 /* Terms Condition */ = {
@@ -2206,6 +2266,7 @@
 				90FDD33F2DE7792300C3BABB /* SubcripedSessionsListM.swift in Sources */,
 				90B67BE12D9ED2B600C1FD31 /* exColors.swift in Sources */,
 				BB1B30052A7EB1B7001677FD /* XibViews.swift in Sources */,
+				90FDD3642DF74DC800C3BABB /* ChatsMessageM.swift in Sources */,
 				BB14DAEB2A7B041C00389B96 /* ProfileTVCellHeader.swift in Sources */,
 				C889958A2AA9F770002AD812 /* ForgetPasswordVM.swift in Sources */,
 				C88995822AA9EDFE002AD812 /* Strings.swift in Sources */,
@@ -2314,6 +2375,7 @@
 				BBBD00242A7311AF00F066DF /* SignUp.swift in Sources */,
 				BBBD00372A731B5E00F066DF /* SplashScreenTVCell1.swift in Sources */,
 				BB518CD32A9A112C00242FAD /* TipsCategoriesVC1.swift in Sources */,
+				90FDD3602DF74D4000C3BABB /* ChatsView.swift in Sources */,
 				BB48F8A32A7482480051F12C /* OtpVC.swift in Sources */,
 				904748552DD4C7F90016C3DC /* KFImageLoader.swift in Sources */,
 				BBBD001A2A73101700F066DF /* ImageFromGallary.swift in Sources */,
@@ -2327,6 +2389,7 @@
 				BBD2B0362AAA832E00C0A807 /* MeasurementServices.swift in Sources */,
 				BBBD00102A73101700F066DF /* CheckConnection.swift in Sources */,
 				BB30E6132A7859FE0045569D /* HTBC.swift in Sources */,
+				90FDD35A2DEF37AD00C3BABB /* ProfileView.swift in Sources */,
 				903667062D82E0A40040AE29 /* LocalizationManager.swift in Sources */,
 				BBE3CC772A80000E004B0D9A /* MedicationScheduleTVCell.swift in Sources */,
 				90B67BE72D9EE21B00C1FD31 /* customModifiers.swift in Sources */,
@@ -2347,6 +2410,7 @@
 				BBBD000E2A73101700F066DF /* ImageViewer.swift in Sources */,
 				C8542D5C2AA8B42600ACE480 /* OtpVM.swift in Sources */,
 				90FDD3012DDDF7F900C3BABB /* MonthYearPicker.swift in Sources */,
+				90FDD3622DF74D5100C3BABB /* ChatsViewModel.swift in Sources */,
 				9047485D2DD8B2750016C3DC /* AvailableDoctorsViewModel.swift in Sources */,
 				BBBD00182A73101700F066DF /* CardView.swift in Sources */,
 				BB1AEAA02A955B450078683A /* NotificationTVCell.swift in Sources */,

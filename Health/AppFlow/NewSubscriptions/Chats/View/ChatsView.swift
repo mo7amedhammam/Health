@@ -1,0 +1,475 @@
+//
+//  ChatsView.swift
+//  Sehaty
+//
+//  Created by mohamed hammam on 09/06/2025.
+//
+
+import SwiftUI
+import AVFoundation
+
+// MARK: - MessageBubbleView
+struct MessageBubbleView: View {
+    let message: ChatsMessageM
+
+    var body: some View {
+        HStack {
+            if message.isFromCustomer {
+                Spacer()
+            }
+
+            HStack(alignment: .top) {
+                
+                if !message.isFromCustomer {
+                    Image(systemName: "person.circle.fill")
+                        .foregroundColor(.white)
+                        .frame(width: 34, height: 34)
+                        .background(Color.mainBlue)
+                        .clipShape(Circle())
+                        .offset(y:14)
+                }
+                VStack(alignment:message.isFromCustomer ? .trailing:.leading, spacing: 4) {
+                    Text(message.formattedDate)
+                        .font(.regular(size: 12))
+                        .foregroundColor(.gray)
+                        .frame(height: 10)
+                    
+                    Text(message.messageText)
+                        .font(.regular(size: 14))
+                        .foregroundColor(message.isFromCustomer ? .white : .black)
+                        .padding(12)
+                        .background(message.isFromCustomer ? Color.mainBlue : Color(.messageSenderBg))
+                        .cornerRadius(16)
+                        .lineSpacing(8)
+                }
+                .frame(maxWidth: 280, alignment: message.isFromCustomer ? .trailing : .leading)
+            }
+
+            if !message.isFromCustomer {
+                Spacer()
+            }
+        }
+//        .padding(.horizontal)
+        .padding(.top, 4)
+    }
+}
+
+// MARK: - ChatsView
+struct ChatsView: View {
+    var CustomerPackageId : Int
+
+    let messages: [ChatsMessageM] = [
+        ChatsMessageM(
+            customerPackageID: 1,
+            comment: "Ask your question/ enquiry and you will get a reply here also, on your e-mail: ahmedsamer062@gmail.com",
+            sendByCustomer: false,
+            sendByDoctor: true,
+            voicePath: nil,
+            doctorID: 10,
+            creationDate: "2025-06-09T21:14:00Z"
+        ),
+        ChatsMessageM(
+            customerPackageID: 1,
+            comment: "Hello, I want to ask about shipment #1203489595A",
+            sendByCustomer: true,
+            sendByDoctor: false,
+            voicePath: nil,
+            doctorID: 10,
+            creationDate: "2025-06-09T21:14:00Z"
+        ),
+        ChatsMessageM(
+            customerPackageID: 1,
+            comment: "Yes of course, Ahmed... I will check that shipment for you right now. Oh! It’s a closed one... what about it?",
+            sendByCustomer: false,
+            sendByDoctor: true,
+            voicePath: nil,
+            doctorID: 10,
+            creationDate: "2025-06-09T21:14:00Z"
+        )
+    ]
+
+    @State private var inputText: String = "ok"
+    @State private var isRecording: Bool = false
+    @State private var audioRecorder: AVAudioRecorder?
+    @State private var recordingURL: URL?
+    @State private var recordingTime: TimeInterval = 0
+    @State private var recordingTimer: Timer?
+
+    @State private var waveformLevel: CGFloat = 0
+    @State private var levelTimer: Timer?
+    @State private var audioPlayer: AVAudioPlayer?
+
+    @State private var playbackTime: TimeInterval = 0
+    @State private var isPlaying: Bool = false
+    @State private var playbackTimer: Timer?
+    
+    var body: some View {
+        VStack(spacing: 0) {
+            // Header placeholder
+            HStack {
+                Button(action:{
+
+                }) {
+                    Image(.backLeft)
+                        .resizable()
+                    
+                }
+                .frame(width: 31,height: 31)
+                
+                Spacer()
+
+                VStack(alignment:.trailing,spacing: 5) {
+                    (Text("د/") + Text("مي أحمد"))
+                        .font(.bold(size: 20))
+                        .foregroundColor(.mainBlue)
+                    Text("Online".localized)
+                        .font(.medium(size: 11))
+                        .foregroundColor(Color(.secondary))
+                }
+
+                Image(systemName: "person.crop.circle.fill")
+                    .resizable()
+                    .frame(width: 49, height: 49)
+                    .clipShape(Circle())
+            }
+            .padding()
+            .background(Color.white)
+//            .shadow(radius: 2)
+
+            // Messages
+            List {
+                VStack(spacing: 0) {
+                    ForEach(messages) { message in
+                        MessageBubbleView(message: message)
+                    }
+                }
+                .padding(.top, 8)
+                .listRowSpacing(0)
+                .listRowSeparator(.hidden)
+                .listRowBackground(Color.clear)
+
+            }
+            .listStyle(.plain)
+
+            // Input (non-functional)
+            VStack() {
+
+                HStack {
+                    
+//                    if recordingURL != nil  {
+//                        //                            HStack{
+//                        Button(action: {
+//                            if let url = recordingURL {
+//                                try? FileManager.default.removeItem(at: url)
+//                                recordingURL = nil
+//                                if isRecording {
+//                                    stopRecording()
+//                                }
+//                                print("🗑 Voice message deleted")
+//                            }
+//                        }) {
+//                            Image(systemName: "trash")
+//                                .resizable()
+//                                .frame(width: 25, height: 28)
+//                                .foregroundColor(.red)
+//                                .padding(8)
+//                        }
+//                        .disabled(recordingURL == nil)
+//                        
+//                        
+//                                                  
+//                        if isRecording {
+//                            RoundedRectangle(cornerRadius: 3)
+//                                .fill(Color.mainBlue)
+//                                .frame( maxHeight: 1 + waveformLevel * 40)
+//                            //                            .frame(minWidth: .infinity,alignment: .center)
+//                                .transition(.scale)
+//                        }
+//                        
+//                        if !isRecording{
+//                            Button("▶️ Play Recording") {
+//                                guard let url = recordingURL else { return }
+//                                do {
+//                                    audioPlayer = try AVAudioPlayer(contentsOf: url)
+//                                    audioPlayer?.play()
+//                                } catch {
+//                                    print("❌ Playback failed: \(error.localizedDescription)")
+//                                }
+//                            }
+//
+//                    }
+////                            }
+//                    }else{
+                        
+                    
+                    if let url = recordingURL {
+                        HStack(spacing: 12) {
+                            // Recording duration + waveform
+                            if isRecording {
+                                HStack(spacing: 10) {
+                                    Text(formatTime(recordingTime))
+                                        .font(.medium(size: 12))
+                                        .foregroundColor(Color(.secondary))
+                                        .lineLimit(1)
+
+                                    RoundedRectangle(cornerRadius: 4)
+                                        .fill(Color.mainBlue)
+                                        .frame( height: 1 + waveformLevel * 60)
+                                        .animation(.easeInOut(duration: 0.1), value: waveformLevel)
+                                }
+                            }
+
+                            // Playback controls
+                            if !isRecording {
+                                HStack(spacing: 0) {
+                                    Button(action: togglePlayback) {
+                                        Image(systemName: isPlaying ? "pause.fill" : "play.fill")
+                                            .foregroundColor(.mainBlue)
+                                            .font(.system(size: 20, weight: .bold))
+                                    }
+
+//                                    Spacer()
+
+                                    HStack {
+                                        Text(formatTime(playbackTime))
+                                            .font(.medium(size: 12))
+                                            .foregroundColor(Color(.secondary))
+                                            .lineLimit(1)
+
+                                        ZStack(alignment: .trailing) {
+                                            RoundedRectangle(cornerRadius: 2)
+                                                .fill(Color(.btnDisabledBg))
+                                                .frame(height: 4)
+                                                .frame(width: CGFloat(max(1, playbackTime / (audioPlayer?.duration ?? 1))) * 200)
+                                            
+                                            RoundedRectangle(cornerRadius: 2)
+                                                .fill(Color.mainBlue)
+                                                .frame(height: 4)
+                                                .frame(width: CGFloat(min(1, playbackTime / (audioPlayer?.duration ?? 1))) * 200)
+                                                .animation(.linear(duration: 0.5), value: playbackTime)
+                                        }
+                                    }
+                                    .frame(maxWidth:.infinity)
+                                }
+                            }
+                            
+                            // Delete button
+                            Button(action: {
+                                try? FileManager.default.removeItem(at: url)
+                                recordingURL = nil
+                                stopRecording()
+                                audioPlayer?.stop()
+                                audioPlayer = nil
+                                print("🗑 Voice message deleted")
+                            }) {
+                                Image(systemName: "trash")
+                                    .resizable()
+                                    .frame(width: 25, height: 28)
+                                    .foregroundColor(.red)
+                            }
+                            .padding(.trailing,4)
+                        }
+                    }else{
+                        MessageInputField(comment: $inputText, onSend: {
+                            sendMessage()
+                        })
+                    }
+                    if inputText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+                        Button(action: {
+                            if isRecording {
+                                stopRecording()
+                            } else {
+                                if !(recordingURL == nil) {
+                                  //send voice
+                                }else{
+                                    startRecording()
+                                }
+                            }
+                        }) {
+                            Image(systemName: isRecording ? "stop.fill" : (recordingURL == nil) ? "mic.fill" : "paperplane.fill")
+                                .foregroundColor(.white)
+                                .frame(width: 40, height: 38)
+                                .horizontalGradientBackground()
+                                .cornerRadius(7)
+                        }
+                    } else {
+                        
+                        Button(action: {
+                                sendMessage()
+                            }) {
+                                
+                                Image(systemName: "paperplane.fill")
+                                    .foregroundColor(.white)
+                                    .frame(width: 40, height: 38)
+                                    .horizontalGradientBackground()
+                                    .cornerRadius(7)
+                            }
+                        }
+                    
+                }
+                Spacer()
+            }
+            .padding()
+//            .padding(.top,0)
+            .background(Color.white)
+            .frame(height: 90)
+            .cardStyle(cornerRadius: 16)
+        }
+        .edgesIgnoringSafeArea(.bottom)
+
+        .background(Color(.bg))
+//        .navigationTitle("Chat")
+//        .navigationBarTitleDisplayMode(.inline)
+    }
+    
+    func startRecording() {
+        let fileName = UUID().uuidString + ".m4a"
+        let path = FileManager.default.temporaryDirectory.appendingPathComponent(fileName)
+        recordingURL = path
+
+        let settings: [String: Any] = [
+            AVFormatIDKey: Int(kAudioFormatMPEG4AAC),
+            AVSampleRateKey: 12000,
+            AVNumberOfChannelsKey: 1,
+            AVEncoderAudioQualityKey: AVAudioQuality.high.rawValue
+        ]
+
+        do {
+            let session = AVAudioSession.sharedInstance()
+            try session.setCategory(.playAndRecord, mode: .default, options: [.defaultToSpeaker])
+            try session.setActive(true, options: .notifyOthersOnDeactivation)
+
+            audioRecorder = try AVAudioRecorder(url: path, settings: settings)
+            audioRecorder?.isMeteringEnabled = true
+            audioRecorder?.record()
+            isRecording = true
+            startLevelTimer()
+            recordingTime = 0
+            startRecordingTimer()
+            print("🎙 Started recording to: \(path.lastPathComponent)")
+        } catch {
+            print("❌ Failed to start recording: \(error.localizedDescription)")
+        }
+    }
+    
+    func startLevelTimer() {
+        levelTimer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { _ in
+            audioRecorder?.updateMeters()
+            let level = CGFloat(audioRecorder?.averagePower(forChannel: 0) ?? -60)
+            waveformLevel = max(0, (level + 60) / 60) // Normalized to 0–1
+        }
+    }
+
+    func stopRecording() {
+        audioRecorder?.stop()
+        isRecording = false
+
+        levelTimer?.invalidate()
+        recordingTimer?.invalidate()
+        guard let url = recordingURL else { return }
+        print("✅ Voice recorded at: \(url.path)")
+        
+        // You can now upload or attach `url` as your voicePath
+        levelTimer?.invalidate()
+          waveformLevel = 0
+    }
+    
+    func sendMessage() {
+        let trimmed = inputText.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !trimmed.isEmpty else { return }
+
+        print("📩 Sent message: \(trimmed)")
+        inputText = ""
+    }
+    func formatTime(_ time: TimeInterval) -> String {
+        let minutes = Int(time) / 60
+        let seconds = Int(time) % 60
+        return String(format: "%02d:%02d", minutes, seconds)
+    }
+    func startRecordingTimer() {
+        recordingTimer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
+            recordingTime += 1
+        }
+    }
+    func togglePlayback() {
+        guard let url = recordingURL else { return }
+
+        if isPlaying {
+            audioPlayer?.pause()
+            playbackTimer?.invalidate()
+            isPlaying = false
+        } else {
+            do {
+                if audioPlayer == nil {
+                    audioPlayer = try AVAudioPlayer(contentsOf: url)
+//                    audioPlayer?.delegate = context.coordinator
+                }
+                audioPlayer?.play()
+                isPlaying = true
+                startPlaybackTimer()
+            } catch {
+                print("❌ Playback failed: \(error.localizedDescription)")
+            }
+        }
+    }
+
+    func startPlaybackTimer() {
+        playbackTimer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
+            if let player = audioPlayer {
+                playbackTime = player.currentTime
+                if !player.isPlaying {
+                    isPlaying = false
+                    playbackTimer?.invalidate()
+                    playbackTime = 0
+                }
+            }
+        }
+    }
+}
+
+#Preview {
+    ChatsView(CustomerPackageId: 0)
+}
+
+
+struct MessageInputField: View {
+    @Binding var comment: String
+    let onSend: () -> Void
+
+    var body: some View {
+        if #available(iOS 16.0, *) {
+            TextField("Write_a_message".localized, text: $comment, axis: .vertical)
+                .font(.medium(size: 14))
+                .padding(.horizontal)
+                .frame(minHeight: 40)
+                .background(Color(.messageSenderBg).cornerRadius(7))
+                .onSubmit {
+                    onSend()
+                }
+        } else {
+            MultilineTextField("Write_a_message".localized, text: $comment, onCommit: onSend)
+                .frame(minHeight: 40)
+                .background(Color(.messageSenderBg).cornerRadius(7))
+        }
+    }
+}
+
+struct EmptyMessageBox: View {
+    var body: some View {
+        VStack{
+            Spacer()
+            Image("messagebox")
+            Text("Message box is empty".localized())
+                .font(Font.regular(size:14))
+                .foregroundColor(.mainBlue)
+                .padding()
+            Spacer()
+            
+        }
+    }
+}
+
+#Preview {
+    EmptyMessageBox()
+}
+
