@@ -29,7 +29,7 @@ class TicketViewModel:ObservableObject {
     @Published var selectedShift: AvailableTimeShiftM?
     @Published var selectedSchedual: AvailableSchedualsM?
 
-    @Published var isLoading = false
+    @Published var isLoading:Bool? = false
     @Published var errorMessage: String? = nil
     
     // Init with DI

@@ -23,9 +23,8 @@ enum HomeServices{
     case GetPackageByCategoryId(parameters : [String:Any]) //post
 
     case AddOrRemoveToWishList(parameters : [String:Any]) //get
-    
+    case GetWishList //get
 
-    
 //    case GetBydIdPb(parameters : [String:Any])
     case GetAvailableShiftDoctors(parameters : [String:Any])
     case GetDoctorPackageById(parameters : [String:Any])
@@ -35,6 +34,7 @@ enum HomeServices{
     case GetBookingSession(parameters : [String:Any])
     case CreateCustomerPackage(parameters : [String:Any])
     
+    case CustomerSessionCalender(parameters : [String:Any])
 }
 
 extension HomeServices : TargetType1 {
@@ -72,6 +72,8 @@ extension HomeServices : TargetType1 {
             
         case .AddOrRemoveToWishList:
             return newEndPoints.AddOrRemoveToWishList.rawValue
+        case .GetWishList:
+            return newEndPoints.GetWishList.rawValue
             
         case .GetAvailableShiftDoctors:
             return newEndPoints.GetAvailableShiftDoctors.rawValue
@@ -89,6 +91,8 @@ extension HomeServices : TargetType1 {
         case .CreateCustomerPackage:
             return newEndPoints.CreateCustomerPackage.rawValue
 
+        case .CustomerSessionCalender:
+            return AppointmentEndPoints.CustomerSessionCalender.rawValue
         }
     }
     
@@ -102,7 +106,8 @@ extension HomeServices : TargetType1 {
                 .GetAvailableShiftDoctors,
                 .GetAvailableDoctorSchedule,
                 .GetBookingSession,
-                .CreateCustomerPackage
+                .CreateCustomerPackage,
+                .CustomerSessionCalender
             :
             return .post
             
@@ -113,6 +118,7 @@ extension HomeServices : TargetType1 {
                 .MostViewedPackage,
                 .GetMainCategoryById,
                 .AddOrRemoveToWishList,
+                .GetWishList,
                 .GetDoctorPackageById,
                 .GetDoctorAvailableDayList,
                 .GetTimeShiftScheduleList
@@ -137,7 +143,8 @@ extension HomeServices : TargetType1 {
             .GetDoctorAvailableDayList(parameters: let parameter),
             .GetAvailableDoctorSchedule(parameters: let parameter),
             .GetBookingSession(parameters: let parameter),
-            .CreateCustomerPackage(parameters: let parameter)
+            .CreateCustomerPackage(parameters: let parameter),
+            .CustomerSessionCalender(parameters: let parameter)
             :
 //            return .parameterRequest(Parameters: parameters, Encoding: encoding)
             return  parameter
@@ -150,7 +157,8 @@ extension HomeServices : TargetType1 {
 //                .GetGenders,
                 .GetUpcomingSession,
                 .GetMyMeasurementsStats,
-                .GetTimeShiftScheduleList
+                .GetTimeShiftScheduleList,
+                .GetWishList
             :
             return nil
         }

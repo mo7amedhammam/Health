@@ -106,7 +106,8 @@ enum newEndPoints : String{
     case GetPackageByCategoryId = "Home/GetPackageByCategoryId"
     
     case AddOrRemoveToWishList = "Home/AddOrRemoveToWishList"
-    
+    case GetWishList = "Home/GetWishList"
+
     //    --------
     case GetBydIdPb                    = "Package/GetBydIdPb"
     case GetAvailableShiftDoctors      = "CustomerPackage/GetAvailableShiftDoctors"
@@ -116,6 +117,7 @@ enum newEndPoints : String{
     case GetAvailableDoctorSchedule    = "CustomerPackage/GetAvailableDoctorSchedule"
     case GetBookingSession             = "CustomerPackage/GetBookingSession"
     case CreateCustomerPackage         = "CustomerPackage/CreateCustomerPackage"
+    
 }
 
 
@@ -131,4 +133,8 @@ case GetCustomerPackageInstructionByCPId = "Subscription/GetCustomerPackageInstr
 case CreateDoctorMessage                 = "CustomerPackageMessage/CreateDoctorMessage"
 case CreateCustomerMessage               = "CustomerPackageMessage/CreateCustomerMessage"
 case GetMessage                          = "CustomerPackageMessage/GetMessage"
+}
+
+enum AppointmentEndPoints : String{
+   case CustomerSessionCalender = "CustomerPackageSession/CustomerSessionCalender"
 }

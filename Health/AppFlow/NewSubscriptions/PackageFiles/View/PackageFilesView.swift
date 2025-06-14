@@ -25,6 +25,10 @@ struct PackageFilesView: View {
             viewmodel.CustomerPackageId = CustomerPackageId
             await viewmodel.getSubscripedPackageFiles()
         }
+        .reversLocalizeView()
+        .showHud(isShowing:  $viewmodel.isLoading)
+        .errorAlert(isPresented: .constant(viewmodel.errorMessage != nil), message: viewmodel.errorMessage)
+
     }
 }
 
@@ -73,18 +77,12 @@ struct filesList:View {
                                 Color.gray.opacity(0.12)
                                     .frame(height:1)
                                     .padding(.horizontal)
-
                             }
-                            
-                        }
-                        
-                        
+                        }                                                
                     }
                     .padding(.bottom,5)
                     .cardStyle(cornerRadius: 3,shadowOpacity: 0.12)
                     .padding()
-
-                    
                     
                 }else {
                     VStack{

@@ -317,6 +317,10 @@ struct TicketView: View {
         .task {
             viewmodel.ticketData = ticketData
         }
+        .reversLocalizeView()
+        .showHud(isShowing:  $viewmodel.isLoading)
+        .errorAlert(isPresented: .constant(viewmodel.errorMessage != nil), message: viewmodel.errorMessage)
+
     }
 }
 

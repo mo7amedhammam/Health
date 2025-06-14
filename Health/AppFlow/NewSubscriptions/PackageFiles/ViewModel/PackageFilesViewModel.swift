@@ -32,7 +32,7 @@ class PackageFilesViewModel:ObservableObject {
 //    @Published var selectedSchedual: AvailableSchedualsM?
 //    @Published var ticketData: TicketM?
     
-    @Published var isLoading = false
+    @Published var isLoading:Bool? = false
     @Published var errorMessage: String? = nil
     
     // Init with DI

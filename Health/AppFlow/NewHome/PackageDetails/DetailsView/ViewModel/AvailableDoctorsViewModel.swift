@@ -20,7 +20,7 @@ class AvailableDoctorsViewModel:ObservableObject {
     @Published var availableDoctors: AvailabeDoctorsM?
 //    @Published var packages: FeaturedPackagesM?
 
-    @Published var isLoading = false
+    @Published var isLoading:Bool? = false
     @Published var errorMessage: String? = nil
     
     // Init with DI

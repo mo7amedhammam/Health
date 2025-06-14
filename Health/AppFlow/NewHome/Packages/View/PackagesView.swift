@@ -113,7 +113,10 @@ struct PackagesView: View {
                 }
             }
             .edgesIgnoringSafeArea([.top,.horizontal])
-        
+            .reversLocalizeView()
+            .showHud(isShowing:  $viewModel.isLoading)
+            .errorAlert(isPresented: .constant(viewModel.errorMessage != nil), message: viewModel.errorMessage)
+
         NavigationLink( "", destination: destination, isActive: $isactive)
 
     }
@@ -229,9 +232,9 @@ struct PackagesListView: View {
 
     var body: some View {
         VStack{
-            SectionHeader(image: Image(.newvippackicon),title: "pack_packages"){
-                //                            go to last mes package
-            }
+//            SectionHeader(image: Image(.newvippackicon),title: "pack_packages"){
+//                //                            go to last mes package
+//            }
             
 //            ScrollView(.horizontal,showsIndicators:false){
             ScrollView{

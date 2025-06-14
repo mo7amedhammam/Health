@@ -336,7 +336,10 @@ struct PackageMoreDetailsView: View {
                 guard newval != nil else {return}
                 pushTo(destination: TicketView(ticketData: viewModel.ticketData,parameters: viewModel.prepareParamters()))
             }
-        
+            .reversLocalizeView()
+            .showHud(isShowing:  $viewModel.isLoading)
+            .errorAlert(isPresented: .constant(viewModel.errorMessage != nil), message: viewModel.errorMessage)
+
         NavigationLink( "", destination: destination, isActive: $isactive)
 
     }

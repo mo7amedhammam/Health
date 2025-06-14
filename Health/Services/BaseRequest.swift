@@ -854,6 +854,7 @@ import os.log
 
 protocol AsyncAwaitNetworkServiceProtocol {
     func request<T: Codable>(_ target: TargetType1, responseType: T.Type) async throws -> T?
+    func uploadMultipart<T: Codable>(_ target: TargetType1, parts: [MultipartFormDataPart], responseType: T.Type) async throws -> T?
 }
 
 final class AsyncAwaitNetworkService: AsyncAwaitNetworkServiceProtocol {
@@ -971,7 +972,7 @@ final class AsyncAwaitNetworkService: AsyncAwaitNetworkServiceProtocol {
     }
 
     // MARK: - Decoding
-    private func decodeResponse<T: Codable>(_ data: Data, _ type: T.Type) throws -> T {
+    private func decodeResponse<T: Codable>(_ data: Data, _ type: T.Type) throws -> T? {
         // Try BaseResponse wrapper
         if let wrapper = try? JSONDecoder().decode(BaseResponse<T>.self, from: data),
            let result = wrapper.data {
@@ -1012,3 +1013,123 @@ final class AsyncAwaitNetworkService: AsyncAwaitNetworkServiceProtocol {
     }
 }
 
+
+
+extension AsyncAwaitNetworkService {
+    func uploadMultipart<T: Codable>(
+        _ target: TargetType1,
+        parts: [MultipartFormDataPart],
+        responseType: T.Type
+    ) async throws -> T? {
+        guard Helper.shared.isConnectedToNetwork() else {
+            throw NetworkError.noConnection
+        }
+
+        let boundary = "Boundary-\(UUID().uuidString)"
+        let url = target.baseURL.appendingPathComponent(target.path)
+        var request = URLRequest(url: url)
+        request.httpMethod = target.method.rawValue
+        request.timeoutInterval = target.timeoutInterval ?? defaultTimeout
+
+        // Set headers
+        var headers = target.headers ?? [:]
+//        var headers : [String: String] = [:]
+        if let token = Helper.shared.getUser()?.token {
+            headers["Authorization"] = "Bearer \(token)"
+        }
+        headers["Content-Type"] = "multipart/form-data; boundary=\(boundary)"
+        headers["accept"] = "text/plain"
+
+        
+        headers.forEach { request.setValue($0.value, forHTTPHeaderField: $0.key) }
+
+        // Construct body
+        request.httpBody = createMultipartBody(parts: parts, boundary: boundary)
+
+        logRequest(request, attempt: 1)
+        if let body = request.httpBody {
+            let preview = String(decoding: body, as: UTF8.self)
+            print("🔍 Multipart Body Preview:\n\(preview.prefix(1000))")
+        }
+        
+        let start = Date()
+        let (data, response) = try await URLSession.shared.data(for: request)
+        let duration = Date().timeIntervalSince(start)
+
+        guard let httpResponse = response as? HTTPURLResponse else {
+            throw NetworkError.invalidJSON("Invalid response object")
+        }
+
+        logResponse(httpResponse, data: data, duration: duration)
+
+        switch httpResponse.statusCode{
+        case 200..<300:
+//            // ✅ Safe decode if data is non-empty
+//                if data.isEmpty  {
+//                    return nil
+//                } else {
+                    return try decodeResponse(data, responseType)
+//                }
+        case 401:
+            // Handle token refresh in future
+            throw NetworkError.unauthorized(code: httpResponse.statusCode, error: "Unauthorized")
+        case 400..<500:
+//                        throw NetworkError.unknown(code: httpResponse.statusCode, error: "client error")
+            let serverMessage: String
+               do {
+                   let errorResponse = try JSONDecoder().decode(ServerErrorResponse.self, from: data)
+                   serverMessage = errorResponse.message
+               } catch {
+                   serverMessage = String(data: data, encoding: .utf8) ?? "Unknown client error"
+               }
+
+               throw NetworkError.unknown(code: httpResponse.statusCode, error: serverMessage)
+            
+        case 500..<600:
+            throw NetworkError.serverError(code: httpResponse.statusCode, error: "Server error")
+        default:
+            throw NetworkError.unknown(code: httpResponse.statusCode, error: "Unhandled status code")
+        }
+        
+//        switch httpResponse.statusCode {
+//        case 200..<300:
+//            return try decodeResponse(data, responseType)
+//        case 400..<500:
+//            let errorResponse = try? JSONDecoder().decode(ServerErrorResponse.self, from: data)
+//            throw NetworkError.unknown(code: httpResponse.statusCode, error: errorResponse?.message ?? "Client error")
+//        case 500..<600:
+//            throw NetworkError.serverError(code: httpResponse.statusCode, error: "Server error")
+//        default:
+//            throw NetworkError.unknown(code: httpResponse.statusCode, error: "Unhandled status code")
+//        }
+    }
+    
+    
+    private func createMultipartBody(parts: [MultipartFormDataPart], boundary: String) -> Data {
+        var body = Data()
+
+        for part in parts {
+            body.append("--\(boundary)\r\n".data(using: .utf8)!)
+
+            // File part (voice, image, etc.)
+            if let filename = part.filename,
+               let mimeType = part.mimeType,
+               let data = part.data {
+                body.append("Content-Disposition: form-data; name=\"\(part.name)\"; filename=\"\(filename)\"\r\n".data(using: .utf8)!)
+                body.append("Content-Type: \(mimeType)\r\n\r\n".data(using: .utf8)!)
+                body.append(data)
+                body.append("\r\n".data(using: .utf8)!)
+            }
+
+            // Text field
+            else if let data = part.data {
+                body.append("Content-Disposition: form-data; name=\"\(part.name)\"\r\n\r\n".data(using: .utf8)!)
+                body.append(data)
+                body.append("\r\n".data(using: .utf8)!)
+            }
+        }
+
+        body.append("--\(boundary)--\r\n".data(using: .utf8)!)
+        return body
+    }
+}

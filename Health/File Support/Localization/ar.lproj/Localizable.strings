@@ -162,3 +162,23 @@
 "OK" = "موافق";
 "login_expired" = "تحتاج الي تسجيل دخول جديد";
 "no_connection" = "لست متصل بالانترنت";
+
+//MARK: ---- appointments ----
+"appointments_title" = "مواعيدي";
+"no_appointments" = "لا يوجد أي مواعيد لديك";
+"other_sessions" = "باقي السيشنز";
+"doc_name" = "اسم الدكتور";
+"renew_subscription" = "إعادة جدولة";
+
+"filter_" = "فلتر";
+"from_date" = "من تاريخ";
+"to_date" = "إلى تاريخ";
+"old_to_new" = "من الأقدم للأحدث";
+"new_to_old" = "من الأحدث للأقدم";
+
+"Done_" = "موافق";
+"cancel_" = "إلغاء";
+"apply_" = "تطبيق";
+
+//MARK:   ---- "favorite_packages" ----
+"favorite_packages" = "باقاتي المفضلة";

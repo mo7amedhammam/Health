@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct NewTabView: View {
-    @State private var selectedTab = 0
+    @State private var selectedTab = 2
     
     var body: some View {
         CustomTabView(
@@ -26,7 +26,13 @@ struct NewTabView: View {
             // Your main content here
             Group {
                 switch selectedTab {
-                case 0: NewHomeView()
+                case 0:
+                    //                    MARK: -- uikit --
+                    UIKitViewControllerWrapper(makeViewController: {
+                        let VC: UIViewController = initiateViewController(storyboardName: .main, viewControllerIdentifier: ProfileVC.self)!
+                        return VC
+                    })
+                    .ignoresSafeArea()
                 case 1:
                     UIKitViewControllerWrapper(makeViewController: {
                     let VC: UIViewController = initiateViewController(storyboardName: .main, viewControllerIdentifier: MedicationScheduleVC.self)!
@@ -35,11 +41,12 @@ struct NewTabView: View {
                 .ignoresSafeArea()
                     
                 case 2:
-                    UIKitViewControllerWrapper(makeViewController: {
-                    let VC: UIViewController = initiateViewController(storyboardName: .main, viewControllerIdentifier: MeasurementsVC.self)!
-                    return VC
-                })
-                .ignoresSafeArea()
+                    NewHomeView()
+//                    UIKitViewControllerWrapper(makeViewController: {
+//                    let VC: UIViewController = initiateViewController(storyboardName: .main, viewControllerIdentifier: MeasurementsVC.self)!
+//                    return VC
+//                })
+//                .ignoresSafeArea()
                     
                 case 3:
                     UIKitViewControllerWrapper(makeViewController: {
@@ -49,16 +56,12 @@ struct NewTabView: View {
                     .ignoresSafeArea()
                     
                 case 4:
-//                    MARK: -- uikit --
-                    UIKitViewControllerWrapper(makeViewController: {
-                    let VC: UIViewController = initiateViewController(storyboardName: .main, viewControllerIdentifier: ProfileVC.self)!
-                    return VC
-                })
-                    .ignoresSafeArea()
-                    
+                    AppointmentsView()
+
                 default: EmptyView()
                 }
             }
+            .reversLocalizeView()
         }
     }
 }

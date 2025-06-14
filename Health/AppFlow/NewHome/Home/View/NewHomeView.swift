@@ -128,7 +128,6 @@ struct NewHomeView: View {
         
     }
     
-
 }
 
 #Preview {
@@ -160,6 +159,8 @@ struct TitleBar: View {
                 }) {
                     Image(.backLeft)
                         .resizable()
+                        .flipsForRightToLeftLayoutDirection(true)
+
                     //                        .foregroundStyle(Color.mainBlue)
                     
                 }
@@ -188,7 +189,7 @@ struct TitleBar: View {
             }
         }
         .padding(.horizontal)
-        .localizeView()
+//        .reversLocalizeView()
     }
 }
 
@@ -270,6 +271,7 @@ struct SectionHeader: View {
     var subTitle: (any View)?
 
     var hasMoreBtn: Bool = true
+    var MoreBtnimage: ImageResource? = .newmoreicon
     var MoreBtnAction: (() -> Void)?
     
     var body: some View {
@@ -293,16 +295,21 @@ struct SectionHeader: View {
                     AnyView(subTitle)
                 }
             }
-            if hasMoreBtn{
+            if let image = MoreBtnimage{
                 Button(action: MoreBtnAction ?? {}){
-                    Image(.newmoreicon)
+                    
+//                    Image(MoreBtnimage ?? .newmoreicon)
+                    Image(image)
                         .resizable()
-                        .frame(width: 18, height: 18)
                         .scaledToFill()
+                        .frame(width: 18, height: 18)
                 }
             }
         }
     }
+}
+#Preview{
+    SectionHeader( title: "welcome",MoreBtnimage: .newfilter)
 }
 
 struct NextSessionSection: View {
@@ -711,9 +718,9 @@ struct VipPackagesSection: View {
     }
 }
 
-#Preview(body: {
-    MostViewedBooked( selectedPackage: .constant(nil))
-})
+//#Preview(body: {
+//    MostViewedBooked( selectedPackage: .constant(nil))
+//})
 
 struct VipPackageCellView: View {
     var item : FeaturedPackageItemM
@@ -819,9 +826,9 @@ struct VipPackageCellView: View {
     }
 }
 
-#Preview {
-    VipPackageCellView(item: .init())
-}
+//#Preview {
+//    VipPackageCellView(item: .init())
+//}
 
 struct MostViewedBooked: View {
     @EnvironmentObject var viewModel : NewHomeViewModel

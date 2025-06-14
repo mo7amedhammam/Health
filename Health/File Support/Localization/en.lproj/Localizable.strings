@@ -164,3 +164,24 @@
 "OK" = "OK";
 "login_expired" = "you need to login again";
 "no_connection" = "you are not connected to the internet";
+
+
+//MARK: ---- appointments ----
+"appointments_title" = "My Appointments";
+"no_appointments" = "no appointments found";
+"other_sessions" = "other sessions";
+"doc_name" = "doctor name";
+"renew_subscription" = "renew";
+
+"filter_" = "filter";
+"from_date" = "from date";
+"to_date" = "to date";
+
+"old_to_new" = "from old to latest";
+"new_to_old" = "from latest to old";
+"Done_" = "Done";
+"cancel_" = "cancel";
+"apply_" = "apply";
+
+//MARK:   ---- "favorite_packages" ----
+"favorite_packages" = "favorite packages";

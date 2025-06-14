@@ -42,7 +42,7 @@ struct SubcripedPackageDetailsView: View {
         }
     }
     
-    @State var selectedSection: SectionType = .chats
+    @State var selectedSection: SectionType = .sessions
  
     var body: some View {
         //        NavigationView(){
@@ -267,6 +267,10 @@ struct SubcripedPackageDetailsView: View {
         //                guard let packageId  = package.id else {return}
         //                await viewmodel.getAvailableDoctors(PackageId: packageId)
         //            }
+        .reversLocalizeView()
+        .showHud(isShowing:  $viewmodel.isLoading)
+        .errorAlert(isPresented: .constant(viewmodel.errorMessage != nil), message: viewmodel.errorMessage)
+
         NavigationLink( "", destination: destination, isActive: $isactive)
         
     }

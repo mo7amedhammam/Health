@@ -21,7 +21,7 @@ class PackagesViewModel:ObservableObject {
     @Published var selectedSubCategory: SubCategoryItemM?
     @Published var packages: FeaturedPackagesM?
 
-    @Published var isLoading = false
+    @Published var isLoading : Bool? = false
     @Published var errorMessage: String? = nil
     
     // Init with DI

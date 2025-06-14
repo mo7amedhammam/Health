@@ -42,3 +42,27 @@ public enum EventHandler:Equatable {
     case success
     case error(Int?=0,String?)
 }
+
+// input multipart
+struct MultipartFormDataPart {
+    let name: String
+    let filename: String?
+    let mimeType: String?
+    let data: Data?
+
+    // Text fields
+    init(name: String, value: String) {
+        self.name = name
+        self.filename = nil
+        self.mimeType = nil
+        self.data = value.data(using: .utf8)
+    }
+
+    // Files
+    init(name: String, filename: String, mimeType: String, data: Data) {
+        self.name = name
+        self.filename = filename
+        self.mimeType = mimeType
+        self.data = data
+    }
+}

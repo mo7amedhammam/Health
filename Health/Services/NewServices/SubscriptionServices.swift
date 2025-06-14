@@ -18,7 +18,7 @@ enum SubscriptionServices{
     case FileType
     case GetCustomerPackageInstructionByCPId(parameters : [String:Any])
     case CreateDoctorMessage(parameters : [String:Any])
-    case CreateCustomerMessage(parameters : [String:Any])
+    case CreateCustomerMessage(parameters : [MultipartFormDataPart])
     case GetMessage(parameters : [String:Any])
 }
 
@@ -79,7 +79,6 @@ extension SubscriptionServices : TargetType1 {
                 .GetCustomerPackageSessionList(parameters: let parameter),
                 .GetCustomerPackageInstructionByCPId(parameters: let parameter),
                 .CreateDoctorMessage(parameters: let parameter),
-                .CreateCustomerMessage(parameters: let parameter),
                 .GetMessage(parameters: let parameter)
             :
 //            return .parameterRequest(Parameters: parameters, Encoding: encoding)
@@ -90,9 +89,11 @@ extension SubscriptionServices : TargetType1 {
             
         case
                 .FileType
+                ,.CreateCustomerMessage
             :
             return nil
         }
     }
+    
     
 }
