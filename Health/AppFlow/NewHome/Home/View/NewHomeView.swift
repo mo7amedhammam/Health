@@ -10,6 +10,7 @@ import SwiftUI
 struct NewHomeView: View {
     @StateObject private var viewModel = NewHomeViewModel.shared
     @State private var refreshTask: Task<Void, Never>?
+    @StateObject var wishlistviewModel: WishListManagerViewModel = WishListManagerViewModel.shared
 
     @State var selectedPackage : FeaturedPackageItemM?
 
@@ -64,9 +65,18 @@ struct NewHomeView: View {
 //                                }
 //                            })
                         
-                        VipPackagesSection(packaces: viewModel.featuredPackages?.items,selectedPackage: $selectedPackage){packageId in
+                        VipPackagesSection(packages: viewModel.featuredPackages?.items,selectedPackage: $selectedPackage){packageId in
 //                            add to wishlist
+                            // Update the source-of-truth array in viewModel
+                             if let index = viewModel.featuredPackages?.items?.firstIndex(where: { $0.id == packageId }) {
+                                 viewModel.featuredPackages?.items?[index].isWishlist?.toggle()
+                             }
+                            
+                            Task{
+                                await wishlistviewModel.addOrRemovePackageToWishList(packageId: packageId)
+                            }
                         }
+//                        .environmentObject(wishlistviewModel)
 //                        .task {
 //                            await viewModel.getFeaturedPackages()
 //
@@ -482,7 +492,7 @@ struct NextSessionSection: View {
                             
                         }){
                             HStack(alignment: .center){
-                                Image(.newmoreicon)
+                                Image( .newmoreicon)
                                     .renderingMode(.template)
                                     .resizable()
                                     .frame(width: 15, height: 15)
@@ -686,11 +696,12 @@ struct LastMesurmentsSection: View {
 }
 
 struct VipPackagesSection: View {
-    var packaces: [FeaturedPackageItemM]?
+    var packages: [FeaturedPackageItemM]?
       @Binding var selectedPackage : FeaturedPackageItemM?
 
 //    var action : ((FeaturedPackageItemM) -> Void)?
     var likeAction : ((Int) -> Void)?
+//    @EnvironmentObject var wishlistviewModel: WishListManagerViewModel
 
     var body: some View {
         VStack{
@@ -701,11 +712,18 @@ struct VipPackagesSection: View {
             
             ScrollView(.horizontal,showsIndicators:false){
                 HStack{
-                    ForEach(packaces ?? [], id: \.self) { item in
+                    ForEach(packages ?? [], id: \.self) { item in
                         VipPackageCellView(item: item,action:{
                             selectedPackage = item
                         },likeAction:{
-                            likeAction?(item.id ?? 0)})
+                            //                            likeAction?(item.id ?? 0)
+                            guard let packageId = item.id else { return }
+//                            Task{
+//                                await wishlistviewModel.addOrRemovePackageToWishList(packageId: packageId)
+                                likeAction?(item.id ?? 0)
+//                            }
+
+                        })
                     }
                 }
                 .padding(.horizontal)
@@ -717,6 +735,7 @@ struct VipPackagesSection: View {
         .padding(.bottom,5)
     }
 }
+
 
 //#Preview(body: {
 //    MostViewedBooked( selectedPackage: .constant(nil))
@@ -750,7 +769,8 @@ struct VipPackageCellView: View {
                             
                             Text("\(item.sessionCount ?? 0) ").font(.semiBold(size: 18))
                             
-                            Text("sessions".localized)                        .font(.regular(size: 12))
+                            Text("sessions".localized)
+                                .font(.regular(size: 12))
 
                         }
                         .foregroundStyle(Color.white)
@@ -763,10 +783,11 @@ struct VipPackageCellView: View {
                         Button(action: {
                             likeAction?()
                         }, label: {
-                            Image(.newlikeicon)
+                            Image( item.isWishlist ?? false ? .newlikeicon : .newunlikeicon)
                                 .resizable()
                                 .frame(width: 20, height: 20)
                         })
+                        .buttonStyle(.plain)
                     }
                     .frame(maxWidth: .infinity,alignment:.leading)
                     .padding()

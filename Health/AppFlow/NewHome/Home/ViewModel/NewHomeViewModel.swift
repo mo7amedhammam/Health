@@ -260,3 +260,4 @@ extension NewHomeViewModel {
         await getFeaturedPackages()
     }
 }
+

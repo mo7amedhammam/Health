@@ -29,7 +29,7 @@ struct ChatsMessageM: Codable, Identifiable {
     }
 
     var messageText: String {
-        comment ?? "[no Voice message or no comment]"
+        comment ?? ""
     }
 
     var formattedDate: String {

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import AVFoundation
 
 
 class ChatsViewModel:ObservableObject {
@@ -54,7 +55,7 @@ extension ChatsViewModel{
                 target,
                 responseType: [ChatsMessageM].self
             )
-            self.ChatMessages = response
+            self.ChatMessages = response?.compactMap({($0.messageText.count > 0 || $0.voicePath?.count ?? 0 > 0) ? $0 : nil})
         } catch {
             self.errorMessage = error.localizedDescription
         }
@@ -147,4 +148,68 @@ extension ChatsViewModel {
 //        skipCount = (skipCount ?? 0) + maxResultCount
 //        await getAppointmenstList()
 //    }
+}
+
+
+
+class VoicePlayerManager: ObservableObject {
+    @Published var isPlaying = false
+    @Published var progress: Double = 0
+    @Published var isLoading = false
+
+    private var player: AVPlayer?
+    private var timeObserverToken: Any?
+
+    func play(from url: URL) {
+        stop()
+        isLoading = true
+
+        let asset = AVAsset(url: url)
+        let playerItem = AVPlayerItem(asset: asset)
+        self.player = AVPlayer(playerItem: playerItem)
+
+        player?.play()
+        isPlaying = true
+        isLoading = false
+
+        // Observe progress
+        timeObserverToken = player?.addPeriodicTimeObserver(forInterval: CMTime(seconds: 0.1, preferredTimescale: 600), queue: .main) { [weak self] time in
+            guard let self = self, let duration = self.player?.currentItem?.duration.seconds,
+                  duration > 0 else { return }
+            self.progress = time.seconds / duration
+        }
+
+        // Observe end
+        NotificationCenter.default.addObserver(
+            forName: .AVPlayerItemDidPlayToEndTime,
+            object: player?.currentItem,
+            queue: .main
+        ) { [weak self] _ in
+            self?.stop()
+        }
+    }
+
+    func pause() {
+        player?.pause()
+        isPlaying = false
+    }
+
+    func stop() {
+        player?.pause()
+        player = nil
+        isPlaying = false
+        progress = 0
+        isLoading = false
+
+        if let token = timeObserverToken {
+            player?.removeTimeObserver(token)
+            timeObserverToken = nil
+        }
+
+        NotificationCenter.default.removeObserver(self)
+    }
+
+    deinit {
+        stop()
+    }
 }

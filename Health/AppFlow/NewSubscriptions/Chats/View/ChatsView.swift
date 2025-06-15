@@ -8,11 +8,53 @@
 import SwiftUI
 import AVFoundation
 
+// MARK: - Single Bar View
+struct WaveBarView: View {
+    var height: CGFloat
+
+    var body: some View {
+        RoundedRectangle(cornerRadius: 2)
+            .fill(Color.white)
+            .frame(width: 4, height: max(height, 2))
+    }
+}
+
+// MARK: - Animated Waveform View
+struct WaveformView: View {
+    @State private var levels: [CGFloat] = Array(repeating: 10, count: 15)
+    let isAnimating: Bool
+
+    var body: some View {
+        HStack(spacing: 4) {
+            ForEach(levels.indices, id: \.self) { index in
+                WaveBarView(height: levels[index])
+            }
+        }
+        .frame(height: 40)
+        .onAppear(perform: animate)
+    }
+
+    private func animate() {
+        guard isAnimating else { return }
+
+        Timer.scheduledTimer(withTimeInterval: 0.2, repeats: true) { timer in
+            if !isAnimating {
+                timer.invalidate()
+            } else {
+                withAnimation(.easeInOut(duration: 0.2)) {
+                    levels = levels.map { _ in CGFloat.random(in: 6...28) }
+                }
+            }
+        }
+    }
+}
 // MARK: - MessageBubbleView
 struct MessageBubbleView: View {
     let message: ChatsMessageM
     
     var body: some View {
+        let _ = print("🔍 message.comment = \(message.comment ?? "nil")")
+        let _ = print("🔊 message.voicePath = \(message.voicePath ?? "nil")")
         HStack {
             if message.isFromCustomer {
                 Spacer()
@@ -34,13 +76,18 @@ struct MessageBubbleView: View {
                         .foregroundColor(.gray)
                         .frame(height: 10)
                     
-                    Text(message.messageText)
-                        .font(.regular(size: 14))
-                        .foregroundColor(message.isFromCustomer ? .white : .black)
-                        .padding(12)
-                        .background(message.isFromCustomer ? Color.mainBlue : Color(.messageSenderBg))
-                        .cornerRadius(16)
-                        .lineSpacing(8)
+                    if message.voicePath == nil || ((message.voicePath?.isEmpty) != nil) {
+                        Text(message.messageText)
+                            .font(.regular(size: 14))
+                            .foregroundColor(message.isFromCustomer ? .white : .black)
+                            .padding(12)
+                            .background(message.isFromCustomer ? Color.mainBlue : Color(.messageSenderBg))
+                            .cornerRadius(16)
+                            .lineSpacing(8)
+                    } else if let voiceURL = URL(string: message.voicePath ?? "") {
+                       VoiceMessagePlayerView(voiceURL: voiceURL, isFromCustomer: message.isFromCustomer)
+                   }
+                    
                 }
                 .frame(maxWidth: 280, alignment: message.isFromCustomer ? .trailing : .leading)
             }
@@ -54,6 +101,59 @@ struct MessageBubbleView: View {
 
     }
 }
+
+
+struct VoiceMessagePlayerView: View {
+    let voiceURL: URL
+    let isFromCustomer: Bool
+
+    @StateObject private var player = VoicePlayerManager()
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            HStack {
+                Button(action: {
+                    if player.isPlaying {
+                        player.pause()
+                    } else {
+                        player.play(from: voiceURL)
+                    }
+                }) {
+                    ZStack {
+                        Circle()
+                            .fill(Color.white.opacity(0.2))
+                            .frame(width: 36, height: 36)
+
+                        if player.isLoading {
+                            ProgressView()
+                                .progressViewStyle(CircularProgressViewStyle(tint: .white))
+                        } else {
+                            Image(systemName: player.isPlaying ? "pause.fill" : "play.fill")
+                                .foregroundColor(.white)
+                        }
+                    }
+                }
+
+                Text(player.isPlaying ? "Playing..." : "Voice message")
+                    .font(.regular(size: 14))
+                    .foregroundColor(.white)
+            }
+
+            if player.isPlaying {
+                WaveformView(isAnimating: true)
+                    .frame(height: 40)
+                    .padding(.vertical, 4)
+            }
+        }
+        .padding(12)
+        .background(isFromCustomer ? Color.mainBlue : Color(.messageSenderBg))
+        .cornerRadius(16)
+    }
+}
+#Preview{
+    VoiceMessagePlayerView(voiceURL: URL(string: "Files/CustomerPackageMessage/5a3f5aa4-fee6-42a6-8710-f6e1fd06e10c.m4a")!, isFromCustomer: true)
+}
+
 
 // MARK: - ChatsView
 struct ChatsView: View {
