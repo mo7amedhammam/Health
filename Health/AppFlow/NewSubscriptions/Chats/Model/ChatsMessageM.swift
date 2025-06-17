@@ -17,11 +17,14 @@ struct ChatsMessageM: Codable, Identifiable {
     var doctorID: Int?
     var creationDate: String?
 
+    var customerImage,doctorImage :String?
+
     enum CodingKeys: String, CodingKey {
         case customerPackageID = "customerPackageId"
         case comment, sendByCustomer, sendByDoctor, voicePath
         case doctorID = "doctorId"
         case creationDate
+        case customerImage,doctorImage
     }
 
     var isFromCustomer: Bool {

@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		80575AC14FA23A70DAA7BBEA /* Pods_Sehaty.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0BF0C90049FC1EFFEE4F4C0 /* Pods_Sehaty.framework */; };
 		900B50B82DAAC4E300EABA67 /* ExUiImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 900B50B72DAAC4E300EABA67 /* ExUiImage.swift */; };
+		902B87A92DFEE5E9009D5234 /* SkeletonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 902B87A82DFEE5E9009D5234 /* SkeletonView.swift */; };
+		902B87AB2DFEE631009D5234 /* LinearGradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 902B87AA2DFEE631009D5234 /* LinearGradientView.swift */; };
+		902B87AD2DFEE652009D5234 /* SimpleAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 902B87AC2DFEE652009D5234 /* SimpleAlertView.swift */; };
 		903667062D82E0A40040AE29 /* LocalizationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 903667052D82E08E0040AE29 /* LocalizationManager.swift */; };
 		903667082D82E1410040AE29 /* AppKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 903667072D82E1370040AE29 /* AppKeys.swift */; };
 		9047483F2DCF63530016C3DC /* PackagesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9047483E2DCF63530016C3DC /* PackagesView.swift */; };
@@ -273,6 +276,9 @@
 		4CFC129D8CF33907DFF2B706 /* Pods-Sehaty.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sehaty.debug.xcconfig"; path = "Target Support Files/Pods-Sehaty/Pods-Sehaty.debug.xcconfig"; sourceTree = "<group>"; };
 		89D6D697015359A8CFB74DC2 /* Pods-Sehaty.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sehaty.release.xcconfig"; path = "Target Support Files/Pods-Sehaty/Pods-Sehaty.release.xcconfig"; sourceTree = "<group>"; };
 		900B50B72DAAC4E300EABA67 /* ExUiImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExUiImage.swift; sourceTree = "<group>"; };
+		902B87A82DFEE5E9009D5234 /* SkeletonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkeletonView.swift; sourceTree = "<group>"; };
+		902B87AA2DFEE631009D5234 /* LinearGradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinearGradientView.swift; sourceTree = "<group>"; };
+		902B87AC2DFEE652009D5234 /* SimpleAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleAlertView.swift; sourceTree = "<group>"; };
 		903667052D82E08E0040AE29 /* LocalizationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationManager.swift; sourceTree = "<group>"; };
 		903667072D82E1370040AE29 /* AppKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppKeys.swift; sourceTree = "<group>"; };
 		9047483E2DCF63530016C3DC /* PackagesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackagesView.swift; sourceTree = "<group>"; };
@@ -1012,6 +1018,9 @@
 			children = (
 				90FDD3552DEE17BB00C3BABB /* AlertView.swift */,
 				90FDD3532DEE179D00C3BABB /* HudView2.swift */,
+				902B87A82DFEE5E9009D5234 /* SkeletonView.swift */,
+				902B87AA2DFEE631009D5234 /* LinearGradientView.swift */,
+				902B87AC2DFEE652009D5234 /* SimpleAlertView.swift */,
 			);
 			path = CustomSwiftuiViews;
 			sourceTree = "<group>";
@@ -2406,6 +2415,7 @@
 				C8F100DF2ADAC7F70085E508 /* ExWkWebView.swift in Sources */,
 				904748572DD61BFE0016C3DC /* PackagesViewModel.swift in Sources */,
 				C8F418D82AC19A5100E7A370 /* TipDetailsDrugGroup.swift in Sources */,
+				902B87A92DFEE5E9009D5234 /* SkeletonView.swift in Sources */,
 				BB1ECAB52AD4741F009BF2DE /* WillExpireTVCell.swift in Sources */,
 				90FDD36A2DF8351B00C3BABB /* AppointmentsM.swift in Sources */,
 				90FDD3332DE5CE0000C3BABB /* SubscriptionServices.swift in Sources */,
@@ -2509,6 +2519,7 @@
 				BB67C0912B247A6200F04266 /* AlignedCollectionView.swift in Sources */,
 				90FDD3032DDDF80F00C3BABB /* CustomDateFormat.swift in Sources */,
 				BB14DAF72A7B047400389B96 /* ProfileTVCellLine.swift in Sources */,
+				902B87AB2DFEE631009D5234 /* LinearGradientView.swift in Sources */,
 				C80DA9E22AA4D11300F10808 /* BaseResponse.swift in Sources */,
 				C80DA9EF2AA4F6B000F10808 /* UiWindow.swift in Sources */,
 				BBB0636A2B0E8D7A00708CF4 /* MeasurementsDetailsFiltterVC.swift in Sources */,
@@ -2516,6 +2527,7 @@
 				90FDD33D2DE6751200C3BABB /* SubcripedPackageDetailsView.swift in Sources */,
 				BB5116CD2A829AC900CF5D11 /* MeasurementsDetailsTVCell.swift in Sources */,
 				BB5A266E2B2E1E330005C9B8 /* HelpTVCell.swift in Sources */,
+				902B87AD2DFEE652009D5234 /* SimpleAlertView.swift in Sources */,
 				903667082D82E1410040AE29 /* AppKeys.swift in Sources */,
 				BB6E07EF2A896B2700689769 /* MeasurementsDetailsTVCell0.swift in Sources */,
 				C82DCAA62AAC784F00322B55 /* MedicationScheduleM.swift in Sources */,

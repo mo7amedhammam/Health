@@ -717,10 +717,10 @@ struct VipPackagesSection: View {
                             selectedPackage = item
                         },likeAction:{
                             //                            likeAction?(item.id ?? 0)
-                            guard let packageId = item.id else { return }
+                            guard let packageId = item.appCountryPackageId else { return }
 //                            Task{
 //                                await wishlistviewModel.addOrRemovePackageToWishList(packageId: packageId)
-                                likeAction?(item.id ?? 0)
+                                likeAction?(packageId)
 //                            }
 
                         })

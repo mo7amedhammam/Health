@@ -90,7 +90,7 @@ extension ChatsViewModel{
             print("fileData: \(fileData)")
 
              parts.append(
-                 .init(name: "VoicePath", filename: "voice.m4a", mimeType: "audio/m4a", data: fileData)
+                 .init(name: "VoicePath", filename: "voice.mp3", mimeType: "audio/m4a", data: fileData)
              )
             }
         
@@ -168,7 +168,7 @@ class VoicePlayerManager: ObservableObject {
         let playerItem = AVPlayerItem(asset: asset)
         self.player = AVPlayer(playerItem: playerItem)
 
-        player?.play()
+//        player?.play()
         isPlaying = true
         isLoading = false
 

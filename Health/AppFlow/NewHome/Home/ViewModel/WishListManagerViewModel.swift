@@ -44,7 +44,7 @@ extension WishListManagerViewModel{
     func addOrRemovePackageToWishList(packageId:Int) async {
 //        isLoading = true
 //        defer { isLoading = false }
-        let parameters: [String: Any] = ["PackageId": packageId]
+        let parameters: [String: Any] = ["AppCountryPackageId": packageId]
         let target = HomeServices.AddOrRemoveToWishList(parameters: parameters)
         do {
 //            self.errorMessage = nil // Clear previous errors

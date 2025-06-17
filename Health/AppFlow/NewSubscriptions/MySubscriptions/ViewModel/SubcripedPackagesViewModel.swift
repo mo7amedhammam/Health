@@ -74,13 +74,13 @@ extension SubcripedPackagesViewModel{
 
 extension SubcripedPackagesViewModel {
     
-    @MainActor
+//    @MainActor
     func refresh() async {
         skipCount = 0
         await getSubscripedPackages()
     }
 
-    @MainActor
+//    @MainActor
     func loadMoreIfNeeded() async {
         guard !(isLoading ?? false),
               let currentCount = subscripedPackages?.items?.count,

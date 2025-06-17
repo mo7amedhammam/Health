@@ -925,9 +925,15 @@ final class AsyncAwaitNetworkService: AsyncAwaitNetworkServiceProtocol {
                 }
        
 
-            } catch let error as NetworkError {
-                throw error
+//            } catch let error as NetworkError {
+//                throw error
             } catch {
+                
+                if (error as NSError).code == URLError.cancelled.rawValue {
+                      logger.info("Request was cancelled.")
+                      return nil // or `throw` a special case you don’t alert for
+                  }
+                
                 lastError = error
                 logger.warning("Attempt \(attempt) failed: \(error.localizedDescription)")
                 if attempt == maxRetryCount {
@@ -946,7 +952,8 @@ final class AsyncAwaitNetworkService: AsyncAwaitNetworkServiceProtocol {
         request.timeoutInterval = target.timeoutInterval ?? defaultTimeout
 
         // Headers
-        var headers = target.headers ?? [:]
+//        var headers = target.headers ?? [:]
+        var headers : [String: String] = [:]
         if let token = Helper.shared.getUser()?.token {
             headers["Authorization"] = "Bearer \(token)"
         }
@@ -963,6 +970,8 @@ final class AsyncAwaitNetworkService: AsyncAwaitNetworkServiceProtocol {
             case .post, .put, .patch:
                 request.httpBody = try JSONSerialization.data(withJSONObject: parameters, options: [])
                 request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+                request.setValue("text/plain", forHTTPHeaderField: "accept")
+
             default:
                 break
             }
@@ -972,15 +981,14 @@ final class AsyncAwaitNetworkService: AsyncAwaitNetworkServiceProtocol {
     }
 
     // MARK: - Decoding
+    private let jsonDecoder = JSONDecoder()
+
     private func decodeResponse<T: Codable>(_ data: Data, _ type: T.Type) throws -> T? {
-        // Try BaseResponse wrapper
-        if let wrapper = try? JSONDecoder().decode(BaseResponse<T>.self, from: data),
+        if let wrapper = try? jsonDecoder.decode(BaseResponse<T>.self, from: data),
            let result = wrapper.data {
             return result
         }
-
-        // Fallback to direct decoding
-        return try JSONDecoder().decode(T.self, from: data)
+        return try jsonDecoder.decode(T.self, from: data)
     }
 
     // MARK: - Logging
@@ -1038,7 +1046,7 @@ extension AsyncAwaitNetworkService {
             headers["Authorization"] = "Bearer \(token)"
         }
         headers["Content-Type"] = "multipart/form-data; boundary=\(boundary)"
-        headers["accept"] = "text/plain"
+        headers["accept"] = "application/json"
 
         
         headers.forEach { request.setValue($0.value, forHTTPHeaderField: $0.key) }

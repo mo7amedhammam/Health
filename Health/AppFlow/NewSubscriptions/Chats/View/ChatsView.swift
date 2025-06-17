@@ -19,42 +19,54 @@ struct WaveBarView: View {
     }
 }
 
-// MARK: - Animated Waveform View
+class WaveformViewModel: ObservableObject {
+    @Published var levels: [CGFloat] = Array(repeating: 10, count: 15)
+    private var timer: Timer?
+
+    func start() {
+        stop()
+        timer = Timer.scheduledTimer(withTimeInterval: 0.15, repeats: true) { [weak self] _ in
+            self?.levels = (0..<30).map { _ in CGFloat.random(in: 6...28) }
+        }
+    }
+
+    func stop() {
+        timer?.invalidate()
+        timer = nil
+        levels = Array(repeating: 10, count: 15)
+    }
+}
+
 struct WaveformView: View {
-    @State private var levels: [CGFloat] = Array(repeating: 10, count: 15)
+    @StateObject private var viewModel = WaveformViewModel()
     let isAnimating: Bool
 
     var body: some View {
         HStack(spacing: 4) {
-            ForEach(levels.indices, id: \.self) { index in
-                WaveBarView(height: levels[index])
+            ForEach(viewModel.levels.indices, id: \.self) { index in
+                RoundedRectangle(cornerRadius: 2)
+                    .fill(Color.white)
+                    .frame(width: 4, height: max(viewModel.levels[index], 2))
             }
         }
-        .frame(height: 40)
-        .onAppear(perform: animate)
-    }
-
-    private func animate() {
-        guard isAnimating else { return }
-
-        Timer.scheduledTimer(withTimeInterval: 0.2, repeats: true) { timer in
-            if !isAnimating {
-                timer.invalidate()
-            } else {
-                withAnimation(.easeInOut(duration: 0.2)) {
-                    levels = levels.map { _ in CGFloat.random(in: 6...28) }
-                }
-            }
+        .frame(height: 35)
+        .onAppear {
+            if isAnimating { viewModel.start() }
+        }
+        .onChange(of: isAnimating) { newValue in
+            newValue ? viewModel.start() : viewModel.stop()
         }
     }
 }
+
+
 // MARK: - MessageBubbleView
 struct MessageBubbleView: View {
     let message: ChatsMessageM
     
     var body: some View {
         let _ = print("🔍 message.comment = \(message.comment ?? "nil")")
-        let _ = print("🔊 message.voicePath = \(message.voicePath ?? "nil")")
+        let _ = print("✅ Final voicePath URL: \(Constants.baseURL + (message.voicePath ?? "").validateSlashs())")
         HStack {
             if message.isFromCustomer {
                 Spacer()
@@ -76,7 +88,7 @@ struct MessageBubbleView: View {
                         .foregroundColor(.gray)
                         .frame(height: 10)
                     
-                    if message.voicePath == nil || ((message.voicePath?.isEmpty) != nil) {
+                    if message.voicePath == nil {
                         Text(message.messageText)
                             .font(.regular(size: 14))
                             .foregroundColor(message.isFromCustomer ? .white : .black)
@@ -84,9 +96,12 @@ struct MessageBubbleView: View {
                             .background(message.isFromCustomer ? Color.mainBlue : Color(.messageSenderBg))
                             .cornerRadius(16)
                             .lineSpacing(8)
-                    } else if let voiceURL = URL(string: message.voicePath ?? "") {
-                       VoiceMessagePlayerView(voiceURL: voiceURL, isFromCustomer: message.isFromCustomer)
-                   }
+                    } else if let voice = message.voicePath,
+                    let voiceURL = URL(string: Constants.baseURL + voice.validateSlashs()) {
+                        
+                     VoiceMessagePlayerView(voiceURL: voiceURL, isFromCustomer: message.isFromCustomer)
+                            .localizeView()
+                 }
                     
                 }
                 .frame(maxWidth: 280, alignment: message.isFromCustomer ? .trailing : .leading)
@@ -110,7 +125,7 @@ struct VoiceMessagePlayerView: View {
     @StateObject private var player = VoicePlayerManager()
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
+        HStack(spacing: 8) {
             HStack {
                 Button(action: {
                     if player.isPlaying {
@@ -134,24 +149,26 @@ struct VoiceMessagePlayerView: View {
                     }
                 }
 
-                Text(player.isPlaying ? "Playing..." : "Voice message")
+                Text(player.isPlaying ? "Playing...".localized : "Voice_message".localized)
                     .font(.regular(size: 14))
                     .foregroundColor(.white)
             }
 
             if player.isPlaying {
                 WaveformView(isAnimating: true)
-                    .frame(height: 40)
-                    .padding(.vertical, 4)
+//                     .frame(height: 40)
+                     .padding(.vertical, 4)
             }
         }
         .padding(12)
+        .frame(height: 50)
+        .frame(maxWidth: .infinity,alignment: .leading)
         .background(isFromCustomer ? Color.mainBlue : Color(.messageSenderBg))
         .cornerRadius(16)
     }
 }
 #Preview{
-    VoiceMessagePlayerView(voiceURL: URL(string: "Files/CustomerPackageMessage/5a3f5aa4-fee6-42a6-8710-f6e1fd06e10c.m4a")!, isFromCustomer: true)
+    VoiceMessagePlayerView(voiceURL: URL(string: "https://alnada-devsehatyapi.azurewebsites.net/Files/CustomerPackageMessage/302bf64e-dd4b-4f93-bcbd-85afd628b9bb.mp3")!, isFromCustomer: true)
 }
 
 
@@ -252,6 +269,8 @@ struct ChatsView: View {
             
             // Input (non-functional)
             VStack() {
+//                VoiceMessagePlayerView(voiceURL: URL(string: "https://alnada-devsehatyapi.azurewebsites.net/Files/CustomerPackageMessage/302bf64e-dd4b-4f93-bcbd-85afd628b9bb.mp3")!, isFromCustomer: true)
+
                 HStack {
                     if let url = viewModel.recordingURL {
                         HStack(spacing: 12) {
