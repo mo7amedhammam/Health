@@ -159,34 +159,58 @@ class VoicePlayerManager: ObservableObject {
 
     private var player: AVPlayer?
     private var timeObserverToken: Any?
+    private var currentURL: URL?
 
     func play(from url: URL) {
+        // If playing same URL and paused, resume
+        if let current = currentURL, current == url, let player = player {
+            player.play()
+            isPlaying = true
+            return
+        }
+
         stop()
         isLoading = true
+        currentURL = url
+
+        do {
+            let session = AVAudioSession.sharedInstance()
+            try session.setCategory(.playback, mode: .default, options: [.defaultToSpeaker])
+            try session.setActive(true)
+        } catch {
+            print("AudioSession error: \(error.localizedDescription)")
+        }
 
         let asset = AVAsset(url: url)
         let playerItem = AVPlayerItem(asset: asset)
         self.player = AVPlayer(playerItem: playerItem)
 
-//        player?.play()
+        player?.play()
         isPlaying = true
         isLoading = false
 
-        // Observe progress
-        timeObserverToken = player?.addPeriodicTimeObserver(forInterval: CMTime(seconds: 0.1, preferredTimescale: 600), queue: .main) { [weak self] time in
-            guard let self = self, let duration = self.player?.currentItem?.duration.seconds,
+        // Progress observer
+        timeObserverToken = player?.addPeriodicTimeObserver(
+            forInterval: CMTime(seconds: 0.1, preferredTimescale: 600),
+            queue: .main
+        ) { [weak self] time in
+            guard let self = self,
+                  let duration = self.player?.currentItem?.duration.seconds,
                   duration > 0 else { return }
             self.progress = time.seconds / duration
         }
 
-        // Observe end
+        // Playback end observer
         NotificationCenter.default.addObserver(
-            forName: .AVPlayerItemDidPlayToEndTime,
-            object: player?.currentItem,
-            queue: .main
-        ) { [weak self] _ in
-            self?.stop()
-        }
+            self,
+            selector: #selector(playerDidFinishPlaying),
+            name: .AVPlayerItemDidPlayToEndTime,
+            object: playerItem
+        )
+    }
+
+    @objc private func playerDidFinishPlaying() {
+        stop()
     }
 
     func pause() {
@@ -200,6 +224,7 @@ class VoicePlayerManager: ObservableObject {
         isPlaying = false
         progress = 0
         isLoading = false
+        currentURL = nil
 
         if let token = timeObserverToken {
             player?.removeTimeObserver(token)
