@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SwiftUI
 
 class SplashScreenVC: UIViewController {
     
@@ -64,7 +65,10 @@ extension SplashScreenVC : UICollectionViewDataSource , UICollectionViewDelegate
     
     func SkipSplash() {
         Helper.shared.onBoardOpened(opened: true)
-        Helper.shared.changeRootVC(newroot: LoginVC.self,transitionFrom: .fromLeft)
+//        Helper.shared.changeRootVC(newroot: LoginVC.self,transitionFrom: .fromLeft)
+        let newHome = UIHostingController(rootView: LoginView())
+        Helper.shared.changeRootVC(newroot: newHome, transitionFrom: .fromLeft)
+
     }
     
     

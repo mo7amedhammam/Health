@@ -62,12 +62,17 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 //                ? initiateViewController(storyboardName: .main, viewControllerIdentifier: HTBC.self)!
 //                : initiateViewController(storyboardName: .main, viewControllerIdentifier: LoginVC.self)!
                 
-                
-                let initialVC: UIViewController = initiateViewController(storyboardName: .main, viewControllerIdentifier: LoginVC.self)!
-                
-                let nav = UINavigationController(rootViewController: initialVC)
+                let vc = UIHostingController(rootView: LoginView())
+                let nav = UINavigationController(rootViewController: vc)
                 nav.navigationBar.isHidden = true
                 window?.rootViewController = nav
+
+                
+                
+//                let initialVC: UIViewController = initiateViewController(storyboardName: .main, viewControllerIdentifier: LoginVC.self)!
+//                let nav = UINavigationController(rootViewController: initialVC)
+//                nav.navigationBar.isHidden = true
+//                window?.rootViewController = nav
             }
         }
         
@@ -149,11 +154,15 @@ extension SceneDelegate {
                     //                : initiateViewController(storyboardName: .main, viewControllerIdentifier: LoginVC.self)!
                     
                     
-                    let initialVC: UIViewController = initiateViewController(storyboardName: .main, viewControllerIdentifier: LoginVC.self)!
-                    
-                    let nav = UINavigationController(rootViewController: initialVC)
+                    let vc = UIHostingController(rootView: LoginView())
+                    let nav = UINavigationController(rootViewController: vc)
                     nav.navigationBar.isHidden = true
                     window.rootViewController = nav
+                    
+//                    let initialVC: UIViewController = initiateViewController(storyboardName: .main, viewControllerIdentifier: LoginVC.self)!
+//                    let nav = UINavigationController(rootViewController: initialVC)
+//                    nav.navigationBar.isHidden = true
+//                    window.rootViewController = nav
                 }
                 
             }

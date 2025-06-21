@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SwiftUI
 
 class ForgetPasswordVC: UIViewController  , UIGestureRecognizerDelegate {
     @IBOutlet weak var LaNavTitle: UILabel!
@@ -115,7 +116,10 @@ extension ForgetPasswordVC {
             viewDone.imgStr = "successicon"
             viewDone.action = {
                 viewDone.removeFromSuperview()
-                Helper.shared.changeRootVC(newroot: LoginVC.self,transitionFrom: .fromLeft)
+//                Helper.shared.changeRootVC(newroot: LoginVC.self,transitionFrom: .fromLeft)
+                let newHome = UIHostingController(rootView: LoginView())
+                Helper.shared.changeRootVC(newroot: newHome, transitionFrom: .fromLeft)
+
             }
         }
     }

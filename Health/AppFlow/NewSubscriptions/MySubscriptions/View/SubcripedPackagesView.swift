@@ -10,6 +10,7 @@ import SwiftUI
 struct SubcripedPackagesView: View {
     //    var mainCategory:HomeCategoryItemM
     @StateObject private var viewModel = SubcripedPackagesViewModel.shared
+    var hasbackBtn : Bool? = true
     var onBack: (() -> Void)? // for uikit dismissal
     
     @State var showCancel: Bool = false
@@ -21,7 +22,8 @@ struct SubcripedPackagesView: View {
         self.isactive = true
     }
     
-    init(onBack: (() -> Void)?) {
+    init(hasbackBtn : Bool? = true,onBack: (() -> Void)?) {
+        self.hasbackBtn = hasbackBtn
         self.onBack = onBack
     }
     
@@ -29,7 +31,7 @@ struct SubcripedPackagesView: View {
         //        NavigationView(){
         VStack(spacing:0){
             VStack(){
-                TitleBar(title: "subscriped_title",titlecolor: .white,hasbackBtn: true,onBack: onBack)
+                TitleBar(title: "subscriped_title",titlecolor: .white,hasbackBtn: hasbackBtn ?? true,onBack: onBack)
                     .padding(.top,55)
                 
                 VStack(spacing:5){
@@ -120,7 +122,7 @@ struct SubcripedPackagesView: View {
 //                }
                 
 //            }
-//            Spacer().frame(height: 55)
+            Spacer().frame(height: hasbackBtn ?? true ? 0 : 80)
             
         }
 //        .showHud(isShowing:  $viewModel.isLoading)

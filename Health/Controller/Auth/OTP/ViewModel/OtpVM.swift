@@ -6,8 +6,9 @@
 //
 
 import Foundation
+import Combine
 
-class OtpVM {
+class OtpVM : ObservableObject{
     var mobile: String?
     var EnteredOtp: String?
     

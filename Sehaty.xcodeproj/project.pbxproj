@@ -12,6 +12,9 @@
 		902B87A92DFEE5E9009D5234 /* SkeletonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 902B87A82DFEE5E9009D5234 /* SkeletonView.swift */; };
 		902B87AB2DFEE631009D5234 /* LinearGradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 902B87AA2DFEE631009D5234 /* LinearGradientView.swift */; };
 		902B87AD2DFEE652009D5234 /* SimpleAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 902B87AC2DFEE652009D5234 /* SimpleAlertView.swift */; };
+		902B87B02E05BB14009D5234 /* LookupsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 902B87AF2E05BB14009D5234 /* LookupsViewModel.swift */; };
+		902B87B22E05BB65009D5234 /* LookupsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 902B87B12E05BB65009D5234 /* LookupsModel.swift */; };
+		902B87B52E05BC9F009D5234 /* LookUpsServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 902B87B42E05BC9F009D5234 /* LookUpsServices.swift */; };
 		903667062D82E0A40040AE29 /* LocalizationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 903667052D82E08E0040AE29 /* LocalizationManager.swift */; };
 		903667082D82E1410040AE29 /* AppKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 903667072D82E1370040AE29 /* AppKeys.swift */; };
 		9047483F2DCF63530016C3DC /* PackagesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9047483E2DCF63530016C3DC /* PackagesView.swift */; };
@@ -279,6 +282,9 @@
 		902B87A82DFEE5E9009D5234 /* SkeletonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkeletonView.swift; sourceTree = "<group>"; };
 		902B87AA2DFEE631009D5234 /* LinearGradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinearGradientView.swift; sourceTree = "<group>"; };
 		902B87AC2DFEE652009D5234 /* SimpleAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleAlertView.swift; sourceTree = "<group>"; };
+		902B87AF2E05BB14009D5234 /* LookupsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LookupsViewModel.swift; sourceTree = "<group>"; };
+		902B87B12E05BB65009D5234 /* LookupsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LookupsModel.swift; sourceTree = "<group>"; };
+		902B87B42E05BC9F009D5234 /* LookUpsServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LookUpsServices.swift; sourceTree = "<group>"; };
 		903667052D82E08E0040AE29 /* LocalizationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationManager.swift; sourceTree = "<group>"; };
 		903667072D82E1370040AE29 /* AppKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppKeys.swift; sourceTree = "<group>"; };
 		9047483E2DCF63530016C3DC /* PackagesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackagesView.swift; sourceTree = "<group>"; };
@@ -566,6 +572,23 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		902B87AE2E05BAF1009D5234 /* Lookups */ = {
+			isa = PBXGroup;
+			children = (
+				902B87B12E05BB65009D5234 /* LookupsModel.swift */,
+				902B87AF2E05BB14009D5234 /* LookupsViewModel.swift */,
+			);
+			path = Lookups;
+			sourceTree = "<group>";
+		};
+		902B87B32E05BC6C009D5234 /* LookUpsServices */ = {
+			isa = PBXGroup;
+			children = (
+				902B87B42E05BC9F009D5234 /* LookUpsServices.swift */,
+			);
+			path = LookUpsServices;
+			sourceTree = "<group>";
+		};
 		903667042D82E0700040AE29 /* Localization */ = {
 			isa = PBXGroup;
 			children = (
@@ -579,6 +602,7 @@
 		904748312DCCAF550016C3DC /* AppFlow */ = {
 			isa = PBXGroup;
 			children = (
+				902B87AE2E05BAF1009D5234 /* Lookups */,
 				90FDD3652DF82B2F00C3BABB /* NewAppointments */,
 				90FDD3572DEF378D00C3BABB /* Profile */,
 				90FDD31B2DE4A4BB00C3BABB /* NewSubscriptions */,
@@ -1657,6 +1681,7 @@
 		BBBDFFF62A730F9800F066DF /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				902B87B32E05BC6C009D5234 /* LookUpsServices */,
 				904748512DD34ECE0016C3DC /* NewServices */,
 				C80DA9E92AA4D37800F10808 /* HealthServices */,
 				C80DA9E12AA4D11300F10808 /* BaseResponse.swift */,
@@ -2442,6 +2467,7 @@
 				BBBD00262A7311E400F066DF /* ForgetPasswordVC.swift in Sources */,
 				BBBD000B2A73101700F066DF /* SalmanLocalize.swift in Sources */,
 				90FDD36C2DF8360900C3BABB /* AppointmentsView.swift in Sources */,
+				902B87B02E05BB14009D5234 /* LookupsViewModel.swift in Sources */,
 				C8C7339A2AA6756B00185698 /* SignUpM.swift in Sources */,
 				C85671BE2AAF5AD900E02D75 /* InbodyM.swift in Sources */,
 				BBBD00172A73101700F066DF /* Helper.swift in Sources */,
@@ -2474,6 +2500,7 @@
 				BB518CD32A9A112C00242FAD /* TipsCategoriesVC1.swift in Sources */,
 				90FDD3602DF74D4000C3BABB /* ChatsView.swift in Sources */,
 				BB48F8A32A7482480051F12C /* OtpVC.swift in Sources */,
+				902B87B52E05BC9F009D5234 /* LookUpsServices.swift in Sources */,
 				904748552DD4C7F90016C3DC /* KFImageLoader.swift in Sources */,
 				BBBD001A2A73101700F066DF /* ImageFromGallary.swift in Sources */,
 				C8918D9C2ACD61F20070A1D3 /* ExUiButtons.swift in Sources */,
@@ -2524,6 +2551,7 @@
 				C80DA9EF2AA4F6B000F10808 /* UiWindow.swift in Sources */,
 				BBB0636A2B0E8D7A00708CF4 /* MeasurementsDetailsFiltterVC.swift in Sources */,
 				C80DA9E42AA4D29500F10808 /* EndPoints.swift in Sources */,
+				902B87B22E05BB65009D5234 /* LookupsModel.swift in Sources */,
 				90FDD33D2DE6751200C3BABB /* SubcripedPackageDetailsView.swift in Sources */,
 				BB5116CD2A829AC900CF5D11 /* MeasurementsDetailsTVCell.swift in Sources */,
 				BB5A266E2B2E1E330005C9B8 /* HelpTVCell.swift in Sources */,

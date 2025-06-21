@@ -70,7 +70,10 @@ struct OnboardingView: View {
     }
     
     func SkipSplash() {
-        Helper.shared.changeRootVC(newroot: LoginVC.self,transitionFrom: .fromRight)
+//        Helper.shared.changeRootVC(newroot: LoginVC.self,transitionFrom: .fromRight)
+
+        let newHome = UIHostingController(rootView: LoginView())
+        Helper.shared.changeRootVC(newroot: newHome, transitionFrom: .fromLeft)
     }
 }
 

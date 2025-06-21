@@ -536,7 +536,8 @@ struct NextSessionSection: View {
                 .padding()
             }
             .frame(maxWidth: .infinity, maxHeight: 200)
-            .background(Color.mainBlue)
+//            .background(Color.mainBlue)
+            .horizontalGradientBackground()
             .cardStyle(cornerRadius: 4,shadowOpacity: 0.4)
             .padding(.bottom,5)
             

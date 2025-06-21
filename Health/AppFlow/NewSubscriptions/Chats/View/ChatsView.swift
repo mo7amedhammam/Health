@@ -15,7 +15,7 @@ struct WaveBarView: View {
     var body: some View {
         RoundedRectangle(cornerRadius: 2)
             .fill(Color.white)
-            .frame(width: 4, height: max(height, 2))
+            .frame(width: 2, height: max(height, 2))
     }
 }
 
@@ -50,9 +50,9 @@ struct WaveformView: View {
             }
         }
         .frame(height: 35)
-        .onAppear {
-            if isAnimating { viewModel.start() }
-        }
+//        .onAppear {
+//            if isAnimating { viewModel.start() }
+//        }
         .onChange(of: isAnimating) { newValue in
             newValue ? viewModel.start() : viewModel.stop()
         }
@@ -65,8 +65,8 @@ struct MessageBubbleView: View {
     let message: ChatsMessageM
     
     var body: some View {
-        let _ = print("🔍 message.comment = \(message.comment ?? "nil")")
-        let _ = print("✅ Final voicePath URL: \(Constants.baseURL + (message.voicePath ?? "").validateSlashs())")
+//        let _ = print("🔍 message.comment = \(message.comment ?? "nil")")
+//        let _ = print("✅ Final voicePath URL: \(Constants.baseURL + (message.voicePath ?? "").validateSlashs())")
         HStack {
             if message.isFromCustomer {
                 Spacer()
@@ -118,6 +118,60 @@ struct MessageBubbleView: View {
 }
 
 
+//struct VoiceMessagePlayerView: View {
+//    let voiceURL: URL
+//    let isFromCustomer: Bool
+//
+//    @StateObject private var player = VoicePlayerManager()
+//
+//    var body: some View {
+//        VStack(spacing: 8) {
+//            HStack(spacing: 12) {
+//                // 🔘 Play/Pause button
+//                Button(action: {
+//                    if player.isPlaying {
+//                        player.pause()
+//                    } else {
+//                        player.play(from: voiceURL)
+//                    }
+//                }) {
+//                    Image(systemName: player.isPlaying ? "pause.fill" : "play.fill")
+//                        .foregroundColor(.white)
+//                        .frame(width: 36, height: 36)
+//                        .background(Circle().fill(Color.mainBlue))
+//                }
+//
+//                // 📈 Simulated waveform (replace with real one later)
+//                ZStack(alignment: .leading) {
+//                    Capsule()
+//                        .fill(Color.white.opacity(0.3))
+//                        .frame(height: 4)
+//                    Capsule()
+//                        .fill(.white)
+//                        .frame(width: CGFloat(player.progress) * 180, height: 4)
+//                }
+//                .animation(.easeInOut(duration: 0.2), value: player.progress)
+//
+//                // 🕐 Time
+//                Text(player.formatTime(player.isPlaying ? player.currentTime : player.totalDuration))
+//                    .font(.caption)
+//                    .foregroundColor(.white)
+//            }
+//
+//            // 🎚 Slider (optional for precise seeking)
+//            Slider(value: Binding(get: {
+//                player.progress
+//            }, set: { newValue in
+//                let newTime = newValue * player.totalDuration
+//                player.seek(to: newTime)
+//            }))
+//            .accentColor(.white)
+//        }
+//        .padding()
+//        .background(isFromCustomer ? Color.mainBlue : Color(.messageSenderBg))
+//        .cornerRadius(16)
+//    }
+//}
 struct VoiceMessagePlayerView: View {
     let voiceURL: URL
     let isFromCustomer: Bool
@@ -149,16 +203,22 @@ struct VoiceMessagePlayerView: View {
                     }
                 }
 
-                Text(player.isPlaying ? "Playing...".localized : "Voice_message".localized)
-                    .font(.regular(size: 14))
-                    .foregroundColor(.white)
+//                Text(player.isPlaying ? "Playing...".localized : "Voice_message".localized)
+//                    .font(.regular(size: 14))
+//                    .foregroundColor(.white)
             }
 
-            if player.isPlaying {
-                WaveformView(isAnimating: true)
+//            if player.isPlaying {
+                WaveformView(isAnimating: player.isPlaying)
 //                     .frame(height: 40)
                      .padding(.vertical, 4)
-            }
+//            }
+            
+//            // 🕐 Time
+//            Text(player.formatTime(player.isPlaying ? player.currentTime : player.totalDuration))
+//                .font(.caption)
+//                .foregroundColor(.white)
+            
         }
         .padding(12)
         .frame(height: 50)
@@ -237,7 +297,6 @@ struct ChatsView: View {
                     Image(.backLeft)
                         .resizable()
                         .flipsForRightToLeftLayoutDirection(true)
-                    
                 }
                 .frame(width: 31,height: 31)
                 

@@ -28,7 +28,10 @@ class StartScreenVC: UIViewController {
                 if Helper.shared.CheckIfLoggedIn() {
                     Helper.shared.changeRootVC(newroot: HTBC.self,transitionFrom: .fromLeft)
                 } else {
-                    Helper.shared.changeRootVC(newroot: LoginVC.self,transitionFrom: .fromLeft)
+//                    Helper.shared.changeRootVC(newroot: LoginVC.self,transitionFrom: .fromLeft)
+                    let newHome = UIHostingController(rootView: LoginView())
+                    Helper.shared.changeRootVC(newroot: newHome, transitionFrom: .fromLeft)
+
                 }
             }
         })

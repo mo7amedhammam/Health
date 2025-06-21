@@ -138,3 +138,9 @@ case GetMessage                          = "CustomerPackageMessage/GetMessage"
 enum AppointmentEndPoints : String{
    case CustomerSessionCalender = "CustomerPackageSession/CustomerSessionCalender"
 }
+
+
+enum LookupsEndPoints : String{
+   case GetAppCountryForList = "AppCountry/GetAppCountryForList"
+    case GetAllGenders = "Lookups/GetAllGenders"
+}

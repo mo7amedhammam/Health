@@ -34,12 +34,14 @@ struct NewTabView: View {
                     })
                     .ignoresSafeArea()
                 case 1:
-                    UIKitViewControllerWrapper(makeViewController: {
-                    let VC: UIViewController = initiateViewController(storyboardName: .main, viewControllerIdentifier: MedicationScheduleVC.self)!
-                    return VC
-                })
-                .ignoresSafeArea()
+//                    UIKitViewControllerWrapper(makeViewController: {
+//                    let VC: UIViewController = initiateViewController(storyboardName: .main, viewControllerIdentifier: MedicationScheduleVC.self)!
+//                    return VC
+//                    SupcripedP
+//                })
+//                .ignoresSafeArea()
                     
+                    SubcripedPackagesView(hasbackBtn: false,onBack: {})
                 case 2:
                     NewHomeView()
 //                    UIKitViewControllerWrapper(makeViewController: {

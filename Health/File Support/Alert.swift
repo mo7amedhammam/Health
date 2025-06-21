@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SwiftUI
 
 //@available(iOS 13.0, *)
 class SimpleAlert : NSObject {
@@ -27,7 +28,10 @@ class SimpleAlert : NSObject {
               let okAction = UIAlertAction(title: "موافق", style: .default){ _ in
                   completion?()
                   if title == NetworkError.expiredTokenMsg.errorDescription ||  message == NetworkError.expiredTokenMsg.errorDescription {
-                      Helper.shared.changeRootVC(newroot: LoginVC.self,transitionFrom: .fromLeft)
+//                      Helper.shared.changeRootVC(newroot: LoginVC.self,transitionFrom: .fromLeft)
+                      let newHome = UIHostingController(rootView: LoginView())
+                      Helper.shared.changeRootVC(newroot: newHome, transitionFrom: .fromLeft)
+
                   }
               }
               okAction.setValue(UIColor.blue, forKey: "titleTextColor") // Set the text color of the action
@@ -85,7 +89,10 @@ class NewSimpleAlert {
         let okAction = UIAlertAction(title:AppKeys.OkAlert.localized, style: .default) { _ in
             completion?()
             if title == NetworkError.expiredTokenMsg.errorDescription || message == NetworkError.expiredTokenMsg.errorDescription {
-                Helper.shared.changeRootVC(newroot: LoginVC.self, transitionFrom: .fromLeft)
+//                Helper.shared.changeRootVC(newroot: LoginVC.self, transitionFrom: .fromLeft)
+                let newHome = UIHostingController(rootView: LoginView())
+                Helper.shared.changeRootVC(newroot: newHome, transitionFrom: .fromLeft)
+
             }
         }
         okAction.setValue(UIColor.systemBlue, forKey: "titleTextColor") // Adapts to dark/light mode

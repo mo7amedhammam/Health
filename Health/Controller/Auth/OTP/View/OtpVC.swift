@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SwiftUI
 
 enum otpCases {
 case CreateAccount , forgetPassword
@@ -379,7 +380,10 @@ extension OtpVC{
             viewDone.action = {
                 viewDone.removeFromSuperview()
                 self.navigationController?.popViewController(animated: true)
-                Helper.shared.changeRootVC(newroot: LoginVC.self,transitionFrom: .fromLeft)
+//                Helper.shared.changeRootVC(newroot: LoginVC.self,transitionFrom: .fromLeft)
+                let newHome = UIHostingController(rootView: LoginView())
+                Helper.shared.changeRootVC(newroot: newHome, transitionFrom: .fromLeft)
+
             }
         }
     }
