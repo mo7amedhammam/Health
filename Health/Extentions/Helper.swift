@@ -21,6 +21,7 @@ class Helper: NSObject {
     let UserDataKey = "UserDataKey"
     let Languagekey = "languagekey"
     let LanguageSelectedKey = "LanguageSelectedKey"
+    let AppCountryIdKey = "AppCountryIdKey"
 
 //     "id": 0,
 //     "phoneNumber": "string",
@@ -379,6 +380,9 @@ extension Helper{
                 IsLoggedIn(value: true)
                 userDef.synchronize()
             }
+//             if let appCountryId = user.appCountryId{
+                 AppCountryId(Id: user.appCountryId)
+//             }
         }
 
          func getUser() -> LoginM? {
@@ -429,6 +433,13 @@ extension Helper{
          func CheckIfLoggedIn() -> Bool {
             return UserDefaults.standard.bool(forKey: LoggedInKey)
         }
+    
+    func AppCountryId(Id:Int?) {
+       UserDefaults.standard.set(Id, forKey: AppCountryIdKey)
+   }
+    func AppCountryId() -> Int? {
+       return UserDefaults.standard.integer(forKey: AppCountryIdKey)
+   }
 
         
         // Checking internet connection

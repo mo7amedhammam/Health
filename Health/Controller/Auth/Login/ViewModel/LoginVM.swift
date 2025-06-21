@@ -202,6 +202,7 @@ import Foundation
 import FirebaseMessaging
 
 protocol LoginViewModelProtocol {
+    var appCountryId: Int? { get set }
     var mobile: String? { get set }
     var password: String? { get set }
     var usermodel: LoginM? { get }
@@ -211,6 +212,7 @@ protocol LoginViewModelProtocol {
 }
 
 final class LoginViewModel: LoginViewModelProtocol, ObservableObject {
+    var appCountryId: Int?
     var mobile: String?
     var password: String?
     var usermodel: LoginM?

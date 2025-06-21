@@ -15,7 +15,7 @@ class ProfileTVCellLogout: UITableViewCell {
         super.awakeFromNib()
         // Initialization code
         LaTitle.font = UIFont(name: fontsenum.bold.rawValue, size: 14)
-
+        LaTitle.text = Helper.shared.CheckIfLoggedIn() ? "تسجيل الخروج".localized : "تسجيل الدخول".localized
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

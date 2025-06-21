@@ -31,10 +31,11 @@ struct PackageData: Codable,Equatable {
     var packageName, mainCategoryName, categoryName: String?
     var sessionCount, duration, priceBeforeDiscount, discount: Int?
     var priceAfterDiscount: Int?
-
+    var appCountryPackageId: Int?
     enum CodingKeys: String, CodingKey {
         case packageID = "packageId"
         case packageName, mainCategoryName, categoryName, sessionCount, duration, priceBeforeDiscount, discount, priceAfterDiscount
+        case appCountryPackageId
     }
 }
 

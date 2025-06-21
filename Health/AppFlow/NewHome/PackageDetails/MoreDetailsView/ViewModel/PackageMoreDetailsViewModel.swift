@@ -73,13 +73,13 @@ extension PackageMoreDetailsViewModel{
     func getAvailableDays() async {
         isLoading = true
         defer { isLoading = false }
-        guard let doctorId = packageDetails?.doctorData?.doctorID  else {
+        guard let doctorId = packageDetails?.doctorData?.doctorID,let appCountryId = packageDetails?.packageData?.appCountryPackageId  else {
 //            // Handle missings
 //            self.errorMessage = "check inputs"
 //            //            throw NetworkError.unknown(code: 0, error: "check inputs")
             return
         }
-        let parametersarr : [String : Any] =  ["Date":"\(newDate.formatted(.customDateFormat("YYYY-MM-dd")))","DoctorId":doctorId]
+        let parametersarr : [String : Any] =  ["date":"\(newDate.formatted(.customDateFormat("YYYY-MM-dd")))","doctorId":doctorId,"appCountryId":appCountryId]
 
         let target = HomeServices.GetDoctorAvailableDayList(parameters: parametersarr)
         do {
@@ -98,13 +98,13 @@ extension PackageMoreDetailsViewModel{
     func getAvailableShifts() async {
         isLoading = true
         defer { isLoading = false }
-//        guard let doctorId = packageDetails?.doctorData?.doctorID  else {
+        guard let AppCountryId = packageDetails?.packageData?.appCountryPackageId  else {
 ////            // Handle missings
 ////            self.errorMessage = "check inputs"
 ////            //            throw NetworkError.unknown(code: 0, error: "check inputs")
-//            return
-//        }
-//        let parametersarr : [String : Any] =  ["Date":"\(selectedDate.formatted(.customDateFormat("YYYY-MM-dd")))","DoctorId":doctorId]
+            return
+        }
+        let parametersarr : [String : Any] =  ["AppCountryId":AppCountryId]
 
         let target = HomeServices.GetTimeShiftScheduleList
         do {
@@ -123,13 +123,13 @@ extension PackageMoreDetailsViewModel{
     func getAvailableScheduals() async {
         isLoading = true
         defer { isLoading = false }
-        guard let packageId = packageDetails?.packageData?.packageID  ,let doctorId = packageDetails?.doctorData?.doctorID,let shiftId = selectedShift?.id else {
+        guard let appCountryId = packageDetails?.packageData?.appCountryPackageId ,let packageId = packageDetails?.packageData?.packageID  ,let doctorId = packageDetails?.doctorData?.doctorID,let shiftId = selectedShift?.id else {
 //            // Handle missings
 //            self.errorMessage = "check inputs"
 //            //            throw NetworkError.unknown(code: 0, error: "check inputs")
             return
         }
-        let parametersarr : [String : Any] =  ["Date":"\(newDate.formatted(.customDateFormat("YYYY-MM-dd")))","packageId":packageId,"DoctorId":doctorId,"shiftId":shiftId]
+        let parametersarr : [String : Any] =  ["AppCountryId":appCountryId,"date":"\(newDate.formatted(.customDateFormat("YYYY-MM-dd")))","packageId":packageId,"doctorId":doctorId,"shiftId":shiftId]
 
         let target = HomeServices.GetAvailableDoctorSchedule(parameters: parametersarr)
         do {
@@ -170,12 +170,12 @@ print(parametersarr)
     }
     
     func prepareParamters()->[String : Any]? {
-        guard let packageId = packageDetails?.packageData?.packageID  ,let doctorId = packageDetails?.doctorData?.doctorID,let shiftId = selectedShift?.id,let doctorPackageId = doctorPackageId ,let totalAfterDiscount = packageDetails?.packageData?.priceAfterDiscount , let timeFrom = selectedSchedual?.timefrom ,let timeTo = selectedSchedual?.timeTo,let date = selectedDay?.date?.ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "YYYY-MM-dd") else {
+        guard let appCountryPackageId = packageDetails?.packageData?.appCountryPackageId ,let packageId = packageDetails?.packageData?.packageID ,let doctorId = packageDetails?.doctorData?.doctorID,let shiftId = selectedShift?.id,let doctorPackageId = doctorPackageId ,let totalAfterDiscount = packageDetails?.packageData?.priceAfterDiscount , let timeFrom = selectedSchedual?.timefrom ,let timeTo = selectedSchedual?.timeTo,let date = selectedDay?.date?.ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "YYYY-MM-dd") else {
 //            // Handle missings
 //            self.errorMessage = "check inputs"
 //            //            throw NetworkError.unknown(code: 0, error: "check inputs")
             return nil
         }
-        return ["date":date,"packageId":packageId,"doctorId":doctorId,"doctorPackageId":doctorPackageId,"shiftId":shiftId,"totalAfterDiscount":totalAfterDiscount,"timeFrom":timeFrom,"timeTo":timeTo]
+        return ["date":date,"packageId":packageId,"doctorId":doctorId,"doctorPackageId":doctorPackageId,"shiftId":shiftId,"totalAfterDiscount":totalAfterDiscount,"timeFrom":timeFrom,"timeTo":timeTo,"appCountryPackageId":appCountryPackageId]
     }
 }

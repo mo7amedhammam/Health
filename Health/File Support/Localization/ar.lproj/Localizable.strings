@@ -49,6 +49,8 @@
 "signup_name_placeholder" = "ادخل اسمك بالكامل";
 "signup_mobile_title" = "رقم الموبايل";
 "signup_mobile_placeholder" = "ادخل رقم الموبايل الخاص بك";
+"signup_gender_title" = "الجنس";
+"signup_gender_placeholder" = "اختر الجنس";
 "signup_password_title" = "كلمة المرور";
 "signup_password_placeholder" = "ضع كلمة المرور الخاصة بك";
 "signup_confirmpassword_title" = "تأكيد كلمة المرور";

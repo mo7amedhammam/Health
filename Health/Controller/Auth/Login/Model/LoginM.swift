@@ -14,19 +14,20 @@ struct LoginM: Codable {
     var code, pharmacistName: String?
     var pharmacistID: Int?
     var genderTitle, createdby, name, mobile: String?
-    var genderID, districtID: Int?
+    var genderID, countryId, districtID, regionId: Int?
     var address, pharmacyCode: String?
-
+    var homeCountryId,appCountryId : Int?
     enum CodingKeys: String, CodingKey {
         case token, id, code, pharmacistName
         case pharmacistID = "pharmacistId"
         case genderTitle, createdby, name, mobile
         case genderID = "genderId"
-        case districtID = "districtId"
+        case countryId
+        case districtID = "districtId",regionId
         case address, pharmacyCode
+        case homeCountryId,appCountryId
     }
 }
-
 
 
 struct MFirebase: Codable {

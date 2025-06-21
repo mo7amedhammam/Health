@@ -140,15 +140,21 @@ class ProfileVC: UIViewController {
     }
     
     private func showLogoutConfirmation() {
-        let actionSheet = UIAlertController(
-            title: "هل أنت متأكد بأنك تريد تسجيل الخروج؟".localized,
-            message: "",
-            preferredStyle: .alert
-        )
-        
-        let logoutAction = UIAlertAction(title: "تسجيل الخروج".localized, style: .default) { _ in
-            Helper.shared.logout()
-            Helper.shared.changeRootVC(newroot: StartScreenVC.self, transitionFrom: .fromLeft)
+        if Helper.shared.CheckIfLoggedIn(){
+            
+            let actionSheet = UIAlertController(
+                title: "هل أنت متأكد بأنك تريد تسجيل الخروج؟".localized,
+                message: "",
+                preferredStyle: .alert
+            )
+            
+            let logoutAction = UIAlertAction(title: Helper.shared.CheckIfLoggedIn() ? "تسجيل الخروج".localized : "تسجيل الدخول".localized, style: .default) { _ in
+                Helper.shared.logout()
+                //            Helper.shared.changeRootVC(newroot: StartScreenVC.self, transitionFrom: .fromLeft)
+                let newhome = UIHostingController(rootView: AnyView(NewTabView()))
+                Helper.shared.changeRootVC(newroot:newhome , transitionFrom: .fromLeft)
+                
+                
         }
         
         let cancelAction = UIAlertAction(title: "إلغاء".localized, style: .destructive)
@@ -166,6 +172,13 @@ class ProfileVC: UIViewController {
         }
         
         present(actionSheet, animated: true)
+            
+        }else{
+            //            Helper.shared.changeRootVC(newroot: StartScreenVC.self, transitionFrom: .fromLeft)
+            let newhome = UIHostingController(rootView: AnyView(LoginView()))
+            Helper.shared.changeRootVC(newroot:newhome , transitionFrom: .fromLeft)
+        }
+
     }
     
     private func pushTo(_ destination: UIViewController.Type) {

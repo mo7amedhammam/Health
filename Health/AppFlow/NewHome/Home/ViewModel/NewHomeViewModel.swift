@@ -35,9 +35,9 @@ class NewHomeViewModel:ObservableObject {
     // Init with DI
     init(networkService: AsyncAwaitNetworkServiceProtocol = AsyncAwaitNetworkService.shared) {
         self.networkService = networkService
-        Task {
-            await refresh()
-        }
+//        Task {
+//            await refresh()
+//        }
     }
     
     // Add task tracking
@@ -133,13 +133,13 @@ extension NewHomeViewModel{
     func getFeaturedPackages() async {
 //        isLoading = true
 //        defer { isLoading = false }
-        guard let maxResultCount = maxResultCount, let FeaturedPackagesSkipCount = FeaturedPackagesSkipCount else {
+        guard let maxResultCount = maxResultCount, let FeaturedPackagesSkipCount = FeaturedPackagesSkipCount,let appCountryId = Helper.shared.AppCountryId() else {
             // Handle missings
             self.errorMessage = "check inputs"
             //            throw NetworkError.unknown(code: 0, error: "check inputs")
             return
         }
-        let parametersarr : [String : Any] =  ["maxResultCount" : maxResultCount ,"skipCount" : FeaturedPackagesSkipCount]
+        let parametersarr : [String : Any] =  ["maxResultCount" : maxResultCount ,"skipCount" : FeaturedPackagesSkipCount,"appCountryId":appCountryId]
 
         let target = HomeServices.FeaturedPackageList(parameters: parametersarr)
         do {
@@ -162,13 +162,13 @@ extension NewHomeViewModel{
     func getMostBookedOrViewedPackages(forcase:MostCases) async {
 //        isLoading = true
 //        defer { isLoading = false }
-        guard let maxResultCount = maxResultCount else {
+        guard let maxResultCount = maxResultCount,let appCountryId = Helper.shared.AppCountryId() else {
             // Handle missings
             self.errorMessage = "check inputs"
             //            throw NetworkError.unknown(code: 0, error: "check inputs")
             return
         }
-        let parametersarr : [String : Any] =  ["top" : maxResultCount ]
+        let parametersarr : [String : Any] =  ["top" : maxResultCount,"AppCountryId":appCountryId ]
         var target = HomeServices.MostBookedPackage(parameters: parametersarr)
         
         switch forcase {
@@ -219,7 +219,9 @@ extension NewHomeViewModel {
                   // Use task groups for structured concurrency
                   await withTaskGroup(of: Void.self) { group in
                       // Add all requests as child tasks
-                      group.addTask { await self.getUpcomingSession() }
+                      if Helper.shared.CheckIfLoggedIn(){
+                          group.addTask { await self.getUpcomingSession() }
+                      }
                       group.addTask { await self.getHomeCategories() }
                       group.addTask { await self.getMyMeasurements() }
                       group.addTask { await self.getFeaturedPackages() }

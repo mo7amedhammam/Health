@@ -131,8 +131,8 @@ struct PackageDetailsView: View {
             }
             .edgesIgnoringSafeArea([.top,.horizontal])
             .task {
-                guard let packageId  = package.id else {return}
-                await viewmodel.getAvailableDoctors(PackageId: packageId)
+                guard let appCountryPackageId  = package.appCountryPackageId else {return}
+                await viewmodel.getAvailableDoctors(appCountryPackageId: appCountryPackageId)
             }
             .reversLocalizeView()
             .showHud(isShowing:  $viewmodel.isLoading)

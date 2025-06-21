@@ -104,6 +104,7 @@ extension HomeServices : TargetType1 {
                 .GetSubCategoryByParentId,
                 .GetPackageByCategoryId,
                 .GetAvailableShiftDoctors,
+                .GetDoctorAvailableDayList,
                 .GetAvailableDoctorSchedule,
                 .GetBookingSession,
                 .CreateCustomerPackage,
@@ -120,7 +121,6 @@ extension HomeServices : TargetType1 {
                 .AddOrRemoveToWishList,
                 .GetWishList,
                 .GetDoctorPackageById,
-                .GetDoctorAvailableDayList,
                 .GetTimeShiftScheduleList
             :
             return .get

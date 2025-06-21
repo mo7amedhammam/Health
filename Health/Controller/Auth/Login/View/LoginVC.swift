@@ -9,7 +9,7 @@ import UIKit
 import SwiftUI
 
 //final class LoginVC: UIViewController {
-//    
+//
 //    @IBOutlet weak var HeaderView: CustomHeader!
 //    @IBOutlet weak var TFMobile: CustomInputField!
 //    @IBOutlet weak var TFPassword: CustomInputField!
@@ -19,7 +19,7 @@ import SwiftUI
 //
 //    @IBOutlet weak var STDontHaveAccount: UIStackView!
 //    @IBOutlet weak var LaDontHaveAccount: UILabel!
-//   
+//
 //    @IBOutlet weak var BtnCreateAccount: UIButton!
 //    private var isMobileValid = false
 //    private var isPasswordValid = false
@@ -33,12 +33,12 @@ import SwiftUI
 //        self.viewModel = viewModel
 //        super.init(nibName: nil, bundle: nil)
 //    }
-//    
+//
 //    required init?(coder: NSCoder) {
 //        self.viewModel = LoginViewModel()
 //        super.init(coder: coder)
 //    }
-//        
+//
 //    override func viewDidLoad() {
 //        super.viewDidLoad()
 //        refreshLocalization()
@@ -47,18 +47,18 @@ import SwiftUI
 //        setupValidation()
 //        refreshLocalization()
 //    }
-//    
+//
 ////    override func viewWillAppear(_ animated: Bool) {
 ////        super.viewWillAppear(animated)
 //////        refreshLocalization()
 ////    }
-//    
+//
 ////    override func viewWillLayoutSubviews() {
 ////        super.viewWillLayoutSubviews()
 ////        refreshLocalization()
 ////        setupUI()
 ////    }
-//    
+//
 //    private func setupUI() {
 //        BtnForgetPassword.underlineCurrentTitle()
 //        BtnLogin.isEnabled(false)
@@ -70,10 +70,10 @@ import SwiftUI
 //        DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {[self] in
 //            HeaderView.titleKey = "login_title"
 //            HeaderView.subtitleKey = "login_subtitle"
-//          
+//
 //            TFMobile.titleKey = "login_mobile_title"
 //            TFMobile.placeholderKey = "login_mobile_placeholder"
-//          
+//
 //            TFPassword.titleKey = "login_password_title"
 //            TFPassword.placeholderKey = "login_password_placeholder"
 //
@@ -90,7 +90,7 @@ import SwiftUI
 ////        super.viewDidLayoutSubviews()
 ////        refreshLocalization()
 ////    }
-//    
+//
 //    private func setupValidation() {
 //         // Mobile Validation
 //         TFMobile.validationRule = {  text in
@@ -102,23 +102,23 @@ import SwiftUI
 //            self?.isMobileValid = isValid
 //            self?.updateLoginButtonState()
 //        }
-//          
+//
 //        // Example of advanced password validation
 //        TFPassword.validationRule = {text in
 //            guard let text = text else { return false }
 //            // At least 6 characters, with 1 uppercase, 1 digit
 ////            let passwordTest = NSPredicate(format: "SELF MATCHES %@", "^(?=.*[A-Z])(?=.*\\d).{6,}$")
 ////            return passwordTest.evaluate(with: text)
-//            
+//
 //            let isValid = text.count >= 6
 //            return isValid
 //        }
-//          
+//
 //          TFPassword.onValidationChanged = { [weak self] isValid in
 //              self?.isPasswordValid = isValid
 //              self?.updateLoginButtonState()
 //          }
-//          
+//
 //          // Trigger initial validation
 ////          TFMobile.validateField()
 ////          TFPassword.validateField()
@@ -130,14 +130,14 @@ import SwiftUI
 //         }
 ////         TFMobile.validateField()
 //     }
-//    
+//
 //    private func updateLoginButtonState() {
 //            BtnLogin.isEnabled(isMobileValid && isPasswordValid)
-//            
+//
 //            // Optional: Change button appearance based on state
 ////            BtnLogin.alpha = (isMobileValid && isPasswordValid) ? 1.0 : 0.6
 //        }
-//    
+//
 //        @IBAction func BUForgetPassword(_ sender: Any) {
 //            if TFMobile.textField.text != ""{
 //                SendOtp()
@@ -162,15 +162,15 @@ import SwiftUI
 //            guard let vc = initiateViewController(storyboardName: .main, viewControllerIdentifier: SignUp.self) else{return}
 //            navigationController?.pushViewController(vc, animated: true)
 //        }
-//    
+//
 //    private func login() {
 //        viewModel.mobile = TFMobile.textField.text
 //        viewModel.password = TFPassword.textField.text
-//        
+//
 //        DispatchQueue.main.async {
 //            ActivityIndicatorView.shared.startLoading(in: self.view)
 //        }
-//        
+//
 ////            Task {
 ////                do{
 ////                    Hud.showHud(in: self.view)
@@ -180,7 +180,7 @@ import SwiftUI
 ////    //                TVScreen.reloadData()
 ////                    Helper.shared.saveUser(user: self.viewModel.usermodel ?? LoginM())
 ////                    Helper.shared.changeRootVC(newroot: HTBC.self, transitionFrom: .fromLeft)
-////                    
+////
 ////                }catch {
 ////                    // Handle any errors that occur during the async operations
 ////                    print("Error: \(error)")
@@ -188,11 +188,11 @@ import SwiftUI
 ////                    SimpleAlert.shared.showAlert(title:error.localizedDescription,message:"", viewController: self)
 ////                }
 ////            }
-//        
-//        
+//
+//
 //        viewModel.login { [weak self] result in
 //            guard let self = self else { return }
-//   
+//
 //            switch result {
 //            case .success:
 //                DispatchQueue.main.async {
@@ -201,7 +201,7 @@ import SwiftUI
 //
 //                    Helper.shared.saveUser(user: self.viewModel.usermodel ?? LoginM())
 ////                    Helper.shared.changeRootVC(newroot: HTBC.self, transitionFrom: .fromLeft)
-//                    
+//
 //                    let newHome = UIHostingController(rootView: NewTabView())
 ////                    let nav = UINavigationController(rootViewController: vc)
 //
@@ -217,10 +217,10 @@ import SwiftUI
 //           }
 //        }
 //    }
-//    
+//
 //        func SendOtp() {
 //            otpViewModel.mobile = TFMobile.textField.text
-//    
+//
 //            otpViewModel.SendOtp{[weak self] state in
 //                guard let self = self else{return}
 //                guard let state = state else{
@@ -262,8 +262,8 @@ import SwiftUI
 
 struct LoginView: View {
     @State private var selectedCountry:AppCountryM = .init(id: 1, name: "Egypt", flag: "🇪🇬")
-    @State private var phoneNumber: String = "0"
-    @State private var password: String = "12312"
+    @State private var phoneNumber: String = ""
+    @State private var password: String = ""
     @State private var isPhoneValid: Bool = true
     @State private var isPasswordValid: Bool = true
     
@@ -272,20 +272,27 @@ struct LoginView: View {
         AppCountryM(id: 2, name: "Saudi Arabia", flag: "🇸🇦"),
         AppCountryM(id: 3, name: "Phalastine", flag: "🇦🇪")
     ]
-      @State private var isLoading = false
-      @State private var errorMessage: String?
-
+    @State private var isLoading:Bool? = false
+    @State private var errorMessage: String?
+    
     @StateObject private var loginViewModel: LoginViewModel
-     @StateObject private var otpViewModel: OtpVM
-
-     init() {
-         _loginViewModel = StateObject(wrappedValue: LoginViewModel())
-         _otpViewModel = StateObject(wrappedValue: OtpVM())
-     }
-
+    @StateObject private var otpViewModel: OtpVM
+    
+    @State var destination = AnyView(EmptyView())
+    @State var isactive: Bool = false
+    func pushTo(destination: any View) {
+        self.destination = AnyView(destination)
+        self.isactive = true
+    }
+    
+    init() {
+        _loginViewModel = StateObject(wrappedValue: LoginViewModel())
+        _otpViewModel = StateObject(wrappedValue: OtpVM())
+    }
+    
     var body: some View {
         VStack(spacing: 20) {
-
+            
             Image("logo")
                 .resizable()
                 .aspectRatio(contentMode: .fit)
@@ -293,15 +300,15 @@ struct LoginView: View {
                 .padding(.bottom,20)
                 .padding(.top,40)
             
-            CustomHeaderUI(title: "login_title", subtitle: "login_subtitle")
-
+            CustomHeaderUI(title: "login_title".localized, subtitle: "login_subtitle".localized)
+            
             VStack(spacing: 30){
                 
                 CustomInputFieldUI(
                     title: "login_mobile_title",
                     placeholder: "login_mobile_placeholder",
                     text: $phoneNumber,
-                    isValid: !phoneNumber.isEmpty,
+                    isValid: isPhoneValid,
                     trailingView: AnyView(
                         Menu {
                             ForEach(countries,id: \.self) { country in
@@ -311,7 +318,7 @@ struct LoginView: View {
                             HStack(spacing: 4) {
                                 Image(systemName: "chevron.down")
                                     .foregroundColor(.gray)
-
+                                
                                 Text(selectedCountry.flag ?? "")
                                     .foregroundColor(.mainBlue)
                                     .font(.medium(size: 22))
@@ -328,7 +335,7 @@ struct LoginView: View {
                         text: $password,
                         isSecure: true,
                         showToggle: true,
-                        isValid: password.count >= 6
+                        isValid:  isPasswordValid
                     )
                     
                     Button("login_forget_Password".localized) {
@@ -341,7 +348,7 @@ struct LoginView: View {
                 }
             }
             .padding(.top)
-
+            
             Spacer()
             Image(.touchidicon)
                 .resizable()
@@ -349,99 +356,159 @@ struct LoginView: View {
                 .foregroundColor(.pink)
                 .padding(.top, 8)
             Spacer()
-
-            CustomButtonUI(title: "login_signin_btn",isValid: true){
+            
+            CustomButtonUI(title: "login_signin_btn",isValid: isFormValid){
                 login()
             }
-
+            
             HStack {
                 Text("login_not_signin".localized)
                     .font(.medium(size: 18))
                     .foregroundColor(Color(.main))
-
+                
                 Button("login_signup_btn".localized) {
                     // Navigate to register
+                    signup()
                 }
                 .font(.medium(size: 18))
                 .foregroundColor(Color(.secondary))
             }
             .padding(.top, 4)
-
+            
             Spacer()
         }
         .padding(.horizontal)
         .environment(\.layoutDirection, .rightToLeft)
+        
         .onChange(of: phoneNumber) { newValue in
-                    isPhoneValid = newValue.count == 11 && newValue.starts(with: "01")
-                }
-                .onChange(of: password) { newValue in
-                    isPasswordValid = newValue.count >= 6
-                }
-                .alert(item: $errorMessage) { msg in
-                    Alert(title: Text("خطأ"), message: Text(msg), dismissButton: .default(Text("OK")))
-                }
+            // Remove non-digit characters (if needed)
+            let filtered = newValue.filter { $0.isNumber }
+            
+            // Limit to 11 digits
+            if filtered.count > 11 {
+                phoneNumber = String(filtered.prefix(11))
+            } else if filtered != newValue {
+                phoneNumber = filtered
+            }
+            
+            // Validate
+            isPhoneValid = newValue.count == 0 || (phoneNumber.count == 11 && phoneNumber.starts(with: "01"))
+        }
+        .onChange(of: password) { newValue in
+            isPasswordValid = newValue.count == 0 || newValue.count >= 6
+        }
+                .showHud(isShowing:  $isLoading)
+        .alert(item: $errorMessage) { msg in
+            Alert(title: Text("_خطأ".localized), message: Text(msg.localized), dismissButton: .default(Text("OK_".localized)))
+        }
+
+        NavigationLink( "", destination: destination, isActive: $isactive)
+
     }
     
     private var isFormValid: Bool {
-           isPhoneValid && isPasswordValid
-       }
-
-       private func sendOtp() {
-           guard !phoneNumber.isEmpty else {
-               errorMessage = "اكتب رقم موبايل الأول"
-               return
-           }
-
-           otpViewModel.mobile = phoneNumber
-//           otpViewModel.SendOtp { state in
-//               switch state {
-//               case .loading:
-//                   isLoading = true
-//               case .stopLoading:
-//                   isLoading = false
-//               case .success:
-//                   isLoading = false
-//                   // Navigate to OTP screen if needed
-//                   print("OTP Sent")
-//               case .error(_, let error):
-//                   isLoading = false
-//                   errorMessage = error
-//               case .none:
-//                   break
-//               case .some(.none):
-//                   break
-//
-//               }
-//           }
-       }
-
-       private func login() {
-           guard isFormValid else { return }
-
-           loginViewModel.mobile = phoneNumber
-           loginViewModel.password = password
-           isLoading = true
-
-           loginViewModel.login { result in
-               isLoading = false
-               switch result {
-               case .success:
-                   Helper.shared.saveUser(user: loginViewModel.usermodel ?? LoginM())
-                   let newHome = UIHostingController(rootView: NewTabView())
-                   Helper.shared.changeRootVC(newroot: newHome, transitionFrom: .fromLeft)
-               case .failure(let error):
-                   errorMessage = error.localizedDescription
-               }
-           }
-       }
-
+        (phoneNumber.count > 0 && isPhoneValid) && (password.count > 0 && isPasswordValid)
+    }
+    
+    private func sendOtp() {
+        guard !phoneNumber.isEmpty else {
+            errorMessage = "_اكتب رقم موبايل الأول"
+            return
+        }
+        
+        otpViewModel.mobile = phoneNumber
+        otpViewModel.SendOtp { state in
+            switch state {
+            case .loading:
+                isLoading = true
+            case .stopLoading:
+                isLoading = false
+            case .success:
+                isLoading = false
+                // Navigate to OTP screen if needed
+                //                   pushTo(destination: OtpVC.self as! (any View))
+                DispatchQueue.main.async {
+                    guard let vc = initiateViewController(storyboardName: .main, viewControllerIdentifier: OtpVC.self) else { return }
+                    vc.Phonenumber = phoneNumber
+                    vc.second = otpViewModel.responseModel?.secondsCount ?? 60
+                    vc.otp = otpViewModel.responseModel?.otp ?? 00
+                    //                                 Shared.shared.remainingSeconds = otpViewModel.responseModel?.secondsCount ?? 60
+                    vc.verivyFor = .forgetPassword
+                    
+                    pushUIKitVC(vc)
+                }
+                
+                //                   print("OTP Sent")
+            case .error(_, let error):
+                isLoading = false
+                errorMessage = error
+            case .none:
+                break
+            case .some(.none):
+                break
+                
+            }
+        }
+    }
+    
+    private func login() {
+        guard isFormValid else { return }
+        //           loginViewModel.appCountryId = 1
+        loginViewModel.mobile = phoneNumber
+        loginViewModel.password = password
+        isLoading = true
+        
+        loginViewModel.login { result in
+            isLoading = false
+            switch result {
+            case .success:
+                Helper.shared.saveUser(user: loginViewModel.usermodel ?? LoginM())
+                DispatchQueue.main.async {
+                    let newHome = UIHostingController(rootView: NewTabView())
+                    Helper.shared.changeRootVC(newroot: newHome, transitionFrom: .fromLeft)
+                }
+            case .failure(let error):
+                errorMessage = error.localizedDescription
+            }
+        }
+    }
+    
+    func signup() {
+        DispatchQueue.main.async {
+//            guard let vc = initiateViewController(storyboardName: .main, viewControllerIdentifier: SignUp.self) else { return }
+//            pushUIKitVC(vc)
+            
+            pushTo(destination: SignUpView())
+        }
+        
+    }
+    
 }
 
-#Preview {
-    LoginView()
+//#Preview {
+//    LoginView()
+//}
+
+func pushUIKitVC(_ vc: UIViewController) {
+    guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+          let root = windowScene.windows.first?.rootViewController else {
+        return
+    }
+    
+    // Get the top most navigation controller
+    var top = root
+    while let presented = top.presentedViewController {
+        top = presented
+    }
+    
+    if let nav = top as? UINavigationController {
+        nav.pushViewController(vc, animated: true)
+    } else {
+        // If the root is not a nav controller, wrap and present
+        let nav = UINavigationController(rootViewController: vc)
+        top.present(nav, animated: true)
+    }
 }
-
-
 
 struct CustomInputFieldUI: View {
     var title: String
@@ -450,49 +517,49 @@ struct CustomInputFieldUI: View {
     var isSecure: Bool = false
     var showToggle: Bool = false
     var isValid: Bool = true
-
+    
     /// Optional trailing view (e.g. icon, icon+arrow)
     var trailingView: AnyView? = nil
-
+    
     @State private var isPasswordVisible = false
-
+    
     var body: some View {
         let borderColor = isValid ? Color.gray.opacity(0.4) : Color(.wrong)
         let textColor = isValid ? Color(.mainBlue) : Color(.wrong)
-
+        
         VStack(spacing: 2) {
             Text(title.localized)
                 .font(.semiBold(size: 20))
                 .foregroundColor(textColor)
                 .frame(maxWidth: .infinity, alignment: .leading)
-
+            
             HStack(spacing: 8) {
                 TextFieldWrapper
                     .frame(height: 32)
                     .textInputAutocapitalization(.never)
-
+                
                 if let view = trailingView {
                     view
                 }
-
+                
                 if showToggle {
                     Button(action: {
                         isPasswordVisible.toggle()
                     }) {
                         Image(systemName: isPasswordVisible ? "eye.slash" : "eye")
-                            .foregroundColor(textColor)
+                            .foregroundColor(isValid ? Color(.secondary):textColor)
                             .frame(width: 20, height: 20)
                     }
                 }
             }
-
+            
             Divider()
                 .frame(height: 1.5)
                 .background(borderColor)
         }
         .padding(.horizontal, 4)
     }
-
+    
     @ViewBuilder
     private var TextFieldWrapper: some View {
         if isSecure && !isPasswordVisible {
@@ -514,12 +581,12 @@ struct CustomHeaderUI: View {
     var subtitle: String?
     var body: some View {
         VStack(spacing: 8){
-            Text(title?.localized ?? "")
+            Text(title ?? "")
                 .font(.bold(size: 36))
                 .foregroundColor(Color(.mainBlue))
                 .frame(maxWidth: .infinity,alignment: .leading)
-
-            Text(subtitle?.localized ?? "")
+            
+            Text(subtitle ?? "")
                 .font(.medium(size: 18))
                 .foregroundColor(Color(.secondary))
                 .frame(maxWidth: .infinity,alignment: .leading)
@@ -549,7 +616,7 @@ struct CustomButtonUI: View {
                     }
                 }
                 .cornerRadius(3)
-
+            
         }
         .disabled(!(isValid ?? true))
     }

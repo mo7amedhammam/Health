@@ -49,6 +49,8 @@
 "signup_name_placeholder" = "Enter Your Full Name";
 "signup_mobile_title" = "Mobile Number";
 "signup_mobile_placeholder" = "Enter Mobile Number";
+"signup_gender_title" = "Gender";
+"signup_gender_placeholder" = "Select Gender";
 "signup_password_title" = "Password";
 "signup_password_placeholder" = "Enter Your Password";
 "signup_confirmpassword_title" = "Confirm Password";

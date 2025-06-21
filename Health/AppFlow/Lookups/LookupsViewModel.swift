@@ -8,7 +8,7 @@
 import Foundation
 
 class LookupsViewModel : ObservableObject {
-    static let shared = AppointmentsViewModel()
+    static let shared = LookupsViewModel()
     // Injected service
     private let networkService: AsyncAwaitNetworkServiceProtocol
     
@@ -44,12 +44,16 @@ extension LookupsViewModel{
         
         let target = LookUpsServices.GetALlCountries
         do {
-//            self.errorMessage = nil // Clear previous errors
+            //            self.errorMessage = nil // Clear previous errors
             let response = try await networkService.request(
                 target,
                 responseType: [AppCountryM].self
             )
-            self.appCountries = response
+            Task{
+                await MainActor.run{
+                    self.appCountries = response
+                }
+            }
         } catch {
 //            self.errorMessage = error.localizedDescription
         }
@@ -74,7 +78,11 @@ extension LookupsViewModel{
                     target,
                     responseType: [GenderM].self
                 )
-                self.genders = response
+                Task{
+                    await MainActor.run{
+                        self.genders = response
+                    }
+                }
             } catch {
     //            self.errorMessage = error.localizedDescription
             }

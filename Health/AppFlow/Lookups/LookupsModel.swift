@@ -14,7 +14,7 @@ struct AppCountryM : Codable , Hashable{
 }
 
 // MARK: - GendersM
-struct GenderM : Codable {
+struct GenderM : Codable,Hashable {
     var id: Int?
     var title : String?
 }

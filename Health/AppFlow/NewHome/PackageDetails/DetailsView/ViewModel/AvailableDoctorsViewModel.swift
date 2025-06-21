@@ -33,7 +33,7 @@ class AvailableDoctorsViewModel:ObservableObject {
 extension AvailableDoctorsViewModel{
     
     @MainActor
-    func getAvailableDoctors(PackageId:Int) async {
+    func getAvailableDoctors(appCountryPackageId:Int) async {
         isLoading = true
         defer { isLoading = false }
         guard let maxResultCount = maxResultCount, let skipCount = skipCount else {
@@ -42,7 +42,7 @@ extension AvailableDoctorsViewModel{
             //            throw NetworkError.unknown(code: 0, error: "check inputs")
             return
         }
-        let parametersarr : [String : Any] =  ["packageId":PackageId,"maxResultCount" : maxResultCount ,"skipCount" : skipCount]
+        let parametersarr : [String : Any] =  ["appCountryPackageId":appCountryPackageId,"maxResultCount" : maxResultCount ,"skipCount" : skipCount]
         
         let target = HomeServices.GetAvailableShiftDoctors(parameters: parametersarr)
         do {

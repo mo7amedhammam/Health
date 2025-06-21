@@ -120,9 +120,9 @@ struct NewHomeView: View {
             .onAppear{
                 selectedPackage = nil
             }
-//            .task {
-//                await viewModel.refresh()
-//            }
+            .task {
+                await viewModel.refresh()
+            }
             .task(id: selectedPackage){
                 guard let selectedPackage = selectedPackage else { return }
                 pushTo(destination: PackageDetailsView(package: selectedPackage))
