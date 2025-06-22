@@ -165,7 +165,7 @@
                                                 <rect key="frame" x="0.0" y="0.0" width="290" height="192"/>
                                                 <color key="backgroundColor" red="0.37055522200000002" green="0.37056469920000001" blue="0.37055957319999999" alpha="0.49314466059536421" colorSpace="custom" customColorSpace="sRGB"/>
                                             </view>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IU6-re-HvQ">
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IU6-re-HvQ" customClass="GradientView" customModule="Sehaty" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="142" width="290" height="50"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" كيفية عمل جدول خاص بالأدوية" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tkU-4B-L6Z">
@@ -183,6 +183,18 @@
                                                     <constraint firstAttribute="trailing" secondItem="tkU-4B-L6Z" secondAttribute="trailing" constant="8" id="TEJ-jW-0Cc"/>
                                                     <constraint firstAttribute="bottom" secondItem="tkU-4B-L6Z" secondAttribute="bottom" constant="8" id="bpu-le-2Z1"/>
                                                 </constraints>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="color" keyPath="startColor">
+                                                        <color key="value" name="mainBlue"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="color" keyPath="endColor">
+                                                        <color key="value" name="SecondaryMain"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="startLocation">
+                                                        <real key="value" value="0.0"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="horizontalMode" value="YES"/>
+                                                </userDefinedRuntimeAttributes>
                                             </view>
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -250,6 +262,7 @@
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <connections>
                 <outlet property="LaTitle1" destination="tkU-4B-L6Z" id="im8-ai-MuY"/>
+                <outlet property="LaTitle1Bg" destination="IU6-re-HvQ" id="eLj-Sp-mdL"/>
                 <outlet property="ViewBtn" destination="DNx-ul-rr5" id="XJc-EQ-TAC"/>
                 <outlet property="ViewLine" destination="Yl3-cF-ybZ" id="a8j-I2-3Nb"/>
                 <outlet property="videoContainerHeightConstraint" destination="reP-Fm-7LO" id="IQa-nO-oHv"/>
@@ -260,6 +273,9 @@
     </objects>
     <resources>
         <image name="play" width="23" height="25"/>
+        <namedColor name="SecondaryMain">
+            <color red="1" green="0.31372549019607843" blue="0.54509803921568623" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <namedColor name="bg">
             <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

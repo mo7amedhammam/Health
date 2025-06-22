@@ -2385,7 +2385,7 @@
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="f9v-g9-KBz">
                                                 <rect key="frame" x="0.0" y="100" width="393" height="70"/>
                                                 <subviews>
-                                                    <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9Ez-f4-DaG">
+                                                    <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9Ez-f4-DaG" customClass="GradientView" customModule="Sehaty" customModuleProvider="target">
                                                         <rect key="frame" x="81.666666666666686" y="5" width="230" height="60"/>
                                                         <subviews>
                                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="lry-eX-3SX">
@@ -2441,6 +2441,13 @@
                                                             <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                                                 <real key="value" value="6"/>
                                                             </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="color" keyPath="startColor">
+                                                                <color key="value" name="mainBlue"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="color" keyPath="endColor">
+                                                                <color key="value" name="SecondaryMain"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="boolean" keyPath="horizontalMode" value="YES"/>
                                                         </userDefinedRuntimeAttributes>
                                                     </view>
                                                 </subviews>
@@ -2631,8 +2638,22 @@
                                                     <stackView opaque="NO" contentMode="scaleToFill" alignment="bottom" spacing="28" translatesAutoresizingMaskIntoConstraints="NO" id="8xj-Er-Cqg">
                                                         <rect key="frame" x="10" y="30" width="373" height="50"/>
                                                         <subviews>
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2WI-ro-XYF">
+                                                                <rect key="frame" x="0.0" y="19" width="50" height="31"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="width" constant="50" id="fBD-a2-Szc"/>
+                                                                </constraints>
+                                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                                <state key="normal" image="backLeft"/>
+                                                            </button>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="جداول الأدوية الشهرية" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HgK-XA-IKq">
+                                                                <rect key="frame" x="78" y="31.666666666666664" width="217" height="18.333333333333336"/>
+                                                                <fontDescription key="fontDescription" name="LamaSans-Bold" family="Lama Sans" pointSize="18"/>
+                                                                <color key="textColor" name="main"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
                                                             <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4A6-LY-cKc">
-                                                                <rect key="frame" x="0.0" y="28" width="50" height="22"/>
+                                                                <rect key="frame" x="323" y="28" width="50" height="22"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="width" constant="50" id="uQZ-3b-nhX"/>
                                                                 </constraints>
@@ -2641,19 +2662,6 @@
                                                                 <connections>
                                                                     <action selector="BUNotification:" destination="SP1-EZ-5tT" eventType="touchUpInside" id="pTO-Bt-6f6"/>
                                                                 </connections>
-                                                            </button>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="جداول الأدوية الشهرية" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HgK-XA-IKq">
-                                                                <rect key="frame" x="78" y="31.666666666666664" width="217" height="18.333333333333336"/>
-                                                                <fontDescription key="fontDescription" name="LamaSans-Bold" family="Lama Sans" pointSize="18"/>
-                                                                <color key="textColor" name="main"/>
-                                                                <nil key="highlightedColor"/>
-                                                            </label>
-                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2WI-ro-XYF">
-                                                                <rect key="frame" x="323" y="16" width="50" height="34"/>
-                                                                <constraints>
-                                                                    <constraint firstAttribute="width" constant="50" id="fBD-a2-Szc"/>
-                                                                </constraints>
-                                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                             </button>
                                                         </subviews>
                                                         <constraints>
@@ -3079,15 +3087,15 @@
                                                     <stackView opaque="NO" contentMode="scaleToFill" alignment="bottom" spacing="28" translatesAutoresizingMaskIntoConstraints="NO" id="99W-cg-coY">
                                                         <rect key="frame" x="10" y="30" width="373" height="50"/>
                                                         <subviews>
-                                                            <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sf8-pl-aqE">
-                                                                <rect key="frame" x="0.0" y="28" width="50" height="22"/>
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cm4-K7-QvA">
+                                                                <rect key="frame" x="0.0" y="19" width="50" height="31"/>
                                                                 <constraints>
-                                                                    <constraint firstAttribute="width" constant="50" id="CUb-t8-jSU"/>
+                                                                    <constraint firstAttribute="width" constant="50" id="2zD-rw-ndq"/>
                                                                 </constraints>
                                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                                <state key="normal" image="bell"/>
+                                                                <state key="normal" image="backLeft"/>
                                                                 <connections>
-                                                                    <action selector="BUNotification:" destination="AZg-jj-Gqp" eventType="touchUpInside" id="BP4-zA-fvu"/>
+                                                                    <action selector="BUBack:" destination="AZg-jj-Gqp" eventType="touchUpInside" id="f0V-SC-2dx"/>
                                                                 </connections>
                                                             </button>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="تنبيهات مواعيد الأدوية" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="akE-qT-BBr">
@@ -3096,12 +3104,16 @@
                                                                 <color key="textColor" name="main"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
-                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cm4-K7-QvA">
-                                                                <rect key="frame" x="323" y="16" width="50" height="34"/>
+                                                            <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sf8-pl-aqE">
+                                                                <rect key="frame" x="323" y="28" width="50" height="22"/>
                                                                 <constraints>
-                                                                    <constraint firstAttribute="width" constant="50" id="2zD-rw-ndq"/>
+                                                                    <constraint firstAttribute="width" constant="50" id="CUb-t8-jSU"/>
                                                                 </constraints>
                                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                                <state key="normal" image="bell"/>
+                                                                <connections>
+                                                                    <action selector="BUNotification:" destination="AZg-jj-Gqp" eventType="touchUpInside" id="BP4-zA-fvu"/>
+                                                                </connections>
                                                             </button>
                                                         </subviews>
                                                         <constraints>
@@ -3120,7 +3132,7 @@
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Y9f-BU-UgD">
                                                 <rect key="frame" x="0.0" y="100" width="393" height="70"/>
                                                 <subviews>
-                                                    <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="e2G-uu-xa9">
+                                                    <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="e2G-uu-xa9" customClass="GradientView" customModule="Sehaty" customModuleProvider="target">
                                                         <rect key="frame" x="91.666666666666686" y="5" width="210" height="60"/>
                                                         <subviews>
                                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="9f5-5r-uJo">
@@ -3176,6 +3188,13 @@
                                                             <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                                                 <real key="value" value="6"/>
                                                             </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="color" keyPath="startColor">
+                                                                <color key="value" name="mainBlue"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="color" keyPath="endColor">
+                                                                <color key="value" name="SecondaryMain"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="boolean" keyPath="horizontalMode" value="YES"/>
                                                         </userDefinedRuntimeAttributes>
                                                     </view>
                                                 </subviews>
@@ -4237,35 +4256,57 @@
                                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dtD-hY-II9">
                                                                                         <rect key="frame" x="20" y="270" width="323" height="100"/>
                                                                                         <subviews>
-                                                                                            <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PWL-H6-Zvm">
+                                                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Y5Q-wW-XZQ" customClass="GradientView" customModule="Sehaty" customModuleProvider="target">
                                                                                                 <rect key="frame" x="0.0" y="20" width="323" height="60"/>
-                                                                                                <color key="backgroundColor" name="mainBlue"/>
+                                                                                                <subviews>
+                                                                                                    <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PWL-H6-Zvm">
+                                                                                                        <rect key="frame" x="20" y="0.0" width="283" height="60"/>
+                                                                                                        <color key="backgroundColor" name="mainBlue"/>
+                                                                                                        <constraints>
+                                                                                                            <constraint firstAttribute="height" constant="60" id="eRC-It-mJs"/>
+                                                                                                        </constraints>
+                                                                                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                                                                        <state key="normal" title="تم"/>
+                                                                                                        <buttonConfiguration key="configuration" style="plain" title="تم" cornerStyle="capsule">
+                                                                                                            <fontDescription key="titleFontDescription" name="LamaSans-Bold" family="Lama Sans" pointSize="18"/>
+                                                                                                            <color key="baseForegroundColor" name="bg"/>
+                                                                                                        </buttonConfiguration>
+                                                                                                        <userDefinedRuntimeAttributes>
+                                                                                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                                                                                <real key="value" value="30"/>
+                                                                                                            </userDefinedRuntimeAttribute>
+                                                                                                        </userDefinedRuntimeAttributes>
+                                                                                                        <connections>
+                                                                                                            <action selector="BUChange:" destination="JHo-il-Jky" eventType="touchUpInside" id="skR-Z3-IAW"/>
+                                                                                                        </connections>
+                                                                                                    </button>
+                                                                                                </subviews>
+                                                                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                                                                 <constraints>
-                                                                                                    <constraint firstAttribute="height" constant="60" id="eRC-It-mJs"/>
+                                                                                                    <constraint firstItem="PWL-H6-Zvm" firstAttribute="centerX" secondItem="Y5Q-wW-XZQ" secondAttribute="centerX" id="FsR-F3-E8V"/>
+                                                                                                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="PWL-H6-Zvm" secondAttribute="trailing" id="Kwu-WU-IWK"/>
+                                                                                                    <constraint firstItem="PWL-H6-Zvm" firstAttribute="leading" secondItem="Y5Q-wW-XZQ" secondAttribute="leading" constant="20" id="Luw-UF-Lvb"/>
+                                                                                                    <constraint firstItem="PWL-H6-Zvm" firstAttribute="centerY" secondItem="Y5Q-wW-XZQ" secondAttribute="centerY" id="OdW-sh-gsL"/>
+                                                                                                    <constraint firstAttribute="height" constant="60" id="x4x-le-b2k"/>
                                                                                                 </constraints>
-                                                                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                                                                <state key="normal" title="تم"/>
-                                                                                                <buttonConfiguration key="configuration" style="plain" title="تم" cornerStyle="capsule">
-                                                                                                    <fontDescription key="titleFontDescription" name="LamaSans-Bold" family="Lama Sans" pointSize="18"/>
-                                                                                                    <color key="baseForegroundColor" name="bg"/>
-                                                                                                </buttonConfiguration>
                                                                                                 <userDefinedRuntimeAttributes>
-                                                                                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                                                                        <real key="value" value="30"/>
+                                                                                                    <userDefinedRuntimeAttribute type="color" keyPath="startColor">
+                                                                                                        <color key="value" name="mainBlue"/>
                                                                                                     </userDefinedRuntimeAttribute>
+                                                                                                    <userDefinedRuntimeAttribute type="color" keyPath="endColor">
+                                                                                                        <color key="value" name="SecondaryMain"/>
+                                                                                                    </userDefinedRuntimeAttribute>
+                                                                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="horizontalMode" value="YES"/>
                                                                                                 </userDefinedRuntimeAttributes>
-                                                                                                <connections>
-                                                                                                    <action selector="BUChange:" destination="JHo-il-Jky" eventType="touchUpInside" id="skR-Z3-IAW"/>
-                                                                                                </connections>
-                                                                                            </button>
+                                                                                            </view>
                                                                                         </subviews>
                                                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                                         <constraints>
-                                                                                            <constraint firstAttribute="trailing" secondItem="PWL-H6-Zvm" secondAttribute="trailing" id="0cd-6D-3SQ"/>
-                                                                                            <constraint firstItem="PWL-H6-Zvm" firstAttribute="centerX" secondItem="dtD-hY-II9" secondAttribute="centerX" id="MyH-P0-7ha"/>
+                                                                                            <constraint firstAttribute="trailing" secondItem="Y5Q-wW-XZQ" secondAttribute="trailing" id="Q34-D6-oaP"/>
+                                                                                            <constraint firstItem="Y5Q-wW-XZQ" firstAttribute="centerY" secondItem="dtD-hY-II9" secondAttribute="centerY" id="aLk-Yu-jgr"/>
                                                                                             <constraint firstAttribute="height" constant="100" id="dBU-c9-ar5"/>
-                                                                                            <constraint firstItem="PWL-H6-Zvm" firstAttribute="leading" secondItem="dtD-hY-II9" secondAttribute="leading" id="eWd-6W-1o8"/>
-                                                                                            <constraint firstItem="PWL-H6-Zvm" firstAttribute="centerY" secondItem="dtD-hY-II9" secondAttribute="centerY" id="llh-FF-mxN"/>
+                                                                                            <constraint firstItem="Y5Q-wW-XZQ" firstAttribute="centerX" secondItem="dtD-hY-II9" secondAttribute="centerX" id="hi3-Vy-geP"/>
+                                                                                            <constraint firstItem="Y5Q-wW-XZQ" firstAttribute="leading" secondItem="dtD-hY-II9" secondAttribute="leading" id="sCY-iE-QS1"/>
                                                                                         </constraints>
                                                                                     </view>
                                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="تم إنشاء حسابك بنجاح!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jO2-YW-jN7">
@@ -6928,8 +6969,8 @@
         <image name="successicon" width="166" height="138"/>
         <image name="tab1" width="25" height="25"/>
         <image name="tab2" width="25" height="30"/>
-        <image name="tab4" width="26" height="27"/>
-        <image name="tab5" width="25" height="25"/>
+        <image name="tab4" width="28" height="28"/>
+        <image name="tab5" width="27" height="27"/>
         <image name="workout-data" width="332" height="332"/>
         <namedColor name="06AD2B">
             <color red="0.024000000208616257" green="0.67799997329711914" blue="0.16899999976158142" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -6950,10 +6991,10 @@
             <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="deactive">
-            <color red="0.17599999904632568" green="0.17599999904632568" blue="0.69800001382827759" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.17254901960784313" green="0.17254901960784313" blue="0.69411764705882351" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="main">
-            <color red="0.17599999904632568" green="0.17599999904632568" blue="0.69800001382827759" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.17254901960784313" green="0.17254901960784313" blue="0.69411764705882351" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="mainBlue">
             <color red="0.17647058823529413" green="0.17647058823529413" blue="0.69803921568627447" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -6962,10 +7003,10 @@
             <color red="1" green="0.31372549019607843" blue="0.54509803921568623" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="stroke">
-            <color red="0.17599999904632568" green="0.17599999904632568" blue="0.69800001382827759" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.17254901960784313" green="0.17254901960784313" blue="0.69411764705882351" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="wrong">
-            <color red="0.93300002813339233" green="0.18000000715255737" blue="0.22699999809265137" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.92941176470588238" green="0.17647058823529413" blue="0.22352941176470589" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

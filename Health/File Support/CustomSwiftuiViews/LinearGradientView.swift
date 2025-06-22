@@ -28,3 +28,106 @@ extension View {
     }
 }
 
+
+//MARK: -- for UIKIT ----
+import UIKit
+
+//class GradientBackgroundView: UIView {
+//    var colors: [UIColor] = [UIColor(Color(.mainBlue)) , UIColor(Color(.secondary))] {
+//        didSet {
+//            updateGradient()
+//        }
+//    }
+//    
+//    private let gradientLayer = CAGradientLayer()
+//    
+//    override init(frame: CGRect) {
+//        super.init(frame: frame)
+//        setupGradient()
+//    }
+//    
+//    required init?(coder: NSCoder) {
+//        super.init(coder: coder)
+//        setupGradient()
+//    }
+//    
+//    private func setupGradient() {
+//        gradientLayer.colors = colors.map { $0.cgColor }
+//        gradientLayer.startPoint = CGPoint(x: 0, y: 0.5)
+//        gradientLayer.endPoint = CGPoint(x: 1, y: 0.5)
+//        layer.insertSublayer(gradientLayer, at: 0)
+//    }
+//    
+//    private func updateGradient() {
+//        gradientLayer.colors = colors.map { $0.cgColor }
+//    }
+//    
+//    override func layoutSubviews() {
+//        super.layoutSubviews()
+//        gradientLayer.frame = bounds
+//    }
+//}
+
+//class GradientView: UIView {
+//    var colors: [UIColor] = [UIColor(Color.mainBlue), UIColor(Color.secondary)] {
+//        didSet { updateGradient() }
+//    }
+//    
+//    private let gradientLayer = CAGradientLayer()
+//    
+//    override init(frame: CGRect) {
+//        super.init(frame: frame)
+//        setup()
+//    }
+//    
+//    required init?(coder: NSCoder) {
+//        super.init(coder: coder)
+//        setup()
+//    }
+//    
+//    private func setup() {
+//        layer.insertSublayer(gradientLayer, at: 0)
+//        updateGradient()
+//    }
+//    
+//    private func updateGradient() {
+//        gradientLayer.colors = colors.map { $0.cgColor }
+//        gradientLayer.startPoint = CGPoint(x: 0, y: 0.5)
+//        gradientLayer.endPoint = CGPoint(x: 1, y: 0.5)
+//    }
+//    
+//    override func layoutSubviews() {
+//        super.layoutSubviews()
+//        gradientLayer.frame = bounds
+//    }
+//}
+
+//extension UIView {
+//    func applyHorizontalGradient(colors: [UIColor] = [UIColor(Color.mainBlue), UIColor(Color.secondary)]) {
+//        // Remove previous gradients
+//        layer.sublayers?
+//            .filter { $0.name == "HorizontalGradient" }
+//            .forEach { $0.removeFromSuperlayer() }
+//        
+//        let gradientLayer = CAGradientLayer()
+//        gradientLayer.name = "HorizontalGradient"
+//        gradientLayer.colors = colors.map { $0.cgColor }
+//        gradientLayer.startPoint = CGPoint(x: 0, y: 0.5)
+//        gradientLayer.endPoint = CGPoint(x: 1, y: 0.5)
+//        gradientLayer.frame = bounds
+//        layer.insertSublayer(gradientLayer, at: 0)
+//        
+//        // Observe bounds changes
+//        let observer = self.observe(\.bounds, options: [.new]) { [weak self] (_, _) in
+//            DispatchQueue.main.async {
+//                self?.layer.sublayers?
+//                    .filter { $0.name == "HorizontalGradient" }
+//                    .forEach { $0.frame = self?.bounds ?? .zero }
+//            }
+//        }
+//        
+//        // Store observer
+//        objc_setAssociatedObject(self, "gradientObserver", observer, .OBJC_ASSOCIATION_RETAIN)
+//    }
+//}
+

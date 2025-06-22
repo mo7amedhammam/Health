@@ -18,3 +18,18 @@ struct GenderM : Codable,Hashable {
     var id: Int?
     var title : String?
 }
+
+// MARK: - LanguageM
+struct LanguageM : Codable,Hashable,Equatable {
+    var id: Int?
+    var lang1 , flag: String?
+    
+//    var languageCode:String?{
+//        switch id {
+//        case 1:
+//            return "ar"
+//        default:
+//            return "en"
+//        }
+//    }
+}

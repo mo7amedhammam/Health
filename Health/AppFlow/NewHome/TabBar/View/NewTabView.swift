@@ -28,11 +28,14 @@ struct NewTabView: View {
                 switch selectedTab {
                 case 0:
                     //                    MARK: -- uikit --
-                    UIKitViewControllerWrapper(makeViewController: {
-                        let VC: UIViewController = initiateViewController(storyboardName: .main, viewControllerIdentifier: ProfileVC.self)!
-                        return VC
-                    })
-                    .ignoresSafeArea()
+//                    UIKitViewControllerWrapper(makeViewController: {
+//                        let VC: UIViewController = initiateViewController(storyboardName: .main, viewControllerIdentifier: ProfileVC.self)!
+//                        return VC
+//                    })
+//                    .ignoresSafeArea()
+                    
+                    ProfileViewUI()
+
                 case 1:
 //                    UIKitViewControllerWrapper(makeViewController: {
 //                    let VC: UIViewController = initiateViewController(storyboardName: .main, viewControllerIdentifier: MedicationScheduleVC.self)!
@@ -41,7 +44,7 @@ struct NewTabView: View {
 //                })
 //                .ignoresSafeArea()
                     
-                    SubcripedPackagesView(hasbackBtn: false,onBack: {})
+                    SubcripedPackagesView(hasbackBtn: false)
                 case 2:
                     NewHomeView()
 //                    UIKitViewControllerWrapper(makeViewController: {
@@ -52,11 +55,14 @@ struct NewTabView: View {
                     
                 case 3:
                     UIKitViewControllerWrapper(makeViewController: {
-                    let VC: UIViewController = initiateViewController(storyboardName: .main, viewControllerIdentifier: NotificationVC.self)!
+//                    let VC: UIViewController = initiateViewController(storyboardName: .main, viewControllerIdentifier: NotificationVC.self)!
+                                    
+                        let VC: UIViewController = initiateViewController(storyboardName: .main, viewControllerIdentifier: MeasurementsVC.self)!
+
                     return VC
                 })
                     .ignoresSafeArea()
-                    
+
                 case 4:
                     AppointmentsView()
 

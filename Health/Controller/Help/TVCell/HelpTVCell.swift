@@ -12,6 +12,7 @@ class HelpTVCell: UITableViewCell,WKNavigationDelegate {
     
     @IBOutlet weak var ViewLine: UIView!
     @IBOutlet weak var LaTitle1: UILabel!
+    @IBOutlet weak var LaTitle1Bg: UIView!
     @IBOutlet weak var ViewBtn: UIView!
     @IBOutlet weak var videoContainerHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var webView: WKWebView!
@@ -39,6 +40,7 @@ class HelpTVCell: UITableViewCell,WKNavigationDelegate {
     }
     
     private func setupUI() {
+//        LaTitle1Bg.applyHorizontalGradient()
         ViewBtn.layer.cornerRadius = 8
         ViewBtn.clipsToBounds = true
     }

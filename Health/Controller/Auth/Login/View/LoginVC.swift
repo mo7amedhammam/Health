@@ -517,7 +517,8 @@ struct CustomInputFieldUI: View {
     var isSecure: Bool = false
     var showToggle: Bool = false
     var isValid: Bool = true
-    
+    var isDisabled: Bool? = false
+
     /// Optional trailing view (e.g. icon, icon+arrow)
     var trailingView: AnyView? = nil
     
@@ -537,7 +538,9 @@ struct CustomInputFieldUI: View {
                 TextFieldWrapper
                     .frame(height: 32)
                     .textInputAutocapitalization(.never)
-                
+                    .disableAutocorrection(true)
+                    .disabled(isDisabled ?? false)
+
                 if let view = trailingView {
                     view
                 }
@@ -573,6 +576,7 @@ struct CustomInputFieldUI: View {
                 .font(.medium(size: 16))
                 .foregroundColor(isValid ? Color(.mainBlue) : Color(.wrong))
         }
+
     }
 }
 

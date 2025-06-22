@@ -238,9 +238,10 @@ class NotificationVC: UIViewController  {
     
     
     
-//    @IBAction func BUBack(_ sender: Any) {
+    @IBAction func BUBack(_ sender: Any) {
+        self.navigationController?.popViewController(animated: true)
 //        self.dismiss(animated: true)
-//    }
+    }
     
     @IBAction func BUSelectDrug(_ sender: Any) {
         

@@ -11,6 +11,7 @@ import Alamofire
 enum LookUpsServices{
     case GetALlGenders
     case GetALlCountries
+    case GetAllLanguages
 }
 
 extension LookUpsServices : TargetType1 {
@@ -27,6 +28,8 @@ extension LookUpsServices : TargetType1 {
         case .GetALlCountries:
             return LookupsEndPoints.GetAppCountryForList.rawValue
             
+            case .GetAllLanguages:
+            return LookupsEndPoints.GetAllLanguages.rawValue
         }
     }
     
@@ -38,8 +41,9 @@ extension LookUpsServices : TargetType1 {
 //            return .post
             
         case
-                .GetALlGenders,
-                .GetALlCountries
+                .GetALlGenders
+                ,.GetALlCountries
+                ,.GetAllLanguages
             :
             return .get
         }
@@ -59,6 +63,7 @@ extension LookUpsServices : TargetType1 {
         case
                 .GetALlGenders
                 ,.GetALlCountries
+                ,.GetAllLanguages
             :
             return nil
         }

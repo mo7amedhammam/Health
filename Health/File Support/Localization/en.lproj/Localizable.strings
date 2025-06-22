@@ -8,7 +8,11 @@
 
 /* select language */
 "lang_Title" =  "Language";
-"lang_Subtitle" =  "Please Select Language";
+"lang_Subtitle" =  "Please Select Language And Country";
+"lang_Country_title" =  "Country";
+"lang_Country_subitle" =  "Select Country";
+"lang_Language_title" =  "Language";
+"lang_Language_subtitle" =  "Select Language";
 "lang_Ar_Btn" =  "العربية";
 "lang_En_Btn" =  "English";
 "lang_Ok_Btn" =  "Confirm";
@@ -108,7 +112,7 @@
 
 
 //MARK: --- Home Screen ----
- "home_navtitle" = "Home";
+"home_navtitle" = "Home";
 "home_Welcome" = "Welcome, ";
 
 "home_subtitle1" = "Sehaty With AlNada";
@@ -135,7 +139,7 @@
 
 
 
-//------------------new ---
+//------------------ new ---
 "home_maincat" = "main Categories";
 "home_nextSession" = "next Session";
 "home_vippackages" = "Vip Packages";
@@ -187,3 +191,10 @@
 
 //MARK:   ---- "favorite_packages" ----
 "favorite_packages" = "favorite packages";
+
+
+//MARK:   ---- "Profile" ----
+"profile_title" = "My Profile";
+"profile_logout" = "Sign Out";
+"profile_login" = "Sign In";
+

@@ -143,4 +143,5 @@ enum AppointmentEndPoints : String{
 enum LookupsEndPoints : String{
    case GetAppCountryForList = "AppCountry/GetAppCountryForList"
     case GetAllGenders = "Lookups/GetAllGenders"
+    case GetAllLanguages = "Lang/GetLangList"
 }

@@ -181,7 +181,7 @@ struct TitleBar: View {
             
             // Title
             Text(title.localized)
-                .font(.bold(size: 18))
+                .font(.bold(size: 20))
                 .foregroundStyle(titlecolor ?? .mainBlue)
                 .frame(maxWidth: .infinity, alignment: .center)
             

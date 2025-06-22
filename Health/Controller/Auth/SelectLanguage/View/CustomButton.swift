@@ -14,7 +14,8 @@ struct CustomButton: View {
     var backgroundcolor: Color? = Color.mainBlue
     var cornerRadius: CGFloat? = 5
     var isdisabled: Bool? = false
-    
+    var backgroundView: AnyView? = AnyView(Color.mainBlue)
+
     var onTap: (() -> Void)?
     var body: some View {
         
@@ -27,7 +28,11 @@ struct CustomButton: View {
                 .frame(maxWidth: .infinity)
                 .frame(height: 55)
                 .background{
-                    isdisabled ?? false ? Color(.btnDisabledBg) : backgroundcolor
+                    if let backgroundView = backgroundView {
+                        backgroundView
+                    }else{
+                        isdisabled ?? false ? Color(.btnDisabledBg) : backgroundcolor
+                    }
                 }
                 .cornerRadius(cornerRadius ?? 5)
                 .padding(.horizontal)

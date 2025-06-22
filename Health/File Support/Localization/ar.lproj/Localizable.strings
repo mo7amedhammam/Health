@@ -8,7 +8,11 @@
 
 /* select language */
 "lang_Title" =  "اللغة";
-"lang_Subtitle" =  "الرجاء اختيار اللغة";
+"lang_Subtitle" =  "الرجاء اختيار اللغة والدولة";
+"lang_Country_title" =  "الدولة";
+"lang_Country_subitle" = "اختر الدولة";
+"lang_Language_title" =  "اللغة";
+"lang_Language_subtitle" =  "اختر اللغة";
 "lang_Ar_Btn" =  "العربية";
 "lang_En_Btn" =  "الإنجليزية";
 "lang_Ok_Btn" =  "تأكيد";
@@ -184,3 +188,8 @@
 
 //MARK:   ---- "favorite_packages" ----
 "favorite_packages" = "باقاتي المفضلة";
+
+//MARK:   ---- "Profile" ----
+"profile_title" = "الملف الشخصي";
+"profile_logout" = "تسجيل الخروج";
+"profile_login" = "تسجيل الدخول";
