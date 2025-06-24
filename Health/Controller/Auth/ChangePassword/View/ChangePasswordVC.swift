@@ -66,6 +66,9 @@ class ChangePasswordVC: UIViewController {
         let isConfirmationValid = TFRe_Password.textField.hasText && TFRe_Password.isValid
         
         BtnChange.isEnabled(isPasswordValid && isNewPasswordValid && isConfirmationValid)
+        if (isPasswordValid && isNewPasswordValid && isConfirmationValid){
+            applyHorizontalGradient(to: BtnChange)
+        }
     }
     @IBAction func BUBack(_ sender: Any) {
         self.navigationController?.popViewController(animated: true)

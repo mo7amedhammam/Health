@@ -44,6 +44,7 @@ class ViewDone: UIView {
     var ButtonTitle:String?{
         didSet{
             BtnDone.setTitle(ButtonTitle?.localized, for: .normal)
+            applyHorizontalGradient(to: BtnDone)
         }
     }
     var action: (()->Void)?

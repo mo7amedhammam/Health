@@ -29,6 +29,7 @@ class ForgetPasswordVC: UIViewController  , UIGestureRecognizerDelegate {
         setupPasswordValidations()
 
     }
+    
     func setupUI(){
         BtnReset.isEnabled(false)
 
@@ -63,6 +64,9 @@ class ForgetPasswordVC: UIViewController  , UIGestureRecognizerDelegate {
         let isConfirmationValid = TFRe_Password.textField.hasText && TFRe_Password.isValid
         
         BtnReset.isEnabled(isPasswordValid && isConfirmationValid)
+        if (isPasswordValid && isConfirmationValid) {
+            applyHorizontalGradient(to: BtnReset)
+        }
     }
     
     func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {

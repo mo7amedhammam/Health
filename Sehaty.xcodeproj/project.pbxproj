@@ -1568,8 +1568,8 @@
 				BBBD002A2A73145200F066DF /* LamaSans-Bold.ttf */,
 				BBBD002E2A73148500F066DF /* LamaSans-Regular.ttf */,
 				BBBD002F2A73148600F066DF /* LamaSans-SemiBold.ttf */,
-				BBBD00292A73145200F066DF /* LamaSans-Light.ttf */,
 				BBBD00282A73145100F066DF /* LamaSans-Medium.ttf */,
+				BBBD00292A73145200F066DF /* LamaSans-Light.ttf */,
 			);
 			path = Font;
 			sourceTree = "<group>";

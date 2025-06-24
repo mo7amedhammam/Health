@@ -13,8 +13,12 @@ class MeasureDetailsVC: UIViewController {
     @IBOutlet weak var ImgMeasurement: UIImageView!
     @IBOutlet weak var LaNum: UILabel!
     
+    @IBOutlet weak var LaTitleAddNewMeas: UILabel!
+    @IBOutlet weak var BtnAddNewMeas: UIButton!
+    
     @IBOutlet weak var LaDateFrom: UILabel!
     @IBOutlet weak var LaDateTo: UILabel!
+    @IBOutlet weak var btnSearch: UIButton!
     
     @IBOutlet weak var BtnDay: UIButton!
     @IBOutlet weak var BtnMonth: UIButton!
@@ -85,6 +89,16 @@ class MeasureDetailsVC: UIViewController {
         ViewModel.medicalMeasurementId = id
         getDataNormalRange()
 
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        [BtnAddNewMeas].forEach{$0.titleLabel?.font = UIFont(name: fontsenum.bold.rawValue, size: 24)
+        }
+            LaTitleAddNewMeas.font = UIFont(name: fontsenum.bold.rawValue, size: 24)
+        [BtnDay,BtnMonth,BtnYear,btnAll].forEach{$0.titleLabel?.font = UIFont(name: fontsenum.bold.rawValue, size: 16)
+        }
+        applyHorizontalGradient(to: btnSearch)
     }
     
     override func viewWillAppear(_ animated: Bool) {

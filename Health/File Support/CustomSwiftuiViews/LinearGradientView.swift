@@ -32,6 +32,22 @@ extension View {
 //MARK: -- for UIKIT ----
 import UIKit
 
+func applyHorizontalGradient(to button: UIButton, colors: [UIColor] = [UIColor(Color(.mainBlue)), UIColor(Color(.secondary))]) {
+    // Remove old gradient layers if any
+    button.layer.sublayers?.removeAll(where: { $0 is CAGradientLayer })
+
+    let gradientLayer = CAGradientLayer()
+    gradientLayer.colors = colors.map { $0.cgColor }
+    gradientLayer.startPoint = CGPoint(x: 0, y: 0.5)
+    gradientLayer.endPoint = CGPoint(x: 1, y: 0.5)
+    gradientLayer.frame = button.bounds
+    gradientLayer.cornerRadius = button.layer.cornerRadius
+
+    button.layer.insertSublayer(gradientLayer, below: button.titleLabel?.layer)
+//    button.setTitleColor(.white, for: .normal)
+    button.clipsToBounds = true
+}
+
 //class GradientBackgroundView: UIView {
 //    var colors: [UIColor] = [UIColor(Color(.mainBlue)) , UIColor(Color(.secondary))] {
 //        didSet {

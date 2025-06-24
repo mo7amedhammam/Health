@@ -25,12 +25,12 @@ class SimpleAlert : NSObject {
 //              let messageAttrString = NSMutableAttributedString(string: message, attributes: messageFont)
 //              alertController.setValue(messageAttrString, forKey: "attributedMessage") // Set the font of the message
 //
-              let okAction = UIAlertAction(title: "موافق", style: .default){ _ in
+        let okAction = UIAlertAction(title: "OK".localized, style: .default){ _ in
                   completion?()
                   if title == NetworkError.expiredTokenMsg.errorDescription ||  message == NetworkError.expiredTokenMsg.errorDescription {
 //                      Helper.shared.changeRootVC(newroot: LoginVC.self,transitionFrom: .fromLeft)
-                      let newHome = UIHostingController(rootView: LoginView())
-                      Helper.shared.changeRootVC(newroot: newHome, transitionFrom: .fromLeft)
+//                      let newHome = UIHostingController(rootView: LoginView())
+//                      Helper.shared.changeRootVC(newroot: newHome, transitionFrom: .fromLeft)
 
                   }
               }

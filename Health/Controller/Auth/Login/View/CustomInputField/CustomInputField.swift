@@ -38,7 +38,7 @@ class CustomInputField: UIView {
            didSet { updateTitleFont() }
        }
        
-       @IBInspectable var titleFontSize: CGFloat = 16 {
+       @IBInspectable var titleFontSize: CGFloat = 20 {
            didSet { updateTitleFont() }
        }
        
@@ -46,7 +46,7 @@ class CustomInputField: UIView {
            didSet { updateTextFont() }
        }
        
-       @IBInspectable var textFontSize: CGFloat = 12 {
+       @IBInspectable var textFontSize: CGFloat = 16 {
            didSet { updateTextFont() }
        }
        
