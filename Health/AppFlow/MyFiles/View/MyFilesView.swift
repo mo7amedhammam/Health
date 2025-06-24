@@ -19,7 +19,10 @@ struct MyFileModel: Identifiable {
 
 struct MyFilesView: View {
     @State private var showUploadSheet = false
+    @StateObject var myfilesvm = MyFilesViewModel.shared
+
     @State private var files: [MyFileModel] = []
+    @StateObject var lookupsvm = LookupsViewModel.shared
 
     var body: some View {
 //        NavigationView {
@@ -28,7 +31,10 @@ struct MyFilesView: View {
 
                 
                 UploadButton {
-                    showUploadSheet = true
+                    Task{
+                        showUploadSheet = true
+                        await lookupsvm.getFileTypes()
+                    }
                 }
                 .padding([.top,.horizontal])
                 .padding(.top,30)
@@ -45,6 +51,8 @@ struct MyFilesView: View {
             .customSheet(isPresented: $showUploadSheet,height: 440){
 //            .sheet(isPresented: $showUploadSheet) {
                 UploadFileSheetView(isPresented: $showUploadSheet)
+                    .environmentObject(myfilesvm)
+                    .environmentObject(lookupsvm)
 //                    .frame(height: 600)
 
 //                { newFile in
@@ -96,21 +104,22 @@ struct UploadButton: View {
 
 
 struct UploadFileSheetView: View {
-    @StateObject var lookupsvm = LookupsViewModel.shared
+    @EnvironmentObject var lookupsvm : LookupsViewModel
     @Binding var isPresented: Bool
     
     @State private var fileName: String = ""
     @State private var fileType: FileTypeM? = nil
     @State private var fileLink: String = ""
     
-    @State private var showPickerOptions = false
+//    @State private var showPickerOptions = false
 
     @State private var showImagePicker = false
+    @State private var imagePickerSource: UIImagePickerController.SourceType = .photoLibrary
     @State private var image: UIImage?
 
     @State private var showPdfPicker = false
     @State private var fileURL: URL?
-    @State private var imagePickerSource: UIImagePickerController.SourceType = .photoLibrary
+    
     @State private var pickedFileName: String = ""
 
     var body: some View {
@@ -152,8 +161,7 @@ struct UploadFileSheetView: View {
 
                 CustomDropListInputFieldUI(title: "new_fileName", placeholder: "new_filenameplaceholder",text: $fileName, isDisabled: false, showDropdownIndicator:false, trailingView: AnyView(Image("newfienameIcon")))
                         Menu {
-                            ForEach(lookupsvm.fileTypes ?? [],id: \.self) { type in
-                                
+                            ForEach(lookupsvm.fileTypes ?? [],id: \.id) { type in
                                 Button(action: {
                                     fileType = type
                                 }, label: {
@@ -165,6 +173,13 @@ struct UploadFileSheetView: View {
                         } label: {
                             CustomDropListInputFieldUI(title: "new_fileType", placeholder: "new_filetypeplaceholder",text: .constant(fileType?.type ?? ""), isDisabled: true, showDropdownIndicator:true, trailingView: AnyView(Image("dateicon 1")))
                         }
+//                        .onTapGesture{
+//                            Task{
+//                                if lookupsvm.fileTypes?.count ?? 0 == 0 {
+//                                    await lookupsvm.getFileTypes()
+//                                }
+//                            }
+//                        }
                     
                 if fileType == nil {
                     CustomDropListInputFieldUI(title: "new_filelink", placeholder: "new_filelinkplaceholder",text: $fileLink, isDisabled: false, showDropdownIndicator:false, trailingView: AnyView(Image("newfilelinkicon")))
@@ -179,13 +194,14 @@ struct UploadFileSheetView: View {
                                                 ))
                     .onTapGesture {
                         switch fileType?.id {
-                        case 1:
-                            showPdfPicker = true
+                        case 0:
+                            break
+//                        case 1:
+//                            showPdfPicker = true
                         case 2:
                             showImagePicker = true
-
                         default:
-                            break
+                            showPdfPicker = true
                         }
                     }
                 }
@@ -206,13 +222,16 @@ struct UploadFileSheetView: View {
         }
         .onAppear(perform: {
             Task{
-                await lookupsvm.getFileTypes()
-                lookupsvm.fileTypes?.insert(FileTypeM.init(id: 0, type: "Link".localized), at: 0)
+//                   await lookupsvm.getFileTypes()
+                    lookupsvm.fileTypes?.insert(FileTypeM.init(id: 0, type: "Link".localized), at: 0)
             }
         })
         .padding()
         .sheet(isPresented: $showImagePicker) {
             ImagePickerView(selectedImage: $image, sourceType: imagePickerSource)
+        }.onChange(of: image){newval in
+            pickedFileName = "Image is Selected Successfully_".localized
+
         }
         .fileImporter(
             isPresented: $showPdfPicker,

@@ -16,6 +16,9 @@
 		902B87B22E05BB65009D5234 /* LookupsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 902B87B12E05BB65009D5234 /* LookupsModel.swift */; };
 		902B87B52E05BC9F009D5234 /* LookUpsServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 902B87B42E05BC9F009D5234 /* LookUpsServices.swift */; };
 		902B87C12E0AD7DA009D5234 /* MyFilesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 902B87C02E0AD7DA009D5234 /* MyFilesView.swift */; };
+		902B87C32E0B4DC6009D5234 /* MyFilesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 902B87C22E0B4DC6009D5234 /* MyFilesViewModel.swift */; };
+		902B87C62E0B523E009D5234 /* MyFilesServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 902B87C52E0B523E009D5234 /* MyFilesServices.swift */; };
+		902B87C82E0B53A8009D5234 /* MyFileM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 902B87C72E0B53A8009D5234 /* MyFileM.swift */; };
 		903667062D82E0A40040AE29 /* LocalizationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 903667052D82E08E0040AE29 /* LocalizationManager.swift */; };
 		903667082D82E1410040AE29 /* AppKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 903667072D82E1370040AE29 /* AppKeys.swift */; };
 		9047483F2DCF63530016C3DC /* PackagesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9047483E2DCF63530016C3DC /* PackagesView.swift */; };
@@ -287,6 +290,9 @@
 		902B87B12E05BB65009D5234 /* LookupsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LookupsModel.swift; sourceTree = "<group>"; };
 		902B87B42E05BC9F009D5234 /* LookUpsServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LookUpsServices.swift; sourceTree = "<group>"; };
 		902B87C02E0AD7DA009D5234 /* MyFilesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyFilesView.swift; sourceTree = "<group>"; };
+		902B87C22E0B4DC6009D5234 /* MyFilesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyFilesViewModel.swift; sourceTree = "<group>"; };
+		902B87C52E0B523E009D5234 /* MyFilesServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyFilesServices.swift; sourceTree = "<group>"; };
+		902B87C72E0B53A8009D5234 /* MyFileM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyFileM.swift; sourceTree = "<group>"; };
 		903667052D82E08E0040AE29 /* LocalizationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationManager.swift; sourceTree = "<group>"; };
 		903667072D82E1370040AE29 /* AppKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppKeys.swift; sourceTree = "<group>"; };
 		9047483E2DCF63530016C3DC /* PackagesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackagesView.swift; sourceTree = "<group>"; };
@@ -622,6 +628,7 @@
 		902B87BB2E0AD76A009D5234 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				902B87C22E0B4DC6009D5234 /* MyFilesViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -629,6 +636,7 @@
 		902B87BC2E0AD770009D5234 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				902B87C72E0B53A8009D5234 /* MyFileM.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -652,6 +660,14 @@
 			children = (
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		902B87C42E0B51E8009D5234 /* MyFilesServices */ = {
+			isa = PBXGroup;
+			children = (
+				902B87C52E0B523E009D5234 /* MyFilesServices.swift */,
+			);
+			path = MyFilesServices;
 			sourceTree = "<group>";
 		};
 		903667042D82E0700040AE29 /* Localization */ = {
@@ -1748,6 +1764,7 @@
 		BBBDFFF62A730F9800F066DF /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				902B87C42E0B51E8009D5234 /* MyFilesServices */,
 				902B87B32E05BC6C009D5234 /* LookUpsServices */,
 				904748512DD34ECE0016C3DC /* NewServices */,
 				C80DA9E92AA4D37800F10808 /* HealthServices */,
@@ -2451,6 +2468,7 @@
 				BB1B30052A7EB1B7001677FD /* XibViews.swift in Sources */,
 				90FDD3642DF74DC800C3BABB /* ChatsMessageM.swift in Sources */,
 				BB14DAEB2A7B041C00389B96 /* ProfileTVCellHeader.swift in Sources */,
+				902B87C82E0B53A8009D5234 /* MyFileM.swift in Sources */,
 				C889958A2AA9F770002AD812 /* ForgetPasswordVM.swift in Sources */,
 				C88995822AA9EDFE002AD812 /* Strings.swift in Sources */,
 				900B50B82DAAC4E300EABA67 /* ExUiImage.swift in Sources */,
@@ -2630,6 +2648,8 @@
 				BBBD00142A73101700F066DF /* AES.swift in Sources */,
 				BBE3CC7B2A80010B004B0D9A /* MedicationScheduleDetailsTVCell.swift in Sources */,
 				BB14DAF32A7B044500389B96 /* ProfileTVCellLogout.swift in Sources */,
+				902B87C62E0B523E009D5234 /* MyFilesServices.swift in Sources */,
+				902B87C32E0B4DC6009D5234 /* MyFilesViewModel.swift in Sources */,
 				BBBD00342A731B3300F066DF /* SplashScreenVC.swift in Sources */,
 				C8346E582AA5EE9C00C3C3EE /* LoginVM.swift in Sources */,
 				C893A9B52AB5BA190054F171 /* TipsVM.swift in Sources */,

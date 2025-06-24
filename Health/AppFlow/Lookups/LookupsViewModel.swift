@@ -118,7 +118,7 @@ extension LookupsViewModel{
         }
     }
     
-    func getFileTypes() async {
+    func getFileTypes() async{
 //        isLoading = true
 //        defer { isLoading = false }
 //        guard let maxResultCount = maxResultCount,let skipCount = skipCount else {

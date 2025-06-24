@@ -146,3 +146,11 @@ enum LookupsEndPoints : String{
     case GetAllLanguages = "Lang/GetLangList"
     case GetAllFileTypes = "Lookups/FileType"
 }
+
+
+enum MyFilesEndPoints : String{
+    case AddFile = "CustomerFile/AddFile"
+    case UpdateFile = "CustomerFile/UpdateFile"
+    case GetCustomerFileList = "CustomerFile/GetCustomerFileList"
+    case GetCustomerFile = "CustomerFile/GetCustomerFile"
+}
