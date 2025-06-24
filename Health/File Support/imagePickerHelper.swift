@@ -75,3 +75,57 @@ class ImagePickerHelper: NSObject, UIImagePickerControllerDelegate, UINavigation
     }
 }
 
+import SwiftUI
+//
+struct UIKitImagePicker: UIViewControllerRepresentable {
+    let onPicked: (UIImage?) -> Void
+
+    func makeUIViewController(context: Context) -> UIViewController {
+        let controller = UIViewController()
+        DispatchQueue.main.async {
+            let helper = ImagePickerHelper(viewController: controller)
+            helper.showImagePicker { image in
+                onPicked(image)
+                controller.dismiss(animated: true)
+            }
+        }
+        return controller
+    }
+
+    func updateUIViewController(_ uiViewController: UIViewController, context: Context) {}
+}
+
+//import SwiftUI
+
+class ImagePickerCoordinator {
+    static func show(completion: @escaping (UIImage?) -> Void) {
+        guard let topVC = UIApplication.shared.topMostViewController() else {
+            completion(nil)
+            return
+        }
+        let helper = ImagePickerHelper(viewController: topVC)
+        helper.showImagePicker(completion: completion)
+    }
+}
+//import UIKit
+
+extension UIApplication {
+    func topMostViewController(base: UIViewController? = UIApplication.shared.connectedScenes
+        .compactMap { ($0 as? UIWindowScene)?.keyWindow }
+        .first?.rootViewController) -> UIViewController? {
+
+        if let nav = base as? UINavigationController {
+            return topMostViewController(base: nav.visibleViewController)
+        }
+
+        if let tab = base as? UITabBarController {
+            return topMostViewController(base: tab.selectedViewController)
+        }
+
+        if let presented = base?.presentedViewController {
+            return topMostViewController(base: presented)
+        }
+
+        return base
+    }
+}

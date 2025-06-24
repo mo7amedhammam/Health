@@ -198,3 +198,7 @@
 "profile_logout" = "Sign Out";
 "profile_login" = "Sign In";
 
+//MARK:   ---- my files ----
+"new_cancel_" = "cancel";
+"new_confirm_" = "confirm";
+

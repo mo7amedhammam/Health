@@ -12,6 +12,7 @@ enum LookUpsServices{
     case GetALlGenders
     case GetALlCountries
     case GetAllLanguages
+    case GetAllFileTypes
 }
 
 extension LookUpsServices : TargetType1 {
@@ -30,6 +31,9 @@ extension LookUpsServices : TargetType1 {
             
             case .GetAllLanguages:
             return LookupsEndPoints.GetAllLanguages.rawValue
+            
+        case .GetAllFileTypes:
+            return LookupsEndPoints.GetAllFileTypes.rawValue
         }
     }
     
@@ -44,6 +48,7 @@ extension LookUpsServices : TargetType1 {
                 .GetALlGenders
                 ,.GetALlCountries
                 ,.GetAllLanguages
+                ,.GetAllFileTypes
             :
             return .get
         }
@@ -64,6 +69,7 @@ extension LookUpsServices : TargetType1 {
                 .GetALlGenders
                 ,.GetALlCountries
                 ,.GetAllLanguages
+            ,.GetAllFileTypes
             :
             return nil
         }

@@ -17,6 +17,7 @@ class NotificationVC: UIViewController  {
     @IBOutlet weak var TVScreen: UITableView!
     let refreshControl = UIRefreshControl()
     @IBOutlet weak var ViewAddNewNotification: UIView!
+    @IBOutlet weak var BtnAddNewMes: UIButton!
     @IBOutlet weak var TFStartDate: UITextField!
     @IBOutlet weak var TFClock: UITextField!
     @IBOutlet weak var TFDrugName: UITextField!
@@ -97,8 +98,11 @@ class NotificationVC: UIViewController  {
         setupUI()
         
     }
-    
-    override func viewWillAppear(_ animated: Bool) {        
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        BtnAddNewMes.titleLabel?.font = UIFont(name: fontsenum.bold.rawValue, size: 24)!
+    }
+    override func viewWillAppear(_ animated: Bool) {
         ViewModel.maxResultCount = 10
         ViewModel.skipCount  = 0
         ViewModel.customerId =  Helper.shared.getUser()?.id // they take it from token

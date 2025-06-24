@@ -17,7 +17,7 @@ class INBodyVC: UIViewController {
     let refreshControl = UIRefreshControl()
     var imagePickerHelper : ImagePickerHelper?
     var image:UIImage?
-    
+    @IBOutlet weak var BtnNewMes: UIButton!
     var pdfPickerHelper : PDFPickerHelper?
     var pdfURL:URL?
     var ImageOrPdf = 0
@@ -41,6 +41,10 @@ class INBodyVC: UIViewController {
         TVScreen.addSubview(refreshControl)
         
         GetCustomerInbodyList()
+    }
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        BtnNewMes.titleLabel?.font = UIFont(name: fontsenum.bold.rawValue, size: 24)!
     }
     
     override func viewWillAppear(_ animated: Bool) {

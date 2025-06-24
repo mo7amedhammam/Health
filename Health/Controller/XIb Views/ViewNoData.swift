@@ -13,4 +13,5 @@ class ViewNoData: UIView {
     
     @IBOutlet weak var LaTitle: UILabel!
     
+
 }

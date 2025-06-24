@@ -15,6 +15,7 @@
 		902B87B02E05BB14009D5234 /* LookupsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 902B87AF2E05BB14009D5234 /* LookupsViewModel.swift */; };
 		902B87B22E05BB65009D5234 /* LookupsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 902B87B12E05BB65009D5234 /* LookupsModel.swift */; };
 		902B87B52E05BC9F009D5234 /* LookUpsServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 902B87B42E05BC9F009D5234 /* LookUpsServices.swift */; };
+		902B87C12E0AD7DA009D5234 /* MyFilesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 902B87C02E0AD7DA009D5234 /* MyFilesView.swift */; };
 		903667062D82E0A40040AE29 /* LocalizationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 903667052D82E08E0040AE29 /* LocalizationManager.swift */; };
 		903667082D82E1410040AE29 /* AppKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 903667072D82E1370040AE29 /* AppKeys.swift */; };
 		9047483F2DCF63530016C3DC /* PackagesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9047483E2DCF63530016C3DC /* PackagesView.swift */; };
@@ -285,6 +286,7 @@
 		902B87AF2E05BB14009D5234 /* LookupsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LookupsViewModel.swift; sourceTree = "<group>"; };
 		902B87B12E05BB65009D5234 /* LookupsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LookupsModel.swift; sourceTree = "<group>"; };
 		902B87B42E05BC9F009D5234 /* LookUpsServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LookUpsServices.swift; sourceTree = "<group>"; };
+		902B87C02E0AD7DA009D5234 /* MyFilesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyFilesView.swift; sourceTree = "<group>"; };
 		903667052D82E08E0040AE29 /* LocalizationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationManager.swift; sourceTree = "<group>"; };
 		903667072D82E1370040AE29 /* AppKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppKeys.swift; sourceTree = "<group>"; };
 		9047483E2DCF63530016C3DC /* PackagesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackagesView.swift; sourceTree = "<group>"; };
@@ -589,6 +591,69 @@
 			path = LookUpsServices;
 			sourceTree = "<group>";
 		};
+		902B87B82E0AD68A009D5234 /* MyFiles */ = {
+			isa = PBXGroup;
+			children = (
+				902B87BC2E0AD770009D5234 /* Model */,
+				902B87BB2E0AD76A009D5234 /* ViewModel */,
+				902B87BA2E0AD764009D5234 /* View */,
+			);
+			path = MyFiles;
+			sourceTree = "<group>";
+		};
+		902B87B92E0AD699009D5234 /* Alergies */ = {
+			isa = PBXGroup;
+			children = (
+				902B87BF2E0AD77B009D5234 /* Model */,
+				902B87BE2E0AD778009D5234 /* ViewModel */,
+				902B87BD2E0AD775009D5234 /* View */,
+			);
+			path = Alergies;
+			sourceTree = "<group>";
+		};
+		902B87BA2E0AD764009D5234 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				902B87C02E0AD7DA009D5234 /* MyFilesView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		902B87BB2E0AD76A009D5234 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		902B87BC2E0AD770009D5234 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		902B87BD2E0AD775009D5234 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		902B87BE2E0AD778009D5234 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		902B87BF2E0AD77B009D5234 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		903667042D82E0700040AE29 /* Localization */ = {
 			isa = PBXGroup;
 			children = (
@@ -602,6 +667,8 @@
 		904748312DCCAF550016C3DC /* AppFlow */ = {
 			isa = PBXGroup;
 			children = (
+				902B87B92E0AD699009D5234 /* Alergies */,
+				902B87B82E0AD68A009D5234 /* MyFiles */,
 				902B87AE2E05BAF1009D5234 /* Lookups */,
 				90FDD3652DF82B2F00C3BABB /* NewAppointments */,
 				90FDD3572DEF378D00C3BABB /* Profile */,
@@ -2491,6 +2558,7 @@
 				BBBD00152A73101700F066DF /* ProgressHud.swift in Sources */,
 				BBD2B03C2AAA84F000C0A807 /* MyMeasurementsStatsVM.swift in Sources */,
 				BB48F8A12A747D020051F12C /* ChangePasswordVC.swift in Sources */,
+				902B87C12E0AD7DA009D5234 /* MyFilesView.swift in Sources */,
 				BBE3CC742A7FFFF8004B0D9A /* MedicationScheduleVC.swift in Sources */,
 				C85996752AA7553500533C87 /* HUD.swift in Sources */,
 				BB0512482B60313C004CAB83 /* ModelResponseFirebase.swift in Sources */,

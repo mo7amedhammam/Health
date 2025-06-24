@@ -33,3 +33,9 @@ struct LanguageM : Codable,Hashable,Equatable {
 //        }
 //    }
 }
+
+// MARK: -- FileTypeM --
+struct FileTypeM : Codable,Hashable {
+    var id: Int?
+    var type : String?
+}

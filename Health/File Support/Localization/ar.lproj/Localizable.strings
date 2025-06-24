@@ -193,3 +193,8 @@
 "profile_title" = "الملف الشخصي";
 "profile_logout" = "تسجيل الخروج";
 "profile_login" = "تسجيل الدخول";
+
+
+//MARK:   ---- my files ----
+"new_cancel_" = "إلغاء";
+"new_confirm_" = "تأكيد";

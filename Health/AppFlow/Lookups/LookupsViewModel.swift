@@ -18,7 +18,8 @@ class LookupsViewModel : ObservableObject {
     @Published var appCountries : [AppCountryM]? = nil
     @Published var genders : [GenderM]? = nil
     @Published var languages : [LanguageM]? = nil
-
+    @Published var fileTypes : [FileTypeM]? = nil
+    
 //    @Published var isLoading:Bool? = false
 //    @Published var errorMessage: String? = nil
     
@@ -110,6 +111,34 @@ extension LookupsViewModel{
             Task{
                 await MainActor.run{
                     self.languages = response
+                }
+            }
+        } catch {
+//            self.errorMessage = error.localizedDescription
+        }
+    }
+    
+    func getFileTypes() async {
+//        isLoading = true
+//        defer { isLoading = false }
+//        guard let maxResultCount = maxResultCount,let skipCount = skipCount else {
+////            // Handle missings
+////            self.errorMessage = "check inputs"
+////            //            throw NetworkError.unknown(code: 0, error: "check inputs")
+//            return
+//        }
+//        let parametersarr : [String : Any] =  ["maxResultCount":maxResultCount,"skipCount":skipCount]
+        
+        let target = LookUpsServices.GetAllFileTypes
+        do {
+//            self.errorMessage = nil // Clear previous errors
+            let response = try await networkService.request(
+                target,
+                responseType: [FileTypeM].self
+            )
+            Task{
+                await MainActor.run{
+                    self.fileTypes = response
                 }
             }
         } catch {

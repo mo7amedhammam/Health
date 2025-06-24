@@ -36,3 +36,23 @@ class PDFPickerHelper: NSObject, UIDocumentPickerDelegate {
         pdfPickedCallback?(nil)
     }
 }
+
+import SwiftUI
+
+struct UIKitPDFPicker: UIViewControllerRepresentable {
+    let onPicked: (URL?) -> Void
+
+    func makeUIViewController(context: Context) -> UIViewController {
+        let controller = UIViewController()
+        DispatchQueue.main.async {
+            let helper = PDFPickerHelper(viewController: controller)
+            helper.showPDFPicker { url in
+                onPicked(url)
+                controller.dismiss(animated: true)
+            }
+        }
+        return controller
+    }
+
+    func updateUIViewController(_ uiViewController: UIViewController, context: Context) {}
+}

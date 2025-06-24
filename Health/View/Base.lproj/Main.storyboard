@@ -2498,6 +2498,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="BtnNewMes" destination="Key-sh-rcr" id="eu2-u4-40c"/>
                         <outlet property="TVScreen" destination="9LC-Tr-eIQ" id="eDm-di-T0U"/>
                     </connections>
                 </viewController>
@@ -3957,6 +3958,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="O7q-DZ-hMu"/>
                     <connections>
+                        <outlet property="BtnAddNewMes" destination="1hN-v5-L6o" id="0NS-qa-d62"/>
                         <outlet property="BtnClock" destination="DpQ-8k-KSb" id="dbu-bn-cgE"/>
                         <outlet property="BtnDay" destination="Kgy-4M-UJb" id="Ghl-cz-Z24"/>
                         <outlet property="BtnSelectDrug" destination="gKd-VJ-gfd" id="5Jl-4B-sLJ"/>

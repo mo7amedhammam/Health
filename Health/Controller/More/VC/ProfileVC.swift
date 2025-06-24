@@ -484,7 +484,7 @@ struct ProfileViewUI: View {
                                     pushUIKitVC(VC)
                             }
                             ProfileRow(title: "ملفاتي", icon: "profile_files"){
-                                
+                                pushTo(destination: MyFilesView())
                             }
                             ProfileRow(title: "المفضلة", icon: "profile_fav"){
                                 pushTo(destination: WishListView())
