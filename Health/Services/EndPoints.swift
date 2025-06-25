@@ -154,3 +154,8 @@ enum MyFilesEndPoints : String{
     case GetCustomerFileList = "CustomerFile/GetCustomerFileList"
     case GetCustomerFile = "CustomerFile/GetCustomerFile"
 }
+
+enum MyAllergiesEndPoints : String{
+    case AddCustomerAllergy = "Allergy/AddCustomerAllergy"
+    case GetCustomerAllergies = "Allergy/GetAllergyWithCategor"
+}

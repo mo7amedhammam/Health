@@ -9,7 +9,7 @@ import SwiftUI
 
 struct CustomButton: View {
     var title: String = "تأكيد"
-    var font:Font? = .bold(size: 18)
+    var font:Font? = .bold(size: 24)
     var foregroundcolor: Color? = .white
     var backgroundcolor: Color? = Color.mainBlue
     var cornerRadius: CGFloat? = 5

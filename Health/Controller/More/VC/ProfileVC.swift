@@ -490,7 +490,8 @@ struct ProfileViewUI: View {
                                 pushTo(destination: WishListView())
                             }
                             ProfileRow(title: "الحساسية", icon: "profile_alergy"){
-                                
+                                pushTo(destination: AllergiesView())
+
                             }
                             ProfileRow(title: "حساباني", icon: "walletIcon",hasDivider:false){
                                 

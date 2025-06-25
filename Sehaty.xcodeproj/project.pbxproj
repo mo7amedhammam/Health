@@ -19,6 +19,10 @@
 		902B87C32E0B4DC6009D5234 /* MyFilesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 902B87C22E0B4DC6009D5234 /* MyFilesViewModel.swift */; };
 		902B87C62E0B523E009D5234 /* MyFilesServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 902B87C52E0B523E009D5234 /* MyFilesServices.swift */; };
 		902B87C82E0B53A8009D5234 /* MyFileM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 902B87C72E0B53A8009D5234 /* MyFileM.swift */; };
+		902B87CA2E0C2D47009D5234 /* AllergiesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 902B87C92E0C2D47009D5234 /* AllergiesView.swift */; };
+		902B87CC2E0C2DED009D5234 /* AllergiesMElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 902B87CB2E0C2DED009D5234 /* AllergiesMElement.swift */; };
+		902B87CE2E0C442C009D5234 /* AllergiesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 902B87CD2E0C442C009D5234 /* AllergiesViewModel.swift */; };
+		902B87D12E0C446C009D5234 /* AllergiesServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 902B87D02E0C446C009D5234 /* AllergiesServices.swift */; };
 		903667062D82E0A40040AE29 /* LocalizationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 903667052D82E08E0040AE29 /* LocalizationManager.swift */; };
 		903667082D82E1410040AE29 /* AppKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 903667072D82E1370040AE29 /* AppKeys.swift */; };
 		9047483F2DCF63530016C3DC /* PackagesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9047483E2DCF63530016C3DC /* PackagesView.swift */; };
@@ -293,6 +297,10 @@
 		902B87C22E0B4DC6009D5234 /* MyFilesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyFilesViewModel.swift; sourceTree = "<group>"; };
 		902B87C52E0B523E009D5234 /* MyFilesServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyFilesServices.swift; sourceTree = "<group>"; };
 		902B87C72E0B53A8009D5234 /* MyFileM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyFileM.swift; sourceTree = "<group>"; };
+		902B87C92E0C2D47009D5234 /* AllergiesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllergiesView.swift; sourceTree = "<group>"; };
+		902B87CB2E0C2DED009D5234 /* AllergiesMElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllergiesMElement.swift; sourceTree = "<group>"; };
+		902B87CD2E0C442C009D5234 /* AllergiesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllergiesViewModel.swift; sourceTree = "<group>"; };
+		902B87D02E0C446C009D5234 /* AllergiesServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllergiesServices.swift; sourceTree = "<group>"; };
 		903667052D82E08E0040AE29 /* LocalizationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationManager.swift; sourceTree = "<group>"; };
 		903667072D82E1370040AE29 /* AppKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppKeys.swift; sourceTree = "<group>"; };
 		9047483E2DCF63530016C3DC /* PackagesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackagesView.swift; sourceTree = "<group>"; };
@@ -644,6 +652,7 @@
 		902B87BD2E0AD775009D5234 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				902B87C92E0C2D47009D5234 /* AllergiesView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -651,6 +660,7 @@
 		902B87BE2E0AD778009D5234 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				902B87CD2E0C442C009D5234 /* AllergiesViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -658,6 +668,7 @@
 		902B87BF2E0AD77B009D5234 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				902B87CB2E0C2DED009D5234 /* AllergiesMElement.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -668,6 +679,14 @@
 				902B87C52E0B523E009D5234 /* MyFilesServices.swift */,
 			);
 			path = MyFilesServices;
+			sourceTree = "<group>";
+		};
+		902B87CF2E0C4456009D5234 /* AllergiesServices */ = {
+			isa = PBXGroup;
+			children = (
+				902B87D02E0C446C009D5234 /* AllergiesServices.swift */,
+			);
+			path = AllergiesServices;
 			sourceTree = "<group>";
 		};
 		903667042D82E0700040AE29 /* Localization */ = {
@@ -1764,6 +1783,7 @@
 		BBBDFFF62A730F9800F066DF /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				902B87CF2E0C4456009D5234 /* AllergiesServices */,
 				902B87C42E0B51E8009D5234 /* MyFilesServices */,
 				902B87B32E05BC6C009D5234 /* LookUpsServices */,
 				904748512DD34ECE0016C3DC /* NewServices */,
@@ -2560,8 +2580,10 @@
 				9057A6132DA4232B0090C34A /* CustomTextField.swift in Sources */,
 				BB5A26672B2E1DC40005C9B8 /* HelpVC.swift in Sources */,
 				BB546DEA2AC9E467008A4F8C /* HomeTVCell1.swift in Sources */,
+				902B87CC2E0C2DED009D5234 /* AllergiesMElement.swift in Sources */,
 				90842F3A2DA1748800B02D02 /* CustomButton.swift in Sources */,
 				BB518CEE2A9A129500242FAD /* TipsCategories3TVCell.swift in Sources */,
+				902B87D12E0C446C009D5234 /* AllergiesServices.swift in Sources */,
 				90FDD3152DDF686300C3BABB /* TicketM.swift in Sources */,
 				904748592DD6233E0016C3DC /* SubCategoriesM.swift in Sources */,
 				90FDD36E2DF83AA100C3BABB /* AppointmentsViewModel.swift in Sources */,
@@ -2595,6 +2617,7 @@
 				C82DCAB22AACB42F00322B55 /* MedicationScheduleDetailsVM.swift in Sources */,
 				BB10D9112B1E774100751AAE /* StartScreenVC.swift in Sources */,
 				BB518CF12A9A131300242FAD /* TipsCategoriesDetailsVC.swift in Sources */,
+				902B87CE2E0C442C009D5234 /* AllergiesViewModel.swift in Sources */,
 				BB518CD72A9A114400242FAD /* TipsCategoriesVC3.swift in Sources */,
 				BBD2B0362AAA832E00C0A807 /* MeasurementServices.swift in Sources */,
 				BBBD00102A73101700F066DF /* CheckConnection.swift in Sources */,
@@ -2648,6 +2671,7 @@
 				BBBD00142A73101700F066DF /* AES.swift in Sources */,
 				BBE3CC7B2A80010B004B0D9A /* MedicationScheduleDetailsTVCell.swift in Sources */,
 				BB14DAF32A7B044500389B96 /* ProfileTVCellLogout.swift in Sources */,
+				902B87CA2E0C2D47009D5234 /* AllergiesView.swift in Sources */,
 				902B87C62E0B523E009D5234 /* MyFilesServices.swift in Sources */,
 				902B87C32E0B4DC6009D5234 /* MyFilesViewModel.swift in Sources */,
 				BBBD00342A731B3300F066DF /* SplashScreenVC.swift in Sources */,

@@ -48,7 +48,7 @@ extension MyFilesViewModel{
         }
         var parametersarr : [String : Any] =  ["FileName":FileName,"FileTypeId":FileTypeId]
         
-        var target = MyFilesServices.AddFile(parameters: parametersarr)
+        let target = MyFilesServices.AddFile(parameters: parametersarr)
         
         if let image = image {
             let data = image.imageWithColor(color1: .blue).imageWithColor(color1: .blue)
