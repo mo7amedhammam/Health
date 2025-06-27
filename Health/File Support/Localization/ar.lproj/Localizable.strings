@@ -205,3 +205,24 @@
 "allergies_header_title" = "الحساسيات اللي بتأثر على حياتك!";
 "allergies_header_subtitle" = "في منصة صحتي مع الندى، يهمنا نعرف كل حاجة عنك… حتى التفاصيل الصغيرة زي أنواع الحساسية اللي ممكن تِسبّب لك تعب أو تِأثر على متابعتك لنظام التغذية أو التمارين. علشان كده، خصصنا لك الصفحة دي علشان تقدر تسجّل كل أنواع الحساسية اللي عندك بسهولة، ونتعامل معاها باهتمام.";
 
+//MARK:   ---- My Payments ----
+"payments_title" = "حساباتي";
+"payments_header" = "مرحبًا بيك في صفحة حساباتك على منصة صحتي مع الندى!";
+"payments_subheader" = "هنا تقدر تتابع كل تفاصيل اشتراكاتك، رصيد الجلسات، عمليات الشراء.";
+"payments_currentballance" = "الرصيد الحالي";
+"payments_wallet" = "محفظتك";
+"payments_Previous_details" = "تفاصيل الاشتراكات السابقة";
+"payments_refund" = "المبالغ المرتجعة";
+
+"payments_notes" = "ملاحظات مهمة";
+
+"payments_buy_date" = "تاريخ الشراء";
+"payments_sessionCount" = "عدد الجلسات";
+"payments_sessionused" = "الجلسات المستخدمة";
+"payments_sessionsREmaining" = "الجلسات المتبقية";
+
+"payments_refundStatus" = "الحالة";
+"payments_refundReason" = "سبب الاسترداد";
+"payments_refundDate" = "التاريخ";
+"payments_refundAmount" = "المبلغ";
+"payments_egp" = "جنية مصري";

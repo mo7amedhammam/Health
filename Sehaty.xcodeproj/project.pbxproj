@@ -23,6 +23,10 @@
 		902B87CC2E0C2DED009D5234 /* AllergiesMElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 902B87CB2E0C2DED009D5234 /* AllergiesMElement.swift */; };
 		902B87CE2E0C442C009D5234 /* AllergiesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 902B87CD2E0C442C009D5234 /* AllergiesViewModel.swift */; };
 		902B87D12E0C446C009D5234 /* AllergiesServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 902B87D02E0C446C009D5234 /* AllergiesServices.swift */; };
+		902B87D42E0F0454009D5234 /* MyWalletServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 902B87D32E0F0454009D5234 /* MyWalletServices.swift */; };
+		902B87DB2E0F07DC009D5234 /* MyPaymentsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 902B87DA2E0F07DC009D5234 /* MyPaymentsView.swift */; };
+		902B87DD2E0F0EEB009D5234 /* CustomerOrderDetailM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 902B87DC2E0F0EEB009D5234 /* CustomerOrderDetailM.swift */; };
+		902B87DF2E0F2ABE009D5234 /* MyPaymentsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 902B87DE2E0F2ABE009D5234 /* MyPaymentsViewModel.swift */; };
 		903667062D82E0A40040AE29 /* LocalizationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 903667052D82E08E0040AE29 /* LocalizationManager.swift */; };
 		903667082D82E1410040AE29 /* AppKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 903667072D82E1370040AE29 /* AppKeys.swift */; };
 		9047483F2DCF63530016C3DC /* PackagesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9047483E2DCF63530016C3DC /* PackagesView.swift */; };
@@ -301,6 +305,10 @@
 		902B87CB2E0C2DED009D5234 /* AllergiesMElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllergiesMElement.swift; sourceTree = "<group>"; };
 		902B87CD2E0C442C009D5234 /* AllergiesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllergiesViewModel.swift; sourceTree = "<group>"; };
 		902B87D02E0C446C009D5234 /* AllergiesServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllergiesServices.swift; sourceTree = "<group>"; };
+		902B87D32E0F0454009D5234 /* MyWalletServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyWalletServices.swift; sourceTree = "<group>"; };
+		902B87DA2E0F07DC009D5234 /* MyPaymentsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPaymentsView.swift; sourceTree = "<group>"; };
+		902B87DC2E0F0EEB009D5234 /* CustomerOrderDetailM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomerOrderDetailM.swift; sourceTree = "<group>"; };
+		902B87DE2E0F2ABE009D5234 /* MyPaymentsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPaymentsViewModel.swift; sourceTree = "<group>"; };
 		903667052D82E08E0040AE29 /* LocalizationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationManager.swift; sourceTree = "<group>"; };
 		903667072D82E1370040AE29 /* AppKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppKeys.swift; sourceTree = "<group>"; };
 		9047483E2DCF63530016C3DC /* PackagesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackagesView.swift; sourceTree = "<group>"; };
@@ -689,6 +697,48 @@
 			path = AllergiesServices;
 			sourceTree = "<group>";
 		};
+		902B87D52E0F04CA009D5234 /* MyWallet */ = {
+			isa = PBXGroup;
+			children = (
+				902B87D32E0F0454009D5234 /* MyWalletServices.swift */,
+			);
+			path = MyWallet;
+			sourceTree = "<group>";
+		};
+		902B87D62E0F0727009D5234 /* MyPayments */ = {
+			isa = PBXGroup;
+			children = (
+				902B87D92E0F0744009D5234 /* Model */,
+				902B87D82E0F0742009D5234 /* ViewModel */,
+				902B87D72E0F073E009D5234 /* View */,
+			);
+			path = MyPayments;
+			sourceTree = "<group>";
+		};
+		902B87D72E0F073E009D5234 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				902B87DA2E0F07DC009D5234 /* MyPaymentsView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		902B87D82E0F0742009D5234 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				902B87DE2E0F2ABE009D5234 /* MyPaymentsViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		902B87D92E0F0744009D5234 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				902B87DC2E0F0EEB009D5234 /* CustomerOrderDetailM.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		903667042D82E0700040AE29 /* Localization */ = {
 			isa = PBXGroup;
 			children = (
@@ -702,6 +752,7 @@
 		904748312DCCAF550016C3DC /* AppFlow */ = {
 			isa = PBXGroup;
 			children = (
+				902B87D62E0F0727009D5234 /* MyPayments */,
 				902B87B92E0AD699009D5234 /* Alergies */,
 				902B87B82E0AD68A009D5234 /* MyFiles */,
 				902B87AE2E05BAF1009D5234 /* Lookups */,
@@ -1783,6 +1834,7 @@
 		BBBDFFF62A730F9800F066DF /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				902B87D52E0F04CA009D5234 /* MyWallet */,
 				902B87CF2E0C4456009D5234 /* AllergiesServices */,
 				902B87C42E0B51E8009D5234 /* MyFilesServices */,
 				902B87B32E05BC6C009D5234 /* LookUpsServices */,
@@ -2553,6 +2605,7 @@
 				C88995902AAA02A2002AD812 /* ChangePasswordM.swift in Sources */,
 				C80DA9F12AA4F73400F10808 /* LoginModel.swift in Sources */,
 				90FDD3372DE5D78700C3BABB /* SubcripedPackagesViewModel.swift in Sources */,
+				902B87DB2E0F07DC009D5234 /* MyPaymentsView.swift in Sources */,
 				BBC7B45D2A72CC820079355E /* SceneDelegate.swift in Sources */,
 				BB913AD72A9BE04900003AC5 /* TipsCategoriesTVCell1.swift in Sources */,
 				BBA1DA162AB11C3A0042713A /* NotificationServices.swift in Sources */,
@@ -2575,6 +2628,7 @@
 				902B87B02E05BB14009D5234 /* LookupsViewModel.swift in Sources */,
 				C8C7339A2AA6756B00185698 /* SignUpM.swift in Sources */,
 				C85671BE2AAF5AD900E02D75 /* InbodyM.swift in Sources */,
+				902B87D42E0F0454009D5234 /* MyWalletServices.swift in Sources */,
 				BBBD00172A73101700F066DF /* Helper.swift in Sources */,
 				9047484C2DCFA4000016C3DC /* PackageMoreDetailsView.swift in Sources */,
 				9057A6132DA4232B0090C34A /* CustomTextField.swift in Sources */,
@@ -2600,6 +2654,7 @@
 				BB48F8A12A747D020051F12C /* ChangePasswordVC.swift in Sources */,
 				902B87C12E0AD7DA009D5234 /* MyFilesView.swift in Sources */,
 				BBE3CC742A7FFFF8004B0D9A /* MedicationScheduleVC.swift in Sources */,
+				902B87DD2E0F0EEB009D5234 /* CustomerOrderDetailM.swift in Sources */,
 				C85996752AA7553500533C87 /* HUD.swift in Sources */,
 				BB0512482B60313C004CAB83 /* ModelResponseFirebase.swift in Sources */,
 				BBBD000C2A73101700F066DF /* EXTAlert.swift in Sources */,
@@ -2675,6 +2730,7 @@
 				902B87C62E0B523E009D5234 /* MyFilesServices.swift in Sources */,
 				902B87C32E0B4DC6009D5234 /* MyFilesViewModel.swift in Sources */,
 				BBBD00342A731B3300F066DF /* SplashScreenVC.swift in Sources */,
+				902B87DF2E0F2ABE009D5234 /* MyPaymentsViewModel.swift in Sources */,
 				C8346E582AA5EE9C00C3C3EE /* LoginVM.swift in Sources */,
 				C893A9B52AB5BA190054F171 /* TipsVM.swift in Sources */,
 				C82DCAA82AAC785D00322B55 /* MedicationScheduleVM.swift in Sources */,

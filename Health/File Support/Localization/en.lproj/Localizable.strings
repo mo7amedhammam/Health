@@ -208,3 +208,25 @@
 "allergies_header_title" = "Allergies That Affect Your Life!";
 "allergies_header_subtitle" = "At My Health with Al-Nada, we want to know everything about you, even small details like allergies that might bother you or affect your diet and exercise.  We've created this page for you to easily list your allergies so we can give them the attention they deserve.";
 
+
+
+//MARK:   ---- My Payments ----
+"payments_title" = "Payments";
+"payments_header" = "Welcome to your accounts page on the My Health with Al Nada platform!";
+"payments_subheader" = "Here you can track all your subscription details, session balance, and purchases.";
+"payments_currentballance" = "Current Ballance";
+"payments_wallet" = "your Wallet";
+"payments_Previous_details" = "Previous Subscription Details";
+"payments_refund" = "Refund";
+"payments_notes" = "Important Notes";
+
+"payments_buy_date" = "Buy Date";
+"payments_sessionCount" = "Sessions Count";
+"payments_sessionused" = "Used Sessions";
+"payments_sessionsREmaining" = "Remainning Sessions";
+
+"payments_refundStatus" = "Status";
+"payments_refundReason" = "Refund Reason";
+"payments_refundDate" = "Date";
+"payments_refundAmount" = "Amount";
+"payments_egp" = "Egyption Pound";

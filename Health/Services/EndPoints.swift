@@ -159,3 +159,10 @@ enum MyAllergiesEndPoints : String{
     case AddCustomerAllergy = "Allergy/AddCustomerAllergy"
     case GetCustomerAllergies = "Allergy/GetAllergyWithCategor"
 }
+
+
+enum MyWalletEndPoints : String{
+  case CustomerWalletBalance = "Customer/CustomerWalletBalance"
+  case CustomerOrderDetail = "CustomerPackage/CustomerOrderDetail"
+  case RefundDetail = "CustomerPackage/RefundDetail"
+}
