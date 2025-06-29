@@ -17,7 +17,7 @@ struct PackageFilesView: View {
 
             Spacer()
             
-            filesList(files: viewmodel.packageFiles)
+            filesList(files: viewmodel.packageFiles?.items)
             
         }
         .background(Color(.bg))
@@ -25,7 +25,8 @@ struct PackageFilesView: View {
             viewmodel.CustomerPackageId = CustomerPackageId
             await viewmodel.getSubscripedPackageFiles()
         }
-        .reversLocalizeView()
+//        .reversLocalizeView()
+        .localizeView()
         .showHud(isShowing:  $viewmodel.isLoading)
         .errorAlert(isPresented: .constant(viewmodel.errorMessage != nil), message: viewmodel.errorMessage)
 
@@ -38,7 +39,7 @@ struct PackageFilesView: View {
 
 
 struct filesList:View {
-    var files:[PackageFileM]? = [.init(),.init(),.init()]
+    var files:[PackageFileItemM]? = [.init(),.init(),.init()]
     
     var body: some View {
         

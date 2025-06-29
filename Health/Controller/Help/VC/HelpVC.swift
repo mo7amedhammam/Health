@@ -12,7 +12,7 @@ class HelpVC: UIViewController {
     @IBOutlet weak var TVScreen: UITableView!
     @IBOutlet weak var LaName: UILabel!
     @IBOutlet weak var ImgUser: UIImageView!
-    
+    @IBOutlet weak var BtnBack:UIButton!
     let ViewModel = HelpVM()
     let ViewModelProfile = ProfileVM()
     var currentIndex = -1
@@ -39,7 +39,9 @@ class HelpVC: UIViewController {
            TVScreen.dataSource = self
            TVScreen.delegate = self
            TVScreen.registerCellNib(cellClass: HelpTVCell.self)
-           
+        
+           BtnBack.setImage(UIImage(resource: .backLeft).flippedIfRTL, for: .normal)
+
 //           TVScreen.rowHeight = UITableView.automaticDimension
 //           TVScreen.estimatedRowHeight = 200
 //           TVScreen.separatorStyle = .none

@@ -88,7 +88,6 @@
 "changed_subtitle2" = "تم ربطه سريعًا بخدمات البريد الإلكتروني الشائعة.";
 "changed_btn" = "Done";
 
-
 //--- paswword forget ----
 "forget_title" = "Reset Password";
 "forget_subtitle" = "Password Changed successfully!";
@@ -97,7 +96,6 @@
 "forget_repass_title" = "Confirm New Password";
 "forget_repass_placeholder" = "ReType your New Passowrd";
 "forget_btn_title" = "Reset Password";
-
 
 //--- paswword change screen ----
 "change_sc_title" = "Reset Password";
@@ -108,8 +106,6 @@
 "change_sc_repass_title" = "Confirm New Password";
 "change_sc_repass_placeholder" = "ReType your New Passowrd";
 "change_sc_btn_title" = "Change Password";
-
-
 
 //MARK: --- Home Screen ----
 "home_navtitle" = "Home";
@@ -132,12 +128,9 @@
 "notfication_active" = "active";
 "notfication_inactive" = "inactive";
 
-
 //MARK: --- measurments ---
 "mesurement_recorded" = "Recorded";
 "mesurement_JusMesurment" = "Just Records";
-
-
 
 //------------------ new ---
 "home_maincat" = "main Categories";
@@ -153,15 +146,11 @@
 //MARK: --- packages Details ---
 "available_doc" = "Available Doctor";
 
-
-
-
 //MARK: --- subsriptions ---
 "subscriped_title" = "my subscriptions";
 "subscriped_packages" = "subscriped packages";
 "subscriped_no_packages" = "no subscriped packages for now";
 "subscription_nextSessions" = "Next Sessions";
-
 
 //MARK: --- Package Files ---
 "package_no_files" = "no files for now";
@@ -170,7 +159,6 @@
 "OK" = "OK";
 "login_expired" = "you need to login again";
 "no_connection" = "you are not connected to the internet";
-
 
 //MARK: ---- appointments ----
 "appointments_title" = "My Appointments";
@@ -192,11 +180,27 @@
 //MARK:   ---- "favorite_packages" ----
 "favorite_packages" = "favorite packages";
 
-
 //MARK:   ---- "Profile" ----
 "profile_title" = "My Profile";
 "profile_logout" = "Sign Out";
 "profile_login" = "Sign In";
+
+"profile_Packages" = "Packaged";
+"profile_drugnotifications" = "Notifications";
+"profile_tips" = "Tips Categories";
+"profile_inbody" = "Inbody";
+"profile_files" = "My Files";
+"profile_Favourite" = "Favourite";
+"profile_allergies" = "Allergies";
+"profile_Payments" = "My Payments";
+"profile_settings" = "Settings";
+
+"profile_editProfile" = "Edit Profile";
+"profile_changepassword" = "Chnage Password";
+"profile_languageandcountry" = "Language And Country";
+"profile_privacyandsecurity" = "Privacy And Security";
+"profile_help" = "Help";
+"profile_termsandconditions" = "Terms And Conditions";
 
 //MARK:   ---- my files ----
 "new_cancel_" = "cancel";
@@ -208,8 +212,6 @@
 "allergies_header_title" = "Allergies That Affect Your Life!";
 "allergies_header_subtitle" = "At My Health with Al-Nada, we want to know everything about you, even small details like allergies that might bother you or affect your diet and exercise.  We've created this page for you to easily list your allergies so we can give them the attention they deserve.";
 
-
-
 //MARK:   ---- My Payments ----
 "payments_title" = "Payments";
 "payments_header" = "Welcome to your accounts page on the My Health with Al Nada platform!";
@@ -218,7 +220,6 @@
 "payments_wallet" = "your Wallet";
 "payments_Previous_details" = "Previous Subscription Details";
 "payments_refund" = "Refund";
-"payments_notes" = "Important Notes";
 
 "payments_buy_date" = "Buy Date";
 "payments_sessionCount" = "Sessions Count";
@@ -230,3 +231,8 @@
 "payments_refundDate" = "Date";
 "payments_refundAmount" = "Amount";
 "payments_egp" = "Egyption Pound";
+
+"payments_notes" = "Important Notes";
+"payment_note1" = "You can use the refunded credit to book new sessions at any time.";
+"payment_note2" = "The validity of sessions is linked to the terms of each package.";
+"payment_note3" = "For more inquiries, contact customer service directly through the platform.";

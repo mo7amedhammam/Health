@@ -9,17 +9,22 @@ import SwiftUI
 
 struct HorizontalGradientBackground: ViewModifier {
     var colors: [Color] = [.mainBlue, Color(.secondary)]
-    
+    var reverse: Bool = false
+
     func body(content: Content) -> some View {
+        let finalColors = Helper.shared.getLanguage().lowercased() != "ar" ? colors : colors.reversed()
+
         content
             .background(
                 LinearGradient(
-                    gradient: Gradient(colors: colors),
+                    gradient: Gradient(colors: finalColors),
                     startPoint: .leading,
                     endPoint: .trailing
                 )
             )
-            .reversLocalizeView()
+            
+//            .localizeView()
+//            .reversLocalizeView()
     }
 }
 extension View {

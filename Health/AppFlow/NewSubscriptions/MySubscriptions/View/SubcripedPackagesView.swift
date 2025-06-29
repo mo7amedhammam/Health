@@ -61,16 +61,16 @@ struct SubcripedPackagesView: View {
             .frame(height: 232)
             .horizontalGradientBackground()
             
-            if viewModel.isLoading ?? false && viewModel.subscripedPackages?.items == nil {
-                VStack{
-                    ForEach(0..<3) { _ in
-                        SkeletonPackageCard()
-                            .padding(.horizontal)
-                            .padding(.vertical, 4)
-                    }
-                 Spacer()
-                }
-            } else {
+//            if viewModel.isLoading ?? false && viewModel.subscripedPackages?.items == nil {
+//                VStack{
+//                    ForEach(0..<3) { _ in
+//                        SkeletonPackageCard()
+//                            .padding(.horizontal)
+//                            .padding(.vertical, 4)
+//                    }
+//                 Spacer()
+//                }
+//            } else {
                 SubcripedPackagesListView(packaces: viewModel.subscripedPackages?.items,selectAction: {package in
                     pushTo(destination: SubcripedPackageDetailsView(package: package))
                 },buttonAction:{item in
@@ -94,7 +94,7 @@ struct SubcripedPackagesView: View {
                     await viewModel.refresh()
                 }
                 
-            }
+//            }
             
 //            Group {
 //                if let packages = viewModel.subscripedPackages?.items {
@@ -125,7 +125,8 @@ struct SubcripedPackagesView: View {
             Spacer().frame(height: hasbackBtn ?? true ? 0 : 80)
             
         }
-//        .showHud(isShowing:  $viewModel.isLoading)
+        .localizeView()
+        .showHud(isShowing:  $viewModel.isLoading)
         .errorAlert(isPresented: .constant(viewModel.errorMessage != nil), message: viewModel.errorMessage)
         .edgesIgnoringSafeArea([.top,.horizontal])
         .task {

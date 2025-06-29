@@ -983,11 +983,27 @@ final class AsyncAwaitNetworkService: AsyncAwaitNetworkServiceProtocol {
     // MARK: - Decoding
     private let jsonDecoder = JSONDecoder()
 
+//    private func decodeResponse<T: Codable>(_ data: Data, _ type: T.Type) throws -> T? {
+//        if let wrapper = try? jsonDecoder.decode(BaseResponse<T>.self, from: data),
+//           let result = wrapper.data {
+//            return result
+//        }
+//        return try jsonDecoder.decode(T.self, from: data)
+//    }
+    
     private func decodeResponse<T: Codable>(_ data: Data, _ type: T.Type) throws -> T? {
-        if let wrapper = try? jsonDecoder.decode(BaseResponse<T>.self, from: data),
-           let result = wrapper.data {
-            return result
+        // Try decoding BaseResponse<T>
+        if let wrapper = try? jsonDecoder.decode(BaseResponse<T>.self, from: data) {
+            if wrapper.messageCode == 200 {
+                // return nil if data is null — that's fine
+                return wrapper.data
+            } else {
+                // throw error with message if available
+                throw NetworkError.unknown(code: wrapper.messageCode ?? -1, error: wrapper.message ?? "Unknown error")
+            }
         }
+
+        // If not a wrapped response, fallback to direct decoding
         return try jsonDecoder.decode(T.self, from: data)
     }
 

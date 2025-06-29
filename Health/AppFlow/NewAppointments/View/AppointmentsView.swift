@@ -68,7 +68,8 @@ struct AppointmentsView: View {
             Spacer().frame(height: 55)
             
         }
-        .reversLocalizeView()
+        .localizeView()
+//        .reversLocalizeView()
         .showHud(isShowing:  $viewModel.isLoading)
         .errorAlert(isPresented: .constant(viewModel.errorMessage != nil), message: viewModel.errorMessage)
 
@@ -142,6 +143,7 @@ struct AppointmentsListView: View {
                 }
                 .listStyle(.plain)
         }
+        
     }
 }
 
@@ -488,7 +490,7 @@ struct FilterView: View {
                             .foregroundColor(.white)
                             .padding(.vertical, 15)
                             .frame(maxWidth: .infinity)
-                            .background(Color.sehatyPrimary)
+                            .background(Color(.main))
                             .cornerRadius(3)
                     }
                     
@@ -524,7 +526,8 @@ struct FilterView: View {
             .padding(.horizontal, 20) // Horizontal padding for the main content VStack
             .background(Color.white) // Main content background
         }
-        .reversLocalizeView()
+//        .reversLocalizeView()
+        .localizeView(reverse: true)
         .background(Color.white.ignoresSafeArea()) // Overall background to extend behind safe areas if needed
 //        .environment(\.layoutDirection, .rightToLeft) // Force RTL layout for the entire view
     }

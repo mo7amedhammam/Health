@@ -267,7 +267,8 @@ struct SubcripedPackageDetailsView: View {
         //                guard let packageId  = package.id else {return}
         //                await viewmodel.getAvailableDoctors(PackageId: packageId)
         //            }
-        .reversLocalizeView()
+//        .reversLocalizeView()
+        .localizeView()
         .showHud(isShowing:  $viewmodel.isLoading)
         .errorAlert(isPresented: .constant(viewmodel.errorMessage != nil), message: viewmodel.errorMessage)
 

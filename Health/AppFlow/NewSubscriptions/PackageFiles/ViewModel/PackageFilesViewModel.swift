@@ -22,7 +22,7 @@ class PackageFilesViewModel:ObservableObject {
     
     var CustomerPackageId : Int?
     // Published properties
-    @Published var packageFiles: [PackageFileM]?
+    @Published var packageFiles : PackageFileM?
 //    @Published var availableDays: [AvailableDayM]?
 //    @Published var availableShifts: [AvailableTimeShiftM]?
 //    @Published var availableScheduals: [AvailableSchedualsM]?
@@ -61,7 +61,7 @@ extension PackageFilesViewModel{
             self.errorMessage = nil // Clear previous errors
             let response = try await networkService.request(
                 target,
-                responseType: [PackageFileM].self
+                responseType: PackageFileM.self
             )
             self.packageFiles = response
         } catch {

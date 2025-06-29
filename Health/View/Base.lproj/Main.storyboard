@@ -2498,6 +2498,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="BtnBack" destination="j0M-UN-sTS" id="mCp-TH-rlN"/>
                         <outlet property="BtnNewMes" destination="Key-sh-rcr" id="eu2-u4-40c"/>
                         <outlet property="TVScreen" destination="9LC-Tr-eIQ" id="eDm-di-T0U"/>
                     </connections>
@@ -3959,6 +3960,7 @@
                     <navigationItem key="navigationItem" id="O7q-DZ-hMu"/>
                     <connections>
                         <outlet property="BtnAddNewMes" destination="1hN-v5-L6o" id="0NS-qa-d62"/>
+                        <outlet property="BtnBack" destination="cm4-K7-QvA" id="BdP-eb-JHc"/>
                         <outlet property="BtnClock" destination="DpQ-8k-KSb" id="dbu-bn-cgE"/>
                         <outlet property="BtnDay" destination="Kgy-4M-UJb" id="Ghl-cz-Z24"/>
                         <outlet property="BtnSelectDrug" destination="gKd-VJ-gfd" id="5Jl-4B-sLJ"/>
@@ -5158,6 +5160,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="sDd-U2-ot7"/>
                     <connections>
+                        <outlet property="BtnBack" destination="XNk-Eb-eAB" id="W3m-Wt-TSM"/>
                         <outlet property="ImgUser" destination="pX7-pc-4kz" id="02j-2X-D9J"/>
                         <outlet property="TVScreen" destination="Flg-8M-fl5" id="W5b-wK-iea"/>
                     </connections>

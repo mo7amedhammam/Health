@@ -12,11 +12,11 @@ enum FileType {
     case image, Pdf
 }
 class INBodyVC: UIViewController {
-    
     @IBOutlet weak var TVScreen: UITableView!
     let refreshControl = UIRefreshControl()
     var imagePickerHelper : ImagePickerHelper?
     var image:UIImage?
+    @IBOutlet weak var BtnBack: UIButton!
     @IBOutlet weak var BtnNewMes: UIButton!
     var pdfPickerHelper : PDFPickerHelper?
     var pdfURL:URL?
@@ -45,6 +45,8 @@ class INBodyVC: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         BtnNewMes.titleLabel?.font = UIFont(name: fontsenum.bold.rawValue, size: 24)!
+        BtnBack.setImage(UIImage(resource: .backLeft).flippedIfRTL, for: .normal)
+
     }
     
     override func viewWillAppear(_ animated: Bool) {

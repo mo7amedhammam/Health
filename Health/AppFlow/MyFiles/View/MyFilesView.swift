@@ -47,7 +47,10 @@ struct MyFilesView: View {
 
                 Spacer()
             }
-        
+            .localizeView()
+            .showHud(isShowing:  $myfilesvm.isLoading)
+            .errorAlert(isPresented: .constant(myfilesvm.errorMessage != nil), message: myfilesvm.errorMessage)
+
             .customSheet(isPresented: $showUploadSheet,height: 440){
 //            .sheet(isPresented: $showUploadSheet) {
                 UploadFileSheetView(isPresented: $showUploadSheet)
@@ -58,6 +61,11 @@ struct MyFilesView: View {
 //                { newFile in
 //                    files.append(newFile)
 //                }
+            }
+            .onAppear(){
+                Task{
+                    await myfilesvm.getMyFilesList()
+                }
             }
 //            .frame(height: 600)
 
@@ -100,7 +108,6 @@ struct UploadButton: View {
         }
     }
 }
-
 
 
 struct UploadFileSheetView: View {
@@ -406,8 +413,6 @@ struct CustomDropListInputFieldUI: View {
 }
 
 
-
-import SwiftUI
 import UIKit
 
 struct ImagePickerView: UIViewControllerRepresentable {

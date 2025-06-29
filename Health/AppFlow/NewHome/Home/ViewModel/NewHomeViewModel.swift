@@ -169,7 +169,7 @@ extension NewHomeViewModel{
             return
         }
         let parametersarr : [String : Any] =  ["top" : maxResultCount,"AppCountryId":appCountryId ]
-        var target = HomeServices.MostBookedPackage(parameters: parametersarr)
+        var target = HomeServices.MostViewedPackage(parameters: parametersarr)
         
         switch forcase {
         case .MostBooked:

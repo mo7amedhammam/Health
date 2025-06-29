@@ -396,13 +396,13 @@ extension Helper{
         }
     
     func setLanguage(currentLanguage: String) {
-        userDef.set(currentLanguage, forKey: Languagekey)
+        userDef.set(currentLanguage.lowercased(), forKey: Languagekey)
         userDef.synchronize()
     }
     
     func getLanguage()->String{
         let deviceLanguage = Locale.preferredLanguages.first ?? "en"
-        let deviceLanguageCode = deviceLanguage.getValidLanguageCode()
+        let deviceLanguageCode = deviceLanguage.getValidLanguageCode().lowercased()
         return userDef.string(forKey: Languagekey) ?? deviceLanguageCode
     }
         

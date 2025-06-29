@@ -7,7 +7,7 @@
 
 
 // MARK: - AllergiesMElement
-struct AllergiesMElement: Codable {
+struct AllergiesMElement: Codable,Hashable {
     var allergyCategoryID: Int?
     var allergyCategoryName: String?
     var allergyList: [AllergyList]?
@@ -19,9 +19,10 @@ struct AllergiesMElement: Codable {
 }
 
 // MARK: - AllergyList
-struct AllergyList: Codable {
+struct AllergyList: Codable,Hashable {
     var id: Int?
     var name: String?
+    var hasAllergy: Bool?
 }
 
 typealias AllergiesM = [AllergiesMElement]

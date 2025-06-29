@@ -9,7 +9,7 @@ import Foundation
 
 
 class MyPaymentsViewModel : ObservableObject {
-    static let shared = AllergiesViewModel()
+    static let shared = MyPaymentsViewModel()
     // Injected service
     private let networkService: AsyncAwaitNetworkServiceProtocol
     
@@ -105,8 +105,8 @@ extension MyPaymentsViewModel{
     
     @MainActor
     func getMyBallance() async {
-        isLoading = true
-        defer { isLoading = false }
+//        isLoading = true
+//        defer { isLoading = false }
 //        guard let maxResultCount = maxResultCount,let skipCount = skipCount else {
 ////            // Handle missings
 ////            self.errorMessage = "check inputs"
@@ -130,8 +130,8 @@ extension MyPaymentsViewModel{
     
     @MainActor
     func getPreviousSubsriptions() async {
-        isLoading = true
-        defer { isLoading = false }
+//        isLoading = true
+//        defer { isLoading = false }
 //        guard let maxResultCount = maxResultCount,let skipCount = skipCount else {
 ////            // Handle missings
 ////            self.errorMessage = "check inputs"
@@ -155,8 +155,8 @@ extension MyPaymentsViewModel{
     
     @MainActor
     func getRefundedSubsriptions() async {
-        isLoading = true
-        defer { isLoading = false }
+//        isLoading = true
+//        defer { isLoading = false }
 //        guard let maxResultCount = maxResultCount,let skipCount = skipCount else {
 ////            // Handle missings
 ////            self.errorMessage = "check inputs"

@@ -18,12 +18,12 @@ struct WishListView: View {
                 .refreshable {
                     await viewModel.getWishList()
                 }
+            
         }
-        .reversLocalizeView()
         .task{
             await viewModel.getWishList()
         }
-        .reversLocalizeView()
+        .localizeView()
         .showHud(isShowing:  $viewModel.isLoading)
         .errorAlert(isPresented: .constant(viewModel.errorMessage != nil), message: viewModel.errorMessage)
 

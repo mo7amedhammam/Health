@@ -13,7 +13,7 @@ class NotificationVC: UIViewController  {
     
     
     @IBOutlet weak var BtnSelectDrug: UIButton!
-    
+    @IBOutlet weak var BtnBack: UIButton!
     @IBOutlet weak var TVScreen: UITableView!
     let refreshControl = UIRefreshControl()
     @IBOutlet weak var ViewAddNewNotification: UIView!
@@ -123,6 +123,8 @@ class NotificationVC: UIViewController  {
         }else{
             LaFor.reverselocalizedview()
         }
+        BtnBack.setImage(UIImage(resource: .backLeft).flippedIfRTL, for: .normal)
+
     }
     
     @objc func EditingChanged (_ textField: UITextField) {

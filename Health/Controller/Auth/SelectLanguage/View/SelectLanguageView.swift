@@ -8,10 +8,12 @@
 import SwiftUI
 
 struct SelectLanguageView : View {
+    @Environment(\.dismiss) var dismiss
     @StateObject var localizationManager = LocalizationManager.shared
     @StateObject private var lookupsVM = LookupsViewModel.shared
     @State private var selectedCountry:AppCountryM? = .init(id: 1, name: "Egypt", flag: "🇪🇬")
     @State private var selectedLanguage:LanguageM? = .init(id: 1, lang1: "Arabic", flag: "🇪🇬")
+    @State private var isLoading:Bool? = false
 
     var hasbackBtn:Bool = false
     var body: some View {
@@ -103,12 +105,12 @@ struct SelectLanguageView : View {
                         )
                     )
                     .keyboardType(.asciiCapableNumberPad)
-                    .task {
-                        await lookupsVM.getLanguages()
-                        if let languages = lookupsVM.languages {
-                            selectedLanguage = languages.first(where: { $0.lang1 == localizationManager.currentLanguage }) ?? languages.first
-                        }
-                    }
+//                    .task {
+//                        await lookupsVM.getLanguages()
+//                        if let languages = lookupsVM.languages {
+//                            selectedLanguage = languages.first(where: { $0.lang1?.lowercased() == localizationManager.currentLanguage?.lowercased() }) ?? languages.first
+//                        }
+//                    }
                     
                     CustomInputFieldUI(
                         title: "lang_Country_title",
@@ -157,12 +159,7 @@ struct SelectLanguageView : View {
                         )
                     )
                     .keyboardType(.asciiCapableNumberPad)
-                    .task {
-                        await lookupsVM.getAppCountries()
-                        if let countries = lookupsVM.appCountries {
-                            selectedCountry = countries.first(where: { $0.id == Helper.shared.AppCountryId() ?? 0 }) ?? countries.first
-                        }
-                    }
+                    
                     
                 }
             }
@@ -171,11 +168,14 @@ struct SelectLanguageView : View {
             Spacer()
 
             CustomButton(title: "lang_Ok_Btn".localized,isdisabled: LocalizationManager.shared.currentLanguage?.isEmpty,backgroundView:AnyView(Color.clear.horizontalGradientBackground())){
-                let rootVC = UIHostingController(rootView: OnboardingView())
-                rootVC.navigationController?.isNavigationBarHidden = true
-                rootVC.navigationController?.toolbar.isHidden = true
-                Helper.shared.changeRootVC(newroot: rootVC, transitionFrom: .fromRight)
-                
+                if !Helper.shared.CheckIfLoggedIn(){
+                    let rootVC = UIHostingController(rootView: OnboardingView())
+                    rootVC.navigationController?.isNavigationBarHidden = true
+                    rootVC.navigationController?.toolbar.isHidden = true
+                    Helper.shared.changeRootVC(newroot: rootVC, transitionFrom: .fromRight)
+                }else{
+                    dismiss()
+                }
 //                Helper.shared.changeRootVC(newroot: HTBC.self, transitionFrom: .fromRight)
 
             }
@@ -183,6 +183,24 @@ struct SelectLanguageView : View {
             
         }
         .localizeView()
+        .showHud(isShowing: $isLoading)
+        .onAppear() {
+            Task{
+                isLoading = true
+                defer { isLoading = false }
+                async let countries:() = await lookupsVM.getAppCountries()
+                async let languages:() = await lookupsVM.getLanguages()
+
+                _ = await (countries,languages)
+                
+                if let countries = lookupsVM.appCountries {
+                    selectedCountry = countries.first(where: { $0.id == Helper.shared.AppCountryId() ?? 0 }) ?? countries.first
+                }
+                if let languages = lookupsVM.languages {
+                    selectedLanguage = languages.first(where: { $0.lang1?.lowercased() == localizationManager.currentLanguage?.lowercased() }) ?? languages.first
+                }
+            }
+        }
 
     }
     

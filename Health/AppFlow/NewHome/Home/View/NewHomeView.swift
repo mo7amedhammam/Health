@@ -113,7 +113,9 @@ struct NewHomeView: View {
                 }
                 //                .padding(.horizontal)
             }
-            .reversLocalizeView()
+//            .reversLocalizeView()
+            .localizeView()
+
             .showHud(isShowing:  $viewModel.isLoading)
             .errorAlert(isPresented: .constant(viewModel.errorMessage != nil), message: viewModel.errorMessage)
 

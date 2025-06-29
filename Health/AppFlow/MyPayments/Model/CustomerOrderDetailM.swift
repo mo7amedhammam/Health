@@ -30,6 +30,15 @@ struct CustomerOrderDetailM: Codable {
     }
 }
 
+extension CustomerOrderDetailM {
+    var formattedDate: String? {
+        guard let date = self.date else { return "" }
+
+        let formatedDate = convertDateToString(inputDateString: date , inputDateFormat: "yyyy-MM-dd'T'HH:mm:ss", outputDateFormat: "yyyy MMM dd")
+        return formatedDate // fallback to original string if parsing fails
+    }
+}
+
 //// MARK: - CustomerOrderRefundM
 //struct CustomerOrderRefundM: Codable {
 //    var packageName: String?

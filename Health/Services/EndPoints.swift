@@ -157,7 +157,7 @@ enum MyFilesEndPoints : String{
 
 enum MyAllergiesEndPoints : String{
     case AddCustomerAllergy = "Allergy/AddCustomerAllergy"
-    case GetCustomerAllergies = "Allergy/GetAllergyWithCategor"
+    case GetCustomerAllergies = "Allergy/GetAllergyWithCategory"
 }
 
 

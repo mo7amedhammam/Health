@@ -134,7 +134,8 @@ struct PackageDetailsView: View {
                 guard let appCountryPackageId  = package.appCountryPackageId else {return}
                 await viewmodel.getAvailableDoctors(appCountryPackageId: appCountryPackageId)
             }
-            .reversLocalizeView()
+//            .reversLocalizeView()
+            .localizeView(reverse: true)
             .showHud(isShowing:  $viewmodel.isLoading)
             .errorAlert(isPresented: .constant(viewmodel.errorMessage != nil), message: viewmodel.errorMessage)
 

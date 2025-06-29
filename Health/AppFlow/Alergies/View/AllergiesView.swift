@@ -46,7 +46,7 @@ struct AllergiesView: View {
                     
                     // MARK: - Categories and Checkboxes
 //                    ForEach(allergies, id: \.allergyCategoryID) { category in
-                    ForEach(viewModel.allergies ?? [], id: \.allergyCategoryID) { category in
+                    ForEach(viewModel.allergies ?? [], id: \.self) { category in
 
                         VStack(alignment: .leading, spacing: 12) {
                             Text(category.allergyCategoryName ?? "")
@@ -64,7 +64,7 @@ struct AllergiesView: View {
                     
 //                    Spacer()
 
-                    if viewModel.allergies?.count == 0  {
+                    if viewModel.allergies?.count ?? 0 > 0  {
                         
                         // MARK: - Buttons
                         HStack(spacing: 2) {
@@ -88,52 +88,28 @@ struct AllergiesView: View {
             }
             .padding(.top)
         }
+        
 //        .padding()
 //        .environment(\.layoutDirection, .rightToLeft)
         .onAppear {
             Task {
                    await viewModel.getMyAllergies()
+                if let allergies = viewModel.allergies {
+                    for category in allergies {
+                        for item in category.allergyList ?? [] {
+                            if (item.hasAllergy ?? false), let id = item.id {
+                                selectedAllergyIds.insert(id)
+                            }
+                        }
+                    }
+                }
                }
         }
+        .localizeView()
+        .showHud(isShowing:  $viewModel.isLoading)
+        .errorAlert(isPresented: .constant(viewModel.errorMessage != nil), message: viewModel.errorMessage)
     }
 
-//    // MARK: - Mock (replace with API call)
-//    func loadMockData() {
-//        allergies = [
-//            AllergiesMElement(allergyCategoryID: 1, allergyCategoryName: "حساسية الطعام", allergyList: [
-//                .init(id: 1, name: "منتجات الألبان"),
-//                .init(id: 2, name: "الجلوتين"),
-//                .init(id: 3, name: "المكسرات"),
-//                .init(id: 4, name: "المحار والأسماك"),
-//                .init(id: 5, name: "الصويا"),
-//                .init(id: 6, name: "البيض"),
-//                .init(id: 7, name: "الشوكولاتة")
-//            ]),
-//            AllergiesMElement(allergyCategoryID: 2, allergyCategoryName: "حساسية الأدوية", allergyList: [
-//                .init(id: 8, name: "البنسلين"),
-//                .init(id: 9, name: "الأيبوبروفين"),
-//                .init(id: 10, name: "الأسبرين"),
-//                .init(id: 11, name: "المضادات الحيوية الأخرى")
-//            ]),
-//            AllergiesMElement(allergyCategoryID: 3, allergyCategoryName: "حساسية بيئية", allergyList: [
-//                .init(id: 12, name: "العفن والرطوبة"),
-//                .init(id: 13, name: "حبوب اللقاح"),
-//                .init(id: 14, name: "وبر الحيوانات"),
-//                .init(id: 15, name: "الغبار")
-//            ]),
-//            AllergiesMElement(allergyCategoryID: 4, allergyCategoryName: "حساسية الجلد", allergyList: [
-//                .init(id: 16, name: "اللاتكس"),
-//                .init(id: 17, name: "بعض أنواع الكريمات"),
-//                .init(id: 18, name: "بعض أنواع المنظفات"),
-//                .init(id: 19, name: "المعادن")
-//            ]),
-//            AllergiesMElement(allergyCategoryID: 5, allergyCategoryName: "حساسية الجهاز التنفسي", allergyList: [
-//                .init(id: 20, name: "الربو"),
-//                .init(id: 21, name: "الروائح القوية"),
-//                .init(id: 22, name: "البخور والدخان")
-//            ])
-//        ]
-//    }
 }
 
 #Preview {
@@ -150,6 +126,7 @@ struct WrapCheckboxList: View {
             ForEach(items, id: \.id) { item in
                 HStack(spacing:0) {
                     Checkbox(isChecked: selectedIds.contains(item.id ?? 0)) {
+//                    Checkbox(isChecked: selectedIds.contains(item.id ?? 0) ? true : (item.hasAllergy ?? false)) {
                         let id = item.id ?? 0
                         if selectedIds.contains(id) {
                             selectedIds.remove(id)
@@ -173,10 +150,11 @@ struct WrapCheckboxList: View {
                 .frame(height: 22)
                 .background(Color(.white))
                 .cornerRadius(8)
-//                .overlay(
-//                    RoundedRectangle(cornerRadius: 8)
-//                        .stroke(Color(.mainBlue), lineWidth: 1)
-//                )
+//                .onAppear {
+//                    if (item.hasAllergy ?? false), let id = item.id {
+//                        selectedIds.insert(id)
+//                    }
+//                }
             }
         }
     }

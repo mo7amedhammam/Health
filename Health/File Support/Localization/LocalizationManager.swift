@@ -19,32 +19,31 @@ class LocalizationManager : ObservableObject{
     func setLanguage(_ language: String, completion: @escaping (Bool) -> Void) {
         print("setLanguage",language)
 
-        currentLanguage = language
+        currentLanguage = language.lowercased()
 //        UIView.appearance().semanticContentAttribute = language == "ar" ? .forceRightToLeft:.forceLeftToRight
         Helper.shared.setLanguage(currentLanguage: language)
         Helper.shared.languageSelected(opened: true)
-        fetchTranslations { success in
-            completion(success)
-        }
+//        fetchTranslations { success in
+//            completion(success)
+//        }
 
     }
     
     func localizedString(forKey key: String) -> String {
         queue.sync {
-            
-            return translations[key] ?? NSLocalizedString(key, comment: "")
+            return translations[key.lowercased()] ?? NSLocalizedString(key.lowercased(), comment: "")
         }
     }
     
     private func cacheTranslations(_ translations: [String: String], for language: String) {
         queue.async(flags: .barrier) {
-            UserDefaults.standard.set(translations, forKey: "cachedTranslations_\(language)")
+            UserDefaults.standard.set(translations, forKey: "cachedTranslations_\(language.lowercased())")
         }
     }
 
     private func loadCachedTranslations(for language: String) -> [String: String]? {
         queue.sync {
-            return UserDefaults.standard.dictionary(forKey: "cachedTranslations_\(language)") as? [String: String]
+            return UserDefaults.standard.dictionary(forKey: "cachedTranslations_\(language.lowercased())") as? [String: String]
         }
     }
     
@@ -58,7 +57,7 @@ class LocalizationManager : ObservableObject{
     
     private func loadDefaultTranslations(for language: String) -> [String: String] {
 //        UserDefaults.standard.removeObject(forKey: "cachedTranslations_\(language)")
-        if let cachedTranslations = loadCachedTranslations(for: language){
+        if let cachedTranslations = loadCachedTranslations(for: language.lowercased()){
             self.updateTranslations(cachedTranslations)
 //            completion(true)
             return cachedTranslations
@@ -162,33 +161,58 @@ extension String {
     }
 }
 
+//
+//import SwiftUI
+////MARK:  --- ViewModifier to update layout Direction RTL ---
+//struct LocalizationViewModifier: ViewModifier {
+//    @ObservedObject var localizeHelper = LocalizationManager.shared
+//    public func body(content: Content) -> some View {
+//        content
+//            .environment(\.locale, Locale(identifier: localizeHelper.currentLanguage?.lowercased() ?? "ar"))
+//            .environment(\.layoutDirection, localizeHelper.currentLanguage?.lowercased() == "ar" ? .rightToLeft : .leftToRight)
+//    }
+//}
+////MARK:  --- ViewModifier to update layout Direction RTL ---
+//struct ReversedLocalizationViewModifier: ViewModifier {
+//    @ObservedObject var localizeHelper = LocalizationManager.shared
+//    public func body(content: Content) -> some View {
+//        content
+//            .environment(\.locale, Locale(identifier: localizeHelper.currentLanguage?.lowercased() ?? "ar"))
+//            .environment(\.layoutDirection, localizeHelper.currentLanguage?.lowercased() == "en" ? .leftToRight : .rightToLeft)
+//    }
+//}
+//
+//// --- View Extension to apply the modifier ---
+//extension View {
+//    public func localizeView() -> some View {
+//        modifier(LocalizationViewModifier())
+//    }
+//    public func reversLocalizeView() -> some View {
+//        modifier(ReversedLocalizationViewModifier())
+//    }
+//}
+
 
 import SwiftUI
-//MARK:  --- ViewModifier to update layout Direction RTL ---
-struct LocalizationViewModifier: ViewModifier {
+
+// MARK: --- Unified ViewModifier for Layout Direction and Locale ---
+struct AppLocalizationViewModifier: ViewModifier {
     @ObservedObject var localizeHelper = LocalizationManager.shared
+    var reverse: Bool = false
+    
     public func body(content: Content) -> some View {
-        content
-            .environment(\.locale, Locale(identifier: localizeHelper.currentLanguage ?? "ar"))
-            .environment(\.layoutDirection, localizeHelper.currentLanguage == "en" ? .rightToLeft : .leftToRight)
-    }
-}
-//MARK:  --- ViewModifier to update layout Direction RTL ---
-struct ReversedLocalizationViewModifier: ViewModifier {
-    @ObservedObject var localizeHelper = LocalizationManager.shared
-    public func body(content: Content) -> some View {
-        content
-            .environment(\.locale, Locale(identifier: localizeHelper.currentLanguage ?? "ar"))
-            .environment(\.layoutDirection, localizeHelper.currentLanguage == "en" ? .leftToRight : .rightToLeft)
+        let lang = localizeHelper.currentLanguage?.lowercased() ?? "ar"
+        let direction: LayoutDirection = (lang == "ar") != reverse ? .rightToLeft : .leftToRight
+        
+        return content
+            .environment(\.locale, Locale(identifier: lang))
+            .environment(\.layoutDirection, direction)
     }
 }
 
 // --- View Extension to apply the modifier ---
 extension View {
-    public func localizeView() -> some View {
-        modifier(LocalizationViewModifier())
-    }
-    public func reversLocalizeView() -> some View {
-        modifier(ReversedLocalizationViewModifier())
+    public func localizeView(reverse: Bool = false) -> some View {
+        modifier(AppLocalizationViewModifier(reverse: reverse))
     }
 }

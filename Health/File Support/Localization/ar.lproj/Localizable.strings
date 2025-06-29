@@ -97,7 +97,6 @@
 "forget_repass_placeholder" = "أكد كلمة المرور الجديدة";
 "forget_btn_title" = "إعادة الضبط";
 
-
 //--- paswword change screeen ----
 "change_sc_title" = "تغيير كلمة المرور";
 "change_sc_oldpass_title" = "كلمة المرور القديمة";
@@ -126,7 +125,6 @@
 "sub_category" =  "تصنيف فرعي";
 "package_" =  "باقة";
 
-
 //MARK: --- notification ---
 "notfication_active" = "فعّال";
 "notfication_inactive" = "مُنتهي";
@@ -134,7 +132,6 @@
 //MARK: --- measurments ---
 "mesurement_recorded" = "تم تسجيل";
 "mesurement_JusMesurment" = "قياس فقط";
-
 
 //------------------new ---
 
@@ -151,18 +148,14 @@
 //MARK: --- packages Details ---
 "available_doc" = "دكتور متاح";
 
-
-
 //MARK: --- subsriptions ---
 "subscriped_title" = "اشتراكاتي";
 "subscriped_packages" = "الباقات المشترك بها";
 "subscriped_no_packages" = "لا يوجد أي باقات مشترك بها حتى الآن";
 "subscription_nextSessions" = "السيشنز القادمة";
 
-
 //MARK: --- Package Files ---
 "package_no_files" = "لا يوجد أي ملفات";
-
 
 //MARK: --- alert ---
 "OK" = "موافق";
@@ -194,6 +187,22 @@
 "profile_logout" = "تسجيل الخروج";
 "profile_login" = "تسجيل الدخول";
 
+"profile_Packages" = "الباقات";
+"profile_drugnotifications" = "تنبيهات الأدوية";
+"profile_tips" = "نصائح طبية";
+"profile_inbody" = "Inbody";
+"profile_files" = "ملفاتي";
+"profile_Favourite" = "المفضلة";
+"profile_allergies" = "الحساسية";
+"profile_Payments" = "حساباتي";
+"profile_settings" = "الإعدادات";
+
+"profile_editProfile" = "تعديل العلف الشخصي";
+"profile_changepassword" = "تغيير كلمة المرور";
+"profile_languageandcountry" = "اللغة والدولة";
+"profile_privacyandsecurity" = "الحماية والخصوصية";
+"profile_help" = "المساعدة";
+"profile_termsandconditions" = "الشروط والأحكام";
 
 //MARK:   ---- my files ----
 "new_cancel_" = "إلغاء";
@@ -214,8 +223,6 @@
 "payments_Previous_details" = "تفاصيل الاشتراكات السابقة";
 "payments_refund" = "المبالغ المرتجعة";
 
-"payments_notes" = "ملاحظات مهمة";
-
 "payments_buy_date" = "تاريخ الشراء";
 "payments_sessionCount" = "عدد الجلسات";
 "payments_sessionused" = "الجلسات المستخدمة";
@@ -226,3 +233,8 @@
 "payments_refundDate" = "التاريخ";
 "payments_refundAmount" = "المبلغ";
 "payments_egp" = "جنية مصري";
+
+"payments_notes" = "ملاحظات مهمة";
+"payment_note1" = "يمكنك استخدام الرصيد المرتجع لحجز جلسات جديدة في أي وقت.";
+"payment_note2" = "صلاحية الجلسات مرتبطة بشروط كل باقة.";
+"payment_note3" = "لاستفسارات أكتر، تواصل مع خدمة العملاء مباشرة من خلال المنصة";

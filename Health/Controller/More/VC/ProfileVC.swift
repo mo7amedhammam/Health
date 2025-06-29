@@ -364,328 +364,39 @@
 //}
 
 
-extension UIView {
-    func makeCardStyle() {
-        self.backgroundColor = .white
-        self.layer.cornerRadius = 12
-        self.layer.shadowColor = UIColor.black.cgColor
-        self.layer.shadowOpacity = 0.1
-        self.layer.shadowOffset = CGSize(width: 0, height: 2)
-        self.layer.shadowRadius = 4
-        self.layer.masksToBounds = false
-    }
-}
-extension UIView {
-    func roundCorners(_ corners: CACornerMask, radius: CGFloat) {
-        self.layer.maskedCorners = corners
-        self.layer.cornerRadius = radius
-        self.layer.masksToBounds = true
-    }
-}
 
-extension UIViewController {
-    /// Pushes a SwiftUI view onto the navigation stack
-    func pushTo<Content: View>(_ swiftUIView: Content, hidesBottomBar: Bool = true) {
-        let hostingController = UIHostingController(rootView:
-            swiftUIView
-                .navigationBarHidden(true) // Hide the native nav bar from SwiftUI
-        )
-        hostingController.hidesBottomBarWhenPushed = hidesBottomBar
-
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-            self.navigationController?.pushViewController(hostingController, animated: true)
-        }
-    }
-}
-
-import SwiftUI
-
-struct ProfileViewUI: View {
-    @State private var showLogoutAlert = false
-    @State var destination = AnyView(EmptyView())
-    @State var isactive: Bool = false
-    func pushTo(destination: any View) {
-        self.destination = AnyView(destination)
-        self.isactive = true
-    }
-    var body: some View {
-        VStack {
-            TitleBar(title: "profile_title")
-
-            List {
-                
-                Group{
-                    // Profile Header Section
-                    Section {
-                        HStack(spacing: 16) {
-                            
-                            // Profile Image with Border and Edit Button
-                            ZStack(alignment: .bottomLeading) {
-                                Image(systemName: "person.circle.fill")
-                                    .resizable()
-                                    .frame(width: 60, height: 60)
-                                    .foregroundColor(.blue)
-                                    .overlay(
-                                        Circle()
-                                            .stroke(Color.mainBlue, lineWidth: 1)
-                                            .padding(-5)
-                                    )
-                                
-                                // Edit Button
-                                Button(action: {
-                                    // Edit profile action
-//                                    pushTo(destination: EditProfileView())
-                                }) {
-                                    Image("editprofile")
-                                        .resizable()
-                                        .frame(width: 24, height: 24)
-                                        .offset(x: -5, y: 5)
-                                }
-                            }
-                            
-                            Text("ندى يونس")
-                                .font(.bold(size: 24))
-                                .foregroundColor(Color(.mainBlue))
-                            
-                            Spacer()
-                            
-                            VStack(alignment: .center, spacing: 4) {
-                                Image("walletIcon")
-                                Text("محفظتك")
-                                    .font(.semiBold(size: 16))
-                                    .foregroundColor(Color(.mainBlue))
-                                
-                                Text("12,400")
-                                    .font(.bold(size: 26))
-                                    .foregroundColor(Color(.secondary))
-                            }
-                        }
-                        .padding(.vertical, 8)
-                    }
-                    .disabled(true)            // Disables any interaction
-
-                    
-                    // Main Menu Section
-                    Section {
-                        VStack{
-                            ProfileRow(title: "الباقات", icon: "profile_packages"){
-                                pushTo(destination: SubcripedPackagesView(hasbackBtn: true) )
-                            }
-                            ProfileRow(title: "تنبيهات الأدوية", icon: "profile_notification"){
-                            let VC: UIViewController = initiateViewController(storyboardName: .main, viewControllerIdentifier: NotificationVC.self)!
-                                pushUIKitVC(VC)
-                            }
-                            ProfileRow(title: "نصائح طبية", icon: "profile_tips"){
-                                let VC: UIViewController = initiateViewController(storyboardName: .main, viewControllerIdentifier: TipsCategoriesVC1.self)!
-                                    pushUIKitVC(VC)
-                            }
-                            ProfileRow(title: "Inbody", icon: "profile_inbody"){
-                                let VC: UIViewController = initiateViewController(storyboardName: .main, viewControllerIdentifier: INBodyVC.self)!
-                                    pushUIKitVC(VC)
-                            }
-                            ProfileRow(title: "ملفاتي", icon: "profile_files"){
-                                pushTo(destination: MyFilesView())
-                            }
-                            ProfileRow(title: "المفضلة", icon: "profile_fav"){
-                                pushTo(destination: WishListView())
-                            }
-                            ProfileRow(title: "الحساسية", icon: "profile_alergy"){
-                                pushTo(destination: AllergiesView())
-
-                            }
-                            ProfileRow(title: "حساباني", icon: "walletIcon",hasDivider:false){
-                                
-                            }
-                        }
-                        .padding()
-                        .cardStyle(cornerRadius: 3,shadowOpacity: 0.1)                    }
-                    .listRowInsets(EdgeInsets(top: 15, leading: 15, bottom: 0, trailing: 15))
-                    
-                    // Settings Section
-                    Section(header:
-                                
-                                HStack{
-                        Image("profile_settings")
-
-                        Text("الإعدادات")
-                            .font(.bold(size: 22))
-                            .foregroundStyle(Color(.mainBlue))
-                    }
-                        .padding(.bottom)
-
-                    ) {
-                        VStack{
-                        ProfileRow(title: "تعديل العلف الشخصي", icon: "profile_editProfile"){
-                            
-                        }
-                        ProfileRow(title: "تغيير كلمة المرور", icon: "profile_changePass"){
-                            let VC: UIViewController = initiateViewController(storyboardName: .main, viewControllerIdentifier: ChangePasswordVC.self)!
-                                pushUIKitVC(VC)
-                        }
-                        ProfileRow(title: "اللغة والدولة", icon: "profile_lang"){
-                            pushTo(destination: SelectLanguageView(hasbackBtn:true))
-                        }
-                        ProfileRow(title: "الحماية والخصوصية", icon: "profile_privacy"){
-                            let VC: UIViewController = initiateViewController(storyboardName: .main, viewControllerIdentifier: TermsConditionsVC.self)!
-                                pushUIKitVC(VC)
-                        }
-                        ProfileRow(title: "المساعدة", icon: "profile_help"){
-                            let VC: UIViewController = initiateViewController(storyboardName: .main, viewControllerIdentifier: HelpVC.self)!
-                                pushUIKitVC(VC)
-                        }
-                        ProfileRow(title: "الشروط والأحكام", icon: "profile_terms",hasDivider: false){
-                            let VC: UIViewController = initiateViewController(storyboardName: .main, viewControllerIdentifier: TermsConditionsVC.self)!
-                                pushUIKitVC(VC)
-                        }
-                    }
-                    .padding()
-                    .cardStyle(cornerRadius: 3,shadowOpacity: 0.1)
-                }
-                .listRowInsets(EdgeInsets(top: 0, leading: 15, bottom: 15, trailing: 15))
-
-                    // Logout Section
-                    Section {
-                        Button(action: {
-                            // Logout action
-                            logoutAction()
-                        }) {
-                            HStack {
-                                Spacer()
-                                Text(Helper.shared.CheckIfLoggedIn() ? "profile_logout".localized:"profile_login".localized)
-                                    .font(.bold(size: 24))
-                                    .foregroundColor(.white)
-                                
-                                Image("logout")
-                                Spacer()
-                            }
-                            
-                        }
-                        .frame(height: 50)
-                        .background(Color(.secondary))
-                        .padding(.vertical)
-                    }
-                }
-                .listRowSeparator(.hidden)
-                .listRowSpacing(0)
-            }
-            .listStyle(PlainListStyle())
-
-            Spacer().frame(height:80)
-
-        }
-        .background(Color(.bg))
-        
-        // Add this modifier to your main view
-             .alert(isPresented: $showLogoutAlert) {
-                 Alert(
-                     title: Text("هل أنت متأكد بأنك تريد تسجيل الخروج؟"),
-                     message: Text(""),
-                     primaryButton: .destructive(Text("تسجيل الخروج")) {
-                         logoutAction()
-                     },
-                     secondaryButton: .cancel(Text("إلغاء"))
-             )}
-        
-        NavigationLink( "", destination: destination, isActive: $isactive)
-
-    }
-}
-
-struct ProfileRow: View {
-    let title: String
-    let icon: String
-    var hasDivider: Bool? = true
-    var trailingView: AnyView? = nil
-    let action: (() -> Void)?
-
-    var body: some View {
-        VStack(spacing:20) {
-            Button(action: {
-                action?()
-            }) {
-                
-                HStack {
-                    ZStack {
-                        Color(.secondary).cornerRadius(3)
-                        
-                        Image(icon)
-                            .resizable()
-                            .renderingMode(.template)
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 14)
-//                            .padding(5)
-                            .foregroundColor(Color(.white))
-                    }
-                    .frame(width: 30,height: 30)
-                        
-                    Text(title)
-                        .font(.bold(size: 16))
-                        .foregroundColor(Color(.mainBlue))
-                    
-                    Spacer()
-                    
-                    if let trailingView = trailingView {
-                        trailingView
-                    }else{
-                        Image(systemName: "chevron.right")
-                            .foregroundColor(.gray.opacity(0.6))
-                    }
-                }
-                .contentShape(Rectangle()) // Makes entire row tappable
-            }
-            .buttonStyle(PlainButtonStyle())
-            if hasDivider == true{
-                Divider()
-                    .padding(.leading)
-            }
-            
-//            Color(.separator)
-//                .opacity(0.3)
-//                .frame(height: 1)
-
-        }
-//        .frame(height: 48)
-    }
-}
-
-struct ProfileViewUI_Previews: PreviewProvider {
-    static var previews: some View {
-        ProfileViewUI()
-    }
-}
+//extension UIView {
+//    func makeCardStyle() {
+//        self.backgroundColor = .white
+//        self.layer.cornerRadius = 12
+//        self.layer.shadowColor = UIColor.black.cgColor
+//        self.layer.shadowOpacity = 0.1
+//        self.layer.shadowOffset = CGSize(width: 0, height: 2)
+//        self.layer.shadowRadius = 4
+//        self.layer.masksToBounds = false
+//    }
+//}
+//extension UIView {
+//    func roundCorners(_ corners: CACornerMask, radius: CGFloat) {
+//        self.layer.maskedCorners = corners
+//        self.layer.cornerRadius = radius
+//        self.layer.masksToBounds = true
+//    }
+//}
+//
+//extension UIViewController {
+//    /// Pushes a SwiftUI view onto the navigation stack
+//    func pushTo<Content: View>(_ swiftUIView: Content, hidesBottomBar: Bool = true) {
+//        let hostingController = UIHostingController(rootView:
+//            swiftUIView
+//                .navigationBarHidden(true) // Hide the native nav bar from SwiftUI
+//        )
+//        hostingController.hidesBottomBarWhenPushed = hidesBottomBar
+//
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+//            self.navigationController?.pushViewController(hostingController, animated: true)
+//        }
+//    }
+//}
 
 
-
-extension ProfileViewUI{
-    
-    private func logoutAction() {
-           if Helper.shared.CheckIfLoggedIn() {
-               Helper.shared.logout()
-               // Change root view to NewTabView
-               if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-                  let window = windowScene.windows.first {
-                   window.rootViewController = UIHostingController(rootView: NewTabView())
-                   window.makeKeyAndVisible()
-                   withAnimation {
-                       window.rootViewController?.view.transform = CGAffineTransform(translationX: -window.bounds.width, y: 0)
-                       UIView.animate(withDuration: 0.3) {
-                           window.rootViewController?.view.transform = .identity
-                       }
-                   }
-               }
-           } else {
-               // Change root view to LoginView
-               if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-                  let window = windowScene.windows.first {
-                   window.rootViewController = UIHostingController(rootView: LoginView())
-                   window.makeKeyAndVisible()
-                   withAnimation {
-                       window.rootViewController?.view.transform = CGAffineTransform(translationX: -window.bounds.width, y: 0)
-                       UIView.animate(withDuration: 0.3) {
-                           window.rootViewController?.view.transform = .identity
-                       }
-                   }
-               }
-           }
-       }
-}

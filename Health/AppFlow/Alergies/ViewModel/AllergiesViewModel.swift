@@ -37,71 +37,61 @@ class AllergiesViewModel : ObservableObject {
 extension AllergiesViewModel{
     
 //    @MainActor
-//    func addNewAllergies() async {
+//    func addNewAllergies(selectedIds: Set<Int>, langId: Int = 1) async {
 //        isLoading = true
 //        defer { isLoading = false }
-//        guard let allergies = addAllergies else {
-////            // Handle missings
-////            self.errorMessage = "check inputs"
-////            //            throw NetworkError.unknown(code: 0, error: "check inputs")
-//            return
+//
+//        guard let allergies = self.allergies else { return }
+//
+//        let payloadArray: [[String: Any]] = allergies.compactMap { category in
+//            guard let categoryId = category.allergyCategoryID else { return nil }
+//
+//            let matchedAllergies = (category.allergyList ?? []).filter { allergy in
+//                selectedIds.contains(allergy.id ?? -1)
+//            }
+//
+//            guard !matchedAllergies.isEmpty else { return nil }
+//
+//            let nameList: [[String: Any]] = matchedAllergies.compactMap { allergy in
+//                guard let name = allergy.name else { return nil }
+//                return [
+//                    "langId": langId,
+//                    "fieldName": name,
+//                    "fieldText": name
+//                ]
+//            }
+//
+//            return [
+//                "allergyCategoryId": categoryId,
+//                "nameList": nameList
+//            ]
 //        }
-//        var parametersarr : [String : Any] = [ : ] // handle allergies dictionary
-//        
-//        let target = MyAllergiesServices.AddAllergies(parameters: parametersarr)
-//        
+//
+//        let parameters: [String: Any] = ["allergies": payloadArray]
+//
+//        let target = MyAllergiesServices.AddAllergies(parameters: parameters)
+//
 //        do {
-//            self.errorMessage = nil // Clear previous errors
-//            let response = try await networkService.request(
-//                target,
-//                responseType: AllergiesM.self
-//            )
-////            self.allergies = response
-//            //update or get allergies to update
+//            self.errorMessage = nil
+//            _ = try await networkService.request(target, responseType: AllergiesM.self)
+//            await getMyAllergies()
 //        } catch {
 //            self.errorMessage = error.localizedDescription
 //        }
 //    }
-    
     @MainActor
-    func addNewAllergies(selectedIds: Set<Int>, langId: Int = 1) async {
+    func addNewAllergies(selectedIds: Set<Int>) async {
         isLoading = true
         defer { isLoading = false }
 
-        guard let allergies = self.allergies else { return }
-
-        let payloadArray: [[String: Any]] = allergies.compactMap { category in
-            guard let categoryId = category.allergyCategoryID else { return nil }
-
-            let matchedAllergies = (category.allergyList ?? []).filter { allergy in
-                selectedIds.contains(allergy.id ?? -1)
-            }
-
-            guard !matchedAllergies.isEmpty else { return nil }
-
-            let nameList: [[String: Any]] = matchedAllergies.compactMap { allergy in
-                guard let name = allergy.name else { return nil }
-                return [
-                    "langId": langId,
-                    "fieldName": name,
-                    "fieldText": name
-                ]
-            }
-
-            return [
-                "allergyCategoryId": categoryId,
-                "nameList": nameList
-            ]
-        }
-
-        let parameters: [String: Any] = ["allergies": payloadArray]
+        let parameters: [String: Any] = ["allergyId": Array(selectedIds)]
 
         let target = MyAllergiesServices.AddAllergies(parameters: parameters)
 
         do {
             self.errorMessage = nil
             _ = try await networkService.request(target, responseType: AllergiesM.self)
-            await getMyAllergies()
+//            await getMyAllergies()
         } catch {
             self.errorMessage = error.localizedDescription
         }
@@ -127,7 +117,7 @@ extension AllergiesViewModel{
                 target,
                 responseType: AllergiesM.self
             )
-            self.allergies = allergies
+            self.allergies = response
         } catch {
             self.errorMessage = error.localizedDescription
         }

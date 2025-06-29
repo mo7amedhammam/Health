@@ -69,7 +69,8 @@ struct NewTabView: View {
                 default: EmptyView()
                 }
             }
-            .reversLocalizeView()
+//            .reversLocalizeView()
+            .localizeView()
         }
     }
 }
