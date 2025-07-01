@@ -23,6 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
 //        Helper.shared.onBoardOpened(opened: false)
+        
         LocalizationInit()
         IQKeyboardManager.shared.enable = true
         IQKeyboardManager.shared.shouldResignOnTouchOutside = true
@@ -155,21 +156,27 @@ extension AppDelegate : UNUserNotificationCenterDelegate {
 // MARK: --- Localization ---
 extension AppDelegate {
     func LocalizationInit() {
-        UIFont.familyNames.forEach({ familyName in
-            let fontNames = UIFont.fontNames(forFamilyName: familyName)
-            print("familyName, fontNames",familyName, fontNames)
-        })
+//        UIFont.familyNames.forEach({ familyName in
+//            let fontNames = UIFont.fontNames(forFamilyName: familyName)
+//            print("familyName, fontNames",familyName, fontNames)
+//        })
         
-        print("Helper Language is:", Helper.shared.getLanguage())
-
-        LocalizationManager.shared.setLanguage(Helper.shared.getLanguage()) { _ in
-            // Ensure this code is executed on the main thread
-//            DispatchQueue.main.async {
-//                if let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate {
-//                    sceneDelegate.reloadRootView()
-//                }
-//            }
+//        changeLanguage(to: Helper.shared.getLanguage())
+        LocalizationManager.shared.changeLanguage(to: Helper.shared.getLanguage()) {
+            
         }
+        
+        
+//        LocalizationManager.shared.setLanguage(Helper.shared.getLanguage()) { _ in
+//            // Ensure this code is executed on the main thread
+////            DispatchQueue.main.async {
+////                if let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate {
+////                    sceneDelegate.reloadRootView()
+////                }
+////            }
+//        }
+        print("Helper Language is:", Helper.shared.getLanguage())
+        print("LocalizationManager Language is:", LocalizationManager.shared.currentLanguage)
 
         // Uncomment the following if you need to fetch translations
         // LocalizationManager.shared.fetchTranslations() { success in

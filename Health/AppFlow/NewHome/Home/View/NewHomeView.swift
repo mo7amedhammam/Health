@@ -92,9 +92,15 @@ struct NewHomeView: View {
                             .frame(height: 229)
                             .padding(.horizontal)
                         
-                        MostViewedBooked(selectedPackage: $selectedPackage){packageId in
+                        MostViewedBooked(packaces:viewModel.mostViewedPackages,  selectedPackage: $selectedPackage,likeAction: {packageId in
                             //                            add to wishlist
-                        }
+                        },onChangeTab:{ newTab in
+//                                             currentCase = newTab
+                                             Task {
+                                                 await viewModel.getMostBookedOrViewedPackages(forcase: newTab == .mostviewed ? .MostViewed : .MostBooked)
+//                                                 packages = newTab == .mostviewed ? viewModel.mostViewedPackages : viewModel.mostBookedPackages
+                                             }
+                                         })
                             .environmentObject(viewModel)
 //                            .onAppear(perform: {
 //                                Task{
@@ -324,231 +330,6 @@ struct SectionHeader: View {
     SectionHeader( title: "welcome",MoreBtnimage: .newfilter)
 }
 
-struct NextSessionSection: View {
-    var upcomingSession: UpcomingSessionM?
-    var canJoin = true
-    
-    var body: some View {
-        VStack{
-            SectionHeader(image: Image(.newnxtsessionicon),title: "home_nextSession"){
-                //                            go to last mes package
-            }
-            
-            ZStack(alignment: .bottomTrailing){
-                HStack {
-                    Image(.nextsessionbg)
-                    Spacer()
-                }.padding(8)
-                
-                VStack{
-                    HStack{
-                        VStack{
-                            // Title
-                            Text("pack_name".localized)
-                                .font(.semiBold(size: 14))
-                                .foregroundStyle(Color.white)
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                                .padding(.bottom,1)
-                            // Title
-                            Text(upcomingSession?.packageName ?? "")
-                                .font(.medium(size: 10))
-                                .foregroundStyle(Color.white)
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                        }
-                        
-                        Spacer()
-                        
-                        HStack(alignment:.top) {
-                            
-                            VStack(){
-                                // Title
-                                Text(upcomingSession?.sessionDate ?? "")
-                                    .font(.regular(size: 12))
-                                    .foregroundStyle(Color.white)
-                                    .frame(maxWidth: .infinity, alignment: .trailing)
-                                    .padding(.bottom,1)
-                                
-                                // Title
-                                Text("03:15 PM")
-                                    .font(.regular(size: 12))
-                                    .foregroundStyle(Color.white)
-                                    .frame(maxWidth: .infinity, alignment: .trailing)
-                            }
-                            Image(.newcal)
-                                .resizable()
-                                .frame(width: 15, height: 15)
-                        }
-                    }
-                    Spacer()
-                    
-                    HStack{
-                        VStack{
-                            // Title
-                            Text("Doctor".localized)
-                                .font(.regular(size: 12))
-                                .foregroundStyle(Color.white)
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                                .padding(.bottom,1)
-                            // Title
-                            Text(upcomingSession?.doctorName ?? "")
-                                .font(.semiBold(size: 16))
-                                .foregroundStyle(Color.white)
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                        }
-                        
-                        Spacer()
-                        
-                        if canJoin{
-                            Button(action: {
-                                
-                            }){
-                                HStack(alignment: .center){
-                                    Image(.newjoinicon)
-                                        .resizable()
-                                        .frame(width: 15, height: 15)
-                                    
-                                    Text("Join_now".localized)
-                                        .font(.bold(size: 12))
-                                        .foregroundStyle(Color(.secondary))
-                                    
-                                }
-                                .padding(.horizontal,13)
-                                .frame(height: 30)
-                                //                                            .padding(.vertical,15)
-                                .background{Color(.white)}
-                                .cardStyle( cornerRadius: 3)
-                            }
-                        }else{
-                            HStack(alignment:.top,spacing:3) {
-                                VStack(){
-                                    // Title
-                                    Text("2")
-                                        .font(.medium(size: 14))
-                                        .foregroundStyle(Color.white)
-                                        .frame(width: 31, height: 31)
-                                        .background{Color(.secondaryMain)}
-                                        .cardStyle( cornerRadius: 3)
-                                    
-                                    // Title
-                                    Text("Days".localized)
-                                        .font(.regular(size: 8))
-                                        .foregroundStyle(Color.white)
-                                        .minimumScaleFactor(0.5)
-                                        .lineLimit(1)
-                                }
-                                
-                                Text(":")
-                                    .font(.regular(size: 12))
-                                    .foregroundStyle(Color.white)
-                                    .offset(y:10)
-                                
-                                VStack(){
-                                    // Title
-                                    Text("11")
-                                        .font(.medium(size: 14))
-                                        .foregroundStyle(Color.white)
-                                        .frame(width: 31, height: 31)
-                                        .background{Color(.secondaryMain)}
-                                        .cardStyle( cornerRadius: 3)
-                                    
-                                    // Title
-                                    Text("Hours".localized)
-                                        .font(.regular(size: 8))
-                                        .foregroundStyle(Color.white)
-                                        .minimumScaleFactor(0.5)
-                                        .lineLimit(1)
-                                }
-                                
-                                Text(":")
-                                    .font(.regular(size: 12))
-                                    .foregroundStyle(Color.white)
-                                    .offset(y:10)
-                                
-                                VStack(){
-                                    // Title
-                                    Text("31")
-                                        .font(.medium(size: 14))
-                                        .foregroundStyle(Color.white)
-                                        .frame(width: 31, height: 31)
-                                        .background{Color(.secondaryMain)}
-                                        .cardStyle( cornerRadius: 3)
-                                    
-                                    // Title
-                                    Text("Minutes".localized)
-                                        .font(.regular(size: 8))
-                                        .foregroundStyle(Color.white)
-                                        .minimumScaleFactor(0.5)
-                                        .lineLimit(1)
-                                }
-                            }
-                        }
-                        Spacer()
-                        
-                    }
-                    
-                    Spacer()
-                    
-                    HStack(alignment:.bottom,spacing:3) {
-                        
-                        Button(action: {
-                            
-                        }){
-                            HStack(alignment: .center){
-                                Image( .newmoreicon)
-                                    .renderingMode(.template)
-                                    .resizable()
-                                    .frame(width: 15, height: 15)
-                                    .foregroundStyle(Color.white)
-                                
-                                Text("more_detail".localized)
-                                    .font(.bold(size: 12))
-                                    .foregroundStyle(Color.white)
-                            }
-                            //                                        .padding(.horizontal,30)
-                            .frame(maxWidth: .infinity)
-                            .frame(height: 30)
-                            .background{Color(.secondaryMain)}
-                            .cardStyle( cornerRadius: 3)
-                        }
-                        
-                        Spacer()
-                        
-                        Button(action: {
-                            
-                        }){
-                            HStack(alignment: .bottom){
-                                Image(.newreschedual)
-                                    .renderingMode(.template)
-                                    .resizable()
-                                    .frame(width: 15, height: 15)
-                                
-                                    .foregroundStyle(Color.white)
-                                
-                                Text("reSchedual".localized)
-                                    .underline()
-                                    .font(.regular(size: 12))
-                                    .foregroundStyle(Color.white)
-                            }
-                            .padding(.horizontal,10)
-                            .padding(.bottom,5)
-                            .frame(alignment:.bottom)
-                        }
-                    }
-                }
-                .padding()
-            }
-            .frame(maxWidth: .infinity, maxHeight: 200)
-//            .background(Color.mainBlue)
-            .horizontalGradientBackground()
-            .cardStyle(cornerRadius: 4,shadowOpacity: 0.4)
-            .padding(.bottom,5)
-            
-        }
-        .padding(.vertical,5)
-        .padding(.bottom,5)
-        
-    }
-}
 
 struct MainCategoriesSection: View {
     var categories: HomeCategoryM?
@@ -672,7 +453,7 @@ struct LastMesurmentsSection: View {
                             .frame(maxWidth: .infinity)
                             .padding(.vertical,0)
                         
-                        let date = (item.lastMeasurementDate ?? "").ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo:"dd MMM yyyy")
+                        let date = (item.formatteddate ?? "")
                         
 //                        (Text("mes_inDate".localized).font(.semiBold(size: 6))
 //                         +
@@ -801,7 +582,7 @@ struct VipPackageCellView: View {
                     Spacer()
                     
                     VStack(alignment: .leading,spacing: 10){
-                        Text(item.name ?? "pack_Name".localized)
+                        Text(item.name ?? "")
                             .font(.semiBold(size: 20))
                             .foregroundStyle(Color.white)
                             .frame(maxWidth: .infinity,alignment:.leading)
@@ -855,16 +636,17 @@ struct VipPackageCellView: View {
 //}
 
 struct MostViewedBooked: View {
-    @EnvironmentObject var viewModel : NewHomeViewModel
+//    @EnvironmentObject var viewModel : NewHomeViewModel
     
-    private enum mostcases {
+     enum mostcases {
         case mostviewed
         case mostbooked
     }
     @State private var currentcase:mostcases = .mostviewed
-    @State var packaces: [FeaturedPackageItemM]?
+     var packaces: [FeaturedPackageItemM]?
     @Binding var selectedPackage : FeaturedPackageItemM?
     var likeAction : ((Int) -> Void)?
+    var onChangeTab : ((mostcases) -> Void)? // callback to parent
 
     var body: some View {
         
@@ -872,7 +654,9 @@ struct MostViewedBooked: View {
             HStack(alignment:.top, spacing:20){
                 Button(action: {
                     currentcase = .mostbooked
-                    getFeaturedPackages()
+//                    getFeaturedPackages()
+                    onChangeTab?(.mostbooked)
+
                 }){
                     VStack {
                         Text("Most_Booked".localized)
@@ -887,7 +671,9 @@ struct MostViewedBooked: View {
                 
                 Button(action: {
                     currentcase = .mostviewed
-                    getFeaturedPackages()
+//                    getFeaturedPackages()
+                    onChangeTab?(.mostviewed)
+
                 }){
                     VStack {
                         Text("Most_Viewed".localized)
@@ -926,16 +712,31 @@ struct MostViewedBooked: View {
 //        .task {
 //            getFeaturedPackages()
 //        }
+//        .onAppear{
+//            Task{
+//                packaces = currentcase == .mostbooked ? viewModel.mostBookedPackages : viewModel.mostViewedPackages
+//
+//                switch currentcase {
+//                    
+//                case .mostviewed:
+//                    packaces = viewModel.mostViewedPackages
+//
+//                case .mostbooked:
+//                    packaces = viewModel.mostBookedPackages
+//
+//                }
+//            }
+//        }
     }
-    func getFeaturedPackages() {
-        Task() {
-            switch currentcase {
-            case .mostviewed:
-                await viewModel.getMostBookedOrViewedPackages(forcase: .MostViewed)
-            case .mostbooked:
-                await viewModel.getMostBookedOrViewedPackages(forcase: .MostBooked)
-            }
-            packaces = currentcase == .mostbooked ? viewModel.mostBookedPackages : viewModel.mostViewedPackages
-        }
-    }
+//    func getFeaturedPackages() {
+//        Task() {
+//            switch currentcase {
+//            case .mostviewed:
+//                await viewModel.getMostBookedOrViewedPackages(forcase: .MostViewed)
+//            case .mostbooked:
+//                await viewModel.getMostBookedOrViewedPackages(forcase: .MostBooked)
+//            }
+//            packaces = currentcase == .mostbooked ? viewModel.mostBookedPackages : viewModel.mostViewedPackages
+//        }
+//    }
 }

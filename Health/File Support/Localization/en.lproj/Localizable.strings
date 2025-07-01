@@ -118,11 +118,19 @@
 "home_newadv" = "New Advices";
 "home_mostviewedadv" = "Most Viewed Advices";
 "mes_inDate" = "Date: ";
+"Join_now" = "Join Now";
+"Most_Booked" = "Most Booked";
+"Most_Viewed" = "Most Viewed";
+"Doctor" = "Doctor";
+"more_detail" = "more detail";
 
 "mesurement_det_title" = "mesurement of ";
 
 "sub_category" = "subcategory";
 "package_" = "package";
+"Days" = "Days";
+"Hours" = "Hours";
+"Minutes" = "Minutes";
 
 //MARK: --- notification ---
 "notfication_active" = "active";

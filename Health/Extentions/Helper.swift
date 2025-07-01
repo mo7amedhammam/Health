@@ -359,6 +359,13 @@ func height(constraintedWidth width: CGFloat, font: UIFont) -> CGFloat {
             return "en"
         }
     }
+    
+    func toDate(format: String, locale: Locale = .current) -> Date? {
+          let formatter = DateFormatter()
+          formatter.locale = locale
+          formatter.dateFormat = format
+          return formatter.date(from: self)
+      }
 }
 
 

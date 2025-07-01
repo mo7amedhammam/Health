@@ -186,7 +186,8 @@ extension NewHomeViewModel{
             )
             switch forcase {
             case .MostBooked:
-                self.mostBookedPackages = response
+//                self.mostBookedPackages = response
+                self.mostViewedPackages = response
 
             case .MostViewed:
                 self.mostViewedPackages = response

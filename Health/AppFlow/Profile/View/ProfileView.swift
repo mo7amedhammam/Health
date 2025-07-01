@@ -1,8 +1,8 @@
 import SwiftUI
 
 struct ProfileViewUI: View {
-    @StateObject var localizationManager = LocalizationManager.shared
-
+//    @StateObject var localizationManager = LocalizationManager.shared
+    @ObservedObject var localizationManager = LocalizationManager.shared
     @State private var showLogoutAlert = false
     @State var destination = AnyView(EmptyView())
     @State var isactive: Bool = false
@@ -145,7 +145,7 @@ struct ProfileViewUI: View {
                     .cardStyle(cornerRadius: 3,shadowOpacity: 0.1)
                 }
                 .listRowInsets(EdgeInsets(top: 0, leading: 15, bottom: 15, trailing: 15))
-
+                    
                     // Logout Section
                     Section {
                         Button(action: {
@@ -176,6 +176,8 @@ struct ProfileViewUI: View {
             Spacer().frame(height:80)
 
         }
+        .localizeView()
+
 //        .environment(\.layoutDirection,localizationManager.currentLanguage == "ar" ? .rightToLeft : .leftToRight)
 //        .localizeView()
         .background(Color(.bg))
@@ -237,6 +239,7 @@ struct ProfileRow: View {
                     }
                 }
                 .contentShape(Rectangle()) // Makes entire row tappable
+                .localizeView()
             }
             .buttonStyle(PlainButtonStyle())
             if hasDivider == true{

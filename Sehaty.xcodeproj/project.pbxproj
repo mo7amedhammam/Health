@@ -27,6 +27,8 @@
 		902B87DB2E0F07DC009D5234 /* MyPaymentsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 902B87DA2E0F07DC009D5234 /* MyPaymentsView.swift */; };
 		902B87DD2E0F0EEB009D5234 /* CustomerOrderDetailM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 902B87DC2E0F0EEB009D5234 /* CustomerOrderDetailM.swift */; };
 		902B87DF2E0F2ABE009D5234 /* MyPaymentsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 902B87DE2E0F2ABE009D5234 /* MyPaymentsViewModel.swift */; };
+		902B87E22E149B67009D5234 /* NextSessionSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 902B87E12E149B67009D5234 /* NextSessionSection.swift */; };
+		902B87E42E149C1F009D5234 /* UpcomingSessionM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 902B87E32E149C1F009D5234 /* UpcomingSessionM.swift */; };
 		903667062D82E0A40040AE29 /* LocalizationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 903667052D82E08E0040AE29 /* LocalizationManager.swift */; };
 		903667082D82E1410040AE29 /* AppKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 903667072D82E1370040AE29 /* AppKeys.swift */; };
 		9047483F2DCF63530016C3DC /* PackagesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9047483E2DCF63530016C3DC /* PackagesView.swift */; };
@@ -309,6 +311,8 @@
 		902B87DA2E0F07DC009D5234 /* MyPaymentsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPaymentsView.swift; sourceTree = "<group>"; };
 		902B87DC2E0F0EEB009D5234 /* CustomerOrderDetailM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomerOrderDetailM.swift; sourceTree = "<group>"; };
 		902B87DE2E0F2ABE009D5234 /* MyPaymentsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPaymentsViewModel.swift; sourceTree = "<group>"; };
+		902B87E12E149B67009D5234 /* NextSessionSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextSessionSection.swift; sourceTree = "<group>"; };
+		902B87E32E149C1F009D5234 /* UpcomingSessionM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpcomingSessionM.swift; sourceTree = "<group>"; };
 		903667052D82E08E0040AE29 /* LocalizationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationManager.swift; sourceTree = "<group>"; };
 		903667072D82E1370040AE29 /* AppKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppKeys.swift; sourceTree = "<group>"; };
 		9047483E2DCF63530016C3DC /* PackagesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackagesView.swift; sourceTree = "<group>"; };
@@ -739,6 +743,14 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		902B87E02E149B53009D5234 /* NextSession */ = {
+			isa = PBXGroup;
+			children = (
+				902B87E12E149B67009D5234 /* NextSessionSection.swift */,
+			);
+			path = NextSession;
+			sourceTree = "<group>";
+		};
 		903667042D82E0700040AE29 /* Localization */ = {
 			isa = PBXGroup;
 			children = (
@@ -803,6 +815,7 @@
 		904748382DCF63090016C3DC /* View */ = {
 			isa = PBXGroup;
 			children = (
+				902B87E02E149B53009D5234 /* NextSession */,
 				90D628782DABE62F008D303E /* NewHomeView.swift */,
 			);
 			path = View;
@@ -820,6 +833,7 @@
 		9047483A2DCF631D0016C3DC /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				902B87E32E149C1F009D5234 /* UpcomingSessionM.swift */,
 				9047484F2DD34D2D0016C3DC /* NewHomeModel.swift */,
 			);
 			path = Model;
@@ -2566,6 +2580,7 @@
 				BB546DDE2AC9D53A008A4F8C /* HomeTVCell0.swift in Sources */,
 				C8A1509D2AB1C63500511B1F /* ProfileVM.swift in Sources */,
 				BBA1DA142AB11C020042713A /* ModelNotification.swift in Sources */,
+				902B87E42E149C1F009D5234 /* UpcomingSessionM.swift in Sources */,
 				BBBD003B2A731B6C00F066DF /* SplashScreenTVCell2.swift in Sources */,
 				BB518CE22A9A122400242FAD /* TipsCategoriesCVCell0.swift in Sources */,
 				90842F3C2DA17A7300B02D02 /* CustomNavBar.swift in Sources */,
@@ -2594,6 +2609,7 @@
 				C85996772AA7556400533C87 /* Alert.swift in Sources */,
 				90FDD2FE2DDBE14F00C3BABB /* CustomSheet.swift in Sources */,
 				90FDD3352DE5D5C700C3BABB /* SubcripedPackagesM.swift in Sources */,
+				902B87E22E149B67009D5234 /* NextSessionSection.swift in Sources */,
 				C8F100DF2ADAC7F70085E508 /* ExWkWebView.swift in Sources */,
 				904748572DD61BFE0016C3DC /* PackagesViewModel.swift in Sources */,
 				C8F418D82AC19A5100E7A370 /* TipDetailsDrugGroup.swift in Sources */,

@@ -654,7 +654,7 @@ struct SignUpView: View {
         //        }
         .showHud(isShowing:  $isLoading)
         .alert(item: $viewModel.errorMessage) { msg in
-            Alert(title: Text("_خطأ".localized), message: Text(msg.localized), dismissButton: .default(Text("OK_".localized)))
+            Alert(title: Text("_خطأ".localized), message: Text(msg.localized), dismissButton: .default(Text("ok".localized)))
         }
         
     }

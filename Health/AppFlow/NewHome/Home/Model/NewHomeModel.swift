@@ -5,23 +5,7 @@
 //  Created by mohamed hammam on 13/05/2025.
 //
 
-// MARK: - UpcomingSessionM
-struct UpcomingSessionM: Codable {
-    var id: Int?
-    var doctorName, sessionDate, timeFrom, packageName: String?
-    var categoryName: String?
-    var mainCategoryID, categoryID: Int?
-    var sessionMethod: String?
-    var packageID: Int?
 
-    enum CodingKeys: String, CodingKey {
-        case id, doctorName, sessionDate, timeFrom, packageName, categoryName
-        case mainCategoryID = "mainCategoryId"
-        case categoryID = "categoryId"
-        case sessionMethod
-        case packageID = "packageId"
-    }
-}
 
 // MARK: - HomeCategoryM
 struct HomeCategoryM: Codable {
@@ -50,6 +34,12 @@ struct MyMeasurementsStatsM: Codable,Hashable {
         case image, title, measurementsCount, lastMeasurementValue, lastMeasurementDate, formatValue, regExpression, normalRangValue
     }
 }
+extension MyMeasurementsStatsM{
+    var formatteddate :String? {
+        guard let date = lastMeasurementDate else { return "" }
+        return date.ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo:"dd MMM yyyy")
+    }
+}
 
 // MARK: - FeaturedPackages
 struct FeaturedPackagesM: Codable {
@@ -58,7 +48,7 @@ struct FeaturedPackagesM: Codable {
 }
 
 // MARK: - FeaturedPackageItemM
-struct FeaturedPackageItemM: Codable,Hashable {
+struct FeaturedPackageItemM: Codable,Hashable,Identifiable {
     var id: Int?
     var name: String?
     var mainCategoryID, subCategoryID: Int?

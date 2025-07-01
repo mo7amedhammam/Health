@@ -25,10 +25,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         self.window = UIWindow(windowScene: WindowScene)
         
         // Optional: force layout direction
-        let selectedLang = Helper.shared.getLanguage()
-        UIView.appearance().semanticContentAttribute = selectedLang == "ar" ? .forceRightToLeft : .forceLeftToRight
-        UITableView.appearance().semanticContentAttribute = selectedLang == "ar" ? .forceRightToLeft : .forceLeftToRight
-        UITabBar.appearance().semanticContentAttribute = selectedLang == "ar" ? .forceRightToLeft : .forceLeftToRight
+//        let selectedLang = Helper.shared.getLanguage()
+//        UIView.appearance().semanticContentAttribute = selectedLang == "ar" ? .forceRightToLeft : .forceLeftToRight
+//        UITableView.appearance().semanticContentAttribute = selectedLang == "ar" ? .forceRightToLeft : .forceLeftToRight
+//        UITabBar.appearance().semanticContentAttribute = selectedLang == "ar" ? .forceRightToLeft : .forceLeftToRight
     
         if !Helper.shared.isLanguageSelected(){ //swiftui
             let vc = UIHostingController(rootView: SelectLanguageView())

@@ -86,7 +86,7 @@ class NewSimpleAlert {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
 
         // Configure the "OK" action
-        let okAction = UIAlertAction(title:AppKeys.OkAlert.localized, style: .default) { _ in
+        let okAction = UIAlertAction(title:"ok_".localized, style: .default) { _ in
             completion?()
             if title == NetworkError.expiredTokenMsg.errorDescription || message == NetworkError.expiredTokenMsg.errorDescription {
 //                Helper.shared.changeRootVC(newroot: LoginVC.self, transitionFrom: .fromLeft)

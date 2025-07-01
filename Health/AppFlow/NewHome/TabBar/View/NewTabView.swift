@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct NewTabView: View {
-    @State private var selectedTab = 2
+    @State var selectedTab = 2
     
     var body: some View {
         CustomTabView(
@@ -70,8 +70,9 @@ struct NewTabView: View {
                 }
             }
 //            .reversLocalizeView()
-            .localizeView()
+//            .localizeView()
         }
+        .localizeView()
     }
 }
 

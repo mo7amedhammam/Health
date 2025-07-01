@@ -167,14 +167,19 @@ struct SelectLanguageView : View {
             
             Spacer()
 
-            CustomButton(title: "lang_Ok_Btn".localized,isdisabled: LocalizationManager.shared.currentLanguage?.isEmpty,backgroundView:AnyView(Color.clear.horizontalGradientBackground())){
+            CustomButton(title: "lang_Ok_Btn",isdisabled: LocalizationManager.shared.currentLanguage.isEmpty,backgroundView:AnyView(Color.clear.horizontalGradientBackground())){
+                setLanguage(selectedLanguage?.lang1?.lowercased() ?? Helper.shared.getLanguage())
                 if !Helper.shared.CheckIfLoggedIn(){
                     let rootVC = UIHostingController(rootView: OnboardingView())
                     rootVC.navigationController?.isNavigationBarHidden = true
                     rootVC.navigationController?.toolbar.isHidden = true
                     Helper.shared.changeRootVC(newroot: rootVC, transitionFrom: .fromRight)
                 }else{
-                    dismiss()
+//                    dismiss()
+                    let rootVC = UIHostingController(rootView: NewTabView(selectedTab: 0))
+                    rootVC.navigationController?.isNavigationBarHidden = true
+                    rootVC.navigationController?.toolbar.isHidden = true
+                    Helper.shared.changeRootVC(newroot: rootVC, transitionFrom: .fromRight)
                 }
 //                Helper.shared.changeRootVC(newroot: HTBC.self, transitionFrom: .fromRight)
 
@@ -182,7 +187,6 @@ struct SelectLanguageView : View {
             
             
         }
-        .localizeView()
         .showHud(isShowing: $isLoading)
         .onAppear() {
             Task{
@@ -197,20 +201,26 @@ struct SelectLanguageView : View {
                     selectedCountry = countries.first(where: { $0.id == Helper.shared.AppCountryId() ?? 0 }) ?? countries.first
                 }
                 if let languages = lookupsVM.languages {
-                    selectedLanguage = languages.first(where: { $0.lang1?.lowercased() == localizationManager.currentLanguage?.lowercased() }) ?? languages.first
+                    selectedLanguage = languages.first(where: { $0.lang1?.lowercased() == localizationManager.currentLanguage.lowercased() }) ?? languages.first
                 }
             }
         }
+        .localizeView()
 
     }
     
     private func setLanguage(_ language: String) {
-         LocalizationManager.shared.setLanguage(language) {_ in
+        
+//        changeLanguage(to: language)
+        LocalizationManager.shared.changeLanguage(to: "en") {
+        }
+        
+//        localizationManager.setLanguage(language) {_ in
              // Option 1: Force immediate reload (works for most cases)
 //             DispatchQueue.main.async {
 //                 UIApplication.shared.windows.first?.rootViewController = UIHostingController(rootView: SelectLanguageView())
 //             }
-         }
+//         }
      }
 }
 

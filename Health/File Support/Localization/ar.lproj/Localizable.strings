@@ -74,7 +74,7 @@
 "created_title" = "تم إنشاء حسابك بنجاح!";
 "created_subtitle1" = "يرجى التحقق من صندوق الوارد الخاص بك للتحقق من رحلتك.";
 "created_subtitle2" = "تم ربطه سريعًا بخدمات البريد الإلكتروني الشائعة.";
-"created_btn" = "Done";
+"created_btn" = "موافق";
 
 //--- paswword reset popup----
 "reset_title" = "تم إعادة ضبط كلمة المرور بنجاح!";
@@ -108,7 +108,6 @@
 "change_sc_btn_title" = "تغيير";
 
 //MARK: --- Home Screen ----
-
 "home_navtitle" = "الصفحة الرئيسية";
 "home_Welcome" = "مرحباً,";
 
@@ -119,11 +118,20 @@
 "home_newadv" = "نصائح حديثة";
 "home_mostviewedadv" = "النصائح الأكثر مشاهدة";
 "mes_inDate" = "بتاريخ: ";
+"Join_now" = "انضم الان";
+"Most_Booked" =  "الأكثر حجزا";
+"Most_Viewed" = "الأكثر مشاهدة";
+"Doctor" = "دكتور";
 
 "mesurement_det_title" = "قياس ";
 
 "sub_category" =  "تصنيف فرعي";
 "package_" =  "باقة";
+"Days" = "يوم";
+"Hours" = "ساعه";
+"Minutes" = "دقيقه";
+"more_detail" = "تفاصيل أكثر";
+"reSchedual" = "اعادة الجدولة";
 
 //MARK: --- notification ---
 "notfication_active" = "فعّال";
@@ -238,3 +246,4 @@
 "payment_note1" = "يمكنك استخدام الرصيد المرتجع لحجز جلسات جديدة في أي وقت.";
 "payment_note2" = "صلاحية الجلسات مرتبطة بشروط كل باقة.";
 "payment_note3" = "لاستفسارات أكتر، تواصل مع خدمة العملاء مباشرة من خلال المنصة";
+
