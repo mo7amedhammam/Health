@@ -142,7 +142,6 @@
 "mesurement_JusMesurment" = "قياس فقط";
 
 //------------------new ---
-
 "home_maincat" = "التصنيفات الرئيسية";
 "home_nextSession" = "السيشن القادمة";
 "home_vippackages" = "الباقات المتميزة";
@@ -154,6 +153,7 @@
 "avilable_doc" = "دكتور متاح";
 
 //MARK: --- packages Details ---
+"sessions" = "سيشنز";
 "available_doc" = "دكتور متاح";
 
 //MARK: --- subsriptions ---
@@ -163,6 +163,9 @@
 "subscription_nextSessions" = "السيشنز القادمة";
 
 //MARK: --- Package Files ---
+"Watch_" = "مشاهده";
+"Open_" = "فتح";
+"Download_" = "تحميل";
 "package_no_files" = "لا يوجد أي ملفات";
 
 //MARK: --- alert ---

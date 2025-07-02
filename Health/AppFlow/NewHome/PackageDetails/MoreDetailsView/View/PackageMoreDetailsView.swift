@@ -337,7 +337,7 @@ struct PackageMoreDetailsView: View {
                 pushTo(destination: TicketView(ticketData: viewModel.ticketData,parameters: viewModel.prepareParamters()))
             }
 //            .reversLocalizeView()
-            .localizeView(reverse: true)
+//            .localizeView(reverse: true)
             .showHud(isShowing:  $viewModel.isLoading)
             .errorAlert(isPresented: .constant(viewModel.errorMessage != nil), message: viewModel.errorMessage)
 

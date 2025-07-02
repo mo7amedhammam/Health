@@ -15,7 +15,9 @@ class AppointmentsViewModel : ObservableObject {
     // -- Get List --
     var maxResultCount: Int?              = 5
     var skipCount: Int?                   = 0
-        
+   
+    @Published var upcomingSession: UpcomingSessionM? = nil
+
     // Published properties
     @Published var appointments : AppointmentsM? = AppointmentsM(items: [AppointmentsItemM.init(id: 0,
                                                                                                 doctorName: "أحمد سامي عبد الله",
@@ -41,6 +43,27 @@ class AppointmentsViewModel : ObservableObject {
 
 //MARK: -- Functions --
 extension AppointmentsViewModel{
+    
+//    CustomerPackageId
+    @MainActor
+    func getUpcomingSession() async {
+//        if Task.isCancelled { return }
+
+//        isLoading = true
+//        defer { isLoading = false }
+        let target = HomeServices.GetUpcomingSession
+        do {
+            self.errorMessage = nil // Clear previous errors
+            let response = try await networkService.request(
+                target,
+                responseType: UpcomingSessionM.self
+            )
+            self.upcomingSession = response
+        } catch {
+//            isError=true
+            self.errorMessage = error.localizedDescription
+        }
+    }
     
     @MainActor
     func getAppointmenstList() async {
@@ -74,7 +97,13 @@ extension AppointmentsViewModel {
     @MainActor
     func refresh() async {
         skipCount = 0
-        await getAppointmenstList()
+        isLoading = true
+        defer { isLoading = false }
+
+        async let upcommingsession: () = getUpcomingSession()
+        async let appointmenstList: () = getAppointmenstList()
+
+        await _ = (upcommingsession,appointmenstList)
     }
 
     @MainActor

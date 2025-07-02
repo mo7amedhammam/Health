@@ -318,7 +318,7 @@ struct TicketView: View {
             viewmodel.ticketData = ticketData
         }
 //        .reversLocalizeView()
-        .localizeView(reverse: true)
+//        .localizeView(reverse: true)
         .showHud(isShowing:  $viewmodel.isLoading)
         .errorAlert(isPresented: .constant(viewmodel.errorMessage != nil), message: viewmodel.errorMessage)
 

@@ -9,24 +9,46 @@
 // MARK: - PackageFileM
 // MARK: - PackageFileM
 struct PackageFileM: Codable,Hashable {
-    var items: [PackageFileItemM]?
+    var items: [MyFileM]?
     var totalCount: Int?
 }
 
-// MARK: - Item
-struct PackageFileItemM: Codable,Hashable {
-    var id, customerPackageID, doctorID: Int?
-    var instText, instDocumentPath, creationDate: String?
-    var fileTypeID: Int?
+// MARK: - PackageFileM
+struct MyFileM: Codable,Hashable {
+    var fileName, notes: String?
+    var fileTypeID, id: Int?
+    var filePath, creationDate: String?
+    var customerID: Int?
 
     enum CodingKeys: String, CodingKey {
-        case id
-        case customerPackageID = "customerPackageId"
-        case doctorID = "doctorId"
-        case instText, instDocumentPath, creationDate
+        case fileName, notes
         case fileTypeID = "fileTypeId"
+        case id, filePath, creationDate
+        case customerID = "customerId"
     }
 }
+extension MyFileM {
+    var formattedCreationDate: String? {
+        guard let date = self.creationDate else { return "" }
+
+        let formatedDate = convertDateToString(inputDateString: date , inputDateFormat: "yyyy-MM-dd'T'HH:mm:ss", outputDateFormat: "yyyy/MM/dd")
+        return formatedDate // fallback to original string if parsing fails
+    }
+}
+// MARK: - Item
+//struct PackageFileItemM: Codable,Hashable {
+//    var id, customerPackageID, doctorID: Int?
+//    var instText, instDocumentPath, creationDate: String?
+//    var fileTypeID: Int?
+//
+//    enum CodingKeys: String, CodingKey {
+//        case id
+//        case customerPackageID = "customerPackageId"
+//        case doctorID = "doctorId"
+//        case instText, instDocumentPath, creationDate
+//        case fileTypeID = "fileTypeId"
+//    }
+//}
 
 //
 //

@@ -19,9 +19,10 @@ struct AppointmentsView: View {
                 
                 ScrollView{
 
-                NextSessionSection()
-                        .padding([.horizontal])
-
+                    if let session = viewModel.upcomingSession{
+                        NextSessionSection(upcomingSession: session)
+                            .padding([.horizontal])
+                    }
                     
                     AppointmentsListView(appointments:viewModel.appointments?.items ,selectAction: {appointment in
 //                                    pushTo(destination: SubcripedPackageDetailsView(package: package))
@@ -452,6 +453,7 @@ struct FilterView: View {
             }
             .padding(.horizontal, 20)
             .padding(.vertical, 15)
+            .padding(.top)
             .background(Color.white)
             .shadow(color: Color.black.opacity(0.05), radius: 3, x: 0, y: 2)
             
@@ -490,7 +492,7 @@ struct FilterView: View {
                             .foregroundColor(.white)
                             .padding(.vertical, 15)
                             .frame(maxWidth: .infinity)
-                            .background(Color(.main))
+                            .background(Color(.secondary))
                             .cornerRadius(3)
                     }
                     
@@ -526,8 +528,9 @@ struct FilterView: View {
             .padding(.horizontal, 20) // Horizontal padding for the main content VStack
             .background(Color.white) // Main content background
         }
+        
 //        .reversLocalizeView()
-        .localizeView(reverse: true)
+//        .localizeView(reverse: true)
         .background(Color.white.ignoresSafeArea()) // Overall background to extend behind safe areas if needed
 //        .environment(\.layoutDirection, .rightToLeft) // Force RTL layout for the entire view
     }

@@ -39,7 +39,7 @@ struct PackageFilesView: View {
 
 
 struct filesList:View {
-    var files:[PackageFileItemM]? = [.init(),.init(),.init()]
+    var files:[MyFileM]? = [.init(),.init(),.init()]
     
     var body: some View {
         
@@ -50,25 +50,43 @@ struct filesList:View {
                         ForEach(files,id: \.self) { file in
                             VStack {
                                 HStack(alignment: .top){
-                                    
+                                
+                                    Button(action: {
+                                     
+                                        if let filePath = file.filePath , let url = URL(string: filePath ) {
+                                            UIApplication.shared.open(url)
+                                        }
+                                        
+                                    }, label: {
                                     VStack(spacing:8){
                                         Image("downloadicon")
                                             .resizable()
                                             .frame(width: 24, height: 24)
                                             .horizontalGradientBackground()
                                             .cardStyle(cornerRadius: 3)
-                                        Text("Watch_".localized)
-                                            .font(.medium(size: 10))
+                                        
+                                        let title = switch file.fileTypeID ?? 0 {
+                                        case 1,2:
+                                            "Download_".localized
+                                        case 3,4:
+                                            "Watch_".localized
+                                        default:
+                                            "Open_".localized
+                                        }
+                                        
+                                        Text(title)
+                                            .font(.medium(size: 12))
                                             .foregroundStyle(Color(.main))
                                     }
+                                    })
                                     
                                     VStack(alignment: .trailing,spacing: 12){
-                                        Text(file.instText ?? "فيديو تمرينات الأسبوع الأول والثاني")
-                                            .font(.semiBold(size: 14))
+                                        Text(file.fileName ?? "فيديو تمرينات الأسبوع الأول والثاني")
+                                            .font(.semiBold(size: 16))
                                             .foregroundStyle(Color(.main))
                                         
-                                        Text("08/05/2025")
-                                            .font(.medium(size: 10))
+                                        Text(file.formattedCreationDate ?? "12 أكتوبر 2020")
+                                            .font(.medium(size: 14))
                                             .foregroundStyle(Color(.secondary))
                                     }
                                     .frame(maxWidth:.infinity,alignment: .trailing)

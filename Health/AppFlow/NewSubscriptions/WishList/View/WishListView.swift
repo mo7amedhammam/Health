@@ -14,12 +14,15 @@ struct WishListView: View {
         VStack( spacing: 0){
             TitleBar(title: "favorite_packages",hasbackBtn: true)
             
-            PackagesListView(packaces: viewModel.WishList)
-                .refreshable {
-                    await viewModel.getWishList()
-                }
-            
+            ScrollView{
+                PackagesListView(packaces: viewModel.WishList)
+                    .padding()
+                    .refreshable {
+                        await viewModel.getWishList()
+                    }
+            }
         }
+        .edgesIgnoringSafeArea(.bottom)
         .task{
             await viewModel.getWishList()
         }

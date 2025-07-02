@@ -168,7 +168,9 @@ struct SelectLanguageView : View {
             Spacer()
 
             CustomButton(title: "lang_Ok_Btn",isdisabled: LocalizationManager.shared.currentLanguage.isEmpty,backgroundView:AnyView(Color.clear.horizontalGradientBackground())){
+                
                 setLanguage(selectedLanguage?.lang1?.lowercased() ?? Helper.shared.getLanguage())
+                
                 if !Helper.shared.CheckIfLoggedIn(){
                     let rootVC = UIHostingController(rootView: OnboardingView())
                     rootVC.navigationController?.isNavigationBarHidden = true
@@ -181,6 +183,7 @@ struct SelectLanguageView : View {
                     rootVC.navigationController?.toolbar.isHidden = true
                     Helper.shared.changeRootVC(newroot: rootVC, transitionFrom: .fromRight)
                 }
+                
 //                Helper.shared.changeRootVC(newroot: HTBC.self, transitionFrom: .fromRight)
 
             }
@@ -212,7 +215,7 @@ struct SelectLanguageView : View {
     private func setLanguage(_ language: String) {
         
 //        changeLanguage(to: language)
-        LocalizationManager.shared.changeLanguage(to: "en") {
+        LocalizationManager.shared.changeLanguage(to: language) {
         }
         
 //        localizationManager.setLanguage(language) {_ in

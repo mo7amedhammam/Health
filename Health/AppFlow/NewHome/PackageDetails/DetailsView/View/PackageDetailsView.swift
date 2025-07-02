@@ -30,23 +30,60 @@ struct PackageDetailsView: View {
 
                     Spacer()
                     
-//                    HStack{
-                        VStack{
-                            Text(package.name ?? "pack_name".localized)
-                                .font(.bold(size: 20))
-                                .foregroundStyle(.white)
+                    HStack{
+//                    VStack(alignment: .leading){
+//                            Text(package.name ?? "pack_name".localized)
+//                                .font(.semiBold(size: 22))
+//                                .foregroundStyle(.white)
                             
-                            HStack(alignment: .center,spacing: 5){
-                                Text(package.categoryName ?? "seha 3ama")
-                                Circle().fill(Color(.white))
-                                    .frame(width: 4, height: 4)
+//                            HStack(alignment: .center,spacing: 5){
+                        VStack(alignment: .leading,spacing: 4){
+                            Text(package.name ?? "pack_name".localized)
+                                .font(.semiBold(size: 22))
+                                .foregroundStyle(.white)
+
+                                Text(package.mainCategoryName ?? "seha 3ama")
+                                .padding(.top,4)
+//                                Circle().fill(Color(.white))
+//                                    .frame(width: 4, height: 4)
                                 Text(package.categoryName ?? "tagzia 3lagia")
                             }
-                            .font(.regular(size: 12))
+                            .font(.medium(size: 18))
                             .foregroundStyle(Color.white)
-                            .frame(maxWidth: .infinity,alignment:.center)
+//                            .frame(maxWidth: .infinity,alignment:.center)
+                        
+                        Spacer()
+                        
+                        VStack(alignment: .trailing){
+                            Button(action: {
+                                
+                            }, label: {
+                                Image(.newlikeicon)
+                                    .resizable()
+                                    .frame(width: 20, height: 20)
+                            })
+                            Spacer()
+                            
+                            HStack(alignment: .center,spacing: 5){
+                                ( Text(" \(package.doctorCount ?? 0) ") + Text("avilable_doc".localized))
+                                    .font(.regular(size: 10))
 
+                                Image(.newdocicon)
+                                    .renderingMode(.template)
+                                    .resizable()
+                                    .frame(width: 10,height:12)
+                                    .scaledToFit()
+                                    .foregroundStyle(Color("FF8F15"))
+                                    .padding(3)
+//                                    .background(Color(.secondary))
+                                
+//                                    .frame(maxWidth: .infinity,alignment:.leading)
+                            }
+                            .font(.medium(size: 12))
+                            .foregroundStyle(Color.white)
                         }
+                        }
+                    .frame(height: 76)
                     .padding(10)
                     .background{
                         BlurView(radius: 5)
@@ -60,7 +97,7 @@ struct PackageDetailsView: View {
 //                    Image(.adsbg2)
 //                        .resizable()
                 }
-                .frame(height: 195)
+                .frame(height: 239)
                 
             HStack(alignment: .bottom){
                 VStack(alignment: .leading){
@@ -81,16 +118,16 @@ struct PackageDetailsView: View {
                 
                 Spacer()
                 
-                VStack(alignment:.trailing,spacing: 2.5){
-                    Button(action: {
-                        
-                    }, label: {
-                        Image(.newlikeicon)
-                            .resizable()
-                            .frame(width: 20, height: 20)
-                    })
+//                VStack(alignment:.trailing,spacing: 2.5){
+//                    Button(action: {
+//                        
+//                    }, label: {
+//                        Image(.newlikeicon)
+//                            .resizable()
+//                            .frame(width: 20, height: 20)
+//                    })
                     
-                    Spacer()
+//                    Spacer()
 
                     // Title
                     HStack (spacing:3){
@@ -107,9 +144,9 @@ struct PackageDetailsView: View {
                     .padding(.horizontal,10)
                     .background{Color(.secondaryMain)}
                     .cardStyle( cornerRadius: 3)
-                }
+//                }
             }
-            .offset(y:-12)
+//            .offset(y:-12)
             .padding()
             .frame(height: 69)
             .background(Color.mainBlue)
@@ -135,7 +172,7 @@ struct PackageDetailsView: View {
                 await viewmodel.getAvailableDoctors(appCountryPackageId: appCountryPackageId)
             }
 //            .reversLocalizeView()
-            .localizeView(reverse: true)
+//            .localizeView(reverse: true)
             .showHud(isShowing:  $viewmodel.isLoading)
             .errorAlert(isPresented: .constant(viewmodel.errorMessage != nil), message: viewmodel.errorMessage)
 
@@ -156,9 +193,9 @@ struct AvailableDoctorsListView: View {
     var body: some View {
         VStack{
             
-            SectionHeader(image: Image(.newdocicon),title: "\(viewmodel.availableDoctors?.totalCount ?? 0) \("available_doc".localized)"){
-                //                            go to last mes package
-            }
+//            SectionHeader(image: Image(.newdocicon),title: "\(viewmodel.availableDoctors?.totalCount ?? 0) \("available_doc".localized)"){
+//                //                            go to last mes package
+//            }
             
 //            ScrollView(.horizontal,showsIndicators:false){
             ScrollView{
@@ -181,13 +218,13 @@ struct AvailableDoctorsListView: View {
                                 
                                 HStack(alignment: .center,spacing: 5){
                                     (Text("doc".localized + "/".localized) + Text(item.doctorName ?? "name"))
-                                       .font(.bold(size: 16))
+                                       .font(.semiBold(size: 22))
                                        .frame(maxWidth: .infinity,alignment:.leading)
                                        .foregroundStyle(Color.mainBlue)
 
                                     HStack(spacing:2) {
                                         Text(item.speciality ?? "")
-                                           .font(.medium(size: 10))
+                                           .font(.semiBold(size: 12))
 //                                           .frame(maxWidth: .infinity,alignment:.leading)
                                            .foregroundStyle(Color.mainBlue)
                                         
@@ -217,9 +254,9 @@ struct AvailableDoctorsListView: View {
                                             .resizable()
                                             .frame(width: 15, height: 15)
                                         
-                                        Text("مزيد من التفاصيل".localized)
+                                        Text("more_detail".localized)
                                     }
-                                    .font(.bold(size: 12))
+                                    .font(.bold(size: 16))
                                     .foregroundStyle(Color.white)
                                     .frame(height:36)
                                     .frame(maxWidth: .infinity)

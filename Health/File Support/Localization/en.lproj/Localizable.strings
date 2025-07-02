@@ -122,7 +122,6 @@
 "Most_Booked" = "Most Booked";
 "Most_Viewed" = "Most Viewed";
 "Doctor" = "Doctor";
-"more_detail" = "more detail";
 
 "mesurement_det_title" = "mesurement of ";
 
@@ -131,6 +130,8 @@
 "Days" = "Days";
 "Hours" = "Hours";
 "Minutes" = "Minutes";
+"more_detail" = "More Detail";
+"reSchedual" = "reSchedual";
 
 //MARK: --- notification ---
 "notfication_active" = "active";
@@ -152,6 +153,7 @@
 "avilable_doc" = "avilable doctor";
 
 //MARK: --- packages Details ---
+"sessions" = "sessions";
 "available_doc" = "Available Doctor";
 
 //MARK: --- subsriptions ---
@@ -161,6 +163,9 @@
 "subscription_nextSessions" = "Next Sessions";
 
 //MARK: --- Package Files ---
+"Watch_" = "Watch";
+"Open_" = "Open";
+"Download_" = "Download";
 "package_no_files" = "no files for now";
 
 //MARK: --- alert ---
@@ -193,7 +198,7 @@
 "profile_logout" = "Sign Out";
 "profile_login" = "Sign In";
 
-"profile_Packages" = "Packaged";
+"profile_Packages" = "Packages";
 "profile_drugnotifications" = "Notifications";
 "profile_tips" = "Tips Categories";
 "profile_inbody" = "Inbody";

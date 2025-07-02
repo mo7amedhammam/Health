@@ -48,7 +48,7 @@ struct FeaturedPackagesM: Codable {
 }
 
 // MARK: - FeaturedPackageItemM
-struct FeaturedPackageItemM: Codable,Hashable,Identifiable {
+struct FeaturedPackageItemM: Codable,Hashable {
     var id: Int?
     var name: String?
     var mainCategoryID, subCategoryID: Int?

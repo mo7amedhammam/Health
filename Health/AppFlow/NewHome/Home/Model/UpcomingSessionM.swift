@@ -74,8 +74,8 @@ extension UpcomingSessionM{
            return (days, hours, minutes)
        }
 
-    var isJoinAvailable: Bool {
-        guard let session = sessionDateTime else { return false }
-        return Date() >= session
-    }
+//    var isJoinAvailable: Bool {
+//        guard let session = sessionDateTime else { return false }
+//        return Date() >= session
+//    }
 }
