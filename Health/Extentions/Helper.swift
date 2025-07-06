@@ -490,22 +490,50 @@ extension Helper{
             return percentage
         }
         
-        @available(iOS 13.0, *)
-     func changeRootVC(newroot viewcontroller:UIViewController.Type,transitionFrom from : CATransitionSubtype){
-            guard  let controller = initiateViewController(storyboardName: .main,viewControllerIdentifier: viewcontroller.self) else {return}
-            let nav = UINavigationController(rootViewController: controller)
-            nav.navigationBar.isHidden = true
-            nav.toolbar.isHidden = true
-            UIApplication.shared.keyWindow?.replaceRootViewController(nav, from)
-        }
-    // Overloaded function for SwiftUI views
-       func changeRootVC(newroot viewController: UIViewController, transitionFrom from: CATransitionSubtype) {
-           let nav = UINavigationController(rootViewController: viewController)
-           nav.navigationBar.isHidden = true
-           nav.toolbar.isHidden = true
-           UIApplication.shared.keyWindow?.replaceRootViewController(nav, from)
-       }
+//        @available(iOS 13.0, *)
+//     func changeRootVC(newroot viewcontroller:UIViewController.Type,transitionFrom from : CATransitionSubtype){
+//            guard  let controller = initiateViewController(storyboardName: .main,viewControllerIdentifier: viewcontroller.self) else {return}
+//            let nav = UINavigationController(rootViewController: controller)
+//            nav.navigationBar.isHidden = true
+//            nav.toolbar.isHidden = true
+//            UIApplication.shared.keyWindow?.replaceRootViewController(nav, from)
+//        }
+//    // Overloaded function for SwiftUI views
+//       func changeRootVC(newroot viewController: UIViewController, transitionFrom from: CATransitionSubtype) {
+//           let nav = UINavigationController(rootViewController: viewController)
+//           nav.navigationBar.isHidden = true
+//           nav.toolbar.isHidden = true
+//           UIApplication.shared.keyWindow?.replaceRootViewController(nav, from)
+//       }
 
+    @available(iOS 13.0, *)
+    func changeRootVC(newroot viewcontroller: UIViewController.Type, transitionFrom from: CATransitionSubtype) {
+        guard let controller = initiateViewController(storyboardName: .main, viewControllerIdentifier: viewcontroller.self) else { return }
+        
+        let nav = UINavigationController(rootViewController: controller)
+        nav.navigationBar.isHidden = true
+        nav.toolbar.isHidden = true
+        
+        // ✅ تحديث اتجاه الواجهة بحسب اللغة
+        let isArabic = LocalizationManager.shared.currentLanguage == "ar"
+        nav.view.semanticContentAttribute = isArabic ? .forceRightToLeft : .forceLeftToRight
+        nav.navigationBar.semanticContentAttribute = nav.view.semanticContentAttribute
+        
+        UIApplication.shared.keyWindow?.replaceRootViewController(nav, from)
+    }
+
+    func changeRootVC(newroot viewController: UIViewController, transitionFrom from: CATransitionSubtype) {
+        let nav = UINavigationController(rootViewController: viewController)
+        nav.navigationBar.isHidden = true
+        nav.toolbar.isHidden = true
+        
+        // ✅ تحديث اتجاه الواجهة بحسب اللغة
+        let isArabic = LocalizationManager.shared.currentLanguage == "ar"
+        nav.view.semanticContentAttribute = isArabic ? .forceRightToLeft : .forceLeftToRight
+        nav.navigationBar.semanticContentAttribute = nav.view.semanticContentAttribute
+        
+        UIApplication.shared.keyWindow?.replaceRootViewController(nav, from)
+    }
 
         
         

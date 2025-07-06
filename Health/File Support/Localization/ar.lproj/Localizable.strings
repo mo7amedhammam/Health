@@ -44,6 +44,8 @@
 "login_signin_btn" = "تسجيل الدخول";
 "login_not_signin" = "لم تقم بإنشاء حساب حتى الآن؟";
 "login_signup_btn" = "إنشاء حساب";
+"Login_With_password_First" = "تسجيل الدخول باستخدام كلمة المرور أولاً";
+"login_type_mobile_first" = "أدخل الهاتف المحمول أولاً";
 
 /* Signup */
 "Signup_title" = "إنشاء حساب";
@@ -59,6 +61,12 @@
 "signup_password_placeholder" = "ضع كلمة المرور الخاصة بك";
 "signup_confirmpassword_title" = "تأكيد كلمة المرور";
 "signup_confirmpassword_placeholder" = "أكد كلمة المرور الخاصة بك";
+
+"signup_terms_title" = "من خلال إنشاء حساب فإنك توافق على";
+"signup_service_condition" = "شروط الخدمة";
+"signup_privacy_policy" = "سياسة الخصوصية";
+"signup_refund_policy" = "سياسة الاسترجاع";
+
 "signup_signup_btn" = "إنشاء";
 "signup_have_account" = "لديك حساب بالفعل؟";
 "signup_signin_btn" = "تسجيل الدخول";
@@ -132,6 +140,8 @@
 "Minutes" = "دقيقه";
 "more_detail" = "تفاصيل أكثر";
 "reSchedual" = "اعادة الجدولة";
+")" = "(";
+"(" = ")";
 
 //MARK: --- notification ---
 "notfication_active" = "فعّال";
@@ -250,3 +260,5 @@
 "payment_note2" = "صلاحية الجلسات مرتبطة بشروط كل باقة.";
 "payment_note3" = "لاستفسارات أكتر، تواصل مع خدمة العملاء مباشرة من خلال المنصة";
 
+//MARK:  edit profile
+"save_" = "حفظ";

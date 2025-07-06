@@ -166,3 +166,8 @@ enum MyWalletEndPoints : String{
   case CustomerOrderDetail = "CustomerPackage/CustomerOrderDetail"
   case RefundDetail = "CustomerPackage/RefundDetail"
 }
+
+enum ProfileEndPoints : String{
+    case GetProfile = "Customer/MyProfile"
+    case UpdateProfile = "Customer/Update"
+}

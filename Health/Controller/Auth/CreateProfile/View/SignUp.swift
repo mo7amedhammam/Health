@@ -450,6 +450,7 @@ struct SignUpView: View {
     private var isConfirmPasswordValid: Bool{
         (confirmPassword.count == 0  || (confirmPassword.count >= 6 && confirmPassword == password))
     }
+    @State var isAgreed: Bool = false
     
     @State private var countries: [AppCountryM] = [
         AppCountryM(id: 1, name: "Egypt", flag: "🇪🇬"),
@@ -542,9 +543,9 @@ struct SignUpView: View {
                     )
                 )
                 .keyboardType(.asciiCapableNumberPad)
-                .task {
-                    await lookupsVM.getAppCountries()
-                }
+//                .task {
+//                    await lookupsVM.getAppCountries()
+//                }
                 
                 CustomInputFieldUI(
                     title: "signup_gender_title",
@@ -569,9 +570,9 @@ struct SignUpView: View {
                         }
                     )
                 )
-                .task {
-                    await lookupsVM.getGenders()
-                }
+//                .task {
+//                    await lookupsVM.getGenders()
+//                }
                 
                 Group{
                     CustomInputFieldUI(
@@ -592,7 +593,55 @@ struct SignUpView: View {
                         isValid: isConfirmPasswordValid
                     )
                 }
-                
+                VStack(spacing: 6) {
+                    HStack(alignment: .top, spacing: 5) {
+                        Image(systemName: isAgreed ? "checkmark.square.fill" : "square")
+                            .resizable()
+                            .frame(width: 14, height: 14)
+                            .foregroundColor(Color(.secondary))
+                            .onTapGesture {
+                                isAgreed.toggle()
+                            }
+
+                        Text("signup_terms_title".localized)
+                            .font(.medium(size: 16))
+                            .foregroundColor(Color(.secondary))
+                            .fixedSize(horizontal: false, vertical: true)
+                    }
+                    .frame(maxWidth: .infinity, alignment: .leading)
+
+                    VStack(alignment: .leading, spacing: 4) {
+                        Button(action: {
+                            // open Terms of Service
+                        }) {
+                            Text("signup_service_condition".localized)
+                                .font(.medium(size: 16))
+                                .underline()
+                                .foregroundColor(.mainBlue)
+                        }
+
+                        Button(action: {
+                            // open Privacy Policy
+                        }) {
+                            Text("signup_privacy_policy".localized)
+                                .font(.medium(size: 16))
+                                .underline()
+                                .foregroundColor(.mainBlue)
+                        }
+
+                        Button(action: {
+                            // open Refund Policy
+                        }) {
+                            Text("signup_refund_policy".localized)
+                                .font(.medium(size: 16))
+                                .underline()
+                                .foregroundColor(.mainBlue)
+                        }
+                    }
+                    .frame(maxWidth: .infinity,alignment: .leading)
+                    .padding(.leading,18)
+                }
+                .padding(.bottom, 10)
                 
             }
             .padding(.top)
@@ -622,7 +671,8 @@ struct SignUpView: View {
             Spacer()
         }
         .padding(.horizontal)
-        .environment(\.layoutDirection, .rightToLeft)
+        .localizeView()
+//        .environment(\.layoutDirection, .rightToLeft)
         //        .onChange(of: phoneNumber) { newValue in
         //            // Keep only digits
         //            let filtered = newValue.filter { $0.isNumber }
@@ -634,7 +684,15 @@ struct SignUpView: View {
         //                phoneNumber = filtered
         //            }
         //        }
-        
+        .onAppear() {
+            Task{
+                async let countries:() = await lookupsVM.getAppCountries()
+                async let genders:() = await lookupsVM.getGenders()
+
+                _ = await (countries,genders)
+                
+            }
+        }
         .onChange(of: phoneNumber) { newValue in
             // Remove non-digit characters (if needed)
             let filtered = newValue.filter { $0.isNumber }
@@ -653,9 +711,11 @@ struct SignUpView: View {
         //            isPasswordValid = newValue.count == 0 || newValue.count >= 6
         //        }
         .showHud(isShowing:  $isLoading)
-        .alert(item: $viewModel.errorMessage) { msg in
-            Alert(title: Text("_خطأ".localized), message: Text(msg.localized), dismissButton: .default(Text("ok".localized)))
-        }
+        .errorAlert(isPresented: .constant(viewModel.errorMessage != nil), message: viewModel.errorMessage)
+
+//        .alert(item: $viewModel.errorMessage) { msg in
+//            Alert(title: Text("_خطأ".localized), message: Text(msg.localized), dismissButton: .default(Text("ok".localized)))
+//        }
         
     }
     
@@ -674,6 +734,7 @@ extension SignUpView {
         && (selectedGender != nil && isGenderValid)
         && (password.count > 0 && isPasswordValid)
         && (confirmPassword.count > 0 && isConfirmPasswordValid)
+        && isAgreed
     }
     
     private func CreateAccount() {
@@ -722,13 +783,16 @@ extension SignUpView {
     }
     
     private func showOtpVC(phone: String, otp: Int, seconds: Int) {
-        guard let vc = initiateViewController(storyboardName: .main, viewControllerIdentifier: OtpVC.self) else { return }
-        vc.Phonenumber = phone
-        vc.otp = otp
-        vc.second = seconds
-        vc.verivyFor = .CreateAccount
-//        Shared.shared.remainingSeconds = seconds
-        pushUIKitVC(vc)
+        pushTo(destination: OTPView(remainingSeconds:seconds, otp:otp, phone: phone,verivyFor:.CreateAccount))
+
+        
+//        guard let vc = initiateViewController(storyboardName: .main, viewControllerIdentifier: OtpVC.self) else { return }
+//        vc.Phonenumber = phone
+//        vc.otp = otp
+//        vc.second = seconds
+//        vc.verivyFor = .CreateAccount
+////        Shared.shared.remainingSeconds = seconds
+//        pushUIKitVC(vc)
     }
     
 }

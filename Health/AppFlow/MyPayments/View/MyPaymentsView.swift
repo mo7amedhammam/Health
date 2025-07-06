@@ -83,7 +83,7 @@ struct MyPaymentsView: View {
 
                             }
                             .padding()
-                            .horizontalGradientBackground()
+                            .horizontalGradientBackground(reverse: true)
                             .cardStyle(cornerRadius: 3,shadowOpacity: 0.3)
                             .frame( height: 76)
                             

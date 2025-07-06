@@ -18,16 +18,16 @@
 "lang_Ok_Btn" =  "Confirm";
 
 /* onBoarding*/
-"bord1_tilte" = "مرحبًا بك في \nصحتي مع الندى!";
-"bord1_subtilte" = "استشارات مع خبراء تغذي\nة لمساعدتك على تحقيق أهدافك.";
-"bord2_tilte" = "مرحبًا بك في \nصحتي مع الندى!";
-"bord2_subtilte" = "استشارات مع خبراء تغذي\nة لمساعدتك على تحقيق أهدافك.";
-"bord3_tilte" = "مرحبًا بك في \nصحتي مع الندى!";
-"bord3_subtilte" = "استشارات مع خبراء تغذي\nة لمساعدتك على تحقيق أهدافك.";
-"bord4_tilte" = "مرحبًا بك في \nصحتي مع الندى!";
-"bord4_subtilte" = "استشارات مع خبراء تغذي\nة لمساعدتك على تحقيق أهدافك.";
-"bord5_tilte" = "مرحبًا بك في \nصحتي مع الندى!";
-"bord5_subtilte" = "استشارات مع خبراء تغذي\nة لمساعدتك على تحقيق أهدافك.";
+"bord1_tilte" = "Welcome to\nMy Health with Al Nadda!";
+"bord1_subtilte" = "Consultations with nutrition experts\nto help you achieve your goals.";
+"bord2_tilte" = "Welcome to\nMy Health with Al Nadda!";
+"bord2_subtilte" = "Consultations with nutrition experts\nto help you achieve your goals.";
+"bord3_tilte" = "Welcome to\nMy Health with Al Nadda!";
+"bord3_subtilte" = "Consultations with nutrition experts\nto help you achieve your goals.";
+"bord4_tilte" = "Welcome to\nMy Health with Al Nadda!";
+"bord4_subtilte" = "Consultations with nutrition experts\nto help you achieve your goals.";
+"bord5_tilte" = "Welcome to\nMy Health with Al Nadda!";
+"bord5_subtilte" = "Consultations with nutrition experts\nto help you achieve your goals.";
 
 "bord_btn_next" = "Next";
 "bord_btn_start" = "Start";
@@ -44,6 +44,8 @@
 "login_signin_btn" = "Sign In";
 "login_not_signin" = "Don't have an account?";
 "login_signup_btn" = "Create Account";
+"Login_With_password_First" = "Login_With_password_First";
+"login_type_mobile_first" = "enter mobile number first";
 
 /* Signup */
 "Signup_title" = "Create Account";
@@ -59,6 +61,12 @@
 "signup_password_placeholder" = "Enter Your Password";
 "signup_confirmpassword_title" = "Confirm Password";
 "signup_confirmpassword_placeholder" = "Enter Your Password";
+
+"signup_terms_title" = "Creating Account Means You Agree To";
+"signup_service_condition" = "Service Conditions";
+"signup_privacy_policy" = "Privacy Policy";
+"signup_refund_policy" = "Refund Policy";
+
 "signup_signup_btn" = "Create";
 "signup_have_account" = "Already have an account?";
 "signup_signin_btn" = "Login";
@@ -72,20 +80,20 @@
 
 //--- Account Created popup ----
 "created_title" = "Account Created successfully";
-"created_subtitle1" = "يرجى التحقق من صندوق الوارد الخاص بك للتحقق من رحلتك.";
-"created_subtitle2" = "تم ربطه سريعًا بخدمات البريد الإلكتروني الشائعة.";
+"created_subtitle1" = "Please check your inbox to verify your journey.";
+"created_subtitle2" = "Quickly linked to popular email services.";
 "created_btn" = "Done";
 
 //--- paswword reset popup ----
 "reset_title" = "Password Reset successfully!";
-"reset_subtitle1" = "يرجى التحقق من صندوق الوارد الخاص بك للتحقق من رحلتك.";
-"reset_subtitle2" = "تم ربطه سريعًا بخدمات البريد الإلكتروني الشائعة.";
+"reset_subtitle1" = "Please check your inbox to verify your journey.";
+"reset_subtitle2" = "Quickly linked to popular email services.";
 "reset_btn" = "Done";
 
 //--- paswword changed popup ----
 "changed_title" = "Password Changed successfully!";
-"changed_subtitle1" = "يرجى التحقق من صندوق الوارد الخاص بك للتحقق من رحلتك.";
-"changed_subtitle2" = "تم ربطه سريعًا بخدمات البريد الإلكتروني الشائعة.";
+"changed_subtitle1" = "Please check your inbox to verify your journey.";
+"changed_subtitle2" = "Quickly linked to popular email services.";
 "changed_btn" = "Done";
 
 //--- paswword forget ----
@@ -132,6 +140,8 @@
 "Minutes" = "Minutes";
 "more_detail" = "More Detail";
 "reSchedual" = "reSchedual";
+")" = ")";
+"(" = "(";
 
 //MARK: --- notification ---
 "notfication_active" = "active";
@@ -249,3 +259,6 @@
 "payment_note1" = "You can use the refunded credit to book new sessions at any time.";
 "payment_note2" = "The validity of sessions is linked to the terms of each package.";
 "payment_note3" = "For more inquiries, contact customer service directly through the platform.";
+
+//MARK:  edit profile
+"save_" = "save";

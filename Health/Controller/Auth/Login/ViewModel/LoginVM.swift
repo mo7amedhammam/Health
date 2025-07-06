@@ -240,6 +240,8 @@ final class LoginViewModel: LoginViewModelProtocol, ObservableObject {
                     self.usermodel = response.data
                     completion(.success(()))
                     self.registerFirebaseDeviceToken { _ in }
+                    KeychainHelper.save(mobile, forKey: "userPhone")
+                    KeychainHelper.save(password, forKey: "userPassword")
                 } else {
                     let errorMessage = response.message ?? ""
                     completion(.failure(NetworkError.unknown(code: response.messageCode ?? 0, error: errorMessage)))

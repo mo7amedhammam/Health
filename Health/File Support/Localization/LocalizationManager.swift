@@ -259,6 +259,7 @@ final class LocalizationManager: ObservableObject {
         Helper.shared.setLanguage(currentLanguage: language)
         currentLanguage = language.lowercased()
         fetchTranslationsFromServer { [weak self ]_ in
+            guard let self = self else { return }
             DispatchQueue.main.async {
                 completion?()
             }

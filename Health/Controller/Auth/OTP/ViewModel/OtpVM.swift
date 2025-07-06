@@ -14,72 +14,76 @@ class OtpVM : ObservableObject{
     
     var responseModel : OtpM? = OtpM()
     
-    func SendOtp(completion: @escaping (EventHandler?) -> Void) {
+    @Published var isLoading: Bool? = false
+    @Published var errorMessage: String? = nil
+    @Published var isSuccess: Bool = false
+
+    func SendOtp(completion: @escaping (EventHandler?) -> Void){
         guard let mobile = mobile else {
             // Handle missing username or password
             return
         }
         let parametersarr : [String : Any] =  ["mobile" : mobile ]
-        completion(.loading)
+        isLoading = true
+        errorMessage = nil
+
         // Create your API request with the username and password
         let target = Authintications.SendOtp(parameters: parametersarr)
 
         // Make the API call using your APIManager or networking code
         BaseNetwork.callApi(target, BaseResponse<OtpM>.self) {[weak self] result in
-            // Handle the API response here
-            switch result {
-            case .success(let response):
-                // Handle the successful response
-                print("request successful: \(response)")
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let response):
+                    self?.isLoading = false
+                    guard response.messageCode == 200 else {
+                        self?.errorMessage = response.message ?? "حدث خطأ"
+                        return
+                    }
+                    
+                    self?.responseModel = response.data
+                    completion(.success)
+                case .failure(let error):
+                    self?.isLoading = false
+                    self?.errorMessage = error.localizedDescription
 
-                guard response.messageCode == 200 else {
-//                    completion(.error((response.message ?? "check validations")))
-                    completion(.error(response.messageCode, response.message ?? "check validations"))
-
-                    return
                 }
-                
-                self?.responseModel = response.data
-                completion(.success)
-            case .failure(let error):
-                // Handle the error
-                print("Login failed: \(error.localizedDescription)")
-                completion(.error(0, "\(error.localizedDescription)"))
             }
         }
     }
     
-    func VerifyOtp(otpfor:otpCases,completion: @escaping (EventHandler?) -> Void) {
+    func VerifyOtp(otpfor:otpCases){
         guard let otp = EnteredOtp ,let mobile = mobile else {
             // Handle missing username or password
             return
         }
         let parametersarr : [String : Any] =  ["otp" : otp,"mobile" : mobile ]
-        completion(.loading)
+        isLoading = true
+        errorMessage = nil
+
         // Create your API request with the username and password
         let target = Authintications.VerifyOtp(otpfor: otpfor,parameters: parametersarr)
 
         // Make the API call using your APIManager or networking code
         BaseNetwork.callApi(target, BaseResponse<OtpM>.self) {[weak self] result in
-            // Handle the API response here
-            switch result {
-            case .success(let response):
-                // Handle the successful response
-                print("request successful: \(response)")
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let response):
+                    self?.isLoading = false
+                    guard response.messageCode == 200 else {
+                        self?.errorMessage = response.message ?? "OTP غير صالح"
+                        return
+                    }
+                    
+                    self?.responseModel = response.data
+                    self?.isSuccess = true
+//                    completion(.success)
+                case .failure(let error):
+                    self?.isLoading = false
+                    self?.errorMessage = error.localizedDescription
 
-                guard response.messageCode == 200 else {
-                    completion(.error(0, (response.message ?? "check validations")))
-                    return
                 }
-                
-                self?.responseModel = response.data
-                completion(.success)
-            case .failure(let error):
-                // Handle the error
-                print("Login failed: \(error.localizedDescription)")
-                completion(.error(0, "\(error.localizedDescription)"))
             }
-
         }
     }
     

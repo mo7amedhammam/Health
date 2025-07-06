@@ -291,9 +291,7 @@ struct PackagesListView: View {
                                     LinearGradient(gradient: Gradient(colors: [.black.opacity(0.5),.clear]), startPoint: .top, endPoint: .bottom)
                                 )
                                 
-                                
                                 Spacer()
-                                
                                 
                                 VStack {
                                     Text(item.name ?? "pack_Name".localized)
@@ -347,7 +345,7 @@ struct PackagesListView: View {
                                 .padding([.bottom,.horizontal],10)
                                 .background{
                                     BlurView(radius: 5)
-                                        .horizontalGradientBackground(reverse: true).opacity(0.89)
+                                        .horizontalGradientBackground().opacity(0.89)
                                     //                                        LinearGradient(gradient: Gradient(colors: [.clear, .black.opacity(0.8)]), startPoint: .top, endPoint: .bottom)
                                 }
                                 

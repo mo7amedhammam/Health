@@ -23,7 +23,7 @@ struct OnboardingPage: View {
             
             VStack(spacing: 20){
                 Text(title.localized)
-                    .font(Font.bold(size: 30))
+                    .font(.bold(size: 30))
                     .multilineTextAlignment(.center)
 //                    .padding(.top, 10)
                     .padding(.horizontal)
@@ -32,7 +32,7 @@ struct OnboardingPage: View {
                     .frame(maxHeight: .infinity)
                 
                 Text(description.localized)
-                    .font(Font.regular(size: 16))
+                    .font(.medium(size: 18))
                     .multilineTextAlignment(.center)
                     .padding(.horizontal)
                     .foregroundStyle(Color(.wrong))
@@ -44,10 +44,9 @@ struct OnboardingPage: View {
                     buttonaction()
                 }, label: {
                     Text(buttontitle.localized)
-                        .font(Font.bold(size: 18))
+                        .font(.bold(size: 18))
                         .multilineTextAlignment(.center)
                         .foregroundColor(Color(.white))
-                    
                         .frame(maxWidth: .infinity)
                         .frame(height: 55)
                         .background(Color(.mainBlue))

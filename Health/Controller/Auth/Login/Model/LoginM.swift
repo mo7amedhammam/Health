@@ -11,21 +11,25 @@
 struct LoginM: Codable {
     var token: String?
     var id: Int?
-    var code, pharmacistName: String?
-    var pharmacistID: Int?
-    var genderTitle, createdby, name, mobile: String?
-    var genderID, countryId, districtID, regionId: Int?
-    var address, pharmacyCode: String?
+    var genderTitle, name, mobile,image: String?
+    var genderID, countryId:Int?
     var homeCountryId,appCountryId : Int?
+
+    //    var code, pharmacistName,createdby: String?
+    //    var pharmacistID: Int?
+//    var districtID, regionId: Int?
+//    var address, pharmacyCode: String?
+    
     enum CodingKeys: String, CodingKey {
-        case token, id, code, pharmacistName
-        case pharmacistID = "pharmacistId"
-        case genderTitle, createdby, name, mobile
+        case token, id
+        case genderTitle , name, mobile,image
         case genderID = "genderId"
         case countryId
-        case districtID = "districtId",regionId
-        case address, pharmacyCode
         case homeCountryId,appCountryId
+        //        case code,pharmacistID = "pharmacistId", pharmacistName,createdby
+        //        case districtID = "districtId",regionId
+        //        case address, pharmacyCode
+
     }
 }
 

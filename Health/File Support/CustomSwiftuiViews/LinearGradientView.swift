@@ -12,8 +12,8 @@ struct HorizontalGradientBackground: ViewModifier {
     var reverse: Bool = false
 
     func body(content: Content) -> some View {
-        let finalColors = Helper.shared.getLanguage().lowercased() != "ar" ? colors.reversed() : colors
-//        let finalColors = reverse ? colors.reversed() : colors
+//        let finalColors = (Helper.shared.getLanguage().lowercased() != "ar") || reverse ? colors : colors.reversed()
+        let finalColors =  !reverse ? colors.reversed() : colors
 
         content
             .background(

@@ -100,7 +100,7 @@ final class SignUpVM: ObservableObject {
 
     // Outputs
     @Published var responseModel: SignUpM?
-    @Published var isLoading = false
+    @Published var isLoading:Bool? = false
     @Published var errorMessage: String?
 
     func createAccount(onSuccess: @escaping () -> Void) {

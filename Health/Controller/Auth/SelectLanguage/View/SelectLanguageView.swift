@@ -19,7 +19,7 @@ struct SelectLanguageView : View {
     var body: some View {
         VStack{
 //            CustomNavBar(title: "lang_Title".localized,hasBackBtn:hasackBtn)
-            TitleBar(title: "lang_Title",hasbackBtn: hasbackBtn)
+            TitleBar(title: "lang_Title".localized,hasbackBtn: hasbackBtn)
             
             Spacer()
             
@@ -64,7 +64,7 @@ struct SelectLanguageView : View {
                 VStack(spacing:30){
                     CustomInputFieldUI(
                         title: "lang_Language_title",
-                        placeholder: "lang_Language_subitle",
+                        placeholder: "lang_Language_subtitle",
 //                        placeholder: "",
 
                         text: .constant( ""),
@@ -73,7 +73,6 @@ struct SelectLanguageView : View {
                         trailingView: AnyView(
                             Menu {
                                 ForEach(lookupsVM.languages ?? [],id: \.self) { language in
-                                    
                                     Button(action: {
                                         selectedLanguage = language  // ✅ Trigger state update
                                         Task{
@@ -87,7 +86,6 @@ struct SelectLanguageView : View {
                                                 .frame(width: 30,height:17)
                                         }
                                     })
-                                    
                                 }
                             } label: {
                                 HStack(spacing: 4) {
@@ -125,7 +123,6 @@ struct SelectLanguageView : View {
                                     Button(action: {
                                         Task {
                                             await MainActor.run(){
-                                                
                                                 selectedCountry = country
                                                 //                                        setLanguage("en")
                                                 if let selectedCountryId = country.id {
@@ -141,7 +138,6 @@ struct SelectLanguageView : View {
                                                 .frame(width: 30,height:17)
                                         }
                                     })
-                                    
                                 }
                             } label: {
                                 HStack(spacing: 4) {
@@ -159,8 +155,6 @@ struct SelectLanguageView : View {
                         )
                     )
                     .keyboardType(.asciiCapableNumberPad)
-                    
-                    
                 }
             }
             .padding(.horizontal)
@@ -171,7 +165,7 @@ struct SelectLanguageView : View {
                 
                 setLanguage(selectedLanguage?.lang1?.lowercased() ?? Helper.shared.getLanguage())
                 
-                if !Helper.shared.CheckIfLoggedIn(){
+                if !Helper.shared.CheckIfLoggedIn() && !Helper.shared.checkOnBoard(){
                     let rootVC = UIHostingController(rootView: OnboardingView())
                     rootVC.navigationController?.isNavigationBarHidden = true
                     rootVC.navigationController?.toolbar.isHidden = true
@@ -183,12 +177,8 @@ struct SelectLanguageView : View {
                     rootVC.navigationController?.toolbar.isHidden = true
                     Helper.shared.changeRootVC(newroot: rootVC, transitionFrom: .fromRight)
                 }
-                
 //                Helper.shared.changeRootVC(newroot: HTBC.self, transitionFrom: .fromRight)
-
             }
-            
-            
         }
         .showHud(isShowing: $isLoading)
         .onAppear() {
@@ -209,11 +199,11 @@ struct SelectLanguageView : View {
             }
         }
         .localizeView()
-
     }
     
     private func setLanguage(_ language: String) {
-        
+        Helper.shared.languageSelected(opened: true)
+
 //        changeLanguage(to: language)
         LocalizationManager.shared.changeLanguage(to: language) {
         }

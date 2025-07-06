@@ -6,47 +6,53 @@
 //
 
 import Foundation
+import Combine
 
-class ChangePasswordVM {
-    var oldPassword: String?
-    var newPassword: String?
+class ChangePasswordVM: ObservableObject {
+    @Published var oldPassword: String = ""
+    @Published var newPassword: String = ""
+    
+    @Published var isLoading:Bool? = false
+    @Published var errorMessage: String? = nil
+    @Published var isSuccess = false
     
     var responsemodel: ChangePasswordM?
     
-}
-
-extension ChangePasswordVM{
-    func ChangePassword(completion: @escaping (EventHandler?) -> Void) {
-        guard let oldPassword = oldPassword, let newPassword = newPassword else {
-            // Handle missing username or password
+    func changePassword() {
+        guard !oldPassword.isEmpty, !newPassword.isEmpty else {
+            errorMessage = "Please fill all fields"
             return
         }
-        let parametersarr : [String : Any] =  ["oldPassword" : oldPassword ,"newPassword" : newPassword]
-        completion(.loading)
-        // Create your API request with the username and password
-        let target = Authintications.ChangePassword(parameters: parametersarr)
-
-        // Make the API call using your APIManager or networking code
-        BaseNetwork.callApi(target, BaseResponse<ChangePasswordM>.self) {[weak self] result in
-            // Handle the API response here
-            switch result {
-            case .success(let response):
-                // Handle the successful response
-                print("request successful: \(response)")
-
-                guard response.messageCode == 200 else {
-                    completion(.error(0, (response.message ?? "check validations")))
-                    return
-                }
+        
+        let parameters: [String: Any] = [
+            "oldPassword": oldPassword,
+            "newPassword": newPassword
+        ]
+        
+        isLoading = true
+        errorMessage = nil
+        
+        let target = Authintications.ChangePassword(parameters: parameters)
+        
+        BaseNetwork.callApi(target, BaseResponse<ChangePasswordM>.self) { [weak self] result in
+            DispatchQueue.main.async {
+                self?.isLoading = false
                 
-                self?.responsemodel = response.data
-                completion(.success)
-            case .failure(let error):
-                // Handle the error
-                print("Login failed: \(error.localizedDescription)")
-                completion(.error(0, "\(error.localizedDescription)"))
+                switch result {
+                case .success(let response):
+                    guard response.messageCode == 200 else {
+                        self?.errorMessage = response.message ?? "Check validations"
+                        return
+                    }
+                    self?.responsemodel = response.data
+                    self?.isSuccess = true
+                    
+                case .failure(let error):
+                    self?.errorMessage = error.localizedDescription
+                }
             }
-
         }
     }
+    
+    
 }

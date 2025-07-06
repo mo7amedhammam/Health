@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct OnboardingView: View {
-    @State private var currentPage = 1
+    @State private var currentPage = 0
     
     let pages = [
         OnboardingPageData(image: "onboarding1", title: "bord1_tilte", description: "bord1_subtilte", buttontitle: "bord_btn_next"),
@@ -38,7 +38,37 @@ struct OnboardingView: View {
                     .tag(index)
                 }
             }
-            HStack {
+            HStack(alignment:.center) {
+                ZStack{
+                    if currentPage > 0 {
+                        Button(action: {
+                            currentPage -= 1
+                        }) {
+                            Image(.previousLeft).flipsForRightToLeftLayoutDirection(true)
+                        }
+//                        .padding()
+                    }
+                }
+                .frame(width: 50)
+
+                Spacer()
+                
+                ForEach(0..<pages.count, id: \.self) { indx in
+                        if indx == currentPage {
+                            withAnimation{
+                                Capsule().frame(width: 18,height: 5)
+                                    .padding(0)
+                                    .foregroundStyle(Color(.secondary))
+                            }
+                        }else{
+                            Circle().frame(width: 5)
+                                .padding(0)
+                                .foregroundStyle(Color(.wrongsurface))
+                        }
+                }
+                
+                Spacer()
+
                 Button(action: {
                     //'go home'
                     Helper.shared.onBoardOpened(opened: true)
@@ -48,21 +78,11 @@ struct OnboardingView: View {
                         .font(.semiBold(size: 14))
                         .foregroundColor(.blue)
                 }
-                .padding()
+//                .padding()
 
-                Spacer()
-
-                if currentPage > 0 {
-                    Button(action: {
-                        currentPage -= 1
-                    }) {
-                        
-                        Image(LocalizationManager.shared.currentLanguage == "ar" ?  .previousRight :  .previousLeft)
-                    }
-                    .padding()
-                }
             }
-            .padding(.top)
+            .frame(height: 50)
+            .padding(.horizontal)
 
         }
         .localizeView()
@@ -72,7 +92,8 @@ struct OnboardingView: View {
     func SkipSplash() {
 //        Helper.shared.changeRootVC(newroot: LoginVC.self,transitionFrom: .fromRight)
 
-        let newHome = UIHostingController(rootView: LoginView())
+//        let newHome = UIHostingController(rootView: LoginView())
+        let newHome = UIHostingController(rootView: NewTabView())
         Helper.shared.changeRootVC(newroot: newHome, transitionFrom: .fromLeft)
     }
 }
