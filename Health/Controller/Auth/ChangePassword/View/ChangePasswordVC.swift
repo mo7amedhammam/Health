@@ -139,53 +139,56 @@ struct ChangePasswordView: View {
             TitleBar(title: "change_sc_title", hasbackBtn: true)
                 .padding(.top)
             
-            VStack (spacing: 20){
-//                Text("change_sc_subtitle".localized)
-//                    .font(.medium(size: 18))
-//                    .foregroundColor(Color(.secondary))
-//                    .padding(.top)
-//                    .padding(.vertical, 40)
-                
-                Spacer().frame(height: 40)
+                VStack(spacing: 20){
+                    ScrollView{
 
-                CustomInputFieldUI(
-                    title: "change_sc_oldpass_title",
-                    placeholder: "change_sc_oldpass_placeholder",
-                    text: $oldPassword,
-                    isSecure: true,
-                    showToggle: true,
-                    isValid: isoldPasswordValid
-                )
-                .onChange(of: oldPassword) { value in
-                    isoldPasswordValid =  value.count == 0 || value.count >= 6
-//                    isoldPasswordValid = oldPassword.count >= 6
+                    
+                    //                Text("change_sc_subtitle".localized)
+                    //                    .font(.medium(size: 18))
+                    //                    .foregroundColor(Color(.secondary))
+                    //                    .padding(.top)
+                    //                    .padding(.vertical, 40)
+                    
+                    Spacer().frame(height: 40)
+                    
+                    CustomInputFieldUI(
+                        title: "change_sc_oldpass_title",
+                        placeholder: "change_sc_oldpass_placeholder",
+                        text: $oldPassword,
+                        isSecure: true,
+                        showToggle: true,
+                        isValid: isoldPasswordValid
+                    )
+                    .onChange(of: oldPassword) { value in
+                        isoldPasswordValid =  value.count == 0 || value.count >= 6
+                        //                    isoldPasswordValid = oldPassword.count >= 6
+                    }
+                    
+                    CustomInputFieldUI(
+                        title: "change_sc_pass_title",
+                        placeholder: "change_sc_pass_placeholder",
+                        text: $newPassword,
+                        isSecure: true,
+                        showToggle: true,
+                        isValid: isNewPasswordValid
+                    )
+                    .onChange(of: newPassword) { value in
+                        isNewPasswordValid = value.count == 0 || (value.count >= 6)
+                        isConfirmPasswordValid = confirmPassword.count >= 6 && confirmPassword == newPassword
+                    }
+                    
+                    CustomInputFieldUI(
+                        title: "change_sc_repass_title",
+                        placeholder: "change_sc_repass_placeholder",
+                        text: $confirmPassword,
+                        isSecure: true,
+                        showToggle: true,
+                        isValid: isConfirmPasswordValid
+                    )
+                    .onChange(of: confirmPassword) { value in
+                        isConfirmPasswordValid = value.count == 0 || (value.count >= 6 && value == newPassword)
+                    }
                 }
-                
-                CustomInputFieldUI(
-                    title: "change_sc_pass_title",
-                    placeholder: "change_sc_pass_placeholder",
-                    text: $newPassword,
-                    isSecure: true,
-                    showToggle: true,
-                    isValid: isNewPasswordValid
-                )
-                .onChange(of: newPassword) { value in
-                    isNewPasswordValid = value.count == 0 || (value.count >= 6)
-                    isConfirmPasswordValid = confirmPassword.count >= 6 && confirmPassword == newPassword
-                }
-                
-                CustomInputFieldUI(
-                    title: "change_sc_repass_title",
-                    placeholder: "change_sc_repass_placeholder",
-                    text: $confirmPassword,
-                    isSecure: true,
-                    showToggle: true,
-                    isValid: isConfirmPasswordValid
-                )
-                .onChange(of: confirmPassword) { value in
-                    isConfirmPasswordValid = value.count == 0 || (value.count >= 6 && value == newPassword)
-                }
-                
                 Spacer()
                 
                 CustomButtonUI(title: "change_sc_btn_title", isValid: isFormValid) {
@@ -261,4 +264,8 @@ struct ChangePasswordView: View {
             Helper.shared.changeRootVC(newroot: newVC, transitionFrom: .fromLeft)
             
     }
+}
+
+#Preview {
+    ChangePasswordView()
 }

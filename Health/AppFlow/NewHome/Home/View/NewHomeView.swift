@@ -9,6 +9,8 @@ import SwiftUI
 
 struct NewHomeView: View {
     @StateObject private var viewModel = NewHomeViewModel.shared
+    @EnvironmentObject var profileViewModel: EditProfileViewModel
+
     @State private var refreshTask: Task<Void, Never>?
     @StateObject var wishlistviewModel: WishListManagerViewModel = WishListManagerViewModel.shared
 
@@ -31,6 +33,7 @@ struct NewHomeView: View {
                 
                 ScrollView(showsIndicators: false){
                     HeaderView()
+                        .environmentObject(profileViewModel)
                         .padding(.horizontal)
 
                     VStack(alignment:.leading){

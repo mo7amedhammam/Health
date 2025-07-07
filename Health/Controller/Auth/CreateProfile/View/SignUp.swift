@@ -492,160 +492,167 @@ struct SignUpView: View {
                 .padding(.top,30)
                 .padding(.bottom,15)
             
-            VStack(spacing: 30){
-                
-                CustomInputFieldUI(
-                    title: "signup_name_title",
-                    placeholder: "signup_name_placeholder",
-                    text: $fullName,
-                    isValid: isNameValid,
-                    trailingView: AnyView(
-                        Image("signup_person")
-                            .resizable()
-                            .frame(width: 17,height: 20)
-                    )
-                )
-                
-                CustomInputFieldUI(
-                    title: "signup_mobile_title",
-                    placeholder: "signup_mobile_placeholder",
-                    text: $phoneNumber,
-                    isValid: isPhoneValid,
-                    trailingView: AnyView(
-                        Menu {
-                            ForEach(lookupsVM.appCountries ?? countries,id: \.self) { country in
-                                
-                                Button(action: {
-                                    selectedCountry = country
-                                }, label: {
-                                    HStack{
-                                        Text(country.name ?? "")
-                                        
-                                        KFImageLoader(url:URL(string:Constants.imagesURL + (country.flag?.validateSlashs() ?? "")),placeholder: Image("egFlagIcon"), shouldRefetch: true)
-                                            .frame(width: 30,height:17)
-                                    }
-                                })
-                                
-                            }
-                        } label: {
-                            HStack(spacing: 4) {
-                                Image(systemName: "chevron.down")
-                                    .foregroundColor(.gray)
-                                
-                                KFImageLoader(url:URL(string:Constants.imagesURL + (selectedCountry?.flag?.validateSlashs() ?? "")),placeholder: Image("egFlagIcon"), shouldRefetch: true)
-                                    .frame(width: 30,height:17)
-                                
-                                //                                Text(selectedCountry?.flag ?? "")
-                                //                                    .foregroundColor(.mainBlue)
-                                //                                    .font(.medium(size: 22))
-                            }
-                        }
-                    )
-                )
-                .keyboardType(.asciiCapableNumberPad)
-//                .task {
-//                    await lookupsVM.getAppCountries()
-//                }
-                
-                CustomInputFieldUI(
-                    title: "signup_gender_title",
-                    placeholder: "signup_gender_placeholder",
-                    text: .constant(selectedGender?.title ?? ""),
-                    isValid: isGenderValid,
-                    trailingView: AnyView(
-                        Menu {
-                            ForEach(lookupsVM.genders ?? genders,id: \.self) { gender in
-                                Button(gender.title ?? "", action: { selectedGender = gender })
-                            }
-                        } label: {
-                            HStack(spacing: 4) {
-                                Image(systemName: "chevron.down")
-                                    .foregroundColor(.gray)
-                                
-                                Image(.signupGender)
-                                    .resizable()
-                                    .frame(width: 19,height: 17)
-                                
-                            }
-                        }
-                    )
-                )
-//                .task {
-//                    await lookupsVM.getGenders()
-//                }
-                
-                Group{
+            ScrollView{
+                VStack(spacing: 30){
+                    
                     CustomInputFieldUI(
-                        title: "signup_password_title",
-                        placeholder: "signup_password_placeholder",
-                        text: $password,
-                        isSecure: true,
-                        showToggle: true,
-                        isValid: isPasswordValid
+                        title: "signup_name_title",
+                        placeholder: "signup_name_placeholder",
+                        text: $fullName,
+                        isValid: isNameValid,
+                        trailingView: AnyView(
+                            Image("signup_person")
+                                .resizable()
+                                .frame(width: 17,height: 20)
+                        )
                     )
                     
                     CustomInputFieldUI(
-                        title: "signup_confirmpassword_title",
-                        placeholder: "signup_confirmpassword_placeholder",
-                        text: $confirmPassword,
-                        isSecure: true,
-                        showToggle: true,
-                        isValid: isConfirmPasswordValid
-                    )
-                }
-                VStack(spacing: 6) {
-                    HStack(alignment: .top, spacing: 5) {
-                        Image(systemName: isAgreed ? "checkmark.square.fill" : "square")
-                            .resizable()
-                            .frame(width: 14, height: 14)
-                            .foregroundColor(Color(.secondary))
-                            .onTapGesture {
-                                isAgreed.toggle()
+                        title: "signup_mobile_title",
+                        placeholder: "signup_mobile_placeholder",
+                        text: $phoneNumber,
+                        isValid: isPhoneValid,
+                        trailingView: AnyView(
+                            Menu {
+                                ForEach(lookupsVM.appCountries ?? countries,id: \.self) { country in
+                                    
+                                    Button(action: {
+                                        selectedCountry = country
+                                    }, label: {
+                                        HStack{
+                                            Text(country.name ?? "")
+                                            
+                                            KFImageLoader(url:URL(string:Constants.imagesURL + (country.flag?.validateSlashs() ?? "")),placeholder: Image("egFlagIcon"), shouldRefetch: true)
+                                                .frame(width: 30,height:17)
+                                        }
+                                    })
+                                    
+                                }
+                            } label: {
+                                HStack(spacing: 4) {
+                                    Image(systemName: "chevron.down")
+                                        .foregroundColor(.gray)
+                                    
+                                    KFImageLoader(url:URL(string:Constants.imagesURL + (selectedCountry?.flag?.validateSlashs() ?? "")),placeholder: Image("egFlagIcon"), shouldRefetch: true)
+                                        .frame(width: 30,height:17)
+                                    
+                                    //                                Text(selectedCountry?.flag ?? "")
+                                    //                                    .foregroundColor(.mainBlue)
+                                    //                                    .font(.medium(size: 22))
+                                }
                             }
-
-                        Text("signup_terms_title".localized)
-                            .font(.medium(size: 16))
-                            .foregroundColor(Color(.secondary))
-                            .fixedSize(horizontal: false, vertical: true)
+                        )
+                    )
+                    .keyboardType(.asciiCapableNumberPad)
+                    //                .task {
+                    //                    await lookupsVM.getAppCountries()
+                    //                }
+                    
+                    CustomInputFieldUI(
+                        title: "signup_gender_title",
+                        placeholder: "signup_gender_placeholder",
+                        text: .constant(selectedGender?.title ?? ""),
+                        isValid: isGenderValid, isDisabled:true,
+                        trailingView: AnyView(
+                            Menu {
+                                ForEach(lookupsVM.genders ?? genders,id: \.self) { gender in
+                                    Button(gender.title ?? "", action: { selectedGender = gender })
+                                }
+                            } label: {
+                                HStack(spacing: 4) {
+                                    Image(systemName: "chevron.down")
+                                        .foregroundColor(.gray)
+                                    
+                                    Image(.signupGender)
+                                        .resizable()
+                                        .frame(width: 19,height: 17)
+                                    
+                                }
+                            }
+                        )
+                    )
+                    //                .task {
+                    //                    await lookupsVM.getGenders()
+                    //                }
+                    
+                    Group{
+                        CustomInputFieldUI(
+                            title: "signup_password_title",
+                            placeholder: "signup_password_placeholder",
+                            text: $password,
+                            isSecure: true,
+                            showToggle: true,
+                            isValid: isPasswordValid
+                        )
+                        
+                        CustomInputFieldUI(
+                            title: "signup_confirmpassword_title",
+                            placeholder: "signup_confirmpassword_placeholder",
+                            text: $confirmPassword,
+                            isSecure: true,
+                            showToggle: true,
+                            isValid: isConfirmPasswordValid
+                        )
                     }
-                    .frame(maxWidth: .infinity, alignment: .leading)
-
-                    VStack(alignment: .leading, spacing: 4) {
-                        Button(action: {
-                            // open Terms of Service
-                        }) {
-                            Text("signup_service_condition".localized)
+                    VStack(spacing: 6) {
+                        HStack(alignment: .top, spacing: 5) {
+                            Image(systemName: isAgreed ? "checkmark.square.fill" : "square")
+                                .resizable()
+                                .frame(width: 14, height: 14)
+                                .foregroundColor(Color(.secondary))
+                                .onTapGesture {
+                                    isAgreed.toggle()
+                                }
+                            
+                            Text("signup_terms_title".localized)
                                 .font(.medium(size: 16))
-                                .underline()
-                                .foregroundColor(.mainBlue)
+                                .foregroundColor(Color(.secondary))
+                                .fixedSize(horizontal: false, vertical: true)
                         }
-
-                        Button(action: {
-                            // open Privacy Policy
-                        }) {
-                            Text("signup_privacy_policy".localized)
-                                .font(.medium(size: 16))
-                                .underline()
-                                .foregroundColor(.mainBlue)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        
+                        VStack(alignment: .leading, spacing: 4) {
+                            Button(action: {
+                                // open Terms of Service
+                                let VC: UIViewController = initiateViewController(storyboardName: .main, viewControllerIdentifier: TermsConditionsVC.self)!
+                                pushUIKitVC(VC)
+                            }) {
+                                Text("signup_service_condition".localized)
+                                    .font(.medium(size: 16))
+                                    .underline()
+                                    .foregroundColor(.mainBlue)
+                            }
+                            
+                            Button(action: {
+                                // open Privacy Policy
+                                let VC: UIViewController = initiateViewController(storyboardName: .main, viewControllerIdentifier: TermsConditionsVC.self)!
+                                pushUIKitVC(VC)
+                            }) {
+                                Text("signup_privacy_policy".localized)
+                                    .font(.medium(size: 16))
+                                    .underline()
+                                    .foregroundColor(.mainBlue)
+                            }
+                            
+                            Button(action: {
+                                // open Refund Policy
+                                let VC: UIViewController = initiateViewController(storyboardName: .main, viewControllerIdentifier: TermsConditionsVC.self)!
+                                pushUIKitVC(VC)
+                            }) {
+                                Text("signup_refund_policy".localized)
+                                    .font(.medium(size: 16))
+                                    .underline()
+                                    .foregroundColor(.mainBlue)
+                            }
                         }
-
-                        Button(action: {
-                            // open Refund Policy
-                        }) {
-                            Text("signup_refund_policy".localized)
-                                .font(.medium(size: 16))
-                                .underline()
-                                .foregroundColor(.mainBlue)
-                        }
+                        .frame(maxWidth: .infinity,alignment: .leading)
+                        .padding(.leading,18)
                     }
-                    .frame(maxWidth: .infinity,alignment: .leading)
-                    .padding(.leading,18)
+                    .padding(.bottom, 10)
+                    
                 }
-                .padding(.bottom, 10)
-                
+                .padding(.top)
             }
-            .padding(.top)
-            
             Spacer()
             
             

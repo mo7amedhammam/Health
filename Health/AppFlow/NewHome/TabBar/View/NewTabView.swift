@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct NewTabView: View {
+    @StateObject private var viewModel = EditProfileViewModel.shared
+
     @State var selectedTab = 2
     
     var body: some View {
@@ -35,6 +37,7 @@ struct NewTabView: View {
 //                    .ignoresSafeArea()
                     
                     ProfileViewUI()
+                        .environmentObject(viewModel)
 
                 case 1:
 //                    UIKitViewControllerWrapper(makeViewController: {
@@ -47,6 +50,8 @@ struct NewTabView: View {
                     SubcripedPackagesView(hasbackBtn: false)
                 case 2:
                     NewHomeView()
+                        .environmentObject(viewModel)
+
 //                    UIKitViewControllerWrapper(makeViewController: {
 //                    let VC: UIViewController = initiateViewController(storyboardName: .main, viewControllerIdentifier: MeasurementsVC.self)!
 //                    return VC

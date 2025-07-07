@@ -296,6 +296,7 @@ struct LoginView: View {
         NavigationView{
             VStack(spacing: 20) {
                 
+                ScrollView{
                 Image("logo")
                     .resizable()
                     .aspectRatio(contentMode: .fit)
@@ -365,17 +366,17 @@ struct LoginView: View {
                 .padding(.top)
                 
                 Spacer()
-//                Image(.touchidicon)
-//                    .resizable()
-//                    .frame(width: 68, height: 68)
-//                    .foregroundColor(.pink)
-//                    .padding(.top, 8)
+                //                Image(.touchidicon)
+                //                    .resizable()
+                //                    .frame(width: 68, height: 68)
+                //                    .foregroundColor(.pink)
+                //                    .padding(.top, 8)
                 
                 BiometricLoginButton {
                     // تسجيل الدخول بعد نجاح التحقق
                     performLogin()
                 }
-                
+            }
                 Spacer()
                 
                 CustomButtonUI(title: "login_signin_btn",isValid: isFormValid){
@@ -538,9 +539,9 @@ struct LoginView: View {
     
 }
 
-//#Preview {
-//    LoginView()
-//}
+#Preview {
+    LoginView()
+}
 
 func pushUIKitVC(_ vc: UIViewController) {
     guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,

@@ -581,6 +581,7 @@ struct OTPView: View {
         VStack(spacing: 10) {
             TitleBar(title: "main_title", hasbackBtn: true)
             
+            ScrollView{
             Image(.otpVerify)
                 .padding(.top)
             
@@ -603,7 +604,7 @@ struct OTPView: View {
                 Text("try: \(otp)")
                     .foregroundColor(Color(.secondary))
             }
-            
+        }
             Spacer()
         }
         .onAppear {

@@ -47,35 +47,37 @@ struct EditProfileView: View {
         VStack(spacing: 16) {
             // MARK: - TitleBar
             TitleBar(title: "profile_editProfile".localized, hasbackBtn: true)
-
+            
             // MARK: - Profile Image
+            ScrollView{
+
             VStack {
-//                ZStack(alignment: .bottomTrailing) {
-//                    if let image = image {
-//                        Image(uiImage: image)
-//                            .resizable()
-//                            .scaledToFill()
-//                            .frame(width: 100, height: 100)
-//                            .clipShape(Circle())
-//                    } else {
-//                        Image("user")
-////                        Image("profile_placeholder")
-//                            .resizable()
-//                            .scaledToFill()
-//                            .frame(width: 100, height: 100)
-//                            .clipShape(Circle())
-//                    }
-//
-//                    Button {
-//                        showImagePicker.toggle()
-//                    } label: {
-//                        Image(systemName: "pencil.circle.fill")
-//                            .font(.system(size: 24))
-//                            .foregroundColor(.pink)
-//                            .background(Color.white.clipShape(Circle()))
-//                    }
-//                    .offset(x: 5, y: 5)
-//                }
+                //                ZStack(alignment: .bottomTrailing) {
+                //                    if let image = image {
+                //                        Image(uiImage: image)
+                //                            .resizable()
+                //                            .scaledToFill()
+                //                            .frame(width: 100, height: 100)
+                //                            .clipShape(Circle())
+                //                    } else {
+                //                        Image("user")
+                ////                        Image("profile_placeholder")
+                //                            .resizable()
+                //                            .scaledToFill()
+                //                            .frame(width: 100, height: 100)
+                //                            .clipShape(Circle())
+                //                    }
+                //
+                //                    Button {
+                //                        showImagePicker.toggle()
+                //                    } label: {
+                //                        Image(systemName: "pencil.circle.fill")
+                //                            .font(.system(size: 24))
+                //                            .foregroundColor(.pink)
+                //                            .background(Color.white.clipShape(Circle()))
+                //                    }
+                //                    .offset(x: 5, y: 5)
+                //                }
                 
                 // Profile Image with Border and Edit Button
                 ZStack(alignment: .bottomLeading) {
@@ -83,29 +85,29 @@ struct EditProfileView: View {
                         if let image = viewModel.Image {
                             Image(uiImage: image)
                                 .resizable()
-//                                .frame(width: 91, height: 91)
-//                                .foregroundColor(.blue)
-
+                            //                                .frame(width: 91, height: 91)
+                            //                                .foregroundColor(.blue)
+                            
                         }else{
-                            KFImageLoader(url:URL(string:Constants.imagesURL + (viewModel.imageURL?.validateSlashs() ?? "")),placeholder: Image(.user), isOpenable: true,shouldRefetch: true)
-
-//                            Image(systemName: "person.circle.fill")
-//                            .resizable()
-                            .scaledToFill()
-                            .frame(width: 91, height: 91)
-//                            .foregroundColor(.blue)
-
+                            KFImageLoader(url:URL(string:Constants.imagesURL + (viewModel.imageURL?.validateSlashs() ?? "")),placeholder: Image(.user), isOpenable: true,shouldRefetch: false)
+                            
+                            //                            Image(systemName: "person.circle.fill")
+                            //                            .resizable()
+                                .scaledToFill()
+                                .frame(width: 91, height: 91)
+                            //                            .foregroundColor(.blue)
+                            
                         }
                     }
                     .clipShape(Circle())
                     .background(Circle()
                         .stroke(.white, lineWidth: 5).padding(-2))
                     .frame(width: 91,height:91)
-                            .overlay(
-                                Circle()
-                                    .stroke(Color.mainBlue, lineWidth: 1)
-                                    .padding(-5)
-                            )
+                    .overlay(
+                        Circle()
+                            .stroke(Color.mainBlue, lineWidth: 1)
+                            .padding(-5)
+                    )
                     
                     
                     // Edit Button
@@ -121,20 +123,23 @@ struct EditProfileView: View {
                     }
                 }
                 .padding(.top,30)
-                .padding(.bottom,50)
-
-//                Text(fullName)
-//                    .font(.bold(size: 20))
-//                    .foregroundStyle(Color(.main))
+                //                .padding(.bottom,50)
+                
+                Text(viewModel.Name)
+                    .font(.bold(size: 24))
+                    .foregroundStyle(Color(.main))
+                    .padding(.bottom,50)
+                
+                
             }
             .padding(.top)
-
+            
             // MARK: - Input Fields
             VStack(spacing: 25) {
                 CustomInputFieldUI(
                     title: "signup_name_title",
                     placeholder: "signup_name_placeholder",
-                    text: $viewModel.Name,
+                    text: $fullName,
                     isValid: isNameValid,
                     trailingView: AnyView(
                         Image("signup_person")
@@ -146,13 +151,13 @@ struct EditProfileView: View {
                 CustomInputFieldUI(
                     title: "login_mobile_title",
                     placeholder: "login_mobile_placeholder",
-                    text: $viewModel.Mobile,
+                    text: $phoneNumber,
                     isValid: isPhoneValid
                     ,trailingView: AnyView(
                         Menu {
                             ForEach(lookupsVM.appCountries ?? [],id: \.self) { country in
                                 Button(action: {
-                                    viewModel.Country = country
+                                    selectedCountry = country
                                 }, label: {
                                     HStack{
                                         Text(country.name ?? "")
@@ -167,7 +172,7 @@ struct EditProfileView: View {
                                 Image(systemName: "chevron.down")
                                     .foregroundColor(.gray)
                                 
-                                KFImageLoader(url:URL(string:Constants.imagesURL + (viewModel.Country?.flag?.validateSlashs() ?? "")),placeholder: Image("egFlagIcon"), shouldRefetch: true)
+                                KFImageLoader(url:URL(string:Constants.imagesURL + (selectedCountry?.flag?.validateSlashs() ?? "")),placeholder: Image("egFlagIcon"), shouldRefetch: true)
                                     .frame(width: 30,height:17)
                                 
                                 //                                Text(selectedCountry?.flag ?? "")
@@ -182,12 +187,13 @@ struct EditProfileView: View {
                 CustomInputFieldUI(
                     title: "signup_gender_title",
                     placeholder: "signup_gender_placeholder",
-                    text: .constant(viewModel.Gender?.title ?? ""),
+                    text: .constant(selectedGender?.title ?? ""),
                     isValid: isGenderValid,
+                    isDisabled:true,
                     trailingView: AnyView(
                         Menu {
                             ForEach(lookupsVM.genders ?? [],id: \.self) { gender in
-                                Button(gender.title ?? "", action: { viewModel.Gender = gender })
+                                Button(gender.title ?? "", action: { selectedGender = gender })
                             }
                         } label: {
                             HStack(spacing: 4) {
@@ -203,13 +209,19 @@ struct EditProfileView: View {
                 )
             }
             .padding(.horizontal)
-
+            
+        }
             Spacer()
 
             // MARK: - Save Button
             CustomButtonUI(title: "save_".localized, isValid: true) {
 //                saveProfile()
                 Task{
+                    viewModel.Name = fullName
+                    viewModel.Mobile = phoneNumber
+                    viewModel.Gender = selectedGender
+                    viewModel.Country = selectedCountry
+                    viewModel.Image = image
                   await viewModel.updateProfile()
                 }
             }
@@ -226,11 +238,18 @@ struct EditProfileView: View {
 
                 _ = await (countries,genders,profil)
                 
+                  fullName = viewModel.Name
+                phoneNumber = viewModel.Mobile
+                image =  viewModel.Image
+
+//                selectedGender = viewModel.Gender
+//                selectedCountry = viewModel.Country
+                
                 if let countries = lookupsVM.appCountries {
-                    viewModel.Country = countries.first(where: { $0.id == viewModel.profile?.appCountryId ?? 0 }) ?? countries.first
+                    selectedCountry = countries.first(where: { $0.id == viewModel.profile?.appCountryId ?? 0 }) ?? countries.first
                 }
                 if let genders = lookupsVM.genders {
-                    viewModel.Gender = genders.first(where: { $0.id == viewModel.profile?.genderID ?? 0 }) ?? genders.first
+                    selectedGender = genders.first(where: { $0.id == viewModel.profile?.genderID ?? 0 }) ?? genders.first
                 }
             }
         }
@@ -254,7 +273,7 @@ struct EditProfileView: View {
         .showHud(isShowing:  $viewModel.isLoading)
         .errorAlert(isPresented: .constant(viewModel.errorMessage != nil), message: viewModel.errorMessage)
         .sheet(isPresented: $showImagePicker) {
-            ImagePickerView(selectedImage: $viewModel.Image, sourceType: imagePickerSource)
+            ImagePickerView(selectedImage: $image, sourceType: imagePickerSource)
         }
     }
 

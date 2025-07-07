@@ -3,6 +3,7 @@ import SwiftUI
 struct ProfileViewUI: View {
     //    @StateObject var localizationManager = LocalizationManager.shared
     @ObservedObject var localizationManager = LocalizationManager.shared
+    @EnvironmentObject var viewModel: EditProfileViewModel
     @State private var showLogoutAlert = false
     @State var destination = AnyView(EmptyView())
     @State var isactive: Bool = false
@@ -17,7 +18,6 @@ struct ProfileViewUI: View {
             TitleBar(title: "profile_title")
             
             List {
-                
                 Group{
                     if isLogedin{
                         // Profile Header Section
@@ -25,30 +25,38 @@ struct ProfileViewUI: View {
                             HStack(spacing: 16) {
                                 
                                 // Profile Image with Border and Edit Button
-                                ZStack(alignment: .bottomLeading) {
-                                    Image(systemName: "person.circle.fill")
-                                        .resizable()
-                                        .frame(width: 60, height: 60)
-                                        .foregroundColor(.blue)
-                                        .overlay(
-                                            Circle()
-                                                .stroke(Color.mainBlue, lineWidth: 1)
-                                                .padding(-5)
-                                        )
-                                    
-                                    // Edit Button
-                                    Button(action: {
-                                        // Edit profile action
-                                        //                                    pushTo(destination: EditProfileView())
-                                    }) {
-                                        Image("editprofile")
-                                            .resizable()
-                                            .frame(width: 24, height: 24)
-                                            .offset(x: -5, y: 5)
-                                    }
-                                }
+//                                ZStack(alignment: .bottomLeading) {
+//                                    Image(systemName: "person.circle.fill")
+//                                        .resizable()
+//                                        .frame(width: 60, height: 60)
+//                                        .foregroundColor(.blue)
+//                                        .overlay(
+//                                            Circle()
+//                                                .stroke(Color.mainBlue, lineWidth: 1)
+//                                                .padding(-5)
+//                                        )
+//                                    
+//                                    // Edit Button
+//                                    Button(action: {
+//                                        // Edit profile action
+//                                        //                                    pushTo(destination: EditProfileView())
+//                                    }) {
+//                                        Image("editprofile")
+//                                            .resizable()
+//                                            .frame(width: 24, height: 24)
+//                                            .offset(x: -5, y: 5)
+//                                    }
+//                                }
                                 
-                                Text("ندى يونس")
+                                KFImageLoader(url:URL(string:Constants.imagesURL + (viewModel.imageURL?.validateSlashs() ?? "")),placeholder: Image(.user), isOpenable: true,shouldRefetch: false)
+
+    //                            Image(systemName: "person.circle.fill")
+    //                            .resizable()
+                                    .clipShape(Circle())
+                                .scaledToFill()
+                                .frame(width: 79, height: 79)
+                                
+                                Text(viewModel.Name)
                                     .font(.bold(size: 24))
                                     .foregroundColor(Color(.mainBlue))
                                 

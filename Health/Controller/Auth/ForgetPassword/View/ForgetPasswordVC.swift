@@ -149,37 +149,41 @@ struct ForgetPasswordView: View {
             TitleBar(title: "forget_title", hasbackBtn: true)
                 .padding(.top)
             
+            
             VStack {
+                ScrollView{
+                    VStack(spacing: 20){
+
                 Text("forget_subtitle".localized)
                     .font(.medium(size: 18))
                     .foregroundColor(Color(.secondary))
                     .padding(.top)
                     .padding(.vertical, 40)
                 
-                VStack(spacing: 20){
-                    CustomInputFieldUI(
-                        title: "forget_pass_title",
-                        placeholder: "forget_pass_placeholder",
-                        text: $newPassword,
-                        isSecure: true,
-                        showToggle: true,
-                        isValid: isNewPasswordValid
-                    )
-                    .onChange(of: newPassword) { value in
-                        isNewPasswordValid = value.count == 0 || (value.count >= 6)
-                        isConfirmPasswordValid = confirmPassword.count >= 6 && confirmPassword == newPassword
-                    }
-                    
-                    CustomInputFieldUI(
-                        title: "forget_repass_title",
-                        placeholder: "forget_repass_placeholder",
-                        text: $confirmPassword,
-                        isSecure: true,
-                        showToggle: true,
-                        isValid: isConfirmPasswordValid
-                    )
-                    .onChange(of: confirmPassword) { value in
-                        isConfirmPasswordValid = value.count == 0 || (value.count >= 6 && value == newPassword)
+                        CustomInputFieldUI(
+                            title: "forget_pass_title",
+                            placeholder: "forget_pass_placeholder",
+                            text: $newPassword,
+                            isSecure: true,
+                            showToggle: true,
+                            isValid: isNewPasswordValid
+                        )
+                        .onChange(of: newPassword) { value in
+                            isNewPasswordValid = value.count == 0 || (value.count >= 6)
+                            isConfirmPasswordValid = confirmPassword.count >= 6 && confirmPassword == newPassword
+                        }
+                        
+                        CustomInputFieldUI(
+                            title: "forget_repass_title",
+                            placeholder: "forget_repass_placeholder",
+                            text: $confirmPassword,
+                            isSecure: true,
+                            showToggle: true,
+                            isValid: isConfirmPasswordValid
+                        )
+                        .onChange(of: confirmPassword) { value in
+                            isConfirmPasswordValid = value.count == 0 || (value.count >= 6 && value == newPassword)
+                        }
                     }
                 }
                 Spacer()
