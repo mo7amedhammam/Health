@@ -59,14 +59,16 @@ struct NewTabView: View {
 //                .ignoresSafeArea()
                     
                 case 3:
-                    UIKitViewControllerWrapper(makeViewController: {
-//                    let VC: UIViewController = initiateViewController(storyboardName: .main, viewControllerIdentifier: NotificationVC.self)!
-                                    
-                        let VC: UIViewController = initiateViewController(storyboardName: .main, viewControllerIdentifier: MeasurementsVC.self)!
-
-                    return VC
-                })
-                    .ignoresSafeArea()
+                    
+                    MyMeasurementsView()
+                    
+//                    UIKitViewControllerWrapper(makeViewController: {
+////                    let VC: UIViewController = initiateViewController(storyboardName: .main, viewControllerIdentifier: NotificationVC.self)!
+//                                    
+//                        let VC: UIViewController = initiateViewController(storyboardName: .main, viewControllerIdentifier: MeasurementsVC.self)!
+//
+//                    return VC
+//                }).ignoresSafeArea()
 
                 case 4:
                     AppointmentsView()

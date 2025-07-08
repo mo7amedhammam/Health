@@ -68,3 +68,60 @@ extension Measurement : TargetType {
         
     }
     
+
+enum NewMeasurement {
+    case GetMyMeasurementsStats
+    case GetMyMedicalMeasurements(parameters : [String:Any])
+    case GetNormalRange(parameters : [String:Any])
+    case CreateMeasurement(parameters : [String:Any])
+
+}
+
+extension NewMeasurement : TargetType1 {
+    var timeoutInterval: TimeInterval? {
+        return nil
+    }
+    var path: String {
+        switch self {
+        case .GetMyMeasurementsStats:
+            return EndPoints.MyMeasurementsStats.rawValue
+        case .GetMyMedicalMeasurements:
+            return EndPoints.MyMedicalMeasurements.rawValue
+        case .GetNormalRange:
+            return EndPoints.MeasurementNormalRange.rawValue
+        case .CreateMeasurement:
+            return EndPoints.CreateMeasurement.rawValue
+        }
+    }
+//    
+    var method: Alamofire.HTTPMethod {
+        switch self {
+        case .GetMyMeasurementsStats,
+                .GetNormalRange:
+            return .get
+            
+        case .GetMyMedicalMeasurements,
+                .CreateMeasurement :
+            return .post
+            
+        }
+    }
+    var parameters: [String:Any]? {
+        switch self {
+        case .GetMyMeasurementsStats:
+            return nil  // get
+        case .GetMyMedicalMeasurements(parameters: let parameters)
+            ,.CreateMeasurement(parameters: let parameters )
+            ,.GetNormalRange(parameters: let parameters)
+            :
+            ////            return .parameterRequest(Parameters: parameters, Encoding: encoding)
+            return parameters
+            
+            //        case .GetMyScheduleDrugs(parameters: let parameters):
+            //            return .BodyparameterRequest(Parameters: parameters, Encoding: encoding)
+            
+        }
+    }
+
+        
+    }

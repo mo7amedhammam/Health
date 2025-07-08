@@ -148,8 +148,22 @@
 "notfication_inactive" = "inactive";
 
 //MARK: --- measurments ---
-"mesurement_recorded" = "Recorded";
-"mesurement_JusMesurment" = "Just Records";
+"measurements" = "Your Measurements";
+"available_measurements" = "available measurements";
+"Last_Measurement" = "Last Measurement:";
+"in_Date_" = "Date:";
+"mesurement_recorded" = "Just";
+"mesurement_JusMesurment" = "Measurement Recorded";
+
+//MARK: --- details ---
+"mesurement_" = "mesurement";
+"la_search" = "Search";
+"last_7_days" = "last 7 days";
+"last_3_months" = "last 3 months";
+"last_year" = "last year";
+"all_messurements" = "All Mesurements";
+"or_" = "or";
+"search_" = "Search";
 
 //------------------ new ---
 "home_maincat" = "main Categories";

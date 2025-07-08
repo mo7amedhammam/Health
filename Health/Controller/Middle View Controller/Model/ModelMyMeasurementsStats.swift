@@ -21,6 +21,12 @@ struct ModelMyMeasurementsStats: Codable {
         case image, title, measurementsCount, lastMeasurementValue, lastMeasurementDate, formatValue, regExpression, normalRangValue
     }
 }
+extension ModelMyMeasurementsStats{
+    var formatteddate :String? {
+        guard let date = lastMeasurementDate else { return nil }
+        return date.ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo:"dd MMM yyyy")
+    }
+}
 
 //.......................................................
 

@@ -348,7 +348,7 @@ struct DatePickerField: View {
             .frame(maxWidth: .infinity,alignment: .leading)
 //            .padding(.vertical, 8)
             .padding(.trailing, 12)
-            .cardStyle(cornerRadius: 3,shadowOpacity: 0.4)
+            .cardStyle(cornerRadius: 3,shadowOpacity: 0.088)
         }
         .customSheet(isPresented: $showingDatePickerSheet){
             VStack {

@@ -41,6 +41,10 @@
 		902B87FF2E1A936D009D5234 /* EditProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 902B87FE2E1A936D009D5234 /* EditProfileView.swift */; };
 		902B88042E1AA083009D5234 /* EditProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 902B88032E1AA079009D5234 /* EditProfileViewModel.swift */; };
 		902B88072E1AA401009D5234 /* ProfileServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 902B88062E1AA401009D5234 /* ProfileServices.swift */; };
+		902B880D2E1D57B7009D5234 /* MyMeasurementsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 902B880C2E1D57B7009D5234 /* MyMeasurementsView.swift */; };
+		902B880F2E1D6138009D5234 /* MyMeasurementsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 902B880E2E1D6138009D5234 /* MyMeasurementsViewModel.swift */; };
+		902B88112E1DA1E6009D5234 /* MeasurementDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 902B88102E1DA1E6009D5234 /* MeasurementDetailsView.swift */; };
+		902B88142E1DA579009D5234 /* NavigationRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 902B88132E1DA579009D5234 /* NavigationRouter.swift */; };
 		903667062D82E0A40040AE29 /* LocalizationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 903667052D82E08E0040AE29 /* LocalizationManager.swift */; };
 		903667082D82E1410040AE29 /* AppKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 903667072D82E1370040AE29 /* AppKeys.swift */; };
 		9047483F2DCF63530016C3DC /* PackagesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9047483E2DCF63530016C3DC /* PackagesView.swift */; };
@@ -337,6 +341,10 @@
 		902B87FE2E1A936D009D5234 /* EditProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileView.swift; sourceTree = "<group>"; };
 		902B88032E1AA079009D5234 /* EditProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewModel.swift; sourceTree = "<group>"; };
 		902B88062E1AA401009D5234 /* ProfileServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileServices.swift; sourceTree = "<group>"; };
+		902B880C2E1D57B7009D5234 /* MyMeasurementsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyMeasurementsView.swift; sourceTree = "<group>"; };
+		902B880E2E1D6138009D5234 /* MyMeasurementsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyMeasurementsViewModel.swift; sourceTree = "<group>"; };
+		902B88102E1DA1E6009D5234 /* MeasurementDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasurementDetailsView.swift; sourceTree = "<group>"; };
+		902B88132E1DA579009D5234 /* NavigationRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationRouter.swift; sourceTree = "<group>"; };
 		903667052D82E08E0040AE29 /* LocalizationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationManager.swift; sourceTree = "<group>"; };
 		903667072D82E1370040AE29 /* AppKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppKeys.swift; sourceTree = "<group>"; };
 		9047483E2DCF63530016C3DC /* PackagesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackagesView.swift; sourceTree = "<group>"; };
@@ -859,6 +867,48 @@
 			path = Profile;
 			sourceTree = "<group>";
 		};
+		902B88082E1D5781009D5234 /* NewMeasurements */ = {
+			isa = PBXGroup;
+			children = (
+				902B880B2E1D57A1009D5234 /* Model */,
+				902B880A2E1D579C009D5234 /* ViewModel */,
+				902B88092E1D5798009D5234 /* View */,
+			);
+			path = NewMeasurements;
+			sourceTree = "<group>";
+		};
+		902B88092E1D5798009D5234 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				902B88102E1DA1E6009D5234 /* MeasurementDetailsView.swift */,
+				902B880C2E1D57B7009D5234 /* MyMeasurementsView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		902B880A2E1D579C009D5234 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				902B880E2E1D6138009D5234 /* MyMeasurementsViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		902B880B2E1D57A1009D5234 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		902B88122E1DA567009D5234 /* SwiftuiNavigation */ = {
+			isa = PBXGroup;
+			children = (
+				902B88132E1DA579009D5234 /* NavigationRouter.swift */,
+			);
+			path = SwiftuiNavigation;
+			sourceTree = "<group>";
+		};
 		903667042D82E0700040AE29 /* Localization */ = {
 			isa = PBXGroup;
 			children = (
@@ -872,6 +922,7 @@
 		904748312DCCAF550016C3DC /* AppFlow */ = {
 			isa = PBXGroup;
 			children = (
+				902B88082E1D5781009D5234 /* NewMeasurements */,
 				902B87FD2E1A9362009D5234 /* EditProfile */,
 				902B87D62E0F0727009D5234 /* MyPayments */,
 				902B87B92E0AD699009D5234 /* Alergies */,
@@ -1873,6 +1924,7 @@
 		BBBDFFF12A730F8400F066DF /* File Support */ = {
 			isa = PBXGroup;
 			children = (
+				902B88122E1DA567009D5234 /* SwiftuiNavigation */,
 				90FDD3522DEE179100C3BABB /* CustomSwiftuiViews */,
 				90FDD2FF2DDDF7E000C3BABB /* DatePicker */,
 				90FDD2FD2DDBE14F00C3BABB /* CustomSheet.swift */,
@@ -2718,6 +2770,7 @@
 				C88995922AAA02BE002AD812 /* ChangePasswordVM.swift in Sources */,
 				BB518CD52A9A113900242FAD /* TipsCategoriesVC2.swift in Sources */,
 				C82FBA192AB0ACD70029F151 /* PDFPickerHelper.swift in Sources */,
+				902B88142E1DA579009D5234 /* NavigationRouter.swift in Sources */,
 				BBBD000F2A73101700F066DF /* RoundedImage.swift in Sources */,
 				904748502DD34D2D0016C3DC /* NewHomeModel.swift in Sources */,
 				C8C7339C2AA6757800185698 /* SignUpVM.swift in Sources */,
@@ -2791,6 +2844,7 @@
 				BB1B2FF72A7E9B5E001677FD /* INBodyTVCell.swift in Sources */,
 				BBBD00152A73101700F066DF /* ProgressHud.swift in Sources */,
 				BBD2B03C2AAA84F000C0A807 /* MyMeasurementsStatsVM.swift in Sources */,
+				902B88112E1DA1E6009D5234 /* MeasurementDetailsView.swift in Sources */,
 				BB48F8A12A747D020051F12C /* ChangePasswordVC.swift in Sources */,
 				902B87C12E0AD7DA009D5234 /* MyFilesView.swift in Sources */,
 				BBE3CC742A7FFFF8004B0D9A /* MedicationScheduleVC.swift in Sources */,
@@ -2808,6 +2862,7 @@
 				904748552DD4C7F90016C3DC /* KFImageLoader.swift in Sources */,
 				BBBD001A2A73101700F066DF /* ImageFromGallary.swift in Sources */,
 				C8918D9C2ACD61F20070A1D3 /* ExUiButtons.swift in Sources */,
+				902B880D2E1D57B7009D5234 /* MyMeasurementsView.swift in Sources */,
 				902B88072E1AA401009D5234 /* ProfileServices.swift in Sources */,
 				BBBD00112A73101700F066DF /* RecieveImageVC.swift in Sources */,
 				BBBD00122A73101700F066DF /* UITableView+Extensions.swift in Sources */,
@@ -2869,6 +2924,7 @@
 				C82DCAA62AAC784F00322B55 /* MedicationScheduleM.swift in Sources */,
 				BBBD00142A73101700F066DF /* AES.swift in Sources */,
 				BBE3CC7B2A80010B004B0D9A /* MedicationScheduleDetailsTVCell.swift in Sources */,
+				902B880F2E1D6138009D5234 /* MyMeasurementsViewModel.swift in Sources */,
 				BB14DAF32A7B044500389B96 /* ProfileTVCellLogout.swift in Sources */,
 				902B87CA2E0C2D47009D5234 /* AllergiesView.swift in Sources */,
 				902B87C62E0B523E009D5234 /* MyFilesServices.swift in Sources */,

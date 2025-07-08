@@ -148,8 +148,22 @@
 "notfication_inactive" = "مُنتهي";
 
 //MARK: --- measurments ---
+"measurements" = "قياساتك";
+"available_measurements" = "نتيجة قياس متاحة";
+"Last_Measurement" = "آخر قياس:";
+"in_Date_" = "بتاريخ:";
 "mesurement_recorded" = "تم تسجيل";
 "mesurement_JusMesurment" = "قياس فقط";
+
+//MARK: --- details ---
+"mesurement_" = "قياس";
+"la_search" = "البحث";
+"last_7_days" = "أخر 7 أيام";
+"last_3_months" = "أخر 3 شهور";
+"last_year" = "أخر سنة";
+"all_messurements" = "كل القياسات";
+"or_" = "أو";
+"search_" = "بحث";
 
 //------------------new ---
 "home_maincat" = "التصنيفات الرئيسية";
