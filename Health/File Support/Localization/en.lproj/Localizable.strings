@@ -157,6 +157,7 @@
 
 //MARK: --- details ---
 "mesurement_" = "mesurement";
+"add_new_mes" = "add new mesurement";
 "la_search" = "Search";
 "last_7_days" = "last 7 days";
 "last_3_months" = "last 3 months";

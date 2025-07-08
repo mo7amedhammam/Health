@@ -157,6 +157,7 @@
 
 //MARK: --- details ---
 "mesurement_" = "قياس";
+"add_new_mes" = "تسجيل قياس جديد";
 "la_search" = "البحث";
 "last_7_days" = "أخر 7 أيام";
 "last_3_months" = "أخر 3 شهور";

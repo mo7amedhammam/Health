@@ -38,9 +38,13 @@ struct MeasurementDetailsView: View {
 
                 Spacer()
                 
-                (Text("mesurement_".localized) + Text(" \(stat.title ?? "") "))
+                HStack(spacing: 0){
+                    Text(" \(stat.title ?? "") ")
+                    Text("mesurement_".localized)
+                }
                     .font(.bold(size: 20))
                     .foregroundColor(Color(.main))
+                    .localizeView(reverse: Helper.shared.getLanguage() == "ar" )
               
                 Spacer()
                 
@@ -128,7 +132,7 @@ struct MeasurementDetailsView: View {
         .background(
             Color(.bgPink)
             .ignoresSafeArea())
-//        .localizeView()
+        .localizeView()
 //        .withNavigation(router: router)
         .showHud(isShowing:  $viewModel.isLoading)
         .errorAlert(isPresented: .constant(viewModel.errorMessage != nil), message: viewModel.errorMessage)
