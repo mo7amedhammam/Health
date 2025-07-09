@@ -45,6 +45,7 @@
 		902B880F2E1D6138009D5234 /* MyMeasurementsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 902B880E2E1D6138009D5234 /* MyMeasurementsViewModel.swift */; };
 		902B88112E1DA1E6009D5234 /* MeasurementDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 902B88102E1DA1E6009D5234 /* MeasurementDetailsView.swift */; };
 		902B88142E1DA579009D5234 /* NavigationRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 902B88132E1DA579009D5234 /* NavigationRouter.swift */; };
+		902B88162E1ED55E009D5234 /* MyMeasurementsDetaislViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 902B88152E1ED55E009D5234 /* MyMeasurementsDetaislViewModel.swift */; };
 		903667062D82E0A40040AE29 /* LocalizationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 903667052D82E08E0040AE29 /* LocalizationManager.swift */; };
 		903667082D82E1410040AE29 /* AppKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 903667072D82E1370040AE29 /* AppKeys.swift */; };
 		9047483F2DCF63530016C3DC /* PackagesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9047483E2DCF63530016C3DC /* PackagesView.swift */; };
@@ -345,6 +346,7 @@
 		902B880E2E1D6138009D5234 /* MyMeasurementsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyMeasurementsViewModel.swift; sourceTree = "<group>"; };
 		902B88102E1DA1E6009D5234 /* MeasurementDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasurementDetailsView.swift; sourceTree = "<group>"; };
 		902B88132E1DA579009D5234 /* NavigationRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationRouter.swift; sourceTree = "<group>"; };
+		902B88152E1ED55E009D5234 /* MyMeasurementsDetaislViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyMeasurementsDetaislViewModel.swift; sourceTree = "<group>"; };
 		903667052D82E08E0040AE29 /* LocalizationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationManager.swift; sourceTree = "<group>"; };
 		903667072D82E1370040AE29 /* AppKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppKeys.swift; sourceTree = "<group>"; };
 		9047483E2DCF63530016C3DC /* PackagesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackagesView.swift; sourceTree = "<group>"; };
@@ -889,6 +891,7 @@
 		902B880A2E1D579C009D5234 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				902B88152E1ED55E009D5234 /* MyMeasurementsDetaislViewModel.swift */,
 				902B880E2E1D6138009D5234 /* MyMeasurementsViewModel.swift */,
 			);
 			path = ViewModel;
@@ -2774,6 +2777,7 @@
 				BBBD000F2A73101700F066DF /* RoundedImage.swift in Sources */,
 				904748502DD34D2D0016C3DC /* NewHomeModel.swift in Sources */,
 				C8C7339C2AA6757800185698 /* SignUpVM.swift in Sources */,
+				902B88162E1ED55E009D5234 /* MyMeasurementsDetaislViewModel.swift in Sources */,
 				BBBD00192A73101700F066DF /* Cesar.swift in Sources */,
 				BBBD000D2A73101700F066DF /* Style.swift in Sources */,
 				BBBD00132A73101700F066DF /* ExtentionLocalize.swift in Sources */,

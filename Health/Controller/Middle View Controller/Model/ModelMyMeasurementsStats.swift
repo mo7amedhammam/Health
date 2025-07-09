@@ -49,7 +49,7 @@ struct Measurements: Codable {
 }
 
 // MARK: - Item
-struct Item: Codable,Equatable {
+struct Item: Codable,Hashable,Identifiable {
     var inNormalRang: Bool?
     var id: Int?
     var date: String?
@@ -66,6 +66,12 @@ struct Item: Codable,Equatable {
         case customerID = "customerId"
         case medicalMeasurementID = "medicalMeasurementId"
         case value, comment
+    }
+}
+extension Item {
+    var formatteddate :String? {
+        guard let date = self.date else { return nil }
+        return date.ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo:"dd/MM/yyyy hh:mm a")
     }
 }
 

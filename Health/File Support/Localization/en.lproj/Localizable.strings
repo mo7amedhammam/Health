@@ -165,6 +165,12 @@
 "all_messurements" = "All Mesurements";
 "or_" = "or";
 "search_" = "Search";
+"no_mes_found" = "no mesurements found";
+"last_mes_results" = "Previous Results";
+"normal_range" = "normal range";
+"within_normal_range" = "within_normal_range";
+"outside_normal_range" = "outside_normal_range";
+"no_comment" = "no comment";
 
 //------------------ new ---
 "home_maincat" = "main Categories";
@@ -214,6 +220,7 @@
 "Done_" = "Done";
 "cancel_" = "cancel";
 "apply_" = "apply";
+"confirm_" = "confirm";
 
 //MARK:   ---- "favorite_packages" ----
 "favorite_packages" = "favorite packages";

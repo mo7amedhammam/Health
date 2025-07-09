@@ -165,6 +165,12 @@
 "all_messurements" = "كل القياسات";
 "or_" = "أو";
 "search_" = "بحث";
+"no_mes_found" = "لا يوجد أي قياسات";
+"last_mes_results" = "نتائج قياساتك السابقة";
+"normal_range" = "المعدل الطبيعي";
+"within_normal_range" = "ضمن المعدل الطبيعي";
+"outside_normal_range" = "خارج المعدل الطبيعي";
+"no_comment" = "لا يوجد تعليق";
 
 //------------------new ---
 "home_maincat" = "التصنيفات الرئيسية";
@@ -214,6 +220,8 @@
 "Done_" = "موافق";
 "cancel_" = "إلغاء";
 "apply_" = "تطبيق";
+"confirm_" = "تأكيد";
+
 
 //MARK:   ---- "favorite_packages" ----
 "favorite_packages" = "باقاتي المفضلة";
