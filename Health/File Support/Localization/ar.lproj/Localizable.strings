@@ -171,6 +171,14 @@
 "within_normal_range" = "ضمن المعدل الطبيعي";
 "outside_normal_range" = "خارج المعدل الطبيعي";
 "no_comment" = "لا يوجد تعليق";
+"mes_val_title" = "ادخل القياس";
+"mes_val_placeholder" = "ادخل القياس";
+"mes_date_title" = "التاريخ";
+"mes_date_placeholder" = "اختر التاريخ";
+"mes_comment_title" = "أضف تعليق";
+"mes_comment_placeholder" = "أضف تعليق";
+"invalid_format" = "تنسيق غير صالح";
+"Try_again_with" = "حاول باستخدام";
 
 //------------------new ---
 "home_maincat" = "التصنيفات الرئيسية";

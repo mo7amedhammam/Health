@@ -171,6 +171,14 @@
 "within_normal_range" = "within_normal_range";
 "outside_normal_range" = "outside_normal_range";
 "no_comment" = "no comment";
+"mes_val_title" = "enter mesurement";
+"mes_val_placeholder" = "enter mesurement";
+"mes_date_title" = "date";
+"mes_date_placeholder" = "select date";
+"mes_comment_title" = "add comment";
+"mes_comment_placeholder" = "add comment";
+"invalid_format" = "invalid format";
+"Try_again_with" = "try again with";
 
 //------------------ new ---
 "home_maincat" = "main Categories";

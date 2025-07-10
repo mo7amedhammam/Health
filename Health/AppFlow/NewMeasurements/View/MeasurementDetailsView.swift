@@ -115,7 +115,6 @@ struct MeasurementDetailsView: View {
                     }
                     .padding()
                     
-                    
                     if let normalRang = viewModel.ArrNormalRange {
                         HStack {
                             Image("newlastmesicon")
@@ -177,9 +176,13 @@ struct MeasurementDetailsView: View {
                             }
                             .padding()
                             .padding(.horizontal)
+                            .frame( height: 124)
                             .background(Color(.mainBlue))
                             .cardStyle( cornerRadius: 6)
                             .padding(.horizontal)
+                   
+                        Spacer(minLength: 30)
+
                         }
 
                         // List of Measurements
@@ -198,22 +201,28 @@ struct MeasurementDetailsView: View {
 
                                     Text(item.formatteddate ?? "")
                                         .font(item.inNormalRang ?? false ? .medium(size: 14) : .regular(size: 10))
-                                        .foregroundColor(.gray)
+                                        .foregroundColor(Color(.secondary))
                                 }
                                 
                                 Divider()
                                     .frame(height: 1)
-                                    .background(Color.gray)
+                                    .background(.gray.opacity(0.5))
                                 
                                 if let comment = item.comment, comment.count > 0 {
                                     Text(comment)
                                         .font(.regular(size: 14))
                                         .foregroundColor(.mainBlue)
+                                        .frame(maxWidth:.infinity, alignment: .center)
+                                        .frame( height: 56)
+
                                 } else {
                                     Text("no_comment".localized)
                                         .font(.regular(size: 15))
                                         .foregroundColor(.gray.opacity(0.5))
+                                        .frame(maxWidth:.infinity, alignment: .center)
+                                        .frame( height: 56)
                                 }
+                                
                             }
                             .padding()
                             .padding(.horizontal)
@@ -222,6 +231,8 @@ struct MeasurementDetailsView: View {
                             .padding(.horizontal)
                         }
                         .listStyle(.plain)
+                        Spacer(minLength: 30)
+
                     }
                     
                     
@@ -244,13 +255,10 @@ struct MeasurementDetailsView: View {
             
         }
         .background(
-            Color(.bgPink)
-            .ignoresSafeArea())
+            Color(.bgPink))
+        .edgesIgnoringSafeArea(.bottom)
         .localizeView()
 //        .withNavigation(router: router)
-        .showHud(isShowing:  $viewModel.isLoading)
-        .errorAlert(isPresented: .constant(viewModel.errorMessage != nil), message: viewModel.errorMessage)
-
         .onAppear{
             Task{
                 viewModel.currentStats = stat
@@ -260,10 +268,13 @@ struct MeasurementDetailsView: View {
                  _ = await (normalRang,details)
             }
         }
-        
-        .customSheet(isPresented: $viewModel.isPresentingNewMeasurementSheet,height: 440){
+        .customSheet(isPresented: $viewModel.isPresentingNewMeasurementSheet,height: 444){
             NewMeasurementSheetView().environmentObject(viewModel)
+                .frame(height: 444)
         }
+        .showHud(isShowing:  $viewModel.isLoading)
+        .errorAlert(isPresented: .constant(viewModel.errorMessage != nil), message: viewModel.errorMessage)
+
         
     }
 }
@@ -285,10 +296,7 @@ struct MeasurementDetailsView: View {
 
 struct MeasurementSearchSection: View {
     @EnvironmentObject var viewModel : MyMeasurementsDetaislViewModel
-
     @State private var selectedRange: TimeRange? = nil
-    @State private var fromDate:Date? = Date()
-    @State private var toDate:Date? = Date()
 
     enum TimeRange: String, CaseIterable {
         case last7Days = "last_7_days"
@@ -303,6 +311,19 @@ struct MeasurementSearchSection: View {
                 ForEach(TimeRange.allCases, id: \.self) { range in
                     Button(action: {
                         selectedRange = range
+                        let today = Date()
+                        let calendar = Calendar.current
+                        switch range {
+                        case .last7Days:
+                            viewModel.dateTo = today
+                            viewModel.dateFrom = calendar.date(byAdding: .day, value: -7, to: today)
+                        case .last3Months:
+                            viewModel.dateTo = today
+                            viewModel.dateFrom = calendar.date(byAdding: .month, value: -3, to: today)
+                        case .lastYear:
+                            viewModel.dateTo = today
+                            viewModel.dateFrom = calendar.date(byAdding: .year, value: -1, to: today)
+                        }
                     }) {
                         Text(range.rawValue.localized)
                             .font(.bold(size: 14))
@@ -320,7 +341,9 @@ struct MeasurementSearchSection: View {
             }
 
             Button(action: {
-                
+                selectedRange = nil
+                viewModel.dateTo = nil
+                viewModel.dateFrom = nil
             },label: {
             // All Measurements
             Text("all_messurements".localized)
@@ -343,13 +366,16 @@ struct MeasurementSearchSection: View {
 
             // From and To Date Pickers
             HStack(spacing: 8) {
-                DatePickerField(selectedDate: $fromDate, title: "from_date".localized)
+                DatePickerField(selectedDate: $viewModel.dateFrom, title: "from_date".localized)
 
-                DatePickerField(selectedDate: $toDate, title: "to_date".localized)
+                DatePickerField(selectedDate: $viewModel.dateTo, title: "to_date".localized)
             }
 
             Button("search_".localized) {
                 // apply filter
+                Task{
+                    await viewModel.fetchMeasurementDetails()
+                }
             }
             .font(.bold(size: 24))
             .foregroundColor(.white)
@@ -367,60 +393,102 @@ struct MeasurementSearchSection: View {
 
 struct NewMeasurementSheetView: View {
     @EnvironmentObject var viewModel: MyMeasurementsDetaislViewModel
-//    @Environment(\.dismiss) var dismiss
-var body: some View {
+
+    var body: some View {
     VStack(spacing: 16) {
         HStack {
+            Image(systemName: "plus")
+                .foregroundStyle(Color(.white))
+                .frame(width: 20,height: 20)
+                .padding(5)
+                .background(Color(.secondary).cornerRadius(3))
+            
+            Text("add_new_mes".localized)
+                .font(.bold(size: 22))
+                .foregroundColor(.mainBlue)
+                .frame(maxWidth: .infinity,alignment: .leading)
+
+            Spacer()
+            
             Button(action: {
-//                dismiss()
                 viewModel.isPresentingNewMeasurementSheet = false
             }) {
-                Image(systemName: "xmark.circle.fill")
+                Image(systemName: "xmark.circle")
                     .resizable()
                     .frame(width: 24, height: 24)
                     .foregroundColor(.pink)
             }
+            .offset(y:-20)
             Spacer()
-            Text("add_new_mes".localized)
-                .font(.bold(size: 22))
-                .foregroundColor(.mainBlue)
-            Spacer()
-            Color.clear.frame(width: 24)
         }
-        .padding()
+        .padding(.top)
 
+        CustomDropListInputFieldUI(title: "mes_val_title", placeholder: "mes_val_placeholder",text: $viewModel.value, isDisabled: false, showDropdownIndicator:false, trailingView: AnyView(Image("newfienameIcon")))
         
-     
-
+        CustomDatePickerField(selectedDate: $viewModel.date) {
+            HStack {
+                CustomDropListInputFieldUI(title: "mes_date_title", placeholder: "mes_date_placeholder",text: $viewModel.formatteddate, isDisabled: true, showDropdownIndicator:false, trailingView: AnyView(Image("dateicon 1")))
+            }
+        }
+        
+        CustomDropListInputFieldUI(title: "mes_comment_title", placeholder: "mes_comment_placeholder",text: $viewModel.comment, isDisabled: false, showDropdownIndicator:false, trailingView: AnyView(Image("messagecentrepopup").resizable().frame(width: 17,height: 17)))
+        
         HStack(spacing: 16) {
-            Button("cancel_".localized) {
+            CustomButton(title: "cancel_",backgroundcolor: Color(.secondary),backgroundView:nil){
                 viewModel.isPresentingNewMeasurementSheet = false
             }
-            .font(.bold(size: 22))
-            .frame(maxWidth: .infinity)
-            .padding()
-            .background(Color(.secondary))
-            .foregroundColor(.white)
-            .cornerRadius(8)
 
-            Button("confirm_".localized) {
+            CustomButton(title: "confirm_",backgroundcolor: Color(.mainBlue),backgroundView:nil){
                 Task{
                     await viewModel.createMeasurement()
                 }
-                    viewModel.isPresentingNewMeasurementSheet = false
+//                    viewModel.isPresentingNewMeasurementSheet = false
             }
-            .font(.bold(size: 22))
-            .frame(maxWidth: .infinity)
-            .padding()
-            .background(Color.mainBlue)
-            .foregroundColor(.white)
-            .cornerRadius(8)
+
         }
         .padding(.top)
 
         Spacer()
     }
     .padding()
+    .localizeView()
 }
 }
 
+
+struct CustomDatePickerField<Content: View>: View {
+    @Binding var selectedDate: Date?
+    let content: () -> Content
+
+    @State private var showingDatePickerSheet = false
+
+    var body: some View {
+        Button(action: {
+            showingDatePickerSheet = true
+        }) {
+            content()
+        }
+        .customSheet(isPresented: $showingDatePickerSheet) {
+            VStack {
+                HStack {
+                    Spacer()
+                    Button("Done_".localized) {
+                        showingDatePickerSheet = false
+                    }
+                    .padding()
+                }
+
+                DatePicker(
+                    "SelectـDate".localized,
+                    selection: Binding(
+                        get: { selectedDate ?? Date() },
+                        set: { selectedDate = $0 }
+                    ),
+                    displayedComponents: .date
+                )
+                .datePickerStyle(.wheel)
+                .labelsHidden()
+            }
+        }
+    }
+}

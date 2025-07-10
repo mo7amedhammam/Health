@@ -7,7 +7,7 @@
 
 import SwiftUI
 import UniformTypeIdentifiers
-import _PhotosUI_SwiftUI
+//import _PhotosUI_SwiftUI
 
 struct MyFileModel: Identifiable {
     let id = UUID()
@@ -167,6 +167,7 @@ struct UploadFileSheetView: View {
             Group {
 
                 CustomDropListInputFieldUI(title: "new_fileName", placeholder: "new_filenameplaceholder",text: $fileName, isDisabled: false, showDropdownIndicator:false, trailingView: AnyView(Image("newfienameIcon")))
+                
                         Menu {
                             ForEach(lookupsvm.fileTypes ?? [],id: \.id) { type in
                                 Button(action: {
