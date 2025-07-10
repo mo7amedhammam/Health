@@ -15,6 +15,8 @@ struct SectionHeader: View {
 
     var hasMoreBtn: Bool = true
     var MoreBtnimage: ImageResource? = .newmoreicon
+    var trailingView: AnyView?
+
     var MoreBtnAction: (() -> Void)?
     
     var body: some View {
@@ -38,14 +40,19 @@ struct SectionHeader: View {
                     AnyView(subTitle)
                 }
             }
-            if let image = MoreBtnimage{
-                Button(action: MoreBtnAction ?? {}){
-                    
-//                    Image(MoreBtnimage ?? .newmoreicon)
-                    Image(image)
-                        .resizable()
-                        .scaledToFill()
-                        .frame(width: 18, height: 18)
+            
+            if let trailingView = trailingView {
+                trailingView
+            }else{
+                if let image = MoreBtnimage{
+                    Button(action: MoreBtnAction ?? {}){
+                        
+                        //                    Image(MoreBtnimage ?? .newmoreicon)
+                        Image(image)
+                            .resizable()
+                            .scaledToFill()
+                            .frame(width: 18, height: 18)
+                    }
                 }
             }
         }

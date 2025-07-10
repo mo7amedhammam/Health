@@ -830,6 +830,9 @@ protocol TargetType1 {
 
 }
 extension TargetType1 {
+        var timeoutInterval: TimeInterval? {
+            return nil
+        }
     var baseURL: URL {
         return URL(string: Constants.apiURL)!
     }

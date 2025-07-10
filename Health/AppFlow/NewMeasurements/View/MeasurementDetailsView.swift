@@ -14,13 +14,6 @@ struct MeasurementDetailsView: View {
 //    @StateObject var router = NavigationRouter()
 
     let stat: ModelMyMeasurementsStats
-
-//    @State private var selectedRange = 0
-//    @State private var fromDate: Date = .now
-//    @State private var toDate: Date = .now
-//    @State private var isShowingData = true // Toggle based on API results
-
-//    var ranges = ["آخر 7 أيام", "آخر 3 شهور", "آخر سنة"]
   
     var body: some View {
         VStack(spacing: 16) {
@@ -107,10 +100,10 @@ struct MeasurementDetailsView: View {
                             .environmentObject(viewModel)
                         
                         // Chart Placeholder
-                        RoundedRectangle(cornerRadius: 10)
-                            .fill(Color.gray.opacity(0.1))
-                            .frame(height: 180)
-                            .overlay(Text("Graph View Placeholder").foregroundColor(.gray))
+//                        RoundedRectangle(cornerRadius: 10)
+//                            .fill(Color.gray.opacity(0.1))
+//                            .frame(height: 180)
+//                            .overlay(Text("Graph View Placeholder").foregroundColor(.gray))
                         
                     }
                     .padding()

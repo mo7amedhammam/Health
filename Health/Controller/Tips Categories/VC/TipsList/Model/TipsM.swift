@@ -22,7 +22,7 @@ struct TipsAllItem: Codable,Equatable {
 
 
 // MARK: - TipsNewest -
-struct TipsNewestM: Codable {
+struct TipsNewestM: Codable,Hashable {
     var title, description, date: String?
     var tipCategoryID: Int?
     var drugGroupIDS: [Int]?

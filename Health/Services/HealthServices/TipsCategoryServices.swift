@@ -81,3 +81,73 @@ extension TipsCategoryServices: TargetType {
     }
 
 }
+
+
+enum NewTipsServices {
+    case GetAllMobile(parameters : [String:Any])
+    case GetTipNewest
+    case GetTipInterestYou
+    case GetTipMostViewed
+    
+    case getTipsByCategory(parameters : [String:Any])
+    case getTipDetails(parameters : [String:Any])
+    
+    //-- Home --
+    case getAlmostFinishedPresc(parameters : [String:Any])
+}
+
+extension NewTipsServices: TargetType1 {
+    
+//    var timeoutInterval: TimeInterval? {
+//        return nil
+//    }
+    var path: String {
+        switch self {
+        case .GetAllMobile:
+            return EndPoints.GetAllMobile.rawValue
+        case .GetTipNewest:
+            return EndPoints.GetTipNewest.rawValue
+        case .GetTipInterestYou:
+            return EndPoints.GetTipInterestYou.rawValue
+        case .GetTipMostViewed:
+            return EndPoints.GetTipMostViewed.rawValue
+        case .getTipsByCategory:
+            return EndPoints.GetByCategory.rawValue
+        case .getTipDetails:
+            return EndPoints.GetDetail.rawValue
+        case .getAlmostFinishedPresc:
+            return EndPoints.GetAlmostFinishedPresc.rawValue
+        }
+    }
+    
+    var method: Alamofire.HTTPMethod {
+        switch self {
+        case .GetAllMobile,
+                .getTipsByCategory,
+                .getAlmostFinishedPresc:
+            return .post
+        case .GetTipNewest,
+                .GetTipInterestYou,
+                .GetTipMostViewed,
+                .getTipDetails:
+            return .get
+        }
+    }
+    var parameters: [String:Any]? {
+        switch self {
+        case .GetAllMobile(parameters: let parameters)
+            ,.getTipsByCategory(parameters: let parameters)
+            ,.getAlmostFinishedPresc(parameters: let parameters)
+            ,.getTipDetails(parameters: let parameters)
+            :
+            return parameters
+            
+        case .GetTipNewest,
+                .GetTipInterestYou,
+                .GetTipMostViewed:
+            return nil
+        }
+    }
+    
+
+}

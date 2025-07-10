@@ -1,16 +1,19 @@
 import SwiftUI
 
 struct ProfileViewUI: View {
+    @StateObject var router = NavigationRouter()
+
     //    @StateObject var localizationManager = LocalizationManager.shared
     @ObservedObject var localizationManager = LocalizationManager.shared
     @EnvironmentObject var viewModel: EditProfileViewModel
     @State private var showLogoutAlert = false
-    @State var destination = AnyView(EmptyView())
-    @State var isactive: Bool = false
-    func pushTo(destination: any View) {
-        self.destination = AnyView(destination)
-        self.isactive = true
-    }
+    
+//    @State var destination = AnyView(EmptyView())
+//    @State var isactive: Bool = false
+//    func pushTo(destination: any View) {
+//        self.destination = AnyView(destination)
+//        self.isactive = true
+//    }
     @State var isLogedin = Helper.shared.CheckIfLoggedIn()
     
     var body: some View {
@@ -82,32 +85,33 @@ struct ProfileViewUI: View {
                         Section {
                             VStack{
                                 ProfileRow(title: "profile_Packages".localized, icon: "profile_packages"){
-                                    pushTo(destination: SubcripedPackagesView(hasbackBtn: true) )
+                                    router.push(SubcripedPackagesView(hasbackBtn: true) )
                                 }
                                 ProfileRow(title: "profile_drugnotifications".localized, icon: "profile_notification"){
                                     let VC: UIViewController = initiateViewController(storyboardName: .main, viewControllerIdentifier: NotificationVC.self)!
                                     pushUIKitVC(VC)
                                 }
                                 ProfileRow(title: "profile_tips".localized, icon: "profile_tips"){
-                                    let VC: UIViewController = initiateViewController(storyboardName: .main, viewControllerIdentifier: TipsCategoriesVC1.self)!
-                                    pushUIKitVC(VC)
+//                                    let VC: UIViewController = initiateViewController(storyboardName: .main, viewControllerIdentifier: TipsCategoriesVC1.self)!
+//                                    pushUIKitVC(VC)
+                                    router.push( TipsView())
                                 }
                                 ProfileRow(title: "profile_inbody".localized, icon: "profile_inbody"){
                                     let VC: UIViewController = initiateViewController(storyboardName: .main, viewControllerIdentifier: INBodyVC.self)!
                                     pushUIKitVC(VC)
                                 }
                                 ProfileRow(title: "profile_files".localized, icon: "profile_files"){
-                                    pushTo(destination: MyFilesView())
+                                    router.push( MyFilesView())
                                 }
                                 ProfileRow(title: "profile_Favourite".localized, icon: "profile_fav"){
-                                    pushTo(destination: WishListView())
+                                    router.push( WishListView())
                                 }
                                 ProfileRow(title: "profile_allergies".localized, icon: "profile_alergy"){
-                                    pushTo(destination: AllergiesView())
+                                    router.push( AllergiesView())
                                     
                                 }
                                 ProfileRow(title: "profile_Payments".localized, icon: "walletIcon",hasDivider:false){
-                                    pushTo(destination: MyPaymentsView())
+                                    router.push( MyPaymentsView())
                                 }
                             }
                             .padding()
@@ -134,19 +138,19 @@ struct ProfileViewUI: View {
                             
                             if isLogedin{
                                 ProfileRow(title: "profile_editProfile".localized, icon: "profile_editProfile"){
-                                    pushTo(destination: EditProfileView())
+                                    router.push( EditProfileView())
 
                                 }
                                 ProfileRow(title: "profile_changepassword".localized, icon: "profile_changePass"){
                                     //                            let VC: UIViewController = initiateViewController(storyboardName: .main, viewControllerIdentifier: ChangePasswordVC.self)!
                                     //                                pushUIKitVC(VC)
                                     
-                                    pushTo(destination: ChangePasswordView())
+                                    router.push( ChangePasswordView())
                                     
                                 }
                             }
                             ProfileRow(title: "profile_languageandcountry".localized, icon: "profile_lang"){
-                                pushTo(destination: SelectLanguageView(hasbackBtn:true))
+                                router.push( SelectLanguageView(hasbackBtn:true))
                             }
                             
                             ProfileRow(title: "profile_privacyandsecurity".localized, icon: "profile_privacy"){
@@ -200,7 +204,7 @@ struct ProfileViewUI: View {
             
         }
         .localizeView()
-        
+        .withNavigation(router: router)
         //        .environment(\.layoutDirection,localizationManager.currentLanguage == "ar" ? .rightToLeft : .leftToRight)
         //        .localizeView()
         .background(Color(.bg))
@@ -216,7 +220,7 @@ struct ProfileViewUI: View {
         //                     secondaryButton: .cancel(Text("إلغاء"))
         //             )}
         
-        NavigationLink( "", destination: destination, isActive: $isactive)
+//        NavigationLink( "", destination: destination, isActive: $isactive)
         
     }
 }

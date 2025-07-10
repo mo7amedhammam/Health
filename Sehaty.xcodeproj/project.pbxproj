@@ -46,6 +46,9 @@
 		902B88112E1DA1E6009D5234 /* MeasurementDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 902B88102E1DA1E6009D5234 /* MeasurementDetailsView.swift */; };
 		902B88142E1DA579009D5234 /* NavigationRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 902B88132E1DA579009D5234 /* NavigationRouter.swift */; };
 		902B88162E1ED55E009D5234 /* MyMeasurementsDetaislViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 902B88152E1ED55E009D5234 /* MyMeasurementsDetaislViewModel.swift */; };
+		902B881E2E1FF014009D5234 /* TipsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 902B881D2E1FF014009D5234 /* TipsView.swift */; };
+		902B88222E200E66009D5234 /* RecentTipCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 902B88212E200E65009D5234 /* RecentTipCardView.swift */; };
+		902B88242E2024B5009D5234 /* TipsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 902B88232E2024B5009D5234 /* TipsViewModel.swift */; };
 		903667062D82E0A40040AE29 /* LocalizationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 903667052D82E08E0040AE29 /* LocalizationManager.swift */; };
 		903667082D82E1410040AE29 /* AppKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 903667072D82E1370040AE29 /* AppKeys.swift */; };
 		9047483F2DCF63530016C3DC /* PackagesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9047483E2DCF63530016C3DC /* PackagesView.swift */; };
@@ -347,6 +350,9 @@
 		902B88102E1DA1E6009D5234 /* MeasurementDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasurementDetailsView.swift; sourceTree = "<group>"; };
 		902B88132E1DA579009D5234 /* NavigationRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationRouter.swift; sourceTree = "<group>"; };
 		902B88152E1ED55E009D5234 /* MyMeasurementsDetaislViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyMeasurementsDetaislViewModel.swift; sourceTree = "<group>"; };
+		902B881D2E1FF014009D5234 /* TipsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TipsView.swift; sourceTree = "<group>"; };
+		902B88212E200E65009D5234 /* RecentTipCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentTipCardView.swift; sourceTree = "<group>"; };
+		902B88232E2024B5009D5234 /* TipsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TipsViewModel.swift; sourceTree = "<group>"; };
 		903667052D82E08E0040AE29 /* LocalizationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationManager.swift; sourceTree = "<group>"; };
 		903667072D82E1370040AE29 /* AppKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppKeys.swift; sourceTree = "<group>"; };
 		9047483E2DCF63530016C3DC /* PackagesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackagesView.swift; sourceTree = "<group>"; };
@@ -912,6 +918,40 @@
 			path = SwiftuiNavigation;
 			sourceTree = "<group>";
 		};
+		902B88192E1FED3B009D5234 /* NewTipsCategories */ = {
+			isa = PBXGroup;
+			children = (
+				902B881C2E1FED4E009D5234 /* Model */,
+				902B881B2E1FED4B009D5234 /* ViewModel */,
+				902B881A2E1FED48009D5234 /* View */,
+			);
+			path = NewTipsCategories;
+			sourceTree = "<group>";
+		};
+		902B881A2E1FED48009D5234 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				902B88212E200E65009D5234 /* RecentTipCardView.swift */,
+				902B881D2E1FF014009D5234 /* TipsView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		902B881B2E1FED4B009D5234 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				902B88232E2024B5009D5234 /* TipsViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		902B881C2E1FED4E009D5234 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		903667042D82E0700040AE29 /* Localization */ = {
 			isa = PBXGroup;
 			children = (
@@ -925,6 +965,7 @@
 		904748312DCCAF550016C3DC /* AppFlow */ = {
 			isa = PBXGroup;
 			children = (
+				902B88192E1FED3B009D5234 /* NewTipsCategories */,
 				902B88082E1D5781009D5234 /* NewMeasurements */,
 				902B87FD2E1A9362009D5234 /* EditProfile */,
 				902B87D62E0F0727009D5234 /* MyPayments */,
@@ -2757,6 +2798,7 @@
 				BBBD003B2A731B6C00F066DF /* SplashScreenTVCell2.swift in Sources */,
 				BB518CE22A9A122400242FAD /* TipsCategoriesCVCell0.swift in Sources */,
 				90842F3C2DA17A7300B02D02 /* CustomNavBar.swift in Sources */,
+				902B88222E200E66009D5234 /* RecentTipCardView.swift in Sources */,
 				902B87FC2E1A7BA8009D5234 /* BiometricLoginButton.swift in Sources */,
 				BBA1DA182AB11E5C0042713A /* NotificationVM.swift in Sources */,
 				BBC3C3ED2ACC912400805524 /* HomeCVCell3.swift in Sources */,
@@ -2841,6 +2883,7 @@
 				904748612DD9CEBE0016C3DC /* PackageMoreDetailsM.swift in Sources */,
 				BBBD003F2A731B7B00F066DF /* SplashScreenTVCell3.swift in Sources */,
 				BB5A266B2B2E1E0B0005C9B8 /* ModelHelp.swift in Sources */,
+				902B881E2E1FF014009D5234 /* TipsView.swift in Sources */,
 				9047484E2DD34CF80016C3DC /* NewHomeViewModel.swift in Sources */,
 				BB546DE62AC9D565008A4F8C /* HomeCVCell2.swift in Sources */,
 				902B87F82E182DA4009D5234 /* BackdropView.swift in Sources */,
@@ -2859,6 +2902,7 @@
 				BBBD000C2A73101700F066DF /* EXTAlert.swift in Sources */,
 				BBBD00242A7311AF00F066DF /* SignUp.swift in Sources */,
 				BBBD00372A731B5E00F066DF /* SplashScreenTVCell1.swift in Sources */,
+				902B88242E2024B5009D5234 /* TipsViewModel.swift in Sources */,
 				BB518CD32A9A112C00242FAD /* TipsCategoriesVC1.swift in Sources */,
 				90FDD3602DF74D4000C3BABB /* ChatsView.swift in Sources */,
 				BB48F8A32A7482480051F12C /* OtpVC.swift in Sources */,
