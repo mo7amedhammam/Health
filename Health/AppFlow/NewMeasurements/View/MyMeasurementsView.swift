@@ -11,6 +11,7 @@ import SwiftUI
 struct MyMeasurementsView: View {
     @StateObject var viewModel = MyMeasurementsViewModel.shared
     @StateObject var router = NavigationRouter()
+    @State var mustLogin: Bool = false
 
     var measurements:[ModelMyMeasurementsStats]? {
         return viewModel.ArrStats
@@ -67,10 +68,18 @@ struct MyMeasurementsView: View {
         .withNavigation(router: router)
         .showHud(isShowing:  $viewModel.isLoading)
         .errorAlert(isPresented: .constant(viewModel.errorMessage != nil), message: viewModel.errorMessage)
-
+        .customSheet(isPresented: $mustLogin ,height: 350){
+            LoginSheetView()
+            
+        }
         .onAppear{
             Task{
-                await viewModel.fetchStats()
+                if Helper.shared.CheckIfLoggedIn(){
+                    await viewModel.fetchStats()
+                }else{
+                    viewModel.clear()
+                    mustLogin = true
+                }
             }
         }
 //        NavigationLink( "", destination: destination, isActive: $isactive)

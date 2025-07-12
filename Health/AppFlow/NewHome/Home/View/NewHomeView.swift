@@ -132,6 +132,11 @@ struct NewHomeView: View {
             }
             .task {
                 await viewModel.refresh()
+                if Helper.shared.CheckIfLoggedIn(){
+                    await profileViewModel.getProfile()
+                }else{
+                    profileViewModel.cleanup()
+                }
             }
             .task(id: selectedPackage){
                 guard let selectedPackage = selectedPackage else { return }

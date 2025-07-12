@@ -23,8 +23,8 @@ class TipDetailsViewModel: ObservableObject {
     
     var tipId: Int? = 0
     
-    @Published var tipsByCategory : TipsByCategoryM? = TipsByCategoryM()
-    @Published var tipDetails : TipDetailsM? = TipDetailsM()
+    @Published var tipsByCategory : TipsByCategoryM?
+    @Published var tipDetails : TipDetailsM?
     
     // Init with DI
     init(networkService: AsyncAwaitNetworkServiceProtocol = AsyncAwaitNetworkService.shared) {
@@ -39,12 +39,12 @@ extension TipDetailsViewModel{
     
     @MainActor
     func GetTipsByCategory() async {
-        guard let maxResultCount = maxResultCount, let skipCount = skipCount else {
+        guard let maxResultCount = maxResultCount, let skipCount = skipCount,let categoryId = tipId else {
             // Handle missings
             self.errorMessage = "check_inputs".localized
             return
         }
-        let parametersarr : [String : Any] =  ["maxResultCount" : maxResultCount ,"skipCount" : skipCount]
+        let parametersarr : [String : Any] =  ["maxResultCount" : maxResultCount ,"skipCount" : skipCount,"categoryId" : categoryId]
         print("param",parametersarr)
 
         isLoading = true
@@ -94,4 +94,28 @@ extension TipDetailsViewModel{
         }
     }
     
+}
+extension TipDetailsViewModel {
+    
+    @MainActor
+    func refresh() async {
+        skipCount = 0
+        isLoading = true
+        defer { isLoading = false }
+
+        async let allTips: () = GetTipsByCategory()
+        await _ = ( allTips)
+    }
+
+    @MainActor
+    func loadMoreIfNeeded() async {
+        guard !(isLoadingMore ?? false),
+              let currentCount = tipsByCategory?.items?.count,
+              let totalCount = tipsByCategory?.totalCount,
+              currentCount < totalCount,
+              let maxResultCount = maxResultCount else { return }
+
+        skipCount = (skipCount ?? 0) + maxResultCount
+        await GetTipsByCategory()
+    }
 }

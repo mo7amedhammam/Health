@@ -91,4 +91,9 @@ extension SubcripedPackagesViewModel {
         skipCount = (skipCount ?? 0) + maxResultCount
         await getSubscripedPackages()
     }
+    
+    func clear() {
+        subscripedPackages = nil
+        skipCount = 0
+    }
 }

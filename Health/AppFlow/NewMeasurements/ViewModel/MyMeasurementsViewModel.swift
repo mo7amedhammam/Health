@@ -46,4 +46,10 @@ class MyMeasurementsViewModel: ObservableObject {
         }
         
     }
+    
+    func clear() {
+        self.ArrStats = nil
+        self.ArrMeasurement = nil
+        self.ArrNormalRange = nil
+    }
 }

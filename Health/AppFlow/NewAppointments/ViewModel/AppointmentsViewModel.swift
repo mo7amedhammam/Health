@@ -19,19 +19,20 @@ class AppointmentsViewModel : ObservableObject {
     @Published var upcomingSession: UpcomingSessionM? = nil
 
     // Published properties
-    @Published var appointments : AppointmentsM? = AppointmentsM(items: [AppointmentsItemM.init(id: 0,
-                                                                                                doctorName: "أحمد سامي عبد الله",
-                                                                                                sessionDate: "2025-06-10T09:12:36.691Z",
-                                                                                                timeFrom: "03:22:00",
-                                                                                                packageName: "باقة الصحة العامة",
-                                                                                                categoryName: "استشفاء بعد مجهود أو إصابة",
-                                                                                                mainCategoryID: 0,
-                                                                                                mainCategoryName: "اللياقة البدنية",
-                                                                                                categoryID: 0,
-                                                                                                sessionMethod: "string",
-                                                                                                packageID: 0,
-                                                                                                dayName: "الإثنين")], totalCount: 3)
-    
+    @Published var appointments : AppointmentsM?
+//    = AppointmentsM(items: [AppointmentsItemM.init(id: 0,
+//                                                                                                doctorName: "أحمد سامي عبد الله",
+//                                                                                                sessionDate: "2025-06-10T09:12:36.691Z",
+//                                                                                                timeFrom: "03:22:00",
+//                                                                                                packageName: "باقة الصحة العامة",
+//                                                                                                categoryName: "استشفاء بعد مجهود أو إصابة",
+//                                                                                                mainCategoryID: 0,
+//                                                                                                mainCategoryName: "اللياقة البدنية",
+//                                                                                                categoryID: 0,
+//                                                                                                sessionMethod: "string",
+//                                                                                                packageID: 0,
+//                                                                                                dayName: "الإثنين")], totalCount: 3)
+//    
     @Published var isLoading:Bool? = false
     @Published var errorMessage: String? = nil
     
@@ -116,5 +117,10 @@ extension AppointmentsViewModel {
 
         skipCount = (skipCount ?? 0) + maxResultCount
         await getAppointmenstList()
+    }
+    
+    func clear() {
+        skipCount = 0
+        appointments = nil
     }
 }

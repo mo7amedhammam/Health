@@ -9,6 +9,8 @@ import SwiftUI
 
 struct SubcripedPackagesView: View {
     //    var mainCategory:HomeCategoryItemM
+    @EnvironmentObject var profileViewModel: EditProfileViewModel
+
     @StateObject private var viewModel = SubcripedPackagesViewModel.shared
     var hasbackBtn : Bool? = true
 //    var onBack: (() -> Void)? // for uikit dismissal
@@ -16,6 +18,7 @@ struct SubcripedPackagesView: View {
     @State var showCancel: Bool = false
 
     @State var destination = AnyView(EmptyView())
+    @State var mustLogin: Bool = false
     @State var isactive: Bool = false
     func pushTo(destination: any View) {
         self.destination = AnyView(destination)
@@ -35,17 +38,34 @@ struct SubcripedPackagesView: View {
                     .padding(.top,55)
                 
                 VStack(spacing:5){
-                    
-                    KFImageLoader(url:URL(string:Constants.imagesURL + ("imagepath".validateSlashs() ?? "")),placeholder: Image(.onboarding1), shouldRefetch: true)
-                        .clipShape(Circle())
-                        .background(Circle()
-                            .stroke(.white, lineWidth: 5).padding(-2))
-                        .frame(width: 91,height:91)
-                    //                        if let name = Helper.shared.getUser()?.name{
-                    Text(Helper.shared.getUser()?.name ?? "user name")
-                        .font(.semiBold(size: 14))
-                        .foregroundStyle(Color.white)
-                    //                        }
+//                    if isLogedin{
+//                        KFImageLoader(url:URL(string:Constants.imagesURL + (viewModel.imageURL?.validateSlashs() ?? "")),placeholder: Image(.user), isOpenable: true,shouldRefetch: false)
+//
+////                            Image(systemName: "person.circle.fill")
+////                            .resizable()
+//                            .clipShape(Circle())
+//                        .scaledToFill()
+//                        .frame(width: 50, height: 50)
+//                    }
+                    if let imageURL = profileViewModel.imageURL{
+                        KFImageLoader(url:URL(string:Constants.imagesURL + (imageURL.validateSlashs())),placeholder: Image(.onboarding1), isOpenable:true, shouldRefetch: false)
+                            .clipShape(Circle())
+                            .background(Circle()
+                                .stroke(.white, lineWidth: 5).padding(-2))
+                            .frame(width: 91,height:91)
+                        if profileViewModel.Name.count > 0{
+                            Text(profileViewModel.Name)
+                                .font(.semiBold(size: 14))
+                                .foregroundStyle(Color.white)
+                        }else{
+                            Text("home_Welcome".localized)
+                                .font(.semiBold(size: 14))
+                                .foregroundStyle(Color.white)
+
+                        }
+                    }else{
+                        Spacer()
+                    }
                 }
                 .background{
                     Image(.logoWaterMarkIcon)
@@ -130,9 +150,21 @@ struct SubcripedPackagesView: View {
         .errorAlert(isPresented: .constant(viewModel.errorMessage != nil), message: viewModel.errorMessage)
         .edgesIgnoringSafeArea([.top,.horizontal])
         .task {
-            await viewModel.getSubscripedPackages()
+            if (Helper.shared.CheckIfLoggedIn()) {
+                await viewModel.getSubscripedPackages()
+                await profileViewModel.getProfile()
+            } else {
+                profileViewModel.cleanup()
+                viewModel.clear()
+                mustLogin = true
+                
+            }
         }
         NavigationLink( "", destination: destination, isActive: $isactive)
+           
+            .customSheet(isPresented: $mustLogin ,height: 350){
+                LoginSheetView()
+            }
         
         if showCancel{
             CancelSubscriptionView().onDisappear(perform: {
@@ -141,12 +173,13 @@ struct SubcripedPackagesView: View {
             })
         }
 
+
         
     }
 }
 
 #Preview {
-    SubcripedPackagesView()
+    SubcripedPackagesView().environmentObject(EditProfileViewModel.shared)
 }
 
 struct SubcripedPackagesListView: View {

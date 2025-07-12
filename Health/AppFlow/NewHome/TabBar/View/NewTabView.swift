@@ -48,6 +48,8 @@ struct NewTabView: View {
 //                .ignoresSafeArea()
                     
                     SubcripedPackagesView(hasbackBtn: false)
+                        .environmentObject(viewModel)
+
                 case 2:
                     NewHomeView()
                         .environmentObject(viewModel)

@@ -18,7 +18,8 @@ struct PackageMoreDetailsView: View {
     var currentcase:bookingCase = .create
     var doctorPackageId: Int
     @StateObject var viewModel = PackageMoreDetailsViewModel.shared
-    
+    @State var mustLogin: Bool = false
+
     @State private var showingDatePicker = false
     @State private var selectedDate = Date()
 
@@ -307,7 +308,11 @@ struct PackageMoreDetailsView: View {
                     
                     Button(action: {
                         Task{
-                          await viewModel.getBookingSession()
+                            if Helper.shared.CheckIfLoggedIn(){
+                                await viewModel.getBookingSession()
+                            }else{
+                                mustLogin = true
+                            }
                         }
                     }){
                             Text("Continue_".localized)
@@ -340,7 +345,9 @@ struct PackageMoreDetailsView: View {
 //            .localizeView(reverse: true)
             .showHud(isShowing:  $viewModel.isLoading)
             .errorAlert(isPresented: .constant(viewModel.errorMessage != nil), message: viewModel.errorMessage)
-
+            .customSheet(isPresented: $mustLogin ,height: 350){
+                LoginSheetView()
+            }
         NavigationLink( "", destination: destination, isActive: $isactive)
 
     }

@@ -46,6 +46,10 @@ class EditProfileViewModel : ObservableObject {
         profile = nil
         isLoading = false
         errorMessage = nil
+        if !Helper.shared.CheckIfLoggedIn(){
+                    imageURL = nil
+                    Name = ""
+        }
     }
 }
 

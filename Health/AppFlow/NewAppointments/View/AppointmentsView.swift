@@ -9,7 +9,8 @@ import SwiftUI
 
 struct AppointmentsView: View {
     @StateObject var viewModel = AppointmentsViewModel.shared
-    
+    @State var mustLogin: Bool = false
+
     @State var showFilter:Bool = false
     var body: some View {
         VStack(spacing:0){
@@ -63,7 +64,12 @@ struct AppointmentsView: View {
             //            .frame(height: 232)
             //            .horizontalGradientBackground()
             .task {
-            await viewModel.refresh()
+                if Helper.shared.CheckIfLoggedIn(){
+                    await viewModel.refresh()
+                }else{
+                    viewModel.clear()
+                    mustLogin = true
+                }
             }
             
             Spacer().frame(height: 55)
@@ -76,6 +82,9 @@ struct AppointmentsView: View {
 
         .customSheet(isPresented: $showFilter,height: 330){
             FilterView()
+        }
+        .customSheet(isPresented: $mustLogin ,height: 350){
+            LoginSheetView()
         }
     }
 }

@@ -17,9 +17,8 @@ struct TipDetailsView: View {
     var body: some View {
             VStack(spacing: 16) {
                 
-                if let tip = viewModel.tipDetails {
                     ZStack(alignment: .top){
-                        if let imageName = tip.image {
+                        if let imageName = viewModel.tipDetails?.image {
                             KFImageLoader(url:URL(string:Constants.imagesURL + (imageName.validateSlashs())),placeholder: Image("sehatylogobg"), isOpenable: false,shouldRefetch: false)
                             //                            .resizable()
                             //                        .clipShape(Circle())
@@ -33,6 +32,7 @@ struct TipDetailsView: View {
                             .padding(.top,55)
                     }
                     
+                if let tip = viewModel.tipDetails {
                     ScrollView {
                         // Title & Meta Info
                         VStack(alignment: .leading, spacing: 20) {
@@ -64,8 +64,8 @@ struct TipDetailsView: View {
                         }
                     }
                     .padding(.horizontal)
-                    
                 }
+                
                 Spacer()
             }
             .localizeView()

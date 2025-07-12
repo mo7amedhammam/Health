@@ -301,3 +301,7 @@
 "tips_mostviewed" = "النصائح الأكثر مشاهدة";
 "subjects_" = "مواضيع";
 "categ_" = "تصنيف:";
+
+//MARK:  -- loginsheet --
+"welcom_title_elnada" = "مرحبًا بك في صحتي مع الندى!";
+"welcom_subtitle_elnada" = "استشارات مع خبراء تغذية لمساعدتك على تحقيق أهدافك.";

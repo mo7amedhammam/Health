@@ -51,6 +51,8 @@
 		902B88242E2024B5009D5234 /* TipsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 902B88232E2024B5009D5234 /* TipsViewModel.swift */; };
 		902B88262E21D0C6009D5234 /* TipDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 902B88252E21D0C6009D5234 /* TipDetailsView.swift */; };
 		902B88282E21DF54009D5234 /* TipDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 902B88272E21DF54009D5234 /* TipDetailsViewModel.swift */; };
+		902B882A2E227AB1009D5234 /* TipsCategoriesListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 902B88292E227AB1009D5234 /* TipsCategoriesListView.swift */; };
+		902B882D2E22B07E009D5234 /* LoginSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 902B882C2E22B07E009D5234 /* LoginSheetView.swift */; };
 		903667062D82E0A40040AE29 /* LocalizationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 903667052D82E08E0040AE29 /* LocalizationManager.swift */; };
 		903667082D82E1410040AE29 /* AppKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 903667072D82E1370040AE29 /* AppKeys.swift */; };
 		9047483F2DCF63530016C3DC /* PackagesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9047483E2DCF63530016C3DC /* PackagesView.swift */; };
@@ -357,6 +359,8 @@
 		902B88232E2024B5009D5234 /* TipsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TipsViewModel.swift; sourceTree = "<group>"; };
 		902B88252E21D0C6009D5234 /* TipDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TipDetailsView.swift; sourceTree = "<group>"; };
 		902B88272E21DF54009D5234 /* TipDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TipDetailsViewModel.swift; sourceTree = "<group>"; };
+		902B88292E227AB1009D5234 /* TipsCategoriesListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TipsCategoriesListView.swift; sourceTree = "<group>"; };
+		902B882C2E22B07E009D5234 /* LoginSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginSheetView.swift; sourceTree = "<group>"; };
 		903667052D82E08E0040AE29 /* LocalizationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationManager.swift; sourceTree = "<group>"; };
 		903667072D82E1370040AE29 /* AppKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppKeys.swift; sourceTree = "<group>"; };
 		9047483E2DCF63530016C3DC /* PackagesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackagesView.swift; sourceTree = "<group>"; };
@@ -936,6 +940,7 @@
 			isa = PBXGroup;
 			children = (
 				902B88252E21D0C6009D5234 /* TipDetailsView.swift */,
+				902B88292E227AB1009D5234 /* TipsCategoriesListView.swift */,
 				902B88212E200E65009D5234 /* TipsByCategoryView.swift */,
 				902B881D2E1FF014009D5234 /* TipsView.swift */,
 			);
@@ -956,6 +961,14 @@
 			children = (
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		902B882B2E22B05F009D5234 /* LoginSheet */ = {
+			isa = PBXGroup;
+			children = (
+				902B882C2E22B07E009D5234 /* LoginSheetView.swift */,
+			);
+			path = LoginSheet;
 			sourceTree = "<group>";
 		};
 		903667042D82E0700040AE29 /* Localization */ = {
@@ -989,6 +1002,7 @@
 		904748322DCCAF6B0016C3DC /* TabBar */ = {
 			isa = PBXGroup;
 			children = (
+				902B882B2E22B05F009D5234 /* LoginSheet */,
 				904748342DCCAF820016C3DC /* View */,
 			);
 			path = TabBar;
@@ -2843,6 +2857,7 @@
 				902B87A92DFEE5E9009D5234 /* SkeletonView.swift in Sources */,
 				BB1ECAB52AD4741F009BF2DE /* WillExpireTVCell.swift in Sources */,
 				90FDD36A2DF8351B00C3BABB /* AppointmentsM.swift in Sources */,
+				902B882A2E227AB1009D5234 /* TipsCategoriesListView.swift in Sources */,
 				90FDD3332DE5CE0000C3BABB /* SubscriptionServices.swift in Sources */,
 				BB1B2FFB2A7EA364001677FD /* INBodyDetailsTVCell.swift in Sources */,
 				C88995902AAA02A2002AD812 /* ChangePasswordM.swift in Sources */,
@@ -2939,6 +2954,7 @@
 				90B67BDC2D9EC7D600C1FD31 /* OnboardingView.swift in Sources */,
 				BBBD001B2A73101700F066DF /* FullImageVC.swift in Sources */,
 				BB518CDA2A9A118B00242FAD /* TipsCategoriesTVCell0.swift in Sources */,
+				902B882D2E22B07E009D5234 /* LoginSheetView.swift in Sources */,
 				C88995882AA9F70C002AD812 /* ForgetPasswordM.swift in Sources */,
 				BB1200F52B52AC6F00AEBBBE /* MeasureDetailsVC.swift in Sources */,
 				BBBD000A2A73101700F066DF /* EXTEnternet.swift in Sources */,

@@ -300,3 +300,7 @@
 "tips_mostviewed" = "Most Viewed Tips";
 "subjects_" = "subjects";
 "categ_" = "category";
+
+//MARK:  -- loginsheet --
+"welcom_title_elnada" = "Welcome to my health with dew!";
+"welcom_subtitle_elnada" = "Consultations with nutrition experts to help you achieve your goals.";

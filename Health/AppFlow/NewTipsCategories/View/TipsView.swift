@@ -60,7 +60,8 @@ struct TipsView: View {
 //            .navigationBarHidden(true)
         }
         .task {
-        await viewModel.refresh()
+//            viewModel.allTips = nil
+            await viewModel.refresh()
         }
         .refreshable {
             await viewModel.refresh()
@@ -90,7 +91,7 @@ struct TipsView: View {
     // MARK: - Categories Section
     private var categoriesSection: some View {
         VStack(alignment: .trailing, spacing: 0) {
-            if let categories = viewModel.allTips?.items{
+            if let categories = viewModel.allTips?.items , categories.count > 0 {
             
             SectionHeader(image: Image("tipscaticon"), title: "tips_adv", trailingView: AnyView(
                 Button(action: {
@@ -107,7 +108,8 @@ struct TipsView: View {
                         ForEach(categories.indices, id: \.self) { index in
                             CategoryCardView(item: categories[index]){
 //                                MARK: -- action ---
-                                
+                                router.push( TipsCategoriesListView(category:categories[index])
+                                    .environmentObject(TipDetailsViewModel.shared) )
                             }
                                 .onAppear {
                                     // Load more when reaching near the end
@@ -133,7 +135,7 @@ struct TipsView: View {
     // MARK: - Recent Tips Section
        private var recentTipsSection: some View {
            VStack(alignment: .trailing, spacing: 12) {
-               if let recentTips = viewModel.newestTipsArr{
+               if let recentTips = viewModel.newestTipsArr, recentTips.count > 0 {
                    SectionHeader(image: Image("newadvicon"), title: "tips_newest", trailingView: AnyView(
                 Button(action: {
                     router.push(TipsByCategoryView(TipsCategoriesCase: .Newest).environmentObject(viewModel))
@@ -164,7 +166,7 @@ struct TipsView: View {
     // MARK: - Your Tips Section
     private var yourTipsSection: some View {
         VStack(alignment: .trailing, spacing: 12) {
-            if let interestingTips = viewModel.interestingTipsArr{
+            if let interestingTips = viewModel.interestingTipsArr, interestingTips.count > 0{
             SectionHeader(image: Image("interestuicon") , title: "tips_interesting",trailingView:AnyView(
                 Button(action: {
                     router.push(TipsByCategoryView(TipsCategoriesCase: .Interesting).environmentObject(viewModel))
@@ -194,7 +196,7 @@ struct TipsView: View {
     // MARK: - Most Viewed Section
     private var mostViewedSection: some View {
         VStack(alignment: .trailing, spacing: 12) {
-            if let mostViewedTips = viewModel.mostViewedTipsArr{
+            if let mostViewedTips = viewModel.mostViewedTipsArr,mostViewedTips.count > 0{
             SectionHeader(image: Image("mostviewedicon") , title: "tips_mostviewed",trailingView:AnyView(
                 Button(action: {
                     router.push(TipsByCategoryView(TipsCategoriesCase: .MostViewed).environmentObject(viewModel))
@@ -205,7 +207,7 @@ struct TipsView: View {
             .padding(.horizontal, 20)
             .padding(.vertical,-8)
 
-                ScrollView(.horizontal, showsIndicators: false) {
+                ScrollView(.horizontal, showsIndicators: false){
                     LazyHStack(spacing: 12) {
                         ForEach(mostViewedTips, id: \.self) { tip in
                             RecentTipCardView(item: tip){
