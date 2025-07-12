@@ -67,3 +67,9 @@ struct DrugGroup: Codable {
     var id,order: Int?
     var title: String?
 }
+
+extension TipDetailsM {
+    var formattedDate: String? {
+        return date?.ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "dd / MM / yyyy hh:mm a") ?? nil
+    }
+}

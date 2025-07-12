@@ -292,3 +292,11 @@
 
 //MARK:  edit profile
 "save_" = "save";
+
+//MARK: new tips
+"tips_adv" = "Tips Advices";
+"tips_newest" = "Newest Tips";
+"tips_interesting" = "Intersting Tips";
+"tips_mostviewed" = "Most Viewed Tips";
+"subjects_" = "subjects";
+"categ_" = "category";

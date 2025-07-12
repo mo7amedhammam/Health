@@ -293,3 +293,11 @@
 
 //MARK:  edit profile
 "save_" = "حفظ";
+
+//MARK: new tips
+"tips_adv" = "تصنيفات النصائح";
+"tips_newest" = "نصائح حديثة";
+"tips_interesting" = "نصائح تهمك";
+"tips_mostviewed" = "النصائح الأكثر مشاهدة";
+"subjects_" = "مواضيع";
+"categ_" = "تصنيف:";

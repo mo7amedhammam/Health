@@ -9,19 +9,18 @@
 import SwiftUI
 
 // MARK: - Sample Data
-extension TipsAllItem {
-    static let sampleCategories = [
+     let sampleCategories = [
         TipsAllItem(title: "مرض السكري", order: 1, id: 1, image: "diabetes", subjectsCount: 15),
         TipsAllItem(title: "ضغط الدم", order: 2, id: 2, image: "blood_pressure", subjectsCount: 22),
         TipsAllItem(title: "أمراض القلب", order: 3, id: 3, image: "heart_disease", subjectsCount: 18),
         TipsAllItem(title: "مرض السكري", order: 4, id: 4, image: "diabetes2", subjectsCount: 12)
     ]
     
-    static let sampleRecentTips = [
+     let sampleRecentTips = [
         TipsNewestM(title: "10 نصائح للتحسين صحة الكبد", description: "10 نصائح للتحسين صحة الكبد", date: "2024-01-01T17:00:00", tipCategoryID: 2, drugGroupIDS: [21], id: 5, image: "", tipCategoryTitle: "مرض السكري", views: 3) ,
         TipsNewestM(title: "10 نصائح للتحسين صحة الكبد", description: "10 نصائح للتحسين صحة الكبد", date: "2024-01-01T17:00:00", tipCategoryID: 1, drugGroupIDS: [2], id: 1, image: "", tipCategoryTitle: "مرض السكري", views: 5)
     ]
-}
+
 
 // MARK: - Main View
 struct TipsView: View {
@@ -29,23 +28,11 @@ struct TipsView: View {
     @StateObject var router = NavigationRouter()
 
     @State private var searchText = ""
-//    @State private var categories: [TipsAllItem] = TipsAllItem.sampleCategories
-//    @State private var recentTips: [TipsNewestM] = TipsAllItem.sampleRecentTips
-//    @State private var yourTips: [TipsNewestM] = TipsAllItem.sampleRecentTips
-//    @State private var mostViewedTips: [TipsNewestM] = TipsAllItem.sampleRecentTips
-     
-//    @State private var currentPage = 0
-//     @State private var isLoadingMore = false
-//     @State private var isLoadingMoreRecent = false
-//     @State private var isLoadingMoreYours = false
-//     @State private var isLoadingMoreMostViewed = false
-    
-//      private let itemsPerPage = 6 // 2 rows × 3 columns per page
     
     var body: some View {
         VStack {
 
-            TitleBar(title: "نصائح طبية",hasbackBtn: true)
+            TitleBar(title: "profile_tips",hasbackBtn: true)
 
             ScrollView {
                 VStack(spacing: 20) {
@@ -84,7 +71,6 @@ struct TipsView: View {
         .errorAlert(isPresented: .constant(viewModel.errorMessage != nil), message: viewModel.errorMessage)
     }
     
-    
     // MARK: - Search Bar
     private var searchBar: some View {
         HStack {
@@ -105,10 +91,10 @@ struct TipsView: View {
     private var categoriesSection: some View {
         VStack(alignment: .trailing, spacing: 0) {
             if let categories = viewModel.allTips?.items{
-
-            SectionHeader(image: Image("tipscaticon"), title: "تصنيفات النصائح", trailingView: AnyView(
+            
+            SectionHeader(image: Image("tipscaticon"), title: "tips_adv", trailingView: AnyView(
                 Button(action: {
-                    
+                    router.push(TipsByCategoryView(TipsCategoriesCase: .All).environmentObject(viewModel))
                 }, label: {
                     Image("newmoredots")
                 })
@@ -138,7 +124,6 @@ struct TipsView: View {
                         }
                     }
                     .padding(.leading, 4)
-                    
                 }
                 .padding(.leading, 4)
             }
@@ -149,10 +134,9 @@ struct TipsView: View {
        private var recentTipsSection: some View {
            VStack(alignment: .trailing, spacing: 12) {
                if let recentTips = viewModel.newestTipsArr{
-
-               SectionHeader(image: Image("newadvicon"), title: "نصائح حديثة", trailingView: AnyView(
+                   SectionHeader(image: Image("newadvicon"), title: "tips_newest", trailingView: AnyView(
                 Button(action: {
-                    
+                    router.push(TipsByCategoryView(TipsCategoriesCase: .Newest).environmentObject(viewModel))
                 }, label: {
                     Image("newmoredots")
                 })
@@ -165,7 +149,7 @@ struct TipsView: View {
                            ForEach(recentTips, id: \.self) { tip in
                                RecentTipCardView(item: tip){
                                    //                                MARK: -- action ---
-                                   
+                                   router.push(TipDetailsView(tipId: tip.id ?? 0).environmentObject(TipDetailsViewModel.shared))
                                }
                            }
                        }
@@ -181,10 +165,9 @@ struct TipsView: View {
     private var yourTipsSection: some View {
         VStack(alignment: .trailing, spacing: 12) {
             if let interestingTips = viewModel.interestingTipsArr{
-
-            SectionHeader(image: Image("interestuicon") , title: "نصائح تهمك",trailingView:AnyView(
+            SectionHeader(image: Image("interestuicon") , title: "tips_interesting",trailingView:AnyView(
                 Button(action: {
-                    
+                    router.push(TipsByCategoryView(TipsCategoriesCase: .Interesting).environmentObject(viewModel))
                 }, label: {
                     Image("newmoredots")
                 })
@@ -197,7 +180,7 @@ struct TipsView: View {
                     ForEach(interestingTips, id: \.self) { tip in
                         RecentTipCardView(item: tip){
                             //                                MARK: -- action ---
-                            
+                            router.push(TipDetailsView(tipId: tip.id ?? 0).environmentObject(TipDetailsViewModel.shared))
                         }
                     }
                 }
@@ -212,10 +195,9 @@ struct TipsView: View {
     private var mostViewedSection: some View {
         VStack(alignment: .trailing, spacing: 12) {
             if let mostViewedTips = viewModel.mostViewedTipsArr{
-
-            SectionHeader(image: Image("mostviewedicon") , title: "النصائح الأكثر مشاهدة",trailingView:AnyView(
+            SectionHeader(image: Image("mostviewedicon") , title: "tips_mostviewed",trailingView:AnyView(
                 Button(action: {
-                    
+                    router.push(TipsByCategoryView(TipsCategoriesCase: .MostViewed).environmentObject(viewModel))
                 }, label: {
                     Image("newmoredots")
                 })
@@ -228,7 +210,7 @@ struct TipsView: View {
                         ForEach(mostViewedTips, id: \.self) { tip in
                             RecentTipCardView(item: tip){
                                 //                                MARK: -- action ---
-                                
+                                router.push(TipDetailsView(tipId: tip.id ?? 0).environmentObject(TipDetailsViewModel.shared))
                             }
                         }
                     }
