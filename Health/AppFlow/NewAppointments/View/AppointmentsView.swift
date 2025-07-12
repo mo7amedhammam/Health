@@ -8,10 +8,13 @@
 import SwiftUI
 
 struct AppointmentsView: View {
+    @StateObject var router = NavigationRouter.shared
     @StateObject var viewModel = AppointmentsViewModel.shared
     @State var mustLogin: Bool = false
 
     @State var showFilter:Bool = false
+    @State var showCancel: Bool = false
+
     var body: some View {
         VStack(spacing:0){
             VStack(){
@@ -26,7 +29,7 @@ struct AppointmentsView: View {
                     }
                     
                     AppointmentsListView(appointments:viewModel.appointments?.items ,selectAction: {appointment in
-//                                    pushTo(destination: SubcripedPackageDetailsView(package: package))
+//                        router.push( SubcripedPackageDetailsView(package: appointment))
                                 },buttonAction:{item in
 //                                    if item.canRenew ?? false{
 //                                        // renew subscription
@@ -76,6 +79,7 @@ struct AppointmentsView: View {
             
         }
         .localizeView()
+        .withNavigation(router: router)
 //        .reversLocalizeView()
         .showHud(isShowing:  $viewModel.isLoading)
         .errorAlert(isPresented: .constant(viewModel.errorMessage != nil), message: viewModel.errorMessage)
@@ -85,6 +89,13 @@ struct AppointmentsView: View {
         }
         .customSheet(isPresented: $mustLogin ,height: 350){
             LoginSheetView()
+        }
+        if showCancel{
+            CancelSubscriptionView(isPresent: $showCancel)
+                .onDisappear(perform: {
+                showCancel = false
+                print("cancelled dismiss")
+            })
         }
     }
 }
@@ -125,6 +136,7 @@ struct AppointmentsListView: View {
     var buttonAction: ((AppointmentsItemM) -> Void)?
     var loadMore: (() -> Void)?
     @Binding var showFilter: Bool
+
     var body: some View {
         VStack(spacing:0){
             SectionHeader(image: Image(.newnxtsessionicon),title: "other_sessions",MoreBtnimage: .newfilter){
@@ -135,7 +147,9 @@ struct AppointmentsListView: View {
                 List{
                     if let appointments = appointments,appointments.count > 0{
                         ForEach(appointments, id: \.self) { item in
-                            AppointmentCardView(appointment: item)
+                            AppointmentCardView(appointment: item, renewaction: {
+                                buttonAction?(item)
+                            })
                             .buttonStyle(.plain)
                             .listRowSpacing(0)
                             .listRowSeparator(.hidden)
@@ -153,6 +167,7 @@ struct AppointmentsListView: View {
                 }
                 .listStyle(.plain)
         }
+
         
     }
 }
@@ -190,7 +205,7 @@ struct AppointmentsListView: View {
 // MARK: - Card View
 struct AppointmentCardView: View {
     let appointment: AppointmentsItemM
-    
+    var renewaction: (() -> Void)
     var body: some View {
         VStack(spacing: 0) {
             // Top Section (White background)
@@ -255,7 +270,7 @@ struct AppointmentCardView: View {
 //                .frame(maxWidth: .infinity,alignment: .leading)
                     Spacer()
                 Button(action: {
-                        
+                        renewaction()
                     },label:{
                         HStack(spacing:3){
                             Image("newreschedual")
@@ -298,7 +313,7 @@ struct AppointmentCardView_Previews: PreviewProvider {
             dayName: "الاثنين" // Correct day name for 08/05/2025 is Friday, but using model's value
         )
         
-        AppointmentCardView(appointment: dummyAppointment)
+        AppointmentCardView(appointment: dummyAppointment, renewaction: {})
             .previewLayout(.sizeThatFits) // Makes the preview fit the card content
             .padding() // Add some padding around the card in the preview
 //            .background(Color.gray) // To see the card clearly on a light background

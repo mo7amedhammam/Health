@@ -10,7 +10,7 @@ import SwiftUI
 struct SubcripedPackagesView: View {
     //    var mainCategory:HomeCategoryItemM
     @EnvironmentObject var profileViewModel: EditProfileViewModel
-
+    @StateObject var router = NavigationRouter.shared
     @StateObject private var viewModel = SubcripedPackagesViewModel.shared
     var hasbackBtn : Bool? = true
 //    var onBack: (() -> Void)? // for uikit dismissal
@@ -19,11 +19,11 @@ struct SubcripedPackagesView: View {
 
     @State var destination = AnyView(EmptyView())
     @State var mustLogin: Bool = false
-    @State var isactive: Bool = false
-    func pushTo(destination: any View) {
-        self.destination = AnyView(destination)
-        self.isactive = true
-    }
+//    @State var isactive: Bool = false
+//    func pushTo(destination: any View) {
+//        self.destination = AnyView(destination)
+//        self.isactive = true
+//    }
     
     init(hasbackBtn : Bool? = true) {
         self.hasbackBtn = hasbackBtn
@@ -92,23 +92,23 @@ struct SubcripedPackagesView: View {
 //                }
 //            } else {
                 SubcripedPackagesListView(packaces: viewModel.subscripedPackages?.items,selectAction: {package in
-                    pushTo(destination: SubcripedPackageDetailsView(package: package))
+//                    pushTo(destination: SubcripedPackageDetailsView(package: package))
+                    router.push(SubcripedPackageDetailsView(package: package))
                 },buttonAction:{item in
                     if item.canRenew ?? false{
                         // renew subscription
                         guard let doctorPackageId = item.customerPackageID else { return }
-                        pushTo(destination: PackageMoreDetailsView( doctorPackageId: doctorPackageId,currentcase:.renew))
+//                        pushTo(destination: PackageMoreDetailsView( doctorPackageId: doctorPackageId,currentcase:.renew))
+                        router.push(PackageMoreDetailsView( doctorPackageId: doctorPackageId,currentcase:.renew) )
                     }else if item.canCancel ?? false{
                         // sheet for cancel subscription
                         showCancel = true
                     }
                 },loadMore: {
                     //                guard viewModel.canLoadMore else { return }
-                    
                     Task {
                         await viewModel.loadMoreIfNeeded()
                     }
-                    
                 })
                 .refreshable {
                     await viewModel.refresh()
@@ -146,6 +146,7 @@ struct SubcripedPackagesView: View {
             
         }
         .localizeView()
+        .withNavigation(router: router)
         .showHud(isShowing:  $viewModel.isLoading)
         .errorAlert(isPresented: .constant(viewModel.errorMessage != nil), message: viewModel.errorMessage)
         .edgesIgnoringSafeArea([.top,.horizontal])
@@ -157,23 +158,21 @@ struct SubcripedPackagesView: View {
                 profileViewModel.cleanup()
                 viewModel.clear()
                 mustLogin = true
-                
             }
         }
-        NavigationLink( "", destination: destination, isActive: $isactive)
+//        NavigationLink( "", destination: destination, isActive: $isactive)
            
             .customSheet(isPresented: $mustLogin ,height: 350){
                 LoginSheetView()
             }
         
         if showCancel{
-            CancelSubscriptionView().onDisappear(perform: {
+            CancelSubscriptionView(isPresent: $showCancel)
+                .onDisappear(perform: {
                 showCancel = false
                 print("cancelled dismiss")
             })
         }
-
-
         
     }
 }
@@ -308,8 +307,8 @@ struct SubcripedPackagesListView: View {
                                                             .frame(maxWidth: .infinity,alignment:.leading)
                                                         
                                                         Button(action: {
-                                                            selectAction?(item)
-                                                            
+//                                                            selectAction?(item)
+                                                            buttonAction?(item)
                                                             //                                                            if item.canRenew ?? false{
                                                             //
                                                             //                                                            }else if item.canCancel ?? false{
@@ -350,7 +349,6 @@ struct SubcripedPackagesListView: View {
                                 .listRowSpacing(0)
                                 .listRowSeparator(.hidden)
                                 .listRowBackground(Color.clear)
-                                
                                 .cardStyle(cornerRadius: 3)
                                 //                        .frame(width: 200, height: 356)
                                 //                            .padding(.horizontal)

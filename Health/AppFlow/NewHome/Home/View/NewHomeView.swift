@@ -95,8 +95,25 @@ struct NewHomeView: View {
                             .frame(height: 229)
                             .padding(.horizontal)
                         
-                        MostViewedBooked(packaces:viewModel.mostViewedPackages,  selectedPackage: $selectedPackage,likeAction: {packageId in
+                        MostViewedBooked(packaces:viewModel.mostViewedPackages,  selectedPackage: $selectedPackage,likeAction: {packageId,currentcase in
                             //                            add to wishlist
+                            
+                            switch currentcase{
+                                
+                            case .mostviewed:
+                                if let index = viewModel.mostViewedPackages?.firstIndex(where: { $0.id == packageId }) {
+                                    viewModel.mostViewedPackages?[index].isWishlist?.toggle()
+                                }
+                            case .mostbooked:
+                                if let index = viewModel.mostBookedPackages?.firstIndex(where: { $0.id == packageId }) {
+                                    viewModel.mostBookedPackages?[index].isWishlist?.toggle()
+                                }
+                            }
+                           
+                           Task{
+                               await wishlistviewModel.addOrRemovePackageToWishList(packageId: packageId)
+                           }
+                            
                         },onChangeTab:{ newTab in
 //                                             currentCase = newTab
                                              Task {

@@ -11,6 +11,7 @@ import SwiftUI
 import Combine
 
 final class NavigationRouter: ObservableObject {
+    static let shared = NavigationRouter()
     @Published var destination: AnyView? = nil
     @Published var isActive: Bool = false
 

@@ -10,7 +10,8 @@ import SwiftUI
 struct PackagesView: View {
     var mainCategory:HomeCategoryItemM
     @StateObject private var viewModel = PackagesViewModel()
-    
+    @StateObject var wishlistviewModel: WishListManagerViewModel = WishListManagerViewModel.shared
+
     @State var destination = AnyView(EmptyView())
     @State var isactive: Bool = false
     func pushTo(destination: any View) {

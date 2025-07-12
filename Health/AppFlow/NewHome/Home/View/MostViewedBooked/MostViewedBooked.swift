@@ -17,7 +17,7 @@ struct MostViewedBooked: View {
     @State private var currentcase:mostcases = .mostviewed
      var packaces: [FeaturedPackageItemM]?
     @Binding var selectedPackage : FeaturedPackageItemM?
-    var likeAction : ((Int) -> Void)?
+    var likeAction : ((Int,mostcases) -> Void)?
     var onChangeTab : ((mostcases) -> Void)? // callback to parent
 
     var body: some View {
@@ -70,7 +70,7 @@ struct MostViewedBooked: View {
                         VipPackageCellView(item: item,action:{
                             selectedPackage = item
                         },likeAction:{
-                            likeAction?(item.id ?? 0)})
+                            likeAction?(item.id ?? 0,currentcase)})
                     }
                 }
                 .padding(.horizontal)

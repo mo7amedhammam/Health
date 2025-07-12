@@ -305,3 +305,8 @@
 //MARK:  -- loginsheet --
 "welcom_title_elnada" = "مرحبًا بك في صحتي مع الندى!";
 "welcom_subtitle_elnada" = "استشارات مع خبراء تغذية لمساعدتك على تحقيق أهدافك.";
+
+//MARK: --- cancel subscriprion ---
+"cancel_confirmation_title" = "هل أنت متأكد أنك تريد إلغاء الاشتراك في هذه الباقة؟";
+"cancel_reason_title" = "سبب إلغاء الاشتراك";
+"cancel_placeholder" = "برجاء إبلاغنا سبب إلغاء الاشتراك في هذه الباقة";

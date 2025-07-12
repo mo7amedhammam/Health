@@ -8,7 +8,8 @@
 import SwiftUI
 
 struct CancelSubscriptionView: View {
-    @Environment(\.dismiss) private var dismiss
+//    @Environment(\.dismiss) private var dismiss
+    @Binding var isPresent: Bool
     @State var reason: String = ""
     var body: some View {
         ZStack{
@@ -20,14 +21,14 @@ struct CancelSubscriptionView: View {
                     .frame(width: 54,height: 45)
                     .aspectRatio(contentMode: .fill)
 
-                Text("هل أنت متأكد أنك تريد إلغاء الاشتراك في هذه الباقة؟".localized)
+                Text("cancel_confirmation_title".localized)
                     .font(.semiBold(size: 12))
                     .foregroundStyle(Color(.main))
                     .padding()
                 
                 VStack(alignment: .leading){
                     HStack{
-                        Text("سبب إلغاء الاشتراك".localized)
+                        Text("cancel_reason_title".localized)
                             .font(.semiBold(size: 16))
                             .foregroundStyle(Color(.main))
                             .frame(maxWidth:.infinity,alignment: .leading)
@@ -40,45 +41,55 @@ struct CancelSubscriptionView: View {
                     }
                     
                     if #available(iOS 16.0, *) {
-                        TextField("برجاء إبلاغنا سبب إلغاء الاشتراك في هذه الباقة".localized, text: $reason, axis: .vertical)
+                        TextField("cancel_placeholder".localized, text: $reason, axis: .vertical)
                             .padding(.vertical)
                             .font(.medium(size: 12))
                         
                     } else {
                         // Fallback on earlier versions
-                        TextField("برجاء إبلاغنا سبب إلغاء الاشتراك في هذه الباقة".localized, text: $reason)
+                        TextField("cancel_placeholder".localized, text: $reason)
                             .padding(.vertical)
                             .font(.medium(size: 12))
                     }
                 }
                 
                 HStack(spacing:20){
-                    Button(action: {
-                        dismiss()
-                    }, label: {
-                        Text("Cancel".localized)
-                            .font(.bold(size: 18))
-                    })
-                    .padding()
-                    .frame(maxWidth: .infinity)
-                    .frame(height:50)
-                    .foregroundStyle(.white)
-                    .background{Color(.secondary)}
-                    .cardStyle(cornerRadius: 3)
-                    .frame(maxWidth: .infinity)
+                    CustomButton(title: "cancel_",backgroundcolor: Color(.secondary),backgroundView:nil){
+                        isPresent = false
+                    }
+
+                    CustomButton(title: "confirm_",backgroundcolor: Color(.mainBlue),backgroundView:nil){
+                        Task{
+//                            await viewModel.createMeasurement()
+                        }
+                    }
                     
-                    Button(action: {
-                        
-                    }, label: {
-                        Text("Confirm".localized)
-                            .font(.bold(size: 18))
-                    })
-                    .padding()
-                    .frame(maxWidth: .infinity)
-                    .frame(height:50)
-                    .foregroundStyle(.white)
-                    .background{Color(.main)}
-                    .cardStyle(cornerRadius: 3)
+//                    Button(action: {
+//                        dismiss()
+//                    }, label: {
+//                        Text("cancel_".localized)
+//                            .font(.bold(size: 18))
+//                    })
+//                    .padding()
+//                    .frame(maxWidth: .infinity)
+//                    .frame(height:50)
+//                    .foregroundStyle(.white)
+//                    .background{Color(.secondary)}
+//                    .cardStyle(cornerRadius: 3)
+//                    .frame(maxWidth: .infinity)
+                    
+//                    Button(action: {
+//                        
+//                    }, label: {
+//                        Text("Confirm".localized)
+//                            .font(.bold(size: 18))
+//                    })
+//                    .padding()
+//                    .frame(maxWidth: .infinity)
+//                    .frame(height:50)
+//                    .foregroundStyle(.white)
+//                    .background{Color(.main)}
+//                    .cardStyle(cornerRadius: 3)
 
                 }
             }
@@ -88,11 +99,11 @@ struct CancelSubscriptionView: View {
 
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background{Color.black.opacity(0.3)}
+        .background{Color.black.opacity(0.4)}
         .ignoresSafeArea()
     }
 }
 
 #Preview {
-    CancelSubscriptionView()
+    CancelSubscriptionView(isPresent: .constant(false))
 }

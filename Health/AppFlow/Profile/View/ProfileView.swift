@@ -85,7 +85,7 @@ struct ProfileViewUI: View {
                         Section {
                             VStack{
                                 ProfileRow(title: "profile_Packages".localized, icon: "profile_packages"){
-                                    router.push(SubcripedPackagesView(hasbackBtn: true) )
+                                    router.push(SubcripedPackagesView(hasbackBtn: true).environmentObject(viewModel) )
                                 }
                                 ProfileRow(title: "profile_drugnotifications".localized, icon: "profile_notification"){
                                     let VC: UIViewController = initiateViewController(storyboardName: .main, viewControllerIdentifier: NotificationVC.self)!
