@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct NewHomeView: View {
+    @StateObject var router = NavigationRouter.shared
     @StateObject private var viewModel = NewHomeViewModel.shared
     @EnvironmentObject var profileViewModel: EditProfileViewModel
 
@@ -15,16 +16,17 @@ struct NewHomeView: View {
     @StateObject var wishlistviewModel: WishListManagerViewModel = WishListManagerViewModel.shared
 
     @State var selectedPackage : FeaturedPackageItemM?
-
+    @State var isReschedualling: Bool = true
+    
     init() {
     }
     
-    @State var destination = AnyView(EmptyView())
-    @State var isactive: Bool = false
-    func pushTo(destination: any View) {
-        self.destination = AnyView(destination)
-        self.isactive = true
-    }
+//    @State var destination = AnyView(EmptyView())
+//    @State var isactive: Bool = false
+//    func pushTo(destination: any View) {
+//        self.destination = AnyView(destination)
+//        self.isactive = true
+//    }
     
     var body: some View {
 //        NavigationView(){
@@ -39,7 +41,11 @@ struct NewHomeView: View {
                     VStack(alignment:.leading){
 //                        Group{
                             if let nextsession = viewModel.upcomingSession{
-                                NextSessionSection(upcomingSession: nextsession)
+                                NextSessionSection(upcomingSession: nextsession,detailsAction: {
+                                        
+                                },rescheduleAction: {
+                                    isReschedualling = true
+                                })
                                     .padding(.horizontal)
                             }
 //                        }
@@ -47,7 +53,7 @@ struct NewHomeView: View {
 //                            await viewModel.getUpcomingSession()
 //                        }
                         MainCategoriesSection(categories: viewModel.homeCategories){category in
-                            pushTo(destination: PackagesView(mainCategory: category))
+                            router.push(PackagesView(mainCategory: category))
                         }
 //                            .task {
 //                                await viewModel.getHomeCategories()
@@ -58,7 +64,10 @@ struct NewHomeView: View {
                             .frame(height: 137)
                             .padding(.horizontal)
 
-                        LastMesurmentsSection(measurements: viewModel.myMeasurements)
+                        LastMesurmentsSection(measurements: viewModel.myMeasurements){item in
+                            guard let item = item else { return }
+                            router.push(MeasurementDetailsView(stat: item))
+                        }
 //                            .task {
 //                                await viewModel.getMyMeasurements()
 //                            }
@@ -71,7 +80,7 @@ struct NewHomeView: View {
                         VipPackagesSection(packages: viewModel.featuredPackages?.items,selectedPackage: $selectedPackage){packageId in
 //                            add to wishlist
                             // Update the source-of-truth array in viewModel
-                             if let index = viewModel.featuredPackages?.items?.firstIndex(where: { $0.id == packageId }) {
+                             if let index = viewModel.featuredPackages?.items?.firstIndex(where: { $0.id == packageId }){
                                  viewModel.featuredPackages?.items?[index].isWishlist?.toggle()
                              }
                             
@@ -97,7 +106,6 @@ struct NewHomeView: View {
                         
                         MostViewedBooked(packaces:viewModel.mostViewedPackages,  selectedPackage: $selectedPackage,likeAction: {packageId,currentcase in
                             //                            add to wishlist
-                            
                             switch currentcase{
                                 
                             case .mostviewed:
@@ -141,9 +149,12 @@ struct NewHomeView: View {
             }
 //            .reversLocalizeView()
             .localizeView()
+            .withNavigation(router: router)
             .showHud(isShowing:  $viewModel.isLoading)
             .errorAlert(isPresented: .constant(viewModel.errorMessage != nil), message: viewModel.errorMessage)
-
+            .customSheet(isPresented: $isReschedualling){
+                ReSchedualView(isPresentingNewMeasurementSheet: $isReschedualling)
+            }
             .onAppear{
                 selectedPackage = nil
             }
@@ -157,7 +168,8 @@ struct NewHomeView: View {
             }
             .task(id: selectedPackage){
                 guard let selectedPackage = selectedPackage else { return }
-                pushTo(destination: PackageDetailsView(package: selectedPackage))
+                
+                router.push( PackageDetailsView(package: selectedPackage))
             }
             .refreshable {
                 await viewModel.refresh()
@@ -166,7 +178,7 @@ struct NewHomeView: View {
                 refreshTask?.cancel()
             }
         
-        NavigationLink( "", destination: destination, isActive: $isactive)
+//        NavigationLink( "", destination: destination, isActive: $isactive)
         
     }
     

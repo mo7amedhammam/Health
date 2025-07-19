@@ -18,10 +18,12 @@ struct DoctorData: Codable,Equatable {
     
     var doctorID: Int?
     var doctorName,doctorImage, speciality: String?
-
+    var packageDoctorId:Int?
+    var nationality,flag:String?
     enum CodingKeys: String, CodingKey {
         case doctorID = "doctorId"
         case doctorName, doctorImage, speciality
+        case packageDoctorId,nationality,flag
     }
 }
 
@@ -29,8 +31,8 @@ struct DoctorData: Codable,Equatable {
 struct PackageData: Codable,Equatable {
     var packageID: Int?
     var packageName, mainCategoryName, categoryName: String?
-    var sessionCount, duration, priceBeforeDiscount, discount: Int?
-    var priceAfterDiscount: Int?
+    var sessionCount, duration: Int?
+    var priceBeforeDiscount,priceAfterDiscount, discount: Double?
     var appCountryPackageId: Int?
     enum CodingKeys: String, CodingKey {
         case packageID = "packageId"

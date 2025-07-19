@@ -101,17 +101,15 @@ struct PackageDetailsView: View {
                 
             HStack(alignment: .bottom){
                 VStack(alignment: .leading){
-                    Text("\(package.priceAfterDiscount ?? 0) " + "EGP".localized)
+                    (Text(package.priceAfterDiscount ?? 0,format:.number.precision(.fractionLength(1))) + Text(" "+"EGP".localized))
                         .font(.semiBold(size: 16))
                         .foregroundStyle(Color.white)
                     
                     HStack{
-                        Text("\(package.priceBeforeDiscount ?? 0) " + "EGP".localized).strikethrough().foregroundStyle(Color(.secondary))
+                        (Text(package.priceBeforeDiscount ?? 0,format:.number.precision(.fractionLength(1))) + Text(" "+"EGP".localized)).strikethrough().foregroundStyle(Color(.secondary))
                             .font(.semiBold(size: 12))
                         
-                        (Text("(".localized + "Discount".localized ) + Text( " \(package.discount ?? 0)" + "%".localized + ")".localized))
-                            .font(.semiBold(size: 12))
-                            .foregroundStyle(Color.white)
+                        DiscountLine(discount: package.discount)
                     }
                     .padding(.top,2)
                 }
@@ -172,7 +170,7 @@ struct PackageDetailsView: View {
                 await viewmodel.getAvailableDoctors(appCountryPackageId: appCountryPackageId)
             }
 //            .reversLocalizeView()
-//            .localizeView(reverse: true)
+            .localizeView()
             .showHud(isShowing:  $viewmodel.isLoading)
             .errorAlert(isPresented: .constant(viewmodel.errorMessage != nil), message: viewmodel.errorMessage)
 
@@ -217,7 +215,9 @@ struct AvailableDoctorsListView: View {
                                     .cardStyle(cornerRadius: 3,shadowOpacity: 0.1)
                                 
                                 HStack(alignment: .center,spacing: 5){
-                                    (Text("doc".localized + "/".localized) + Text(item.doctorName ?? "name"))
+                                    (
+//                                        Text("doc".localized + "/".localized) +
+                                     Text(item.doctorName ?? "name"))
                                        .font(.semiBold(size: 22))
                                        .frame(maxWidth: .infinity,alignment:.leading)
                                        .foregroundStyle(Color.mainBlue)
@@ -261,7 +261,8 @@ struct AvailableDoctorsListView: View {
                                     .frame(height:36)
                                     .frame(maxWidth: .infinity)
                                     .padding(.horizontal,10)
-                                    .background{LinearGradient(gradient: Gradient(colors: [.mainBlue, Color(.secondary)]), startPoint: .leading, endPoint: .trailing)}
+                                    .horizontalGradientBackground()
+//                                    .background{LinearGradient(gradient: Gradient(colors: [.mainBlue, Color(.secondary)]), startPoint: .leading, endPoint: .trailing)}
 //                                    .cardStyle( cornerRadius: 3)
                                     .cornerRadius(3)
                                 }
@@ -295,5 +296,20 @@ struct AvailableDoctorsListView: View {
         }
 //        .padding(.vertical,5)
         .padding(.bottom,5)
+    }
+}
+
+struct DiscountLine: View {
+    let discount: Double?
+    var body: some View {
+        HStack(spacing:0){
+            Text("(".localized)
+            Text("Discount".localized + " ")
+            Text( discount ?? 0,format: .percent)
+//            Text("%".localized )
+            Text(")".localized)
+        }
+        .font(.semiBold(size: 12))
+        .foregroundStyle(Color.white)
     }
 }

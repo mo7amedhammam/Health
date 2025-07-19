@@ -15,6 +15,7 @@ struct LastMesurmentsSection: View {
 //        GridItem(.flexible()),
         GridItem(.flexible())
     ]
+    let action : ((MyMeasurementsStatsM?) -> Void)?
     var body: some View {
         VStack{
             SectionHeader(image: Image(.newlastmesicon),title: "home_lastMes"){
@@ -24,6 +25,9 @@ struct LastMesurmentsSection: View {
             
             LazyVGrid(columns: columns, spacing: 5) {
                 ForEach(measurements ?? [], id: \.self) { item in
+                    Button(action:{
+                        action?(item)
+                    },label: {
                     VStack{
                         Text(item.title ?? "")
                             .font(.bold(size: 16))
@@ -59,6 +63,7 @@ struct LastMesurmentsSection: View {
                     }
                     .frame(width: UIScreen.main.bounds.width/3.3, height: 112)
                     .cardStyle(cornerRadius: 3,shadowOpacity:0.08)
+                    })
                 }
             }
             .padding(.horizontal)
@@ -71,5 +76,5 @@ struct LastMesurmentsSection: View {
 }
 
 #Preview {
-    LastMesurmentsSection()
+    LastMesurmentsSection(action: {_ in })
 }

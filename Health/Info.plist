@@ -58,5 +58,7 @@
     <string>This app needs access to the microphone to record audio messages.</string>
     <key>NSFaceIDUsageDescription</key>
     <string>نستخدم Face ID لتسجيل الدخول</string>
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string>We need to access your location to display content relevant to your country.</string>
 </dict>
 </plist>

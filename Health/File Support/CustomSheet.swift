@@ -31,8 +31,7 @@ struct CustomHeightSheetModifier<SheetContent: View>: ViewModifier {
         content.sheet(isPresented: $isPresented) {
             sheetBody()
         }
-        .background(Color(.systemBackground))
-
+        .background(Color(.white))
     }
 }
 

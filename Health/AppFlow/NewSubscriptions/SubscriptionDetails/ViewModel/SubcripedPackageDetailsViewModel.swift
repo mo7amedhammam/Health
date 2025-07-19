@@ -21,6 +21,8 @@ class SubcripedPackageDetailsViewModel:ObservableObject {
 //    @Published var newDate                = Date()
     
     // Published properties
+    @Published var subscripedPackage: SubcripedPackageItemM?
+
     @Published var subscripedSessions: SubcripedSessionsListM?
 //    @Published var availableDays: [AvailableDayM]?
 //    @Published var availableShifts: [AvailableTimeShiftM]?
@@ -63,6 +65,26 @@ extension SubcripedPackageDetailsViewModel{
                 responseType: SubcripedSessionsListM.self
             )
             self.subscripedSessions = response
+        } catch {
+            self.errorMessage = error.localizedDescription
+        }
+    }
+    
+    @MainActor
+    func getSubscripedPackageDetails(CustomerPackageId:Int) async {
+        isLoading = true
+        defer { isLoading = false }
+
+        let parametersarr : [String : Any] =  ["CustomerPackageId":CustomerPackageId]
+        
+        let target = SubscriptionServices.GetCustomerPackageById(parameters: parametersarr)
+        do {
+            self.errorMessage = nil // Clear previous errors
+            let response = try await networkService.request(
+                target,
+                responseType: SubcripedPackageItemM.self
+            )
+                self.subscripedPackage = response
         } catch {
             self.errorMessage = error.localizedDescription
         }

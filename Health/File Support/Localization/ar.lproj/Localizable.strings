@@ -140,8 +140,8 @@
 "Minutes" = "دقيقه";
 "more_detail" = "تفاصيل أكثر";
 "reSchedual" = "اعادة الجدولة";
-")" = "(";
-"(" = ")";
+")" = ")";
+"(" = "(";
 
 //MARK: --- notification ---
 "notfication_active" = "فعّال";
@@ -193,13 +193,39 @@
 
 //MARK: --- packages Details ---
 "sessions" = "سيشنز";
+"sessions_Duration" = "مدة السيشن";
 "available_doc" = "دكتور متاح";
+"Schedualling_" = "تحديد معاد أول سيشن";
+"schedualling_Hint" = "قم بتحديد معاد أول سيشن وسيقوم الطبيب بتحديد الباقي";
+"Continue_" = "استمرار";
+
+//MARK: --- ticket ---
+"ticket_confirm_title" = "تأكيد";
+"confirm_Package_data" = "تأكيد بيانات الباقة";
+"first_session" = "معاد أول سيشن:";
+"sessions_selection_hint" = "*سيقوم الدكتور  بتحديد مواعيد باقي السيشنز";
+"confirm_Doctor_data" = "تأكيد بيانات الدكتور";
+"Add_Copon" = "إضافة كوبون";
+"enter_Copon_number" = "ادخل رقم الكوبون";
+"Payment_shortly" = "ملخص الدفع";
+"price_" = "السعر";
+"EGP_" = "جنية مصري";
+"la_Discount" = "الخصم";
+"Final_price_" = "السعر النهائي";
 
 //MARK: --- subsriptions ---
 "subscriped_title" = "اشتراكاتي";
 "subscriped_packages" = "الباقات المشترك بها";
 "subscriped_no_packages" = "لا يوجد أي باقات مشترك بها حتى الآن";
 "subscription_nextSessions" = "السيشنز القادمة";
+"subscription_Date" = "تاريخ الاشتراك";
+"last_session_Date" = "تاريخ آخر جلسة";
+"Active_" = "نشط";
+"remain_" = "متبقي";
+"from_" = "من";
+"doc_" = "د";
+"renew_subscription" = "تجديد الاشتراك";
+"cancel_subscription" = "إلغاء الاشتراك";
 
 //MARK: --- Package Files ---
 "Watch_" = "مشاهده";
@@ -229,7 +255,6 @@
 "cancel_" = "إلغاء";
 "apply_" = "تطبيق";
 "confirm_" = "تأكيد";
-
 
 //MARK:   ---- "favorite_packages" ----
 "favorite_packages" = "باقاتي المفضلة";
@@ -310,3 +335,32 @@
 "cancel_confirmation_title" = "هل أنت متأكد أنك تريد إلغاء الاشتراك في هذه الباقة؟";
 "cancel_reason_title" = "سبب إلغاء الاشتراك";
 "cancel_placeholder" = "برجاء إبلاغنا سبب إلغاء الاشتراك في هذه الباقة";
+
+//MARK: --- reschedual --
+"ReSchedualling_" = "إعادة جدولة";
+
+//MARK:  --- reminder ---
+"reminder_title" = "تنبيهات مواعيد الأدوية";
+"add_new_reminder" = "إضافة تنبيه جديد";
+"no_reminders" = "لا يوجد أي تنبيهات";
+"your_reminders" = "تنبيهاتك السابقة";
+"rem_start_date" = "تاريخ بداية التنبيه";
+"rem_start_time" = "الساعة";
+"rem_drug_every" = "الدواء كل";
+"rem_drug_duration" = "لمدة";
+"hours_" = "ساعات";
+"days_" = "أيام";
+"rem_end_date" = "نهاية التنبيه";
+"drug_active" = "فعّال";
+"drug_expired" = "مُنتهي";
+"add_medication_sheet_tittle" = "إضافة تنبيه جديد";
+"add_medication_name_itle" = "اسم الدواء";
+"add_medication_name_placeholder" = "ادخل اسم الدواء";
+"add_medication_start_date_title" = "بداية التنبيه";
+"add_medication_start_date_placeholder" = "اختر تاريخ بداية التنبيه";
+"add_medication_start_time_title" = "وقت بداية التنبيه";
+"add_medication_start_time_placeholder" = "ضع وقت بداية التنبيه";
+"add_medication_frequency_title" = "الدواء كل";
+"add_medication_frequency_placeholder" = "ضع عدد مرت أخد الدواء";
+"add_duration_title" = "لمدة";
+"add_duration_placeholder" = "ضع عدد أيام أخد الدواء";

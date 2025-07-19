@@ -24,7 +24,8 @@ struct SubcripedPackagesView: View {
 //        self.destination = AnyView(destination)
 //        self.isactive = true
 //    }
-    
+    @State var idToCancel: Int?
+
     init(hasbackBtn : Bool? = true) {
         self.hasbackBtn = hasbackBtn
 //        self.onBack = onBack
@@ -61,7 +62,6 @@ struct SubcripedPackagesView: View {
                             Text("home_Welcome".localized)
                                 .font(.semiBold(size: 14))
                                 .foregroundStyle(Color.white)
-
                         }
                     }else{
                         Spacer()
@@ -92,20 +92,19 @@ struct SubcripedPackagesView: View {
 //                }
 //            } else {
                 SubcripedPackagesListView(packaces: viewModel.subscripedPackages?.items,selectAction: {package in
-//                    pushTo(destination: SubcripedPackageDetailsView(package: package))
-                    router.push(SubcripedPackageDetailsView(package: package))
+                    router.push(SubcripedPackageDetailsView(package: package, CustomerPackageId: nil))
                 },buttonAction:{item in
+                    guard let doctorPackageId = item.customerPackageID else { return }
+
                     if item.canRenew ?? false{
                         // renew subscription
-                        guard let doctorPackageId = item.customerPackageID else { return }
-//                        pushTo(destination: PackageMoreDetailsView( doctorPackageId: doctorPackageId,currentcase:.renew))
                         router.push(PackageMoreDetailsView( doctorPackageId: doctorPackageId,currentcase:.renew) )
                     }else if item.canCancel ?? false{
                         // sheet for cancel subscription
+                        idToCancel = doctorPackageId
                         showCancel = true
                     }
                 },loadMore: {
-                    //                guard viewModel.canLoadMore else { return }
                     Task {
                         await viewModel.loadMoreIfNeeded()
                     }
@@ -167,10 +166,10 @@ struct SubcripedPackagesView: View {
             }
         
         if showCancel{
-            CancelSubscriptionView(isPresent: $showCancel)
-                .onDisappear(perform: {
-                showCancel = false
-                print("cancelled dismiss")
+            CancelSubscriptionView(isPresent: $showCancel, customerPackageId: idToCancel ?? 0,onCancelSuccess: {
+                if let index = viewModel.subscripedPackages?.items?.firstIndex(where: { $0.customerPackageID == idToCancel }) {
+                    viewModel.subscripedPackages?.items?[index].canCancel?.toggle()
+                }
             })
         }
         
@@ -217,14 +216,14 @@ struct SubcripedPackagesListView: View {
                                                     .frame(width: 11, height: 11)
                                                 VStack(alignment:.leading){
                                                     (Text("subscription_Date".localized) + Text("  \(item.subscriptionDate ?? "2025-03-31")".ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "yyyy-MM-dd"))
-                                                        .font(.regular(size: 10)))
-                                                    .font(.semiBold(size: 10))
+                                                        .font(.regular(size: 14)))
+                                                    .font(.semiBold(size: 12))
                                                     .foregroundStyle(Color.white)
                                                     .frame(maxWidth:.infinity, alignment: .leading)
                                                     
                                                     (Text("last_session_Date".localized) + Text("  \(item.lastSessionDate ?? "2025-03-31")".ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "yyyy-MM-dd"))
-                                                        .font(.regular(size: 10)))
-                                                    .font(.medium(size: 8))
+                                                        .font(.regular(size: 12)))
+                                                    .font(.medium(size: 10))
                                                     .foregroundStyle(Color.white)
                                                 }
                                                 
@@ -235,9 +234,9 @@ struct SubcripedPackagesListView: View {
                                                     //                                                    .fill(Color(.white))
                                                         .frame(width: 5, height: 5)
                                                     
-                                                    Text(item.status ?? "Active")
+                                                    Text(item.status ?? "Active_".localized)
                                                 }
-                                                .font(.medium(size: 10))
+                                                .font(.medium(size: 12))
                                                 .foregroundStyle(Color.white)
                                                 .frame(height:22)
                                                 .padding(.horizontal,10)
@@ -254,86 +253,123 @@ struct SubcripedPackagesListView: View {
                                             
                                             VStack(spacing:8){
                                                 HStack{
-                                                    VStack{
-                                                        Text(item.packageName ?? "pack_Name".localized)
-                                                            .font(.semiBold(size: 16))
-                                                            .foregroundStyle(Color.white)
-                                                            .frame(maxWidth: .infinity,alignment:.leading)
-                                                        
+                                                    VStack(alignment:.leading){
                                                         HStack{
-                                                            Text(item.mainCategoryName ?? "main_category")
-                                                            Circle()
-                                                                .fill(Color(.secondary))
-                                                                .frame(width: 5, height: 5)
+                                                            Text(item.packageName ?? "")
+                                                                .font(.semiBold(size: 20))
+                                                                .foregroundStyle(Color.white)
+                                                                .frame(maxWidth: .infinity,alignment:.leading)
                                                             
-                                                            Text(item.categoryName ?? "sub_category")
+                                                            Button(action: {
+                                                                buttonAction?(item)
+                                                            },label:{
+                                                                HStack(spacing:3){
+                                                                    Image(item.canRenew ?? false ? "newreschedual" : "cancelsubscription")
+                                                                        .resizable()
+                                                                        .frame(width: 10, height: 8.5)
+                                                                    Text(item.canRenew ?? false ? "renew_subscription".localized: "cancel_subscription".localized)
+                                                                        .underline()
+                                                                }
+                                                                .foregroundStyle(Color.white)
+                                                                .font(.regular(size: 12))
+                                                                
+                                                            })
+                                                            .buttonStyle(.plain)
                                                             
                                                         }
-                                                        .font(.regular(size: 10))
+//                                                        HStack{
+                                                        Text(item.categoryName ?? "")
+
+                                                        HStack {
+                                                            Text(item.mainCategoryName ?? "")
+                                                            
+                                                            
+                                                            Spacer()
+                                                            
+                                                            Image(.newdocicon)
+                                                                .renderingMode(.template)
+                                                                .resizable()
+                                                                .frame(width: 10,height:12)
+                                                                .scaledToFit()
+                                                                .foregroundStyle(Color(.secondary))
+                                                                .padding(3)
+                                                            
+                                                            ( Text("doc_".localized + " / ".localized) + Text(item.doctorName ?? "Doctor Name"))
+                                                                .font(.semiBold(size: 16))
+//                                                                .frame(maxWidth: .infinity,alignment:.trailing)
+                                                            
+                                                        }
+//                                                            Circle()
+//                                                                .fill(Color(.secondary))
+//                                                                .frame(width: 5, height: 5)
+                                                            
+                                                            
+                                                        }
+                                                        .font(.medium(size: 14))
                                                         .foregroundStyle(Color.white)
                                                         .frame(maxWidth: .infinity,alignment:.leading)
                                                         
-                                                    }
+//                                                    }
                                                     
-                                                    HStack(alignment:.center,spacing:0){
-                                                        Text( "remain_".localized)
-                                                        
-                                                        let reamin = (item.sessionCount ?? 0) - (item.attendedSessionCount ?? 0)
-                                                        
-                                                        (Text(" \(reamin) " + "from".localized + " \(item.sessionCount ?? 0) "))
-                                                            .font(.bold(size: 12))
-                                                        
-                                                        Text( "sessions_ar".localized )
-                                                    }
-                                                    .font(.regular(size: 10))
-                                                    .minimumScaleFactor(0.5)
-                                                    .foregroundStyle(Color(.secondary))
-                                                    .padding(8)
-                                                    .cardStyle(backgroundColor: .white,cornerRadius: 3)
+//                                                    HStack(alignment:.center,spacing:0){
+//                                                        Text( "remain_".localized)
+//                                                        
+//                                                        let reamin = (item.sessionCount ?? 0) - (item.attendedSessionCount ?? 0)
+//                                                        
+//                                                        (Text(" \(reamin) " + "from_".localized + " \(item.sessionCount ?? 0) "))
+//                                                            .font(.bold(size: 12))
+//                                                        
+//                                                        Text( "sessions_ar".localized )
+//                                                    }
+//                                                    .font(.regular(size: 10))
+//                                                    .minimumScaleFactor(0.5)
+//                                                    .foregroundStyle(Color(.secondary))
+//                                                    .padding(8)
+//                                                    .cardStyle(backgroundColor: .white,cornerRadius: 3)
                                                 }
                                                 
-                                                HStack{
-                                                    HStack(alignment: .center,spacing: 5){
-                                                        Image(.newdocicon)
-                                                            .renderingMode(.template)
-                                                            .resizable()
-                                                            .frame(width: 10,height:12)
-                                                            .scaledToFit()
-                                                            .foregroundStyle(Color(.secondary))
-                                                            .padding(3)
-                                                        
-                                                        ( Text("doc".localized + " / ".localized) + Text(item.doctorName ?? "Doctor Name"))
-                                                            .font(.semiBold(size: 12))
-                                                            .frame(maxWidth: .infinity,alignment:.leading)
-                                                        
-                                                        Button(action: {
-//                                                            selectAction?(item)
-                                                            buttonAction?(item)
-                                                            //                                                            if item.canRenew ?? false{
-                                                            //
-                                                            //                                                            }else if item.canCancel ?? false{
-                                                            //
-                                                            //                                                            }
-                                                            
-                                                        },label:{
-                                                            HStack(spacing:3){
-                                                                Image(item.canRenew ?? false ? "newreschedual" : "cancelsubscription")
-                                                                    .resizable()
-                                                                    .frame(width: 10, height: 8.5)
-                                                                Text(item.canRenew ?? false ? "renew_subscription".localized: "cancel_subscription".localized)
-                                                                    .underline()
-                                                            }
-                                                            .foregroundStyle(Color.white)
-                                                            .font(.regular(size: 10))
-                                                            
-                                                        })
-                                                        .buttonStyle(.plain)
-                                                        
-                                                    }
-                                                    .font(.regular(size: 10))
-                                                    .foregroundStyle(Color.white)
-                                                    //                                            .frame(maxWidth: .infinity,alignment:.leading)
-                                                }
+//                                                HStack{
+//                                                    HStack(alignment: .center,spacing: 5){
+////                                                        Image(.newdocicon)
+////                                                            .renderingMode(.template)
+////                                                            .resizable()
+////                                                            .frame(width: 10,height:12)
+////                                                            .scaledToFit()
+////                                                            .foregroundStyle(Color(.secondary))
+////                                                            .padding(3)
+////                                                        
+////                                                        ( Text("doc_".localized + " / ".localized) + Text(item.doctorName ?? "Doctor Name"))
+////                                                            .font(.semiBold(size: 12))
+////                                                            .frame(maxWidth: .infinity,alignment:.leading)
+////                                                        
+////                                                        Button(action: {
+//////                                                            selectAction?(item)
+////                                                            buttonAction?(item)
+////                                                            //                                                            if item.canRenew ?? false{
+////                                                            //
+////                                                            //                                                            }else if item.canCancel ?? false{
+////                                                            //
+////                                                            //                                                            }
+////                                                            
+////                                                        },label:{
+////                                                            HStack(spacing:3){
+////                                                                Image(item.canRenew ?? false ? "newreschedual" : "cancelsubscription")
+////                                                                    .resizable()
+////                                                                    .frame(width: 10, height: 8.5)
+////                                                                Text(item.canRenew ?? false ? "renew_subscription".localized: "cancel_subscription".localized)
+////                                                                    .underline()
+////                                                            }
+////                                                            .foregroundStyle(Color.white)
+////                                                            .font(.regular(size: 10))
+////                                                            
+////                                                        })
+////                                                        .buttonStyle(.plain)
+//                                                        
+//                                                    }
+//                                                    .font(.regular(size: 10))
+//                                                    .foregroundStyle(Color.white)
+//                                                    //                                            .frame(maxWidth: .infinity,alignment:.leading)
+//                                                }
                                                 
                                             }
                                             .padding(.horizontal,8)

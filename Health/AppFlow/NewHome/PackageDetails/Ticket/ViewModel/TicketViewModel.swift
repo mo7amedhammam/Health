@@ -18,7 +18,8 @@ class TicketViewModel:ObservableObject {
     
     var doctorId:Int                      = 0
     @Published var newDate                = Date()
-    
+    @Published var couponeCode                = ""
+
     // Published properties
     @Published var ticketData: TicketM? = .init()
     @Published var availableDays: [AvailableDayM]?

@@ -193,13 +193,39 @@
 
 //MARK: --- packages Details ---
 "sessions" = "sessions";
+"sessions_Duration" = "sessions Duration";
 "available_doc" = "Available Doctor";
+"Schedualling_" = "Select First Session Date";
+"schedualling_Hint" = "select first session and doctor will select remainig sessions";
+"Continue_" = "Continue";
+
+//MARK: --- ticket ---
+"ticket_confirm_title" = "ticket confirm title";
+"confirm_Package_data" = "confirm Package data";
+"first_session" = "first_session";
+"sessions_selection_hint" = "*Doctor Will select remaining sessions";
+"confirm_Doctor_data" = "confirm Doctor data";
+"Add_Copon" = "Add Copon";
+"enter_Copon_number" = "enter Copon cumber";
+"Payment_shortly" = "Payment shortly";
+"price_" = "price";
+"EGP_" = "EGP";
+"la_Discount" = "Discount";
+"Final_price_" = "Final_price";
 
 //MARK: --- subsriptions ---
 "subscriped_title" = "my subscriptions";
 "subscriped_packages" = "subscriped packages";
 "subscriped_no_packages" = "no subscriped packages for now";
 "subscription_nextSessions" = "Next Sessions";
+"subscription_Date" = "Subscription Date";
+"last_session_Date" = "Last Session Date";
+"Active_" = "Active";
+"remain_" = "remain";
+"from_" = "from";
+"doc_" = "doc";
+"renew_subscription" = "Renew Subscription";
+"cancel_subscription" = "Cancel Subscription";
 
 //MARK: --- Package Files ---
 "Watch_" = "Watch";
@@ -304,3 +330,32 @@
 //MARK:  -- loginsheet --
 "welcom_title_elnada" = "Welcome to my health with dew!";
 "welcom_subtitle_elnada" = "Consultations with nutrition experts to help you achieve your goals.";
+
+//MARK: --- reschedual --
+"ReSchedualling_" = "ReSchedualling";
+
+//MARK:  --- reminder ---
+"reminder_title" = "Medication Reminder";
+"add_new_reminder" = "add new reminder";
+"no_reminders" = "no reminders found";
+"your_reminders" = "your reminders";
+"rem_start_date" = "start date";
+"rem_start_time" = "start time";
+"red_drug_every" = "drug every";
+"rem_drug_duration" = "rem_drug_duration";
+"hours_" = "hours";
+"days_" = "days";
+"rem_end_date" = "end date";
+"drug_active" = "active";
+"drug_expired" = "expired";
+"add_medication_sheet_tittle" = "add new reminder";
+"add_medication_name_itle" = "medication name";
+"add_medication_name_placeholder" = "enter medication name";
+"add_medication_start_date_title" = "start date";
+"add_medication_start_date_placeholder" = "select starting date";
+"add_medication_start_time_title" = "start time";
+"add_medication_start_time_placeholder" = "select starting time";
+"add_medication_frequency_title" = "dose every";
+"add_medication_frequency_placeholder" = "enter medication times";
+"add_duration_title" = "number of days";
+"add_duration_placeholder" = "enter medication days";

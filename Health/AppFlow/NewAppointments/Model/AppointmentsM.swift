@@ -16,24 +16,24 @@ struct AppointmentsM: Codable {
 
 // MARK: - Item
 struct AppointmentsItemM: Codable, Identifiable,Hashable {
-    var id: Int?
+    var id,customerPackageId: Int?
     var doctorName, sessionDate, timeFrom, packageName: String?
     var categoryName: String?
     var mainCategoryID: Int?
     var mainCategoryName: String?
     var categoryID: Int?
     var sessionMethod: String?
-    var packageID: Int?
-    var dayName: String?
+    var packageID,appCountryPackageId: Int?
+    var dayName,customerName: String?
 
     enum CodingKeys: String, CodingKey {
-        case id, doctorName, sessionDate, timeFrom, packageName, categoryName
+        case id,customerPackageId, doctorName, sessionDate, timeFrom, packageName, categoryName
         case mainCategoryID = "mainCategoryId"
         case mainCategoryName
         case categoryID = "categoryId"
         case sessionMethod
-        case packageID = "packageId"
-        case dayName
+        case packageID = "packageId",appCountryPackageId
+        case dayName,customerName
     }
     
     var formattedDate: String {

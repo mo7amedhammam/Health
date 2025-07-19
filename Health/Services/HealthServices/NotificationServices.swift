@@ -59,3 +59,49 @@ extension NotificationServices: TargetType {
     }
 
 }
+
+enum NewNotificationServices {
+    case GetNotification(parameters : [String:Any])
+    case CreateNotification (parameters : [String:Any])
+    case GetDrug
+}
+
+
+extension NewNotificationServices: TargetType1 {
+    
+    var path: String {
+        switch self {
+        case .GetNotification :
+            return EndPoints.GetNotification.rawValue
+        case .CreateNotification:
+            return EndPoints.CreateNotification.rawValue
+        case .GetDrug:
+            return EndPoints.GetDrug.rawValue
+        }
+    }
+    
+    var method: Alamofire.HTTPMethod {
+        switch self {
+        case .GetNotification :
+            return .post
+        case .CreateNotification:
+            return .post
+        case .GetDrug:
+            return .get
+        }
+    }
+    
+    var parameters: [String:Any]? {
+        switch self {
+        case .GetNotification(parameters: let parameter)
+            ,.CreateNotification(parameters: let parameter)
+            :
+            return parameter
+
+        case .GetDrug:
+            return nil
+        }
+    }
+    
+
+}

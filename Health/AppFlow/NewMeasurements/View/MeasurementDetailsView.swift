@@ -13,7 +13,7 @@ struct MeasurementDetailsView: View {
     @StateObject var viewModel = MyMeasurementsDetaislViewModel.shared
 //    @StateObject var router = NavigationRouter()
 
-    let stat: ModelMyMeasurementsStats
+    var stat: MyMeasurementsStatsM
   
     var body: some View {
         VStack(spacing: 16) {
@@ -32,7 +32,7 @@ struct MeasurementDetailsView: View {
                 Spacer()
                 
                 HStack(spacing: 0){
-                    Text(" \(stat.title ?? "") ")
+                    Text(" \(viewModel.currentStats?.title ?? "") ")
                     Text("mesurement_".localized)
                 }
                     .font(.bold(size: 20))
@@ -72,13 +72,13 @@ struct MeasurementDetailsView: View {
                 }
                 .padding(.horizontal)
                 
-                if stat.measurementsCount ?? 0 > 0 {
+                if viewModel.currentStats?.measurementsCount ?? 0 > 0 {
                     VStack(spacing: 12) {
                         HStack{
                             Image(.newmegicon)
                             
                             // Measurement Count
-                            ( Text("mesurement_recorded".localized) + Text(" \(stat.measurementsCount ?? 0) ")                        .foregroundColor(Color(.secondary)) + Text("mesurement_JusMesurment".localized))
+                            ( Text("mesurement_recorded".localized) + Text(" \(viewModel.currentStats?.measurementsCount ?? 0) ")                        .foregroundColor(Color(.secondary)) + Text("mesurement_JusMesurment".localized))
                                 .font(.bold(size: 18))
                                 .foregroundColor(.mainBlue)
                                 .frame(maxWidth: .infinity,alignment: .leading)
@@ -273,7 +273,7 @@ struct MeasurementDetailsView: View {
 }
 
 #Preview {
-    MeasurementDetailsView(stat: ModelMyMeasurementsStats(
+    MeasurementDetailsView(stat: MyMeasurementsStatsM(
         medicalMeasurementID: 1,
         image: "bloodPressure",
         title: "الضغط",
@@ -451,6 +451,7 @@ struct NewMeasurementSheetView: View {
 
 struct CustomDatePickerField<Content: View>: View {
     @Binding var selectedDate: Date?
+    var showTime: Bool = false
     let content: () -> Content
 
     @State private var showingDatePickerSheet = false
@@ -477,10 +478,11 @@ struct CustomDatePickerField<Content: View>: View {
                         get: { selectedDate ?? Date() },
                         set: { selectedDate = $0 }
                     ),
-                    displayedComponents: .date
+                    displayedComponents: showTime ? [.hourAndMinute] : [.date]
                 )
                 .datePickerStyle(.wheel)
                 .labelsHidden()
+                .padding()
             }
         }
     }

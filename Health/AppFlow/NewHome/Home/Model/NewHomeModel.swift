@@ -55,7 +55,7 @@ struct FeaturedPackageItemM: Codable,Hashable {
     var categoryName,mainCategoryName: String?
     var sessionCount: Int?
     var isWishlist: Bool?
-    var priceBeforeDiscount, discount, priceAfterDiscount: Int?
+    var priceBeforeDiscount, discount, priceAfterDiscount: Double?
     var homeImage, imagePath: String?
     var doctorCount: Int?
     var appCountryPackageId: Int?

@@ -133,6 +133,7 @@ case GetCustomerPackageInstructionByCPId = "Subscription/GetCustomerPackageInstr
 case CreateDoctorMessage                 = "CustomerPackageMessage/CreateDoctorMessage"
 case CreateCustomerMessage               = "CustomerPackageMessage/CreateCustomerMessage"
 case GetMessage                          = "CustomerPackageMessage/GetMessage"
+case CustomerPackageCancel               = "CustomerPackage/CustomerPackageCancel"
 }
 
 enum AppointmentEndPoints : String{

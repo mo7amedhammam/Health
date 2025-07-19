@@ -73,7 +73,7 @@ extension PackageMoreDetailsViewModel{
     func getAvailableDays() async {
         isLoading = true
         defer { isLoading = false }
-        guard let doctorId = packageDetails?.doctorData?.doctorID,let appCountryId = packageDetails?.packageData?.appCountryPackageId  else {
+        guard let doctorId = packageDetails?.doctorData?.doctorID,let appCountryId = Helper.shared.AppCountryId()  else {
 //            // Handle missings
 //            self.errorMessage = "check inputs"
 //            //            throw NetworkError.unknown(code: 0, error: "check inputs")

@@ -6,7 +6,6 @@
 //
 
 import Foundation
-
 import Combine
 
 class MyMeasurementsViewModel: ObservableObject {
@@ -17,7 +16,7 @@ class MyMeasurementsViewModel: ObservableObject {
     // Published properties to bind with SwiftUI
     @Published var isLoading:Bool? = false
     @Published var errorMessage: String?
-    @Published var ArrStats: [ModelMyMeasurementsStats]?
+    @Published var ArrStats: [MyMeasurementsStatsM]?
     @Published var ArrMeasurement: ModelMedicalMeasurements?
     @Published var ArrNormalRange: ModelMeasurementsNormalRange?
     
@@ -38,7 +37,7 @@ class MyMeasurementsViewModel: ObservableObject {
             self.errorMessage = nil // Clear previous errors
             let response = try await networkService.request(
                 target,
-                responseType: [ModelMyMeasurementsStats].self
+                responseType: [MyMeasurementsStatsM].self
             )
             self.ArrStats = response
         } catch {

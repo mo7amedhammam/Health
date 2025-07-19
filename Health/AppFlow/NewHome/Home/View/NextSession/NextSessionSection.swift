@@ -9,7 +9,9 @@ import SwiftUI
 
 struct NextSessionSection: View {
     var upcomingSession: UpcomingSessionM?
-    
+    var detailsAction: (() -> Void)?
+    var rescheduleAction: (() -> Void)?
+
     var body: some View {
         VStack {
             SectionHeader(image: Image(.newnxtsessionicon), title: "home_nextSession") {}
@@ -26,7 +28,7 @@ struct NextSessionSection: View {
                         NextSessionDoctorView(session: upcomingSession)
                         NextSessionCountdownOrJoinView(session: upcomingSession)
                     }
-                    NextSessionActionsView()
+                    NextSessionActionsView(detailsAction: detailsAction,rescheduleAction: rescheduleAction)
                 }
                 .padding()
             }
@@ -165,10 +167,13 @@ struct NextSessionCountdownOrJoinView: View {
     }
 }
 struct NextSessionActionsView: View {
+    var detailsAction: (() -> Void)?
+    var rescheduleAction: (() -> Void)?
     var body: some View {
         HStack(alignment: .bottom) {
             Button(action: {
                 // More details action
+                detailsAction?()
             }) {
                 HStack {
                     Image(.newmoreicon)
@@ -190,6 +195,7 @@ struct NextSessionActionsView: View {
             
             Button(action: {
                 // Reschedule action
+                rescheduleAction?()
             }) {
                 HStack {
                     Image(.newreschedual)

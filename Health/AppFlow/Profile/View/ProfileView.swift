@@ -88,8 +88,9 @@ struct ProfileViewUI: View {
                                     router.push(SubcripedPackagesView(hasbackBtn: true).environmentObject(viewModel) )
                                 }
                                 ProfileRow(title: "profile_drugnotifications".localized, icon: "profile_notification"){
-                                    let VC: UIViewController = initiateViewController(storyboardName: .main, viewControllerIdentifier: NotificationVC.self)!
-                                    pushUIKitVC(VC)
+                                    router.push( MedicationReminderView())
+//                                    let VC: UIViewController = initiateViewController(storyboardName: .main, viewControllerIdentifier: NotificationVC.self)!
+//                                    pushUIKitVC(VC)
                                 }
                                 ProfileRow(title: "profile_tips".localized, icon: "profile_tips"){
 //                                    let VC: UIViewController = initiateViewController(storyboardName: .main, viewControllerIdentifier: TipsCategoriesVC1.self)!

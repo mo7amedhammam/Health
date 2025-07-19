@@ -11,7 +11,7 @@ import Alamofire
 
 enum SubscriptionServices{
     case GetCustomerPackageList(parameters : [String:Any])
-//    case GetCustomerPackageById(parameters : [String:Any])
+    case GetCustomerPackageById(parameters : [String:Any])
 //    case GetDoctorById(parameters : [String:Any])
 //    case GetCustomerUpComingSession
     case GetCustomerPackageSessionList(parameters : [String:Any])
@@ -20,6 +20,9 @@ enum SubscriptionServices{
     case CreateDoctorMessage(parameters : [String:Any])
     case CreateCustomerMessage(parameters : [MultipartFormDataPart])
     case GetMessage(parameters : [String:Any])
+    
+    case CancelSubscription(parameters : [String:Any])
+
 }
 
 extension SubscriptionServices : TargetType1 {
@@ -32,8 +35,8 @@ extension SubscriptionServices : TargetType1 {
             
         case .GetCustomerPackageList:
             return SubscriptionEndPoints.GetCustomerPackageList.rawValue
-//        case .GetCustomerPackageById:
-//            return SubscriptionEndPoints.GetCustomerPackageById.rawValue
+        case .GetCustomerPackageById:
+            return SubscriptionEndPoints.GetCustomerPackageById.rawValue
 //        case .GetDoctorById:
 //            return SubscriptionEndPoints.GetDoctorById.rawValue
 //        case .GetCustomerUpComingSession:
@@ -50,6 +53,10 @@ extension SubscriptionServices : TargetType1 {
             return SubscriptionEndPoints.CreateCustomerMessage.rawValue
         case .GetMessage:
             return SubscriptionEndPoints.GetMessage.rawValue
+            
+        case .CancelSubscription:
+            return SubscriptionEndPoints.CustomerPackageCancel.rawValue
+
         }
     }
     
@@ -58,8 +65,10 @@ extension SubscriptionServices : TargetType1 {
         case
                 .GetCustomerPackageList,
                 .GetCustomerPackageSessionList,
+                .GetCustomerPackageById,
                 .CreateDoctorMessage,
-                .CreateCustomerMessage
+                .CreateCustomerMessage,
+                .CancelSubscription
             :
             return .post
             
@@ -77,9 +86,11 @@ extension SubscriptionServices : TargetType1 {
         case
                 .GetCustomerPackageList(parameters: let parameter),
                 .GetCustomerPackageSessionList(parameters: let parameter),
+                .GetCustomerPackageById(parameters: let parameter),
                 .GetCustomerPackageInstructionByCPId(parameters: let parameter),
                 .CreateDoctorMessage(parameters: let parameter),
-                .GetMessage(parameters: let parameter)
+                .GetMessage(parameters: let parameter),
+                .CancelSubscription(parameters: let parameter)
             :
 //            return .parameterRequest(Parameters: parameters, Encoding: encoding)
             return  parameter

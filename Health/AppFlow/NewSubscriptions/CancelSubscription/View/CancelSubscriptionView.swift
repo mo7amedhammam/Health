@@ -9,8 +9,12 @@ import SwiftUI
 
 struct CancelSubscriptionView: View {
 //    @Environment(\.dismiss) private var dismiss
+    @StateObject var viewModel: CancelSubscriptionViewModel = .init()
     @Binding var isPresent: Bool
+    var customerPackageId:Int
     @State var reason: String = ""
+    var onCancelSuccess: (() -> Void)? = nil // ✅ new callback
+
     var body: some View {
         ZStack{
             VStack{
@@ -60,50 +64,35 @@ struct CancelSubscriptionView: View {
 
                     CustomButton(title: "confirm_",backgroundcolor: Color(.mainBlue),backgroundView:nil){
                         Task{
-//                            await viewModel.createMeasurement()
+                            if reason.count > 0 {
+                                viewModel.reason = reason
+                            }
+                            await viewModel.cancelSubscription()
                         }
                     }
-                    
-//                    Button(action: {
-//                        dismiss()
-//                    }, label: {
-//                        Text("cancel_".localized)
-//                            .font(.bold(size: 18))
-//                    })
-//                    .padding()
-//                    .frame(maxWidth: .infinity)
-//                    .frame(height:50)
-//                    .foregroundStyle(.white)
-//                    .background{Color(.secondary)}
-//                    .cardStyle(cornerRadius: 3)
-//                    .frame(maxWidth: .infinity)
-                    
-//                    Button(action: {
-//                        
-//                    }, label: {
-//                        Text("Confirm".localized)
-//                            .font(.bold(size: 18))
-//                    })
-//                    .padding()
-//                    .frame(maxWidth: .infinity)
-//                    .frame(height:50)
-//                    .foregroundStyle(.white)
-//                    .background{Color(.main)}
-//                    .cardStyle(cornerRadius: 3)
-
                 }
             }
             .padding()
             .cardStyle(cornerRadius: 3)
             .padding(30)
-
         }
+        .localizeView()
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background{Color.black.opacity(0.4)}
         .ignoresSafeArea()
+        .onAppear(){
+            Task{
+                viewModel.customerPackageId = customerPackageId
+            }
+        }
+        .onChange(of: viewModel.isCancelled){newval in
+            guard newval == true else{return}
+            isPresent = false
+            onCancelSuccess?() // ✅ trigger callback
+        }
     }
 }
 
 #Preview {
-    CancelSubscriptionView(isPresent: .constant(false))
+    CancelSubscriptionView(isPresent: .constant(false), customerPackageId: 0)
 }

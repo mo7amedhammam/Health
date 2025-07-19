@@ -723,7 +723,8 @@ struct SignUpView: View {
 //        .alert(item: $viewModel.errorMessage) { msg in
 //            Alert(title: Text("_خطأ".localized), message: Text(msg.localized), dismissButton: .default(Text("ok".localized)))
 //        }
-        
+        NavigationLink( "", destination: destination, isActive: $isactive)
+
     }
     
 }

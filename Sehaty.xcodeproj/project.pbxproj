@@ -53,6 +53,13 @@
 		902B88282E21DF54009D5234 /* TipDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 902B88272E21DF54009D5234 /* TipDetailsViewModel.swift */; };
 		902B882A2E227AB1009D5234 /* TipsCategoriesListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 902B88292E227AB1009D5234 /* TipsCategoriesListView.swift */; };
 		902B882D2E22B07E009D5234 /* LoginSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 902B882C2E22B07E009D5234 /* LoginSheetView.swift */; };
+		902B882F2E23D1BB009D5234 /* CancelSubscriptionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 902B882E2E23D1BB009D5234 /* CancelSubscriptionViewModel.swift */; };
+		902B88322E23E189009D5234 /* ReSchedualView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 902B88312E23E189009D5234 /* ReSchedualView.swift */; };
+		902B88352E2AA712009D5234 /* MedicationReminderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 902B88342E2AA712009D5234 /* MedicationReminderView.swift */; };
+		902B883A2E2AA93C009D5234 /* MedicationReminderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 902B88392E2AA927009D5234 /* MedicationReminderViewModel.swift */; };
+		902B883C2E2AA988009D5234 /* MedicationReminderModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 902B883B2E2AA988009D5234 /* MedicationReminderModel.swift */; };
+		902B883E2E2AA9AE009D5234 /* MyMeasurementsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 902B883D2E2AA9AE009D5234 /* MyMeasurementsModel.swift */; };
+		902B88402E2AAAF6009D5234 /* TipsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 902B883F2E2AAAF6009D5234 /* TipsModel.swift */; };
 		903667062D82E0A40040AE29 /* LocalizationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 903667052D82E08E0040AE29 /* LocalizationManager.swift */; };
 		903667082D82E1410040AE29 /* AppKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 903667072D82E1370040AE29 /* AppKeys.swift */; };
 		9047483F2DCF63530016C3DC /* PackagesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9047483E2DCF63530016C3DC /* PackagesView.swift */; };
@@ -70,6 +77,7 @@
 		904748632DD9CF230016C3DC /* PackageMoreDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 904748622DD9CF230016C3DC /* PackageMoreDetailsViewModel.swift */; };
 		9057A6132DA4232B0090C34A /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9057A6122DA4232B0090C34A /* CustomTextField.swift */; };
 		9057A61C2DA430470090C34A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9057A61A2DA430470090C34A /* Localizable.strings */; };
+		9063C5ED2E2B093F00B92E0D /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9063C5EC2E2B093F00B92E0D /* LocationManager.swift */; };
 		90842F382DA16A3700B02D02 /* SelectLanguageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90842F372DA16A2200B02D02 /* SelectLanguageView.swift */; };
 		90842F3A2DA1748800B02D02 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90842F392DA1748800B02D02 /* CustomButton.swift */; };
 		90842F3C2DA17A7300B02D02 /* CustomNavBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90842F3B2DA17A7300B02D02 /* CustomNavBar.swift */; };
@@ -361,6 +369,13 @@
 		902B88272E21DF54009D5234 /* TipDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TipDetailsViewModel.swift; sourceTree = "<group>"; };
 		902B88292E227AB1009D5234 /* TipsCategoriesListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TipsCategoriesListView.swift; sourceTree = "<group>"; };
 		902B882C2E22B07E009D5234 /* LoginSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginSheetView.swift; sourceTree = "<group>"; };
+		902B882E2E23D1BB009D5234 /* CancelSubscriptionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CancelSubscriptionViewModel.swift; sourceTree = "<group>"; };
+		902B88312E23E189009D5234 /* ReSchedualView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReSchedualView.swift; sourceTree = "<group>"; };
+		902B88342E2AA712009D5234 /* MedicationReminderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedicationReminderView.swift; sourceTree = "<group>"; };
+		902B88392E2AA927009D5234 /* MedicationReminderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedicationReminderViewModel.swift; sourceTree = "<group>"; };
+		902B883B2E2AA988009D5234 /* MedicationReminderModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedicationReminderModel.swift; sourceTree = "<group>"; };
+		902B883D2E2AA9AE009D5234 /* MyMeasurementsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyMeasurementsModel.swift; sourceTree = "<group>"; };
+		902B883F2E2AAAF6009D5234 /* TipsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TipsModel.swift; sourceTree = "<group>"; };
 		903667052D82E08E0040AE29 /* LocalizationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationManager.swift; sourceTree = "<group>"; };
 		903667072D82E1370040AE29 /* AppKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppKeys.swift; sourceTree = "<group>"; };
 		9047483E2DCF63530016C3DC /* PackagesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackagesView.swift; sourceTree = "<group>"; };
@@ -379,6 +394,7 @@
 		9057A6122DA4232B0090C34A /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		9057A61B2DA430470090C34A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		9057A61D2DA430E90090C34A /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Localizable.strings; sourceTree = "<group>"; };
+		9063C5EC2E2B093F00B92E0D /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		90842F372DA16A2200B02D02 /* SelectLanguageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectLanguageView.swift; sourceTree = "<group>"; };
 		90842F392DA1748800B02D02 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
 		90842F3B2DA17A7300B02D02 /* CustomNavBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavBar.swift; sourceTree = "<group>"; };
@@ -914,6 +930,7 @@
 		902B880B2E1D57A1009D5234 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				902B883D2E2AA9AE009D5234 /* MyMeasurementsModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -959,6 +976,7 @@
 		902B881C2E1FED4E009D5234 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				902B883F2E2AAAF6009D5234 /* TipsModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -969,6 +987,48 @@
 				902B882C2E22B07E009D5234 /* LoginSheetView.swift */,
 			);
 			path = LoginSheet;
+			sourceTree = "<group>";
+		};
+		902B88302E23E15F009D5234 /* ReSchedual */ = {
+			isa = PBXGroup;
+			children = (
+				902B88312E23E189009D5234 /* ReSchedualView.swift */,
+			);
+			path = ReSchedual;
+			sourceTree = "<group>";
+		};
+		902B88332E2AA6F6009D5234 /* NewMedicationReminder */ = {
+			isa = PBXGroup;
+			children = (
+				902B88382E2AA737009D5234 /* Model */,
+				902B88372E2AA730009D5234 /* ViewModel */,
+				902B88362E2AA72A009D5234 /* View */,
+			);
+			path = NewMedicationReminder;
+			sourceTree = "<group>";
+		};
+		902B88362E2AA72A009D5234 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				902B88342E2AA712009D5234 /* MedicationReminderView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		902B88372E2AA730009D5234 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				902B88392E2AA927009D5234 /* MedicationReminderViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		902B88382E2AA737009D5234 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				902B883B2E2AA988009D5234 /* MedicationReminderModel.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		903667042D82E0700040AE29 /* Localization */ = {
@@ -984,6 +1044,7 @@
 		904748312DCCAF550016C3DC /* AppFlow */ = {
 			isa = PBXGroup;
 			children = (
+				902B88332E2AA6F6009D5234 /* NewMedicationReminder */,
 				902B88192E1FED3B009D5234 /* NewTipsCategories */,
 				902B88082E1D5781009D5234 /* NewMeasurements */,
 				902B87FD2E1A9362009D5234 /* EditProfile */,
@@ -1179,6 +1240,14 @@
 			path = NewServices;
 			sourceTree = "<group>";
 		};
+		9063C5EB2E2B093600B92E0D /* Location */ = {
+			isa = PBXGroup;
+			children = (
+				9063C5EC2E2B093F00B92E0D /* LocationManager.swift */,
+			);
+			path = Location;
+			sourceTree = "<group>";
+		};
 		90842F352DA16A0600B02D02 /* SelectLanguage */ = {
 			isa = PBXGroup;
 			children = (
@@ -1289,6 +1358,7 @@
 		90FDD31B2DE4A4BB00C3BABB /* NewSubscriptions */ = {
 			isa = PBXGroup;
 			children = (
+				902B88302E23E15F009D5234 /* ReSchedual */,
 				90FDD36F2DF9F42E00C3BABB /* WishList */,
 				90FDD35B2DF74D0700C3BABB /* Chats */,
 				90FDD34C2DEC45EC00C3BABB /* CancelSubscription */,
@@ -1422,6 +1492,7 @@
 		90FDD34E2DEC460900C3BABB /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				902B882E2E23D1BB009D5234 /* CancelSubscriptionViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -1988,6 +2059,7 @@
 		BBBDFFF12A730F8400F066DF /* File Support */ = {
 			isa = PBXGroup;
 			children = (
+				9063C5EB2E2B093600B92E0D /* Location */,
 				902B88122E1DA567009D5234 /* SwiftuiNavigation */,
 				90FDD3522DEE179100C3BABB /* CustomSwiftuiViews */,
 				90FDD2FF2DDDF7E000C3BABB /* DatePicker */,
@@ -2796,6 +2868,7 @@
 				90842F382DA16A3700B02D02 /* SelectLanguageView.swift in Sources */,
 				BB218A582ADF1CA90061FF81 /* ViewNoData.swift in Sources */,
 				C893A9B72AB5BE450054F171 /* TipsCategoryServices.swift in Sources */,
+				902B88402E2AAAF6009D5234 /* TipsModel.swift in Sources */,
 				BB1B2FFE2A7EA379001677FD /* INBodyDetailsVC.swift in Sources */,
 				90FDD3562DEE17BB00C3BABB /* AlertView.swift in Sources */,
 				BB1AEAA32A955B710078683A /* NotificationVC.swift in Sources */,
@@ -2820,6 +2893,7 @@
 				BB518CE22A9A122400242FAD /* TipsCategoriesCVCell0.swift in Sources */,
 				90842F3C2DA17A7300B02D02 /* CustomNavBar.swift in Sources */,
 				902B88222E200E66009D5234 /* TipsByCategoryView.swift in Sources */,
+				902B882F2E23D1BB009D5234 /* CancelSubscriptionViewModel.swift in Sources */,
 				902B87FC2E1A7BA8009D5234 /* BiometricLoginButton.swift in Sources */,
 				BBA1DA182AB11E5C0042713A /* NotificationVM.swift in Sources */,
 				BBC3C3ED2ACC912400805524 /* HomeCVCell3.swift in Sources */,
@@ -2834,10 +2908,12 @@
 				C824CED62AD418AA0051E491 /* AlmostFinishedPrescriptionM.swift in Sources */,
 				C8346E5A2AA5EEA800C3C3EE /* LoginM.swift in Sources */,
 				C88995922AAA02BE002AD812 /* ChangePasswordVM.swift in Sources */,
+				902B88322E23E189009D5234 /* ReSchedualView.swift in Sources */,
 				BB518CD52A9A113900242FAD /* TipsCategoriesVC2.swift in Sources */,
 				C82FBA192AB0ACD70029F151 /* PDFPickerHelper.swift in Sources */,
 				902B88142E1DA579009D5234 /* NavigationRouter.swift in Sources */,
 				BBBD000F2A73101700F066DF /* RoundedImage.swift in Sources */,
+				902B883A2E2AA93C009D5234 /* MedicationReminderViewModel.swift in Sources */,
 				904748502DD34D2D0016C3DC /* NewHomeModel.swift in Sources */,
 				C8C7339C2AA6757800185698 /* SignUpVM.swift in Sources */,
 				902B88162E1ED55E009D5234 /* MyMeasurementsDetaislViewModel.swift in Sources */,
@@ -2872,7 +2948,9 @@
 				BB518CEA2A9A125900242FAD /* TipsCategories2CVCell.swift in Sources */,
 				BB14DAE72A7B036400389B96 /* ProfileVC.swift in Sources */,
 				BB1B2FF42A7E9B44001677FD /* INBodyVC.swift in Sources */,
+				902B88352E2AA712009D5234 /* MedicationReminderView.swift in Sources */,
 				BB5116D22A829B4900CF5D11 /* MeasurementsCVCell.swift in Sources */,
+				9063C5ED2E2B093F00B92E0D /* LocationManager.swift in Sources */,
 				C80DA9ED2AA4F65300F10808 /* Navigations.swift in Sources */,
 				90D6287B2DAE86FE008D303E /* NewTabView.swift in Sources */,
 				90FDD3542DEE179D00C3BABB /* HudView2.swift in Sources */,
@@ -2935,6 +3013,7 @@
 				C8918D9C2ACD61F20070A1D3 /* ExUiButtons.swift in Sources */,
 				902B880D2E1D57B7009D5234 /* MyMeasurementsView.swift in Sources */,
 				902B88072E1AA401009D5234 /* ProfileServices.swift in Sources */,
+				902B883E2E2AA9AE009D5234 /* MyMeasurementsModel.swift in Sources */,
 				BBBD00112A73101700F066DF /* RecieveImageVC.swift in Sources */,
 				BBBD00122A73101700F066DF /* UITableView+Extensions.swift in Sources */,
 				C82DCAB22AACB42F00322B55 /* MedicationScheduleDetailsVM.swift in Sources */,
@@ -2987,6 +3066,7 @@
 				BBB0636A2B0E8D7A00708CF4 /* MeasurementsDetailsFiltterVC.swift in Sources */,
 				C80DA9E42AA4D29500F10808 /* EndPoints.swift in Sources */,
 				902B87B22E05BB65009D5234 /* LookupsModel.swift in Sources */,
+				902B883C2E2AA988009D5234 /* MedicationReminderModel.swift in Sources */,
 				90FDD33D2DE6751200C3BABB /* SubcripedPackageDetailsView.swift in Sources */,
 				BB5116CD2A829AC900CF5D11 /* MeasurementsDetailsTVCell.swift in Sources */,
 				BB5A266E2B2E1E330005C9B8 /* HelpTVCell.swift in Sources */,
@@ -3203,7 +3283,7 @@
 				CODE_SIGN_ENTITLEMENTS = Sehaty.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2.1.5;
+				CURRENT_PROJECT_VERSION = 3.0.1;
 				DEVELOPMENT_TEAM = M7AX57X8LV;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Health/Info.plist;
@@ -3224,7 +3304,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.1.2;
+				MARKETING_VERSION = 3.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.AlNadaPharmacies.Health;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -3247,7 +3327,7 @@
 				CODE_SIGN_ENTITLEMENTS = Sehaty.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2.1.5;
+				CURRENT_PROJECT_VERSION = 3.0.1;
 				DEVELOPMENT_TEAM = M7AX57X8LV;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Health/Info.plist;
@@ -3268,7 +3348,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.1.2;
+				MARKETING_VERSION = 3.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.AlNadaPharmacies.Health;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

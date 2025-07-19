@@ -32,9 +32,9 @@ class EditProfileViewModel : ObservableObject {
     // Init with DI
     init(networkService: AsyncAwaitNetworkServiceProtocol = AsyncAwaitNetworkService.shared) {
         self.networkService = networkService
-        Task{
-            await getProfile()
-        }
+//        Task{
+//            await getProfile()
+//        }
     }
     func cleanup() {
 //        imageURL = nil

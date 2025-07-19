@@ -84,13 +84,13 @@ extension NewHomeViewModel{
 
 //        isLoading = true
 //        defer { isLoading = false }
-        guard let maxResultCount = maxResultCount, let skipCount = skipCount else {
+        guard let maxResultCount = maxResultCount, let skipCount = skipCount,let appCountryId = Helper.shared.AppCountryId() else {
             // Handle missings
             self.errorMessage = "check inputs"
             //            throw NetworkError.unknown(code: 0, error: "check inputs")
             return
         }
-        let parametersarr : [String : Any] =  ["maxResultCount" : maxResultCount ,"skipCount" : skipCount,"appCountryId":1]
+        let parametersarr : [String : Any] =  ["maxResultCount" : maxResultCount ,"skipCount" : skipCount,"appCountryId":appCountryId]
         
         let target = HomeServices.GetAllHomeCategory(parameters: parametersarr)
         do {

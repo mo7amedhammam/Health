@@ -9,16 +9,22 @@ import SwiftUI
 
 struct SubcripedPackageDetailsView: View {
     @StateObject var viewmodel = SubcripedPackageDetailsViewModel.shared
-    var package: SubcripedPackageItemM
-    
+    @State var package: SubcripedPackageItemM?
+    var CustomerPackageId: Int?
+
     @State var destination = AnyView(EmptyView())
     @State var isactive: Bool = false
     func pushTo(destination: any View) {
         self.destination = AnyView(destination)
         self.isactive = true
     }
-    init(package: SubcripedPackageItemM) {
-        self.package = package
+    init(package: SubcripedPackageItemM?,CustomerPackageId:Int?) {
+        if let package = package{
+            self.package = package
+        }
+        if let CustomerPackageId = CustomerPackageId{
+            self.CustomerPackageId = CustomerPackageId
+        }
    
     }
     
@@ -56,18 +62,18 @@ struct SubcripedPackageDetailsView: View {
                 ZStack (alignment:.top){
                     HStack{
                         VStack{
-                            Text(package.packageName ?? "pack_Name".localized)
+                            Text(package?.packageName ?? "pack_Name".localized)
                                 .font(.semiBold(size: 16))
                                 .foregroundStyle(Color.white)
                                 .frame(maxWidth: .infinity,alignment:.leading)
                             
                             HStack{
-                                Text(package.mainCategoryName ?? "main_category")
+                                Text(package?.mainCategoryName ?? "main_category")
                                 Circle()
                                     .fill(Color(.secondary))
                                     .frame(width: 5, height: 5)
                                 
-                                Text(package.categoryName ?? "sub_category")
+                                Text(package?.categoryName ?? "sub_category")
                                 
                             }
                             .font(.regular(size: 10))
@@ -79,9 +85,9 @@ struct SubcripedPackageDetailsView: View {
                             HStack(spacing:0){
                                 Text( "remain_".localized)
                                 
-                                let reamin = (package.sessionCount ?? 0) - (package.attendedSessionCount ?? 0)
+                                let reamin = (package?.sessionCount ?? 0) - (package?.attendedSessionCount ?? 0)
                                 
-                                (Text(" \(reamin) " + "from".localized + " \(package.sessionCount ?? 0) "))
+                                (Text(" \(reamin) " + "from".localized + " \(package?.sessionCount ?? 0) "))
                                     .font(.bold(size: 12))
                                 
                                 Text( "sessions_ar".localized )
@@ -126,19 +132,19 @@ struct SubcripedPackageDetailsView: View {
                         Circle()
                             .frame(width: 5, height: 5)
                         
-                        Text(package.status ?? "Active")
+                        Text(package?.status ?? "Active")
                     }
                     .font(.medium(size: 10))
                     .foregroundStyle(Color.white)
                     .frame(height:22)
                     .padding(.horizontal,10)
-                    .background{Color(package.canCancel ?? false ? .active:.notActive)}
+                    .background{Color(package?.canCancel ?? false ? .active:.notActive)}
                     .cardStyle( cornerRadius: 3)
                     .offset(y:-11)
                 }
             }
             .background{
-                KFImageLoader(url:URL(string:Constants.imagesURL + (package.packageImage?.validateSlashs() ?? "")),placeholder: Image("logo"), shouldRefetch: true)
+                KFImageLoader(url:URL(string:Constants.imagesURL + (package?.packageImage?.validateSlashs() ?? "")),placeholder: Image("logo"), shouldRefetch: true)
                     .frame( height: 238)
             }
             .frame(height: 238)
@@ -153,12 +159,12 @@ struct SubcripedPackageDetailsView: View {
                             selectedSection = button
                             switch button {
                             case .chats:
-                                guard let customerPackageID = package.customerPackageID else { return }
+                                guard let customerPackageID = package?.customerPackageID else { return }
                                 pushTo(destination: ChatsView(CustomerPackageId: customerPackageID) )
                             case .sessions:
                                 break
                             case .files:
-                                guard let customerPackageID = package.customerPackageID else { return }
+                                guard let customerPackageID = package?.customerPackageID else { return }
                                 pushTo(destination: PackageFilesView(CustomerPackageId: customerPackageID) )
                             }
                         }) {
@@ -174,7 +180,6 @@ struct SubcripedPackageDetailsView: View {
                                 Text(button.title)
                                     .font(.bold(size: 12))
                                     .foregroundStyle(selectedSection == button ? Color(.secondary):Color(.btnDisabledTxt))
-                                
                             }
                         }
                         
@@ -193,20 +198,20 @@ struct SubcripedPackageDetailsView: View {
                 ZStack{
                     VStack(spacing:8){
                         
-                        KFImageLoader(url:URL(string:Constants.imagesURL + (package.doctorImage?.validateSlashs() ?? "")),placeholder: Image("logo") , shouldRefetch: true)
+                        KFImageLoader(url:URL(string:Constants.imagesURL + (package?.doctorImage?.validateSlashs() ?? "")),placeholder: Image("logo") , shouldRefetch: true)
                             .frame(height: 160)
                             .frame(maxWidth:.infinity)
                             .cardStyle(cornerRadius: 3,shadowOpacity: 0.1)
                         //                            .padding(.v)
                         
                         HStack(alignment: .center,spacing: 5){
-                            (Text("doc_".localized + " / ".localized) + Text(package.doctorName ?? "Doctor name"))
+                            (Text("doc_".localized + " / ".localized) + Text(package?.doctorName ?? "Doctor name"))
                                 .font(.bold(size: 16))
                                 .frame(maxWidth: .infinity,alignment:.leading)
                                 .foregroundStyle(Color.white)
                             
                             HStack(spacing:2) {
-                                Text(package.doctorSpeciality ?? "speciality")
+                                Text(package?.doctorSpeciality ?? "speciality")
                                     .font(.medium(size: 10))
                                     .foregroundStyle(Color.white)
                                 
@@ -228,7 +233,7 @@ struct SubcripedPackageDetailsView: View {
                                 .scaledToFit()
                                 .padding(3)
                             
-                            Text(package.doctorNationality ?? "egyption")
+                            Text(package?.doctorNationality ?? "egyption")
                                 .font(.semiBold(size: 12))
                                 .foregroundStyle(Color.white)
                         }
@@ -271,14 +276,23 @@ struct SubcripedPackageDetailsView: View {
         .localizeView()
         .showHud(isShowing:  $viewmodel.isLoading)
         .errorAlert(isPresented: .constant(viewmodel.errorMessage != nil), message: viewmodel.errorMessage)
-
+        .onAppear{
+            Task{
+                if let CustomerPackageId = CustomerPackageId{
+                   await viewmodel.getSubscripedPackageDetails(CustomerPackageId: CustomerPackageId)
+                    if let package = viewmodel.subscripedPackage{
+                        self.package = package
+                    }
+                }
+            }
+        }
         NavigationLink( "", destination: destination, isActive: $isactive)
         
     }
 }
 
 #Preview {
-    SubcripedPackageDetailsView(package: .init())
+    SubcripedPackageDetailsView(package: .init(), CustomerPackageId: 0)
 }
 
 struct SubcripedNextSession: View {

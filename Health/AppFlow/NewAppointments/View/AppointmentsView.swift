@@ -14,7 +14,7 @@ struct AppointmentsView: View {
 
     @State var showFilter:Bool = false
     @State var showCancel: Bool = false
-
+    @State var idToCancel:Int?
     var body: some View {
         VStack(spacing:0){
             VStack(){
@@ -29,8 +29,10 @@ struct AppointmentsView: View {
                     }
                     
                     AppointmentsListView(appointments:viewModel.appointments?.items ,selectAction: {appointment in
-//                        router.push( SubcripedPackageDetailsView(package: appointment))
+                        
+                        router.push( SubcripedPackageDetailsView(package: nil, CustomerPackageId:appointment.customerPackageId ?? 0))
                                 },buttonAction:{item in
+                                    idToCancel = item.packageID
 //                                    if item.canRenew ?? false{
 //                                        // renew subscription
 //                                        guard let doctorPackageId = item.customerPackageID else { return }
@@ -91,7 +93,7 @@ struct AppointmentsView: View {
             LoginSheetView()
         }
         if showCancel{
-            CancelSubscriptionView(isPresent: $showCancel)
+            CancelSubscriptionView(isPresent: $showCancel, customerPackageId: idToCancel ?? 0)
                 .onDisappear(perform: {
                 showCancel = false
                 print("cancelled dismiss")

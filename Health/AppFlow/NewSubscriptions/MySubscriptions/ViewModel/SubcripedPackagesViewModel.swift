@@ -17,6 +17,7 @@ class SubcripedPackagesViewModel:ObservableObject {
     
     // Published properties
     @Published var subscripedPackages: SubcripedPackagesM?
+//    = SubcripedPackagesM(items: [SubcripedPackageItemM(customerPackageID: 2, status: "active", subscriptionDate: "", lastSessionDate: "", packageName: "nameeee", categoryName: "cateeee", mainCategoryName: "main cateee", doctorName: "doc doc", docotrID: "2", sessionCount: 4, attendedSessionCount: 2, packageImage: "", doctorSpeciality: "special", doctorNationality: "egegege", doctorImage: "", canCancel: true, canRenew: true )], totalCount: 1)
     
     @Published var isLoading:Bool? = false
     @Published var canLoadMore:Bool? = false
@@ -41,7 +42,7 @@ extension SubcripedPackagesViewModel{
 //            //            throw NetworkError.unknown(code: 0, error: "check inputs")
             return
         }
-        let parametersarr : [String : Any] =  ["maxResultCount":maxResultCount,"skipCount":skipCount]
+        let parametersarr : [String : Any] =  ["maxResultCount":maxResultCount,"skipCount":skipCount,"isExpired":false]
         
         let target = SubscriptionServices.GetCustomerPackageList(parameters: parametersarr)
         do {

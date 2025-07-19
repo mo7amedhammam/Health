@@ -40,42 +40,59 @@ struct PackageMoreDetailsView: View {
             let doctorData = viewModel.packageDetails?.doctorData
             let packageData = viewModel.packageDetails?.packageData
 
-                VStack(){
-                    TitleBar(title: "",hasbackBtn: true)
-                        .padding(.top,50)
-
-                    Spacer()
+            VStack(){
+                TitleBar(title: "",hasbackBtn: true)
+                    .padding(.top,50)
+                
+                Spacer()
+                                    
+                HStack{
                     
-//                    HStack{
-                        VStack{
-                            (Text("doc".localized + "/".localized) + Text(doctorData?.doctorName ?? "name".localized))
-                               .font(.bold(size: 16))
-                                .foregroundStyle(.white)
-                                .frame(maxWidth: .infinity,alignment:.center)
-
-//                            HStack(alignment: .center,spacing: 5){
-//                                Text( "التغذية العلاجية")
-//                                Circle().fill(Color(.white))
-//                                    .frame(width: 4, height: 4)
-//                                Text("صحة عامة")
-//                            }
+                    VStack(alignment:.leading){
+                        (Text("doc".localized + "/".localized) + Text(doctorData?.doctorName ?? "name".localized))
+                            .font(.bold(size: 16))
+                            .foregroundStyle(.white)
+                            .frame(maxWidth: .infinity,alignment:.leading)
+                        
+                        //                            HStack(alignment: .center,spacing: 5){
+                        //                                Text( "التغذية العلاجية")
+                        //                                Circle().fill(Color(.white))
+                        //                                    .frame(width: 4, height: 4)
+                        //                                Text("صحة عامة")
+                        //                            }
+                        //                            .font(.medium(size: 10))
+                        //                            .foregroundStyle(Color.white)
+                        
+                        HStack(spacing:2) {
+                            Image(.newpharmacisticon)
+                            //                                            .renderingMode(.template)
+                                .resizable()
+                                .frame(width: 12,height:12)
+                                .scaledToFit()
+                            //                                            .foregroundStyle(.white)
+                                .padding(3)
+                            
+                            Text(doctorData?.speciality ?? "speciality".localized)
+                                .font(.medium(size: 10))
+                                .foregroundStyle(Color.white)
+                        }
+                    }
+                    
+                    
+                    HStack(spacing:2) {
+                        
+                        KFImageLoader(url:URL(string:Constants.imagesURL + (doctorData?.flag?.validateSlashs() ?? "")),placeholder: Image("egFlagIcon"), shouldRefetch: false)
+                            .frame(width: 12,height: 12)
 //                            .font(.medium(size: 10))
 //                            .foregroundStyle(Color.white)
-                            
-                            HStack(spacing:2) {
-                                Image(.newpharmacisticon)
-//                                            .renderingMode(.template)
-                                    .resizable()
-                                    .frame(width: 12,height:12)
-                                    .scaledToFit()
-//                                            .foregroundStyle(.white)
-                                    .padding(3)
-                                
-                                Text(doctorData?.speciality ?? "speciality".localized)
-                                   .font(.medium(size: 10))
-                                   .foregroundStyle(Color.white)
-                            }
-                        }
+                        
+                        Text(doctorData?.nationality ?? "")
+                            .font(.medium(size: 10))
+                            .foregroundStyle(Color.white)
+
+                    }
+                    
+                }
                     .padding(10)
                     .background{
                         BlurView(radius: 5)
@@ -98,21 +115,22 @@ struct PackageMoreDetailsView: View {
                     HStack(alignment: .bottom){
                         
                         VStack(alignment:.leading,spacing: 8){
-                            Text("pack_Name".localized + ":")
-                                .font(.regular(size: 13))
-                                .foregroundStyle(Color.white)
+//                            Text("pack_Name".localized + ":")
+//                                .font(.regular(size: 13))
+//                                .foregroundStyle(Color.white)
 
-                            Text(packageData?.packageName ?? "pack_Name".localized )
-                                   .font(.semiBold(size: 15))
+                            Text(packageData?.packageName ?? "باقة الصحة العامة")
+                                   .font(.semiBold(size: 20))
                                     .foregroundStyle(.white)
                                 
-                                HStack(alignment: .center,spacing: 5){
-                                    Text( packageData?.categoryName ?? "category_Name".localized)
-                                    Circle().fill(Color(.white))
-                                        .frame(width: 4, height: 4)
-                                    Text(packageData?.mainCategoryName ?? "صحة عامة")
+//                                HStack(alignment: .center,spacing: 5){
+                            Group{
+                                    Text( packageData?.categoryName ?? "صحة عامة")
+//                                    Circle().fill(Color(.white))
+//                                        .frame(width: 4, height: 4)
+                                    Text(packageData?.mainCategoryName ?? "التغذية العلاجية")
                                 }
-                                .font(.medium(size: 10))
+                                .font(.medium(size: 16))
                                 .foregroundStyle(Color.white)
                                 
                             // Title
@@ -130,7 +148,7 @@ struct PackageMoreDetailsView: View {
                                 Text(" - " + "sessions_Duration".localized)
                                     .font(.regular(size: 10))
 
-                                Text(" \(packageData?.duration ?? 0) " + "Minute_".localized)
+                                Text(" \(packageData?.duration ?? 0) " + "Minutes".localized)
                                     .font(.regular(size: 10))
                                 
                             }
@@ -146,26 +164,32 @@ struct PackageMoreDetailsView: View {
                         
                         VStack(alignment: .center,spacing: 4){
                             Group{
-                                Text("\(packageData?.priceAfterDiscount ?? 0) " )
-                                Text( "EGP".localized)
+                                Text(packageData?.priceAfterDiscount ?? 0,format:.number.precision(.fractionLength(2) ))
+                                    .font(.semiBold(size: 16))
+
+                                 Text(" "+"EGP".localized)
+                                    .font(.medium(size: 12))
                             }
-                                .font(.semiBold(size: 16))
                                 .foregroundStyle(Color.white)
                             
 //                            HStack{
-                                Text("\(packageData?.priceBeforeDiscount ?? 0) " + "EGP".localized).strikethrough().foregroundStyle(Color(.secondary))
-                                    .font(.semiBold(size: 12))
-                                
-                                (Text("(".localized + "Discount".localized ) + Text( " \(packageData?.discount ?? 0)" + "%".localized + ")".localized))
-                                    .font(.semiBold(size: 12))
-                                    .foregroundStyle(Color.white)
+                            (Text(packageData?.priceBeforeDiscount ?? 0,format:.number.precision(.fractionLength(2) )) + Text(" "+"EGP".localized))
+                                .strikethrough().foregroundStyle(Color(.secondary))
+                                    .font(.medium(size: 12))
+
+                            DiscountLine(discount: packageData?.discount)
+
+//                                (Text("(".localized) + Text("Discount".localized ) + Text( " \(packageData?.discount ?? 0)") + Text("%".localized) + Text(")".localized))
+//                            
+//                                    .font(.semiBold(size: 12))
+//                                    .foregroundStyle(Color.white)
 //                            }
 //                            .padding(.top,2)
                         }
                     }
 //                    .offset(y:-12)
-                    .padding()
-                    .frame(height: 101)
+                    .padding(10)
+//                    .frame(height: 101)
                     .background(Color.mainBlue)
                     .cardStyle( cornerRadius: 3)
                         
@@ -214,7 +238,6 @@ struct PackageMoreDetailsView: View {
                                     showingDatePicker = false
                                     guard selectedDate != viewModel.newDate else {return}
                                     viewModel.newDate = selectedDate
-
                                 }) {
                                     Text("Done".localized)
                                         .font(.bold(size: 16))
@@ -306,7 +329,9 @@ struct PackageMoreDetailsView: View {
                             .padding(.top)
                     }
                     
-                    Button(action: {
+                    
+                    CustomButton(title: "Continue_".localized,backgroundView:
+                                    AnyView(Color.clear.horizontalGradientBackground())){
                         Task{
                             if Helper.shared.CheckIfLoggedIn(){
                                 await viewModel.getBookingSession()
@@ -314,18 +339,7 @@ struct PackageMoreDetailsView: View {
                                 mustLogin = true
                             }
                         }
-                    }){
-                            Text("Continue_".localized)
-                        .font(.bold(size: 18))
-                        .foregroundStyle(Color.white)
-                        .frame(height:50)
-                        .frame(maxWidth: .infinity)
-                        .padding(.horizontal,10)
-                        .background{LinearGradient(gradient: Gradient(colors: [.mainBlue, Color(.secondary)]), startPoint: .leading, endPoint: .trailing)}
-                        .cornerRadius(3)
                     }
-                    .padding()
-                    .padding(.top)
                     
                     Spacer().frame(height: 55)
                 }
@@ -342,7 +356,7 @@ struct PackageMoreDetailsView: View {
                 pushTo(destination: TicketView(ticketData: viewModel.ticketData,parameters: viewModel.prepareParamters()))
             }
 //            .reversLocalizeView()
-//            .localizeView(reverse: true)
+            .localizeView()
             .showHud(isShowing:  $viewModel.isLoading)
             .errorAlert(isPresented: .constant(viewModel.errorMessage != nil), message: viewModel.errorMessage)
             .customSheet(isPresented: $mustLogin ,height: 350){

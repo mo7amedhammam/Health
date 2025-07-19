@@ -18,12 +18,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate {
     
     var window : UIWindow?
     let gcmMessageIDKey = "gcm.Message_ID"
-    
+    var locationService: LocationService?
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
 //        Helper.shared.onBoardOpened(opened: false)
-        
+        detectCountry()
         LocalizationInit()
         IQKeyboardManager.shared.enable = true
         IQKeyboardManager.shared.shouldResignOnTouchOutside = true
@@ -187,4 +187,25 @@ extension AppDelegate {
         //    }
         // }
     }
+    
+    
+    func detectCountry() {
+        locationService = LocationService() // keep a strong reference
+
+        locationService?.onCountryDetected = { countryCode in
+            if let code = countryCode {
+                print("Detected Country: \(code)")
+
+                // Example: Set global flags or variables
+                if code == "EG" {
+                    print("🇪🇬 User is in Egypt")
+                } else if code == "SA" {
+                    print("🇸🇦 User is in Saudi Arabia")
+                }
+            } else {
+                print("❌ Failed to detect country")
+            }
+        }
+    }
+    
 }

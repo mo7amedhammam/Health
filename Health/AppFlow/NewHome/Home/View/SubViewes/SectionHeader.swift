@@ -20,7 +20,7 @@ struct SectionHeader: View {
     var MoreBtnAction: (() -> Void)?
     
     var body: some View {
-        HStack(alignment: .firstTextBaseline) {
+        HStack(alignment: .center) {
             if let image = image{
                 image
                     .renderingMode(imageForground != nil ? .template:.original)
@@ -42,7 +42,10 @@ struct SectionHeader: View {
             }
             
             if let trailingView = trailingView {
-                trailingView
+//                trailingView
+                Button(action: MoreBtnAction ?? {}){
+                    trailingView
+                }
             }else{
                 if let image = MoreBtnimage{
                     Button(action: MoreBtnAction ?? {}){

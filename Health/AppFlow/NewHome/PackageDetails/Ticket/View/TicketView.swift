@@ -48,7 +48,7 @@ struct TicketView: View {
                                     .background{
                                         Color(.bgPurple)
                                     }
-                                    .font(.semiBold(size: 16))
+                                    .font(.semiBold(size: 22))
                                 
                                 DashedLine(dash:[3,1])
                                     .frame(width:40)
@@ -60,21 +60,21 @@ struct TicketView: View {
                             let bookedTiming = viewmodel.ticketData?.bookedTimming ?? .init()
                             VStack(alignment:.leading,spacing: 10){
                                 
-                                Text("pack_Name".localized)
-                                    .font(.regular(size: 14))
-                                    .foregroundStyle(Color(.secondary))
+//                                Text("pack_Name".localized)
+//                                    .font(.regular(size: 14))
+//                                    .foregroundStyle(Color(.secondary))
                                 
                                 Text(packageData.packageName ?? "pack_Name".localized )
-                                    .font(.semiBold(size: 15))
+                                    .font(.semiBold(size: 22))
                                     .foregroundStyle(Color(.main))
                                 
-                                HStack(alignment: .center,spacing: 5){
+                                Group{
                                     Text( packageData.categoryName ?? "category_Name".localized)
-                                    Circle().fill(Color(.secondary))
-                                        .frame(width: 4, height: 4)
+//                                    Circle().fill(Color(.secondary))
+//                                        .frame(width: 4, height: 4)
                                     Text(packageData.mainCategoryName ?? "صحة عامة")
                                 }
-                                .font(.regular(size: 12))
+                                .font(.medium(size: 18))
                                 .foregroundStyle(Color(.secondary))
                                 
                                 // Title
@@ -87,13 +87,13 @@ struct TicketView: View {
                                     
                                     ( Text(" \(packageData.sessionCount ?? 0) " )
                                         .font(.semiBold(size: 16)) + Text( "sessions".localized)
-                                        .font(.regular(size: 10)))
+                                        .font(.semiBold(size: 16)))
                                     
                                     Text(" - " + "sessions_Duration".localized)
-                                        .font(.regular(size: 10))
+                                        .font(.regular(size: 12))
                                     
-                                    Text(" \(packageData.duration ?? 0) " + "Minute_".localized)
-                                        .font(.regular(size: 10))
+                                    Text(" \(packageData.duration ?? 0) " + "Minutes".localized)
+                                        .font(.regular(size: 12))
                                     
                                 }
                                 .foregroundStyle(Color(.main))
@@ -104,18 +104,18 @@ struct TicketView: View {
                                 
                                 HStack{
                                     (Text("\(bookedTiming.dayName ?? "") ")
-                                        .font(.semiBold(size: 14)) + Text((bookedTiming.date ?? "").ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "yyyy-MM-dd"))
-                                        .font(.regular(size: 12)))
+                                        .font(.semiBold(size: 16)) + Text((bookedTiming.date ?? "").ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "yyyy-MM-dd"))
+                                        .font(.regular(size: 14)))
                                     .foregroundStyle(Color(.main))
                                     
                                     Spacer()
                                     
                                     ( Text("\(bookedTiming.timefrom ?? "")".ChangeDateFormat(FormatFrom: "HH:mm:ss", FormatTo: "hh:mm a")) + Text(" - ") + Text("\(bookedTiming.timeTo ?? "")".ChangeDateFormat(FormatFrom: "HH:mm:ss", FormatTo: "hh:mm a")))
-                                        .font(.regular(size: 12))
+                                        .font(.regular(size: 14))
                                         .foregroundStyle(Color(.secondary))
                                 }
                                 
-                                Text("*سيقوم الدكتور  بتحديد مواعيد باقي السيشنز".localized)
+                                Text("sessions_selection_hint".localized)
                                     .font(.medium(size: 10))
                                     .foregroundStyle(Color(.secondary))
                                 
@@ -149,7 +149,7 @@ struct TicketView: View {
                                     .background{
                                         Color(.bgPurple)
                                     }
-                                    .font(.semiBold(size: 16))
+                                    .font(.semiBold(size: 22))
                                 
                                 DashedLine(dash:[3,1])
                                     .frame(width:40)
@@ -159,22 +159,30 @@ struct TicketView: View {
                             VStack(spacing:10){
                                 
                                 HStack{
-                                    
-                                    Text("doc_name".localized)
-                                        .font(.regular(size: 14))
-                                        .foregroundStyle(Color(.secondary))
+                                    Text(doctorData.doctorName ?? "Doctor_Name_")
+                                        .font(.semiBold(size: 22))
+                                        .foregroundStyle(Color(.main))
                                         .frame(maxWidth: .infinity,alignment:.leading)
+
+//                                    Text(doctorData.doctorName ?? "doc_name".localized)
+//                                        .font(.regular(size: 14))
+//                                        .foregroundStyle(Color(.secondary))
+//                                        .frame(maxWidth: .infinity,alignment:.leading)
                                     
                                     HStack(spacing:2) {
-                                        Text("egyption_".localized)
-                                            .font(.medium(size: 12))
+                                        Text(doctorData.nationality ?? "egyption_".localized)
+                                            .font(.semiBold(size: 12))
                                             .foregroundStyle(Color(.main))
                                         
-                                        Image(.egFlagIcon)
-                                            .resizable()
-                                            .frame(width: 12,height:8)
-                                            .scaledToFill()
-                                            .padding(3)
+                                        
+                                        KFImageLoader(url:URL(string:Constants.imagesURL + (doctorData.flag?.validateSlashs() ?? "")),placeholder: Image("egFlagIcon"), shouldRefetch: false)
+                                            .frame(width: 12,height: 12)
+
+//                                        Image(.egFlagIcon)
+//                                            .resizable()
+//                                            .frame(width: 12,height:8)
+//                                            .scaledToFill()
+//                                            .padding(3)
                                     }
                                 }
                                 
@@ -187,7 +195,7 @@ struct TicketView: View {
                                     
                                     HStack(spacing:2) {
                                         Text(doctorData.speciality ?? "speciality_")
-                                            .font(.medium(size: 10))
+                                            .font(.semiBold(size: 12))
                                             .foregroundStyle(Color(.main))
                                         
                                         //                                            Image(.egFlagIcon)
@@ -212,10 +220,27 @@ struct TicketView: View {
                         VStack(spacing:15) {
                             Text("Add_Copon".localized)
                                 .frame(maxWidth: .infinity, alignment: .leading)
-                                .font(.semiBold(size: 16))
+                                .font(.bold(size: 22))
                                 .foregroundStyle(Color(.main))
                             
                             HStack {
+                                HStack(spacing: 8) {
+                                    Image("coponIcon")
+                                               .resizable()
+                                               .frame(width: 12, height: 17)
+
+                                    TextField("enter_Copon_number".localized, text: $viewmodel.couponeCode)
+                                               .font(.regular(size: 16))
+                                               .foregroundColor(.mainBlue)
+                                       }
+                                       .padding(.vertical, 12)
+                                       .padding(.horizontal)
+                                       .frame(height:50)
+                                       .overlay(
+                                           RoundedRectangle(cornerRadius: 3)
+                                               .stroke(Color.mainBlue, lineWidth: 1)
+                                       )
+                                
                                 Button(action: {
                                     Task{
                                         await viewmodel.createCustomerPackage(paramters: parameters)
@@ -225,18 +250,21 @@ struct TicketView: View {
                                     Text("Confirm_".localized)
                                         .underline()
                                         .font(.bold(size: 16))
-                                        .foregroundStyle(Color.white)
+                                        .padding(.horizontal,8)
                                         .frame(height:50)
-                                        .frame(maxWidth: .infinity)
                                         .padding(.horizontal,10)
-                                        .horizontalGradientBackground()
+                                        .foregroundStyle(Color.white)
+                                        .background(Color.mainBlue)
+                                    //                                        .horizontalGradientBackground()
                                         .cornerRadius(3)
                                 }
-                                Spacer()
                             }
+                            
                         }
                         .frame(height:80)
                         .padding(.bottom,8)
+                        .frame(maxWidth:.infinity)
+
                         
                         ZStack {
                             
@@ -250,7 +278,7 @@ struct TicketView: View {
                                 let coponData = viewmodel.ticketData?.coupon ?? .init()
                                 Text("Payment_shortly".localized)
                                     .frame(maxWidth: .infinity, alignment: .leading)
-                                    .font(.semiBold(size: 16))
+                                    .font(.bold(size: 22))
                                     .foregroundStyle(Color(.main))
                                 
                                 HStack(spacing:2) {
@@ -260,17 +288,17 @@ struct TicketView: View {
                                     Text("\(coponData.totalBeforeDiscount ?? 0)")
                                     Text("EGP_".localized)
                                 }
-                                .font(.semiBold(size: 12))
+                                .font(.medium(size: 16))
                                 .foregroundStyle(Color(.main))
                                 
                                 HStack(spacing:2) {
-                                    Text("discount_".localized)
+                                    Text("la_Discount".localized)
                                         .frame(maxWidth: .infinity,alignment:.leading)
                                     
                                     Text("\(coponData.discount ?? 0)")
                                     Text("EGP_".localized)
                                 }
-                                .font(.semiBold(size: 12))
+                                .font(.medium(size: 16))
                                 .foregroundStyle(Color(.secondary))
                                 
                                 HStack(spacing:2) {
@@ -280,7 +308,7 @@ struct TicketView: View {
                                     Text("\(coponData.totalAfterDiscount ?? 0)")
                                     Text("EGP_".localized)
                                 }
-                                .font(.semiBold(size: 12))
+                                .font(.semiBold(size: 16))
                                 .foregroundStyle(Color(.main))
                                 
                                 Spacer().frame(height:60)
@@ -319,6 +347,7 @@ struct TicketView: View {
         }
 //        .reversLocalizeView()
 //        .localizeView(reverse: true)
+        .localizeView()
         .showHud(isShowing:  $viewmodel.isLoading)
         .errorAlert(isPresented: .constant(viewmodel.errorMessage != nil), message: viewmodel.errorMessage)
 

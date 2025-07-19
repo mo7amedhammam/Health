@@ -33,8 +33,8 @@ struct PackagesView: View {
                 Spacer()
                 
                 HStack{
-                    VStack(alignment:.leading){
-                        Text(mainCategory.title ?? "main category")
+                    VStack(alignment:.leading,spacing: 3){
+                        Text(mainCategory.title ?? "")
                             .font(.semiBold(size: 22))
                             .foregroundStyle(.white)
                         
@@ -67,7 +67,7 @@ struct PackagesView: View {
                 .padding(10)
                 .background{
                     BlurView(radius: 5)
-                        .horizontalGradientBackground().opacity(0.89)
+                        .horizontalGradientBackground(reverse: false).opacity(0.89)
                 }
             }
             .frame(height: 195)
@@ -97,9 +97,18 @@ struct PackagesView: View {
                         
                     }
                     
-                    PackagesListView(packaces: viewModel.packages?.items){package in
+                    PackagesListView(packaces: viewModel.packages?.items,action: {package in
                         pushTo(destination: PackageDetailsView(package: package))
-                    }
+                    },likeAction: { packageId in
+                        if let index = viewModel.packages?.items?.firstIndex(where: { $0.id == packageId }) {
+                            viewModel.packages?.items?[index].isWishlist?.toggle()
+                        }
+                       Task{
+                           await wishlistviewModel.addOrRemovePackageToWishList(packageId: packageId)
+                       }
+
+                    })
+                    
                     //                        .task {
                     //                            guard let subCategoryId = viewModel.subCategories?.items?.first?.id else { return }
                     //                            await viewModel.getPackages(categoryId: subCategoryId)
@@ -231,7 +240,8 @@ struct SubCategoriesSection: View {
 struct PackagesListView: View {
     var packaces: [FeaturedPackageItemM]?
     var action: ((FeaturedPackageItemM) -> Void)?
-    
+    var likeAction : ((Int) -> Void)?
+
     var body: some View {
         VStack{
             
@@ -277,12 +287,11 @@ struct PackagesListView: View {
                                     
                                     Spacer()
                                     Button(action: {
-                                        
+                                        likeAction?(item.id ?? 0)
                                     }, label: {
-                                        Image(.newlikeicon)
+                                        Image( item.isWishlist ?? false ? .newlikeicon : .newunlikeicon)
                                             .resizable()
                                             .frame(width: 20, height: 20)
-                                        
                                     })
                                     
                                 }
@@ -314,7 +323,7 @@ struct PackagesListView: View {
                                                     .background(Color(.secondary))
                                                 
                                                 ( Text(" \(item.doctorCount ?? 0) ") + Text("avilable_doc".localized))
-                                                    .font(.regular(size: 10))
+                                                    .font(.medium(size: 12))
                                                     .frame(maxWidth: .infinity,alignment:.leading)
                                             }
                                             .font(.medium(size: 12))
@@ -325,28 +334,30 @@ struct PackagesListView: View {
                                         Spacer()
                                         
                                         VStack(alignment: .trailing){
-                                            Text("\(item.priceAfterDiscount ?? 0) " + "EGP".localized)
+                                            (Text(item.priceAfterDiscount ?? 0,format:.number.precision(.fractionLength(1))) + Text(" "+"EGP".localized))
                                                 .font(.semiBold(size: 16))
                                                 .foregroundStyle(Color.white)
                                             
                                             HStack{
-                                                Text("\(item.priceBeforeDiscount ?? 0) " + "EGP".localized).strikethrough().foregroundStyle(Color(.secondary))
+                                                
+                                               (Text(item.priceBeforeDiscount ?? 0,format:.number.precision(.fractionLength(1))) + Text(" "+"EGP".localized)).strikethrough().foregroundStyle(Color(.secondary))
                                                     .font(.semiBold(size: 12))
                                                 
-                                                (Text("(".localized + "Discount".localized ) + Text( " \(item.discount ?? 0)" + "%".localized + ")".localized))
-                                                    .font(.semiBold(size: 12))
-                                                    .foregroundStyle(Color.white)
+                                                DiscountLine(discount: item.discount)
+
+//                                                (Text("(".localized + "Discount".localized ) + Text( " \(item.discount ?? 0)" + "%".localized + ")".localized))
+//                                                    .font(.semiBold(size: 12))
+//                                                    .foregroundStyle(Color.white)
                                             }
                                             .padding(.top,2)
                                         }
-                                        
                                     }
                                 }
                                 .padding(.top,5)
                                 .padding([.bottom,.horizontal],10)
                                 .background{
                                     BlurView(radius: 5)
-                                        .horizontalGradientBackground().opacity(0.89)
+                                        .horizontalGradientBackground( reverse: true).opacity(0.89)
                                     //                                        LinearGradient(gradient: Gradient(colors: [.clear, .black.opacity(0.8)]), startPoint: .top, endPoint: .bottom)
                                 }
                                 

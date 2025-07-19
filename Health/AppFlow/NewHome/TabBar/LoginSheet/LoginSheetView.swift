@@ -20,12 +20,14 @@ struct LoginSheetView: View {
                 .font(.bold(size: 28))
                 .foregroundColor(.mainBlue)
                 .multilineTextAlignment(.center)
+                .lineLimit(2)
             
             Text("welcom_subtitle_elnada".localized)
                 .font(.regular(size: 16))
                 .foregroundColor(Color(.secondary))
                 .multilineTextAlignment(.center)
                 .padding(.top, 8)
+                .lineLimit(2)
             
             Spacer()
             

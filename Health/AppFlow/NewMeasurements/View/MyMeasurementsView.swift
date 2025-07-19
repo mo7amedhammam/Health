@@ -13,7 +13,7 @@ struct MyMeasurementsView: View {
     @StateObject var router = NavigationRouter()
     @State var mustLogin: Bool = false
 
-    var measurements:[ModelMyMeasurementsStats]? {
+    var measurements:[MyMeasurementsStatsM]? {
         return viewModel.ArrStats
     }
 //    @State var destination = AnyView(EmptyView())
@@ -89,7 +89,7 @@ struct MyMeasurementsView: View {
 
 
 struct MeasurementCard: View {
-    var item: ModelMyMeasurementsStats
+    var item: MyMeasurementsStatsM
 
     var body: some View {
         VStack(alignment: .trailing, spacing: 6) {
@@ -153,8 +153,8 @@ struct MyMeasurementsView_Previews: PreviewProvider {
         MyMeasurementsView()
     }
 
-    static var sampleMeasurements: [ModelMyMeasurementsStats] = [
-        ModelMyMeasurementsStats(
+    static var sampleMeasurements: [MyMeasurementsStatsM] = [
+        MyMeasurementsStatsM(
             medicalMeasurementID: 1,
             image: "bloodPressure",
             title: "الضغط",
@@ -165,7 +165,7 @@ struct MyMeasurementsView_Previews: PreviewProvider {
             regExpression: nil,
             normalRangValue: nil
         ),
-        ModelMyMeasurementsStats(
+        MyMeasurementsStatsM(
             medicalMeasurementID: 2,
             image: "sugar",
             title: "السكر",

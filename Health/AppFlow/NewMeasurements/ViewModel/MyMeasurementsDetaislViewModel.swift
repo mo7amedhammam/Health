@@ -14,7 +14,7 @@ class MyMeasurementsDetaislViewModel: ObservableObject {
     
     private let networkService: AsyncAwaitNetworkServiceProtocol
     
-    @Published var currentStats:ModelMyMeasurementsStats?
+    @Published var currentStats:MyMeasurementsStatsM?
     @Published var isPresentingNewMeasurementSheet = false
     
     // Published properties to bind with SwiftUI
@@ -33,7 +33,7 @@ class MyMeasurementsDetaislViewModel: ObservableObject {
 //    var medicalMeasurementId: Int?
     @Published var dateFrom: Date?
     @Published var dateTo: Date?
-    var maxResultCount = 15
+    var maxResultCount:Int = 10
     @Published var skipCount = 0
     
     @MainActor
@@ -64,6 +64,11 @@ class MyMeasurementsDetaislViewModel: ObservableObject {
                 responseType: ModelMedicalMeasurements.self
             )
             self.ArrMeasurement = response
+            if skipCount == 0 {
+                self.ArrMeasurement = response
+            }else{
+                self.ArrMeasurement?.measurements?.items?.append(contentsOf: response?.measurements?.items ?? [])
+            }
         } catch {
             self.errorMessage = error.localizedDescription
         }
@@ -133,16 +138,16 @@ class MyMeasurementsDetaislViewModel: ObservableObject {
         let target = NewMeasurement.CreateMeasurement(parameters: parameters)
         do {
             self.errorMessage = nil // Clear previous errors
-            let response = try await networkService.request(
+            _ = try await networkService.request(
                 target,
                 responseType: ModelCreateMeasurements.self
             )
             if let current = currentStats?.measurementsCount {
                 currentStats?.measurementsCount = current + 1
+                await fetchMeasurementDetails()
             }
             isPresentingNewMeasurementSheet = false
 //            self.ArrNormalRange = response
-//           await fetchStats()
             
         } catch {
             self.errorMessage = error.localizedDescription
@@ -154,5 +159,35 @@ class MyMeasurementsDetaislViewModel: ObservableObject {
         date = nil
         formatteddate = ""
         comment = ""
+    }
+}
+
+extension MyMeasurementsDetaislViewModel {
+    
+    @MainActor
+    func refresh() async {
+        skipCount = 0
+        isLoading = true
+        defer { isLoading = false }
+//        async let normalRang: () = fetchNormalRange()
+        async let details: () = fetchMeasurementDetails()
+
+         _ = await (details)
+    }
+
+    @MainActor
+    func loadMoreIfNeeded() async {
+        guard !(isLoading ?? false),
+              let currentCount = ArrMeasurement?.measurements?.items?.count,
+              let totalCount = ArrMeasurement?.measurements?.totalCount,
+              currentCount < totalCount else { return }
+
+        skipCount = (skipCount) + maxResultCount
+        await fetchMeasurementDetails()
+    }
+    
+    func clear() {
+        skipCount = 0
+        ArrMeasurement = nil
     }
 }
