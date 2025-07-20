@@ -100,7 +100,7 @@ struct PackagesView: View {
                     PackagesListView(packaces: viewModel.packages?.items,action: {package in
                         pushTo(destination: PackageDetailsView(package: package))
                     },likeAction: { packageId in
-                        if let index = viewModel.packages?.items?.firstIndex(where: { $0.id == packageId }) {
+                        if let index = viewModel.packages?.items?.firstIndex(where: { $0.appCountryPackageId == packageId }) {
                             viewModel.packages?.items?[index].isWishlist?.toggle()
                         }
                        Task{

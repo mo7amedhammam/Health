@@ -148,6 +148,12 @@ struct SubcripedPackagesView: View {
             Spacer().frame(height: hasbackBtn ?? true ? 0 : 80)
             
         }
+
+        .localizeView()
+        .withNavigation(router: router)
+        .showHud(isShowing:  $viewModel.isLoading)
+        .errorAlert(isPresented: .constant(viewModel.errorMessage != nil), message: viewModel.errorMessage)
+        .edgesIgnoringSafeArea([.top,.horizontal])
         .onAppear {
             Task{
                 if (Helper.shared.CheckIfLoggedIn()) {
@@ -165,28 +171,7 @@ struct SubcripedPackagesView: View {
                 }
             }
         }
-        .localizeView()
-        .withNavigation(router: router)
-        .showHud(isShowing:  $viewModel.isLoading)
-        .errorAlert(isPresented: .constant(viewModel.errorMessage != nil), message: viewModel.errorMessage)
-        .edgesIgnoringSafeArea([.top,.horizontal])
-//        .onAppear {
-//            Task{
-//                if (Helper.shared.CheckIfLoggedIn()) {
-//                    async let Profile:() = profileViewModel.getProfile()
-////                    async let Packages:() = viewModel.refresh()
-//                    await viewModel.getSubscripedPackages()
-//                     _ = await (Profile)
-//                    
-//                    print("Items count:", viewModel.subscripedPackages?.items?.count ?? -1)
-//                       print("Items:", viewModel.subscripedPackages?.items ?? [])
-//                } else {
-//                    profileViewModel.cleanup()
-//                    viewModel.clear()
-//                    mustLogin = true
-//                }
-//            }
-//        }
+        
         //        NavigationLink( "", destination: destination, isActive: $isactive)
         
         .customSheet(isPresented: $mustLogin ,height: 350){

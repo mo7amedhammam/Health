@@ -15,7 +15,7 @@ class PackageMoreDetailsViewModel:ObservableObject {
     
     // -- Get List --
     var maxResultCount: Int?              = 5
-    var skipCount: Int?                   = 0
+    @Published var skipCount: Int?        = 0
     
 //    var doctorId:Int                      = 0
     var doctorPackageId:Int?

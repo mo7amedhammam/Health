@@ -17,7 +17,7 @@ class SubcripedPackagesViewModel:ObservableObject {
     
     // Published properties
     @Published var subscripedPackages: SubcripedPackagesM?
-//    = SubcripedPackagesM(items: [SubcripedPackageItemM(customerPackageID: 2, status: "active", subscriptionDate: "", lastSessionDate: "", packageName: "nameeee", categoryName: "cateeee", mainCategoryName: "main cateee", doctorName: "doc doc", docotrID: "2", sessionCount: 4, attendedSessionCount: 2, packageImage: "", doctorSpeciality: "special", doctorNationality: "egegege", doctorImage: "", canCancel: true, canRenew: true )], totalCount: 1)
+//    = SubcripedPackagesM(items: [SubcripedPackageItemM(customerPackageID: 2, docotrID: 2, status: "active", subscriptionDate: "", lastSessionDate: "", packageName: "nameeee", categoryName: "cateeee", mainCategoryName: "main cateee", doctorName: "doc doc", sessionCount: 4, attendedSessionCount: 2, packageImage: "", doctorSpeciality: "special", doctorNationality: "egegege", doctorImage: "", canCancel: true, canRenew: true )], totalCount: 1)
     
     @Published var isLoading:Bool? = false
     @Published var canLoadMore:Bool? = false
@@ -54,8 +54,10 @@ extension SubcripedPackagesViewModel{
 
             if skipCount == 0 {
                 // Fresh load
-                subscripedPackages = response
-                print("subscripedPackages:",subscripedPackages)
+               await MainActor.run(){
+                    subscripedPackages = response
+                    print("subscripedPackages:",subscripedPackages)
+                }
             } else {
                 // Append for pagination
                 if var existing = self.subscripedPackages,
@@ -76,13 +78,13 @@ extension SubcripedPackagesViewModel{
 
 extension SubcripedPackagesViewModel {
     
-//    @MainActor
+    @MainActor
     func refresh() async {
         skipCount = 0
         await getSubscripedPackages()
     }
 
-//    @MainActor
+    @MainActor
     func loadMoreIfNeeded() async {
         guard !(isLoading ?? false),
               let currentCount = subscripedPackages?.items?.count,

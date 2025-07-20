@@ -80,7 +80,7 @@ struct NewHomeView: View {
                         VipPackagesSection(packages: viewModel.featuredPackages?.items,selectedPackage: $selectedPackage){packageId in
 //                            add to wishlist
                             // Update the source-of-truth array in viewModel
-                             if let index = viewModel.featuredPackages?.items?.firstIndex(where: { $0.id == packageId }){
+                             if let index = viewModel.featuredPackages?.items?.firstIndex(where: { $0.appCountryPackageId == packageId }){
                                  viewModel.featuredPackages?.items?[index].isWishlist?.toggle()
                              }
                             
@@ -109,11 +109,11 @@ struct NewHomeView: View {
                             switch currentcase{
                                 
                             case .mostviewed:
-                                if let index = viewModel.mostViewedPackages?.firstIndex(where: { $0.id == packageId }) {
+                                if let index = viewModel.mostViewedPackages?.firstIndex(where: { $0.appCountryPackageId == packageId }) {
                                     viewModel.mostViewedPackages?[index].isWishlist?.toggle()
                                 }
                             case .mostbooked:
-                                if let index = viewModel.mostBookedPackages?.firstIndex(where: { $0.id == packageId }) {
+                                if let index = viewModel.mostBookedPackages?.firstIndex(where: { $0.appCountryPackageId == packageId }) {
                                     viewModel.mostBookedPackages?[index].isWishlist?.toggle()
                                 }
                             }

@@ -344,6 +344,9 @@ struct PackageMoreDetailsView: View {
                     Spacer().frame(height: 55)
                 }
             }
+        .localizeView()
+        .showHud2(isShowing: $viewModel.isLoading)
+        .errorAlert(isPresented: .constant(viewModel.errorMessage != nil), message: viewModel.errorMessage)
             .edgesIgnoringSafeArea([.top,.horizontal])
             .task{
                 viewModel.doctorPackageId = doctorPackageId
@@ -358,9 +361,6 @@ struct PackageMoreDetailsView: View {
                 pushTo(destination: TicketView(ticketData: viewModel.ticketData,parameters: viewModel.prepareParamters()))
             }
 //            .reversLocalizeView()
-            .localizeView()
-            .showHud(isShowing:  $viewModel.isLoading)
-            .errorAlert(isPresented: .constant(viewModel.errorMessage != nil), message: viewModel.errorMessage)
             .customSheet(isPresented: $mustLogin ,height: 350){
                 LoginSheetView()
             }
