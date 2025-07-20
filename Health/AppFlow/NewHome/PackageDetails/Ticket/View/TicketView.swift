@@ -56,23 +56,23 @@ struct TicketView: View {
                             .foregroundStyle(Color(.main))
                             
                             
-                            let packageData = viewmodel.ticketData?.packageData ?? .init()
-                            let bookedTiming = viewmodel.ticketData?.bookedTimming ?? .init()
+                            let packageData = viewmodel.ticketData?.packageData ?? nil
+                            let bookedTiming = viewmodel.ticketData?.bookedTimming ?? nil
                             VStack(alignment:.leading,spacing: 10){
                                 
 //                                Text("pack_Name".localized)
 //                                    .font(.regular(size: 14))
 //                                    .foregroundStyle(Color(.secondary))
                                 
-                                Text(packageData.packageName ?? "pack_Name".localized )
+                                Text(packageData?.packageName ?? "pack_Name".localized )
                                     .font(.semiBold(size: 22))
                                     .foregroundStyle(Color(.main))
                                 
                                 Group{
-                                    Text( packageData.categoryName ?? "category_Name".localized)
+                                    Text( packageData?.categoryName ?? "category_Name".localized)
 //                                    Circle().fill(Color(.secondary))
 //                                        .frame(width: 4, height: 4)
-                                    Text(packageData.mainCategoryName ?? "صحة عامة")
+                                    Text(packageData?.mainCategoryName ?? "صحة عامة")
                                 }
                                 .font(.medium(size: 18))
                                 .foregroundStyle(Color(.secondary))
@@ -85,14 +85,14 @@ struct TicketView: View {
                                         .frame(width: 16, height: 9)
                                         .foregroundStyle(Color(.secondaryMain))
                                     
-                                    ( Text(" \(packageData.sessionCount ?? 0) " )
+                                    ( Text(" \(packageData?.sessionCount ?? 0) " )
                                         .font(.semiBold(size: 16)) + Text( "sessions".localized)
                                         .font(.semiBold(size: 16)))
                                     
                                     Text(" - " + "sessions_Duration".localized)
                                         .font(.regular(size: 12))
                                     
-                                    Text(" \(packageData.duration ?? 0) " + "Minutes".localized)
+                                    Text(" \(packageData?.duration ?? 0) " + "Minutes".localized)
                                         .font(.regular(size: 12))
                                     
                                 }
@@ -103,14 +103,14 @@ struct TicketView: View {
                                     .foregroundStyle(Color(.secondary))
                                 
                                 HStack{
-                                    (Text("\(bookedTiming.dayName ?? "") ")
-                                        .font(.semiBold(size: 16)) + Text((bookedTiming.date ?? "").ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "yyyy-MM-dd"))
+                                    (Text("\(bookedTiming?.dayName ?? "") ")
+                                        .font(.semiBold(size: 16)) + Text((bookedTiming?.date ?? "").ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "yyyy-MM-dd"))
                                         .font(.regular(size: 14)))
                                     .foregroundStyle(Color(.main))
                                     
                                     Spacer()
                                     
-                                    ( Text("\(bookedTiming.timefrom ?? "")".ChangeDateFormat(FormatFrom: "HH:mm:ss", FormatTo: "hh:mm a")) + Text(" - ") + Text("\(bookedTiming.timeTo ?? "")".ChangeDateFormat(FormatFrom: "HH:mm:ss", FormatTo: "hh:mm a")))
+                                    ( Text("\(bookedTiming?.timefrom ?? "")".ChangeDateFormat(FormatFrom: "HH:mm:ss", FormatTo: "hh:mm a")) + Text(" - ") + Text("\(bookedTiming?.timeTo ?? "")".ChangeDateFormat(FormatFrom: "HH:mm:ss", FormatTo: "hh:mm a")))
                                         .font(.regular(size: 14))
                                         .foregroundStyle(Color(.secondary))
                                 }
@@ -132,7 +132,7 @@ struct TicketView: View {
                         }
                         .padding(.vertical)
                         
-                        let doctorData = viewmodel.ticketData?.doctorData ?? .init()
+                        let doctorData = viewmodel.ticketData?.doctorData ?? nil
                         
                         VStack{
                             Image(.officialDoctorIcon)
@@ -159,7 +159,7 @@ struct TicketView: View {
                             VStack(spacing:10){
                                 
                                 HStack{
-                                    Text(doctorData.doctorName ?? "Doctor_Name_")
+                                    Text(doctorData?.doctorName ?? "Doctor_Name_")
                                         .font(.semiBold(size: 22))
                                         .foregroundStyle(Color(.main))
                                         .frame(maxWidth: .infinity,alignment:.leading)
@@ -170,12 +170,12 @@ struct TicketView: View {
 //                                        .frame(maxWidth: .infinity,alignment:.leading)
                                     
                                     HStack(spacing:2) {
-                                        Text(doctorData.nationality ?? "egyption_".localized)
+                                        Text(doctorData?.nationality ?? "egyption_".localized)
                                             .font(.semiBold(size: 12))
                                             .foregroundStyle(Color(.main))
                                         
                                         
-                                        KFImageLoader(url:URL(string:Constants.imagesURL + (doctorData.flag?.validateSlashs() ?? "")),placeholder: Image("egFlagIcon"), shouldRefetch: false)
+                                        KFImageLoader(url:URL(string:Constants.imagesURL + (doctorData?.flag?.validateSlashs() ?? "")),placeholder: Image("egFlagIcon"), shouldRefetch: false)
                                             .frame(width: 12,height: 12)
 
 //                                        Image(.egFlagIcon)
@@ -187,14 +187,14 @@ struct TicketView: View {
                                 }
                                 
                                 HStack{
-                                    Text(doctorData.doctorName ?? "Doctor_Name_")
+                                    Text(doctorData?.doctorName ?? "Doctor_Name_")
                                         .font(.semiBold(size: 16))
                                         .foregroundStyle(Color(.main))
                                         .frame(maxWidth: .infinity,alignment:.leading)
                                     
                                     
                                     HStack(spacing:2) {
-                                        Text(doctorData.speciality ?? "speciality_")
+                                        Text(doctorData?.speciality ?? "speciality_")
                                             .font(.semiBold(size: 12))
                                             .foregroundStyle(Color(.main))
                                         

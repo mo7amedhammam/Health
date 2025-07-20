@@ -15,9 +15,9 @@ struct SubcripedPackagesM: Codable {
 
 // MARK: - Item
 struct SubcripedPackageItemM: Codable,Hashable {
-    var customerPackageID: Int?
+    var customerPackageID,docotrID: Int?
     var status, subscriptionDate, lastSessionDate, packageName: String?
-    var categoryName, mainCategoryName, doctorName, docotrID: String?
+    var categoryName, mainCategoryName, doctorName: String?
     var sessionCount, attendedSessionCount: Int?
     var packageImage: String?
     var doctorSpeciality,doctorNationality,doctorImage :String?

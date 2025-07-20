@@ -48,13 +48,13 @@ extension PackageMoreDetailsViewModel{
     func getDoctorPackageDetails() async {
         isLoading = true
         defer { isLoading = false }
-        guard let doctorPackageId = doctorPackageId else {
+        guard let doctorPackageId = doctorPackageId, let appCountryId = Helper.shared.AppCountryId() else {
 //            // Handle missings
 //            self.errorMessage = "check inputs"
 //            //            throw NetworkError.unknown(code: 0, error: "check inputs")
             return
         }
-        let parametersarr : [String : Any] =  ["Id":doctorPackageId ]
+        let parametersarr : [String : Any] =  ["Id":doctorPackageId,"AppCountryId":appCountryId ]
         
         let target = HomeServices.GetDoctorPackageById(parameters: parametersarr)
         do {
@@ -106,7 +106,7 @@ extension PackageMoreDetailsViewModel{
         }
         let parametersarr : [String : Any] =  ["AppCountryId":AppCountryId]
 
-        let target = HomeServices.GetTimeShiftScheduleList
+        let target = HomeServices.GetTimeShiftScheduleList(parameters: parametersarr)
         do {
             self.errorMessage = nil // Clear previous errors
             let response = try await networkService.request(
@@ -129,7 +129,7 @@ extension PackageMoreDetailsViewModel{
 //            //            throw NetworkError.unknown(code: 0, error: "check inputs")
             return
         }
-        let parametersarr : [String : Any] =  ["AppCountryId":appCountryId,"date":"\(newDate.formatted(.customDateFormat("YYYY-MM-dd")))","packageId":packageId,"doctorId":doctorId,"shiftId":shiftId]
+        let parametersarr : [String : Any] =  ["appCountryId":appCountryId,"date":"\(newDate.formatted(.customDateFormat("YYYY-MM-dd")))","packageId":packageId,"doctorId":doctorId,"shiftId":shiftId]
 
         let target = HomeServices.GetAvailableDoctorSchedule(parameters: parametersarr)
         do {
@@ -176,6 +176,7 @@ print(parametersarr)
 //            //            throw NetworkError.unknown(code: 0, error: "check inputs")
             return nil
         }
-        return ["date":date,"packageId":packageId,"doctorId":doctorId,"doctorPackageId":doctorPackageId,"shiftId":shiftId,"totalAfterDiscount":totalAfterDiscount,"timeFrom":timeFrom,"timeTo":timeTo,"appCountryPackageId":appCountryPackageId]
+        return ["date":date,"packageId":packageId,"doctorId":doctorId,"doctorPackageId":doctorPackageId,"shiftId":shiftId,"totalAfterDiscount":totalAfterDiscount,"timeFrom":timeFrom,"timeTo":timeTo
+                ,"appCountryPackageId":appCountryPackageId]
     }
 }

@@ -287,7 +287,7 @@ struct PackagesListView: View {
                                     
                                     Spacer()
                                     Button(action: {
-                                        likeAction?(item.id ?? 0)
+                                        likeAction?(item.appCountryPackageId ?? 0)
                                     }, label: {
                                         Image( item.isWishlist ?? false ? .newlikeicon : .newunlikeicon)
                                             .resizable()

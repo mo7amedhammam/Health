@@ -12,7 +12,7 @@ class SubcripedPackagesViewModel:ObservableObject {
     private let networkService: AsyncAwaitNetworkServiceProtocol
     // -- Get List --
     var maxResultCount: Int?              = 5
-    var skipCount: Int?                   = 0
+    @Published var skipCount: Int?        = 0
 
     
     // Published properties
@@ -54,14 +54,15 @@ extension SubcripedPackagesViewModel{
 
             if skipCount == 0 {
                 // Fresh load
-                self.subscripedPackages = response
+                subscripedPackages = response
+                print("subscripedPackages:",subscripedPackages)
             } else {
                 // Append for pagination
                 if var existing = self.subscripedPackages,
                    let newItems = response?.items {
                     existing.items?.append(contentsOf: newItems)
                     existing.totalCount = response?.totalCount
-                    self.subscripedPackages = existing
+                    subscripedPackages = existing
                 }
             }
             canLoadMore = response?.items?.count ?? 0 < response?.totalCount ?? 0

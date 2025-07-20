@@ -46,16 +46,22 @@ class SubcripedPackageDetailsViewModel:ObservableObject {
 extension SubcripedPackageDetailsViewModel{
     
     @MainActor
-    func getSubscripedSessionsList() async {
+    func getSubscripedSessionsList(customerPackageId:Int?) async {
         isLoading = true
         defer { isLoading = false }
-        guard let maxResultCount = maxResultCount,let skipCount = skipCount else {
+        guard let maxResultCount = maxResultCount,let skipCount = skipCount,let customerPackageId = customerPackageId else {
 //            // Handle missings
 //            self.errorMessage = "check inputs"
 //            //            throw NetworkError.unknown(code: 0, error: "check inputs")
             return
         }
-        let parametersarr : [String : Any] =  ["maxResultCount":maxResultCount,"skipCount":skipCount]
+        let parametersarr : [String : Any] =  ["maxResultCount":maxResultCount,"skipCount":skipCount,"customerPackageId":customerPackageId]
+        
+//        Filter
+//        "sortDirection": "string",
+//        "fromDate": "2025-07-20T09:21:48.207Z",
+//        "toDate": "2025-07-20T09:21:48.207Z",
+
         
         let target = SubscriptionServices.GetCustomerPackageSessionList(parameters: parametersarr)
         do {

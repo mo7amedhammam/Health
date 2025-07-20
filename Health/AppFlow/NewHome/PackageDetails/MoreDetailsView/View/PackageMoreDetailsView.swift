@@ -347,8 +347,10 @@ struct PackageMoreDetailsView: View {
             .edgesIgnoringSafeArea([.top,.horizontal])
             .task{
                 viewModel.doctorPackageId = doctorPackageId
-                await viewModel.getDoctorPackageDetails()
-                await viewModel.getAvailableDays()
+                
+                async let doctorPackageDetails:() = viewModel.getDoctorPackageDetails()
+                async let availableDays:() = viewModel.getAvailableDays()
+                await _ = (doctorPackageDetails,availableDays)
 //                await viewModel.getAvailableShifts()
             }
             .onChange(of: viewModel.ticketData){newval in

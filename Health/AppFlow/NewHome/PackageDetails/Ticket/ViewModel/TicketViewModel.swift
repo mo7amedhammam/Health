@@ -157,6 +157,9 @@ extension TicketViewModel{
         if let doctorName = ticketData?.doctorData?.doctorName {
             parametersarr["doctorName"] = doctorName
         }
+        if couponeCode.count > 0{
+            parametersarr["coupon"] = couponeCode
+        }
         
 print(parametersarr)
         let target = HomeServices.CreateCustomerPackage(parameters: parametersarr)

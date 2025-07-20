@@ -70,7 +70,7 @@ struct MostViewedBooked: View {
                         VipPackageCellView(item: item,action:{
                             selectedPackage = item
                         },likeAction:{
-                            likeAction?(item.id ?? 0,currentcase)})
+                            likeAction?(item.appCountryPackageId ?? 0,currentcase)})
                     }
                 }
                 .padding(.horizontal)

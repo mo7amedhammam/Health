@@ -16,10 +16,10 @@ struct NewHomeView: View {
     @StateObject var wishlistviewModel: WishListManagerViewModel = WishListManagerViewModel.shared
 
     @State var selectedPackage : FeaturedPackageItemM?
-    @State var isReschedualling: Bool = true
+    @State var isReschedualling: Bool = false
     
-    init() {
-    }
+//    init() {
+//    }
     
 //    @State var destination = AnyView(EmptyView())
 //    @State var isactive: Bool = false

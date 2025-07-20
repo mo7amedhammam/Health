@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct SubcripedPackageDetailsView: View {
+    @StateObject var router = NavigationRouter.shared
+
     @StateObject var viewmodel = SubcripedPackageDetailsViewModel.shared
     @State var package: SubcripedPackageItemM?
     var CustomerPackageId: Int?
@@ -50,6 +52,9 @@ struct SubcripedPackageDetailsView: View {
     
     @State var selectedSection: SectionType = .sessions
  
+    @State var showCancel: Bool = false
+    @State var idToCancel: Int?
+
     var body: some View {
         //        NavigationView(){
         VStack(spacing:0){
@@ -63,7 +68,7 @@ struct SubcripedPackageDetailsView: View {
                     HStack{
                         VStack{
                             Text(package?.packageName ?? "pack_Name".localized)
-                                .font(.semiBold(size: 16))
+                                .font(.semiBold(size: 20))
                                 .foregroundStyle(Color.white)
                                 .frame(maxWidth: .infinity,alignment:.leading)
                             
@@ -76,7 +81,7 @@ struct SubcripedPackageDetailsView: View {
                                 Text(package?.categoryName ?? "sub_category")
                                 
                             }
-                            .font(.regular(size: 10))
+                            .font(.medium(size: 14))
                             .foregroundStyle(Color.white)
                             .frame(maxWidth: .infinity,alignment:.leading)
                         }
@@ -98,23 +103,35 @@ struct SubcripedPackageDetailsView: View {
                                     .padding(.horizontal,3)
                                 
                             }
-                            .font(.regular(size: 10))
+                            .font(.regular(size: 12))
                             .minimumScaleFactor(0.5)
                             .foregroundStyle(Color(.white))
                             .padding(.vertical,8)
                             
                             Button(action: {
+                                guard let customerPackageID = package?.customerPackageID else { return }
+
+                                if package?.canRenew ?? false{
+                                    // renew subscription
+                                    guard let docotrID = package?.docotrID else { return }
+                                    router.push(PackageMoreDetailsView( doctorPackageId: docotrID,currentcase:.renew) )
+                                    
+                                }else if package?.canCancel ?? false{
+                                    // sheet for cancel subscription
+                                    idToCancel = customerPackageID
+                                    showCancel = true
+                                }
                                 
                             },label:{
                                 HStack(spacing:3){
-                                    Image("newreschedual")
+                                    Image(package?.canRenew ?? false ? "newreschedual" : "cancelsubscription")
                                         .resizable()
                                         .frame(width: 10, height: 8.5)
-                                    Text("renew_subscription".localized)
+                                    Text(package?.canRenew ?? false ? "renew_subscription".localized: "cancel_subscription".localized)
                                         .underline()
                                 }
                                 .foregroundStyle(Color.white)
-                                .font(.regular(size: 10))
+                                .font(.regular(size: 12))
                             })
                         }
                         .font(.regular(size: 10))
@@ -274,20 +291,35 @@ struct SubcripedPackageDetailsView: View {
         //            }
 //        .reversLocalizeView()
         .localizeView()
+        .withNavigation(router: router)
         .showHud(isShowing:  $viewmodel.isLoading)
         .errorAlert(isPresented: .constant(viewmodel.errorMessage != nil), message: viewmodel.errorMessage)
         .onAppear{
             Task{
                 if let CustomerPackageId = CustomerPackageId{
-                   await viewmodel.getSubscripedPackageDetails(CustomerPackageId: CustomerPackageId)
-                    if let package = viewmodel.subscripedPackage{
-                        self.package = package
-                    }
+                    async let upcoming: () = viewmodel.getSubscripedPackageDetails(CustomerPackageId: CustomerPackageId)
+                    async let packages: () = viewmodel.getSubscripedSessionsList(customerPackageId: CustomerPackageId)
+                    
+                    _ = await (upcoming,packages)
+
+                    self.package = viewmodel.subscripedPackage
                 }
             }
         }
         NavigationLink( "", destination: destination, isActive: $isactive)
         
+        if showCancel{
+            CancelSubscriptionView(isPresent: $showCancel, customerPackageId: idToCancel ?? 0,onCancelSuccess: {
+//                if let index = viewModel.subscripedPackages?.items?.firstIndex(where: { $0.customerPackageID == idToCancel }) {
+//                    viewModel.subscripedPackages?.items?[index].canCancel?.toggle()
+//                }
+                Task{
+                    if let CustomerPackageId = CustomerPackageId{
+                        await viewmodel.getSubscripedPackageDetails(CustomerPackageId: CustomerPackageId)
+                    }
+                }
+            })
+        }
     }
 }
 
@@ -498,7 +530,8 @@ struct SubcripedNextSession: View {
 struct SubcripedSessionsList: View {
     var sessions: [SubcripedSessionsListItemM]?
     var canJoin = true
-    
+    var loadMore: (() -> Void)?
+
     var body: some View {
         VStack{
 //            SectionHeader(image: Image(.newnxtsessionicon),title: "subscription_nextSessions"){
@@ -550,7 +583,7 @@ struct SubcripedSessionsList: View {
                         Spacer()
                         
                         Button(action: {
-                            
+
                         }){
                             HStack(alignment: .bottom){
                                 Image(.newreschedual)
@@ -572,6 +605,12 @@ struct SubcripedSessionsList: View {
                 .frame(maxWidth: .infinity, maxHeight: 124)
                 .padding(10)
                 .cardStyle(cornerRadius: 3)
+                .onAppear {
+                    // Detect when the last item appears
+                    guard session == sessions?.last else {return}
+                        loadMore?()
+                }
+                    
             }
         }
         }

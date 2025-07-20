@@ -65,7 +65,6 @@ extension SubscriptionServices : TargetType1 {
         case
                 .GetCustomerPackageList,
                 .GetCustomerPackageSessionList,
-                .GetCustomerPackageById,
                 .CreateDoctorMessage,
                 .CreateCustomerMessage,
                 .CancelSubscription
@@ -74,6 +73,7 @@ extension SubscriptionServices : TargetType1 {
             
         case
                 .FileType,
+                .GetCustomerPackageById,
                 .GetCustomerPackageInstructionByCPId,
                 .GetMessage
             :

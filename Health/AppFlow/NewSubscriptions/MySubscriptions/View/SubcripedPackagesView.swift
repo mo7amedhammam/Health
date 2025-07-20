@@ -13,22 +13,22 @@ struct SubcripedPackagesView: View {
     @StateObject var router = NavigationRouter.shared
     @StateObject private var viewModel = SubcripedPackagesViewModel.shared
     var hasbackBtn : Bool? = true
-//    var onBack: (() -> Void)? // for uikit dismissal
+    //    var onBack: (() -> Void)? // for uikit dismissal
     
     @State var showCancel: Bool = false
-
+    @State var idToCancel: Int?
+    
     @State var destination = AnyView(EmptyView())
     @State var mustLogin: Bool = false
-//    @State var isactive: Bool = false
-//    func pushTo(destination: any View) {
-//        self.destination = AnyView(destination)
-//        self.isactive = true
-//    }
-    @State var idToCancel: Int?
-
+    //    @State var isactive: Bool = false
+    //    func pushTo(destination: any View) {
+    //        self.destination = AnyView(destination)
+    //        self.isactive = true
+    //    }
+    
     init(hasbackBtn : Bool? = true) {
         self.hasbackBtn = hasbackBtn
-//        self.onBack = onBack
+        //        self.onBack = onBack
     }
     
     var body: some View {
@@ -39,15 +39,15 @@ struct SubcripedPackagesView: View {
                     .padding(.top,55)
                 
                 VStack(spacing:5){
-//                    if isLogedin{
-//                        KFImageLoader(url:URL(string:Constants.imagesURL + (viewModel.imageURL?.validateSlashs() ?? "")),placeholder: Image(.user), isOpenable: true,shouldRefetch: false)
-//
-////                            Image(systemName: "person.circle.fill")
-////                            .resizable()
-//                            .clipShape(Circle())
-//                        .scaledToFill()
-//                        .frame(width: 50, height: 50)
-//                    }
+                    //                    if isLogedin{
+                    //                        KFImageLoader(url:URL(string:Constants.imagesURL + (viewModel.imageURL?.validateSlashs() ?? "")),placeholder: Image(.user), isOpenable: true,shouldRefetch: false)
+                    //
+                    ////                            Image(systemName: "person.circle.fill")
+                    ////                            .resizable()
+                    //                            .clipShape(Circle())
+                    //                        .scaledToFill()
+                    //                        .frame(width: 50, height: 50)
+                    //                    }
                     if let imageURL = profileViewModel.imageURL{
                         KFImageLoader(url:URL(string:Constants.imagesURL + (imageURL.validateSlashs())),placeholder: Image(.onboarding1), isOpenable:true, shouldRefetch: false)
                             .clipShape(Circle())
@@ -81,26 +81,29 @@ struct SubcripedPackagesView: View {
             .frame(height: 232)
             .horizontalGradientBackground()
             
-//            if viewModel.isLoading ?? false && viewModel.subscripedPackages?.items == nil {
-//                VStack{
-//                    ForEach(0..<3) { _ in
-//                        SkeletonPackageCard()
-//                            .padding(.horizontal)
-//                            .padding(.vertical, 4)
-//                    }
-//                 Spacer()
-//                }
-//            } else {
-                SubcripedPackagesListView(packaces: viewModel.subscripedPackages?.items,selectAction: {package in
-                    router.push(SubcripedPackageDetailsView(package: package, CustomerPackageId: nil))
-                },buttonAction:{item in
-                    guard let doctorPackageId = item.customerPackageID else { return }
+            //            if viewModel.isLoading ?? false && viewModel.subscripedPackages?.items == nil {
+            //                VStack{
+            //                    ForEach(0..<3) { _ in
+            //                        SkeletonPackageCard()
+            //                            .padding(.horizontal)
+            //                            .padding(.vertical, 4)
+            //                    }
+            //                 Spacer()
+            //                }
+            //            } else {
+            
 
+                SubcripedPackagesListView(packages: viewModel.subscripedPackages?.items,selectAction: {package in
+                    router.push(SubcripedPackageDetailsView(package: nil, CustomerPackageId: package.customerPackageID))
+                },buttonAction:{item in
+                    
                     if item.canRenew ?? false{
                         // renew subscription
-                        router.push(PackageMoreDetailsView( doctorPackageId: doctorPackageId,currentcase:.renew) )
+                        guard let doctorId = item.docotrID else { return }
+                        router.push(PackageMoreDetailsView( doctorPackageId: doctorId,currentcase:.renew) )
                     }else if item.canCancel ?? false{
                         // sheet for cancel subscription
+                        guard let doctorPackageId = item.customerPackageID else { return }
                         idToCancel = doctorPackageId
                         showCancel = true
                     }
@@ -112,58 +115,83 @@ struct SubcripedPackagesView: View {
                 .refreshable {
                     await viewModel.refresh()
                 }
-                
-//            }
             
-//            Group {
-//                if let packages = viewModel.subscripedPackages?.items {
-//                    SubcripedPackagesListView(packaces: packages, selectAction: { package in
-//                        pushTo(destination: SubcripedPackageDetailsView(package: package))
-//                    }, buttonAction: { item in
-//                        if item.canRenew ?? false {
-//                            // renew subscription
-//                            guard let doctorPackageId = item.customerPackageID else { return }
-//                            pushTo(destination: PackageMoreDetailsView( doctorPackageId: doctorPackageId,currentcase:.renew))
-//                        } else if item.canCancel ?? false {
-//                            // sheet for cancel subscription
-//                            showCancel = true
-//                        }
-//                    }, loadMore: {
-//                        Task {
-//                            await viewModel.loadMoreIfNeeded()
-//                        }
-//                    })
-//                    .refreshable {
-//                        await viewModel.refresh()
-//                    }
-//                }else{
-//                    Spacer()
-//                }
                 
-//            }
+            //            }
+            
+            //            Group {
+            //                if let packages = viewModel.subscripedPackages?.items {
+            //                    SubcripedPackagesListView(packaces: packages, selectAction: { package in
+            //                        pushTo(destination: SubcripedPackageDetailsView(package: package))
+            //                    }, buttonAction: { item in
+            //                        if item.canRenew ?? false {
+            //                            // renew subscription
+            //                            guard let doctorPackageId = item.customerPackageID else { return }
+            //                            pushTo(destination: PackageMoreDetailsView( doctorPackageId: doctorPackageId,currentcase:.renew))
+            //                        } else if item.canCancel ?? false {
+            //                            // sheet for cancel subscription
+            //                            showCancel = true
+            //                        }
+            //                    }, loadMore: {
+            //                        Task {
+            //                            await viewModel.loadMoreIfNeeded()
+            //                        }
+            //                    })
+            //                    .refreshable {
+            //                        await viewModel.refresh()
+            //                    }
+            //                }else{
+            //                    Spacer()
+            //                }
+            
+            //            }
             Spacer().frame(height: hasbackBtn ?? true ? 0 : 80)
             
+        }
+        .onAppear {
+            Task{
+                if (Helper.shared.CheckIfLoggedIn()) {
+                    async let Profile:() = profileViewModel.getProfile()
+                    async let Packages:() = viewModel.refresh()
+//                    await viewModel.getSubscripedPackages()
+                     _ = await (Profile,Packages)
+                    
+                    print("Items count:", viewModel.subscripedPackages?.items?.count ?? -1)
+                       print("Items:", viewModel.subscripedPackages?.items ?? [])
+                } else {
+                    profileViewModel.cleanup()
+                    viewModel.clear()
+                    mustLogin = true
+                }
+            }
         }
         .localizeView()
         .withNavigation(router: router)
         .showHud(isShowing:  $viewModel.isLoading)
         .errorAlert(isPresented: .constant(viewModel.errorMessage != nil), message: viewModel.errorMessage)
         .edgesIgnoringSafeArea([.top,.horizontal])
-        .task {
-            if (Helper.shared.CheckIfLoggedIn()) {
-                await viewModel.getSubscripedPackages()
-                await profileViewModel.getProfile()
-            } else {
-                profileViewModel.cleanup()
-                viewModel.clear()
-                mustLogin = true
-            }
+//        .onAppear {
+//            Task{
+//                if (Helper.shared.CheckIfLoggedIn()) {
+//                    async let Profile:() = profileViewModel.getProfile()
+////                    async let Packages:() = viewModel.refresh()
+//                    await viewModel.getSubscripedPackages()
+//                     _ = await (Profile)
+//                    
+//                    print("Items count:", viewModel.subscripedPackages?.items?.count ?? -1)
+//                       print("Items:", viewModel.subscripedPackages?.items ?? [])
+//                } else {
+//                    profileViewModel.cleanup()
+//                    viewModel.clear()
+//                    mustLogin = true
+//                }
+//            }
+//        }
+        //        NavigationLink( "", destination: destination, isActive: $isactive)
+        
+        .customSheet(isPresented: $mustLogin ,height: 350){
+            LoginSheetView()
         }
-//        NavigationLink( "", destination: destination, isActive: $isactive)
-           
-            .customSheet(isPresented: $mustLogin ,height: 350){
-                LoginSheetView()
-            }
         
         if showCancel{
             CancelSubscriptionView(isPresent: $showCancel, customerPackageId: idToCancel ?? 0,onCancelSuccess: {
@@ -181,255 +209,160 @@ struct SubcripedPackagesView: View {
 }
 
 struct SubcripedPackagesListView: View {
-    var packaces: [SubcripedPackageItemM]?
+    var packages: [SubcripedPackageItemM]?
     var selectAction: ((SubcripedPackageItemM) -> Void)?
     var buttonAction: ((SubcripedPackageItemM) -> Void)?
     var loadMore: (() -> Void)?
 
     var body: some View {
-        VStack(spacing:0){
-            SectionHeader(image: Image(.newvippackicon),title: "subscriped_packages"){
-                //                            go to last mes package
-            }
-            .padding([.horizontal,.top])
-            
-            //            ScrollView(.horizontal,showsIndicators:false){
-            GeometryReader { gr in
-//                List{
-                    
-                    if let packages = packaces,packages.count > 0{
-                        ScrollView{
-                            LazyVStack{
-                            ForEach(packages, id: \.self) { item in
-                                Button(action: {
-                                    selectAction?(item)
-                                }, label: {
-                                    ZStack(alignment: .bottom){
-                                        KFImageLoader(url:URL(string:Constants.imagesURL + (item.packageImage?.validateSlashs() ?? "")),placeholder: Image("logo"), shouldRefetch: true)
-                                            .frame( height: 180)
-                                        
-                                        VStack {
-                                            HStack(alignment:.top){
-                                                
-                                                Image("dateicon 1")
-                                                    .resizable()
-                                                    .frame(width: 11, height: 11)
-                                                VStack(alignment:.leading){
-                                                    (Text("subscription_Date".localized) + Text("  \(item.subscriptionDate ?? "2025-03-31")".ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "yyyy-MM-dd"))
-                                                        .font(.regular(size: 14)))
-                                                    .font(.semiBold(size: 12))
-                                                    .foregroundStyle(Color.white)
-                                                    .frame(maxWidth:.infinity, alignment: .leading)
-                                                    
-                                                    (Text("last_session_Date".localized) + Text("  \(item.lastSessionDate ?? "2025-03-31")".ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "yyyy-MM-dd"))
-                                                        .font(.regular(size: 12)))
-                                                    .font(.medium(size: 10))
-                                                    .foregroundStyle(Color.white)
-                                                }
-                                                
-                                                
-                                                // Title
-                                                HStack (spacing:3){
-                                                    Circle()
-                                                    //                                                    .fill(Color(.white))
-                                                        .frame(width: 5, height: 5)
-                                                    
-                                                    Text(item.status ?? "Active_".localized)
-                                                }
-                                                .font(.medium(size: 12))
-                                                .foregroundStyle(Color.white)
-                                                .frame(height:22)
-                                                .padding(.horizontal,10)
-                                                .background{Color(item.canCancel ?? false ? .active:.notActive)}
-                                                .cardStyle( cornerRadius: 3)
-                                            }
-                                            .frame(maxWidth: .infinity,alignment:.leading)
-                                            .padding(8)
-                                            .background{
-                                                LinearGradient(gradient: Gradient(colors: [.black.opacity(0.5),.clear]), startPoint: .top, endPoint: .bottom)
-                                            }
-                                            
-                                            Spacer()
-                                            
-                                            VStack(spacing:8){
-                                                HStack{
-                                                    VStack(alignment:.leading){
-                                                        HStack{
-                                                            Text(item.packageName ?? "")
-                                                                .font(.semiBold(size: 20))
-                                                                .foregroundStyle(Color.white)
-                                                                .frame(maxWidth: .infinity,alignment:.leading)
-                                                            
-                                                            Button(action: {
-                                                                buttonAction?(item)
-                                                            },label:{
-                                                                HStack(spacing:3){
-                                                                    Image(item.canRenew ?? false ? "newreschedual" : "cancelsubscription")
-                                                                        .resizable()
-                                                                        .frame(width: 10, height: 8.5)
-                                                                    Text(item.canRenew ?? false ? "renew_subscription".localized: "cancel_subscription".localized)
-                                                                        .underline()
-                                                                }
-                                                                .foregroundStyle(Color.white)
-                                                                .font(.regular(size: 12))
-                                                                
-                                                            })
-                                                            .buttonStyle(.plain)
-                                                            
-                                                        }
-//                                                        HStack{
-                                                        Text(item.categoryName ?? "")
+        VStack(spacing: 0) {
+            SectionHeader(image: Image(.newvippackicon), title: "subscriped_packages")
+                .padding([.horizontal, .top])
 
-                                                        HStack {
-                                                            Text(item.mainCategoryName ?? "")
-                                                            
-                                                            
-                                                            Spacer()
-                                                            
-                                                            Image(.newdocicon)
-                                                                .renderingMode(.template)
-                                                                .resizable()
-                                                                .frame(width: 10,height:12)
-                                                                .scaledToFit()
-                                                                .foregroundStyle(Color(.secondary))
-                                                                .padding(3)
-                                                            
-                                                            ( Text("doc_".localized + " / ".localized) + Text(item.doctorName ?? "Doctor Name"))
-                                                                .font(.semiBold(size: 16))
-//                                                                .frame(maxWidth: .infinity,alignment:.trailing)
-                                                            
-                                                        }
-//                                                            Circle()
-//                                                                .fill(Color(.secondary))
-//                                                                .frame(width: 5, height: 5)
-                                                            
-                                                            
-                                                        }
-                                                        .font(.medium(size: 14))
-                                                        .foregroundStyle(Color.white)
-                                                        .frame(maxWidth: .infinity,alignment:.leading)
-                                                        
-//                                                    }
-                                                    
-//                                                    HStack(alignment:.center,spacing:0){
-//                                                        Text( "remain_".localized)
-//                                                        
-//                                                        let reamin = (item.sessionCount ?? 0) - (item.attendedSessionCount ?? 0)
-//                                                        
-//                                                        (Text(" \(reamin) " + "from_".localized + " \(item.sessionCount ?? 0) "))
-//                                                            .font(.bold(size: 12))
-//                                                        
-//                                                        Text( "sessions_ar".localized )
-//                                                    }
-//                                                    .font(.regular(size: 10))
-//                                                    .minimumScaleFactor(0.5)
-//                                                    .foregroundStyle(Color(.secondary))
-//                                                    .padding(8)
-//                                                    .cardStyle(backgroundColor: .white,cornerRadius: 3)
-                                                }
-                                                
-//                                                HStack{
-//                                                    HStack(alignment: .center,spacing: 5){
-////                                                        Image(.newdocicon)
-////                                                            .renderingMode(.template)
-////                                                            .resizable()
-////                                                            .frame(width: 10,height:12)
-////                                                            .scaledToFit()
-////                                                            .foregroundStyle(Color(.secondary))
-////                                                            .padding(3)
-////                                                        
-////                                                        ( Text("doc_".localized + " / ".localized) + Text(item.doctorName ?? "Doctor Name"))
-////                                                            .font(.semiBold(size: 12))
-////                                                            .frame(maxWidth: .infinity,alignment:.leading)
-////                                                        
-////                                                        Button(action: {
-//////                                                            selectAction?(item)
-////                                                            buttonAction?(item)
-////                                                            //                                                            if item.canRenew ?? false{
-////                                                            //
-////                                                            //                                                            }else if item.canCancel ?? false{
-////                                                            //
-////                                                            //                                                            }
-////                                                            
-////                                                        },label:{
-////                                                            HStack(spacing:3){
-////                                                                Image(item.canRenew ?? false ? "newreschedual" : "cancelsubscription")
-////                                                                    .resizable()
-////                                                                    .frame(width: 10, height: 8.5)
-////                                                                Text(item.canRenew ?? false ? "renew_subscription".localized: "cancel_subscription".localized)
-////                                                                    .underline()
-////                                                            }
-////                                                            .foregroundStyle(Color.white)
-////                                                            .font(.regular(size: 10))
-////                                                            
-////                                                        })
-////                                                        .buttonStyle(.plain)
-//                                                        
-//                                                    }
-//                                                    .font(.regular(size: 10))
-//                                                    .foregroundStyle(Color.white)
-//                                                    //                                            .frame(maxWidth: .infinity,alignment:.leading)
-//                                                }
-                                                
-                                            }
-                                            .padding(.horizontal,8)
-                                            .padding(.vertical,2)
-                                            .background{
-                                                BlurView(radius: 5)
-                                                    .horizontalGradientBackground().opacity(0.89)
-                                            }
-                                        }
-                                    }
-                                })
-                                .buttonStyle(.plain)
-                                .listRowSpacing(0)
-                                .listRowSeparator(.hidden)
-                                .listRowBackground(Color.clear)
-                                .cardStyle(cornerRadius: 3)
-                                //                        .frame(width: 200, height: 356)
-                                //                            .padding(.horizontal)
-                                .padding(.top,8)
-                                .onAppear {
-                                    // Detect when the last item appears
-                                    guard item == packages.last else {return}
-                                    
-                                    //                                if item == packages.last {
+            if let packages = packages{
+//                if let packages = packaces, packages.count > 0 {
+                ScrollView {
+                    LazyVStack(spacing: 8) {
+                        ForEach(packages, id: \.self) { item in
+                            SubscribedPackageCardView(item: item, selectAction: {
+                                selectAction?(item)
+                            }, buttonAction: {
+                                buttonAction?(item)
+                            })
+                            .onAppear {
+                                if item == packages.last {
                                     loadMore?()
-                                    //                                    Task {
-                                    //
-                                    //                                        await viewModel.loadMoreIfNeeded()
-                                    //                                    }
-                                    //                                }
                                 }
                             }
-                            //                        .padding(.horizontal,10)
-                            //                        .padding(.top,5)
                         }
-                            .padding(.horizontal)
-                        }
-                        .listStyle(.plain)
-                    }else{
-                        VStack{
-                            Image(.nosubscription)
-                                .resizable()
-                                .frame(width: 162, height: 162)
-                            
-                            Text("subscriped_no_packages".localized)
-                                .font(.semiBold(size: 22))
-                                .foregroundStyle(Color(.btnDisabledTxt))
-                                .padding()
-                                .padding(.horizontal)
-                                .multilineTextAlignment(.center)
-                                .lineSpacing(12)
-                        }
-                        .frame(width: gr.size.width,height:gr.size.height)
-                        
                     }
-//                }
-//                .listStyle(.plain)
-
+                    .padding(.horizontal)
+                }
+            } else {
+                SubscribedPackageEmptyView()
             }
         }
-        
+    }
+}
+
+struct SubscribedPackageCardView: View {
+    let item: SubcripedPackageItemM
+    var selectAction: () -> Void
+    var buttonAction: () -> Void
+
+    var body: some View {
+        Button(action: selectAction) {
+            ZStack(alignment: .bottom) {
+                KFImageLoader(url: URL(string: Constants.imagesURL + (item.packageImage?.validateSlashs() ?? "")), placeholder: Image("logo"), shouldRefetch: true)
+                    .frame(height: 180)
+
+                VStack {
+                    // Top info
+                    HStack(alignment: .top) {
+                        Image("dateicon 1")
+                            .resizable()
+                            .frame(width: 11, height: 11)
+
+                        VStack(alignment: .leading) {
+                            Text("subscription_Date".localized + "  \(item.subscriptionDate?.ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "yyyy-MM-dd") ?? "")")
+                                .font(.semiBold(size: 12))
+                                .foregroundStyle(.white)
+
+                            Text("last_session_Date".localized + "  \(item.lastSessionDate?.ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "yyyy-MM-dd") ?? "")")
+                                .font(.medium(size: 10))
+                                .foregroundStyle(.white)
+                        }
+
+                        Spacer()
+
+                        HStack(spacing: 3) {
+                            Circle().frame(width: 5, height: 5)
+                            Text(item.status ?? "Active_".localized)
+                        }
+                        .font(.medium(size: 12))
+                        .foregroundStyle(.white)
+                        .padding(.horizontal, 10)
+                        .frame(height: 22)
+                        .background(Color(item.canCancel ?? false ? .active : .notActive))
+                        .cardStyle(cornerRadius: 3)
+                    }
+                    .padding(8)
+                    .background(LinearGradient(gradient: Gradient(colors: [.black.opacity(0.5), .clear]), startPoint: .top, endPoint: .bottom))
+
+                    Spacer()
+
+                    // Bottom info
+                    VStack(alignment: .leading, spacing: 8) {
+                        HStack {
+                            Text(item.packageName ?? "")
+                                .font(.semiBold(size: 20))
+                                .foregroundStyle(.white)
+
+                            Spacer()
+
+                            Button(action: buttonAction) {
+                                HStack(spacing: 3) {
+                                    Image(item.canRenew ?? false ? "newreschedual" : "cancelsubscription")
+                                        .resizable()
+                                        .frame(width: 10, height: 8.5)
+
+                                    Text(item.canRenew ?? false ? "renew_subscription".localized : "cancel_subscription".localized)
+                                        .underline()
+                                }
+                                .font(.regular(size: 12))
+                                .foregroundStyle(.white)
+                            }
+                        }
+
+                        Text(item.categoryName ?? "")
+                            .font(.medium(size: 14))
+                            .foregroundStyle(.white)
+
+                        HStack {
+                            Text(item.mainCategoryName ?? "")
+                                .foregroundStyle(.white)
+
+                            Spacer()
+
+                            Image(.newdocicon)
+                                .resizable()
+                                .renderingMode(.template)
+                                .frame(width: 10, height: 12)
+                                .foregroundStyle(Color(.secondary))
+
+                            Text("doc_".localized + " / " + (item.doctorName ?? "Doctor"))
+                                .font(.semiBold(size: 16))
+                                .foregroundStyle(.white)
+                        }
+                    }
+                    .padding(8)
+                    .background(
+                        BlurView(radius: 5)
+                            .horizontalGradientBackground()
+                            .opacity(0.89)
+                    )
+                }
+            }
+        }
+        .buttonStyle(.plain)
+        .cardStyle(cornerRadius: 3)
+    }
+}
+
+struct SubscribedPackageEmptyView: View {
+    var body: some View {
+        VStack {
+            Image(.nosubscription)
+                .resizable()
+                .frame(width: 162, height: 162)
+
+            Text("subscriped_no_packages".localized)
+                .font(.semiBold(size: 22))
+                .foregroundStyle(Color(.btnDisabledTxt))
+                .padding()
+                .multilineTextAlignment(.center)
+                .lineSpacing(12)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 }

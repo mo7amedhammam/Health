@@ -29,7 +29,7 @@ enum HomeServices{
     case GetAvailableShiftDoctors(parameters : [String:Any])
     case GetDoctorPackageById(parameters : [String:Any])
     case GetDoctorAvailableDayList(parameters : [String:Any])
-    case GetTimeShiftScheduleList
+    case GetTimeShiftScheduleList(parameters : [String:Any])
     case GetAvailableDoctorSchedule(parameters : [String:Any])
     case GetBookingSession(parameters : [String:Any])
     case CreateCustomerPackage(parameters : [String:Any])
