@@ -364,3 +364,9 @@
 "add_medication_frequency_placeholder" = "ضع عدد مرت أخد الدواء";
 "add_duration_title" = "لمدة";
 "add_duration_placeholder" = "ضع عدد أيام أخد الدواء";
+
+//MARK: --- inbody ---
+"Inbody_Title" = "إنبودي";
+"upload_New_Inbody" = "تحميل إنبودي جديد";
+"inbody_no_files" = "لا توجد بيانات إنبودي حالياً";
+"inbody_notes" = "ملاحظات:";

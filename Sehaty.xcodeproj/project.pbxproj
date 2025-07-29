@@ -75,6 +75,7 @@
 		9047485D2DD8B2750016C3DC /* AvailableDoctorsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9047485C2DD8B2750016C3DC /* AvailableDoctorsViewModel.swift */; };
 		904748612DD9CEBE0016C3DC /* PackageMoreDetailsM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 904748602DD9CEBE0016C3DC /* PackageMoreDetailsM.swift */; };
 		904748632DD9CF230016C3DC /* PackageMoreDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 904748622DD9CF230016C3DC /* PackageMoreDetailsViewModel.swift */; };
+		905419832E39106B00E8B9F2 /* InbodyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 905419822E39105F00E8B9F2 /* InbodyView.swift */; };
 		9057A6132DA4232B0090C34A /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9057A6122DA4232B0090C34A /* CustomTextField.swift */; };
 		9057A61C2DA430470090C34A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9057A61A2DA430470090C34A /* Localizable.strings */; };
 		9063C5ED2E2B093F00B92E0D /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9063C5EC2E2B093F00B92E0D /* LocationManager.swift */; };
@@ -391,6 +392,7 @@
 		9047485C2DD8B2750016C3DC /* AvailableDoctorsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvailableDoctorsViewModel.swift; sourceTree = "<group>"; };
 		904748602DD9CEBE0016C3DC /* PackageMoreDetailsM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackageMoreDetailsM.swift; sourceTree = "<group>"; };
 		904748622DD9CF230016C3DC /* PackageMoreDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackageMoreDetailsViewModel.swift; sourceTree = "<group>"; };
+		905419822E39105F00E8B9F2 /* InbodyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InbodyView.swift; sourceTree = "<group>"; };
 		9057A6122DA4232B0090C34A /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		9057A61B2DA430470090C34A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		9057A61D2DA430E90090C34A /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -1044,6 +1046,7 @@
 		904748312DCCAF550016C3DC /* AppFlow */ = {
 			isa = PBXGroup;
 			children = (
+				9054197E2E390F9E00E8B9F2 /* NewInbody */,
 				902B88332E2AA6F6009D5234 /* NewMedicationReminder */,
 				902B88192E1FED3B009D5234 /* NewTipsCategories */,
 				902B88082E1D5781009D5234 /* NewMeasurements */,
@@ -1238,6 +1241,38 @@
 				904748522DD34EE50016C3DC /* HomeServices.swift */,
 			);
 			path = NewServices;
+			sourceTree = "<group>";
+		};
+		9054197E2E390F9E00E8B9F2 /* NewInbody */ = {
+			isa = PBXGroup;
+			children = (
+				905419812E390FB100E8B9F2 /* Model */,
+				905419802E390FAD00E8B9F2 /* ViewModel */,
+				9054197F2E390FAA00E8B9F2 /* View */,
+			);
+			path = NewInbody;
+			sourceTree = "<group>";
+		};
+		9054197F2E390FAA00E8B9F2 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				905419822E39105F00E8B9F2 /* InbodyView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		905419802E390FAD00E8B9F2 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		905419812E390FB100E8B9F2 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		9063C5EB2E2B093600B92E0D /* Location */ = {
@@ -2996,6 +3031,7 @@
 				BB48F8A12A747D020051F12C /* ChangePasswordVC.swift in Sources */,
 				902B87C12E0AD7DA009D5234 /* MyFilesView.swift in Sources */,
 				BBE3CC742A7FFFF8004B0D9A /* MedicationScheduleVC.swift in Sources */,
+				905419832E39106B00E8B9F2 /* InbodyView.swift in Sources */,
 				902B87DD2E0F0EEB009D5234 /* CustomerOrderDetailM.swift in Sources */,
 				C85996752AA7553500533C87 /* HUD.swift in Sources */,
 				BB0512482B60313C004CAB83 /* ModelResponseFirebase.swift in Sources */,

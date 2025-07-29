@@ -359,3 +359,9 @@
 "add_medication_frequency_placeholder" = "enter medication times";
 "add_duration_title" = "number of days";
 "add_duration_placeholder" = "enter medication days";
+
+//MARK: --- inbody ---
+"Inbody_Title" = "Inbody";
+"upload_New_Inbody" = "upload New Inbody";
+"inbody_no_files" = "no inbody recorded for now";
+"inbody_notes" = "notes :";

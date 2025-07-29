@@ -93,13 +93,16 @@ struct ProfileViewUI: View {
 //                                    pushUIKitVC(VC)
                                 }
                                 ProfileRow(title: "profile_tips".localized, icon: "profile_tips"){
+                                    router.push( TipsView())
 //                                    let VC: UIViewController = initiateViewController(storyboardName: .main, viewControllerIdentifier: TipsCategoriesVC1.self)!
 //                                    pushUIKitVC(VC)
-                                    router.push( TipsView())
                                 }
                                 ProfileRow(title: "profile_inbody".localized, icon: "profile_inbody"){
-                                    let VC: UIViewController = initiateViewController(storyboardName: .main, viewControllerIdentifier: INBodyVC.self)!
-                                    pushUIKitVC(VC)
+                                    router.push( InbodyView())
+
+//                                    let VC: UIViewController = initiateViewController(storyboardName: .main, viewControllerIdentifier: INBodyVC.self)!
+//                                    pushUIKitVC(VC)
+
                                 }
                                 ProfileRow(title: "profile_files".localized, icon: "profile_files"){
                                     router.push( MyFilesView())
