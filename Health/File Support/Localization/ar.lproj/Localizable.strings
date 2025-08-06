@@ -370,3 +370,14 @@
 "upload_New_Inbody" = "تحميل إنبودي جديد";
 "inbody_no_files" = "لا توجد بيانات إنبودي حالياً";
 "inbody_notes" = "ملاحظات:";
+
+"select_Date" = "حدد تاريخ";
+"download_Inbody" = "تحميل التقرير";
+"Downloading_" = "جارى التحميل";
+"inbody_success_title" = "تم تحميل التقرير بنجاح";
+"inbody_success_subtitle1" = "يرجى التحقق من صندوق الوارد الخاص بك للتحقق من رحلتك.";
+"inbody_success_subtitle2" = "تم ربطه سريعًا بخدمات البريد الإلكتروني الشائعة.";
+"inbody_success_created_btn" = "التالي";
+"PDF_" = "ملف";
+"Image" = "صوره";
+"Image is Selected Successfully_" = "تم اختيار الصورة بنجاح";

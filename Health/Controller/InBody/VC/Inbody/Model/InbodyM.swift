@@ -12,9 +12,9 @@ struct InbodyListM: Codable {
 }
 
 // MARK: - InbodyListItemM -
-struct InbodyListItemM: Codable,Equatable {
+struct InbodyListItemM: Codable,Hashable {
    var id: Int?
-   var testFile: String?
+   var testFile,title: String?
    var customerID: Int?
    var customerName,createdByName,comment, date: String?
 
@@ -23,6 +23,15 @@ struct InbodyListItemM: Codable,Equatable {
        case testFile = "test"
        case customerID = "customerId"
        case customerName,createdByName, date, comment
+       case title
    }
+}
+extension InbodyListItemM {
+    var formattedCreationDate: String? {
+        guard let date = self.date else { return "" }
+
+        let formatedDate = convertDateToString(inputDateString: date , inputDateFormat: "yyyy-MM-dd'T'HH:mm:ss", outputDateFormat: "yyyy/MM/dd hh:mm a")
+        return formatedDate // fallback to original string if parsing fails
+    }
 }
 

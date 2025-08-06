@@ -365,3 +365,19 @@
 "upload_New_Inbody" = "upload New Inbody";
 "inbody_no_files" = "no inbody recorded for now";
 "inbody_notes" = "notes :";
+
+"select_Date" = "select Date";
+"download_Inbody" = "download Inbody";
+"Downloading_" = "Downloading";
+"inbody_success_title" = "Report uploaded successfully";
+"inbody_success_subtitle1" = "Please check your inbox to view your journey.";
+"inbody_success_subtitle2" = "Quickly linked with popular email services.";
+"inbody_success_created_btn" = "Next";
+"PDF" = "PDF";
+"Image" = "Image";
+"Image is Selected Successfully_" = "Image is Selected Successfully";
+
+"new_fileName" = "new_fileName";
+"new_filenameplaceholder" = "new_filenameplaceholder";
+"new_filecomments" = "new_filecomments";
+"new_filecommentsplaceholder" = "new_filecommentsplaceholder";

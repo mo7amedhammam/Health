@@ -911,7 +911,6 @@ final class AsyncAwaitNetworkService: AsyncAwaitNetworkServiceProtocol {
                 case 400..<500:
 //                        throw NetworkError.unknown(code: httpResponse.statusCode, error: "client error")
                     let serverMessage: String
-
                        do {
                            let errorResponse = try JSONDecoder().decode(ServerErrorResponse.self, from: data)
                            serverMessage = errorResponse.message
@@ -920,7 +919,7 @@ final class AsyncAwaitNetworkService: AsyncAwaitNetworkServiceProtocol {
                        }
 
                        throw NetworkError.unknown(code: httpResponse.statusCode, error: serverMessage)
-                    
+                                        
                 case 500..<600:
                     throw NetworkError.serverError(code: httpResponse.statusCode, error: "Server error")
                 default:
