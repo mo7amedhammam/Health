@@ -381,3 +381,27 @@
 "new_filenameplaceholder" = "new_filenameplaceholder";
 "new_filecomments" = "new_filecomments";
 "new_filecommentsplaceholder" = "new_filecommentsplaceholder";
+
+
+//MARK: - --------------> DOCTOR <--------------- -
+//MARK: --- My Schedule ---
+"doc_myscehdules" = "My Scehdules";
+"select_available_time_slots" = "available slots";
+"select_available_time_slots_subtitle" = "select availabal slots";
+"remove_all_btn" = "remove all";
+"confirm_title" = "are you sure you available in selected slots";
+"doc_conf_succ_title" = "Your appointments have been successfully scheduled";
+"doc_conf_succ_subtitle1" = "Please check your inbox to confirm your trip.";
+"doc_conf_succ_subtitle2" = "Quickly linked with popular email services.";
+"doc_conf_succ_btn" = "Home screen";
+
+//MARK: --- notification ---
+"doc_notifications" = "Notifications";
+
+//MARK: --- payments ---
+
+"doc_pay_due_amount" = "Due Amount";
+"doc_pay_received" = "Received";
+"doc_pay_total" = "Total";
+"doc_Previous_details" = "Previous Subscription Details";
+"doc_refund" = "Refund";

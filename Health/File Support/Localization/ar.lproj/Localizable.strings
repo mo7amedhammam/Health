@@ -381,3 +381,27 @@
 "PDF_" = "ملف";
 "Image" = "صوره";
 "Image is Selected Successfully_" = "تم اختيار الصورة بنجاح";
+
+
+//MARK: - --------------> DOCTOR <--------------- -
+//MARK: --- My Schedule ---
+"doc_myscehdules" = "جدولي";
+"select_available_time_slots" = "تحديد الفترات المتاحة";
+"select_available_time_slots_subtitle" = "قم بتحديد الفترات المتاحة إليك خلال أيام الأسبوع";
+"remove_all_btn" = "مسح الكل";
+"confirm_title" = "هل أنت متأكد من تحديد المواعيد المتاحة إليك؟";
+"doc_conf_succ_title" = "تم تحديد مواعيدك بنجاح";
+"doc_conf_succ_subtitle1" = "يرجى التحقق من صندوق الوارد الخاص بك للتحقق من رحلتك.";
+"doc_conf_succ_subtitle2" = "تم ربطه سريعًا بخدمات البريد الإلكتروني الشائعة.";
+"doc_conf_succ_btn" = "الصفحة الرئيسية";
+
+//MARK: --- notification ---
+"doc_notifications" = "التنبيهات";
+
+//MARK: --- payments ---
+
+"doc_pay_due_amount" = "المبلغ المُستحق";
+"doc_pay_received" = "تم استلام:";
+"doc_pay_total" = "إجمالي:";
+"doc_Previous_details" = "تفاصيل الاشتراكات المدفوعة";
+"doc_refund" = "المبالغ المترجعة للعميل";
