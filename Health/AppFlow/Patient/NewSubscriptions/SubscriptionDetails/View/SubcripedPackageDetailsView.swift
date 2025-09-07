@@ -194,7 +194,7 @@ struct SubcripedPackageDetailsView: View {
                                     .frame(width: 70,height: 70)
                                     .cardStyle(cornerRadius: 3)
                                 
-                                Text(button.title)
+                                Text(button.title.localized)
                                     .font(.bold(size: 12))
                                     .foregroundStyle(selectedSection == button ? Color(.secondary):Color(.btnDisabledTxt))
                             }

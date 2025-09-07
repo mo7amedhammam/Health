@@ -222,6 +222,9 @@ struct PackageCard: View {
         .cardStyle(cornerRadius: 3,shadowOpacity: 0.2)
     }
 }
+//#Preview{
+//    PackageCard(package: CustomerOrderDetailM.init(packageName: "dsdsd dsdsd fsfsf", customerPackageID: 2, cancelReason: "Sfdfdfweafcafcaedfd few few few f ew f ew f ew f. Ew f e f. Feed me and ewrmf ", status: "", date: "2025-07-06T00:00:00", amount: 2, sessionCount: 10, attendedSessionCount: 4, remainingSessionCount: 6))
+//}
 
 struct RefundCard: View {
     var package: CustomerOrderDetailM
@@ -280,14 +283,15 @@ struct RefundCard: View {
                     .padding(.top, 6)
                     //                    .frame(maxWidth: .infinity,alignment: .leading)
                     
-                    Text(package.date ?? "")
+                    Text(package.formattedDate ?? "")
                         .font(.medium(size: 14))
                         .foregroundColor(.mainBlue)
                 }
             }
             //                .frame(maxWidth: .infinity,alignment: .leading)
-            .layoutPriority(1)
+//            .layoutPriority(1)
             
+            Spacer()
             
             VStack(alignment: .leading,spacing: 4) {
                 //
@@ -325,7 +329,7 @@ struct RefundCard: View {
                             .font(.medium(size: 12))
                             .foregroundColor(Color(.secondary))
                         
-                        Spacer()
+//                        Spacer()
                     }
                     .padding(.top, 6)
                     
@@ -334,7 +338,7 @@ struct RefundCard: View {
                         .foregroundColor(.mainBlue)
                 }
             }
-            //            .frame(maxWidth: .infinity,alignment: .leading)
+//                        .frame(maxWidth: .infinity,alignment: .leading)
             //            .layoutPriority(0.5)
             .fixedSize(horizontal: false, vertical: true) // <- restrict width
             
@@ -343,6 +347,9 @@ struct RefundCard: View {
         .cardStyle(cornerRadius: 3,shadowOpacity: 0.2)
         
     }
+}
+#Preview{
+    RefundCard(package: CustomerOrderDetailM.init(packageName: "", customerPackageID: 2, cancelReason: "", status: "", date: "2025-07-06T00:00:00", amount: 2, sessionCount: 10, attendedSessionCount: 4, remainingSessionCount: 6), isRefunded: true)
 }
 
 struct NoteRow: View {

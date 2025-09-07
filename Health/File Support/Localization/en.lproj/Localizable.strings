@@ -222,10 +222,14 @@
 "last_session_Date" = "Last Session Date";
 "Active_" = "Active";
 "remain_" = "remain";
+"sessions_ar" = "sessions_ar";
 "from_" = "from";
 "doc_" = "doc";
 "renew_subscription" = "Renew Subscription";
 "cancel_subscription" = "Cancel Subscription";
+"Chats_" = "Chats";
+"sessions_" = "sessions";
+"Files_" = "Files";
 
 //MARK: --- Package Files ---
 "Watch_" = "Watch";
@@ -405,3 +409,16 @@
 "doc_pay_total" = "Total";
 "doc_Previous_details" = "Previous Subscription Details";
 "doc_refund" = "Refund";
+
+//MARK: --- Packages ---
+"doc_packages" = "My Packages";
+"doc_no_packages" = "you don't have any Packeages yet";
+"doc_package_request" = "send package request";
+"new_send_btn" = "send";
+"subscribtions_" = "subscribtions";
+"doc_your_packages" = "your packages";
+
+//MARK: ---- active customer packages ----
+"Customer_Mesurements" = "Customer Mesurements";
+"select_next_session" = "select next session";
+"send_customer_notification" = "send customer notification";

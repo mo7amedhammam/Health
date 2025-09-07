@@ -222,10 +222,14 @@
 "last_session_Date" = "تاريخ آخر جلسة";
 "Active_" = "نشط";
 "remain_" = "متبقي";
+"sessions_ar" = "سيشنز";
 "from_" = "من";
 "doc_" = "د";
 "renew_subscription" = "تجديد الاشتراك";
 "cancel_subscription" = "إلغاء الاشتراك";
+"Chats_" = "محادثة";
+"sessions_" = "السيشنز";
+"Files_" = "الملفات";
 
 //MARK: --- Package Files ---
 "Watch_" = "مشاهده";
@@ -405,3 +409,16 @@
 "doc_pay_total" = "إجمالي:";
 "doc_Previous_details" = "تفاصيل الاشتراكات المدفوعة";
 "doc_refund" = "المبالغ المترجعة للعميل";
+
+//MARK: --- Packages ---
+"doc_packages" = "باقاتي";
+"doc_no_packages" = "لا يوجد لديك أي باقات حتى الآن";
+"doc_package_request" = "إرسال طلب باقة";
+"new_send_btn" = "ارسال";
+"subscribtions_" = "اشتراك";
+"doc_your_packages" = "باقاتك";
+
+//MARK: ---- active customer packages ----
+"Customer_Mesurements" = "قياسات العميل";
+"select_next_session" = "تحديد السيشن القادمة";
+"send_customer_notification" = "إرسال تنبيه للعميل";
