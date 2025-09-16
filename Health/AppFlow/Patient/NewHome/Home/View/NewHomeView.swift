@@ -185,8 +185,8 @@ struct NewHomeView: View {
 }
 
 #Preview {
-    //    NewHomeView()
     NewTabView()
+        .environmentObject(EditProfileViewModel.shared)
 }
 
 

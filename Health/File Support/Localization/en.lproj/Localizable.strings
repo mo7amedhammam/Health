@@ -34,6 +34,7 @@
 "bord_btn_skip" = "Skip";
 
 /* Login */
+"Customer" = "Customer";
 "login_title" = "Login";
 "login_subtitle" = "Enter Your Date and press ”Login”";
 "login_mobile_title" = "Mobile Number";
@@ -417,6 +418,18 @@
 "new_send_btn" = "send";
 "subscribtions_" = "subscribtions";
 "doc_your_packages" = "your packages";
+"Package_selection" = "Package selection";
+"Package_selection_Hint" ="Select Package You want to goin";
+"MainCategory_title" = "Main Category";
+"MainCategory_placeholder" = "Select Main Category";
+"SubCategory_title" = "Sub Category";
+"SubCategory_placeholder" = "Select Sub Category";
+"Package_title" = "Package";
+"Package_placeholder" = "Select Package";
+"Package_success_title" = "Request Added";
+"Package_success_subtitle1" = "Please check your inbox to confirm your trip.";
+"Package_success_subtitle2" = "Quickly linked with popular email services.";
+
 
 //MARK: ---- active customer packages ----
 "Customer_Mesurements" = "Customer Mesurements";

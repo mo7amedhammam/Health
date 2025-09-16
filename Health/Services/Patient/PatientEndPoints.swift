@@ -42,10 +42,7 @@ enum EndPoints: String {
     
     // -- notifications --
 //    case GetNotification = "CustomerPrescriptionDrug/GetCustomerNormalDrugs"
-        case GetNotification = "CustomerPrescriptionDrug/GetMyNormalDrugs"
-
-    // -- pfofile --
-    case GetMyProfile = "Customer/MyProfile"
+    case GetNotification = "CustomerPrescriptionDrug/GetMyNormalDrugs"
 
     // -- tips categories --
     case GetAllMobile = "TipCategory/GetAllMobile"

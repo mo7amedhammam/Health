@@ -35,7 +35,7 @@ struct DocTabView: View{
 //                    })
 //                    .ignoresSafeArea()
                     
-                    ProfileViewUI()
+                   DocProfileViewUI()
                         .environmentObject(viewModel)
 
                 case 1:
@@ -56,8 +56,10 @@ struct DocTabView: View{
                     
                 case 3:
                     
-                    MyMeasurementsView()
-                    
+//                    MyMeasurementsView()
+                    DocScheduleView()
+                        .environmentObject(viewModel)
+
 //                    UIKitViewControllerWrapper(makeViewController: {
 ////                    let VC: UIViewController = initiateViewController(storyboardName: .main, viewControllerIdentifier: NotificationVC.self)!
 //                                    

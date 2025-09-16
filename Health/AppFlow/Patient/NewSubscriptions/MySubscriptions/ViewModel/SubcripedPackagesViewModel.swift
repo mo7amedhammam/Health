@@ -56,7 +56,7 @@ extension SubcripedPackagesViewModel{
                 // Fresh load
                await MainActor.run(){
                     subscripedPackages = response
-                    print("subscripedPackages:",subscripedPackages)
+                   print("subscripedPackages:",subscripedPackages ?? .init())
                 }
             } else {
                 // Append for pagination

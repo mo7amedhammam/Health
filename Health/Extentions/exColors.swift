@@ -5,7 +5,7 @@
 //  Created by mohamed hammam on 03/04/2025.
 //
 
-import SwiftUICore
+import SwiftUI
 
 extension Color {
     public static let mainBlue = Color(.mainBlue)

@@ -34,6 +34,7 @@
 "bord_btn_skip" = "تخطي";
 
 /* Login */
+"Customer" = "مريض";
 "login_title" = "تسجيل الدخول";
 "login_subtitle" = "ادخل بياناتك ثم اضغط على “تسجيل الدخول”";
 "login_mobile_title" = "رقم الموبايل";
@@ -417,6 +418,17 @@
 "new_send_btn" = "ارسال";
 "subscribtions_" = "اشتراك";
 "doc_your_packages" = "باقاتك";
+"Package_selection" = "اختيار الباقة";
+"Package_selection_Hint" = "اختر الباقة التي ترغب في الانضمام إليها";
+"MainCategory_title" = "التصنيف الرئيسي";
+"MainCategory_placeholder" = "اختر التصنيف الرئيسي";
+"SubCategory_title" = "التصنيف الفرعي";
+"SubCategory_placeholder" = "اختر التصنيف الفرعي";
+"Package_title" = "الباقة";
+"Package_placeholder" = "اختر الباقة";
+"Package_success_title" = "تم إرسال طلبك بنجاح";
+"Package_success_subtitle1" = "يرجى التحقق من صندوق الوارد الخاص بك للتحقق من رحلتك.";
+"Package_success_subtitle2" = "تم ربطه سريعًا بخدمات البريد الإلكتروني الشائعة.";
 
 //MARK: ---- active customer packages ----
 "Customer_Mesurements" = "قياسات العميل";

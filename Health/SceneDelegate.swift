@@ -45,7 +45,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         } else { //uikit
             
             if Helper.shared.CheckIfLoggedIn(){ //swiftui
-                let vc = UIHostingController(rootView: NewTabView())
+                let vc = Helper.shared.getSelectedUserType() == .Doctor ? UIHostingController(rootView:  DocTabView().environmentObject(EditProfileViewModel.shared)) : UIHostingController(rootView: NewTabView().environmentObject(EditProfileViewModel.shared))
                 let nav = UINavigationController(rootViewController: vc)
                 nav.navigationBar.isHidden = true
                 window?.rootViewController = nav
@@ -64,7 +64,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 
                 
                 if Helper.shared.AppCountryId() != nil{
-                    let vc = UIHostingController(rootView: NewTabView())
+                    let vc = Helper.shared.getSelectedUserType() == .Doctor ? UIHostingController(rootView:  DocTabView().environmentObject(EditProfileViewModel.shared)) : UIHostingController(rootView: NewTabView().environmentObject(EditProfileViewModel.shared))
                     let nav = UINavigationController(rootViewController: vc)
                     nav.navigationBar.isHidden = true
                     window?.rootViewController = nav

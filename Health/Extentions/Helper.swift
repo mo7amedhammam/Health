@@ -22,6 +22,7 @@ class Helper: NSObject {
     let Languagekey = "languagekey"
     let LanguageSelectedKey = "LanguageSelectedKey"
     let AppCountryIdKey = "AppCountryIdKey"
+    let UserTypeKey = "setSelectedUserTypeKey"
 
 //     "id": 0,
 //     "phoneNumber": "string",
@@ -448,6 +449,20 @@ extension Helper{
        return UserDefaults.standard.integer(forKey: AppCountryIdKey)
    }
 
+    func setSelectedUserType(userType: UserTypeEnum) {
+        userDef.set(userType.rawValue, forKey: UserTypeKey)
+//        let rawValue = userType
+//        userDef.set(rawValue, forKey: UserTypeKey)
+//        userDef.synchronize()
+    }
+    
+    func getSelectedUserType() -> UserTypeEnum? {
+        guard let rawValue = userDef.string(forKey: UserTypeKey) else { return nil }
+        return UserTypeEnum(rawValue: rawValue)
+
+//        let rawValue = userDef.string(forKey: UserTypeKey)
+//        return UserTypeEnum(rawValue: rawValue ?? "")
+    }
         
         // Checking internet connection
      func isConnectedToNetwork() -> Bool {

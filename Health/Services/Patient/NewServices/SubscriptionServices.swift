@@ -34,7 +34,14 @@ extension SubscriptionServices : TargetType1 {
         switch self {
             
         case .GetCustomerPackageList:
-            return SubscriptionEndPoints.GetCustomerPackageList.rawValue
+            switch Helper.shared.getSelectedUserType() {
+            case .Customer,.none:
+                return SubscriptionEndPoints.GetCustomerPackageList.rawValue
+
+                case .Doctor:
+                return DocEndPoints.DocGetDoctorCustomerPackageList.rawValue
+            }
+            
         case .GetCustomerPackageById:
             return SubscriptionEndPoints.GetCustomerPackageById.rawValue
 //        case .GetDoctorById:

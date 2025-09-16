@@ -7,7 +7,6 @@
 
 import SwiftUI
 
-
 struct DocProfileViewUI: View {
     @StateObject var router = NavigationRouter()
 
@@ -87,10 +86,14 @@ struct DocProfileViewUI: View {
                         Section {
                             VStack{
                                 ProfileRow(title: "profile_Packages".localized, icon: "profile_packages"){
-                                    router.push(DocScheduleView())
+//                                    router.push(DocScheduleView())
+                                    router.push( DocPackagesScreen())
+
                                 }
                                 ProfileRow(title: "profile_drugnotifications".localized, icon: "profile_notification"){
-                                    router.push( MedicationReminderView())
+//                                    router.push( MedicationReminderView())
+                                    router.push( DocScheduleView().environmentObject(viewModel))
+
 //                                    let VC: UIViewController = initiateViewController(storyboardName: .main, viewControllerIdentifier: NotificationVC.self)!
 //                                    pushUIKitVC(VC)
                                 }
@@ -144,7 +147,7 @@ struct DocProfileViewUI: View {
                             
                             if isLogedin{
                                 ProfileRow(title: "profile_editProfile".localized, icon: "profile_editProfile"){
-                                    router.push( EditProfileView())
+                                    router.push( DocEditProfileView().environmentObject(viewModel))
 
                                 }
                                 ProfileRow(title: "profile_changepassword".localized, icon: "profile_changePass"){
@@ -219,7 +222,7 @@ struct DocProfileViewUI: View {
 }
 struct DocProfileViewUI_Previews: PreviewProvider {
     static var previews: some View {
-        DocProfileViewUI()
+        DocProfileViewUI().environmentObject(EditProfileViewModel.shared)
     }
 }
 

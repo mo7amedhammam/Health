@@ -80,7 +80,7 @@ extension Authintications : TargetType {
         case .CreateCustomerInboy:
             return EndPoints.CreateCustomerInBody.rawValue
         case .GetMyProfile:
-            return EndPoints.GetMyProfile.rawValue
+            return ProfileEndPoints.GetProfile.rawValue
 
         case .SendFireBaseDeviceToken :
             return EndPoints.SendFireBaseDeviceToken.rawValue
@@ -182,13 +182,34 @@ extension NewAuthontications : TargetType1 {
         case .Register:
             return EndPoints.Register.rawValue
         case .Login:
-            return EndPoints.Login.rawValue
+            switch Helper.shared.getSelectedUserType() {
+            case .Customer,.none:
+                return EndPoints.Login.rawValue
+
+            case .Doctor:
+                return DocEndPoints.DocLogin.rawValue
+
+            }
             
         case .SendOtp:
-            return EndPoints.sendOTP.rawValue
+            switch Helper.shared.getSelectedUserType() {
+            case .Customer,.none:
+                return EndPoints.sendOTP.rawValue
+
+            case .Doctor:
+                return DocEndPoints.DocsendOTP.rawValue
+
+            }
             
         case .VerifyOtp:
-            return EndPoints.VerifyOTP.rawValue
+            switch Helper.shared.getSelectedUserType() {
+            case .Customer,.none:
+                return EndPoints.VerifyOTP.rawValue
+
+            case .Doctor:
+                return DocEndPoints.DocVerifyOTP.rawValue
+
+            }
             
         case .GetDistricts:
             return EndPoints.GetAllDistricts.rawValue
@@ -199,7 +220,14 @@ extension NewAuthontications : TargetType1 {
             return EndPoints.ResetPassword.rawValue
             
         case .ChangePassword:
-            return EndPoints.ChangePassword.rawValue
+            switch Helper.shared.getSelectedUserType() {
+            case .Customer,.none:
+                return EndPoints.ChangePassword.rawValue
+
+            case .Doctor:
+                return DocEndPoints.DocChangePassword.rawValue
+
+            }
             
             // -- schedual --
         case .GetMySchedulePrescriptions:
@@ -214,7 +242,14 @@ extension NewAuthontications : TargetType1 {
         case .CreateCustomerInboy:
             return EndPoints.CreateCustomerInBody.rawValue
         case .GetMyProfile:
-            return EndPoints.GetMyProfile.rawValue
+            switch Helper.shared.getSelectedUserType() {
+            case .Customer,.none:
+                return ProfileEndPoints.GetProfile.rawValue
+
+            case .Doctor:
+                return DocEndPoints.DocGetMyProfile.rawValue
+
+            }
             
         case .SendFireBaseDeviceToken :
             return EndPoints.SendFireBaseDeviceToken.rawValue

@@ -8,10 +8,26 @@
 
 enum DocEndPoints : String{
 //MARK: -    —— Doctor Api ——
+    // MARK: - Auth
+    case DocRegister = "Doctor/Create"
+    case DocVerifyUser = "Doctor/VerifyUser"
+    case DocLogin = "Doctor/Login"
 
-//------------My Schedule----------
-    case DocCreateOrUpdateDoctorSchedule = "Doctor/CreateOrUpdateDoctorSchedule"
+    case DocsendOTP = "Doctor/SendOTP"
+    case DocVerifyOTP = "Doctor/VerifyOTP"
 
+    case DocResetPassword = "Doctor/ResetPassword"
+    case DocChangePassword = "Doctor/ChangePassword"
+    
+    // -- pfofile --
+    case DocGetMyProfile = "Doctor/GetById"
+    case DocUpdateMyProfile = "Doctor/Update"
+
+    //------------My Schedule----------
+    case GetDoctorSchedule = "Doctor/GetDoctorSchedule"
+    case CreateDoctorSchedule = "Doctor/CreateDoctorSchedule"
+    case DeleteSchedule = "Doctor/DeleteSchedule"
+    
 //-----------My Appointments--------
     case DocGetDoctorUpComingSession = "Home/GetDoctorUpComingSession"
     case DocDoctorSessionCalender = "CustomerPackageSession/DoctorSessionCalender"

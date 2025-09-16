@@ -38,6 +38,8 @@ struct OnboardingView: View {
                     .tag(index)
                 }
             }
+            .tabViewStyle(.page) // 👈 This makes it a paging view (no Tab Bar UI)
+            
             HStack(alignment:.center) {
                 ZStack{
                     if currentPage > 0 {

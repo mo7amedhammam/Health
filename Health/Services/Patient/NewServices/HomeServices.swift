@@ -44,7 +44,14 @@ extension HomeServices : TargetType1 {
     var path: String {
         switch self {
         case .GetUpcomingSession:
-            return newEndPoints.GetCustomerUpcomingSession.rawValue
+            switch Helper.shared.getSelectedUserType() {
+            case .Customer,.none:
+                return newEndPoints.GetCustomerUpcomingSession.rawValue
+
+            case .Doctor:
+                return DocEndPoints.DocGetDoctorUpComingSession.rawValue
+
+            }
     
         case .GetAllHomeCategory:
             return newEndPoints.GetAllHomeCategory.rawValue
@@ -92,7 +99,13 @@ extension HomeServices : TargetType1 {
             return newEndPoints.CreateCustomerPackage.rawValue
 
         case .CustomerSessionCalender:
-            return AppointmentEndPoints.CustomerSessionCalender.rawValue
+            switch Helper.shared.getSelectedUserType() {
+            case .Customer,.none:
+                return AppointmentEndPoints.CustomerSessionCalender.rawValue
+
+            case .Doctor:
+                return DocEndPoints.DocDoctorSessionCalender.rawValue
+            }
         }
     }
     

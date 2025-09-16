@@ -5,7 +5,7 @@
 //  Created by mohamed hammam on 24/08/2025.
 //
 
-import SwiftUICore
+import SwiftUI
 
 struct DocNotificationM: Identifiable {
     let id = UUID()

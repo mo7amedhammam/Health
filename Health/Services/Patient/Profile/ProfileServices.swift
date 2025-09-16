@@ -21,10 +21,24 @@ extension ProfileServices : TargetType1 {
         switch self {
             
         case .GetProfile:
-            return ProfileEndPoints.GetProfile.rawValue
+            switch Helper.shared.getSelectedUserType() {
+            case .Customer,.none:
+                return ProfileEndPoints.GetProfile.rawValue
+
+            case .Doctor:
+                return DocEndPoints.DocGetMyProfile.rawValue
+
+            }
 
         case .UpdateProfile:
-            return ProfileEndPoints.UpdateProfile.rawValue
+            switch Helper.shared.getSelectedUserType() {
+        case .Customer,.none:
+                return ProfileEndPoints.UpdateProfile.rawValue
+
+        case .Doctor:
+            return DocEndPoints.DocUpdateMyProfile.rawValue
+
+        }
 
         }
     }
