@@ -434,3 +434,6 @@
 "Customer_Mesurements" = "قياسات العميل";
 "select_next_session" = "تحديد السيشن القادمة";
 "send_customer_notification" = "إرسال تنبيه للعميل";
+"Files_Title" = "الملفات";
+"Package_files" = "ملفات الباقة";
+"customer_files" = "ملفات العميل";

@@ -68,21 +68,21 @@ struct MessageBubbleView: View {
 //        let _ = print("🔍 message.comment = \(message.comment ?? "nil")")
 //        let _ = print("✅ Final voicePath URL: \(Constants.baseURL + (message.voicePath ?? "").validateSlashs())")
         HStack {
-            if message.isFromCustomer {
+            if message.isFromMe {
                 Spacer()
             }
             
             HStack(alignment: .top) {
                 
-                if !message.isFromCustomer {
-                    Image(systemName: "person.circle.fill")
-                        .foregroundColor(.white)
-                        .frame(width: 34, height: 34)
-                        .background(Color.mainBlue)
-                        .clipShape(Circle())
-                        .offset(y:14)
-                }
-                VStack(alignment:message.isFromCustomer ? .trailing:.leading, spacing: 4) {
+//                if !message.isFromCustomer {
+//                    Image(systemName: "person.circle.fill")
+//                        .foregroundColor(.white)
+//                        .frame(width: 34, height: 34)
+//                        .background(Color.mainBlue)
+//                        .clipShape(Circle())
+//                        .offset(y:14)
+//                }
+                VStack(alignment:(message.isFromMe) ? .trailing:.leading, spacing: 4) {
                     Text(message.formattedDate)
                         .font(.regular(size: 12))
                         .foregroundColor(.gray)
@@ -91,23 +91,23 @@ struct MessageBubbleView: View {
                     if message.voicePath == nil {
                         Text(message.messageText)
                             .font(.regular(size: 14))
-                            .foregroundColor(message.isFromCustomer ? .white : .black)
+                            .foregroundColor(message.isFromMe ? .white : .black)
                             .padding(12)
-                            .background(message.isFromCustomer ? Color.mainBlue : Color(.messageSenderBg))
+                            .background(message.isFromMe ? Color.mainBlue : Color(.messageSenderBg))
                             .cornerRadius(16)
                             .lineSpacing(8)
                     } else if let voice = message.voicePath,
                     let voiceURL = URL(string: Constants.baseURL + voice.validateSlashs()) {
                         
-                     VoiceMessagePlayerView(voiceURL: voiceURL, isFromCustomer: message.isFromCustomer)
+                     VoiceMessagePlayerView(voiceURL: voiceURL, isFromCustomer: message.isFromMe)
                             .localizeView()
                  }
                     
                 }
-                .frame(maxWidth: 280, alignment: message.isFromCustomer ? .trailing : .leading)
+                .frame(maxWidth: 280, alignment: message.isFromMe ? .trailing : .leading)
             }
             
-            if !message.isFromCustomer {
+            if !message.isFromMe {
                 Spacer()
             }
         }
@@ -283,7 +283,14 @@ struct ChatsView: View {
     @State private var playbackTime: TimeInterval = 0
     @State private var isPlaying: Bool = false
     @State private var playbackTimer: Timer?
-    
+    var chatwithName:String?{
+        let message = viewModel.ChatMessages?.first
+        return message?.sendByCustomer ?? false ? message?.customerName : message?.doctorName
+    }
+    var chatwithImage:String?{
+        let message = viewModel.ChatMessages?.first
+        return message?.sendByCustomer ?? false ? message?.customerImage : message?.doctorImage
+    }
     init(CustomerPackageId:Int) {
         self.CustomerPackageId = CustomerPackageId
     }
@@ -303,7 +310,7 @@ struct ChatsView: View {
                 Spacer()
                 
                 VStack(alignment:.trailing,spacing: 5) {
-                    (Text("د/") + Text("مي أحمد"))
+                    Text(chatwithName ?? "")
                         .font(.bold(size: 20))
                         .foregroundColor(.mainBlue)
                     Text("Online".localized)
@@ -311,10 +318,16 @@ struct ChatsView: View {
                         .foregroundColor(Color(.secondary))
                 }
                 
-                Image(systemName: "person.crop.circle.fill")
-                    .resizable()
-                    .frame(width: 49, height: 49)
-                    .clipShape(Circle())
+                if let imageUrl = chatwithImage {
+                    KFImageLoader(url:URL(string:Constants.imagesURL + (imageUrl.validateSlashs())),placeholder: Image("logo"), shouldRefetch: true)
+                        .frame(width: 49, height: 49)
+                        .clipShape(Circle())
+                }
+//                Image(systemName: "person.crop.circle.fill")
+//                    .resizable()
+//                    .frame(width: 49, height: 49)
+//                    .clipShape(Circle())
+                
             }
             .padding()
             .background(Color.white)
@@ -618,10 +631,63 @@ struct EmptyMessageBox: View {
     }
 }
 
-
-
 struct MessagesListView: View {
     var messages: [ChatsMessageM]?
+    
+//    var messages: [ChatsMessageM]? = [
+//        ChatsMessageM(
+//            customerPackageID: 1,
+//            comment: "Hello doctor, I have a question about my treatment.",
+//            sendByCustomer: true,
+//            sendByDoctor: false,
+//            voicePath: nil,
+//            doctorID: 101,
+//            creationDate: "2025-09-17T10:15:00Z",
+//            customerName: "Mohamed",
+//            doctorName: "Dr. Ahmed",
+//            customerImage: nil,
+//            doctorImage: nil
+//        ),
+//        ChatsMessageM(
+//            customerPackageID: 1,
+//            comment: "Sure, please go ahead.",
+//            sendByCustomer: false,
+//            sendByDoctor: true,
+//            voicePath: nil,
+//            doctorID: 101,
+//            creationDate: "2025-09-17T10:16:00Z",
+//            customerName: "Mohamed",
+//            doctorName: "Dr. Ahmed",
+//            customerImage: nil,
+//            doctorImage: nil
+//        ),
+//        ChatsMessageM(
+//            customerPackageID: 1,
+//            comment: "Is it okay to take the medicine after eating?",
+//            sendByCustomer: true,
+//            sendByDoctor: false,
+//            voicePath: nil,
+//            doctorID: 101,
+//            creationDate: "2025-09-17T10:17:00Z",
+//            customerName: "Mohamed",
+//            doctorName: "Dr. Ahmed",
+//            customerImage: nil,
+//            doctorImage: nil
+//        ),
+//        ChatsMessageM(
+//            customerPackageID: 1,
+//            comment: "Yes, that’s fine. Just make sure to take it with water.",
+//            sendByCustomer: false,
+//            sendByDoctor: true,
+//            voicePath: nil,
+//            doctorID: 101,
+//            creationDate: "2025-09-17T10:18:00Z",
+//            customerName: "Mohamed",
+//            doctorName: "Dr. Ahmed",
+//            customerImage: nil,
+//            doctorImage: nil
+//        )
+//    ]
     
     var body: some View {
 //        if let messages = messages, messages.count > 0 {
@@ -673,3 +739,6 @@ struct MessagesListView: View {
        
     }
 }
+//#Preview{
+//    MessagesListView()
+//}

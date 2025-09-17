@@ -10,7 +10,7 @@ import SwiftUI
 
 struct DocPaymentsView: View {
     var hasbackBtn: Bool? = true
-    @StateObject private var viewModel = DocPaymentsViewModel.shared
+    @EnvironmentObject var viewModel : DocPaymentsViewModel
 
     // Mock Data (بدل الـ API لحد ما توصّلها بالباك إند)
 //    let paidSubscriptions: [CustomerOrderDetailM] = [
@@ -155,7 +155,7 @@ struct DocPaymentsView: View {
 }
 
 #Preview {
-    DocPaymentsView()
+    DocPaymentsView().environmentObject( DocPaymentsViewModel.shared)
 }
 
 struct DocPackageCard: View {

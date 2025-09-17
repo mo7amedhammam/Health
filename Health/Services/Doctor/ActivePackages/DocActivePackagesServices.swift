@@ -1,31 +1,32 @@
+
 //
-//  SubscriptionServices.swift
+//  DocActivePackagesServices.swift
 //  Sehaty
 //
-//  Created by mohamed hammam on 27/05/2025.
+//  Created by mohamed hammam on 17/09/2025.
 //
-
 
 import Alamofire
 
-
-enum SubscriptionServices{
+enum DocActivePackagesServices{
     case GetCustomerPackageList(parameters : [String:Any])
     case GetCustomerPackageById(parameters : [String:Any])
+    case GetCustomerMeasurements(parameters : [String:Any])
+
 //    case GetDoctorById(parameters : [String:Any])
 //    case GetCustomerUpComingSession
     case GetCustomerPackageSessionList(parameters : [String:Any])
     case FileType
     case GetCustomerPackageInstructionByCPId(parameters : [String:Any])
 //    case CreateDoctorMessage(parameters : [String:Any])
-    case CreateCustomerMessage(parameters : [MultipartFormDataPart])
-    case GetMessage(parameters : [String:Any])
+//    case CreateCustomerMessage(parameters : [MultipartFormDataPart])
+//    case GetMessage(parameters : [String:Any])
     
     case CancelSubscription(parameters : [String:Any])
 
 }
 
-extension SubscriptionServices : TargetType1 {
+extension DocActivePackagesServices : TargetType1 {
     var timeoutInterval: TimeInterval? {
         return nil
     }
@@ -34,13 +35,7 @@ extension SubscriptionServices : TargetType1 {
         switch self {
             
         case .GetCustomerPackageList:
-            switch Helper.shared.getSelectedUserType() {
-            case .Customer,.none:
-                return SubscriptionEndPoints.GetCustomerPackageList.rawValue
-
-                case .Doctor:
-                return DocEndPoints.DocGetDoctorCustomerPackageList.rawValue
-            }
+            return DocEndPoints.DocGetActivePackageDoctorList.rawValue
             
         case .GetCustomerPackageById:
             return SubscriptionEndPoints.GetCustomerPackageById.rawValue
@@ -48,6 +43,10 @@ extension SubscriptionServices : TargetType1 {
 //            return SubscriptionEndPoints.GetDoctorById.rawValue
 //        case .GetCustomerUpComingSession:
 //            return SubscriptionEndPoints.GetCustomerUpComingSession.rawValue
+            
+        case .GetCustomerMeasurements:
+                return DocEndPoints.DocGetPatientMeasurements.rawValue
+            
         case .GetCustomerPackageSessionList:
             return SubscriptionEndPoints.GetCustomerPackageSessionList.rawValue
         case .FileType:
@@ -56,26 +55,10 @@ extension SubscriptionServices : TargetType1 {
             return SubscriptionEndPoints.GetCustomerPackageInstructionByCPId.rawValue
 //        case .CreateDoctorMessage:
 //            return SubscriptionEndPoints.CreateDoctorMessage.rawValue
-            
-        case .CreateCustomerMessage:
-            switch Helper.shared.getSelectedUserType() {
-            case .Customer,.none:
-
-            return SubscriptionEndPoints.CreateCustomerMessage.rawValue
-        case .Doctor:
-            return DocEndPoints.DocCreateDoctorMessage.rawValue
-
-        }
-
-        case .GetMessage:
-            switch Helper.shared.getSelectedUserType() {
-            case .Customer,.none:
-                return SubscriptionEndPoints.GetMessage.rawValue
-
-            case .Doctor:
-                return DocEndPoints.DocGetMessage.rawValue
-
-            }
+//        case .CreateCustomerMessage:
+//            return SubscriptionEndPoints.CreateCustomerMessage.rawValue
+//        case .GetMessage:
+//            return SubscriptionEndPoints.GetMessage.rawValue
             
         case .CancelSubscription:
             return SubscriptionEndPoints.CustomerPackageCancel.rawValue
@@ -89,16 +72,17 @@ extension SubscriptionServices : TargetType1 {
                 .GetCustomerPackageList,
                 .GetCustomerPackageSessionList,
 //                .CreateDoctorMessage,
-                .CreateCustomerMessage,
-                .CancelSubscription
+//                .CreateCustomerMessage,
+                .CancelSubscription,
+                .GetCustomerMeasurements
             :
             return .post
             
         case
-                .FileType,
-                .GetCustomerPackageById,
-                .GetCustomerPackageInstructionByCPId,
-                .GetMessage
+                .FileType
+                ,.GetCustomerPackageById
+                ,.GetCustomerPackageInstructionByCPId
+//               , .GetMessage
             :
             return .get
         }
@@ -112,8 +96,9 @@ extension SubscriptionServices : TargetType1 {
                 .GetCustomerPackageById(parameters: let parameter),
                 .GetCustomerPackageInstructionByCPId(parameters: let parameter),
 //                .CreateDoctorMessage(parameters: let parameter),
-                .GetMessage(parameters: let parameter),
-                .CancelSubscription(parameters: let parameter)
+//                .GetMessage(parameters: let parameter),
+                .CancelSubscription(parameters: let parameter),
+                .GetCustomerMeasurements(parameters: let parameter)
             :
 //            return .parameterRequest(Parameters: parameters, Encoding: encoding)
             return  parameter
@@ -123,7 +108,7 @@ extension SubscriptionServices : TargetType1 {
             
         case
                 .FileType
-                ,.CreateCustomerMessage
+//                ,.CreateCustomerMessage
             :
             return nil
         }

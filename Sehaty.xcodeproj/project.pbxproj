@@ -118,6 +118,10 @@
 		90C7F3B82E7066F300907BF8 /* DocEditProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90C7F3B72E7066F300907BF8 /* DocEditProfileViewModel.swift */; };
 		90C7F3BA2E71BA8500907BF8 /* DocPackagesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90C7F3B92E71BA8500907BF8 /* DocPackagesViewModel.swift */; };
 		90C7F3BC2E71BBED00907BF8 /* DocPackagesM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90C7F3BB2E71BBED00907BF8 /* DocPackagesM.swift */; };
+		90CE587A2E7AC31600A3D271 /* ActiveCusPackViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90CE58792E7AC30600A3D271 /* ActiveCusPackViewModel.swift */; };
+		90CE587C2E7AC79E00A3D271 /* DocActivePackagesServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90CE587B2E7AC79400A3D271 /* DocActivePackagesServices.swift */; };
+		90CE58802E7AEB0600A3D271 /* ActiveCustPackFiles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90CE587F2E7AEAEA00A3D271 /* ActiveCustPackFiles.swift */; };
+		90CE58852E7AEB9F00A3D271 /* ActiveCustPackFilesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90CE58842E7AEB9F00A3D271 /* ActiveCustPackFilesViewModel.swift */; };
 		90D628792DABE62F008D303E /* NewHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90D628782DABE62F008D303E /* NewHomeView.swift */; };
 		90D6287B2DAE86FE008D303E /* NewTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90D6287A2DAE86FE008D303E /* NewTabView.swift */; };
 		90FDD2FE2DDBE14F00C3BABB /* CustomSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90FDD2FD2DDBE14F00C3BABB /* CustomSheet.swift */; };
@@ -463,6 +467,10 @@
 		90C7F3B72E7066F300907BF8 /* DocEditProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocEditProfileViewModel.swift; sourceTree = "<group>"; };
 		90C7F3B92E71BA8500907BF8 /* DocPackagesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocPackagesViewModel.swift; sourceTree = "<group>"; };
 		90C7F3BB2E71BBED00907BF8 /* DocPackagesM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocPackagesM.swift; sourceTree = "<group>"; };
+		90CE58792E7AC30600A3D271 /* ActiveCusPackViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveCusPackViewModel.swift; sourceTree = "<group>"; };
+		90CE587B2E7AC79400A3D271 /* DocActivePackagesServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocActivePackagesServices.swift; sourceTree = "<group>"; };
+		90CE587F2E7AEAEA00A3D271 /* ActiveCustPackFiles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveCustPackFiles.swift; sourceTree = "<group>"; };
+		90CE58842E7AEB9F00A3D271 /* ActiveCustPackFilesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveCustPackFilesViewModel.swift; sourceTree = "<group>"; };
 		90D628782DABE62F008D303E /* NewHomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewHomeView.swift; sourceTree = "<group>"; };
 		90D6287A2DAE86FE008D303E /* NewTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTabView.swift; sourceTree = "<group>"; };
 		90FDD2FD2DDBE14F00C3BABB /* CustomSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSheet.swift; sourceTree = "<group>"; };
@@ -1588,6 +1596,7 @@
 		90C7F38F2E64459A00907BF8 /* ActiveCustomerPackages */ = {
 			isa = PBXGroup;
 			children = (
+				90CE587E2E7AEADA00A3D271 /* Files */,
 				90C7F3922E6445B700907BF8 /* Model */,
 				90C7F3912E6445B400907BF8 /* ViewModel */,
 				90C7F3902E6445B000907BF8 /* View */,
@@ -1607,6 +1616,7 @@
 		90C7F3912E6445B400907BF8 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				90CE58792E7AC30600A3D271 /* ActiveCusPackViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -1660,6 +1670,7 @@
 		90C7F3A22E6D9FDD00907BF8 /* Doctor */ = {
 			isa = PBXGroup;
 			children = (
+				90CE587D2E7AC7B400A3D271 /* ActivePackages */,
 				904133942E76C259005726E7 /* Packages */,
 				90C7F3A72E6DA94F00907BF8 /* Payments */,
 				90C7F3A32E6D9FF800907BF8 /* DocEndPoints.swift */,
@@ -1702,6 +1713,47 @@
 			sourceTree = "<group>";
 		};
 		90C7F3B42E70662700907BF8 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		90CE587D2E7AC7B400A3D271 /* ActivePackages */ = {
+			isa = PBXGroup;
+			children = (
+				90CE587B2E7AC79400A3D271 /* DocActivePackagesServices.swift */,
+			);
+			path = ActivePackages;
+			sourceTree = "<group>";
+		};
+		90CE587E2E7AEADA00A3D271 /* Files */ = {
+			isa = PBXGroup;
+			children = (
+				90CE58832E7AEB7500A3D271 /* Model */,
+				90CE58822E7AEB6E00A3D271 /* ViewModel */,
+				90CE58812E7AEB6700A3D271 /* View */,
+			);
+			path = Files;
+			sourceTree = "<group>";
+		};
+		90CE58812E7AEB6700A3D271 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				90CE587F2E7AEAEA00A3D271 /* ActiveCustPackFiles.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		90CE58822E7AEB6E00A3D271 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				90CE58842E7AEB9F00A3D271 /* ActiveCustPackFilesViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		90CE58832E7AEB7500A3D271 /* Model */ = {
 			isa = PBXGroup;
 			children = (
 			);
@@ -3359,6 +3411,7 @@
 				BB913AD72A9BE04900003AC5 /* TipsCategoriesTVCell1.swift in Sources */,
 				BBA1DA162AB11C3A0042713A /* NotificationServices.swift in Sources */,
 				90FDD3782DFEC69B00C3BABB /* WishListManagerViewModel.swift in Sources */,
+				90CE587C2E7AC79E00A3D271 /* DocActivePackagesServices.swift in Sources */,
 				902B87E72E18293A009D5234 /* VipPackageCellView.swift in Sources */,
 				BB518CEA2A9A125900242FAD /* TipsCategories2CVCell.swift in Sources */,
 				BB14DAE72A7B036400389B96 /* ProfileVC.swift in Sources */,
@@ -3481,6 +3534,7 @@
 				C893A9B32AB5BA070054F171 /* TipsM.swift in Sources */,
 				C80DA9EB2AA4D3B300F10808 /* Authintications.swift in Sources */,
 				90C7F3BC2E71BBED00907BF8 /* DocPackagesM.swift in Sources */,
+				90CE58802E7AEB0600A3D271 /* ActiveCustPackFiles.swift in Sources */,
 				904748632DD9CF230016C3DC /* PackageMoreDetailsViewModel.swift in Sources */,
 				902B87F42E182D3C009D5234 /* SectionHeader.swift in Sources */,
 				C82FBA172AB08F200029F151 /* imagePickerHelper.swift in Sources */,
@@ -3494,6 +3548,7 @@
 				BBB0636A2B0E8D7A00708CF4 /* MeasurementsDetailsFiltterVC.swift in Sources */,
 				C80DA9E42AA4D29500F10808 /* PatientEndPoints.swift in Sources */,
 				9005E4882E5B115600FB437E /* DocPaymentsView.swift in Sources */,
+				90CE58852E7AEB9F00A3D271 /* ActiveCustPackFilesViewModel.swift in Sources */,
 				902B87B22E05BB65009D5234 /* LookupsModel.swift in Sources */,
 				9005E4822E5B0AB300FB437E /* DocNotificationM.swift in Sources */,
 				902B883C2E2AA988009D5234 /* MedicationReminderModel.swift in Sources */,
@@ -3516,6 +3571,7 @@
 				902B87DF2E0F2ABE009D5234 /* MyPaymentsViewModel.swift in Sources */,
 				C8346E582AA5EE9C00C3C3EE /* LoginVM.swift in Sources */,
 				C893A9B52AB5BA190054F171 /* TipsVM.swift in Sources */,
+				90CE587A2E7AC31600A3D271 /* ActiveCusPackViewModel.swift in Sources */,
 				C82DCAA82AAC785D00322B55 /* MedicationScheduleVM.swift in Sources */,
 				C80DA9E82AA4D33000F10808 /* RequestBuilder.swift in Sources */,
 				BBBD00212A73119500F066DF /* LoginVC.swift in Sources */,
@@ -3715,7 +3771,7 @@
 				CODE_SIGN_ENTITLEMENTS = Sehaty.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3.0.1;
+				CURRENT_PROJECT_VERSION = 3.0.2;
 				DEVELOPMENT_TEAM = M7AX57X8LV;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Health/Info.plist;
@@ -3759,7 +3815,7 @@
 				CODE_SIGN_ENTITLEMENTS = Sehaty.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3.0.1;
+				CURRENT_PROJECT_VERSION = 3.0.2;
 				DEVELOPMENT_TEAM = M7AX57X8LV;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Health/Info.plist;

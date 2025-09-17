@@ -16,7 +16,7 @@ struct ChatsMessageM: Codable, Identifiable {
     var voicePath: String?
     var doctorID: Int?
     var creationDate: String?
-
+    var customerName,doctorName :String?
     var customerImage,doctorImage :String?
 
     enum CodingKeys: String, CodingKey {
@@ -24,11 +24,18 @@ struct ChatsMessageM: Codable, Identifiable {
         case comment, sendByCustomer, sendByDoctor, voicePath
         case doctorID = "doctorId"
         case creationDate
+        case customerName,doctorName
         case customerImage,doctorImage
     }
 
-    var isFromCustomer: Bool {
-        return sendByCustomer == true
+    var isFromMe: Bool {
+//        return sendByCustomer == true
+        switch Helper.shared.getSelectedUserType(){
+        case .Customer,.none:
+                return sendByCustomer == true
+            case .Doctor:
+                return sendByDoctor == true
+            }
     }
 
     var messageText: String {

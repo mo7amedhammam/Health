@@ -29,7 +29,8 @@ struct SubcripedPackageDetailsView: View {
         }
    
     }
-    
+    @State var isReschedualling: Bool = false
+
     enum SectionType: CaseIterable,Hashable {
         case chats, sessions, files
         
@@ -263,7 +264,11 @@ struct SubcripedPackageDetailsView: View {
                 .cardStyle(cornerRadius: 3,shadowOpacity: 0.1)
                 .padding(.horizontal)
                 
-                SubcripedNextSession(upcomingSession: UpcomingSessionM.init())
+                SubcripedNextSession(upcomingSession: viewmodel.upcomingSession,detailsAction: {
+                    
+                },rescheduleAction: {
+                    isReschedualling = true
+                })
                     .padding(.horizontal)
                 
                 SubcripedSessionsList(sessions: viewmodel.subscripedSessions?.items)
@@ -297,7 +302,7 @@ struct SubcripedPackageDetailsView: View {
         .onAppear{
             Task{
                 if let CustomerPackageId = CustomerPackageId{
-                    async let upcoming: () = viewmodel.getSubscripedPackageDetails(CustomerPackageId: CustomerPackageId)
+                    async let upcoming: () = viewmodel.getUpcomingSession()
                     async let packages: () = viewmodel.getSubscripedSessionsList(customerPackageId: CustomerPackageId)
                     
                     _ = await (upcoming,packages)
@@ -307,7 +312,9 @@ struct SubcripedPackageDetailsView: View {
             }
         }
         NavigationLink( "", destination: destination, isActive: $isactive)
-        
+            .customSheet(isPresented: $isReschedualling){
+                ReSchedualView(isPresentingNewMeasurementSheet: $isReschedualling)
+            }
         if showCancel{
             CancelSubscriptionView(isPresent: $showCancel, customerPackageId: idToCancel ?? 0,onCancelSuccess: {
 //                if let index = viewModel.subscripedPackages?.items?.firstIndex(where: { $0.customerPackageID == idToCancel }) {
@@ -329,8 +336,10 @@ struct SubcripedPackageDetailsView: View {
 
 struct SubcripedNextSession: View {
     var upcomingSession: UpcomingSessionM?
-    var canJoin = true
-    
+//    var canJoin = true
+    var detailsAction: (() -> Void)?
+    var rescheduleAction: (() -> Void)?
+
     var body: some View {
         VStack{
             SectionHeader(image: Image(.newnxtsessionicon),title: "subscription_nextSessions"){
@@ -346,90 +355,92 @@ struct SubcripedNextSession: View {
             
             VStack(spacing: 20){
                 HStack(alignment:.top){
-                    if canJoin{
-                        Button(action: {
-                            
-                        }){
-                            HStack(alignment: .center){
-                                Image(.newjoinicon)
-                                    .resizable()
-                                    .frame(width: 15, height: 15)
-                                
-                                Text("Join_now".localized)
-                                    .font(.bold(size: 12))
-                                    .foregroundStyle(Color(.secondary))
-                                
-                            }
-                            .padding(.horizontal,13)
-                            .frame(height: 30)
-                            //                                            .padding(.vertical,15)
-                            .background{Color(.white)}
-                            .cardStyle( cornerRadius: 3)
-                        }
-                    }else{
-                        HStack(alignment:.top,spacing:3) {
-                            VStack(){
-                                // Title
-                                Text("2")
-                                    .font(.medium(size: 14))
-                                    .foregroundStyle(Color.white)
-                                    .frame(width: 31, height: 31)
-                                    .background{Color(.secondaryMain)}
-                                    .cardStyle( cornerRadius: 3)
-                                
-                                // Title
-                                Text("Days".localized)
-                                    .font(.regular(size: 8))
-                                    .foregroundStyle(Color.white)
-                                    .minimumScaleFactor(0.5)
-                                    .lineLimit(1)
-                            }
-                            
-                            Text(":")
-                                .font(.regular(size: 12))
-                                .foregroundStyle(Color.white)
-                                .offset(y:10)
-                            
-                            VStack(){
-                                // Title
-                                Text("11")
-                                    .font(.medium(size: 14))
-                                    .foregroundStyle(Color.white)
-                                    .frame(width: 31, height: 31)
-                                    .background{Color(.secondaryMain)}
-                                    .cardStyle( cornerRadius: 3)
-                                
-                                // Title
-                                Text("Hours".localized)
-                                    .font(.regular(size: 8))
-                                    .foregroundStyle(Color.white)
-                                    .minimumScaleFactor(0.5)
-                                    .lineLimit(1)
-                            }
-                            
-                            Text(":")
-                                .font(.regular(size: 12))
-                                .foregroundStyle(Color.white)
-                                .offset(y:10)
-                            
-                            VStack(){
-                                // Title
-                                Text("31")
-                                    .font(.medium(size: 14))
-                                    .foregroundStyle(Color.white)
-                                    .frame(width: 31, height: 31)
-                                    .background{Color(.secondaryMain)}
-                                    .cardStyle( cornerRadius: 3)
-                                
-                                // Title
-                                Text("Minutes".localized)
-                                    .font(.regular(size: 8))
-                                    .foregroundStyle(Color.white)
-                                    .minimumScaleFactor(0.5)
-                                    .lineLimit(1)
-                            }
-                        }
-                    }
+//                    if canJoin{
+//                        Button(action: {
+//                            
+//                        }){
+//                            HStack(alignment: .center){
+//                                Image(.newjoinicon)
+//                                    .resizable()
+//                                    .frame(width: 15, height: 15)
+//                                
+//                                Text("Join_now".localized)
+//                                    .font(.bold(size: 12))
+//                                    .foregroundStyle(Color(.secondary))
+//                                
+//                            }
+//                            .padding(.horizontal,13)
+//                            .frame(height: 30)
+//                            //                                            .padding(.vertical,15)
+//                            .background{Color(.white)}
+//                            .cardStyle( cornerRadius: 3)
+//                        }
+//                    }else{
+                         NextSessionCountdownOrJoinView(session: upcomingSession)
+                        
+//                        HStack(alignment:.top,spacing:3) {
+//                            VStack(){
+//                                // Title
+//                                Text("2")
+//                                    .font(.medium(size: 14))
+//                                    .foregroundStyle(Color.white)
+//                                    .frame(width: 31, height: 31)
+//                                    .background{Color(.secondaryMain)}
+//                                    .cardStyle( cornerRadius: 3)
+//                                
+//                                // Title
+//                                Text("Days".localized)
+//                                    .font(.regular(size: 8))
+//                                    .foregroundStyle(Color.white)
+//                                    .minimumScaleFactor(0.5)
+//                                    .lineLimit(1)
+//                            }
+//                            
+//                            Text(":")
+//                                .font(.regular(size: 12))
+//                                .foregroundStyle(Color.white)
+//                                .offset(y:10)
+//                            
+//                            VStack(){
+//                                // Title
+//                                Text("11")
+//                                    .font(.medium(size: 14))
+//                                    .foregroundStyle(Color.white)
+//                                    .frame(width: 31, height: 31)
+//                                    .background{Color(.secondaryMain)}
+//                                    .cardStyle( cornerRadius: 3)
+//                                
+//                                // Title
+//                                Text("Hours".localized)
+//                                    .font(.regular(size: 8))
+//                                    .foregroundStyle(Color.white)
+//                                    .minimumScaleFactor(0.5)
+//                                    .lineLimit(1)
+//                            }
+//                            
+//                            Text(":")
+//                                .font(.regular(size: 12))
+//                                .foregroundStyle(Color.white)
+//                                .offset(y:10)
+//                            
+//                            VStack(){
+//                                // Title
+//                                Text("31")
+//                                    .font(.medium(size: 14))
+//                                    .foregroundStyle(Color.white)
+//                                    .frame(width: 31, height: 31)
+//                                    .background{Color(.secondaryMain)}
+//                                    .cardStyle( cornerRadius: 3)
+//                                
+//                                // Title
+//                                Text("Minutes".localized)
+//                                    .font(.regular(size: 8))
+//                                    .foregroundStyle(Color.white)
+//                                    .minimumScaleFactor(0.5)
+//                                    .lineLimit(1)
+//                            }
+//                        }
+//                    }
                     
                     Spacer()
                     
@@ -444,7 +455,7 @@ struct SubcripedNextSession: View {
                                 .padding(.bottom,1)
                             
                             // Title
-                            Text("03:15 PM")
+                            Text(upcomingSession?.formattedSessionTime ?? "")
                                 .font(.regular(size: 12))
                                 .foregroundStyle(Color.white)
                                 .frame(maxWidth: .infinity, alignment: .trailing)
@@ -458,7 +469,8 @@ struct SubcripedNextSession: View {
                 HStack(alignment:.bottom,spacing:3) {
                     
                     Button(action: {
-                        
+                        detailsAction?()
+
                     }){
                         HStack(alignment: .center){
                             Image(.newmoreicon)
@@ -482,7 +494,8 @@ struct SubcripedNextSession: View {
                     Spacer()
                     
                     Button(action: {
-                        
+                        rescheduleAction?()
+
                     }){
                         HStack(alignment: .bottom){
                             Image(.newreschedual)

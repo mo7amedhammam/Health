@@ -9,16 +9,16 @@ import SwiftUI
 struct ActiveCustomerPackagesView: View {
     @StateObject var router = NavigationRouter.shared
 
-    @StateObject var viewmodel = SubcripedPackageDetailsViewModel.shared
+    @StateObject var viewmodel = ActiveCusPackViewModel.shared
     @State var package: SubcripedPackageItemM?
     var CustomerPackageId: Int?
 
-    @State var destination = AnyView(EmptyView())
-    @State var isactive: Bool = false
-    func pushTo(destination: any View) {
-        self.destination = AnyView(destination)
-        self.isactive = true
-    }
+//    @State var destination = AnyView(EmptyView())
+//    @State var isactive: Bool = false
+//    func pushTo(destination: any View) {
+//        self.destination = AnyView(destination)
+//        self.isactive = true
+//    }
 //    init(package: SubcripedPackageItemM?,CustomerPackageId:Int?) {
 //        if let package = package{
 //            self.package = package
@@ -28,7 +28,8 @@ struct ActiveCustomerPackagesView: View {
 //        }
 //   
 //    }
-    
+    @State var isReschedualling: Bool = false
+
     enum SectionType: CaseIterable,Hashable {
         case chats, sessions, files
         
@@ -103,9 +104,9 @@ struct ActiveCustomerPackagesView: View {
                             HStack(spacing:0){
                                 Text( "remain_".localized)
                                 
-                                let reamin = (package?.sessionCount ?? 0) - (package?.attendedSessionCount ?? 0)
+//                                let reamin = (package?.sessionCount ?? 0) - (package?.attendedSessionCount ?? 0)
                                 
-                                (Text(" \(reamin) " + "from_".localized + " \(package?.sessionCount ?? 0) "))
+                                (Text(" \(package?.remainingSessionCount ?? 0) " + "from_".localized + " \(package?.sessionCount ?? 0) "))
                                     .font(.bold(size: 12))
                                 
                                 Text( "sessions_ar".localized )
@@ -152,12 +153,12 @@ struct ActiveCustomerPackagesView: View {
                             switch button {
                             case .chats:
                                 guard let customerPackageID = package?.customerPackageID else { return }
-                                pushTo(destination: ChatsView(CustomerPackageId: customerPackageID) )
+                                router.push( ChatsView(CustomerPackageId: customerPackageID) )
                             case .sessions:
                                 break
                             case .files:
-                                guard let customerPackageID = package?.customerPackageID else { return }
-                                pushTo(destination: PackageFilesView(CustomerPackageId: customerPackageID) )
+                                guard let customerID = package?.customerID, let packageId = package?.customerPackageID else { return }
+                                router.push( ActiveCustPackFiles(customerId: customerID,PackageId: packageId) )
                             }
                         }) {
                             VStack(spacing:7) {
@@ -186,23 +187,25 @@ struct ActiveCustomerPackagesView: View {
                 }
                 .padding(.vertical)
                 
-                CustomerHeaderView(
-                       name: "عبد الرحمن عادل محمد",
-                       imageUrl: "https://picsum.photos/200"
-                ){
-                    
+                if let customerName = package?.customerName{
+                    CustomerHeaderView(
+                        name: customerName,
+                        imageUrl: package?.customerImage ?? ""
+                    ){
+                        
+                    }
                 }
                 
-//                CustomerMesurmentsSection(measurements: [.init(),.init()]){item in
-//                    guard let item = item else { return }
-//                    router.push(MeasurementDetailsView(stat: item))
-//                }
+                CustomerMesurmentsSection(measurements: viewmodel.customerMeasurements){item in
+                    guard let item = item else { return }
+                    router.push(MeasurementDetailsView(stat: item))
+                }
                 
                 CustomButton(title: "select_next_session",isdisabled: false,backgroundView:AnyView(Color.clear.horizontalGradientBackground())){
 //                    showFilter.toggle()
                 }
                 
-                SubcripedNextSession(upcomingSession: UpcomingSessionM.init())
+                SubcripedNextSession(upcomingSession: viewmodel.upcomingSession)
                     .padding(.horizontal)
                 
                 SubcripedSessionsList(sessions: viewmodel.subscripedSessions?.items)
@@ -234,19 +237,23 @@ struct ActiveCustomerPackagesView: View {
         .showHud(isShowing:  $viewmodel.isLoading)
         .errorAlert(isPresented: .constant(viewmodel.errorMessage != nil), message: viewmodel.errorMessage)
         .onAppear{
+            selectedSection = .sessions
             Task{
                 if let CustomerPackageId = CustomerPackageId{
-                    async let upcoming: () = viewmodel.getSubscripedPackageDetails(CustomerPackageId: CustomerPackageId)
-                    async let packages: () = viewmodel.getSubscripedSessionsList(customerPackageId: CustomerPackageId)
+                    async let upcoming: () = viewmodel.getUpcomingSession()
+                    async let packages: () = viewmodel.getSubscripedPackageDetails(CustomerPackageId: CustomerPackageId)
+                    async let measurements: () = viewmodel.getCustomerMeasurements(CustomerPackageId:CustomerPackageId)
                     
-                    _ = await (upcoming,packages)
+                    _ = await (upcoming,packages,measurements)
 
                     self.package = viewmodel.subscripedPackage
                 }
             }
         }
-        NavigationLink( "", destination: destination, isActive: $isactive)
-        
+//        NavigationLink( "", destination: destination, isActive: $isactive)
+        .customSheet(isPresented: $isReschedualling){
+            ReSchedualView(isPresentingNewMeasurementSheet: $isReschedualling)
+        }
         if showCancel{
             CancelSubscriptionView(isPresent: $showCancel, customerPackageId: idToCancel ?? 0,onCancelSuccess: {
 //                if let index = viewModel.subscripedPackages?.items?.firstIndex(where: { $0.customerPackageID == idToCancel }) {

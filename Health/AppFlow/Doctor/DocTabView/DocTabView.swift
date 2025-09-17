@@ -42,8 +42,9 @@ struct DocTabView: View{
 //                    SubcripedPackagesView(hasbackBtn: false)
 //                        .environmentObject(viewModel)
                     
-                    ActiveCustomerPackagesView()
+//                    ActiveCustomerPackagesView()
 
+                    DocPackagesScreen(hasbackBtn: false)
                 case 2:
                     NewHomeView()
                         .environmentObject(viewModel)

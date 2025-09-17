@@ -30,7 +30,10 @@ struct AppointmentsView: View {
                     
                     AppointmentsListView(appointments:viewModel.appointments?.items ,selectAction: {appointment in
                         
-                        router.push( SubcripedPackageDetailsView(package: nil, CustomerPackageId:appointment.customerPackageId ?? 0))
+                        router.push(
+//                            SubcripedPackageDetailsView(package: nil, CustomerPackageId:appointment.customerPackageId ?? 0)
+                            ActiveCustomerPackagesView(CustomerPackageId: appointment.customerPackageId ?? 0)
+                        )
                                 },buttonAction:{item in
                                     idToCancel = item.packageID
 //                                    if item.canRenew ?? false{

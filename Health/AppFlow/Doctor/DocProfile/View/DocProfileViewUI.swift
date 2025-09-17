@@ -11,6 +11,7 @@ struct DocProfileViewUI: View {
     @StateObject var router = NavigationRouter()
 
     //    @StateObject var localizationManager = LocalizationManager.shared
+    @StateObject private var paymentsVM = DocPaymentsViewModel.shared
     @ObservedObject var localizationManager = LocalizationManager.shared
     @EnvironmentObject var viewModel: EditProfileViewModel
     @State private var showLogoutAlert = false
@@ -72,7 +73,7 @@ struct DocProfileViewUI: View {
                                         .font(.semiBold(size: 16))
                                         .foregroundColor(Color(.mainBlue))
                                     
-                                    Text("12,400")
+                                    Text(paymentsVM.ballance?.total ?? 0, format: .number.precision(.fractionLength(2)) )
                                         .font(.bold(size: 26))
                                         .foregroundColor(Color(.secondary))
                                 }
@@ -120,7 +121,7 @@ struct DocProfileViewUI: View {
                                     
                                 }
                                 ProfileRow(title: "profile_Payments".localized, icon: "walletIcon",hasDivider:false){
-                                    router.push( DocPaymentsView() )
+                                    router.push( DocPaymentsView().environmentObject(paymentsVM) )
                                 }
                             }
                             .padding()
@@ -217,6 +218,9 @@ struct DocProfileViewUI: View {
         //        .environment(\.layoutDirection,localizationManager.currentLanguage == "ar" ? .rightToLeft : .leftToRight)
         //        .localizeView()
         .background(Color(.bg))
+        .task {
+            await paymentsVM.getMyBallance()
+        }
         
     }
 }

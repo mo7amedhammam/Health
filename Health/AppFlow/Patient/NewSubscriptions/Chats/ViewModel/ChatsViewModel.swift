@@ -22,6 +22,61 @@ class ChatsViewModel:ObservableObject {
     
     // Published properties
     @Published var ChatMessages: [ChatsMessageM]?
+//    = [
+//        ChatsMessageM(
+//            customerPackageID: 1,
+//            comment: "Hello doctor, I have a question about my treatment.",
+//            sendByCustomer: true,
+//            sendByDoctor: false,
+//            voicePath: nil,
+//            doctorID: 101,
+//            creationDate: "2025-09-17T10:15:00Z",
+//            customerName: "Mohamed",
+//            doctorName: "Dr. Ahmed",
+//            customerImage: nil,
+//            doctorImage: nil
+//        ),
+//        ChatsMessageM(
+//            customerPackageID: 1,
+//            comment: "Sure, please go ahead.",
+//            sendByCustomer: false,
+//            sendByDoctor: true,
+//            voicePath: nil,
+//            doctorID: 101,
+//            creationDate: "2025-09-17T10:16:00Z",
+//            customerName: "Mohamed",
+//            doctorName: "Dr. Ahmed",
+//            customerImage: nil,
+//            doctorImage: nil
+//        ),
+//        ChatsMessageM(
+//            customerPackageID: 1,
+//            comment: "Is it okay to take the medicine after eating?",
+//            sendByCustomer: true,
+//            sendByDoctor: false,
+//            voicePath: nil,
+//            doctorID: 101,
+//            creationDate: "2025-09-17T10:17:00Z",
+//            customerName: "Mohamed",
+//            doctorName: "Dr. Ahmed",
+//            customerImage: nil,
+//            doctorImage: nil
+//        ),
+//        ChatsMessageM(
+//            customerPackageID: 1,
+//            comment: "Yes, that’s fine. Just make sure to take it with water.",
+//            sendByCustomer: false,
+//            sendByDoctor: true,
+//            voicePath: nil,
+//            doctorID: 101,
+//            creationDate: "2025-09-17T10:18:00Z",
+//            customerName: "Mohamed",
+//            doctorName: "Dr. Ahmed",
+//            customerImage: nil,
+//            doctorImage: nil
+//        )
+//    ]
+    
     @Published var CreatedMessage: ChatsMessageM?
    
     @Published var isLoading:Bool? = false

@@ -9,7 +9,7 @@ import SwiftUI
 
 struct MyPaymentsView: View {
     
-    @StateObject private var viewModel = MyPaymentsViewModel.shared
+    @EnvironmentObject var viewModel : MyPaymentsViewModel
     
     // MARK: - Mock / ViewModel Data
     //      var balance: Double = 12400
@@ -146,7 +146,7 @@ struct MyPaymentsView: View {
 }
 
 #Preview {
-    MyPaymentsView()
+    MyPaymentsView().environmentObject(MyPaymentsViewModel.shared)
 }
 
 

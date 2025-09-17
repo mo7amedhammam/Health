@@ -435,3 +435,6 @@
 "Customer_Mesurements" = "Customer Mesurements";
 "select_next_session" = "select next session";
 "send_customer_notification" = "send customer notification";
+"Files_Title" = "Files";
+"Package_files" = "Package Files";
+"customer_files" = "Customer Files";
