@@ -99,6 +99,7 @@ struct DocPackagesScreen: View {
 //            .showHud(isShowing:  $viewModel.isLoading)
 //            .errorAlert(isPresented: .constant(viewModel.errorMessage != nil), message: viewModel.errorMessage)
 
+            .padding(.bottom,88)
             .sheet(isPresented: $showFilter) {
                 DocPackagesFilterView(viewmodel: viewModel)
             }

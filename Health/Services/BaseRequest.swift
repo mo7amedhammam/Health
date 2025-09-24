@@ -936,10 +936,15 @@ final class AsyncAwaitNetworkService: AsyncAwaitNetworkServiceProtocol {
                       return nil // or `throw` a special case you don’t alert for
                   }
                 
+//                lastError = error
+//                logger.warning("Attempt \(attempt) failed: \(error.localizedDescription)")
+//                if attempt == maxRetryCount {
+//                    throw NetworkError.unknown(code: -1, error: error.localizedDescription)
+//                }
                 lastError = error
                 logger.warning("Attempt \(attempt) failed: \(error.localizedDescription)")
                 if attempt == maxRetryCount {
-                    throw NetworkError.unknown(code: -1, error: error.localizedDescription)
+                    throw error   // preserve real error (401, serverError, etc.)
                 }
             }
         }

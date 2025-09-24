@@ -313,7 +313,7 @@ struct SubcripedPackageDetailsView: View {
         }
         NavigationLink( "", destination: destination, isActive: $isactive)
             .customSheet(isPresented: $isReschedualling){
-                ReSchedualView(isPresentingNewMeasurementSheet: $isReschedualling)
+                ReSchedualView(isPresentingNewMeasurementSheet: $isReschedualling,reschedualcase: .reschedualSession)
             }
         if showCancel{
             CancelSubscriptionView(isPresent: $showCancel, customerPackageId: idToCancel ?? 0,onCancelSuccess: {

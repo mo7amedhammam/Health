@@ -33,7 +33,8 @@ enum HomeServices{
     case GetAvailableDoctorSchedule(parameters : [String:Any])
     case GetBookingSession(parameters : [String:Any])
     case CreateCustomerPackage(parameters : [String:Any])
-    
+    case rescheduleSession(parameters : [String:Any])
+
     case CustomerSessionCalender(parameters : [String:Any])
 }
 
@@ -50,7 +51,6 @@ extension HomeServices : TargetType1 {
 
             case .Doctor:
                 return DocEndPoints.DocGetDoctorUpComingSession.rawValue
-
             }
     
         case .GetAllHomeCategory:
@@ -97,7 +97,9 @@ extension HomeServices : TargetType1 {
             return newEndPoints.GetBookingSession.rawValue
         case .CreateCustomerPackage:
             return newEndPoints.CreateCustomerPackage.rawValue
-
+        case .rescheduleSession:
+            return newEndPoints.ReschedualSession.rawValue
+            
         case .CustomerSessionCalender:
             switch Helper.shared.getSelectedUserType() {
             case .Customer,.none:
@@ -121,7 +123,8 @@ extension HomeServices : TargetType1 {
                 .GetAvailableDoctorSchedule,
                 .GetBookingSession,
                 .CreateCustomerPackage,
-                .CustomerSessionCalender
+                .CustomerSessionCalender,
+                .rescheduleSession
             :
             return .post
             
@@ -157,7 +160,8 @@ extension HomeServices : TargetType1 {
             .GetAvailableDoctorSchedule(parameters: let parameter),
             .GetBookingSession(parameters: let parameter),
             .CreateCustomerPackage(parameters: let parameter),
-            .CustomerSessionCalender(parameters: let parameter)
+            .CustomerSessionCalender(parameters: let parameter),
+            .rescheduleSession(parameters: let parameter)
             :
 //            return .parameterRequest(Parameters: parameters, Encoding: encoding)
             return  parameter

@@ -14,6 +14,7 @@
 		9005E4882E5B115600FB437E /* DocPaymentsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9005E4872E5B115600FB437E /* DocPaymentsView.swift */; };
 		9005E48E2E5B3CF700FB437E /* DocPackagesScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9005E48D2E5B3CF700FB437E /* DocPackagesScreen.swift */; };
 		900B50B82DAAC4E300EABA67 /* ExUiImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 900B50B72DAAC4E300EABA67 /* ExUiImage.swift */; };
+		9020846C2E7FF2870001C55D /* ReSchedualViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9020846B2E7FF2790001C55D /* ReSchedualViewModel.swift */; };
 		902B87A92DFEE5E9009D5234 /* SkeletonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 902B87A82DFEE5E9009D5234 /* SkeletonView.swift */; };
 		902B87AB2DFEE631009D5234 /* LinearGradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 902B87AA2DFEE631009D5234 /* LinearGradientView.swift */; };
 		902B87AD2DFEE652009D5234 /* SimpleAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 902B87AC2DFEE652009D5234 /* SimpleAlertView.swift */; };
@@ -362,6 +363,7 @@
 		9005E4872E5B115600FB437E /* DocPaymentsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocPaymentsView.swift; sourceTree = "<group>"; };
 		9005E48D2E5B3CF700FB437E /* DocPackagesScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocPackagesScreen.swift; sourceTree = "<group>"; };
 		900B50B72DAAC4E300EABA67 /* ExUiImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExUiImage.swift; sourceTree = "<group>"; };
+		9020846B2E7FF2790001C55D /* ReSchedualViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReSchedualViewModel.swift; sourceTree = "<group>"; };
 		902B87A82DFEE5E9009D5234 /* SkeletonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkeletonView.swift; sourceTree = "<group>"; };
 		902B87AA2DFEE631009D5234 /* LinearGradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinearGradientView.swift; sourceTree = "<group>"; };
 		902B87AC2DFEE652009D5234 /* SimpleAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleAlertView.swift; sourceTree = "<group>"; };
@@ -1157,6 +1159,7 @@
 		902B88302E23E15F009D5234 /* ReSchedual */ = {
 			isa = PBXGroup;
 			children = (
+				9020846B2E7FF2790001C55D /* ReSchedualViewModel.swift */,
 				902B88312E23E189009D5234 /* ReSchedualView.swift */,
 			);
 			path = ReSchedual;
@@ -3579,6 +3582,7 @@
 				C8542D5A2AA8B3EC00ACE480 /* OtpM.swift in Sources */,
 				C85671C02AAF5AEE00E02D75 /* InbodyVM.swift in Sources */,
 				90FDD3742DF9F50D00C3BABB /* WishListView.swift in Sources */,
+				9020846C2E7FF2870001C55D /* ReSchedualViewModel.swift in Sources */,
 				BB546DE22AC9D558008A4F8C /* HomeCVCell1.swift in Sources */,
 				90FDD3492DEB105A00C3BABB /* PackageFileM.swift in Sources */,
 				C88974052ABAF2AD00C2A948 /* TipsDetailsVM.swift in Sources */,

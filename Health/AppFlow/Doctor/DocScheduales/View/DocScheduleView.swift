@@ -176,7 +176,7 @@ struct DocScheduleView: View {
                         cancelTitle: "cancel_",
                         onConfirm: {
                             print("Confirmed")
-                            Task{ await viewModel.CreateOrUpdateScheduales()}
+//                            Task{ await viewModel.CreateOrUpdateScheduales()}
                             showDialog = false
                         },
                         onCancel: {

@@ -46,13 +46,13 @@ struct LoginView: View {
             VStack(spacing: 20) {
                 
                 ScrollView{
-                Image("logo")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: 132,height: 93)
-                    .padding(.bottom,20)
-                    .padding(.top,40)
-                
+                    Image("logo")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 132,height: 93)
+                        .padding(.bottom,20)
+                        .padding(.top,40)
+                    
                     UserTypesList(selectedUser: $selectedUser){
                         Helper.shared.setSelectedUserType(userType:selectedUser)
                         
@@ -67,79 +67,79 @@ struct LoginView: View {
                     }
                     
                     
-                CustomHeaderUI(title: "login_title".localized, subtitle: "login_subtitle".localized)
-                
-                VStack(spacing: 30){
+                    CustomHeaderUI(title: "login_title".localized, subtitle: "login_subtitle".localized)
                     
-                    CustomInputFieldUI(
-                        title: "login_mobile_title",
-                        placeholder: "login_mobile_placeholder",
-                        text: $phoneNumber,
-                        isValid: isPhoneValid,
-                        trailingView: AnyView(
-                            Menu {
-                                ForEach(lookupsVM.appCountries ?? [],id: \.self) { country in
-                                    Button(action: {
-                                        selectedCountry = country
-                                    }, label: {
-                                        HStack{
-                                            Text(country.name ?? "")
-                                            
-                                            KFImageLoader(url:URL(string:Constants.imagesURL + (country.flag?.validateSlashs() ?? "")),placeholder: Image("egFlagIcon"), shouldRefetch: true)
-                                                .frame(width: 30,height:17)
-                                        }
-                                    })
-                                }
-                            } label: {
-                                HStack(spacing: 4) {
-                                    Image(systemName: "chevron.down")
-                                        .foregroundColor(.gray)
-                                    
-                                    KFImageLoader(url:URL(string:Constants.imagesURL + (selectedCountry?.flag?.validateSlashs() ?? "")),placeholder: Image("egFlagIcon"), shouldRefetch: true)
-                                        .frame(width: 30,height:17)
-                                    
-                                    //                                Text(selectedCountry?.flag ?? "")
-                                    //                                    .foregroundColor(.mainBlue)
-                                    //                                    .font(.medium(size: 22))
-                                }
-                            }
-                        )
-                    )
-                    .keyboardType(.asciiCapableNumberPad)
-                    
-                    VStack(alignment: .trailing, spacing: 12) {
-                        CustomInputFieldUI(
-                            title: "login_password_title",
-                            placeholder: "login_password_placeholder",
-                            text: $password,
-                            isSecure: true,
-                            showToggle: true,
-                            isValid:  isPasswordValid
-                        )
+                    VStack(spacing: 30){
                         
-                        Button("login_forget_Password".localized) {
-                            // Handle forgot password
-                            sendOtp()
+                        CustomInputFieldUI(
+                            title: "login_mobile_title",
+                            placeholder: "login_mobile_placeholder",
+                            text: $phoneNumber,
+                            isValid: isPhoneValid,
+                            trailingView: AnyView(
+                                Menu {
+                                    ForEach(lookupsVM.appCountries ?? [],id: \.self) { country in
+                                        Button(action: {
+                                            selectedCountry = country
+                                        }, label: {
+                                            HStack{
+                                                Text(country.name ?? "")
+                                                
+                                                KFImageLoader(url:URL(string:Constants.imagesURL + (country.flag?.validateSlashs() ?? "")),placeholder: Image("egFlagIcon"), shouldRefetch: true)
+                                                    .frame(width: 30,height:17)
+                                            }
+                                        })
+                                    }
+                                } label: {
+                                    HStack(spacing: 4) {
+                                        Image(systemName: "chevron.down")
+                                            .foregroundColor(.gray)
+                                        
+                                        KFImageLoader(url:URL(string:Constants.imagesURL + (selectedCountry?.flag?.validateSlashs() ?? "")),placeholder: Image("egFlagIcon"), shouldRefetch: true)
+                                            .frame(width: 30,height:17)
+                                        
+                                        //                                Text(selectedCountry?.flag ?? "")
+                                        //                                    .foregroundColor(.mainBlue)
+                                        //                                    .font(.medium(size: 22))
+                                    }
+                                }
+                            )
+                        )
+                        .keyboardType(.asciiCapableNumberPad)
+                        
+                        VStack(alignment: .trailing, spacing: 12) {
+                            CustomInputFieldUI(
+                                title: "login_password_title",
+                                placeholder: "login_password_placeholder",
+                                text: $password,
+                                isSecure: true,
+                                showToggle: true,
+                                isValid:  isPasswordValid
+                            )
+                            
+                            Button("login_forget_Password".localized) {
+                                // Handle forgot password
+                                sendOtp()
+                            }
+                            .font(.medium(size: 18))
+                            .foregroundColor(Color(.secondary))
+                            .frame(maxWidth: .infinity, alignment: .leading)
                         }
-                        .font(.medium(size: 18))
-                        .foregroundColor(Color(.secondary))
-                        .frame(maxWidth: .infinity, alignment: .leading)
+                    }
+                    .padding(.top)
+                    
+                    Spacer()
+                    //                Image(.touchidicon)
+                    //                    .resizable()
+                    //                    .frame(width: 68, height: 68)
+                    //                    .foregroundColor(.pink)
+                    //                    .padding(.top, 8)
+                    
+                    BiometricLoginButton {
+                        // تسجيل الدخول بعد نجاح التحقق
+                        performLogin()
                     }
                 }
-                .padding(.top)
-                
-                Spacer()
-                //                Image(.touchidicon)
-                //                    .resizable()
-                //                    .frame(width: 68, height: 68)
-                //                    .foregroundColor(.pink)
-                //                    .padding(.top, 8)
-                
-                BiometricLoginButton {
-                    // تسجيل الدخول بعد نجاح التحقق
-                    performLogin()
-                }
-            }
                 Spacer()
                 
                 CustomButtonUI(title: "login_signin_btn",isValid: isFormValid){
@@ -147,6 +147,7 @@ struct LoginView: View {
                     login()
                 }
                 
+                if Helper.shared.getSelectedUserType() == .Customer{
                 HStack {
                     Text("login_not_signin".localized)
                         .font(.medium(size: 18))
@@ -154,14 +155,15 @@ struct LoginView: View {
                     
                     Button("login_signup_btn".localized) {
                         // Navigate to register
-//                        signup()
+                        //                        signup()
                         pushTo(destination: SignUpView())
-
+                        
                     }
                     .font(.medium(size: 18))
                     .foregroundColor(Color(.secondary))
                 }
                 .padding(.top, 4)
+            }
                 
                 Spacer()
             }
@@ -270,8 +272,20 @@ struct LoginView: View {
             case .success:
                 Helper.shared.saveUser(user: loginViewModel.usermodel ?? LoginM())
                 DispatchQueue.main.async {
-                    let newHome = UIHostingController(rootView: destination)
-                    Helper.shared.changeRootVC(newroot: newHome, transitionFrom: .fromLeft)
+                    switch selectedUser {
+                    case .Customer:
+//                        destination = AnyView(NewTabView())
+                        let newHome = UIHostingController(rootView: NewTabView())
+                        Helper.shared.changeRootVC(newroot: newHome, transitionFrom: .fromLeft)
+
+                    case .Doctor:
+//                        destination = AnyView(DocTabView())
+                        let newHome = UIHostingController(rootView: DocTabView())
+                        Helper.shared.changeRootVC(newroot: newHome, transitionFrom: .fromLeft)
+
+                    }
+//                    let newHome = UIHostingController(rootView: destination)
+//                    Helper.shared.changeRootVC(newroot: newHome, transitionFrom: .fromLeft)
                 }
             case .failure(let error):
                 errorMessage = error.localizedDescription

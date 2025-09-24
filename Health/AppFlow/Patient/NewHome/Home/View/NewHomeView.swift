@@ -153,7 +153,7 @@ struct NewHomeView: View {
             .showHud(isShowing:  $viewModel.isLoading)
             .errorAlert(isPresented: .constant(viewModel.errorMessage != nil), message: viewModel.errorMessage)
             .customSheet(isPresented: $isReschedualling){
-                ReSchedualView(isPresentingNewMeasurementSheet: $isReschedualling)
+                ReSchedualView(isPresentingNewMeasurementSheet: $isReschedualling,reschedualcase: .reschedualSession)
             }
             .onAppear{
                 selectedPackage = nil

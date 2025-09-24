@@ -28,6 +28,7 @@ struct ActiveCustomerPackagesView: View {
 //        }
 //   
 //    }
+    @State var reschedualcase: reschedualCases? = .reschedualSession
     @State var isReschedualling: Bool = false
 
     enum SectionType: CaseIterable,Hashable {
@@ -203,9 +204,14 @@ struct ActiveCustomerPackagesView: View {
                 
                 CustomButton(title: "select_next_session",isdisabled: false,backgroundView:AnyView(Color.clear.horizontalGradientBackground())){
 //                    showFilter.toggle()
+                    Task{ reschedualcase = .nextSession }
+                    isReschedualling = true
                 }
                 
-                SubcripedNextSession(upcomingSession: viewmodel.upcomingSession)
+                SubcripedNextSession(upcomingSession: viewmodel.upcomingSession,rescheduleAction: {
+                    Task{ reschedualcase = .reschedualSession }
+                    isReschedualling = true
+                })
                     .padding(.horizontal)
                 
                 SubcripedSessionsList(sessions: viewmodel.subscripedSessions?.items)
@@ -252,10 +258,14 @@ struct ActiveCustomerPackagesView: View {
         }
 //        NavigationLink( "", destination: destination, isActive: $isactive)
         .customSheet(isPresented: $isReschedualling){
-            ReSchedualView(isPresentingNewMeasurementSheet: $isReschedualling)
+            if let CustomerPackageId = CustomerPackageId{
+                ReSchedualView(doctorPackageId: CustomerPackageId, isPresentingNewMeasurementSheet: $isReschedualling,reschedualcase:reschedualcase,onRescheduleSuccess: {
+                    
+                })
+            }
         }
         if showCancel{
-            CancelSubscriptionView(isPresent: $showCancel, customerPackageId: idToCancel ?? 0,onCancelSuccess: {
+            CancelSubscriptionView(isPresent: $showCancel,customerPackageId: idToCancel ?? 0,onCancelSuccess: {
 //                if let index = viewModel.subscripedPackages?.items?.firstIndex(where: { $0.customerPackageID == idToCancel }) {
 //                    viewModel.subscripedPackages?.items?[index].canCancel?.toggle()
 //                }

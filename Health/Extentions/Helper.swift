@@ -214,20 +214,23 @@ class Helper: NSObject {
     
      func openTelegram (TelegramLink : String) {
         
-        let botURL = URL.init(string: TelegramLink)
-            if UIApplication.shared.canOpenURL(botURL!) {
-                UIApplication.shared.openURL(botURL!)
+        guard let botURL = URL(string: TelegramLink) else { return }
+        if UIApplication.shared.canOpenURL(botURL) {
+            if #available(iOS 10.0, *) {
+                UIApplication.shared.open(botURL, options: [:], completionHandler: nil)
             } else {
-                let urlAppStore = URL(string: "itms-apps://itunes.apple.com/app/id686449807")
-                if(UIApplication.shared.canOpenURL(urlAppStore!))
-                {
-                    if #available(iOS 10.0, *) {
-                        UIApplication.shared.open(urlAppStore!, options: [:], completionHandler: nil)
-                    } else {
-                        UIApplication.shared.openURL(urlAppStore!)
-                    }
+                UIApplication.shared.openURL(botURL)
+            }
+        } else {
+            if let urlAppStore = URL(string: "itms-apps://itunes.apple.com/app/id686449807"),
+               UIApplication.shared.canOpenURL(urlAppStore) {
+                if #available(iOS 10.0, *) {
+                    UIApplication.shared.open(urlAppStore, options: [:], completionHandler: nil)
+                } else {
+                    UIApplication.shared.openURL(urlAppStore)
                 }
             }
+        }
     }
     
     
@@ -266,7 +269,7 @@ class Helper: NSObject {
     
     
      func GoToAnyScreen (storyboard : String , identifier : String) {
-        guard let window = UIApplication.shared.keyWindow else{return}
+        guard let window = Helper.activeWindow() else { return }
         let storyboard = UIStoryboard(name: storyboard , bundle: nil)
         var vc:UIViewController
         vc = storyboard.instantiateViewController(withIdentifier: identifier )
@@ -534,10 +537,13 @@ extension Helper{
         nav.view.semanticContentAttribute = isArabic ? .forceRightToLeft : .forceLeftToRight
         nav.navigationBar.semanticContentAttribute = nav.view.semanticContentAttribute
         
-        UIApplication.shared.keyWindow?.replaceRootViewController(nav, from)
+        // Use active window from foreground scene
+        if let window = Helper.activeWindow() {
+            window.replaceRootViewController(nav, from)
+        }
     }
 
-    func changeRootVC(newroot viewController: UIViewController, transitionFrom from: CATransitionSubtype) {
+    func changeRootVC(newroot viewController: UIViewController, transitionFrom from: CATransitionSubtype?) {
         let nav = UINavigationController(rootViewController: viewController)
         nav.navigationBar.isHidden = true
         nav.toolbar.isHidden = true
@@ -547,12 +553,45 @@ extension Helper{
         nav.view.semanticContentAttribute = isArabic ? .forceRightToLeft : .forceLeftToRight
         nav.navigationBar.semanticContentAttribute = nav.view.semanticContentAttribute
         
-        UIApplication.shared.keyWindow?.replaceRootViewController(nav, from)
+        // Use active window from foreground scene
+        if let window = Helper.activeWindow() {
+            window.replaceRootViewController(nav, from ?? (isArabic ? .fromRight : .fromLeft))
+        }
+    }
+
+    // MARK: - Active window helper
+    static func activeWindow() -> UIWindow? {
+        if #available(iOS 13.0, *) {
+            // Prefer the key window in the foreground active scene
+            let scenes = UIApplication.shared.connectedScenes
+                .filter { $0.activationState == .foregroundActive }
+                .compactMap { $0 as? UIWindowScene }
+            for scene in scenes {
+                if let keyWindow = scene.windows.first(where: { $0.isKeyWindow }) {
+                    return keyWindow
+                }
+                if let normalWindow = scene.windows.first(where: { $0.windowLevel == .normal }) {
+                    return normalWindow
+                }
+            }
+            // Final fallback within scenes (avoid deprecated UIApplication.shared.windows)
+            if let anyScene = scenes.first {
+                return anyScene.windows.first
+            }
+            return nil
+        } else {
+            // iOS 12 and earlier
+            return UIApplication.shared.keyWindow
+        }
     }
 
         
         
     }
+
+
+
+
 
 
 

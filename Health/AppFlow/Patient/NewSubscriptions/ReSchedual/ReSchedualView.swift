@@ -4,14 +4,22 @@
 //
 //  Created by mohamed hammam on 13/07/2025.
 //
-
+enum reschedualCases{
+    case nextSession
+    case reschedualSession
+}
 import SwiftUI
 
 struct ReSchedualView: View {
-    @StateObject var viewModel = PackageMoreDetailsViewModel.shared
+    var doctorPackageId : Int?
+    @StateObject var viewModel = ReSchedualViewModel.shared
     @State private var showingDatePicker = false
     @State private var selectedDate = Date()
     @Binding var isPresentingNewMeasurementSheet:Bool
+    var reschedualcase:reschedualCases? = .reschedualSession
+    // New: callback to run after success
+    var onRescheduleSuccess: (() -> Void)? = nil
+    
     var body: some View {
         VStack{
             
@@ -29,7 +37,8 @@ struct ReSchedualView: View {
             .offset(y:30)
             .padding(.horizontal)
 
-            SectionHeader(image: Image(.newreschedual),imageForground: Color(.secondary),title: "ReSchedualling_".localized,MoreBtnimage: nil ){
+            let title = reschedualcase == .nextSession ? "Next_Session_selection".localized : "ReSchedualling_".localized
+            SectionHeader(image: Image(.newreschedual),imageForground: Color(.secondary),title: title ,MoreBtnimage: nil ){
                 //                            go to last mes package
             }
             .padding()
@@ -95,11 +104,6 @@ struct ReSchedualView: View {
                             Task{
                                 await viewModel.getAvailableShifts()
                             }
-                            //                                    guard viewModel.selectedShift != nil else { return
-                            //                                    }
-                            //                                    Task{
-                            //                                        await viewModel.getAvailableScheduals()
-                            //                                    }
                         }, label: {
                             VStack{
                                 Text("\(day.date ?? "")".ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "dd"))
@@ -161,18 +165,37 @@ struct ReSchedualView: View {
 
                 CustomButton(title: "confirm_",backgroundcolor: Color(.mainBlue),backgroundView:nil){
                     Task{
-//                        await viewModel.createMeasurement()
-                    }
-    //                    viewModel.isPresentingNewMeasurementSheet = false
-                }
+                        // Call the reschedule method (to be added in ViewModel)
+                        switch reschedualcase {
+                        case .nextSession:
+                            await viewModel.createCustomerPackage(paramters: [:] )
 
+                        case .reschedualSession,.none:
+                            await viewModel.rescheduleCustomerPackage()
+
+                        }
+                    }
+                }
             }
             .padding(.top)
-            
+        }
+        .task {
+            // Run sequentially and await completion on the view’s task context (non-blocking UI, but ordered)
+            viewModel.doctorPackageId = doctorPackageId
+            await viewModel.getDoctorPackageDetails()
+            await viewModel.getAvailableDays()
+        }
+        // React to success
+        .onChange(of: viewModel.isReschedualed) { newValue in
+            guard newValue == true else { return }
+            isPresentingNewMeasurementSheet = false
+            onRescheduleSuccess?()
+            // reset so future sheets can trigger again if needed
+            viewModel.isReschedualed = false
         }
     }
 }
 
 #Preview {
-    ReSchedualView( isPresentingNewMeasurementSheet: .constant(true))
+    ReSchedualView( doctorPackageId: 0,isPresentingNewMeasurementSheet: .constant(true),reschedualcase: .reschedualSession)
 }
