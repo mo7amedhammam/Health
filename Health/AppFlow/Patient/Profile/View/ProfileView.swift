@@ -4,7 +4,7 @@ struct ProfileViewUI: View {
     @StateObject var router = NavigationRouter()
 
     //    @StateObject var localizationManager = LocalizationManager.shared
-    @StateObject private var paymentsVM = DocPaymentsViewModel.shared
+    @StateObject private var paymentsVM = MyPaymentsViewModel.shared
 
     @ObservedObject var localizationManager = LocalizationManager.shared
     @EnvironmentObject var viewModel: EditProfileViewModel
@@ -73,7 +73,7 @@ struct ProfileViewUI: View {
                                         .font(.semiBold(size: 16))
                                         .foregroundColor(Color(.mainBlue))
                                     
-                                    Text(paymentsVM.ballance?.total ?? 0, format: .number.precision(.fractionLength(2)) )
+                                    Text(paymentsVM.ballance?.balance ?? 0, format: .number.precision(.fractionLength(2)) )
                                         .font(.bold(size: 26))
                                         .foregroundColor(Color(.secondary))
                                 }

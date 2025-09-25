@@ -14,7 +14,7 @@ struct NewHomeView: View {
 
     // UI-only state
     @State private var selectedPackage: FeaturedPackageItemM?
-    @State private var isReschedualling: Bool = false
+    @State private var isRescheduling: Bool = false
 
     // MARK: - Lightweight Equatable ViewState for subviews
     // These structs carry only the minimal, comparable "fingerprints" that matter to the subviews.
@@ -81,8 +81,14 @@ struct NewHomeView: View {
         return MeasurementsViewState(fingerprints: items.map(fingerprint(for:)))
     }
 
+    // Default init
     init() {
         _viewModel = StateObject(wrappedValue: NewHomeViewModel())
+    }
+
+    // Test/preview-friendly init (dependency injection)
+    init(viewModel: NewHomeViewModel) {
+        _viewModel = StateObject(wrappedValue: viewModel)
     }
 
     var body: some View {
@@ -93,15 +99,17 @@ struct NewHomeView: View {
                 HeaderView()
                     .environmentObject(profileViewModel)
                     .padding(.horizontal)
+                    .accessibilityIdentifier("home_header")
 
                 VStack(alignment: .leading) {
                     if let nextsession = viewModel.upcomingSession {
                         NextSessionSection(
                             upcomingSession: nextsession,
                             detailsAction: {},
-                            rescheduleAction: { isReschedualling = true }
+                            rescheduleAction: { isRescheduling = true }
                         )
                         .padding(.horizontal)
+                        .accessibilityIdentifier("home_next_session")
                     }
 
                     MainCategoriesSection(categories: viewModel.homeCategories) { category in
@@ -119,6 +127,7 @@ struct NewHomeView: View {
                             guard let item = item else { return }
                             router.push(MeasurementDetailsView(stat: item))
                         }
+                        .accessibilityIdentifier("home_measurements_section")
                     }
 
                     // VIP packages wrapped with EquatableByValue
@@ -130,6 +139,7 @@ struct NewHomeView: View {
                                 Task { await viewModel.toggleWishlist(for: packageId, in: .featured) }
                             }
                         )
+                        .accessibilityIdentifier("home_vip_section")
                     }
 
                     Image(.adsbg2)
@@ -160,6 +170,7 @@ struct NewHomeView: View {
                                 }
                             }
                         )
+                        .accessibilityIdentifier("home_most_section")
                     }
                 }
 
@@ -169,10 +180,21 @@ struct NewHomeView: View {
         }
         .localizeView()
         .withNavigation(router: router)
-        .showHud(isShowing: $viewModel.isLoading)
-        .errorAlert(isPresented: .constant(viewModel.errorMessage != nil), message: viewModel.errorMessage)
-        .customSheet(isPresented: $isReschedualling) {
-            ReSchedualView(isPresentingNewMeasurementSheet: $isReschedualling, reschedualcase: .reschedualSession)
+        // Bridge Bool -> Bool? for HUD modifier
+        .showHud(isShowing: Binding<Bool?>(
+            get: { viewModel.isLoading },
+            set: { viewModel.isLoading = $0 ?? false }
+        ))
+        // Two-way binding so dismissing the alert clears the error
+        .errorAlert(
+            isPresented: Binding(
+                get: { viewModel.errorMessage != nil },
+                set: { if !$0 { viewModel.errorMessage = nil } }
+            ),
+            message: viewModel.errorMessage
+        )
+        .customSheet(isPresented: $isRescheduling) {
+            ReSchedualView(isPresentingNewMeasurementSheet: $isRescheduling, reschedualcase: .reschedualSession)
         }
         .task {
             await viewModel.load()
@@ -182,9 +204,12 @@ struct NewHomeView: View {
                 profileViewModel.cleanup()
             }
         }
-        .task(id: selectedPackage) {
-            guard let selectedPackage = selectedPackage else { return }
-            router.push(PackageDetailsView(package: selectedPackage))
+        // Navigate on selection and reset so selecting the same item again works
+        .onChange(of: selectedPackage) { newValue in
+            guard let selected = newValue else { return }
+            router.push(PackageDetailsView(package: selected))
+            // reset selection after navigation
+            selectedPackage = nil
         }
         .refreshable {
             await viewModel.load()

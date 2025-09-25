@@ -195,8 +195,14 @@ final class AsyncAwaitNetworkService: AsyncAwaitNetworkServiceProtocol {
                 return try decodeResponse(data, responseType)
 
             } catch let cancelError as CancellationError {
-                // Propagate true cancellation
-                throw cancelError
+                // Treat task cancellation as benign: do not surface an error.
+                logger.info("Request was cancelled (CancellationError). Suppressing error.")
+                return nil
+
+            } catch let urlErr as URLError where urlErr.code == .cancelled {
+                // Treat URLSession cancellation as benign: do not surface an error.
+                logger.info("Request was cancelled (URLError.cancelled). Suppressing error.")
+                return nil
 
             } catch {
                 // Map URL errors to domain-specific errors
@@ -341,6 +347,7 @@ final class AsyncAwaitNetworkService: AsyncAwaitNetworkServiceProtocol {
             case .cannotFindHost, .cannotConnectToHost, .dnsLookupFailed:
                 return .apiError(code: urlErr.errorCode, error: "Cannot reach host")
             case .cancelled:
+                // We generally swallow cancellations earlier; mapping kept for completeness.
                 return .unknown(code: urlErr.errorCode, error: "Cancelled")
             default:
                 return .unknown(code: urlErr.errorCode, error: urlErr.localizedDescription)
@@ -486,34 +493,44 @@ extension AsyncAwaitNetworkService {
 
         logRequest(request, attempt: 1)
 
-        let start = Date()
-        let (data, response) = try await session.data(for: request)
-        let duration = Date().timeIntervalSince(start)
+        do {
+            let start = Date()
+            let (data, response) = try await session.data(for: request)
+            let duration = Date().timeIntervalSince(start)
 
-        guard let httpResponse = response as? HTTPURLResponse else {
-            throw NetworkError.noResponse("Invalid response object")
-        }
-
-        logResponse(httpResponse, data: data, duration: duration)
-
-        switch httpResponse.statusCode {
-        case 200..<300:
-            if data.isEmpty { return nil }
-            return try decodeResponse(data, responseType)
-        case 401:
-            throw NetworkError.unauthorized(code: httpResponse.statusCode, error: "Unauthorized")
-        case 400..<500:
-            let message: String
-            if let errorResponse = try? JSONDecoder().decode(ServerErrorResponse.self, from: data) {
-                message = errorResponse.message
-            } else {
-                message = String(data: data, encoding: .utf8) ?? "Client error"
+            guard let httpResponse = response as? HTTPURLResponse else {
+                throw NetworkError.noResponse("Invalid response object")
             }
-            throw NetworkError.badRequest(code: httpResponse.statusCode, error: message)
-        case 500..<600:
-            throw NetworkError.serverError(code: httpResponse.statusCode, error: "Server error")
-        default:
-            throw NetworkError.unknown(code: httpResponse.statusCode, error: "Unhandled status code")
+
+            logResponse(httpResponse, data: data, duration: duration)
+
+            switch httpResponse.statusCode {
+            case 200..<300:
+                if data.isEmpty { return nil }
+                return try decodeResponse(data, responseType)
+            case 401:
+                throw NetworkError.unauthorized(code: httpResponse.statusCode, error: "Unauthorized")
+            case 400..<500:
+                let message: String
+                if let errorResponse = try? JSONDecoder().decode(ServerErrorResponse.self, from: data) {
+                    message = errorResponse.message
+                } else {
+                    message = String(data: data, encoding: .utf8) ?? "Client error"
+                }
+                throw NetworkError.badRequest(code: httpResponse.statusCode, error: message)
+            case 500..<600:
+                throw NetworkError.serverError(code: httpResponse.statusCode, error: "Server error")
+            default:
+                throw NetworkError.unknown(code: httpResponse.statusCode, error: "Unhandled status code")
+            }
+        } catch let cancelError as CancellationError {
+            logger.info("Multipart upload cancelled (CancellationError). Suppressing error.")
+            return nil
+        } catch let urlErr as URLError where urlErr.code == .cancelled {
+            logger.info("Multipart upload cancelled (URLError.cancelled). Suppressing error.")
+            return nil
+        } catch {
+            throw mapToNetworkError(error: error)
         }
     }
 

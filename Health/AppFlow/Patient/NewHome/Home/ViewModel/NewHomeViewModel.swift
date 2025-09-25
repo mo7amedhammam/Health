@@ -7,13 +7,43 @@
 
 import Foundation
 
+// MARK: - Test seams
+
+/// Abstraction for wishlist operations so we can mock/throw in unit tests.
+protocol WishlistManaging {
+    /// Add or remove a package from wishlist. Implementations may throw on failure.
+    func addOrRemovePackageToWishList(packageId: Int) async throws
+}
+
+/// Adapter to existing singleton manager. If the underlying method doesn’t throw,
+/// this adapter will never throw — tests can inject a throwing mock to exercise rollback.
+struct WishListManagerAdapter: WishlistManaging {
+    func addOrRemovePackageToWishList(packageId: Int) async throws {
+        await WishListManagerViewModel.shared.addOrRemovePackageToWishList(packageId: packageId)
+    }
+}
+
+/// Minimal environment wrapper for Helper.shared usage (login/country).
+protocol AppEnvironmentProviding {
+    func appCountryId() -> Int
+    func isLoggedIn() -> Bool
+}
+
+struct HelperEnvironment: AppEnvironmentProviding {
+    func appCountryId() -> Int { Helper.shared.AppCountryId() ?? 0 }
+    func isLoggedIn() -> Bool { Helper.shared.CheckIfLoggedIn() }
+}
+
+// MARK: - ViewModel
+
+@MainActor
 final class NewHomeViewModel: ObservableObject {
     static let shared = NewHomeViewModel() // kept for other screens if they rely on it; NewHomeView creates its own instance
 
     // Injected services
     private let networkService: AsyncAwaitNetworkServiceProtocol
-    // Wishlist manager (kept internal to avoid View coupling)
-    private let wishlistManager = WishListManagerViewModel.shared
+    private let wishlistManager: WishlistManaging
+    private let env: AppEnvironmentProviding
 
     // Pagination/state
     var maxResultCount: Int? = 5
@@ -28,12 +58,21 @@ final class NewHomeViewModel: ObservableObject {
     @Published private(set) var mostBookedPackages: [FeaturedPackageItemM]?
     @Published private(set) var mostViewedPackages: [FeaturedPackageItemM]?
 
-    @Published var isLoading: Bool? = false
-    @Published var isError: Bool? = false
+    // UI flags
+    @Published var isLoading: Bool = false
+    @Published var isError: Bool = false
     @Published var errorMessage: String? = nil
 
-    init(networkService: AsyncAwaitNetworkServiceProtocol = AsyncAwaitNetworkService.shared) {
+    // MARK: Init
+
+    init(
+        networkService: AsyncAwaitNetworkServiceProtocol = AsyncAwaitNetworkService.shared,
+        wishlistManager: WishlistManaging = WishListManagerAdapter(),
+        env: AppEnvironmentProviding = HelperEnvironment()
+    ) {
         self.networkService = networkService
+        self.wishlistManager = wishlistManager
+        self.env = env
     }
 }
 
@@ -41,19 +80,19 @@ final class NewHomeViewModel: ObservableObject {
 extension NewHomeViewModel {
 
     // Unified loader to minimize UI invalidations
-    @MainActor
     func load() async {
-        guard isLoading != true else { return }
+        guard !isLoading else { return }
         isLoading = true
+        isError = false
         errorMessage = nil
 
-        let appCountryId = Helper.shared.AppCountryId()
+        let appCountryId = env.appCountryId()
         let max = maxResultCount ?? 5
         let categoriesSkip = 0
         let featuredSkip = 0
 
         do {
-            async let upc: UpcomingSessionM? = Helper.shared.CheckIfLoggedIn()
+            async let upc: UpcomingSessionM? = env.isLoggedIn()
                 ? networkService.request(HomeServices.GetUpcomingSession, responseType: UpcomingSessionM.self)
                 : nil
 
@@ -61,7 +100,7 @@ extension NewHomeViewModel {
                 HomeServices.GetAllHomeCategory(parameters: [
                     "maxResultCount": max,
                     "skipCount": categoriesSkip,
-                    "appCountryId": appCountryId ?? 0
+                    "appCountryId": appCountryId
                 ]),
                 responseType: HomeCategoryM.self
             )
@@ -75,7 +114,7 @@ extension NewHomeViewModel {
                 HomeServices.FeaturedPackageList(parameters: [
                     "maxResultCount": max,
                     "skipCount": featuredSkip,
-                    "appCountryId": appCountryId ?? 0
+                    "appCountryId": appCountryId
                 ]),
                 responseType: FeaturedPackagesM.self
             )
@@ -83,7 +122,7 @@ extension NewHomeViewModel {
             async let mostViewed: [FeaturedPackageItemM]? = networkService.request(
                 HomeServices.MostViewedPackage(parameters: [
                     "top": max,
-                    "AppCountryId": appCountryId ?? 0
+                    "AppCountryId": appCountryId
                 ]),
                 responseType: [FeaturedPackageItemM].self
             )
@@ -99,7 +138,7 @@ extension NewHomeViewModel {
 
         } catch {
             isError = true
-            errorMessage = error.localizedDescription
+            errorMessage = (error as? LocalizedError)?.errorDescription ?? error.localizedDescription
         }
 
         isLoading = false
@@ -112,11 +151,10 @@ extension NewHomeViewModel {
         case MostBooked, MostViewed
     }
 
-    @MainActor
     func getMostBookedOrViewedPackages(forcase: MostCases) async {
-        let appCountryId = Helper.shared.AppCountryId()
+        let appCountryId = env.appCountryId()
         let top = maxResultCount ?? 5
-        let parameters: [String: Any] = ["top": top, "AppCountryId": appCountryId ?? 0]
+        let parameters: [String: Any] = ["top": top, "AppCountryId": appCountryId]
 
         let target: TargetType1 = {
             switch forcase {
@@ -128,6 +166,7 @@ extension NewHomeViewModel {
         }()
 
         do {
+            isError = false
             errorMessage = nil
             let response: [FeaturedPackageItemM]? = try await networkService.request(target, responseType: [FeaturedPackageItemM].self)
             switch forcase {
@@ -138,120 +177,147 @@ extension NewHomeViewModel {
             }
         } catch {
             isError = true
-            errorMessage = error.localizedDescription
+            errorMessage = (error as? LocalizedError)?.errorDescription ?? error.localizedDescription
         }
     }
 
-    // Intent: toggle wishlist in a specific source list and sync to server
+    // Intent: toggle wishlist in all lists that might contain the package and sync to server.
     enum SourceList {
         case featured
         case mostViewed
         case mostBooked
     }
 
-    @MainActor
     func toggleWishlist(for packageId: Int, in source: SourceList) async {
-        // Update local state first for responsiveness
-        switch source {
-        case .featured:
-            if var items = featuredPackages?.items,
-               let idx = items.firstIndex(where: { $0.appCountryPackageId == packageId }) {
-                items[idx].isWishlist?.toggle()
-                featuredPackages?.items = items
-            }
-        case .mostViewed:
-            if var list = mostViewedPackages,
-               let idx = list.firstIndex(where: { $0.appCountryPackageId == packageId }) {
-                list[idx].isWishlist?.toggle()
-                mostViewedPackages = list
-            }
-        case .mostBooked:
-            if var list = mostBookedPackages,
-               let idx = list.firstIndex(where: { $0.appCountryPackageId == packageId }) {
-                list[idx].isWishlist?.toggle()
-                mostBookedPackages = list
-            }
-        }
+        // Snapshot current state for possible rollback
+        let oldFeatured = featuredPackages?.items
+        let oldMostViewed = mostViewedPackages
+        let oldMostBooked = mostBookedPackages
 
-        // Sync server
-        await wishlistManager.addOrRemovePackageToWishList(packageId: packageId)
+        // Optimistically update local state across lists to keep them consistent
+        toggleWishlistLocally(packageId: packageId)
+
+        // Sync server. If this throws, roll back and surface the error.
+        do {
+            try await wishlistManager.addOrRemovePackageToWishList(packageId: packageId)
+        } catch {
+            // Rollback local state
+            featuredPackages?.items = oldFeatured
+            mostViewedPackages = oldMostViewed
+            mostBookedPackages = oldMostBooked
+
+            isError = true
+            errorMessage = (error as? LocalizedError)?.errorDescription ?? error.localizedDescription
+        }
     }
 
     // Targeted refreshers kept for reuse if needed elsewhere
-    @MainActor
     func getUpcomingSession() async {
         let target = HomeServices.GetUpcomingSession
         do {
+            isError = false
             errorMessage = nil
             let response = try await networkService.request(target, responseType: UpcomingSessionM.self)
             self.upcomingSession = response
         } catch {
             isError = true
-            errorMessage = error.localizedDescription
+            errorMessage = (error as? LocalizedError)?.errorDescription ?? error.localizedDescription
         }
     }
 
-    @MainActor
     func getHomeCategories() async {
         guard let maxResultCount = maxResultCount,
-              let skipCount = skipCount,
-              let appCountryId = Helper.shared.AppCountryId() else {
+              let skipCount = skipCount else {
+            isError = true
             errorMessage = "check inputs"
             return
         }
-        let parametersarr: [String: Any] = ["maxResultCount": maxResultCount, "skipCount": skipCount, "appCountryId": appCountryId]
+        let parametersarr: [String: Any] = [
+            "maxResultCount": maxResultCount,
+            "skipCount": skipCount,
+            "appCountryId": env.appCountryId()
+        ]
 
         let target = HomeServices.GetAllHomeCategory(parameters: parametersarr)
         do {
+            isError = false
             errorMessage = nil
             let response = try await networkService.request(target, responseType: HomeCategoryM.self)
             self.homeCategories = response
         } catch {
             isError = true
-            errorMessage = error.localizedDescription
+            errorMessage = (error as? LocalizedError)?.errorDescription ?? error.localizedDescription
         }
     }
 
-    @MainActor
     func getMyMeasurements() async {
         let target = HomeServices.GetMyMeasurementsStats
         do {
+            isError = false
             errorMessage = nil
             let response = try await networkService.request(target, responseType: [MyMeasurementsStatsM].self)
             self.myMeasurements = response
         } catch {
             isError = true
-            errorMessage = error.localizedDescription
+            errorMessage = (error as? LocalizedError)?.errorDescription ?? error.localizedDescription
         }
     }
 
-    @MainActor
     func getFeaturedPackages() async {
         guard let maxResultCount = maxResultCount,
-              let FeaturedPackagesSkipCount = FeaturedPackagesSkipCount,
-              let appCountryId = Helper.shared.AppCountryId() else {
+              let FeaturedPackagesSkipCount = FeaturedPackagesSkipCount else {
+            isError = true
             errorMessage = "check inputs"
             return
         }
-        let parametersarr: [String: Any] = ["maxResultCount": maxResultCount, "skipCount": FeaturedPackagesSkipCount, "appCountryId": appCountryId]
+        let parametersarr: [String: Any] = [
+            "maxResultCount": maxResultCount,
+            "skipCount": FeaturedPackagesSkipCount,
+            "appCountryId": env.appCountryId()
+        ]
 
         let target = HomeServices.FeaturedPackageList(parameters: parametersarr)
         do {
+            isError = false
             errorMessage = nil
             let response = try await networkService.request(target, responseType: FeaturedPackagesM.self)
             self.featuredPackages = response
         } catch {
             isError = true
-            errorMessage = error.localizedDescription
+            errorMessage = (error as? LocalizedError)?.errorDescription ?? error.localizedDescription
+        }
+    }
+}
+
+// MARK: - Private helpers
+
+private extension NewHomeViewModel {
+    func toggleWishlistLocally(packageId: Int) {
+        // Featured
+        if var items = featuredPackages?.items,
+           let idx = items.firstIndex(where: { $0.appCountryPackageId == packageId }) {
+            items[idx].isWishlist = !(items[idx].isWishlist ?? false)
+            featuredPackages?.items = items
+        }
+        // Most Viewed
+        if var list = mostViewedPackages,
+           let idx = list.firstIndex(where: { $0.appCountryPackageId == packageId }) {
+            list[idx].isWishlist = !(list[idx].isWishlist ?? false)
+            mostViewedPackages = list
+        }
+        // Most Booked
+        if var list = mostBookedPackages,
+           let idx = list.firstIndex(where: { $0.appCountryPackageId == packageId }) {
+            list[idx].isWishlist = !(list[idx].isWishlist ?? false)
+            mostBookedPackages = list
         }
     }
 }
 
 // MARK: - Pagination helpers (optional)
 extension NewHomeViewModel {
-    @MainActor
     func loadMoreCategoriesIfNeeded() async {
-        guard !(isLoading ?? false),
+        guard !isLoading,
               let currentCount = homeCategories?.items?.count,
               let totalCount = homeCategories?.totalCount,
               currentCount < totalCount,
@@ -261,9 +327,8 @@ extension NewHomeViewModel {
         await getHomeCategories()
     }
 
-    @MainActor
     func loadMoreFeaturedPackagesIfNeeded() async {
-        guard !(isLoading ?? false),
+        guard !isLoading,
               let currentCount = featuredPackages?.items?.count,
               let totalCount = featuredPackages?.totalCount,
               currentCount < totalCount,
