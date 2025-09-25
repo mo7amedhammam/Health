@@ -29,9 +29,7 @@ extension NotificationServices: TargetType {
     
     var method: Alamofire.HTTPMethod {
         switch self {
-        case .GetNotification :
-            return .post
-        case .CreateNotification(parameters: _):
+        case .GetNotification,.CreateNotification :
             return .post
         case .GetDrug:
             return .get
@@ -80,11 +78,10 @@ extension NewNotificationServices: TargetType1 {
         }
     }
     
-    var method: Alamofire.HTTPMethod {
+    var method: HTTPMethod {
         switch self {
-        case .GetNotification :
-            return .post
-        case .CreateNotification:
+        case .GetNotification
+            ,.CreateNotification:
             return .post
         case .GetDrug:
             return .get

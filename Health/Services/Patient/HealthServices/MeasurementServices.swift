@@ -94,7 +94,7 @@ extension NewMeasurement : TargetType1 {
         }
     }
 //    
-    var method: Alamofire.HTTPMethod {
+    var method: HTTPMethod {
         switch self {
         case .GetMyMeasurementsStats,
                 .GetNormalRange:
@@ -103,7 +103,7 @@ extension NewMeasurement : TargetType1 {
         case .GetMyMedicalMeasurements,
                 .CreateMeasurement :
             return .post
-            
+
         }
     }
     var parameters: [String:Any]? {

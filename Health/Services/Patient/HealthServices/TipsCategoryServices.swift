@@ -120,7 +120,7 @@ extension NewTipsServices: TargetType1 {
         }
     }
     
-    var method: Alamofire.HTTPMethod {
+    var method: HTTPMethod {
         switch self {
         case .GetAllMobile,
                 .getTipsByCategory,

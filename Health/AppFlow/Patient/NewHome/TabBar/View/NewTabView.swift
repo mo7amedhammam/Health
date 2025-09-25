@@ -53,7 +53,8 @@ struct NewTabView: View {
                 case 2:
                     NewHomeView()
                         .environmentObject(viewModel)
-
+                        .environmentObject(NavigationRouter.shared)
+                    
 //                    UIKitViewControllerWrapper(makeViewController: {
 //                    let VC: UIViewController = initiateViewController(storyboardName: .main, viewControllerIdentifier: MeasurementsVC.self)!
 //                    return VC

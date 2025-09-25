@@ -72,6 +72,7 @@
 		903667062D82E0A40040AE29 /* LocalizationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 903667052D82E08E0040AE29 /* LocalizationManager.swift */; };
 		903667082D82E1410040AE29 /* AppKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 903667072D82E1370040AE29 /* AppKeys.swift */; };
 		904133962E76C27A005726E7 /* DocPackagesServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 904133952E76C272005726E7 /* DocPackagesServices.swift */; };
+		90466D2F2E85607400C3D1C8 /* CoreNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90466D2E2E85607400C3D1C8 /* CoreNetwork.swift */; };
 		9047483F2DCF63530016C3DC /* PackagesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9047483E2DCF63530016C3DC /* PackagesView.swift */; };
 		904748452DCF8EF80016C3DC /* PackageDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 904748442DCF8EF80016C3DC /* PackageDetailsView.swift */; };
 		9047484C2DCFA4000016C3DC /* PackageMoreDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9047484A2DCFA4000016C3DC /* PackageMoreDetailsView.swift */; };
@@ -421,6 +422,7 @@
 		903667052D82E08E0040AE29 /* LocalizationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationManager.swift; sourceTree = "<group>"; };
 		903667072D82E1370040AE29 /* AppKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppKeys.swift; sourceTree = "<group>"; };
 		904133952E76C272005726E7 /* DocPackagesServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocPackagesServices.swift; sourceTree = "<group>"; };
+		90466D2E2E85607400C3D1C8 /* CoreNetwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreNetwork.swift; sourceTree = "<group>"; };
 		9047483E2DCF63530016C3DC /* PackagesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackagesView.swift; sourceTree = "<group>"; };
 		904748442DCF8EF80016C3DC /* PackageDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackageDetailsView.swift; sourceTree = "<group>"; };
 		9047484A2DCFA4000016C3DC /* PackageMoreDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackageMoreDetailsView.swift; sourceTree = "<group>"; };
@@ -1285,6 +1287,14 @@
 				904133952E76C272005726E7 /* DocPackagesServices.swift */,
 			);
 			path = Packages;
+			sourceTree = "<group>";
+		};
+		90466D2D2E85606B00C3D1C8 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				90466D2E2E85607400C3D1C8 /* CoreNetwork.swift */,
+			);
+			path = Core;
 			sourceTree = "<group>";
 		};
 		904748312DCCAF550016C3DC /* AppFlow */ = {
@@ -2612,6 +2622,7 @@
 		BBBDFFF62A730F9800F066DF /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				90466D2D2E85606B00C3D1C8 /* Core */,
 				90C7F3A22E6D9FDD00907BF8 /* Doctor */,
 				90C7F3A12E6D9FC400907BF8 /* Patient */,
 				90C7F3A52E6DA8EF00907BF8 /* BaseEndPoints.swift */,
@@ -3513,6 +3524,7 @@
 				BB1ECAB82AD47435009BF2DE /* WillExpireVC.swift in Sources */,
 				90B67BDC2D9EC7D600C1FD31 /* OnboardingView.swift in Sources */,
 				BBBD001B2A73101700F066DF /* FullImageVC.swift in Sources */,
+				90466D2F2E85607400C3D1C8 /* CoreNetwork.swift in Sources */,
 				BB518CDA2A9A118B00242FAD /* TipsCategoriesTVCell0.swift in Sources */,
 				902B882D2E22B07E009D5234 /* LoginSheetView.swift in Sources */,
 				C88995882AA9F70C002AD812 /* ForgetPasswordM.swift in Sources */,

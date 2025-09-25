@@ -36,6 +36,7 @@ enum Authintications {
 }
 
 extension Authintications : TargetType {
+    
     var path: String {
         switch self {
         case .Register:
@@ -89,7 +90,7 @@ extension Authintications : TargetType {
 
     }
 
-    var method: HTTPMethod {
+    var method: Alamofire.HTTPMethod {
         switch self {
         case .Register,
                 .Login,

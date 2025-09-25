@@ -8,195 +8,207 @@
 import SwiftUI
 
 struct NewHomeView: View {
-    @StateObject var router = NavigationRouter.shared
-    @StateObject private var viewModel = NewHomeViewModel.shared
+    @EnvironmentObject var router: NavigationRouter
+    @StateObject private var viewModel: NewHomeViewModel
     @EnvironmentObject var profileViewModel: EditProfileViewModel
 
-    @State private var refreshTask: Task<Void, Never>?
-    @StateObject var wishlistviewModel: WishListManagerViewModel = WishListManagerViewModel.shared
+    // UI-only state
+    @State private var selectedPackage: FeaturedPackageItemM?
+    @State private var isReschedualling: Bool = false
 
-    @State var selectedPackage : FeaturedPackageItemM?
-    @State var isReschedualling: Bool = false
-    
-//    init() {
-//    }
-    
-//    @State var destination = AnyView(EmptyView())
-//    @State var isactive: Bool = false
-//    func pushTo(destination: any View) {
-//        self.destination = AnyView(destination)
-//        self.isactive = true
-//    }
-    
+    // MARK: - Lightweight Equatable ViewState for subviews
+    // These structs carry only the minimal, comparable "fingerprints" that matter to the subviews.
+    // When the fingerprint arrays don't change, SwiftUI can skip re-rendering those subviews.
+
+    // VIP Packages section state
+    private struct VipPackagesViewState: Equatable {
+        let fingerprints: [String]
+    }
+
+    // MostViewed/Booked section state
+    private struct PackagesListViewState: Equatable {
+        let fingerprints: [String]
+    }
+
+    // Measurements section state
+    private struct MeasurementsViewState: Equatable {
+        let fingerprints: [String]
+    }
+
+    // Produce a stable string that reflects all user-visible fields used by package cells.
+    // If any of these fields change, the fingerprint changes -> view will re-render.
+    private func fingerprint(for item: FeaturedPackageItemM) -> String {
+        [
+            String(describing: item.appCountryPackageId),
+            String(describing: item.isWishlist),
+            String(describing: item.name),
+            String(describing: item.homeImage ?? item.imagePath),
+            String(describing: item.categoryName),
+            String(describing: item.mainCategoryName),
+            String(describing: item.sessionCount),
+            String(describing: item.priceAfterDiscount),
+            String(describing: item.priceBeforeDiscount),
+            String(describing: item.discount)
+        ].joined(separator: "|")
+    }
+
+    // Produce a stable string for a measurement row (only fields that affect UI)
+    private func fingerprint(for m: MyMeasurementsStatsM) -> String {
+        [
+            String(describing: m.medicalMeasurementID),
+            String(describing: m.title),
+            String(describing: m.lastMeasurementValue),
+            String(describing: m.formatteddate),
+            String(describing: m.measurementsCount),
+            String(describing: m.image),
+            String(describing: m.normalRangValue)
+        ].joined(separator: "|")
+    }
+
+    // Derived states for EquatableByValue
+    private var vipPackagesState: VipPackagesViewState {
+        let items = viewModel.featuredPackages?.items ?? []
+        return VipPackagesViewState(fingerprints: items.map(fingerprint(for:)))
+    }
+
+    private var mostViewedState: PackagesListViewState {
+        let items = viewModel.mostViewedPackages ?? []
+        return PackagesListViewState(fingerprints: items.map(fingerprint(for:)))
+    }
+
+    private var measurementsState: MeasurementsViewState {
+        let items = viewModel.myMeasurements ?? []
+        return MeasurementsViewState(fingerprints: items.map(fingerprint(for:)))
+    }
+
+    init() {
+        _viewModel = StateObject(wrappedValue: NewHomeViewModel())
+    }
+
     var body: some View {
-//        NavigationView(){
-            VStack{
-                TitleBar(title: "home_navtitle")
-                
-                ScrollView(showsIndicators: false){
-                    HeaderView()
-                        .environmentObject(profileViewModel)
+        VStack {
+            TitleBar(title: "home_navtitle")
+
+            ScrollView(showsIndicators: false) {
+                HeaderView()
+                    .environmentObject(profileViewModel)
+                    .padding(.horizontal)
+
+                VStack(alignment: .leading) {
+                    if let nextsession = viewModel.upcomingSession {
+                        NextSessionSection(
+                            upcomingSession: nextsession,
+                            detailsAction: {},
+                            rescheduleAction: { isReschedualling = true }
+                        )
+                        .padding(.horizontal)
+                    }
+
+                    MainCategoriesSection(categories: viewModel.homeCategories) { category in
+                        router.push(PackagesView(mainCategory: category))
+                    }
+
+                    Image(.adsbg)
+                        .resizable()
+                        .frame(height: 137)
                         .padding(.horizontal)
 
-                    VStack(alignment:.leading){
-//                        Group{
-                            if let nextsession = viewModel.upcomingSession{
-                                NextSessionSection(upcomingSession: nextsession,detailsAction: {
-                                        
-                                },rescheduleAction: {
-                                    isReschedualling = true
-                                })
-                                    .padding(.horizontal)
-                            }
-//                        }
-//                        .task {
-//                            await viewModel.getUpcomingSession()
-//                        }
-                        MainCategoriesSection(categories: viewModel.homeCategories){category in
-                            router.push(PackagesView(mainCategory: category))
-                        }
-//                            .task {
-//                                await viewModel.getHomeCategories()
-//                            }
-                        
-                        Image(.adsbg)
-                            .resizable()
-                            .frame(height: 137)
-                            .padding(.horizontal)
-
-                        LastMesurmentsSection(measurements: viewModel.myMeasurements){item in
+                    // Last measurements wrapped with EquatableByValue
+                    EquatableByValue(value: measurementsState) {
+                        LastMesurmentsSection(measurements: viewModel.myMeasurements) { item in
                             guard let item = item else { return }
                             router.push(MeasurementDetailsView(stat: item))
                         }
-//                            .task {
-//                                await viewModel.getMyMeasurements()
-//                            }
-//                            .onAppear(perform: {
-//                                Task{
-//                                    await viewModel.getMyMeasurements()
-//                                }
-//                            })
-                        
-                        VipPackagesSection(packages: viewModel.featuredPackages?.items,selectedPackage: $selectedPackage){packageId in
-//                            add to wishlist
-                            // Update the source-of-truth array in viewModel
-                             if let index = viewModel.featuredPackages?.items?.firstIndex(where: { $0.appCountryPackageId == packageId }){
-                                 viewModel.featuredPackages?.items?[index].isWishlist?.toggle()
-                             }
-                            
-                            Task{
-                                await wishlistviewModel.addOrRemovePackageToWishList(packageId: packageId)
-                            }
-                        }
-//                        .environmentObject(wishlistviewModel)
-//                        .task {
-//                            await viewModel.getFeaturedPackages()
-//
-//                        }
-//                        .onAppear(perform: {
-//                            Task{
-//                                await viewModel.getFeaturedPackages()
-//                            }
-//                        })
-                        
-                        Image(.adsbg2)
-                            .resizable()
-                            .frame(height: 229)
-                            .padding(.horizontal)
-                        
-                        MostViewedBooked(packaces:viewModel.mostViewedPackages,  selectedPackage: $selectedPackage,likeAction: {packageId,currentcase in
-                            //                            add to wishlist
-                            switch currentcase{
-                                
-                            case .mostviewed:
-                                if let index = viewModel.mostViewedPackages?.firstIndex(where: { $0.appCountryPackageId == packageId }) {
-                                    viewModel.mostViewedPackages?[index].isWishlist?.toggle()
-                                }
-                            case .mostbooked:
-                                if let index = viewModel.mostBookedPackages?.firstIndex(where: { $0.appCountryPackageId == packageId }) {
-                                    viewModel.mostBookedPackages?[index].isWishlist?.toggle()
-                                }
-                            }
-                           
-                           Task{
-                               await wishlistviewModel.addOrRemovePackageToWishList(packageId: packageId)
-                           }
-                            
-                        },onChangeTab:{ newTab in
-//                                             currentCase = newTab
-                                             Task {
-                                                 await viewModel.getMostBookedOrViewedPackages(forcase: newTab == .mostviewed ? .MostViewed : .MostBooked)
-//                                                 packages = newTab == .mostviewed ? viewModel.mostViewedPackages : viewModel.mostBookedPackages
-                                             }
-                                         })
-                            .environmentObject(viewModel)
-//                            .onAppear(perform: {
-//                                Task{
-//                                    await viewModel.getFeaturedPackages()
-//                                }
-//                            })
-//                            .task {
-//                                await viewModel.getFeaturedPackages()
-//                            }
                     }
-                    
-                    Spacer()
-                    
-                    Spacer().frame(height: 77)
-                    
+
+                    // VIP packages wrapped with EquatableByValue
+                    EquatableByValue(value: vipPackagesState) {
+                        VipPackagesSection(
+                            packages: viewModel.featuredPackages?.items,
+                            selectedPackage: $selectedPackage,
+                            likeAction: { packageId in
+                                Task { await viewModel.toggleWishlist(for: packageId, in: .featured) }
+                            }
+                        )
+                    }
+
+                    Image(.adsbg2)
+                        .resizable()
+                        .frame(height: 229)
+                        .padding(.horizontal)
+
+                    // Most viewed/booked wrapped with EquatableByValue
+                    EquatableByValue(value: mostViewedState) {
+                        MostViewedBooked(
+                            packaces: viewModel.mostViewedPackages,
+                            selectedPackage: $selectedPackage,
+                            likeAction: { packageId, currentcase in
+                                Task {
+                                    switch currentcase {
+                                    case .mostviewed:
+                                        await viewModel.toggleWishlist(for: packageId, in: .mostViewed)
+                                    case .mostbooked:
+                                        await viewModel.toggleWishlist(for: packageId, in: .mostBooked)
+                                    }
+                                }
+                            },
+                            onChangeTab: { newTab in
+                                Task {
+                                    await viewModel.getMostBookedOrViewedPackages(
+                                        forcase: newTab == .mostviewed ? .MostViewed : .MostBooked
+                                    )
+                                }
+                            }
+                        )
+                    }
                 }
-                //                .padding(.horizontal)
+
+                Spacer()
+                Spacer().frame(height: 77)
             }
-//            .reversLocalizeView()
-            .localizeView()
-            .withNavigation(router: router)
-            .showHud(isShowing:  $viewModel.isLoading)
-            .errorAlert(isPresented: .constant(viewModel.errorMessage != nil), message: viewModel.errorMessage)
-            .customSheet(isPresented: $isReschedualling){
-                ReSchedualView(isPresentingNewMeasurementSheet: $isReschedualling,reschedualcase: .reschedualSession)
+        }
+        .localizeView()
+        .withNavigation(router: router)
+        .showHud(isShowing: $viewModel.isLoading)
+        .errorAlert(isPresented: .constant(viewModel.errorMessage != nil), message: viewModel.errorMessage)
+        .customSheet(isPresented: $isReschedualling) {
+            ReSchedualView(isPresentingNewMeasurementSheet: $isReschedualling, reschedualcase: .reschedualSession)
+        }
+        .task {
+            await viewModel.load()
+            if Helper.shared.CheckIfLoggedIn() {
+                await profileViewModel.getProfile()
+            } else {
+                profileViewModel.cleanup()
             }
-            .onAppear{
-                selectedPackage = nil
-            }
-            .task {
-                await viewModel.refresh()
-                if Helper.shared.CheckIfLoggedIn(){
-                    await profileViewModel.getProfile()
-                }else{
-                    profileViewModel.cleanup()
-                }
-            }
-            .task(id: selectedPackage){
-                guard let selectedPackage = selectedPackage else { return }
-                
-                router.push( PackageDetailsView(package: selectedPackage))
-            }
-            .refreshable {
-                await viewModel.refresh()
-            }
-            .onDisappear {
-                refreshTask?.cancel()
-            }
-        
-//        NavigationLink( "", destination: destination, isActive: $isactive)
-        
+        }
+        .task(id: selectedPackage) {
+            guard let selectedPackage = selectedPackage else { return }
+            router.push(PackageDetailsView(package: selectedPackage))
+        }
+        .refreshable {
+            await viewModel.load()
+        }
     }
-    
 }
 
 #Preview {
     NewTabView()
         .environmentObject(EditProfileViewModel.shared)
+        .environmentObject(NavigationRouter.shared)
 }
 
+// MARK: - Generic Equatable wrapper by value
+// This avoids requiring the wrapped view to conform to Equatable.
+struct EquatableByValue<Value: Equatable, Content: View>: View, Equatable {
+    let value: Value
+    let content: () -> Content
 
+    static func == (lhs: EquatableByValue<Value, Content>, rhs: EquatableByValue<Value, Content>) -> Bool {
+        lhs.value == rhs.value
+    }
 
-
-
-
-
-
-
-
-
-
+    var body: some View {
+        content()
+    }
+}

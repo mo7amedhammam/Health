@@ -532,15 +532,15 @@ final class NetworkService1: NetworkServiceProtocol {
 ////                    print("httpResponse",httpResponse)
 ////                    print("data",data)
 ////                    print("JSONDecoder().decode(T.self, from: data)",try JSONDecoder().decode(T.self, from: data))
-//                    
+//
 //                                              // First try to decode as ApiResponse
 //                                              if let wrapper = try? JSONDecoder().decode(BaseResponse<T>.self, from: data) {
 //                                                  return wrapper.data
 //                                              }
-//                    
+//
 //                                              // Fall back to direct decoding if not wrapped
 //                                              return try JSONDecoder().decode(T.self, from: data)
-//                    
+//
 ////                    ------------------------------
 ////                    // First try to decode as BaseResponse
 ////                     if let wrapper = try? JSONDecoder().decode(BaseResponse<T>.self, from: data) {
@@ -550,7 +550,7 @@ final class NetworkService1: NetworkServiceProtocol {
 ////                         }
 ////                         return responseData
 ////                     }
-////                     
+////
 ////                     // Fall back to direct decoding if not wrapped
 ////                     do {
 ////                         let directResult = try JSONDecoder().decode(T.self, from: data)
@@ -619,8 +619,8 @@ final class NetworkService1: NetworkServiceProtocol {
 //    func request<T: Codable>(_ target: TargetType1, responseType: T.Type) async throws -> T? //async/await
 //}
 //final class AsyncAwaitNetworkService: AsyncAwaitNetworkServiceProtocol {
-//  
-//    
+//
+//
 //    static let shared = AsyncAwaitNetworkService()
 //    private init() {}
 //
@@ -772,395 +772,390 @@ final class NetworkService1: NetworkServiceProtocol {
 //}
 
 
-
-
-public enum NetworkError: Error, Equatable {
-    case expiredTokenMsg
-    case badURL(_ error: String)
-    case apiError(code: Int, error: String)
-    case invalidJSON(_ error: String)
-    case unauthorized(code: Int, error: String)
-    case badRequest(code: Int, error: String)
-    case serverError(code: Int, error: String)
-    case noResponse(_ error: String)
-    case unableToParseData(_ error: String)
-    case unknown(code: Int, error: String)
-    case noConnection
-}
-
-extension NetworkError: LocalizedError {
-    public var errorDescription: String? {
-        switch self {
-        case .badURL(let errorMsg):
-            return NSLocalizedString("Bad Url", comment: errorMsg)
-        case .apiError(_, let errorMsg):
-            return errorMsg
-        case .invalidJSON(let errorMsg):
-            return NSLocalizedString("00", comment: errorMsg)
-        case .unauthorized(_, let errorMsg):
-            return errorMsg
-        case .badRequest(_, let errorMsg):
-            return errorMsg
-        case .serverError(_, let errorMsg):
-            return errorMsg
-        case .noResponse(let errorMsg):
-            return errorMsg
-        case .unableToParseData(let errorMsg):
-            return errorMsg
-        case .unknown(_, let errorMsg):
-            return errorMsg
-        case .expiredTokenMsg:
-            return "login_expired"
-        case .noConnection:
-            return "no_connection"
-
-        }
-    }
-}
-
-// ----------------------------
-
-protocol TargetType1 {
-    var baseURL: URL { get }
-    var path: String { get }
-    var method: HTTPMethod { get }
-    var headers: [String: String]? { get }
-    var parameters: [String: Any]? { get }
-    var timeoutInterval: TimeInterval? { get }  // Add this line
-
-}
-extension TargetType1 {
-        var timeoutInterval: TimeInterval? {
-            return nil
-        }
-    var baseURL: URL {
-        return URL(string: Constants.apiURL)!
-    }
-    // MARK: - Request URL
-    var requestURL: URL {
-        return baseURL.appendingPathComponent(path)
-    }
-    var headers: [String: String]? {
-        var header = [String: String]()
-        header["Content-Type"] = "application/json"
-        header ["Accept"] = "multipart/form-data"
-        if let token = Helper.shared.getUser()?.token {
-        header["Authorization"] = "Bearer " + token
-        }
-        return header
-    }
-
-}
-
-import Foundation
-import os.log
-
-protocol AsyncAwaitNetworkServiceProtocol {
-    func request<T: Codable>(_ target: TargetType1, responseType: T.Type) async throws -> T?
-    func uploadMultipart<T: Codable>(_ target: TargetType1, parts: [MultipartFormDataPart], responseType: T.Type) async throws -> T?
-}
-
-final class AsyncAwaitNetworkService: AsyncAwaitNetworkServiceProtocol {
-
-    static let shared = AsyncAwaitNetworkService()
-    private init() {}
-
-    private let logger = Logger(subsystem: "com.sehaty.network", category: "networking")
-    private let defaultTimeout: TimeInterval = 30.0
-    private let maxRetryCount = 2
-
-    func request<T: Codable>(_ target: TargetType1, responseType: T.Type) async throws -> T? {
-        guard Helper.shared.isConnectedToNetwork() else {
-            throw NetworkError.noConnection
-        }
-
-        let url = target.baseURL.appendingPathComponent(target.path)
-        let request = try buildRequest(for: target, url: url)
-
-        var lastError: Error?
-
-        for attempt in 1...maxRetryCount {
-            logRequest(request, attempt: attempt)
-
-            do {
-                let start = Date()
-                let (data, response) = try await URLSession.shared.data(for: request)
-                let duration = Date().timeIntervalSince(start)
-
-                guard let httpResponse = response as? HTTPURLResponse else {
-                    throw NetworkError.invalidJSON("Invalid response object")
-                }
-
-                logResponse(httpResponse, data: data, duration: duration)
-
-                guard let contentType = httpResponse.value(forHTTPHeaderField: "Content-Type") else {
-                    throw NetworkError.invalidJSON("Missing Content-Type header")
-                }
-
-                guard contentType.contains("application/json") else {
-                    throw NetworkError.invalidJSON("Unexpected Content-Type: \(contentType)")
-                }
-
-
-                switch httpResponse.statusCode {
-                case 200..<300:
-                    return try decodeResponse(data, responseType)
-                case 401:
-                    // Handle token refresh in future
-                    throw NetworkError.unauthorized(code: httpResponse.statusCode, error: "Unauthorized")
-                case 400..<500:
-//                        throw NetworkError.unknown(code: httpResponse.statusCode, error: "client error")
-                    let serverMessage: String
-                       do {
-                           let errorResponse = try JSONDecoder().decode(ServerErrorResponse.self, from: data)
-                           serverMessage = errorResponse.message
-                       } catch {
-                           serverMessage = String(data: data, encoding: .utf8) ?? "Unknown client error"
-                       }
-
-                       throw NetworkError.unknown(code: httpResponse.statusCode, error: serverMessage)
-                                        
-                case 500..<600:
-                    throw NetworkError.serverError(code: httpResponse.statusCode, error: "Server error")
-                default:
-                    throw NetworkError.unknown(code: httpResponse.statusCode, error: "Unhandled status code")
-                }
-       
-
-//            } catch let error as NetworkError {
-//                throw error
-            } catch {
-                
-                if (error as NSError).code == URLError.cancelled.rawValue {
-                      logger.info("Request was cancelled.")
-                      return nil // or `throw` a special case you don’t alert for
-                  }
-                
+// ----------------------------------------------------------------------------------
+// ----------------------------------------------------------------------------------
+//
+//public enum NetworkError: Error, Equatable {
+//    case expiredTokenMsg
+//    case badURL(_ error: String)
+//    case apiError(code: Int, error: String)
+//    case invalidJSON(_ error: String)
+//    case unauthorized(code: Int, error: String)
+//    case badRequest(code: Int, error: String)
+//    case serverError(code: Int, error: String)
+//    case noResponse(_ error: String)
+//    case unableToParseData(_ error: String)
+//    case unknown(code: Int, error: String)
+//    case noConnection
+//}
+//
+//extension NetworkError: LocalizedError {
+//    public var errorDescription: String? {
+//        switch self {
+//        case .badURL(let errorMsg):
+//            return NSLocalizedString("Bad Url", comment: errorMsg)
+//        case .apiError(_, let errorMsg):
+//            return errorMsg
+//        case .invalidJSON(let errorMsg):
+////            return NSLocalizedString("invalid_json", comment: errorMsg)
+//            return errorMsg
+//
+//        case .unauthorized(_, let errorMsg):
+//            return errorMsg
+//        case .badRequest(_, let errorMsg):
+//            return errorMsg
+//        case .serverError(_, let errorMsg):
+//            return errorMsg
+//        case .noResponse(let errorMsg):
+//            return errorMsg
+//        case .unableToParseData(let errorMsg):
+//            return errorMsg
+//        case .unknown(_, let errorMsg):
+//            return errorMsg
+//        case .expiredTokenMsg:
+//            return "login_expired"
+//        case .noConnection:
+//            return "no_connection"
+//
+//        }
+//    }
+//}
+//
+//
+//protocol TargetType1 {
+//    var baseURL: URL { get }
+//    var path: String { get }
+//    var method: HTTPMethod { get }
+//    var headers: [String: String]? { get }
+//    var parameters: [String: Any]? { get }
+//    var timeoutInterval: TimeInterval? { get }  // Add this line
+//
+//}
+//extension TargetType1 {
+//        var timeoutInterval: TimeInterval? {
+//            return nil
+//        }
+//    var baseURL: URL {
+//        return URL(string: Constants.apiURL)!
+//    }
+//    // MARK: - Request URL
+//    var requestURL: URL {
+//        return baseURL.appendingPathComponent(path)
+//    }
+//    var headers: [String: String]? {
+//        var header = [String: String]()
+//        header["Content-Type"] = "application/json"
+//        header ["Accept"] = "multipart/form-data"
+//        if let token = Helper.shared.getUser()?.token {
+//        header["Authorization"] = "Bearer " + token
+//        }
+//        return header
+//    }
+//
+//}
+//
+//import Foundation
+//import os.log
+//
+//protocol AsyncAwaitNetworkServiceProtocol {
+//    func request<T: Codable>(_ target: TargetType1, responseType: T.Type) async throws -> T?
+//    func uploadMultipart<T: Codable>(_ target: TargetType1, parts: [MultipartFormDataPart], responseType: T.Type) async throws -> T?
+//}
+//
+//final class AsyncAwaitNetworkService: AsyncAwaitNetworkServiceProtocol {
+//
+//    static let shared = AsyncAwaitNetworkService()
+//    private init() {}
+//
+//    private let logger = Logger(subsystem: "com.sehaty.network", category: "networking")
+//    private let defaultTimeout: TimeInterval = 30.0
+//    private let maxRetryCount = 2
+//
+//    // MARK: - Clean Pipeline: build → send → validate → decode
+//    func request<T: Codable>(_ target: TargetType1, responseType: T.Type) async throws -> T? {
+//        guard Helper.shared.isConnectedToNetwork() else {
+//            throw NetworkError.noConnection
+//        }
+//
+//        let url = target.baseURL.appendingPathComponent(target.path)
+//        var lastError: Error?
+//
+//        for attempt in 1...maxRetryCount {
+//            // 1. Build
+//            let request = try buildRequest(for: target, url: url)
+//            logRequest(request, attempt: attempt)
+//
+//            do {
+//                let start = Date()
+//                // 2. Send
+//                let (data, response) = try await URLSession.shared.data(for: request)
+//                let duration = Date().timeIntervalSince(start)
+//
+//                // 3. Validate
+//                guard let httpResponse = response as? HTTPURLResponse else {
+//                    throw NetworkError.invalidJSON("Invalid response object")
+//                }
+//                logResponse(httpResponse, data: data, duration: duration)
+//
+//                let contentType = httpResponse.value(forHTTPHeaderField: "Content-Type") ?? ""
+//
+//                // Accept JSON only for successful responses
+//                if !(200..<300).contains(httpResponse.statusCode) {
+//                    // Error: still log and decode error message if possible
+//                    switch httpResponse.statusCode {
+//                    case 401:
+//                        let errorHeader = httpResponse.value(forHTTPHeaderField: "Www-Authenticate")
+//                        throw NetworkError.unauthorized(
+//                            code: httpResponse.statusCode,
+//                            error: errorHeader ?? "Unauthorized"
+//                        )
+//                    case 400..<500:
+//                        let serverMessage: String
+//                        do {
+//                            let errorResponse = try JSONDecoder().decode(ServerErrorResponse.self, from: data)
+//                            serverMessage = errorResponse.message
+//                        } catch {
+//                            serverMessage = String(data: data, encoding: .utf8) ?? "Unknown client error"
+//                        }
+//                        throw NetworkError.unknown(code: httpResponse.statusCode, error: serverMessage)
+//                    case 500..<600:
+//                        throw NetworkError.serverError(code: httpResponse.statusCode, error: "Server error")
+//                    default:
+//                        throw NetworkError.unknown(code: httpResponse.statusCode, error: "Unhandled status code")
+//                    }
+//                }
+//                // Success: ensure JSON
+//                if !contentType.contains("application/json") {
+//                    throw NetworkError.invalidJSON("Unexpected Content-Type: \(contentType)")
+//                }
+//
+//                // 4. Decode
+//                return try decodeResponse(data, responseType)
+//            } catch {
+//                if (error as NSError).code == URLError.cancelled.rawValue {
+//                    logger.info("Request was cancelled.")
+//                    return nil
+//                }
 //                lastError = error
 //                logger.warning("Attempt \(attempt) failed: \(error.localizedDescription)")
 //                if attempt == maxRetryCount {
-//                    throw NetworkError.unknown(code: -1, error: error.localizedDescription)
+//                    // propagate the last error (preserve real error type)
+//                    throw error
 //                }
-                lastError = error
-                logger.warning("Attempt \(attempt) failed: \(error.localizedDescription)")
-                if attempt == maxRetryCount {
-                    throw error   // preserve real error (401, serverError, etc.)
-                }
-            }
-        }
-
-        throw lastError ?? NetworkError.unknown(code: -1, error: "Unknown failure")
-    }
-
-    // MARK: - Request Building
-    private func buildRequest(for target: TargetType1, url: URL) throws -> URLRequest {
-        var request = URLRequest(url: url)
-        request.httpMethod = target.method.rawValue
-        request.timeoutInterval = target.timeoutInterval ?? defaultTimeout
-
-        // Headers
-//        var headers = target.headers ?? [:]
-        var headers : [String: String] = [:]
-        if let token = Helper.shared.getUser()?.token {
-            headers["Authorization"] = "Bearer \(token)"
-        }
-        headers.forEach { request.setValue($0.value, forHTTPHeaderField: $0.key) }
-
-        // Parameters
-        if let parameters = target.parameters {
-            switch target.method {
-            case .get:
-                if var components = URLComponents(url: url, resolvingAgainstBaseURL: false) {
-                    components.queryItems = parameters.map { URLQueryItem(name: $0.key, value: "\($0.value)") }
-                    request.url = components.url
-                }
-            case .post, .put, .patch:
-                request.httpBody = try JSONSerialization.data(withJSONObject: parameters, options: [])
-                request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-                request.setValue("text/plain", forHTTPHeaderField: "accept")
-
-            default:
-                break
-            }
-        }
-
-        return request
-    }
-
-    // MARK: - Decoding
-    private let jsonDecoder = JSONDecoder()
-
-//    private func decodeResponse<T: Codable>(_ data: Data, _ type: T.Type) throws -> T? {
-//        if let wrapper = try? jsonDecoder.decode(BaseResponse<T>.self, from: data),
-//           let result = wrapper.data {
-//            return result
+//            }
 //        }
+//        throw lastError ?? NetworkError.unknown(code: -1, error: "Unknown failure")
+//    }
+//
+//    // MARK: - Request Building
+//    private func buildRequest(for target: TargetType1, url: URL) throws -> URLRequest {
+//        var request = URLRequest(url: url)
+//        request.httpMethod = target.method.rawValue
+//        request.timeoutInterval = target.timeoutInterval ?? defaultTimeout
+//
+//        // Headers
+////        var headers = target.headers ?? [:]
+//        var headers : [String: String] = [:]
+//        if let token = Helper.shared.getUser()?.token {
+//            headers["Authorization"] = "Bearer \(token)"
+//        }
+//        headers.forEach { request.setValue($0.value, forHTTPHeaderField: $0.key) }
+//
+//        // Parameters
+//        if let parameters = target.parameters {
+//            switch target.method {
+//            case .get:
+//                if var components = URLComponents(url: url, resolvingAgainstBaseURL: false) {
+//                    components.queryItems = parameters.map { URLQueryItem(name: $0.key, value: "\($0.value)") }
+//                    request.url = components.url
+//                }
+//            case .post, .put, .patch:
+//                request.httpBody = try JSONSerialization.data(withJSONObject: parameters, options: [])
+//                request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+//                request.setValue("text/plain", forHTTPHeaderField: "accept")
+//
+//            default:
+//                break
+//            }
+//        }
+//
+//        return request
+//    }
+//
+//    // MARK: - Decoding
+//    private let jsonDecoder = JSONDecoder()
+//
+////    private func decodeResponse<T: Codable>(_ data: Data, _ type: T.Type) throws -> T? {
+////        if let wrapper = try? jsonDecoder.decode(BaseResponse<T>.self, from: data),
+////           let result = wrapper.data {
+////            return result
+////        }
+////        return try jsonDecoder.decode(T.self, from: data)
+////    }
+//    
+//    private func decodeResponse<T: Codable>(_ data: Data, _ type: T.Type) throws -> T? {
+//        // Try decoding BaseResponse<T>
+//        if let wrapper = try? jsonDecoder.decode(BaseResponse<T>.self, from: data) {
+//            if wrapper.messageCode == 200 {
+//                // return nil if data is null — that's fine
+//                return wrapper.data
+//            } else {
+//                // throw error with message if available
+//                throw NetworkError.unknown(code: wrapper.messageCode ?? -1, error: wrapper.message ?? "Unknown error")
+//            }
+//        }
+//
+//        // If not a wrapped response, fallback to direct decoding
 //        return try jsonDecoder.decode(T.self, from: data)
 //    }
-    
-    private func decodeResponse<T: Codable>(_ data: Data, _ type: T.Type) throws -> T? {
-        // Try decoding BaseResponse<T>
-        if let wrapper = try? jsonDecoder.decode(BaseResponse<T>.self, from: data) {
-            if wrapper.messageCode == 200 {
-                // return nil if data is null — that's fine
-                return wrapper.data
-            } else {
-                // throw error with message if available
-                throw NetworkError.unknown(code: wrapper.messageCode ?? -1, error: wrapper.message ?? "Unknown error")
-            }
-        }
-
-        // If not a wrapped response, fallback to direct decoding
-        return try jsonDecoder.decode(T.self, from: data)
-    }
-
-    // MARK: - Logging
-    private func logRequest(_ request: URLRequest, attempt: Int) {
-        #if DEBUG
-        print("=== Request [Attempt \(attempt)] ===")
-        print("URL: \(request.url?.absoluteString ?? "nil")")
-        print("Method: \(request.httpMethod ?? "nil")")
-        let safeHeaders = request.allHTTPHeaderFields?.filter { $0.key.lowercased() != "authorization" }
-        print("Headers: \(safeHeaders ?? [:])")
-        if let body = request.httpBody,
-           let bodyString = String(data: body, encoding: .utf8) {
-            print("Body: \(bodyString)")
-        }
-        print("=========================")
-        #endif
-    }
-
-    private func logResponse(_ response: HTTPURLResponse, data: Data?, duration: TimeInterval) {
-        #if DEBUG
-        print("=== Response ===")
-        print("Status Code: \(response.statusCode)")
-        print("Duration: \(String(format: "%.2f", duration))s")
-        print("Headers: \(response.allHeaderFields)")
-        if let data = data, let body = String(data: data, encoding: .utf8) {
-            print("Body: \(body.prefix(1000))...") // Truncate long body
-        }
-        print("================")
-        #endif
-    }
-}
-
-
-
-extension AsyncAwaitNetworkService {
-    func uploadMultipart<T: Codable>(
-        _ target: TargetType1,
-        parts: [MultipartFormDataPart],
-        responseType: T.Type
-    ) async throws -> T? {
-        guard Helper.shared.isConnectedToNetwork() else {
-            throw NetworkError.noConnection
-        }
-
-        let boundary = "Boundary-\(UUID().uuidString)"
-        let url = target.baseURL.appendingPathComponent(target.path)
-        var request = URLRequest(url: url)
-        request.httpMethod = target.method.rawValue
-        request.timeoutInterval = target.timeoutInterval ?? defaultTimeout
-
-        // Set headers
-        var headers = target.headers ?? [:]
-//        var headers : [String: String] = [:]
-        if let token = Helper.shared.getUser()?.token {
-            headers["Authorization"] = "Bearer \(token)"
-        }
-        headers["Content-Type"] = "multipart/form-data; boundary=\(boundary)"
-        headers["accept"] = "application/json"
-
-        
-        headers.forEach { request.setValue($0.value, forHTTPHeaderField: $0.key) }
-
-        // Construct body
-        request.httpBody = createMultipartBody(parts: parts, boundary: boundary)
-
-        logRequest(request, attempt: 1)
-        if let body = request.httpBody {
-            let preview = String(decoding: body, as: UTF8.self)
-            print("🔍 Multipart Body Preview:\n\(preview.prefix(1000))")
-        }
-        
-        let start = Date()
-        let (data, response) = try await URLSession.shared.data(for: request)
-        let duration = Date().timeIntervalSince(start)
-
-        guard let httpResponse = response as? HTTPURLResponse else {
-            throw NetworkError.invalidJSON("Invalid response object")
-        }
-
-        logResponse(httpResponse, data: data, duration: duration)
-
-        switch httpResponse.statusCode{
-        case 200..<300:
-//            // ✅ Safe decode if data is non-empty
-//                if data.isEmpty  {
-//                    return nil
-//                } else {
-                    return try decodeResponse(data, responseType)
-//                }
-        case 401:
-            // Handle token refresh in future
-            throw NetworkError.unauthorized(code: httpResponse.statusCode, error: "Unauthorized")
-        case 400..<500:
-//                        throw NetworkError.unknown(code: httpResponse.statusCode, error: "client error")
-            let serverMessage: String
-               do {
-                   let errorResponse = try JSONDecoder().decode(ServerErrorResponse.self, from: data)
-                   serverMessage = errorResponse.message
-               } catch {
-                   serverMessage = String(data: data, encoding: .utf8) ?? "Unknown client error"
-               }
-
-               throw NetworkError.unknown(code: httpResponse.statusCode, error: serverMessage)
-            
-        case 500..<600:
-            throw NetworkError.serverError(code: httpResponse.statusCode, error: "Server error")
-        default:
-            throw NetworkError.unknown(code: httpResponse.statusCode, error: "Unhandled status code")
-        }
-        
-//        switch httpResponse.statusCode {
+//
+//    // MARK: - Logging
+//    private func logRequest(_ request: URLRequest, attempt: Int) {
+//        #if DEBUG
+//        print("=== Request [Attempt \(attempt)] ===")
+//        print("URL: \(request.url?.absoluteString ?? "nil")")
+//        print("Method: \(request.httpMethod ?? "nil")")
+//        let safeHeaders = request.allHTTPHeaderFields?.filter { $0.key.lowercased() != "authorization" }
+//        print("Headers: \(safeHeaders ?? [:])")
+//        if let body = request.httpBody,
+//           let bodyString = String(data: body, encoding: .utf8) {
+//            print("Body: \(bodyString)")
+//        }
+//        print("=========================")
+//        #endif
+//    }
+//
+//    private func logResponse(_ response: HTTPURLResponse, data: Data?, duration: TimeInterval) {
+//        #if DEBUG
+//        print("=== Response ===")
+//        print("Status Code: \(response.statusCode)")
+//        print("Duration: \(String(format: "%.2f", duration))s")
+//        print("Headers: \(response.allHeaderFields)")
+//        if let data = data, let body = String(data: data, encoding: .utf8) {
+//            print("Body: \(body.prefix(1000))...") // Truncate long body
+//        }
+//        print("================")
+//        #endif
+//    }
+//}
+//
+//
+//
+//extension AsyncAwaitNetworkService {
+//    func uploadMultipart<T: Codable>(
+//        _ target: TargetType1,
+//        parts: [MultipartFormDataPart],
+//        responseType: T.Type
+//    ) async throws -> T? {
+//        guard Helper.shared.isConnectedToNetwork() else {
+//            throw NetworkError.noConnection
+//        }
+//
+//        let boundary = "Boundary-\(UUID().uuidString)"
+//        let url = target.baseURL.appendingPathComponent(target.path)
+//        var request = URLRequest(url: url)
+//        request.httpMethod = target.method.rawValue
+//        request.timeoutInterval = target.timeoutInterval ?? defaultTimeout
+//
+//        // Set headers
+//        var headers = target.headers ?? [:]
+////        var headers : [String: String] = [:]
+//        if let token = Helper.shared.getUser()?.token {
+//            headers["Authorization"] = "Bearer \(token)"
+//        }
+//        headers["Content-Type"] = "multipart/form-data; boundary=\(boundary)"
+//        headers["accept"] = "application/json"
+//
+//        
+//        headers.forEach { request.setValue($0.value, forHTTPHeaderField: $0.key) }
+//
+//        // Construct body
+//        request.httpBody = createMultipartBody(parts: parts, boundary: boundary)
+//
+//        logRequest(request, attempt: 1)
+//        if let body = request.httpBody {
+//            let preview = String(decoding: body, as: UTF8.self)
+//            print("🔍 Multipart Body Preview:\n\(preview.prefix(1000))")
+//        }
+//        
+//        let start = Date()
+//        let (data, response) = try await URLSession.shared.data(for: request)
+//        let duration = Date().timeIntervalSince(start)
+//
+//        guard let httpResponse = response as? HTTPURLResponse else {
+//            throw NetworkError.invalidJSON("Invalid response object")
+//        }
+//
+//        logResponse(httpResponse, data: data, duration: duration)
+//
+//        switch httpResponse.statusCode{
 //        case 200..<300:
-//            return try decodeResponse(data, responseType)
+////            // ✅ Safe decode if data is non-empty
+////                if data.isEmpty  {
+////                    return nil
+////                } else {
+//                    return try decodeResponse(data, responseType)
+////                }
+//        case 401:
+//            // Handle token refresh in future
+//            throw NetworkError.unauthorized(code: httpResponse.statusCode, error: "Unauthorized")
 //        case 400..<500:
-//            let errorResponse = try? JSONDecoder().decode(ServerErrorResponse.self, from: data)
-//            throw NetworkError.unknown(code: httpResponse.statusCode, error: errorResponse?.message ?? "Client error")
+////                        throw NetworkError.unknown(code: httpResponse.statusCode, error: "client error")
+//            let serverMessage: String
+//               do {
+//                   let errorResponse = try JSONDecoder().decode(ServerErrorResponse.self, from: data)
+//                   serverMessage = errorResponse.message
+//               } catch {
+//                   serverMessage = String(data: data, encoding: .utf8) ?? "Unknown client error"
+//               }
+//
+//               throw NetworkError.unknown(code: httpResponse.statusCode, error: serverMessage)
+//            
 //        case 500..<600:
 //            throw NetworkError.serverError(code: httpResponse.statusCode, error: "Server error")
 //        default:
 //            throw NetworkError.unknown(code: httpResponse.statusCode, error: "Unhandled status code")
 //        }
-    }
-    
-    
-    private func createMultipartBody(parts: [MultipartFormDataPart], boundary: String) -> Data {
-        var body = Data()
-
-        for part in parts {
-            body.append("--\(boundary)\r\n".data(using: .utf8)!)
-
-            // File part (voice, image, etc.)
-            if let filename = part.filename,
-               let mimeType = part.mimeType,
-               let data = part.data {
-                body.append("Content-Disposition: form-data; name=\"\(part.name)\"; filename=\"\(filename)\"\r\n".data(using: .utf8)!)
-                body.append("Content-Type: \(mimeType)\r\n\r\n".data(using: .utf8)!)
-                body.append(data)
-                body.append("\r\n".data(using: .utf8)!)
-            }
-
-            // Text field
-            else if let data = part.data {
-                body.append("Content-Disposition: form-data; name=\"\(part.name)\"\r\n\r\n".data(using: .utf8)!)
-                body.append(data)
-                body.append("\r\n".data(using: .utf8)!)
-            }
-        }
-
-        body.append("--\(boundary)--\r\n".data(using: .utf8)!)
-        return body
-    }
-}
+//        
+////        switch httpResponse.statusCode {
+////        case 200..<300:
+////            return try decodeResponse(data, responseType)
+////        case 400..<500:
+////            let errorResponse = try? JSONDecoder().decode(ServerErrorResponse.self, from: data)
+////            throw NetworkError.unknown(code: httpResponse.statusCode, error: errorResponse?.message ?? "Client error")
+////        case 500..<600:
+////            throw NetworkError.serverError(code: httpResponse.statusCode, error: "Server error")
+////        default:
+////            throw NetworkError.unknown(code: httpResponse.statusCode, error: "Unhandled status code")
+////        }
+//    }
+//    
+//    
+//    private func createMultipartBody(parts: [MultipartFormDataPart], boundary: String) -> Data {
+//        var body = Data()
+//
+//        for part in parts {
+//            body.append("--\(boundary)\r\n".data(using: .utf8)!)
+//
+//            // File part (voice, image, etc.)
+//            if let filename = part.filename,
+//               let mimeType = part.mimeType,
+//               let data = part.data {
+//                body.append("Content-Disposition: form-data; name=\"\(part.name)\"; filename=\"\(filename)\"\r\n".data(using: .utf8)!)
+//                body.append("Content-Type: \(mimeType)\r\n\r\n".data(using: .utf8)!)
+//                body.append(data)
+//                body.append("\r\n".data(using: .utf8)!)
+//            }
+//
+//            // Text field
+//            else if let data = part.data {
+//                body.append("Content-Disposition: form-data; name=\"\(part.name)\"\r\n\r\n".data(using: .utf8)!)
+//                body.append(data)
+//                body.append("\r\n".data(using: .utf8)!)
+//            }
+//        }
+//
+//        body.append("--\(boundary)--\r\n".data(using: .utf8)!)
+//        return body
+//    }
+//}
