@@ -1,20 +1,20 @@
+////
+////  SplashScreenTVCell1.swift
+////  Health
+////
+////  Created by Hamza on 28/07/2023.
+////
 //
-//  SplashScreenTVCell1.swift
-//  Health
+//import UIKit
 //
-//  Created by Hamza on 28/07/2023.
+//class SplashScreenTVCell1: UICollectionViewCell {
 //
-
-import UIKit
-
-class SplashScreenTVCell1: UICollectionViewCell {
-
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
-
-
-}
-
+//    
+//    override func awakeFromNib() {
+//        super.awakeFromNib()
+//        // Initialization code
+//    }
+//
+//
+//}
+//

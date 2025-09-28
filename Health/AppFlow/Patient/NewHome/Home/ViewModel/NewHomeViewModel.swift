@@ -131,7 +131,7 @@ extension NewHomeViewModel {
             upcomingSession = try await upc
             homeCategories = try await categories
             myMeasurements = try await measurements
-            featuredPackages = try await featured
+            if Helper.shared.CheckIfLoggedIn(){  featuredPackages = try await featured }
             mostViewedPackages = try await mostViewed
             // Optionally also prefetch most booked
             mostBookedPackages = nil

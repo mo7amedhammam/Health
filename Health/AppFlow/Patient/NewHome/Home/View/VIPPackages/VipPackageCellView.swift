@@ -10,7 +10,7 @@ import SwiftUI
 
 struct VipPackagesSection: View {
     var packages: [FeaturedPackageItemM]?
-      @Binding var selectedPackage : FeaturedPackageItemM?
+    @Binding var selectedPackage : FeaturedPackageItemM?
 
 //    var action : ((FeaturedPackageItemM) -> Void)?
     var likeAction : ((Int) -> Void)?
@@ -24,35 +24,63 @@ struct VipPackagesSection: View {
             .padding(.horizontal)
             
             ScrollView(.horizontal,showsIndicators:false){
-                HStack{
-                    ForEach(packages ?? [], id: \.self) { item in
-                        VipPackageCellView(item: item,action:{
-                            selectedPackage = item
-                        },likeAction:{
-                            //                            likeAction?(item.id ?? 0)
-                            guard let packageId = item.appCountryPackageId else { return }
-//                            Task{
-//                                await wishlistviewModel.addOrRemovePackageToWishList(packageId: packageId)
-                                likeAction?(packageId)
-//                            }
-
-                        })
+                LazyHStack {
+                    let items = packages ?? []
+                    if items.allSatisfy({ $0.appCountryPackageId != nil }) {
+                        ForEach(items, id: \.appCountryPackageId) { item in
+                            cell(for: item)
+                        }
+                    } else {
+                        ForEach(items, id: \.id) { item in
+                            cell(for: item)
+                        }
                     }
                 }
                 .padding(.horizontal)
                 .padding(.vertical,5)
-                
             }
         }
         .padding(.vertical,5)
         .padding(.bottom,5)
     }
+
+    @ViewBuilder
+    private func cell(for item: FeaturedPackageItemM) -> some View {
+        VipPackageCellView(
+            item: item,
+            action: { selectedPackage = item },
+            likeAction: {
+                guard let packageId = item.appCountryPackageId else { return }
+                likeAction?(packageId)
+            }
+        )
+        .equatable()
+    }
 }
 
-struct VipPackageCellView: View {
-    var item : FeaturedPackageItemM
-    var action : (() -> Void)?
-    var likeAction : (() -> Void)?
+struct VipPackageCellView: View, Equatable {
+    static func == (lhs: VipPackageCellView, rhs: VipPackageCellView) -> Bool {
+        // Only re-render when the item’s value actually changes.
+        // (Closures are intentionally not part of equality.)
+        lhs.item == rhs.item
+    }
+
+    let item : FeaturedPackageItemM
+    var action : (() -> Void)? = nil
+    var likeAction : (() -> Void)? = nil
+
+    // Explicit initializer so calls with action/likeAction compile even if
+    // a different init was introduced elsewhere.
+    init(
+        item: FeaturedPackageItemM,
+        action: (() -> Void)? = nil,
+        likeAction: (() -> Void)? = nil
+    ) {
+        self.item = item
+        self.action = action
+        self.likeAction = likeAction
+    }
+
     var body: some View {
         Button(action: {
             action?()
@@ -153,7 +181,7 @@ struct VipPackageCellView: View {
                     .padding([.bottom,.horizontal],10)
                     .background{
                         BlurView(radius: 5)
-                            .horizontalGradientBackground(reverse: false).opacity(0.89)
+                            .horizontalGradientBackground(reverse: (Helper.shared.getLanguage().lowercased() != "ar")).opacity(0.89)
                     }
                 }
             }

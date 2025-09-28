@@ -8,57 +8,88 @@
 
 import Foundation
 
-class AvailableDoctorsViewModel:ObservableObject {
-    // Injected service
-    private let networkService: AsyncAwaitNetworkServiceProtocol
-    
-    // -- Get List --
-    var maxResultCount: Int? = 5
-    var skipCount: Int?      = 0
-    
-    // Published properties
-    @Published var availableDoctors: AvailabeDoctorsM?
-//    @Published var packages: FeaturedPackagesM?
+@MainActor
+final class AvailableDoctorsViewModel:ObservableObject {
+    // Input (immutable)
+    let package: FeaturedPackageItemM
 
-    @Published var isLoading:Bool? = false
+    // Dependencies
+    private let networkService: AsyncAwaitNetworkServiceProtocol
+
+    // Pagination (if needed)
+    var maxResultCount: Int? = 5
+    var skipCount: Int? = 0
+
+    // Outputs
+    @Published var availableDoctors: [AvailabeDoctorsItemM] = []
+    @Published var isLoading: Bool? = false
     @Published var errorMessage: String? = nil
-    
-    // Init with DI
-    init(networkService: AsyncAwaitNetworkServiceProtocol = AsyncAwaitNetworkService.shared) {
+
+    // Navigation state
+    @Published var selectedDoctorPackageId: Int? = nil
+
+    // Load-once guard
+    private var didLoad = false
+
+    init(
+        package: FeaturedPackageItemM,
+        networkService: AsyncAwaitNetworkServiceProtocol = AsyncAwaitNetworkService.shared
+    ) {
+        self.package = package
         self.networkService = networkService
     }
-}
 
-//MARK: -- Functions --
-extension AvailableDoctorsViewModel{
-    
-    @MainActor
-    func getAvailableDoctors(appCountryPackageId:Int) async {
+    func loadOnce() async {
+        guard !didLoad else { return }
+        didLoad = true
+        await getAvailableDoctors()
+    }
+
+    func getAvailableDoctors() async {
+        guard let appCountryPackageId = package.appCountryPackageId else { return }
+
         isLoading = true
         defer { isLoading = false }
-        guard let maxResultCount = maxResultCount, let skipCount = skipCount else {
-            // Handle missings
+
+        guard let maxResultCount, let skipCount else {
             self.errorMessage = "check inputs"
-            //            throw NetworkError.unknown(code: 0, error: "check inputs")
             return
         }
-        let parametersarr : [String : Any] =  ["appCountryPackageId":appCountryPackageId,"maxResultCount" : maxResultCount ,"skipCount" : skipCount]
-        
-        let target = HomeServices.GetAvailableShiftDoctors(parameters: parametersarr)
+
+        let parameters: [String: Any] = [
+            "appCountryPackageId": appCountryPackageId,
+            "maxResultCount": maxResultCount,
+            "skipCount": skipCount
+        ]
+
+        let target = HomeServices.GetAvailableShiftDoctors(parameters: parameters)
         do {
-            self.errorMessage = nil // Clear previous errors
+            self.errorMessage = nil
             let response = try await networkService.request(
                 target,
                 responseType: AvailabeDoctorsM.self
             )
-            self.availableDoctors = response
+            self.availableDoctors = response?.items ?? []
         } catch {
             self.errorMessage = error.localizedDescription
         }
     }
 
+    func selectDoctor(_ item: AvailabeDoctorsItemM) {
+        guard let id = item.packageDoctorID else { return }
+        selectedDoctorPackageId = id
+    }
+
+    func clearSelection() {
+        selectedDoctorPackageId = nil
+    }
+}
+
+//MARK: -- Functions --
+//extension AvailableDoctorsViewModel{
+//    
 //    @MainActor
-//    func getPackages(categoryId:Int) async {
+//    func getAvailableDoctors(appCountryPackageId:Int) async {
 //        isLoading = true
 //        defer { isLoading = false }
 //        guard let maxResultCount = maxResultCount, let skipCount = skipCount else {
@@ -67,20 +98,45 @@ extension AvailableDoctorsViewModel{
 //            //            throw NetworkError.unknown(code: 0, error: "check inputs")
 //            return
 //        }
-//        let parametersarr : [String : Any] =  ["categoryId":categoryId,"maxResultCount" : maxResultCount ,"skipCount" : skipCount]
-//
-//        let target = HomeServices.GetPackageByCategoryId(parameters: parametersarr)
+//        let parametersarr : [String : Any] =  ["appCountryPackageId":appCountryPackageId,"maxResultCount" : maxResultCount ,"skipCount" : skipCount]
+//        
+//        let target = HomeServices.GetAvailableShiftDoctors(parameters: parametersarr)
 //        do {
 //            self.errorMessage = nil // Clear previous errors
 //            let response = try await networkService.request(
 //                target,
-//                responseType: FeaturedPackagesM.self
+//                responseType: AvailabeDoctorsM.self
 //            )
-//            self.packages = response
+//            self.availableDoctors = response
 //        } catch {
 //            self.errorMessage = error.localizedDescription
 //        }
 //    }
-    
-    
-}
+//
+////    @MainActor
+////    func getPackages(categoryId:Int) async {
+////        isLoading = true
+////        defer { isLoading = false }
+////        guard let maxResultCount = maxResultCount, let skipCount = skipCount else {
+////            // Handle missings
+////            self.errorMessage = "check inputs"
+////            //            throw NetworkError.unknown(code: 0, error: "check inputs")
+////            return
+////        }
+////        let parametersarr : [String : Any] =  ["categoryId":categoryId,"maxResultCount" : maxResultCount ,"skipCount" : skipCount]
+////
+////        let target = HomeServices.GetPackageByCategoryId(parameters: parametersarr)
+////        do {
+////            self.errorMessage = nil // Clear previous errors
+////            let response = try await networkService.request(
+////                target,
+////                responseType: FeaturedPackagesM.self
+////            )
+////            self.packages = response
+////        } catch {
+////            self.errorMessage = error.localizedDescription
+////        }
+////    }
+//    
+//    
+//}

@@ -141,8 +141,8 @@
 "Minutes" = "دقيقه";
 "more_detail" = "تفاصيل أكثر";
 "reSchedual" = "اعادة الجدولة";
-")" = ")";
-"(" = "(";
+")" = "(";
+"(" = ")";
 
 //MARK: --- notification ---
 "notfication_active" = "فعّال";

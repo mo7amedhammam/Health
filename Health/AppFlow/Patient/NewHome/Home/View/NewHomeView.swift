@@ -16,6 +16,9 @@ struct NewHomeView: View {
     @State private var selectedPackage: FeaturedPackageItemM?
     @State private var isRescheduling: Bool = false
 
+    // Active tab for MostViewed/Booked
+    @State private var mostTab: MostViewedBooked.mostcases = .mostviewed
+
     // MARK: - Lightweight Equatable ViewState for subviews
     // These structs carry only the minimal, comparable "fingerprints" that matter to the subviews.
     // When the fingerprint arrays don't change, SwiftUI can skip re-rendering those subviews.
@@ -71,14 +74,32 @@ struct NewHomeView: View {
         return VipPackagesViewState(fingerprints: items.map(fingerprint(for:)))
     }
 
-    private var mostViewedState: PackagesListViewState {
-        let items = viewModel.mostViewedPackages ?? []
+    // Active MostViewed/Booked list state (depends on selected tab)
+    private var mostListState: PackagesListViewState {
+        let items: [FeaturedPackageItemM] = {
+            switch mostTab {
+            case .mostviewed:
+                return viewModel.mostViewedPackages ?? []
+            case .mostbooked:
+                return viewModel.mostBookedPackages ?? []
+            }
+        }()
         return PackagesListViewState(fingerprints: items.map(fingerprint(for:)))
     }
 
     private var measurementsState: MeasurementsViewState {
         let items = viewModel.myMeasurements ?? []
         return MeasurementsViewState(fingerprints: items.map(fingerprint(for:)))
+    }
+
+    // Active packages array for the MostViewed/Booked section (used in the View body)
+    private var activeMostPackages: [FeaturedPackageItemM] {
+        switch mostTab {
+        case .mostviewed:
+            return viewModel.mostViewedPackages ?? []
+        case .mostbooked:
+            return viewModel.mostBookedPackages ?? []
+        }
     }
 
     // Default init
@@ -121,13 +142,15 @@ struct NewHomeView: View {
                         .frame(height: 137)
                         .padding(.horizontal)
 
-                    // Last measurements wrapped with EquatableByValue
-                    EquatableByValue(value: measurementsState) {
-                        LastMesurmentsSection(measurements: viewModel.myMeasurements) { item in
-                            guard let item = item else { return }
-                            router.push(MeasurementDetailsView(stat: item))
+                    if Helper.shared.CheckIfLoggedIn(){
+                        // Last measurements wrapped with EquatableByValue
+                        EquatableByValue(value: measurementsState) {
+                            LastMesurmentsSection(measurements: viewModel.myMeasurements) { item in
+                                guard let item = item else { return }
+                                router.push(MeasurementDetailsView(stat: item))
+                            }
+                            .accessibilityIdentifier("home_measurements_section")
                         }
-                        .accessibilityIdentifier("home_measurements_section")
                     }
 
                     // VIP packages wrapped with EquatableByValue
@@ -147,10 +170,11 @@ struct NewHomeView: View {
                         .frame(height: 229)
                         .padding(.horizontal)
 
-                    // Most viewed/booked wrapped with EquatableByValue
-                    EquatableByValue(value: mostViewedState) {
+                    // Most viewed/booked wrapped with EquatableByValue keyed to the active list
+                    EquatableByValue(value: mostListState) {
                         MostViewedBooked(
-                            packaces: viewModel.mostViewedPackages,
+                            currentcase: $mostTab,
+                            packaces: activeMostPackages,
                             selectedPackage: $selectedPackage,
                             likeAction: { packageId, currentcase in
                                 Task {
@@ -163,6 +187,8 @@ struct NewHomeView: View {
                                 }
                             },
                             onChangeTab: { newTab in
+                                // Update selection and fetch the corresponding list
+                                mostTab = newTab
                                 Task {
                                     await viewModel.getMostBookedOrViewedPackages(
                                         forcase: newTab == .mostviewed ? .MostViewed : .MostBooked
@@ -228,6 +254,11 @@ struct NewHomeView: View {
 struct EquatableByValue<Value: Equatable, Content: View>: View, Equatable {
     let value: Value
     let content: () -> Content
+
+    init(value: Value, @ViewBuilder content: @escaping () -> Content) {
+        self.value = value
+        self.content = content
+    }
 
     static func == (lhs: EquatableByValue<Value, Content>, rhs: EquatableByValue<Value, Content>) -> Bool {
         lhs.value == rhs.value
