@@ -15,8 +15,9 @@ class PackagesViewModel: ObservableObject {
     private let env: AppEnvironmentProviding
 
     // Pagination
-    var maxResultCount: Int? = 10
-    var skipCount: Int?      = 0
+    var maxResultCount: Int = 10
+    var subcategoryskipCount: Int      = 0
+    var PackagesSkipCount: Int      = 0
 
     // Published properties
     @Published var subCategories: SubCategoriesM?
@@ -65,7 +66,8 @@ extension PackagesViewModel {
 
     func refresh(mainCategoryId: Int) async {
         // Reset pagination and reload everything, but keep current data visible
-        skipCount = 0
+        subcategoryskipCount = 0
+        PackagesSkipCount = 0
         await loadInitial(mainCategoryId: mainCategoryId)
     }
 
@@ -78,15 +80,11 @@ extension PackagesViewModel {
             if !isLoadingPackages { isLoading = false }
         }
 
-        guard let maxResultCount = maxResultCount, let skipCount = skipCount else {
-            self.errorMessage = "check inputs"
-            return
-        }
 
         let parameters: [String: Any] = [
             "parentId": mainCategoryId,
             "maxResultCount": maxResultCount,
-            "skipCount": skipCount
+            "skipCount": subcategoryskipCount
         ]
 
         let target = HomeServices.GetSubCategoryByParentId(parameters: parameters)
@@ -96,7 +94,18 @@ extension PackagesViewModel {
                 target,
                 responseType: SubCategoriesM.self
             )
-            self.subCategories = response
+//            self.subCategories = response
+            if subcategoryskipCount == 0 {
+                // Initial load or reload: replace
+                self.subCategories = response
+            } else {
+                // Pagination: append
+                var current = self.subCategories ?? SubCategoriesM(items: [], totalCount: 0)
+                let newItems = response?.items ?? []
+                current.items = (current.items ?? []) + newItems
+                current.totalCount = response?.totalCount ?? current.totalCount
+                self.subCategories = current
+            }
         } catch {
             self.errorMessage = error.localizedDescription
         }
@@ -113,7 +122,7 @@ extension PackagesViewModel {
         let intendedCategoryId = categoryId
 
         if reset {
-            skipCount = 0
+            PackagesSkipCount = 0
             // Do NOT clear packages here; keep old data visible during refresh
         }
 
@@ -128,15 +137,10 @@ extension PackagesViewModel {
             if !isLoadingSubcategories { isLoading = false }
         }
 
-        guard let maxResultCount = maxResultCount, let skip = skipCount else {
-            self.errorMessage = "check inputs"
-            return
-        }
-
         var parameters: [String : Any] = [
             "categoryId": intendedCategoryId,
             "maxResultCount": maxResultCount,
-            "skipCount": skip
+            "skipCount": PackagesSkipCount
         ]
         // Apply environment: include appCountryId
         parameters["appCountryId"] = env.appCountryId()
@@ -168,27 +172,47 @@ extension PackagesViewModel {
 
             // Advance skipCount for next page
             let currentCount = self.packages?.items?.count ?? 0
-            self.skipCount = currentCount
+            self.PackagesSkipCount = currentCount
         } catch {
             // Keep existing data; just surface the error
             self.errorMessage = error.localizedDescription
         }
     }
 
-    // Pagination trigger when a cell appears
-    func loadMoreIfNeeded(currentItem: FeaturedPackageItemM) async {
-        guard
-            !isLoadingMore,
-            let total = packages?.totalCount,
-            let items = packages?.items,
-            items.count < total,
-            let last = items.last,
-            last == currentItem, // only when the last visible appears
-            let subId = selectedSubCategory?.id
-        else { return }
+    func loadMoreSubcategoriesIfNeeded(mainCategoryId:Int) async {
+        guard !isLoadingMore,
+              let currentCount = subCategories?.items?.count,
+              let totalCount = subCategories?.totalCount,
+              currentCount < totalCount else { return }
 
+        subcategoryskipCount = subcategoryskipCount + maxResultCount
+        await getSubCategories(mainCategoryId:mainCategoryId )
+    }
+    
+    func loadMorePAckagesIfNeeded(currentItem: FeaturedPackageItemM) async {
+        guard !isLoadingMore,
+              let currentCount = packages?.items?.count,
+              let totalCount = packages?.totalCount,
+              currentCount < totalCount,
+        let subId = selectedSubCategory?.id else { return }
+
+        subcategoryskipCount = subcategoryskipCount + maxResultCount
         await getPackages(categoryId: subId, reset: false)
     }
+    // Pagination trigger when a cell appears
+//    func loadMorePAckagesIfNeeded(currentItem: FeaturedPackageItemM) async {
+//        guard
+//            !isLoadingMore,
+//            let total = packages?.totalCount,
+//            let items = packages?.items,
+//            items.count < total,
+//            let last = items.last,
+//            last == currentItem, // only when the last visible appears
+//            let subId = selectedSubCategory?.id
+//        else { return }
+//
+//        await getPackages(categoryId: subId, reset: false)
+//    }
 
     // Optimistic wishlist toggle with in-flight protection + rollback on error
     func toggleWishlist(for appCountryPackageId: Int) async {

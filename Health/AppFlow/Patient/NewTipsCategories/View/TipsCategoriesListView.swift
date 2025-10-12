@@ -56,7 +56,7 @@ struct TipsCategoriesListView: View {
                         ForEach(categories.indices, id: \.self) { index in
                             TipListCardView(item: categories[index]){
                                 //                                MARK: --- action ---
-                                router.push(TipDetailsView(tipId: categories[index].tipCategoryID ?? 0).environmentObject(viewModel))
+                                router.push(TipDetailsView(tipId: categories[index].id ?? 0).environmentObject(viewModel))
                             }
                             .padding(.horizontal, 10)
                             

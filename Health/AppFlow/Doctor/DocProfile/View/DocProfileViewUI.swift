@@ -98,18 +98,18 @@ struct DocProfileViewUI: View {
 //                                    let VC: UIViewController = initiateViewController(storyboardName: .main, viewControllerIdentifier: NotificationVC.self)!
 //                                    pushUIKitVC(VC)
                                 }
-                                ProfileRow(title: "profile_tips".localized, icon: "profile_tips"){
-                                    router.push( TipsView())
-//                                    let VC: UIViewController = initiateViewController(storyboardName: .main, viewControllerIdentifier: TipsCategoriesVC1.self)!
-//                                    pushUIKitVC(VC)
-                                }
-                                ProfileRow(title: "profile_inbody".localized, icon: "profile_inbody"){
-                                    router.push( InbodyView())
-
-//                                    let VC: UIViewController = initiateViewController(storyboardName: .main, viewControllerIdentifier: INBodyVC.self)!
-//                                    pushUIKitVC(VC)
-
-                                }
+//                                ProfileRow(title: "profile_tips".localized, icon: "profile_tips"){
+//                                    router.push( TipsView())
+////                                    let VC: UIViewController = initiateViewController(storyboardName: .main, viewControllerIdentifier: TipsCategoriesVC1.self)!
+////                                    pushUIKitVC(VC)
+//                                }
+//                                ProfileRow(title: "profile_inbody".localized, icon: "profile_inbody"){
+//                                    router.push( InbodyView())
+//
+////                                    let VC: UIViewController = initiateViewController(storyboardName: .main, viewControllerIdentifier: INBodyVC.self)!
+////                                    pushUIKitVC(VC)
+//
+//                                }
                                 ProfileRow(title: "profile_files".localized, icon: "profile_files"){
                                     router.push( MyFilesView())
                                 }

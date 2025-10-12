@@ -56,4 +56,12 @@ enum DocEndPoints : String{
 //-----------Payments-------------
     case DocGetDoctorFinance = "Doctor/GetDoctorFinance"
     case DocGetDoctorFinanceDetail = "Doctor/GetDoctorFinanceDetail"
+    
+    //-----------Questionaire-------------
+    case DocGetCustomerPackageQuest = "Questionnaire/GetCustomerPackageQuest"
+    case DocCreatePackageQuestionnaireAnswer = "Questionnaire/CreatePackageQuestionnaireAnswer"
+
+    //-----------CustomerAllergy-------------
+    case DocGetCustomerAllergy = "Allergy/GetCustomerAllergy"
+
 }

@@ -229,8 +229,9 @@
 "renew_subscription" = "Renew Subscription";
 "cancel_subscription" = "Cancel Subscription";
 "Chats_" = "Chats";
-"sessions_" = "sessions";
+"questions_" = "questions";
 "Files_" = "Files";
+"CustAlergy_" = "Alergy";
 
 //MARK: --- Package Files ---
 "Watch_" = "Watch";
@@ -439,3 +440,9 @@
 "Package_files" = "Package Files";
 "customer_files" = "Customer Files";
 "Next_Session_selection" = "Next Session selection";
+"laquestions_" = "questions";
+"yes_" = "Yes";
+"no_" = "No";
+"Type_Answer_here_" = "Type Answer Here";
+"laalergy_" = "allergies";
+"back_" = "Back";

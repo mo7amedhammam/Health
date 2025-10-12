@@ -46,9 +46,9 @@ final class NewHomeViewModel: ObservableObject {
     private let env: AppEnvironmentProviding
 
     // Pagination/state
-    var maxResultCount: Int? = 5
-    var skipCount: Int? = 0
-    var FeaturedPackagesSkipCount: Int? = 0
+    var maxResultCount: Int = 5
+    var HomeCategoriesSkipCount: Int = 0
+    var FeaturedPackagesSkipCount: Int = 0
 
     // Published outputs (read-only to the View)
     @Published private(set) var upcomingSession: UpcomingSessionM? = nil
@@ -87,7 +87,7 @@ extension NewHomeViewModel {
         errorMessage = nil
 
         let appCountryId = env.appCountryId()
-        let max = maxResultCount ?? 5
+        let max = maxResultCount
         let categoriesSkip = 0
         let featuredSkip = 0
 
@@ -143,7 +143,7 @@ extension NewHomeViewModel {
 
         isLoading = false
         // reset pagination for a new load
-        skipCount = 0
+        HomeCategoriesSkipCount = 0
         FeaturedPackagesSkipCount = 0
     }
 
@@ -153,7 +153,7 @@ extension NewHomeViewModel {
 
     func getMostBookedOrViewedPackages(forcase: MostCases) async {
         let appCountryId = env.appCountryId()
-        let top = maxResultCount ?? 5
+        let top = maxResultCount
         let parameters: [String: Any] = ["top": top, "AppCountryId": appCountryId]
 
         let target: TargetType1 = {
@@ -226,29 +226,33 @@ extension NewHomeViewModel {
     }
 
     func getHomeCategories() async {
-        guard let maxResultCount = maxResultCount,
-              let skipCount = skipCount else {
-            isError = true
-            errorMessage = "check inputs"
-            return
-        }
-        let parametersarr: [String: Any] = [
-            "maxResultCount": maxResultCount,
-            "skipCount": skipCount,
-            "appCountryId": env.appCountryId()
-        ]
+    let parametersarr: [String: Any] = [
+        "maxResultCount": maxResultCount,
+        "skipCount": HomeCategoriesSkipCount,
+        "appCountryId": env.appCountryId()
+    ]
 
-        let target = HomeServices.GetAllHomeCategory(parameters: parametersarr)
-        do {
-            isError = false
-            errorMessage = nil
-            let response = try await networkService.request(target, responseType: HomeCategoryM.self)
+    let target = HomeServices.GetAllHomeCategory(parameters: parametersarr)
+    do {
+        isError = false
+        errorMessage = nil
+        let response = try await networkService.request(target, responseType: HomeCategoryM.self)
+        if HomeCategoriesSkipCount == 0 {
+            // Initial load or reload: replace
             self.homeCategories = response
-        } catch {
-            isError = true
-            errorMessage = (error as? LocalizedError)?.errorDescription ?? error.localizedDescription
+        } else {
+            // Pagination: append
+            var current = self.homeCategories ?? HomeCategoryM(items: [], totalCount: 0)
+            let newItems = response?.items ?? []
+            current.items = (current.items ?? []) + newItems
+            current.totalCount = response?.totalCount ?? current.totalCount
+            self.homeCategories = current
         }
+    } catch {
+        isError = true
+        errorMessage = (error as? LocalizedError)?.errorDescription ?? error.localizedDescription
     }
+}
 
     func getMyMeasurements() async {
         let target = HomeServices.GetMyMeasurementsStats
@@ -264,12 +268,6 @@ extension NewHomeViewModel {
     }
 
     func getFeaturedPackages() async {
-        guard let maxResultCount = maxResultCount,
-              let FeaturedPackagesSkipCount = FeaturedPackagesSkipCount else {
-            isError = true
-            errorMessage = "check inputs"
-            return
-        }
         let parametersarr: [String: Any] = [
             "maxResultCount": maxResultCount,
             "skipCount": FeaturedPackagesSkipCount,
@@ -281,7 +279,17 @@ extension NewHomeViewModel {
             isError = false
             errorMessage = nil
             let response = try await networkService.request(target, responseType: FeaturedPackagesM.self)
-            self.featuredPackages = response
+            if FeaturedPackagesSkipCount == 0 {
+                // Initial load or reload: replace
+                self.featuredPackages = response
+            } else {
+                // Pagination: append
+                var current = self.featuredPackages ?? FeaturedPackagesM(items: [], totalCount: 0)
+                let newItems = response?.items ?? []
+                current.items = (current.items ?? []) + newItems
+                current.totalCount = response?.totalCount ?? current.totalCount
+                self.featuredPackages = current
+            }
         } catch {
             isError = true
             errorMessage = (error as? LocalizedError)?.errorDescription ?? error.localizedDescription
@@ -320,10 +328,9 @@ extension NewHomeViewModel {
         guard !isLoading,
               let currentCount = homeCategories?.items?.count,
               let totalCount = homeCategories?.totalCount,
-              currentCount < totalCount,
-              let maxResultCount = maxResultCount else { return }
+              currentCount < totalCount else { return }
 
-        skipCount = (skipCount ?? 0) + maxResultCount
+        HomeCategoriesSkipCount = HomeCategoriesSkipCount + maxResultCount
         await getHomeCategories()
     }
 
@@ -331,10 +338,9 @@ extension NewHomeViewModel {
         guard !isLoading,
               let currentCount = featuredPackages?.items?.count,
               let totalCount = featuredPackages?.totalCount,
-              currentCount < totalCount,
-              let maxResultCount = maxResultCount else { return }
+              currentCount < totalCount else { return }
 
-        FeaturedPackagesSkipCount = (FeaturedPackagesSkipCount ?? 0) + maxResultCount
+        FeaturedPackagesSkipCount = FeaturedPackagesSkipCount + maxResultCount
         await getFeaturedPackages()
     }
 }

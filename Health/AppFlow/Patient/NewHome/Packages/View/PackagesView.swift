@@ -109,6 +109,12 @@ struct PackagesView: View {
                                         viewModel.selectedSubCategory = selected
                                     }
                                 }
+                            } loadMore :{
+                                Task {
+                                    guard let mainCategoryId = self.mainCategory.id else { return }
+
+                                    await viewModel.loadMoreSubcategoriesIfNeeded(mainCategoryId: mainCategoryId)
+                                }
                             }
                         }
                         
@@ -145,7 +151,7 @@ struct PackagesView: View {
                                     },
                                     onItemAppear: { item in
                                         Task {
-                                            await viewModel.loadMoreIfNeeded(currentItem: item)
+                                            await viewModel.loadMorePAckagesIfNeeded(currentItem: item)
                                         }
                                     }
                                 )
@@ -201,6 +207,8 @@ struct SubCategoriesSection: View {
     var categories: SubCategoriesM?
     @Binding var selectedSubCategory : SubCategoryItemM?
     var action: ((Int) -> Void)?
+    let loadMore: (() -> Void)?
+
     var body: some View {
         VStack(spacing:5){
             SectionHeader(image: Image(.newcategicon),title: "pack_subcat"){
@@ -264,6 +272,11 @@ struct SubCategoriesSection: View {
                             
                         })
                         .cardStyle(cornerRadius: 6)
+                        .onAppear {
+                            if item == categories.last {
+                                loadMore?()
+                            }
+                        }
                         
                     }
                 }

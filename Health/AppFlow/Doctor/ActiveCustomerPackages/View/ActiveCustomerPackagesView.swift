@@ -12,7 +12,7 @@ struct ActiveCustomerPackagesView: View {
 
     let customerPackageId: Int
 
-    @State private var selectedSection: SectionType = .sessions
+    @State private var selectedSection: SectionType? = nil
     @State private var reschedualcase: reschedualCases? = .reschedualSession
     @State private var isReschedualling: Bool = false
 
@@ -20,21 +20,23 @@ struct ActiveCustomerPackagesView: View {
     @State private var idToCancel: Int?
 
     enum SectionType: CaseIterable, Hashable {
-        case chats, sessions, files
+        case chats, questionaire, files, alergy
 
         var title: String {
             switch self {
             case .chats: return "Chats_"
-            case .sessions: return "sessions_"
+            case .questionaire: return "questions_"
             case .files: return "Files_"
+            case .alergy: return "CustAlergy_"
             }
         }
 
         var image: Image {
             switch self {
             case .chats: return Image(.chats)
-            case .sessions: return Image(.sessions)
+            case .questionaire: return Image(.questionicon)
             case .files: return Image(.packagefiles)
+            case .alergy: return Image(.packagefiles)
             }
         }
     }
@@ -139,13 +141,21 @@ struct ActiveCustomerPackagesView: View {
                             switch button {
                             case .chats:
                                 guard let customerPackageID = viewModel.subscripedPackage?.customerPackageID else { return }
-                                router.push( ChatsView(CustomerPackageId: customerPackageID) )
-                            case .sessions:
-                                break
+                                router.push( ChatsView(CustomerPackageId: customerPackageID))
+                                
+                            case .questionaire:
+                                guard let CustomerPackageId = viewModel.subscripedPackage?.customerPackageID else { return }
+                                router.push( QuestionaireView(CustomerPackageId: CustomerPackageId))
+
                             case .files:
                                 guard let customerID = viewModel.subscripedPackage?.customerID,
                                       let packageId = viewModel.subscripedPackage?.customerPackageID else { return }
                                 router.push( ActiveCustPackFiles(customerId: customerID,PackageId: packageId) )
+                          
+                            case .alergy:
+                                guard let customerID = viewModel.subscripedPackage?.customerID else { return }
+                                router.push(CustomerAlergyView(customerID: customerID))
+
                             }
                         }) {
                             VStack(spacing: 7) {
@@ -162,7 +172,7 @@ struct ActiveCustomerPackagesView: View {
                             }
                         }
 
-                        if button == .chats || button == .sessions {
+                        if button == .chats || button == .questionaire {
                             Spacer()
                             Color.gray.opacity(0.2).frame(width: 1, height: 70)
                                 .padding(.bottom)
@@ -217,7 +227,7 @@ struct ActiveCustomerPackagesView: View {
         .showHud(isShowing:  $viewModel.isLoading)
         .errorAlert(isPresented: .constant(viewModel.errorMessage != nil), message: viewModel.errorMessage)
         .task(id: customerPackageId) {
-            selectedSection = .sessions
+            selectedSection = .questionaire
             await viewModel.load(customerPackageId: customerPackageId)
         }
         .customSheet(isPresented: $isReschedualling){

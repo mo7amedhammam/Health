@@ -229,8 +229,9 @@
 "renew_subscription" = "تجديد الاشتراك";
 "cancel_subscription" = "إلغاء الاشتراك";
 "Chats_" = "محادثة";
-"sessions_" = "السيشنز";
+"questions_" = "أسألة";
 "Files_" = "الملفات";
+"CustAlergy_" = "الحساسية";
 
 //MARK: --- Package Files ---
 "Watch_" = "مشاهده";
@@ -438,3 +439,10 @@
 "Package_files" = "ملفات الباقة";
 "customer_files" = "ملفات العميل";
 "Next_Session_selection" = "تحديد السيشن القادمة";
+"laquestions_" = "الأسألة";
+"yes_" = "نعم";
+"no_" = "لا";
+"Type_Answer_here_" = "اكتب الإجابة هنا";
+
+"laalergy_" = "الحساسية";
+"back_" = "عودة";

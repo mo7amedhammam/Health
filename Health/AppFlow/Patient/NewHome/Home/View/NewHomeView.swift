@@ -132,10 +132,15 @@ struct NewHomeView: View {
                         .padding(.horizontal)
                         .accessibilityIdentifier("home_next_session")
                     }
-
+                    
                     MainCategoriesSection(categories: viewModel.homeCategories) { category in
                         router.push(PackagesView(mainCategory: category))
+                    } loadMore:{
+                    Task {
+                        await viewModel.loadMoreCategoriesIfNeeded()
                     }
+                }
+                    
 
                     Image(.adsbg)
                         .resizable()

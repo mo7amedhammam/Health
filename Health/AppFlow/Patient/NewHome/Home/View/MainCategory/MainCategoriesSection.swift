@@ -10,7 +10,8 @@ import SwiftUI
 struct MainCategoriesSection: View {
     let categories: HomeCategoryM?
     let action: ((HomeCategoryItemM) -> Void)?
-    
+    let loadMore: (() -> Void)?
+
     var body: some View {
         VStack(spacing: 5) {
             SectionHeader(image: Image(.newcategicon), title: "home_maincat") {
@@ -26,6 +27,11 @@ struct MainCategoriesSection: View {
                         MainCategoryCardView(item: item, action: action)
                             .buttonStyle(.plain)
                             .cardStyle(cornerRadius: 3)
+                            .onAppear {
+                                if item == items.last {
+                                    loadMore?()
+                                }
+                            }
                     }
                 }
                 .padding(.horizontal)
@@ -36,6 +42,57 @@ struct MainCategoriesSection: View {
         .padding(.bottom, 5)
     }
 }
+// --- PAGINATED MAIN CATEGORIES SECTION VIEW ---
+//struct MainCategoriesPaginatedSection: View {
+//    let categories: HomeCategoryM?
+//    let isLoadingMore: Bool
+//    let loadMoreAction: () -> Void
+//    let onSelectCategory: (HomeCategoryItemM) -> Void
+//
+//    var body: some View {
+//        VStack(spacing: 5) {
+//            SectionHeader(image: Image(.newcategicon), title: "home_maincat") { }
+//                .padding(.horizontal)
+//
+//            ScrollView(.horizontal, showsIndicators: false) {
+//                LazyHStack(spacing: 12) {
+//                    let items = categories?.items ?? []
+//                    ForEach(Array(items.enumerated()), id: \.element.id) { idx, item in
+//                        MainCategoryCardView(item: item, action: { _ in onSelectCategory(item) })
+//                            .buttonStyle(.plain)
+//                            .cardStyle(cornerRadius: 3)
+//                            .onAppear {
+//                                // If last item appears: trigger pagination
+//                                if idx == items.count - 1,
+//                                   let total = categories?.totalCount,
+//                                   items.count < total {
+//                                    loadMoreAction()
+//                                }
+//                            }
+//                    }
+//                    // Show a loading indicator if more pages exist
+//                    if let total = categories?.totalCount,
+//                       let items = categories?.items,
+//                       items.count < total,
+//                       isLoadingMore {
+//                        HStack {
+//                            ProgressView()
+//                                .tint(.gray)
+//                            Text("loading_more".localized)
+//                                .foregroundColor(.gray)
+//                        }
+//                        .padding(.horizontal, 20)
+//                        .padding(.vertical, 10)
+//                    }
+//                }
+//                .padding(.horizontal)
+//                .padding(.vertical, 5)
+//            }
+//        }
+//        .padding(.vertical, 5)
+//        .padding(.bottom, 5)
+//    }
+//}
 
 private struct MainCategoryCardView: View, Equatable {
     let item: HomeCategoryItemM
@@ -119,5 +176,5 @@ private extension HomeCategoryItemM {
 }
 
 #Preview {
-    MainCategoriesSection(categories: nil, action: nil)
+    MainCategoriesSection(categories: nil, action: nil, loadMore: {})
 }

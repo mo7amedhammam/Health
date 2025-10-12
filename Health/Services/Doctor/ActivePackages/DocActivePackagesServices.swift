@@ -12,18 +12,21 @@ enum DocActivePackagesServices{
     case GetCustomerPackageList(parameters : [String:Any])
     case GetCustomerPackageById(parameters : [String:Any])
     case GetCustomerMeasurements(parameters : [String:Any])
-
-//    case GetDoctorById(parameters : [String:Any])
-//    case GetCustomerUpComingSession
+    
+    //    case GetDoctorById(parameters : [String:Any])
+    //    case GetCustomerUpComingSession
     case GetCustomerPackageSessionList(parameters : [String:Any])
     case FileType
     case GetCustomerPackageInstructionByCPId(parameters : [String:Any])
-//    case CreateDoctorMessage(parameters : [String:Any])
-//    case CreateCustomerMessage(parameters : [MultipartFormDataPart])
-//    case GetMessage(parameters : [String:Any])
+    //    case CreateDoctorMessage(parameters : [String:Any])
+    //    case CreateCustomerMessage(parameters : [MultipartFormDataPart])
+    //    case GetMessage(parameters : [String:Any])
     
     case CancelSubscription(parameters : [String:Any])
-
+    
+    case GetCustomerPackageQuest(parameters : [String:Any])
+    case CreatePackageQuestionnaireAnswer(parameters : [String:Any])
+    case GetCustomerAllergy(parameters : [String:Any])
 }
 
 extension DocActivePackagesServices : TargetType1 {
@@ -39,13 +42,13 @@ extension DocActivePackagesServices : TargetType1 {
             
         case .GetCustomerPackageById:
             return SubscriptionEndPoints.GetCustomerPackageById.rawValue
-//        case .GetDoctorById:
-//            return SubscriptionEndPoints.GetDoctorById.rawValue
-//        case .GetCustomerUpComingSession:
-//            return SubscriptionEndPoints.GetCustomerUpComingSession.rawValue
+            //        case .GetDoctorById:
+            //            return SubscriptionEndPoints.GetDoctorById.rawValue
+            //        case .GetCustomerUpComingSession:
+            //            return SubscriptionEndPoints.GetCustomerUpComingSession.rawValue
             
         case .GetCustomerMeasurements:
-                return DocEndPoints.DocGetPatientMeasurements.rawValue
+            return DocEndPoints.DocGetPatientMeasurements.rawValue
             
         case .GetCustomerPackageSessionList:
             return SubscriptionEndPoints.GetCustomerPackageSessionList.rawValue
@@ -53,16 +56,24 @@ extension DocActivePackagesServices : TargetType1 {
             return SubscriptionEndPoints.FileType.rawValue
         case .GetCustomerPackageInstructionByCPId:
             return SubscriptionEndPoints.GetCustomerPackageInstructionByCPId.rawValue
-//        case .CreateDoctorMessage:
-//            return SubscriptionEndPoints.CreateDoctorMessage.rawValue
-//        case .CreateCustomerMessage:
-//            return SubscriptionEndPoints.CreateCustomerMessage.rawValue
-//        case .GetMessage:
-//            return SubscriptionEndPoints.GetMessage.rawValue
+            //        case .CreateDoctorMessage:
+            //            return SubscriptionEndPoints.CreateDoctorMessage.rawValue
+            //        case .CreateCustomerMessage:
+            //            return SubscriptionEndPoints.CreateCustomerMessage.rawValue
+            //        case .GetMessage:
+            //            return SubscriptionEndPoints.GetMessage.rawValue
             
         case .CancelSubscription:
             return SubscriptionEndPoints.CustomerPackageCancel.rawValue
-
+            
+        case .GetCustomerPackageQuest:
+            return DocEndPoints.DocGetCustomerPackageQuest.rawValue
+            
+        case .CreatePackageQuestionnaireAnswer:
+            return DocEndPoints.DocCreateDoctorPackageRequest.rawValue
+            
+        case .GetCustomerAllergy:
+            return DocEndPoints.DocGetCustomerAllergy.rawValue
         }
     }
     
@@ -71,18 +82,21 @@ extension DocActivePackagesServices : TargetType1 {
         case
                 .GetCustomerPackageList,
                 .GetCustomerPackageSessionList,
-//                .CreateDoctorMessage,
-//                .CreateCustomerMessage,
+            //                .CreateDoctorMessage,
+            //                .CreateCustomerMessage,
                 .CancelSubscription,
-                .GetCustomerMeasurements
+                .GetCustomerMeasurements,
+                .CreatePackageQuestionnaireAnswer
             :
             return .post
             
         case
                 .FileType
-                ,.GetCustomerPackageById
-                ,.GetCustomerPackageInstructionByCPId
-//               , .GetMessage
+            ,.GetCustomerPackageById
+            ,.GetCustomerPackageInstructionByCPId,
+                .GetCustomerPackageQuest,
+                .GetCustomerAllergy
+            //               , .GetMessage
             :
             return .get
         }
@@ -95,24 +109,26 @@ extension DocActivePackagesServices : TargetType1 {
                 .GetCustomerPackageSessionList(parameters: let parameter),
                 .GetCustomerPackageById(parameters: let parameter),
                 .GetCustomerPackageInstructionByCPId(parameters: let parameter),
-//                .CreateDoctorMessage(parameters: let parameter),
-//                .GetMessage(parameters: let parameter),
+            //                .CreateDoctorMessage(parameters: let parameter),
+            //                .GetMessage(parameters: let parameter),
                 .CancelSubscription(parameters: let parameter),
-                .GetCustomerMeasurements(parameters: let parameter)
+                .GetCustomerMeasurements(parameters: let parameter),
+                .GetCustomerPackageQuest(parameters: let parameter),
+                .CreatePackageQuestionnaireAnswer(parameters: let parameter),
+                .GetCustomerAllergy(parameters: let parameter)
             :
-//            return .parameterRequest(Parameters: parameters, Encoding: encoding)
+            //            return .parameterRequest(Parameters: parameters, Encoding: encoding)
             return  parameter
-
-//        case .GetMyScheduleDrugs(parameters: let parameters):
-//            return .BodyparameterRequest(Parameters: parameters, Encoding: encoding)
+            
+            //        case .GetMyScheduleDrugs(parameters: let parameters):
+            //            return .BodyparameterRequest(Parameters: parameters, Encoding: encoding)
             
         case
                 .FileType
-//                ,.CreateCustomerMessage
+            //                ,.CreateCustomerMessage
             :
             return nil
         }
     }
-    
     
 }
