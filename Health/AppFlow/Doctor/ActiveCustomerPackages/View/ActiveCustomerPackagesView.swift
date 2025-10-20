@@ -7,7 +7,7 @@
 import SwiftUI
 
 struct ActiveCustomerPackagesView: View {
-    @EnvironmentObject var router: NavigationRouter
+    @StateObject var router: NavigationRouter = NavigationRouter()
     @StateObject private var viewModel: ActiveCusPackViewModel
 
     let customerPackageId: Int
@@ -140,8 +140,8 @@ struct ActiveCustomerPackagesView: View {
                             selectedSection = button
                             switch button {
                             case .chats:
-                                guard let customerPackageID = viewModel.subscripedPackage?.customerPackageID else { return }
-                                router.push( ChatsView(CustomerPackageId: customerPackageID))
+                                guard let customerPackageId = viewModel.subscripedPackage?.customerPackageID else { return }
+                                router.push( ChatsView(CustomerPackageId: customerPackageId))
                                 
                             case .questionaire:
                                 guard let CustomerPackageId = viewModel.subscripedPackage?.customerPackageID else { return }
@@ -194,11 +194,6 @@ struct ActiveCustomerPackagesView: View {
                     .equatable()
                 }
 
-                CustomerMesurmentsSection(measurements: viewModel.customerMeasurements){item in
-                    guard let item = item else { return }
-                    router.push(MeasurementDetailsView(stat: item))
-                }
-
                 CustomButton(title: "select_next_session",isdisabled: false,backgroundView:AnyView(Color.clear.horizontalGradientBackground())){
                     Task{ reschedualcase = .nextSession }
                     isReschedualling = true
@@ -218,6 +213,12 @@ struct ActiveCustomerPackagesView: View {
                 )
                 .padding(.horizontal)
 
+                
+                CustomerMesurmentsSection(measurements: viewModel.customerMeasurements){item in
+                    guard let item = item else { return }
+                    router.push(MeasurementDetailsView(stat: item))
+                }
+                
                 Spacer().frame(height: 55)
             }
         }
@@ -227,9 +228,10 @@ struct ActiveCustomerPackagesView: View {
         .showHud(isShowing:  $viewModel.isLoading)
         .errorAlert(isPresented: .constant(viewModel.errorMessage != nil), message: viewModel.errorMessage)
         .task(id: customerPackageId) {
-            selectedSection = .questionaire
+            selectedSection = nil
             await viewModel.load(customerPackageId: customerPackageId)
         }
+        
         .customSheet(isPresented: $isReschedualling){
             ReSchedualView(
                 doctorPackageId: customerPackageId,

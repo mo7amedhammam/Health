@@ -35,7 +35,8 @@ enum DocEndPoints : String{
 
 //-----------Active Customer Packages----------
     case DocGetCustomerPackageSessionList = "Subscription/GetCustomerPackageSessionList"
-    case DocGetActivePackageDoctorList = "packageDoctor/GetPackageDoctorList"
+//    case DocGetActivePackageDoctorList = "packageDoctor/GetCustomerPackageList"
+    case DocGetActivePackageDoctorList = "Subscription/GetCustomerPackageList"
     case DocCreateCustomerPackageByDoctor = "CustomerPackage/CreateCustomerPackageByDoctor"
     case DocGetMessage = "CustomerPackageMessage/GetMessage"
     case DocCreateDoctorMessage = "CustomerPackageMessage/CreateDoctorMessage"

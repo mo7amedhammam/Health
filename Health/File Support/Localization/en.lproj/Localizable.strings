@@ -227,6 +227,7 @@
 "from_" = "from";
 "doc_" = "doc";
 "renew_subscription" = "Renew Subscription";
+"customer_details" = "Customer Details";
 "cancel_subscription" = "Cancel Subscription";
 "Chats_" = "Chats";
 "questions_" = "questions";

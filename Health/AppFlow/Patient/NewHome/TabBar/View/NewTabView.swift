@@ -9,7 +9,6 @@ import SwiftUI
 
 struct NewTabView: View {
     @StateObject private var viewModel = EditProfileViewModel.shared
-
     @State var selectedTab = 2
     
     var body: some View {

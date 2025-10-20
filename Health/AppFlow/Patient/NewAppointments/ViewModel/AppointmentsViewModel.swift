@@ -85,7 +85,18 @@ extension AppointmentsViewModel{
                 target,
                 responseType: AppointmentsM.self
             )
-            self.appointments = response
+            
+            if skipCount == 0 {
+                // Initial load or reload: replace
+                self.appointments = response
+            } else {
+                // Pagination: append
+                var current = self.appointments ?? AppointmentsM(items: [], totalCount: 0)
+                let newItems = response?.items ?? []
+                current.items = (current.items ?? []) + newItems
+                current.totalCount = response?.totalCount ?? current.totalCount
+                self.appointments = current
+            }
         } catch {
             self.errorMessage = error.localizedDescription
         }
@@ -109,7 +120,7 @@ extension AppointmentsViewModel {
 
     @MainActor
     func loadMoreIfNeeded() async {
-        guard !(isLoading ?? false),
+        guard isLoading == false,
               let currentCount = appointments?.items?.count,
               let totalCount = appointments?.totalCount,
               currentCount < totalCount,

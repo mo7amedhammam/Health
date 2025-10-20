@@ -227,6 +227,7 @@
 "from_" = "من";
 "doc_" = "د";
 "renew_subscription" = "تجديد الاشتراك";
+"customer_details" = "تفاصيل العميل";
 "cancel_subscription" = "إلغاء الاشتراك";
 "Chats_" = "محادثة";
 "questions_" = "أسألة";

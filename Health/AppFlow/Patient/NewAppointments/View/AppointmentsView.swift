@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct AppointmentsView: View {
-    @StateObject var router = NavigationRouter.shared
+    @StateObject var router = NavigationRouter()
     @StateObject var viewModel = AppointmentsViewModel.shared
     @State var mustLogin: Bool = false
 
@@ -30,10 +30,13 @@ struct AppointmentsView: View {
                     
                     AppointmentsListView(appointments:viewModel.appointments?.items ,selectAction: {appointment in
                         
+//                        print(appointment.doctorName ?? "")
                         router.push(
 //                            SubcripedPackageDetailsView(package: nil, CustomerPackageId:appointment.customerPackageId ?? 0)
                             ActiveCustomerPackagesView(CustomerPackageId: appointment.customerPackageId ?? 0)
+//                                .environmentObject(router)
                         )
+                        
                                 },buttonAction:{item in
                                     idToCancel = item.packageID
 //                                    if item.canRenew ?? false{
@@ -45,8 +48,7 @@ struct AppointmentsView: View {
 //                                        showCancel = true
 //                                    }
                                 },loadMore: {
-                    //                guard viewModel.canLoadMore else { return }
-                    
+//                                    guard viewModel.isLoading == false else { return }
                                     Task {
                                         await viewModel.loadMoreIfNeeded()
                                     }
@@ -55,7 +57,6 @@ struct AppointmentsView: View {
                                 .refreshable {
                                     await viewModel.refresh()
                                 }
-
                     
 //                }else{
 //
@@ -71,12 +72,14 @@ struct AppointmentsView: View {
             }
             //            .frame(height: 232)
             //            .horizontalGradientBackground()
-            .task {
-                if Helper.shared.CheckIfLoggedIn(){
-                    await viewModel.refresh()
-                }else{
-                    viewModel.clear()
-                    mustLogin = true
+            .onAppear{
+                Task{
+                    if Helper.shared.CheckIfLoggedIn(){
+                        await viewModel.refresh()
+                    }else{
+                        viewModel.clear()
+                        mustLogin = true
+                    }
                 }
             }
             
@@ -110,33 +113,34 @@ struct AppointmentsView: View {
 }
 
 struct AppointmentsListView: View {
-    var appointments: [AppointmentsItemM]? = [AppointmentsItemM(
-        id: 1,
-        doctorName: "د. أحمد سامي",
-        sessionDate: "2025-08-05T15:15:00",
-        timeFrom: "2025-08-05T15:15:00",
-        packageName: "باقة الصحة العامة",
-        categoryName: "العلاج الطبيعي",
-        mainCategoryID: 1,
-        mainCategoryName: "الصحة",
-        categoryID: 2,
-        sessionMethod: "حضوري",
-        packageID: 10,
-        dayName: "الاثنين"
-    ),AppointmentsItemM(
-        id: 2,
-        doctorName: "د. أحمد سامي",
-        sessionDate: "2025-08-05T15:15:00",
-        timeFrom: "2025-08-05T15:15:00",
-        packageName: "باقة الصحة العامة",
-        categoryName: "العلاج الطبيعي",
-        mainCategoryID: 2,
-        mainCategoryName: "الصحة",
-        categoryID: 4,
-        sessionMethod: "حضوري",
-        packageID: 55,
-        dayName: "الاثنين"
-    )]
+    var appointments: [AppointmentsItemM]?
+//    = [AppointmentsItemM(
+//        id: 1,
+//        doctorName: "د. أحمد سامي",
+//        sessionDate: "2025-08-05T15:15:00",
+//        timeFrom: "2025-08-05T15:15:00",
+//        packageName: "باقة الصحة العامة",
+//        categoryName: "العلاج الطبيعي",
+//        mainCategoryID: 1,
+//        mainCategoryName: "الصحة",
+//        categoryID: 2,
+//        sessionMethod: "حضوري",
+//        packageID: 10,
+//        dayName: "الاثنين"
+//    ),AppointmentsItemM(
+//        id: 2,
+//        doctorName: "د. أحمد سامي",
+//        sessionDate: "2025-08-05T15:15:00",
+//        timeFrom: "2025-08-05T15:15:00",
+//        packageName: "باقة الصحة العامة",
+//        categoryName: "العلاج الطبيعي",
+//        mainCategoryID: 2,
+//        mainCategoryName: "الصحة",
+//        categoryID: 4,
+//        sessionMethod: "حضوري",
+//        packageID: 55,
+//        dayName: "الاثنين"
+//    )]
     var selectAction: ((AppointmentsItemM) -> Void)?
     var buttonAction: ((AppointmentsItemM) -> Void)?
     var loadMore: (() -> Void)?
@@ -149,28 +153,38 @@ struct AppointmentsListView: View {
                 showFilter = true
             }
             .padding([.horizontal])
-                List{
-                    if let appointments = appointments,appointments.count > 0{
-                        ForEach(appointments, id: \.self) { item in
-                            AppointmentCardView(appointment: item, renewaction: {
-                                buttonAction?(item)
-                            })
-                            .buttonStyle(.plain)
-                            .listRowSpacing(0)
-                            .listRowSeparator(.hidden)
-                            .listRowBackground(Color.clear)
-                            .listRowInsets(EdgeInsets(top: 8, leading: 14, bottom: 8, trailing: 14))
-                            
-                            .onAppear {
-                                // Detect when the last item appears
-                                guard item == appointments.last else {return}
-                                    loadMore?()
-                            }
-                        }
+            if let appointments = appointments,appointments.count > 0{
+
+//                List{
+            ScrollView{
+                LazyVStack{
+                    
+                    ForEach(appointments, id: \.self) { item in
+                        AppointmentCardView(appointment: item, detaisactions: {selectAction?(item)}, renewaction: {
+                            buttonAction?(item)
+                        })
+                        .buttonStyle(.plain)
+                        .padding(.horizontal,14)
+                        .padding(.vertical,5)
+
+//                        .listRowSpacing(0)
+//                        .listRowSeparator(.hidden)
+//                        .listRowBackground(Color.clear)
+//                        .listRowInsets(EdgeInsets(top: 8, leading: 14, bottom: 8, trailing: 14))
                         
+                        .onAppear {
+                            // Detect when the last item appears
+                            guard appointments.count >= 5 ,item == appointments.last else {return}
+                            loadMore?()
+                        }
                     }
+                    
+                    
+                    //                }
+                    //                .listStyle(.plain)
                 }
-                .listStyle(.plain)
+                }
+            }
         }
 
         
@@ -210,8 +224,13 @@ struct AppointmentsListView: View {
 // MARK: - Card View
 struct AppointmentCardView: View {
     let appointment: AppointmentsItemM
+    var detaisactions: (() -> Void)
     var renewaction: (() -> Void)
     var body: some View {
+        Button(action:{
+            detaisactions()
+        },label:{
+        
         VStack(spacing: 0) {
             // Top Section (White background)
             VStack(alignment: .leading, spacing: 4) { // Right aligned for Arabic
@@ -274,7 +293,25 @@ struct AppointmentCardView: View {
                 }
 //                .frame(maxWidth: .infinity,alignment: .leading)
                     Spacer()
-                Button(action: {
+                
+                VStack(alignment: .trailing, spacing: 8) { // Right aligned for Arabic
+                    Button(action: {
+                            detaisactions()
+                        },label:{
+//                            HStack(spacing:3){
+//                                Image("newreschedual")
+//                                    .resizable()
+//                                    .frame(width: 10, height: 8.5)
+                                Text("customer_details".localized)
+                                    .underline()
+//                            }
+                            .foregroundStyle(Color.white)
+                            .font(.regular(size: 12))
+                        })
+                    Spacer()
+
+                    
+                    Button(action: {
                         renewaction()
                     },label:{
                         HStack(spacing:3){
@@ -287,6 +324,7 @@ struct AppointmentCardView: View {
                         .foregroundStyle(Color.white)
                         .font(.regular(size: 12))
                     })
+                }
 
             }
             .padding(.horizontal, 16)
@@ -296,6 +334,7 @@ struct AppointmentCardView: View {
         }
         .cardStyle(cornerRadius: 3)
 
+        })
     }
 }
 
@@ -318,7 +357,7 @@ struct AppointmentCardView_Previews: PreviewProvider {
             dayName: "الاثنين" // Correct day name for 08/05/2025 is Friday, but using model's value
         )
         
-        AppointmentCardView(appointment: dummyAppointment, renewaction: {})
+        AppointmentCardView(appointment: dummyAppointment, detaisactions: {}, renewaction: {})
             .previewLayout(.sizeThatFits) // Makes the preview fit the card content
             .padding() // Add some padding around the card in the preview
 //            .background(Color.gray) // To see the card clearly on a light background

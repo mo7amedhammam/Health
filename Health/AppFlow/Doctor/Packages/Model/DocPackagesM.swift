@@ -32,4 +32,10 @@ struct CategoriyListItemM: Codable,Hashable {
     var id : Int?
     var title:String?
     var status:Bool?
+    
+//    enum CodingKeys: String, CodingKey {
+//        case id = "id"
+//        case title = "name"
+//        case status
+//    }
 }

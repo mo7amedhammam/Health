@@ -152,7 +152,8 @@ extension ActiveCusPackViewModel {
         guard let maxResultCount = maxResultCount,let skipCount = skipCount,let customerPackageId = customerPackageId else {
             return
         }
-        let parametersarr : [String : Any] =  ["maxResultCount":maxResultCount,"skipCount":skipCount,"customerPackageId":customerPackageId]
+//        customerId    // customerPackageId
+        let parametersarr : [String : Any] =  ["maxResultCount":maxResultCount,"skipCount":skipCount,"customerId":customerPackageId]
         let target = DocActivePackagesServices.GetCustomerPackageList(parameters: parametersarr)
         do {
             self.errorMessage = nil

@@ -14,7 +14,6 @@ class DocPackagesViewModel:ObservableObject {
     // -- Get List --
     var maxResultCount: Int?              = 5
     @Published var skipCount: Int?        = 0
-
     
     // Published properties
     @Published var ActivePackages: DocPackagesM?
@@ -23,13 +22,15 @@ class DocPackagesViewModel:ObservableObject {
     @Published var MainCategories: [CategoriyListItemM]?
     @Published var selectedMainCategory: CategoriyListItemM?{
         didSet{
-            guard selectedMainCategory != nil else { return }
-        Task{ await getSubCategories()}
+//            guard selectedMainCategory != nil else { return }
+            selectedSubCategory = nil
+            Task{ await getSubCategories()}
     }}
     @Published var SubCategories: [CategoriyListItemM]?
     @Published var selectedSubCategory: CategoriyListItemM?{
         didSet{
-            guard selectedSubCategory != nil else { return }
+//            guard selectedSubCategory != nil else { return }
+            SelectedPackage = nil
         Task{ await getPackagesList()}
     }}
     @Published var PackagesList: [CategoriyListItemM]?

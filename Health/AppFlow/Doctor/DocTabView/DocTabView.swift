@@ -7,8 +7,8 @@
 import SwiftUI
 
 struct DocTabView: View{
+//    @StateObject var router = NavigationRouter()
     @StateObject private var viewModel = EditProfileViewModel.shared
-
     @State var selectedTab = 2
     
     var body: some View {
@@ -72,6 +72,7 @@ struct DocTabView: View{
 
                 case 4:
                     AppointmentsView()
+//                        .environmentObject(router)
 
                 default: EmptyView()
                 }

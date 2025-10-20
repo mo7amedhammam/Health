@@ -20,6 +20,8 @@ private struct MCQOptions {
 }
 
 struct QuestionaireView: View {
+    @StateObject private var viewModel = QuestionaireViewModel.shared
+
     var CustomerPackageId: Int
 
     // MARK: - Mock Data
@@ -73,7 +75,7 @@ struct QuestionaireView: View {
                     Spacer()
                     
                     CustomButton(title: "save_",isdisabled: false,backgroundView:AnyView(Color.clear.horizontalGradientBackground())){
-                        submit()
+                        Task { await submit() }
                     }
                     .disabled(isSubmitting)
 
@@ -112,69 +114,37 @@ struct QuestionaireView: View {
         }
     }
 
-    private func submit() {
+    @MainActor
+    private func submit() async {
         isSubmitting = true
-        errorMessage = nil
+        viewModel.errorMessage = nil
+        defer {
+            isSubmitting = false
+        }
 
-        var missing: [Int] = []
-        for q in questions {
-            guard let id = q.id else { continue }
-            switch QuestionType(rawValue: q.typeID ?? 0) {
-            case .text:
-                if (textAnswers[id]?.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ?? true) {
-                    missing.append(id)
+        // Optional: validate required answers for text/mcq
+        if let questions = viewModel.questions {
+            var missing = [Int]()
+            for q in questions {
+                guard let id = q.id else { continue }
+                switch QuestionType(rawValue: q.typeID ?? 0) {
+                case .text, .mcq:
+                    let value = viewModel.userAnswers[id]?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+                    if value.isEmpty { missing.append(id) }
+                case .trueFalse:
+                    // optional, skip required check
+                    break
+                default:
+                    break
                 }
-            case .mcq:
-                if (mcqAnswersMulti[id]?.isEmpty ?? true) {
-                    missing.append(id)
-                }
-            case .trueFalse:
-                // اعتبرناها ليست إجبارية
-                break
-            default: break
+            }
+            if !missing.isEmpty {
+                viewModel.errorMessage = "من فضلك أجب على كل الأسئلة المطلوبة".localized
+                return
             }
         }
 
-        if !missing.isEmpty {
-            errorMessage = "من فضلك أجب على كل الأسئلة المطلوبة".localized
-            isSubmitting = false
-            return
-        }
-
-        var payload: [[String: Any]] = []
-        for q in questions {
-            guard let id = q.id else { continue }
-            switch QuestionType(rawValue: q.typeID ?? 0) {
-            case .text:
-                payload.append([
-                    "questionId": id,
-                    "typeId": q.typeID ?? 0,
-                    "answer": textAnswers[id] ?? ""
-                ])
-            case .mcq:
-                let selected = Array(mcqAnswersMulti[id] ?? [])
-                payload.append([
-                    "questionId": id,
-                    "typeId": q.typeID ?? 0,
-                    // ممكن ترسلها Array أو String مفصول بفواصل حسب الـ API
-                    "answer": selected.joined(separator: ",")
-                ])
-            case .trueFalse:
-                payload.append([
-                    "questionId": id,
-                    "typeId": q.typeID ?? 0,
-                    "answer": (tfAnswers[id] ?? false) ? "نعم" : "لا"
-                ])
-            default: break
-            }
-        }
-
-        print("Submitting questionnaire for CustomerPackageId: \(CustomerPackageId)")
-        print("Payload: \(payload)")
-
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
-            isSubmitting = false
-        }
+        await viewModel.addCustomerQuestionAnswer()
     }
 }
 

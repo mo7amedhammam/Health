@@ -82,6 +82,8 @@ struct EditProfileView: View {
                 // Profile Image with Border and Edit Button
                 ZStack(alignment: .bottomLeading) {
                     Group {
+                        
+                        
                         if let image = viewModel.Image {
                             Image(uiImage: image)
                                 .resizable()
@@ -221,7 +223,7 @@ struct EditProfileView: View {
                     viewModel.Mobile = phoneNumber
                     viewModel.Gender = selectedGender
                     viewModel.Country = selectedCountry
-                    viewModel.Image = image
+//                    viewModel.Image = image
                   await viewModel.updateProfile()
                 }
             }
@@ -240,13 +242,13 @@ struct EditProfileView: View {
                 
                   fullName = viewModel.Name
                 phoneNumber = viewModel.Mobile
-                image =  viewModel.Image
+//                image =  viewModel.Image
 
 //                selectedGender = viewModel.Gender
 //                selectedCountry = viewModel.Country
                 
                 if let countries = lookupsVM.appCountries {
-                    selectedCountry = countries.first(where: { $0.id == viewModel.profile?.appCountryId ?? 0 }) ?? countries.first
+                    selectedCountry = countries.first(where: { $0.id == viewModel.profile?.countryID ?? 0 }) ?? countries.first
                 }
                 if let genders = lookupsVM.genders {
                     selectedGender = genders.first(where: { $0.id == viewModel.profile?.genderID ?? 0 }) ?? genders.first
@@ -273,7 +275,7 @@ struct EditProfileView: View {
         .showHud(isShowing:  $viewModel.isLoading)
         .errorAlert(isPresented: .constant(viewModel.errorMessage != nil), message: viewModel.errorMessage)
         .sheet(isPresented: $showImagePicker) {
-            ImagePickerView(selectedImage: $image, sourceType: imagePickerSource)
+            ImagePickerView(selectedImage: $viewModel.Image, sourceType: imagePickerSource)
         }
     }
 
