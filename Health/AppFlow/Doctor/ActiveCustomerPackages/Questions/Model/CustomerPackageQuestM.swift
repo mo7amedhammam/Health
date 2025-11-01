@@ -7,7 +7,11 @@
 
 
 // MARK: - CustomerPackageQuestM
-struct CustomerPackageQuestM: Codable {
+struct CustomerPackageQuestM: Codable,Equatable {
+    static func == (lhs: CustomerPackageQuestM, rhs: CustomerPackageQuestM) -> Bool {
+       return lhs.id == rhs.id
+    }
+    
     var id: Int?
     var question: String?
     var typeID: Int?

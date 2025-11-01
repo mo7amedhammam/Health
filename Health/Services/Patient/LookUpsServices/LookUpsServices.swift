@@ -13,6 +13,7 @@ enum LookUpsServices{
     case GetALlCountries
     case GetAllLanguages
     case GetAllFileTypes
+    case GetAllSpecialities
 }
 
 extension LookUpsServices : TargetType1 {
@@ -25,30 +26,34 @@ extension LookUpsServices : TargetType1 {
             
         case .GetALlGenders:
             return LookupsEndPoints.GetAllGenders.rawValue
-          
+            
         case .GetALlCountries:
             return LookupsEndPoints.GetAppCountryForList.rawValue
             
-            case .GetAllLanguages:
+        case .GetAllLanguages:
             return LookupsEndPoints.GetAllLanguages.rawValue
             
         case .GetAllFileTypes:
             return LookupsEndPoints.GetAllFileTypes.rawValue
+            
+        case .GetAllSpecialities:
+            return LookupsEndPoints.GetSpecialityForList.rawValue
         }
     }
     
     var method: HTTPMethod {
         switch self {
-//        case
-//                .CreateCustomerMessage
-//            :
-//            return .post
+            //        case
+            //                .CreateCustomerMessage
+            //            :
+            //            return .post
             
         case
                 .GetALlGenders
-                ,.GetALlCountries
-                ,.GetAllLanguages
-                ,.GetAllFileTypes
+            ,.GetALlCountries
+            ,.GetAllLanguages
+            ,.GetAllFileTypes
+            ,.GetAllSpecialities
             :
             return .get
         }
@@ -56,20 +61,21 @@ extension LookUpsServices : TargetType1 {
     
     var parameters: [String:Any]? {
         switch self {
-//        case
-//                .GetMessage(parameters: let parameter)
-//            :
-////            return .parameterRequest(Parameters: parameters, Encoding: encoding)
-//            return  parameter
-
-//        case .GetMyScheduleDrugs(parameters: let parameters):
-//            return .BodyparameterRequest(Parameters: parameters, Encoding: encoding)
+            //        case
+            //                .GetMessage(parameters: let parameter)
+            //            :
+            ////            return .parameterRequest(Parameters: parameters, Encoding: encoding)
+            //            return  parameter
+            
+            //        case .GetMyScheduleDrugs(parameters: let parameters):
+            //            return .BodyparameterRequest(Parameters: parameters, Encoding: encoding)
             
         case
                 .GetALlGenders
-                ,.GetALlCountries
-                ,.GetAllLanguages
+            ,.GetALlCountries
+            ,.GetAllLanguages
             ,.GetAllFileTypes
+            ,.GetAllSpecialities
             :
             return nil
         }

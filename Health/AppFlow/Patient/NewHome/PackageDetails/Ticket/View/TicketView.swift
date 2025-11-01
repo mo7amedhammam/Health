@@ -349,7 +349,10 @@ struct TicketView: View {
 //        .localizeView(reverse: true)
         .localizeView()
         .showHud(isShowing:  $viewmodel.isLoading)
-        .errorAlert(isPresented: .constant(viewmodel.errorMessage != nil), message: viewmodel.errorMessage)
+        .errorAlert(isPresented:Binding(
+            get: { viewmodel.errorMessage != nil },
+            set: { if !$0 { viewmodel.errorMessage = nil } }
+        ), message: viewmodel.errorMessage)
 
     }
 }

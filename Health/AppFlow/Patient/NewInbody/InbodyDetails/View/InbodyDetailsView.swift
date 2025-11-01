@@ -67,7 +67,10 @@ struct InbodyDetailsView: View {
         }
         .localizeView()
 //        .showHud(isShowing: $viewmodel.isLoading)
-        .errorAlert(isPresented: .constant(downloader.errorMessage != nil), message: downloader.errorMessage)
+        .errorAlert(isPresented: Binding(
+            get: { downloader.errorMessage != nil },
+            set: { if !$0 { downloader.errorMessage = nil } }
+        ), message: downloader.errorMessage)
 //        .onChange(of: downloader.showSuccess){newval in
 //            guard newval == true else { return }
 //            fileDownloaded()

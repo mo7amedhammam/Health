@@ -298,7 +298,10 @@ struct SubcripedPackageDetailsView: View {
         .localizeView()
         .withNavigation(router: router)
         .showHud(isShowing:  $viewmodel.isLoading)
-        .errorAlert(isPresented: .constant(viewmodel.errorMessage != nil), message: viewmodel.errorMessage)
+        .errorAlert(isPresented: Binding(
+            get: { viewmodel.errorMessage != nil },
+            set: { if !$0 { viewmodel.errorMessage = nil } }
+        ), message: viewmodel.errorMessage)
         .onAppear{
             Task{
                 if let CustomerPackageId = CustomerPackageId{

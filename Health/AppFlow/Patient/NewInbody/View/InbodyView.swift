@@ -54,7 +54,10 @@ struct InbodyView: View {
             .withNavigation(router: router)
             .localizeView()
             .showHud(isShowing: $viewmodel.isLoading)
-            .errorAlert(isPresented: .constant(viewmodel.errorMessage != nil), message: viewmodel.errorMessage)
+            .errorAlert(isPresented: Binding(
+                get: { viewmodel.errorMessage != nil },
+                set: { if !$0 { viewmodel.errorMessage = nil } }
+            ), message: viewmodel.errorMessage)
             .customSheet(isPresented: $viewmodel.showAddSheet,height: 470){
                 UploadInbodySheetView( isPresented: $viewmodel.showAddSheet)
                     .environmentObject(viewmodel)
@@ -387,7 +390,10 @@ struct UploadInbodySheetView: View {
                 print("Error picking file: \(error.localizedDescription)")
             }
         }
-        .errorAlert(isPresented: .constant(viewmodel.errorMessage != nil), message: viewmodel.errorMessage)
+        .errorAlert(isPresented: Binding(
+            get: { viewmodel.errorMessage != nil },
+            set: { if !$0 { viewmodel.errorMessage = nil } }
+        ), message: viewmodel.errorMessage)
 
  
     }

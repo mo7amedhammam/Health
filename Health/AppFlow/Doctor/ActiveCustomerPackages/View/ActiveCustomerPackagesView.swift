@@ -153,7 +153,7 @@ struct ActiveCustomerPackagesView: View {
                                 router.push( ActiveCustPackFiles(customerId: customerID,PackageId: packageId) )
                           
                             case .alergy:
-                                guard let customerID = viewModel.subscripedPackage?.customerID else { return }
+                                guard let customerID = viewModel.subscripedPackage?.customerPackageID else { return }
                                 router.push(CustomerAlergyView(customerID: customerID))
 
                             }
@@ -181,7 +181,7 @@ struct ActiveCustomerPackagesView: View {
                         }
                     }
                 }
-                .padding(.vertical)
+                .padding(.top)
 
                 if let customerName = viewModel.subscripedPackage?.customerName {
                     CustomerHeaderView(
@@ -226,7 +226,10 @@ struct ActiveCustomerPackagesView: View {
         .localizeView()
         .withNavigation(router: router)
         .showHud(isShowing:  $viewModel.isLoading)
-        .errorAlert(isPresented: .constant(viewModel.errorMessage != nil), message: viewModel.errorMessage)
+        .errorAlert(isPresented: Binding(
+            get: { viewModel.errorMessage != nil },
+            set: { if !$0 { viewModel.errorMessage = nil } }
+        ), message: viewModel.errorMessage)
         .task(id: customerPackageId) {
             selectedSection = nil
             await viewModel.load(customerPackageId: customerPackageId)
@@ -335,6 +338,6 @@ struct CustomerHeaderView: View, Equatable {
             .frame(maxWidth: .infinity, alignment: .leading)
 
         }
-        .padding([.vertical,.leading])
+        .padding([.leading])
     }
 }

@@ -199,7 +199,10 @@ struct ChangePasswordView: View {
         }
         .localizeView()
         .showHud2(isShowing: $viewModel.isLoading)
-        .errorAlert(isPresented: .constant(viewModel.errorMessage != nil), message: viewModel.errorMessage)
+        .errorAlert(isPresented: Binding(
+            get: { viewModel.errorMessage != nil },
+            set: { if !$0 { viewModel.errorMessage = nil } }
+        ), message: viewModel.errorMessage)
         .onChange(of: viewModel.isSuccess ){newval in
         guard newval else { return }
             PassChangedDone()

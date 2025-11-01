@@ -211,11 +211,8 @@ struct NewHomeView: View {
         }
         .localizeView()
         .withNavigation(router: router)
-        // Bridge Bool -> Bool? for HUD modifier
-        .showHud(isShowing: Binding<Bool?>(
-            get: { viewModel.isLoading },
-            set: { viewModel.isLoading = $0 ?? false }
-        ))
+        .showHud(isShowing: $viewModel.isLoading )
+
         // Two-way binding so dismissing the alert clears the error
         .errorAlert(
             isPresented: Binding(

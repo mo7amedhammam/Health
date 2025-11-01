@@ -40,7 +40,10 @@ struct PackageDetailsView: View {
         }
         .localizeView()
         .showHud(isShowing: $viewModel.isLoading)
-        .errorAlert(isPresented: .constant(viewModel.errorMessage != nil), message: viewModel.errorMessage)
+        .errorAlert(isPresented:Binding(
+            get: { viewModel.errorMessage != nil },
+            set: { if !$0 { viewModel.errorMessage = nil } }
+        ), message: viewModel.errorMessage)
         // Navigation without AnyView/type-erasure; minimal invalidations
         .background(
             NavigationLink(

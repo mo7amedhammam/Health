@@ -19,7 +19,8 @@ class LookupsViewModel : ObservableObject {
     @Published var genders : [GenderM]? = nil
     @Published var languages : [LanguageM]? = nil
     @Published var fileTypes : [FileTypeM]? = nil
-    
+    @Published var specialities : [GenderM]? = nil
+
 //    @Published var isLoading:Bool? = false
 //    @Published var errorMessage: String? = nil
     
@@ -146,5 +147,32 @@ extension LookupsViewModel{
         }
     }
     
+    func getSpecialities() async {
+//        isLoading = true
+//        defer { isLoading = false }
+//        guard let maxResultCount = maxResultCount,let skipCount = skipCount else {
+////            // Handle missings
+////            self.errorMessage = "check inputs"
+////            //            throw NetworkError.unknown(code: 0, error: "check inputs")
+//            return
+//        }
+//        let parametersarr : [String : Any] =  ["maxResultCount":maxResultCount,"skipCount":skipCount]
+        
+        let target = LookUpsServices.GetAllSpecialities
+        do {
+//            self.errorMessage = nil // Clear previous errors
+            let response = try await networkService.request(
+                target,
+                responseType: [GenderM].self
+            )
+            Task{
+                await MainActor.run{
+                    self.specialities = response
+                }
+            }
+        } catch {
+//            self.errorMessage = error.localizedDescription
+        }
+    }
 }
 

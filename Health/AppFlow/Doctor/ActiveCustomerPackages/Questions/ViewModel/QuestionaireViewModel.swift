@@ -40,31 +40,30 @@ extension QuestionaireViewModel{
         // [
         //   { "customerPackageId": 0, "packageQuestionId": 0, "mcqId": 0, "typeId": 0, "answer": "string" }
         // ]
+        
         let answersArray: [[String: Any]] = userAnswers.map { (id, value) in
-            [
+            let typeid = questions?.first( where: {$0.id == id})?.typeID ?? 0
+            var answerDict: [String: Any] = [
                 "customerPackageId": customerPackageId,
                 "packageQuestionId": id,
-                "mcqId": 0,
-                "typeId": 0,
+                "typeId": typeid,
                 "answer": value
             ]
+            
+            // Add conditional field
+            if typeid == 2 {
+                answerDict["mcqId"] = 0
+            }
+            
+            return answerDict
         }
+        print("answersArray",answersArray)
         
         isLoading = true
         defer { isLoading = false }
 
-        // IMPORTANT: Endpoint likely expects a top-level array body, not wrapped in "answers"
-        // Our TargetType1 only accepts [String: Any], so we wrap under a known key on the service side.
-        // To send a raw array, we can create a special key understood by request builder,
-        // or simpler: define the service to accept an array. For now we’ll send raw array by encoding it to JSON data manually.
-        // However, since TargetType1.parameters is [String: Any], we’ll pass through using a neutral key that backend ignores.
-        // Preferred approach: create a dedicated target that accepts raw Data. If not available, we can still send as ["": answersArray].
-        
-        // Workaround: backend expects array; our builder serializes parameters to JSON.
-        // JSONSerialization allows top-level array only from `data(withJSONObject:)`, but our type is [String: Any].
-        // So, instead of workaround hacks, we can send under "answers" if backend accepts it. If NOT, we need a new API surface.
         // Assuming backend accepts top-level array, we’ll extend our builder later. For now, send under "answers".
-        let parameters: [String: Any] = ["answers": answersArray]
+        let parameters: [String: Any] = answersArray.first ?? [:]
         let target = DocActivePackagesServices.CreatePackageQuestionnaireAnswer(parameters: parameters)
 
         do {

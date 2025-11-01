@@ -119,6 +119,7 @@ enum LookupsEndPoints : String{
     case GetAllGenders = "Lookups/GetAllGenders"
     case GetAllLanguages = "Lang/GetLangList"
     case GetAllFileTypes = "Lookups/FileType"
+    case GetSpecialityForList = "Speciality/GetSpecialityForList"
 }
 
 

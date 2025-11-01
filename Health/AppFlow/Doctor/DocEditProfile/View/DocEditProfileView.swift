@@ -10,11 +10,14 @@ struct DocEditProfileView: View {
     @EnvironmentObject private var viewModel: EditProfileViewModel
     //    @StateObject private var otpViewModel: OtpVM
     @StateObject private var lookupsVM = LookupsViewModel.shared
-
+   
+    @State private var bio: String = ""
     @State private var fullName: String = ""
     @State private var phoneNumber: String = ""
+    @State private var email: String = ""
     @State private var selectedGender:GenderM? = nil
-    @State private var selectedCountry:AppCountryM? = .init(id: 1, name: "Egypt", flag: "🇪🇬")
+    @State private var selectedCountry:AppCountryM? = nil
+    @State private var selectedSpeciality:GenderM? = nil
 
     // Image selection
 //    @State private var selectedImage: UIImage? = nil
@@ -30,10 +33,22 @@ struct DocEditProfileView: View {
     private var isNameValid: Bool{
         fullName.count == 0 || fullName.count > 3
     }
-    
+    private var isEmailValid: Bool{
+        email.count == 0 || email.count > 3
+    }
     private var isGenderValid: Bool{
         //        selectedGender != nil
         selectedGender == nil || selectedGender?.title?.count ?? 0 > 0
+        
+    }
+    private var isCountryValid: Bool{
+        //        selectedGender != nil
+        selectedCountry == nil || selectedCountry?.name?.count ?? 0 > 0
+        
+    }
+    private var isSpecialityValid: Bool{
+        //        selectedGender != nil
+        selectedSpeciality == nil || selectedSpeciality?.title?.count ?? 0 > 0
         
     }
     
@@ -184,6 +199,20 @@ struct DocEditProfileView: View {
                 )
                 .keyboardType(.asciiCapableNumberPad)
                 
+                if Helper.shared.getSelectedUserType() == .Doctor{
+                    CustomInputFieldUI(
+                        title: "signup_email_title",
+                        placeholder: "signup_email_placeholder",
+                        text: $email,
+                        isValid: isEmailValid,
+                        trailingView: AnyView(
+                            Image("signup_person")
+                                .resizable()
+                                .frame(width: 17,height: 20)
+                        )
+                    )
+                }
+                
                 CustomInputFieldUI(
                     title: "signup_gender_title",
                     placeholder: "signup_gender_placeholder",
@@ -207,6 +236,59 @@ struct DocEditProfileView: View {
                         }
                     )
                 )
+                
+                if Helper.shared.getSelectedUserType() == .Doctor{
+                    CustomInputFieldUI(
+                        title: "signup_country_title",
+                        placeholder: "signup_country_placeholder",
+                        text: .constant(selectedCountry?.name ?? ""),
+                        isValid: isCountryValid,
+                        isDisabled:true,
+                        trailingView: AnyView(
+                            Menu {
+                                ForEach(lookupsVM.appCountries ?? [],id: \.self) { country in
+                                    Button(country.name ?? "", action: { selectedCountry = country })
+                                }
+                            } label: {
+                                HStack(spacing: 4) {
+                                    Image(systemName: "chevron.down")
+                                        .foregroundColor(.gray)
+                                    
+                                    Image(.signupGender)
+                                        .resizable()
+                                        .frame(width: 19,height: 17)
+                                }
+                            }
+                        )
+                    )
+                }
+                
+                if Helper.shared.getSelectedUserType() == .Doctor{
+                    CustomInputFieldUI(
+                        title: "signup_speciality_title",
+                        placeholder: "signup_speciality_placeholder",
+                        text: .constant(selectedSpeciality?.title ?? ""),
+                        isValid: isSpecialityValid,
+                        isDisabled:true,
+                        trailingView: AnyView(
+                            Menu {
+                                ForEach(lookupsVM.specialities ?? [],id: \.self) { speciality in
+                                    Button(speciality.title ?? "", action: { selectedSpeciality = speciality })
+                                }
+                            } label: {
+                                HStack(spacing: 4) {
+                                    Image(systemName: "chevron.down")
+                                        .foregroundColor(.gray)
+                                    
+                                    Image(.signupGender)
+                                        .resizable()
+                                        .frame(width: 19,height: 17)
+                                }
+                            }
+                        )
+                    )
+                }
+                
             }
             .padding(.horizontal)
             
@@ -217,10 +299,14 @@ struct DocEditProfileView: View {
             CustomButtonUI(title: "save_".localized, isValid: true) {
 //                saveProfile()
                 Task{
+                    viewModel.Bio = bio
                     viewModel.Name = fullName
                     viewModel.Mobile = phoneNumber
+                    viewModel.Email = email
                     viewModel.Gender = selectedGender
                     viewModel.Country = selectedCountry
+                    viewModel.Speciality = selectedSpeciality
+
 //                    viewModel.Image = image
                   await viewModel.updateProfile()
                 }
@@ -234,22 +320,28 @@ struct DocEditProfileView: View {
             Task{
                 async let countries:() = await lookupsVM.getAppCountries()
                 async let genders:() = await lookupsVM.getGenders()
+                async let specialities:() = await lookupsVM.getSpecialities()
                 async let profil:() = await viewModel.getProfile()
 
-                _ = await (countries,genders,profil)
+                _ = await (countries,genders,specialities,profil)
                 
                   fullName = viewModel.Name
                 phoneNumber = viewModel.Mobile
+                
 //                image =  viewModel.Image
 
 //                selectedGender = viewModel.Gender
 //                selectedCountry = viewModel.Country
                 
                 if let countries = lookupsVM.appCountries {
-                    selectedCountry = countries.first(where: { $0.id == viewModel.profile?.countryID ?? 0 }) ?? countries.first
+                    selectedCountry = countries.first(where: { $0.id == viewModel.DocProfile?.countryID ?? 0 }) ?? countries.first
                 }
                 if let genders = lookupsVM.genders {
-                    selectedGender = genders.first(where: { $0.id == viewModel.profile?.genderID ?? 0 }) ?? genders.first
+                    selectedGender = genders.first(where: { $0.id == viewModel.DocProfile?.genderId ?? 0 }) ?? genders.first
+                }
+                if let specialities = lookupsVM.specialities {
+                    print("specialities:/n",specialities)
+                    selectedSpeciality = specialities.first(where: { $0.id == viewModel.DocProfile?.specialityID ?? 0 }) ?? specialities.first
                 }
             }
         }
@@ -271,7 +363,10 @@ struct DocEditProfileView: View {
         }
         
         .showHud(isShowing:  $viewModel.isLoading)
-        .errorAlert(isPresented: .constant(viewModel.errorMessage != nil), message: viewModel.errorMessage)
+        .errorAlert(isPresented: Binding(
+            get: { viewModel.errorMessage != nil },
+            set: { if !$0 { viewModel.errorMessage = nil } }
+        ), message: viewModel.errorMessage)
         .sheet(isPresented: $showImagePicker) {
             ImagePickerView(selectedImage: $viewModel.Image , sourceType: imagePickerSource)
         }

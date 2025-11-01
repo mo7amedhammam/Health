@@ -217,7 +217,10 @@ final class AsyncAwaitNetworkService: AsyncAwaitNetworkServiceProtocol {
                     try? await Task.sleep(nanoseconds: backoff)
                     continue
                 } else {
+//                    print(mapped.localizedDescription)
+//                    print(mapped.errorDescription)
                     throw mapped
+//                    throw NetworkError.unauthorized(code: 401, error: "Unauthorized")
                 }
             }
         }

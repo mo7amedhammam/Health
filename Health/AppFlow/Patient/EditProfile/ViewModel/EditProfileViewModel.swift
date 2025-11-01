@@ -40,6 +40,7 @@ class EditProfileViewModel : ObservableObject {
     @Published var imageURL: String?
     @Published var Name: String = ""
     @Published var Bio: String = ""
+    @Published var Email: String = ""
 
     @Published var Gender: GenderM? = nil
     @Published var Country: AppCountryM? = nil
@@ -63,6 +64,9 @@ class EditProfileViewModel : ObservableObject {
     @Published var genderError: String? = nil
     @Published var countryError: String? = nil
 
+    var isDoctor: Bool {
+        return Helper.shared.getSelectedUserType() == .Doctor
+    }
     // Computed: enable/disable Save button
     var canSubmit: Bool {
         // Run validation without setting error strings (dry run)
@@ -163,11 +167,20 @@ extension EditProfileViewModel{
             "GenderId" : genderId
         ]
         
-        if let Speciality = Speciality{
+        if isDoctor{
+            if Email.count > 0{
+            parametersarr["email"] = Email
+        }else{
+            errorMessage = "Please type email."
+            return
+        }
+            
+            if let Speciality = Speciality{
             parametersarr["SpecialityId"] = Speciality.id
         }else{
             errorMessage = "Please select speciality."
             return
+        }
         }
         var parts: [MultipartFormDataPart] = parametersarr.map { key, value in
             MultipartFormDataPart(name: key, value: "\(value)")

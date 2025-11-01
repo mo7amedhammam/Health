@@ -436,8 +436,8 @@ final class NetworkService1: NetworkServiceProtocol {
                 } else {
                     completion(.failure(.invalidJSON(error?.localizedDescription ?? "invalid response")))
                 }
-//            case 401:
-//                completion(.failure(.unauthorized(code: httpResponse.statusCode, error: error?.localizedDescription ?? "Unauthorized")))
+            case 401:
+                completion(.failure(.unauthorized(code: httpResponse.statusCode, error: error?.localizedDescription ?? "Unauthorized")))
             default:
                 completion(.failure(.serverError(code: httpResponse.statusCode, error: error?.localizedDescription ?? "error") ))
             }

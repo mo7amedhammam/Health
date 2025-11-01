@@ -240,7 +240,10 @@ struct TipsByCategoryView: View {
             .localizeView()
             .withNavigation(router: router)
             .showHud(isShowing:  $viewModel.isLoading)
-            .errorAlert(isPresented: .constant(viewModel.errorMessage != nil), message: viewModel.errorMessage)
+            .errorAlert(isPresented: Binding(
+                get: { viewModel.errorMessage != nil },
+                set: { if !$0 { viewModel.errorMessage = nil } }
+            ), message: viewModel.errorMessage)
 
 
     }

@@ -324,6 +324,12 @@
 "payment_note3" = "For more inquiries, contact customer service directly through the platform.";
 
 //MARK:  edit profile
+"signup_email_title" = "email";
+"signup_email_placeholder" = "type your email";
+"signup_country_title" = "country";
+"signup_country_placeholder" = "select country";
+"signup_speciality_title" = "speciality";
+"signup_speciality_placeholder" = "select speciality";
 "save_" = "save";
 
 //MARK: new tips

@@ -24,17 +24,7 @@ struct QuestionaireView: View {
 
     var CustomerPackageId: Int
 
-    // MARK: - Mock Data
-    @State private var questions: [CustomerPackageQuestM] = [
-        .init(id: 101, question: "سؤال 1", typeID: 2, answer: nil),
-        .init(id: 102, question: "سؤال 2", typeID: 3, answer: nil),
-        .init(id: 103, question: "سؤال 3", typeID: 1, answer: nil)
-    ]
-    private let mcqOptions: [MCQOptions] = [
-        .init(questionId: 101, options: ["اختيار 1","اختيار 2","اختيار 3","اختيار 4","اختيار 5","اختيار 6","اختيار 7"])
-    ]
-
-    // MARK: - Answers State
+    // MARK: - Answers State (UI state to render controls)
     @State private var textAnswers: [Int: String] = [:]
     // لدعم تعدد الاختيارات حسب التصميم
     @State private var mcqAnswersMulti: [Int: Set<String>] = [:]
@@ -49,67 +39,132 @@ struct QuestionaireView: View {
 
             ScrollView {
                 VStack(spacing: 24) {
-                    ForEach(questions.indices, id: \.self) { idx in
-                        let q = questions[idx]
-                        QuestionBlock(
-                            index: idx + 1,
-                            question: q,
-                            mcqOptions: mcqOptions.first(where: { $0.questionId == (q.id ?? -1) })?.options ?? [],
-                            textAnswer: Binding(
-                                get: { textAnswers[q.id ?? -1] ?? "" },
-                                set: { textAnswers[q.id ?? -1] = $0 }
-                            ),
-                            mcqAnswers: Binding(
-                                get: { mcqAnswersMulti[q.id ?? -1] ?? [] },
-                                set: { mcqAnswersMulti[q.id ?? -1] = $0 }
-                            ),
-                            tfAnswer: Binding(
-                                get: { tfAnswers[q.id ?? -1] ?? false },
-                                set: { tfAnswers[q.id ?? -1] = $0 }
+                    if let questions = viewModel.questions, !questions.isEmpty {
+                        ForEach(questions.indices, id: \.self) { idx in
+                            let q = questions[idx]
+                            let qid = q.id ?? -1
+
+                            // Try to derive MCQ options if your API later provides them.
+                            // For now, we have no options in the model, so we’ll render selected chips only if present.
+                            let options = deriveMcqOptions(for: q)
+
+                            QuestionBlock(
+                                index: idx + 1,
+                                question: q,
+                                mcqOptions: options,
+                                textAnswer: Binding(
+                                    get: { textAnswers[qid] ?? "" },
+                                    set: { newVal in
+                                        textAnswers[qid] = newVal
+                                        viewModel.updateAnswer(for: qid, answer: newVal)
+                                    }
+                                ),
+                                mcqAnswers: Binding(
+                                    get: { mcqAnswersMulti[qid] ?? [] },
+                                    set: { newVal in
+                                        mcqAnswersMulti[qid] = newVal
+                                        // Persist as comma-separated for backend (matches seedInitialAnswers parsing)
+                                        let value = newVal.sorted().joined(separator: ",")
+                                        viewModel.updateAnswer(for: qid, answer: value)
+                                    }
+                                ),
+                                tfAnswer: Binding(
+                                    get: { tfAnswers[qid] ?? false },
+                                    set: { newVal in
+                                        tfAnswers[qid] = newVal
+                                        viewModel.updateAnswer(for: qid, answer: newVal ? "true" : "false")
+                                    }
+                                )
                             )
-                        )
-                        .padding(.horizontal, 20)
+                            .padding(.horizontal, 20)
+                        }
+                    } else {
+                        // Empty or loading state
+                        if viewModel.isLoading == true {
+                            ProgressView().padding(.top, 20)
+                        } else {
+                            Text("no_data_found_".localized)
+                                .font(.regular(size: 16))
+                                .foregroundStyle(Color(.secondary))
+                                .padding(.top, 20)
+                        }
                     }
 
-                    
                     Spacer()
-                    
+
                     CustomButton(title: "save_",isdisabled: false,backgroundView:AnyView(Color.clear.horizontalGradientBackground())){
                         Task { await submit() }
                     }
-                    .disabled(isSubmitting)
+                    .disabled(isSubmitting || viewModel.isLoading == true)
 
                 }
                 .padding(.top, 12)
             }
         }
         .localizeView()
-        .showHud(isShowing: .constant(isSubmitting))
-        .errorAlert(isPresented: .constant(errorMessage != nil), message: errorMessage)
-        .onAppear {
+        .showHud(isShowing: $viewModel.isLoading )
+        .errorAlert(isPresented:Binding(
+            get: { viewModel.errorMessage != nil },
+            set: { if !$0 { viewModel.errorMessage = nil } }
+        ), message: viewModel.errorMessage)
+        .task(id: CustomerPackageId) {
+            // Configure view model and fetch
+            viewModel.CustomerPackageId = CustomerPackageId
+            await viewModel.getCustomerQuestions()
+            seedInitialAnswers()
+        }
+        .onChange(of: viewModel.questions) { _ in
+            // When questions change (e.g. refresh), reseed UI state
             seedInitialAnswers()
         }
     }
 
+    // Attempt to derive MCQ options. Currently model has no explicit options; we can:
+    // - Use distinct previous answers if present as a best-effort.
+    // - Else, return empty; grid will still allow selection, but with no visible options nothing to tap.
+    private func deriveMcqOptions(for q: CustomerPackageQuestM) -> [String] {
+        guard let type = QuestionType(rawValue: q.typeID ?? 0), type == .mcq else { return [] }
+        // If backend later adds options, replace this with q.options (or via viewModel)
+        if let prev = q.answer, !prev.isEmpty {
+            let values = prev.compactMap { $0.answer?.trimmingCharacters(in: .whitespacesAndNewlines) }
+            let unique = Array(Set(values)).filter { !$0.isEmpty }
+            return unique
+        }
+        return []
+    }
+
     private func seedInitialAnswers() {
+        textAnswers.removeAll()
+        mcqAnswersMulti.removeAll()
+        tfAnswers.removeAll()
+
+        guard let questions = viewModel.questions else { return }
+
         for q in questions {
             guard let id = q.id else { continue }
             switch QuestionType(rawValue: q.typeID ?? 0) {
             case .text:
-                textAnswers[id] = q.answer?.first?.answer ?? ""
+                let value = q.answer?.first?.answer ?? ""
+                textAnswers[id] = value
+                viewModel.updateAnswer(for: id, answer: value ?? "")
             case .mcq:
-                // إن وُجدت إجابات سابقة متعددة مفصولة بفواصل (كمثال)
                 if let prev = q.answer?.first?.answer, !prev.isEmpty {
                     let set = Set(prev.split(separator: ",").map { $0.trimmingCharacters(in: .whitespaces) })
                     mcqAnswersMulti[id] = set
+                    viewModel.updateAnswer(for: id, answer: set.sorted().joined(separator: ","))
                 } else {
                     mcqAnswersMulti[id] = []
                 }
             case .trueFalse:
                 if let prev = q.answer?.first?.answer?.lowercased() {
-                    tfAnswers[id] = (prev == "true" || prev == "yes" || prev == "نعم")
-                } else { tfAnswers[id] = false }
-            default: break
+                    let boolVal = (prev == "true" || prev == "yes" || prev == "نعم")
+                    tfAnswers[id] = boolVal
+                    viewModel.updateAnswer(for: id, answer: boolVal ? "true" : "false")
+                } else {
+                    tfAnswers[id] = false
+                }
+            default:
+                break
             }
         }
     }
@@ -122,7 +177,7 @@ struct QuestionaireView: View {
             isSubmitting = false
         }
 
-        // Optional: validate required answers for text/mcq
+        // Validate required answers for text/mcq if needed
         if let questions = viewModel.questions {
             var missing = [Int]()
             for q in questions {
@@ -132,7 +187,6 @@ struct QuestionaireView: View {
                     let value = viewModel.userAnswers[id]?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
                     if value.isEmpty { missing.append(id) }
                 case .trueFalse:
-                    // optional, skip required check
                     break
                 default:
                     break
@@ -174,11 +228,11 @@ private struct QuestionBlock: View {
                 VStack(alignment: .trailing, spacing: 12) {
                     RadioRow(title: "yes_".localized, isOn: Binding(
                         get: { tfAnswer },
-                        set: { newVal in tfAnswer = true }
+                        set: { _ in tfAnswer = true }
                     ))
                     RadioRow(title: "no_".localized, isOn: Binding(
                         get: { !tfAnswer },
-                        set: { newVal in tfAnswer = false }
+                        set: { _ in tfAnswer = false }
                     ))
                 }
                 .padding(.top, 4)
@@ -213,18 +267,18 @@ private struct QuestionBlock: View {
             }
 
             // (اختياري) عرض إجابات سابقة
-            if let previous = question.answer, !previous.isEmpty {
-                Divider().padding(.vertical, 6)
-                VStack(alignment: .trailing, spacing: 4) {
-                    ForEach(previous.indices, id: \.self) { idx in
-                        let a = previous[idx]
-                        Text(a.answer ?? "-")
-                            .font(.regular(size: 14))
-                            .foregroundStyle(Color(.secondary))
-                            .frame(maxWidth: .infinity, alignment: .trailing)
-                    }
-                }
-            }
+//            if let previous = question.answer, !previous.isEmpty {
+//                Divider().padding(.vertical, 6)
+//                VStack(alignment: .trailing, spacing: 4) {
+//                    ForEach(previous.indices, id: \.self) { idx in
+//                        let a = previous[idx]
+//                        Text(a.answer ?? "-")
+//                            .font(.regular(size: 14))
+//                            .foregroundStyle(Color(.secondary))
+//                            .frame(maxWidth: .infinity, alignment: .trailing)
+//                    }
+//                }
+//            }
         }
     }
 }
@@ -276,20 +330,9 @@ private struct RadioRow: View {
                 .foregroundColor(.mainBlue)
 
             ZStack {
-                
                 Image( isOn ? .radiofill : .radio)
                     .resizable()
                     .frame(width: 17, height: 17)
-
-//                Circle()
-//                    .stroke(Color.mainBlue, lineWidth: 3)
-//                    .frame(width: 18, height: 18)
-
-//                if isOn {
-//                    Circle()
-//                        .fill(Color(.secondary)) // وردي
-//                        .frame(width: 10, height: 10)
-//                }
             }
         }
         .frame(maxWidth: .infinity, alignment: .trailing)

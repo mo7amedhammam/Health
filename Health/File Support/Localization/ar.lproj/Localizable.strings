@@ -324,6 +324,12 @@
 "payment_note3" = "لاستفسارات أكتر، تواصل مع خدمة العملاء مباشرة من خلال المنصة";
 
 //MARK:  edit profile
+"signup_email_title" = "البريد الالكتروني";
+"signup_email_placeholder" = "ادخل البريد الالكتروني";
+"signup_country_title" = "الدولة";
+"signup_country_placeholder" = "اختر الدولة";
+"signup_speciality_title" = "التخصص";
+"signup_speciality_placeholder" = "اختر التخصص";
 "save_" = "حفظ";
 
 //MARK: new tips

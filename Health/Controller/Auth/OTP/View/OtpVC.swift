@@ -626,7 +626,10 @@ struct OTPView: View {
         .localizeView()
         .showHud2(isShowing: $viewModel.isLoading)
         //        .showHud2(isShowing: .constant(true))
-        .errorAlert(isPresented: .constant(viewModel.errorMessage != nil), message: viewModel.errorMessage)
+        .errorAlert(isPresented: Binding(
+            get: { viewModel.errorMessage != nil },
+            set: { if !$0 { viewModel.errorMessage = nil } }
+        ), message: viewModel.errorMessage)
 
         NavigationLink( "", destination: destination, isActive: $isactive)
 

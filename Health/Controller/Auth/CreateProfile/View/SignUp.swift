@@ -718,7 +718,10 @@ struct SignUpView: View {
         //            isPasswordValid = newValue.count == 0 || newValue.count >= 6
         //        }
         .showHud(isShowing:  $isLoading)
-        .errorAlert(isPresented: .constant(viewModel.errorMessage != nil), message: viewModel.errorMessage)
+        .errorAlert(isPresented: Binding(
+            get: { viewModel.errorMessage != nil },
+            set: { if !$0 { viewModel.errorMessage = nil } }
+        ), message: viewModel.errorMessage)
 
 //        .alert(item: $viewModel.errorMessage) { msg in
 //            Alert(title: Text("_خطأ".localized), message: Text(msg.localized), dismissButton: .default(Text("ok".localized)))

@@ -32,7 +32,8 @@ struct SubcripedPackageItemM: Codable,Hashable {
         case sessionCount, attendedSessionCount, packageImage
         case doctorSpeciality,doctorNationality,doctorImage
         case canCancel,canRenew
-        case customerName,customerImage,customerID,remainingSessionCount
+        case customerName,customerImage,remainingSessionCount
+        case customerID = "customerId"
     }
 }
 

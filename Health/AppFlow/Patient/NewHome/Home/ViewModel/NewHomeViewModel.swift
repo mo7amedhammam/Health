@@ -59,7 +59,7 @@ final class NewHomeViewModel: ObservableObject {
     @Published private(set) var mostViewedPackages: [FeaturedPackageItemM]?
 
     // UI flags
-    @Published var isLoading: Bool = false
+    @Published var isLoading: Bool? = false
     @Published var isError: Bool = false
     @Published var errorMessage: String? = nil
 
@@ -81,7 +81,7 @@ extension NewHomeViewModel {
 
     // Unified loader to minimize UI invalidations
     func load() async {
-        guard !isLoading else { return }
+        guard isLoading == false else { return }
         isLoading = true
         isError = false
         errorMessage = nil
@@ -138,7 +138,9 @@ extension NewHomeViewModel {
 
         } catch {
             isError = true
-            errorMessage = (error as? LocalizedError)?.errorDescription ?? error.localizedDescription
+//            errorMessage = (error as? LocalizedError)?.errorDescription ?? error.localizedDescription
+            self.errorMessage = error.localizedDescription
+
         }
 
         isLoading = false
@@ -177,7 +179,9 @@ extension NewHomeViewModel {
             }
         } catch {
             isError = true
-            errorMessage = (error as? LocalizedError)?.errorDescription ?? error.localizedDescription
+//            errorMessage = (error as? LocalizedError)?.errorDescription ?? error.localizedDescription
+            self.errorMessage = error.localizedDescription
+
         }
     }
 
@@ -207,7 +211,9 @@ extension NewHomeViewModel {
             mostBookedPackages = oldMostBooked
 
             isError = true
-            errorMessage = (error as? LocalizedError)?.errorDescription ?? error.localizedDescription
+//            errorMessage = (error as? LocalizedError)?.errorDescription ?? error.localizedDescription
+            self.errorMessage = error.localizedDescription
+
         }
     }
 
@@ -221,7 +227,9 @@ extension NewHomeViewModel {
             self.upcomingSession = response
         } catch {
             isError = true
-            errorMessage = (error as? LocalizedError)?.errorDescription ?? error.localizedDescription
+//            errorMessage = (error as? LocalizedError)?.errorDescription ?? error.localizedDescription
+            self.errorMessage = error.localizedDescription
+
         }
     }
 
@@ -250,7 +258,8 @@ extension NewHomeViewModel {
         }
     } catch {
         isError = true
-        errorMessage = (error as? LocalizedError)?.errorDescription ?? error.localizedDescription
+//        errorMessage = (error as? LocalizedError)?.errorDescription ?? error.localizedDescription
+        self.errorMessage = error.localizedDescription
     }
 }
 
@@ -263,7 +272,8 @@ extension NewHomeViewModel {
             self.myMeasurements = response
         } catch {
             isError = true
-            errorMessage = (error as? LocalizedError)?.errorDescription ?? error.localizedDescription
+//            errorMessage = (error as? LocalizedError)?.errorDescription ?? error.localizedDescription
+            self.errorMessage = error.localizedDescription
         }
     }
 
@@ -292,7 +302,9 @@ extension NewHomeViewModel {
             }
         } catch {
             isError = true
-            errorMessage = (error as? LocalizedError)?.errorDescription ?? error.localizedDescription
+//            errorMessage = (error as? LocalizedError)?.errorDescription ?? error.localizedDescription
+            self.errorMessage = error.localizedDescription
+
         }
     }
 }
@@ -325,7 +337,7 @@ private extension NewHomeViewModel {
 // MARK: - Pagination helpers (optional)
 extension NewHomeViewModel {
     func loadMoreCategoriesIfNeeded() async {
-        guard !isLoading,
+        guard isLoading == false,
               let currentCount = homeCategories?.items?.count,
               let totalCount = homeCategories?.totalCount,
               currentCount < totalCount else { return }
@@ -335,7 +347,7 @@ extension NewHomeViewModel {
     }
 
     func loadMoreFeaturedPackagesIfNeeded() async {
-        guard !isLoading,
+        guard isLoading == false,
               let currentCount = featuredPackages?.items?.count,
               let totalCount = featuredPackages?.totalCount,
               currentCount < totalCount else { return }

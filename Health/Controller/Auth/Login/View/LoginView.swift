@@ -198,7 +198,10 @@ struct LoginView: View {
             }
             .localizeView()
             .showHud(isShowing:  $isLoading)
-            .errorAlert(isPresented: .constant(errorMessage != nil), message: errorMessage)
+            .errorAlert(isPresented: Binding(
+                get: { errorMessage != nil },
+                set: { if !$0 { errorMessage = nil } }
+            ), message: errorMessage)
             
 //                    .alert(item: $errorMessage) { msg in
 //                        Alert(title: Text("_خطأ".localized), message: Text(msg.localized), dismissButton: .default(Text("OK_".localized)))

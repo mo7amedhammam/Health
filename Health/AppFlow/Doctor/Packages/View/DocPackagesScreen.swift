@@ -9,6 +9,7 @@
 import SwiftUI
 
 struct DocPackagesScreen: View {
+    @StateObject var router: NavigationRouter = NavigationRouter()
     @StateObject private var viewModel = DocPackagesViewModel.shared
     
     @State private var packages: [String] = ["okkkkkk","done"] // Empty initially
@@ -95,9 +96,12 @@ struct DocPackagesScreen: View {
             
         }
         .localizeView()
-        //            .withNavigation(router: router)
-        //            .showHud(isShowing:  $viewModel.isLoading)
-        //            .errorAlert(isPresented: .constant(viewModel.errorMessage != nil), message: viewModel.errorMessage)
+                    .withNavigation(router: router)
+                    .showHud(isShowing:  $viewModel.isLoading)
+                    .errorAlert(isPresented: Binding(
+                        get: { viewModel.errorMessage != nil },
+                        set: { if !$0 { viewModel.errorMessage = nil } }
+                    ), message: viewModel.errorMessage)
         
         .padding(.bottom,88)
         .sheet(isPresented: $showFilter) {

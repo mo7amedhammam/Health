@@ -56,7 +56,10 @@ struct ActiveCustPackFiles : View {
             }
             .localizeView()
             .showHud(isShowing:  $myfilesvm.isLoading)
-            .errorAlert(isPresented: .constant(myfilesvm.errorMessage != nil), message: myfilesvm.errorMessage)
+            .errorAlert(isPresented: Binding(
+                get: { myfilesvm.errorMessage != nil },
+                set: { if !$0 { myfilesvm.errorMessage = nil } }
+            ), message: myfilesvm.errorMessage)
 
             .customSheet(isPresented: $showUploadSheet,height: 440){
 //            .sheet(isPresented: $showUploadSheet) {

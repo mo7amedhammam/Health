@@ -9,34 +9,59 @@ import SwiftUI
 
 struct CustomerAlergyView: View {
     @Environment(\.dismiss) var dismiss
-    @State var allergies: [CustomerAllergyListM] = mockAllergies
-
+    
     var customerID : Int
+    @StateObject private var viewModel = CustomerAlergiesViewModel.shared
 
     var body: some View {
         VStack {
             TitleBar(title: "laalergy_", hasbackBtn: true)
             ScrollView(showsIndicators: false) {
-                          VStack(alignment: .trailing, spacing: 32) {
-                              ForEach(allergies, id: \.allergyCategoryID) { category in
-                                  AllergyCategoryView(category: category)
-                              }
-                          }
-                          .padding(.horizontal, 24)
-                          .padding(.vertical, 16)
-                      }
+                VStack(alignment: .trailing, spacing: 32) {
+                    // Use data from the view model, defaulting to empty array
+                    ForEach(viewModel.allergies ?? [], id: \.allergyCategoryID) { category in
+                        AllergyCategoryView(category: category)
+                    }
+                    
+                    // Empty state
+                    if (viewModel.allergies?.isEmpty ?? true) && !(viewModel.isLoading ?? false) && (viewModel.errorMessage == nil) {
+                        Text("no_data_".localized)
+                            .font(.medium(size: 16))
+                            .foregroundColor(.mainBlue)
+                            .frame(maxWidth: .infinity, alignment: .center)
+                            .padding(.vertical, 24)
+                    }
+                    
+                    // Error state
+                    if let error = viewModel.errorMessage {
+                        Text(error)
+                            .font(.medium(size: 14))
+                            .foregroundColor(.red)
+                            .multilineTextAlignment(.center)
+                            .frame(maxWidth: .infinity, alignment: .center)
+                            .padding(.vertical, 16)
+                    }
+                }
+                .padding(.horizontal, 24)
+                .padding(.vertical, 16)
+            }
             Spacer()
             
             CustomButton(title: "back_",isdisabled: false,backgroundView:AnyView(Color.clear.horizontalGradientBackground())){
                 dismiss()
             }
-
         }
         .localizeView()
-        //            .withNavigation(router: router)
-//            .showHud(isShowing:  $viewModel.isLoading)
-//            .errorAlert(isPresented: .constant(viewModel.errorMessage != nil), message: viewModel.errorMessage)
-
+        .showHud(isShowing: $viewModel.isLoading )
+        .errorAlert(isPresented:Binding(
+            get: { viewModel.errorMessage != nil },
+            set: { if !$0 { viewModel.errorMessage = nil } }
+        ), message: viewModel.errorMessage)
+        .task {
+            // Bind the package/customer id and fetch
+            viewModel.CustomerPackageId = customerID
+            await viewModel.getCustomerAllergies()
+        }
     }
 }
 
@@ -69,3 +94,4 @@ struct AllergyCategoryView: View {
         .frame(maxWidth: .infinity, alignment: .trailing)
     }
 }
+

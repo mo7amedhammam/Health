@@ -273,7 +273,10 @@ struct EditProfileView: View {
         }
         
         .showHud(isShowing:  $viewModel.isLoading)
-        .errorAlert(isPresented: .constant(viewModel.errorMessage != nil), message: viewModel.errorMessage)
+        .errorAlert(isPresented: Binding(
+            get: { viewModel.errorMessage != nil },
+            set: { if !$0 { viewModel.errorMessage = nil } }
+        ), message: viewModel.errorMessage)
         .sheet(isPresented: $showImagePicker) {
             ImagePickerView(selectedImage: $viewModel.Image, sourceType: imagePickerSource)
         }
