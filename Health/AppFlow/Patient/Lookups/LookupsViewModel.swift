@@ -19,7 +19,7 @@ class LookupsViewModel : ObservableObject {
     @Published var genders : [GenderM]? = nil
     @Published var languages : [LanguageM]? = nil
     @Published var fileTypes : [FileTypeM]? = nil
-    @Published var specialities : [GenderM]? = nil
+    @Published var specialities : [SpecialityM]? = nil
 
 //    @Published var isLoading:Bool? = false
 //    @Published var errorMessage: String? = nil
@@ -163,7 +163,7 @@ extension LookupsViewModel{
 //            self.errorMessage = nil // Clear previous errors
             let response = try await networkService.request(
                 target,
-                responseType: [GenderM].self
+                responseType: [SpecialityM].self
             )
             Task{
                 await MainActor.run{

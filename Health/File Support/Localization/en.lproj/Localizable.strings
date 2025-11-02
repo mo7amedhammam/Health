@@ -330,6 +330,8 @@
 "signup_country_placeholder" = "select country";
 "signup_speciality_title" = "speciality";
 "signup_speciality_placeholder" = "select speciality";
+"Bio_title" = "Bio";
+"Bio_placeholder" = "Type Your Bio";
 "save_" = "save";
 
 //MARK: new tips
@@ -453,3 +455,7 @@
 "Type_Answer_here_" = "Type Answer Here";
 "laalergy_" = "allergies";
 "back_" = "Back";
+//--- Questions-----
+"previous_answers_" = "previous answers";
+"new_answer_" = "new answer";
+"By._" = "By. ";

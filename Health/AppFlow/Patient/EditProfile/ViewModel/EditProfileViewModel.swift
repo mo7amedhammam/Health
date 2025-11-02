@@ -44,7 +44,7 @@ class EditProfileViewModel : ObservableObject {
 
     @Published var Gender: GenderM? = nil
     @Published var Country: AppCountryM? = nil
-    @Published var Speciality: GenderM? = nil
+    @Published var Speciality: SpecialityM? = nil
 
     @Published var Mobile: String = ""
 
@@ -255,7 +255,6 @@ extension EditProfileViewModel{
         Mobile = profile.mobile ?? ""
         // Country not fully reconstructable without lookup; keep as-is.
         Gender = GenderM(id: profile.genderID, title: profile.genderTitle)
-
         // Clear previous validation errors when filling from server
         nameError = nil
         mobileError = nil
@@ -267,15 +266,17 @@ extension EditProfileViewModel{
         imageURL = profile.imagePath ?? ""
         Name = profile.name ?? ""
         Mobile = profile.mobile ?? ""
+        Email = profile.email ?? ""
         // Country not fully reconstructable without lookup; keep as-is.
         Gender = GenderM(id: profile.genderId, title: profile.genderTitle)
         Country = AppCountryM(id: profile.countryID, name: profile.countryTitle)
-        Speciality = GenderM(id: profile.specialityID, title: profile.speciality)
+        Speciality = SpecialityM(id: profile.specialityID, name: profile.speciality)
 
         // Clear previous validation errors when filling from server
         nameError = nil
         mobileError = nil
         genderError = nil
         countryError = nil
+        
     }
 }

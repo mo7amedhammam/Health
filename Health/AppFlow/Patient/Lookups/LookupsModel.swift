@@ -19,6 +19,12 @@ struct GenderM : Codable,Hashable {
     var title : String?
 }
 
+// MARK: - GendersM
+struct SpecialityM : Codable,Hashable {
+    var id: Int?
+    var name : String?
+}
+
 // MARK: - LanguageM
 struct LanguageM : Codable,Hashable,Equatable {
     var id: Int?

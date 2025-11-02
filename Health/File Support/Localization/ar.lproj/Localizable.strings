@@ -330,6 +330,8 @@
 "signup_country_placeholder" = "اختر الدولة";
 "signup_speciality_title" = "التخصص";
 "signup_speciality_placeholder" = "اختر التخصص";
+"Bio_title" = "وصف";
+"Bio_placeholder" = "اكتب الوصف";
 "save_" = "حفظ";
 
 //MARK: new tips
@@ -450,6 +452,9 @@
 "yes_" = "نعم";
 "no_" = "لا";
 "Type_Answer_here_" = "اكتب الإجابة هنا";
-
 "laalergy_" = "الحساسية";
 "back_" = "عودة";
+//--- Questions-----
+"previous_answers_" = "الإجابات السابقة";
+"new_answer_" = "إجابة جديدة";
+"By._" = "بواسطة.";

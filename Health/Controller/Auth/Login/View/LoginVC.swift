@@ -294,6 +294,8 @@ struct CustomInputFieldUI: View {
     var showToggle: Bool = false
     var isValid: Bool = true
     var isDisabled: Bool? = false
+    var isMultilineText:Bool? = false
+    var isIconOnTop:Bool? = false
 
     /// Optional trailing view (e.g. icon, icon+arrow)
     var trailingView: AnyView? = nil
@@ -305,10 +307,16 @@ struct CustomInputFieldUI: View {
         let textColor = isValid ? Color(.mainBlue) : Color(.wrong)
         
         VStack(spacing: 2) {
-            Text(title.localized)
-                .font(.semiBold(size: 20))
-                .foregroundColor(textColor)
-                .frame(maxWidth: .infinity, alignment: .leading)
+            HStack{
+                Text(title.localized)
+                    .font(.semiBold(size: 20))
+                    .foregroundColor(textColor)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+             
+                if isIconOnTop == true, let view = trailingView {
+                    view
+                }
+            }
             
             HStack(spacing: 8) {
                 TextFieldWrapper
@@ -317,7 +325,7 @@ struct CustomInputFieldUI: View {
                     .disableAutocorrection(true)
                     .disabled(isDisabled ?? false)
 
-                if let view = trailingView {
+                if isIconOnTop == false, let view = trailingView {
                     view
                 }
                 
@@ -341,16 +349,34 @@ struct CustomInputFieldUI: View {
     
     @ViewBuilder
     private var TextFieldWrapper: some View {
-        if isSecure && !isPasswordVisible {
-            SecureField(placeholder.localized, text: $text)
-                .padding(.leading, 4)
-                .font(.medium(size: 16))
-                .foregroundColor(isValid ? Color(.mainBlue) : Color(.wrong))
-        } else {
-            TextField(placeholder.localized, text: $text)
-                .padding(.leading, 4)
-                .font(.medium(size: 16))
-                .foregroundColor(isValid ? Color(.mainBlue) : Color(.wrong))
+        if isMultilineText == false{
+            if isSecure && !isPasswordVisible {
+                SecureField(placeholder.localized, text: $text)
+                    .padding(.leading, 4)
+                    .font(.medium(size: 16))
+                    .foregroundColor(isValid ? Color(.mainBlue) : Color(.wrong))
+            } else {
+                TextField(placeholder.localized, text: $text)
+                    .padding(.leading, 4)
+                    .font(.medium(size: 16))
+                    .foregroundColor(isValid ? Color(.mainBlue) : Color(.wrong))
+            }
+        }else{
+            if #available(iOS 16.0, *) {
+                TextField(placeholder.localized, text: $text, axis: .vertical)
+                    .font(.regular(size: 16))
+                    .multilineTextAlignment(.leading)
+//                    .foregroundColor(Color(.main))
+                    .foregroundColor(isValid ? Color(.mainBlue) : Color(.wrong))
+                    .tint(.mainBlue)
+                    .frame(minHeight: 60)
+            } else {
+                MultilineTextField(placeholder.localized, text: $text, onCommit: {})
+                    .font(.regular(size: 16))
+                    .frame(minHeight: 60)
+//                    .background(Color(.messageSenderBg).cornerRadius(7))
+                    .foregroundColor(isValid ? Color(.mainBlue) : Color(.wrong))
+            }
         }
 
     }

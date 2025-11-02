@@ -17,7 +17,7 @@ struct DocEditProfileView: View {
     @State private var email: String = ""
     @State private var selectedGender:GenderM? = nil
     @State private var selectedCountry:AppCountryM? = nil
-    @State private var selectedSpeciality:GenderM? = nil
+    @State private var selectedSpeciality:SpecialityM? = nil
 
     // Image selection
 //    @State private var selectedImage: UIImage? = nil
@@ -48,7 +48,7 @@ struct DocEditProfileView: View {
     }
     private var isSpecialityValid: Bool{
         //        selectedGender != nil
-        selectedSpeciality == nil || selectedSpeciality?.title?.count ?? 0 > 0
+        selectedSpeciality == nil || selectedSpeciality?.name?.count ?? 0 > 0
         
     }
     
@@ -65,35 +65,7 @@ struct DocEditProfileView: View {
             
             // MARK: - Profile Image
             ScrollView{
-
             VStack {
-                //                ZStack(alignment: .bottomTrailing) {
-                //                    if let image = image {
-                //                        Image(uiImage: image)
-                //                            .resizable()
-                //                            .scaledToFill()
-                //                            .frame(width: 100, height: 100)
-                //                            .clipShape(Circle())
-                //                    } else {
-                //                        Image("user")
-                ////                        Image("profile_placeholder")
-                //                            .resizable()
-                //                            .scaledToFill()
-                //                            .frame(width: 100, height: 100)
-                //                            .clipShape(Circle())
-                //                    }
-                //
-                //                    Button {
-                //                        showImagePicker.toggle()
-                //                    } label: {
-                //                        Image(systemName: "pencil.circle.fill")
-                //                            .font(.system(size: 24))
-                //                            .foregroundColor(.pink)
-                //                            .background(Color.white.clipShape(Circle()))
-                //                    }
-                //                    .offset(x: 5, y: 5)
-                //                }
-                
                 // Profile Image with Border and Edit Button
                 ZStack(alignment: .bottomLeading) {
                     Group {
@@ -124,11 +96,8 @@ struct DocEditProfileView: View {
                             .padding(-5)
                     )
                     
-                    
                     // Edit Button
                     Button(action: {
-                        // Edit profile action
-                        //                                    pushTo(destination: EditProfileView())
                         showImagePicker = true
                     }) {
                         Image("editprofile")
@@ -144,13 +113,27 @@ struct DocEditProfileView: View {
                     .font(.bold(size: 24))
                     .foregroundStyle(Color(.main))
                     .padding(.bottom,50)
-                
-                
             }
             .padding(.top)
             
             // MARK: - Input Fields
             VStack(spacing: 25) {
+                if Helper.shared.getSelectedUserType() == .Doctor {
+                    CustomInputFieldUI(
+                        title: "Bio_title",
+                        placeholder: "Bio_placeholder",
+                        text: $bio,
+                        isValid: true,
+                        isMultilineText: true,
+                        isIconOnTop: true,
+                        trailingView: AnyView(
+                            Image(.messagecentrepopup)
+                                .resizable()
+                                .frame(width: 18,height: 18)
+                        )
+                    )
+                }
+                
                 CustomInputFieldUI(
                     title: "signup_name_title",
                     placeholder: "signup_name_placeholder",
@@ -267,13 +250,13 @@ struct DocEditProfileView: View {
                     CustomInputFieldUI(
                         title: "signup_speciality_title",
                         placeholder: "signup_speciality_placeholder",
-                        text: .constant(selectedSpeciality?.title ?? ""),
+                        text: .constant(selectedSpeciality?.name ?? ""),
                         isValid: isSpecialityValid,
                         isDisabled:true,
                         trailingView: AnyView(
                             Menu {
                                 ForEach(lookupsVM.specialities ?? [],id: \.self) { speciality in
-                                    Button(speciality.title ?? "", action: { selectedSpeciality = speciality })
+                                    Button(speciality.name ?? "", action: { selectedSpeciality = speciality })
                                 }
                             } label: {
                                 HStack(spacing: 4) {
@@ -315,7 +298,6 @@ struct DocEditProfileView: View {
         }
 //        .padding()
         .localizeView()
-
         .onAppear() {
             Task{
                 async let countries:() = await lookupsVM.getAppCountries()
@@ -329,7 +311,6 @@ struct DocEditProfileView: View {
                 phoneNumber = viewModel.Mobile
                 
 //                image =  viewModel.Image
-
 //                selectedGender = viewModel.Gender
 //                selectedCountry = viewModel.Country
                 
