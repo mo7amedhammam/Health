@@ -59,10 +59,13 @@ class EditProfileViewModel : ObservableObject {
     @Published var errorMessage: String? = nil
 
     // Per-field validation errors
-    @Published var nameError: String? = nil
-    @Published var mobileError: String? = nil
-    @Published var genderError: String? = nil
-    @Published var countryError: String? = nil
+//    @Published var BioError: String? = nil
+//    @Published var nameError: String? = nil
+//    @Published var emailError: String? = nil
+//    @Published var mobileError: String? = nil
+//    @Published var genderError: String? = nil
+//    @Published var countryError: String? = nil
+//    @Published var specialityError: String? = nil
 
     var isDoctor: Bool {
         return Helper.shared.getSelectedUserType() == .Doctor
@@ -70,7 +73,7 @@ class EditProfileViewModel : ObservableObject {
     // Computed: enable/disable Save button
     var canSubmit: Bool {
         // Run validation without setting error strings (dry run)
-        return validateInputs(applyErrors: false)
+        return validateInputs()
     }
     
     // Init with DI
@@ -87,11 +90,11 @@ class EditProfileViewModel : ObservableObject {
         profile = nil
         DocProfile = nil
         isLoading = false
-        errorMessage = nil
-        nameError = nil
-        mobileError = nil
-        genderError = nil
-        countryError = nil
+//        errorMessage = nil
+//        nameError = nil
+//        mobileError = nil
+//        genderError = nil
+//        countryError = nil
         Speciality = nil
         if !Helper.shared.CheckIfLoggedIn(){
             imageURL = nil
@@ -102,44 +105,86 @@ class EditProfileViewModel : ObservableObject {
     // MARK: - Validation
 
     // Mirrors SignUpView mobile rule: 11 digits, starts with "01"
-    private func isValidMobile(_ value: String) -> Bool {
+     func isValidMobile(_ value: String) -> Bool {
         let digitsOnly = value.filter { $0.isNumber }
         return digitsOnly.count == 11 && digitsOnly.hasPrefix("01")
     }
+ 
+    // Mirrors SignUpView mobile rule: 11 digits, starts with "01"
+     func isValidEmail(_ value: String) -> Bool {
+        let trimmed = value.trimmingCharacters(in: .whitespacesAndNewlines)
+
+        // More forgiving and reliable email pattern
+        let emailRegex = "^[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}$"
+
+        let predicate = NSPredicate(format: "SELF MATCHES %@", emailRegex)
+        return predicate.evaluate(with: trimmed)
+    }
 
     // Validate all inputs. If applyErrors is true, set per-field error strings for UI.
-    @discardableResult
-    private func validateInputs(applyErrors: Bool = true) -> Bool {
+//    @discardableResult
+    
+    private func validateInputs() -> Bool {
         var valid = true
-
+        
         // Name required: min 2 characters after trimming
         let trimmedName = Name.trimmingCharacters(in: .whitespacesAndNewlines)
         let nameIsValid = trimmedName.count >= 2
-        if applyErrors { nameError = nameIsValid ? nil : "Please enter a valid name (min 2 characters)" }
+        guard nameIsValid else {
+            errorMessage = nameIsValid ? nil : "Please_enter_a_valid_name_(min_2_characters)".localized
+            return false }
         valid = valid && nameIsValid
 
         // Mobile required: 11 digits starting with 01
         let mobileIsValid = isValidMobile(Mobile)
-        if applyErrors { mobileError = mobileIsValid ? nil : "Please enter a valid mobile number (11 digits starting with 01)" }
+        guard mobileIsValid else {
+            errorMessage = mobileIsValid ? nil : "Please_enter_a_valid_mobile_number_(11_digits_starting_with_01)".localized
+            return false
+        }
         valid = valid && mobileIsValid
 
         // Gender required
         let genderIsValid = (Gender?.id != nil)
-        if applyErrors { genderError = genderIsValid ? nil : "Please select gender" }
-        valid = valid && genderIsValid
-
-        // Country required
-        let countryIsValid = (Country?.id != nil)
-        if applyErrors { countryError = countryIsValid ? nil : "Please select country" }
-        valid = valid && countryIsValid
-
-        // Image optional — no validation
-        if applyErrors {
-            // If any field invalid, also surface a top-level message (optional)
-            errorMessage = valid ? nil : "Please complete all required fields correctly."
+        guard genderIsValid else{
+        errorMessage = genderIsValid ? nil : "Please_select_gender".localized
+            return false
         }
+        valid = valid && genderIsValid
+        
+        if isDoctor{
+            // email required
+            let emailIsValid = isValidEmail(Email)
+            guard emailIsValid else {
+                errorMessage = emailIsValid ? nil : "Please_enter_a_valid_email".localized
+                return false
+            }
+            valid = valid && emailIsValid
+
+            // Country required
+            let countryIsValid = (Country?.id != nil)
+            guard countryIsValid else{
+                errorMessage = countryIsValid ? nil : "Please_select_country".localized
+                return false
+            }
+            valid = valid && countryIsValid
+            
+            // speciality required
+            let SpecialityIsValid = (Speciality?.id != nil)
+            guard SpecialityIsValid else{
+                errorMessage = SpecialityIsValid ? nil : "Please_select_speciality".localized
+                return false
+            }
+            valid = valid && SpecialityIsValid
+        }
+    
+        // Image optional — no validation
+//        if applyErrors {
+            // If any field invalid, also surface a top-level message (optional)
+//            errorMessage = valid ? nil : errorMessage
+//        }
 
         return valid
+        
     }
 }
 
@@ -149,7 +194,7 @@ extension EditProfileViewModel{
     @MainActor
     func updateProfile() async {
         // Validate required data first
-        guard validateInputs(applyErrors: true) else { return }
+        guard validateInputs() else { return }
 
         isLoading = true
         defer { isLoading = false }
@@ -157,7 +202,7 @@ extension EditProfileViewModel{
         guard let appCountryId = Country?.id,
               let genderId = Gender?.id else {
             // Defensive: should be covered by validation above
-            errorMessage = "Please select country and gender."
+//            errorMessage = "make_Sure_you_selected_country_and_gender.".localized
             return
         }
         var parametersarr : [String : Any] =  [
@@ -168,20 +213,27 @@ extension EditProfileViewModel{
         ]
         
         if isDoctor{
-            if Email.count > 0{
-            parametersarr["email"] = Email
-        }else{
-            errorMessage = "Please type email."
-            return
-        }
+//            if Bio.count > 0{
+            parametersarr["bio"] = Bio
+//        }
             
-            if let Speciality = Speciality{
+//            if Email.count > 0{
+            parametersarr["email"] = Email
+//        }
+//            else{
+//            errorMessage = "Please_type_email.".localized
+//            return
+//        }
+            
+        if let Speciality = Speciality{
             parametersarr["SpecialityId"] = Speciality.id
-        }else{
-            errorMessage = "Please select speciality."
-            return
         }
+//            else{
+//            errorMessage = "Please_select_speciality.".localized
+//            return
+//        }
         }
+        
         var parts: [MultipartFormDataPart] = parametersarr.map { key, value in
             MultipartFormDataPart(name: key, value: "\(value)")
         }
@@ -232,7 +284,6 @@ extension EditProfileViewModel{
                 fillData(from: data)
             }
             
-                
             case .Doctor:
                 let response = try await networkService.request(
                     target,
@@ -256,14 +307,16 @@ extension EditProfileViewModel{
         // Country not fully reconstructable without lookup; keep as-is.
         Gender = GenderM(id: profile.genderID, title: profile.genderTitle)
         // Clear previous validation errors when filling from server
-        nameError = nil
-        mobileError = nil
-        genderError = nil
-        countryError = nil
+        errorMessage = nil
+//        nameError = nil
+//        mobileError = nil
+//        genderError = nil
+//        countryError = nil
     }
     func fillData(from profile: DocProfileM) {
         Image = nil
         imageURL = profile.imagePath ?? ""
+        Bio = profile.bio ?? ""
         Name = profile.name ?? ""
         Mobile = profile.mobile ?? ""
         Email = profile.email ?? ""
@@ -273,10 +326,13 @@ extension EditProfileViewModel{
         Speciality = SpecialityM(id: profile.specialityID, name: profile.speciality)
 
         // Clear previous validation errors when filling from server
-        nameError = nil
-        mobileError = nil
-        genderError = nil
-        countryError = nil
-        
+//        BioError = nil
+        errorMessage = nil
+//        nameError = nil
+//        emailError = nil
+//        mobileError = nil
+//        genderError = nil
+//        countryError = nil
+//        specialityError = nil
     }
 }

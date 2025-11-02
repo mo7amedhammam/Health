@@ -319,11 +319,19 @@ struct CustomInputFieldUI: View {
             }
             
             HStack(spacing: 8) {
-                TextFieldWrapper
-                    .frame(height: 32)
-                    .textInputAutocapitalization(.never)
-                    .disableAutocorrection(true)
-                    .disabled(isDisabled ?? false)
+                if isMultilineText == false{
+                    TextFieldWrapper
+                        .frame(height: 32)
+                        .textInputAutocapitalization(.never)
+                        .disableAutocorrection(true)
+                        .disabled(isDisabled ?? false)
+                }else{
+                    MultiLineTextFieldWrapper
+                        .textInputAutocapitalization(.never)
+                        .disableAutocorrection(true)
+                        .disabled(isDisabled ?? false)
+                        .lineLimit(4)
+                }
 
                 if isIconOnTop == false, let view = trailingView {
                     view
@@ -349,7 +357,6 @@ struct CustomInputFieldUI: View {
     
     @ViewBuilder
     private var TextFieldWrapper: some View {
-        if isMultilineText == false{
             if isSecure && !isPasswordVisible {
                 SecureField(placeholder.localized, text: $text)
                     .padding(.leading, 4)
@@ -361,7 +368,11 @@ struct CustomInputFieldUI: View {
                     .font(.medium(size: 16))
                     .foregroundColor(isValid ? Color(.mainBlue) : Color(.wrong))
             }
-        }else{
+
+
+    }
+    @ViewBuilder
+    private var MultiLineTextFieldWrapper: some View {
             if #available(iOS 16.0, *) {
                 TextField(placeholder.localized, text: $text, axis: .vertical)
                     .font(.regular(size: 16))
@@ -377,7 +388,7 @@ struct CustomInputFieldUI: View {
 //                    .background(Color(.messageSenderBg).cornerRadius(7))
                     .foregroundColor(isValid ? Color(.mainBlue) : Color(.wrong))
             }
-        }
+        
 
     }
 }

@@ -332,6 +332,13 @@
 "signup_speciality_placeholder" = "اختر التخصص";
 "Bio_title" = "وصف";
 "Bio_placeholder" = "اكتب الوصف";
+"Please_enter_a_valid_name_(min_2_characters)" = "يرجى إدخال اسم صالح (أكثر من حرفين)";
+"Please_enter_a_valid_mobile_number_(11_digits_starting_with_01)" = "يرجى إدخال رقم هاتف محمول صالح (11 رقما يبدأ ب 01)";
+"Please_enter_a_valid_email" = "يرجى إدخال بريد إلكتروني صالح";
+"Please_select_gender" = "يرجى تحديد الجنس";
+"Please_select_country" = "يرجى تحديد البلد";
+"Please_select_speciality" = "يرجى اختيار التخصص";
+
 "save_" = "حفظ";
 
 //MARK: new tips

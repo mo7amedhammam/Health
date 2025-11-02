@@ -52,38 +52,10 @@ struct EditProfileView: View {
             ScrollView{
 
             VStack {
-                //                ZStack(alignment: .bottomTrailing) {
-                //                    if let image = image {
-                //                        Image(uiImage: image)
-                //                            .resizable()
-                //                            .scaledToFill()
-                //                            .frame(width: 100, height: 100)
-                //                            .clipShape(Circle())
-                //                    } else {
-                //                        Image("user")
-                ////                        Image("profile_placeholder")
-                //                            .resizable()
-                //                            .scaledToFill()
-                //                            .frame(width: 100, height: 100)
-                //                            .clipShape(Circle())
-                //                    }
-                //
-                //                    Button {
-                //                        showImagePicker.toggle()
-                //                    } label: {
-                //                        Image(systemName: "pencil.circle.fill")
-                //                            .font(.system(size: 24))
-                //                            .foregroundColor(.pink)
-                //                            .background(Color.white.clipShape(Circle()))
-                //                    }
-                //                    .offset(x: 5, y: 5)
-                //                }
                 
                 // Profile Image with Border and Edit Button
                 ZStack(alignment: .bottomLeading) {
                     Group {
-                        
-                        
                         if let image = viewModel.Image {
                             Image(uiImage: image)
                                 .resizable()
@@ -114,8 +86,6 @@ struct EditProfileView: View {
                     
                     // Edit Button
                     Button(action: {
-                        // Edit profile action
-                        //                                    pushTo(destination: EditProfileView())
                         showImagePicker = true
                     }) {
                         Image("editprofile")

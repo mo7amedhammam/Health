@@ -33,9 +33,12 @@ struct DocEditProfileView: View {
     private var isNameValid: Bool{
         fullName.count == 0 || fullName.count > 3
     }
-    private var isEmailValid: Bool{
-        email.count == 0 || email.count > 3
-    }
+    @State var isEmailValid: Bool = true
+//    {
+////        email.count == 0 || email.count > 3
+//        viewModel.isValidEmail(email)
+////      return true
+//    }
     private var isGenderValid: Bool{
         //        selectedGender != nil
         selectedGender == nil || selectedGender?.title?.count ?? 0 > 0
@@ -118,7 +121,7 @@ struct DocEditProfileView: View {
             
             // MARK: - Input Fields
             VStack(spacing: 25) {
-                if Helper.shared.getSelectedUserType() == .Doctor {
+//                if Helper.shared.getSelectedUserType() == .Doctor {
                     CustomInputFieldUI(
                         title: "Bio_title",
                         placeholder: "Bio_placeholder",
@@ -132,7 +135,7 @@ struct DocEditProfileView: View {
                                 .frame(width: 18,height: 18)
                         )
                     )
-                }
+//                }
                 
                 CustomInputFieldUI(
                     title: "signup_name_title",
@@ -182,7 +185,7 @@ struct DocEditProfileView: View {
                 )
                 .keyboardType(.asciiCapableNumberPad)
                 
-                if Helper.shared.getSelectedUserType() == .Doctor{
+//                if Helper.shared.getSelectedUserType() == .Doctor{
                     CustomInputFieldUI(
                         title: "signup_email_title",
                         placeholder: "signup_email_placeholder",
@@ -194,7 +197,7 @@ struct DocEditProfileView: View {
                                 .frame(width: 17,height: 20)
                         )
                     )
-                }
+//                }
                 
                 CustomInputFieldUI(
                     title: "signup_gender_title",
@@ -220,7 +223,7 @@ struct DocEditProfileView: View {
                     )
                 )
                 
-                if Helper.shared.getSelectedUserType() == .Doctor{
+//                if Helper.shared.getSelectedUserType() == .Doctor{
                     CustomInputFieldUI(
                         title: "signup_country_title",
                         placeholder: "signup_country_placeholder",
@@ -244,9 +247,9 @@ struct DocEditProfileView: View {
                             }
                         )
                     )
-                }
+//                }
                 
-                if Helper.shared.getSelectedUserType() == .Doctor{
+//                if Helper.shared.getSelectedUserType() == .Doctor{
                     CustomInputFieldUI(
                         title: "signup_speciality_title",
                         placeholder: "signup_speciality_placeholder",
@@ -270,7 +273,7 @@ struct DocEditProfileView: View {
                             }
                         )
                     )
-                }
+//                }
                 
             }
             .padding(.horizontal)
@@ -290,6 +293,8 @@ struct DocEditProfileView: View {
                     viewModel.Country = selectedCountry
                     viewModel.Speciality = selectedSpeciality
 
+//                    if viewModel.isDoctor{
+//                    }
 //                    viewModel.Image = image
                   await viewModel.updateProfile()
                 }
@@ -307,8 +312,10 @@ struct DocEditProfileView: View {
 
                 _ = await (countries,genders,specialities,profil)
                 
-                  fullName = viewModel.Name
+                bio = viewModel.Bio
+                fullName = viewModel.Name
                 phoneNumber = viewModel.Mobile
+                email = viewModel.Email
                 
 //                image =  viewModel.Image
 //                selectedGender = viewModel.Gender
@@ -321,7 +328,6 @@ struct DocEditProfileView: View {
                     selectedGender = genders.first(where: { $0.id == viewModel.DocProfile?.genderId ?? 0 }) ?? genders.first
                 }
                 if let specialities = lookupsVM.specialities {
-                    print("specialities:/n",specialities)
                     selectedSpeciality = specialities.first(where: { $0.id == viewModel.DocProfile?.specialityID ?? 0 }) ?? specialities.first
                 }
             }
@@ -342,12 +348,15 @@ struct DocEditProfileView: View {
             // Validate
             isPhoneValid = newValue.count == 0 || (phoneNumber.count == 11 && phoneNumber.starts(with: "01"))
         }
-        
+        .onChange(of: email) { newValue in
+            isEmailValid = viewModel.isValidEmail(newValue)
+        }
         .showHud(isShowing:  $viewModel.isLoading)
         .errorAlert(isPresented: Binding(
             get: { viewModel.errorMessage != nil },
             set: { if !$0 { viewModel.errorMessage = nil } }
         ), message: viewModel.errorMessage)
+        
         .sheet(isPresented: $showImagePicker) {
             ImagePickerView(selectedImage: $viewModel.Image , sourceType: imagePickerSource)
         }

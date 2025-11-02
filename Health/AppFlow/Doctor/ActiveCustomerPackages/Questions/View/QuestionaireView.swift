@@ -269,7 +269,8 @@ private struct QuestionTypeBlock: View {
                     ForEach(previousAnswers.indices, id: \.self) { idx in
                         let a = previousAnswers[idx]
                         VStack(alignment: .trailing, spacing: 2) {
-                            Text(a.answer ?? "-")
+                            // Map True/False answers to localized Yes/No when this is a TF question
+                            Text(formattedPreviousAnswer(for: a))
                                 .font(.regular(size: 16))
                                 .foregroundColor(.black)
                                 .frame(maxWidth: .infinity, alignment: .leading)
@@ -349,6 +350,25 @@ private struct QuestionTypeBlock: View {
                 }
             }
             .padding(.top, 8)
+        }
+    }
+
+    // Formats previous answer depending on question type
+    private func formattedPreviousAnswer(for a: Answer) -> String {
+        let type = QuestionType(rawValue: question.typeID ?? 0)
+        if type == .trueFalse {
+            let raw = (a.answer ?? "").trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
+            switch raw {
+            case "true", "1", "yes", "y":
+                return "yes_".localized
+            case "false", "0", "no", "n":
+                return "no_".localized
+            default:
+                // Fallback to raw text if unexpected
+                return a.answer ?? "-"
+            }
+        } else {
+            return a.answer ?? "-"
         }
     }
 }
