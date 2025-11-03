@@ -20,6 +20,8 @@ enum DocActivePackagesServices{
     
     case GetCustomerPackageQuest(parameters : [String:Any])
     case CreatePackageQuestionnaireAnswer(parameters : [String:Any])
+    // New: top-level array payload for bulk answers
+    case CreatePackageQuestionnaireAnswersArray(items: [[String: Any]])
     case GetCustomerAllergy(parameters : [String:Any])
 }
 
@@ -32,30 +34,23 @@ extension DocActivePackagesServices : TargetType1 {
         switch self {
         case .GetCustomerPackageList:
             return DocEndPoints.DocGetActivePackageDoctorList.rawValue
-            
         case .GetCustomerPackageById:
             return SubscriptionEndPoints.GetCustomerPackageById.rawValue
-            
         case .GetCustomerMeasurements:
             return DocEndPoints.DocGetPatientMeasurements.rawValue
-            
         case .GetCustomerPackageSessionList:
             return SubscriptionEndPoints.GetCustomerPackageSessionList.rawValue
         case .FileType:
             return SubscriptionEndPoints.FileType.rawValue
         case .GetCustomerPackageInstructionByCPId:
             return SubscriptionEndPoints.GetCustomerPackageInstructionByCPId.rawValue
-            
         case .CancelSubscription:
             return SubscriptionEndPoints.CustomerPackageCancel.rawValue
-            
         case .GetCustomerPackageQuest:
             return DocEndPoints.DocGetCustomerPackageQuest.rawValue
-            
-        case .CreatePackageQuestionnaireAnswer:
-            // FIX: point to questionnaire endpoint, not doctor package request
+        case .CreatePackageQuestionnaireAnswer,
+             .CreatePackageQuestionnaireAnswersArray:
             return DocEndPoints.DocCreatePackageQuestionnaireAnswer.rawValue
-            
         case .GetCustomerAllergy:
             return DocEndPoints.DocGetCustomerAllergy.rawValue
         }
@@ -67,7 +62,8 @@ extension DocActivePackagesServices : TargetType1 {
                 .GetCustomerPackageList,
                 .GetCustomerPackageSessionList,
                 .CancelSubscription,
-                .CreatePackageQuestionnaireAnswer
+                .CreatePackageQuestionnaireAnswer,
+                .CreatePackageQuestionnaireAnswersArray
             :
             return .post
             
@@ -97,9 +93,21 @@ extension DocActivePackagesServices : TargetType1 {
                 .GetCustomerAllergy(parameters: let parameter)
             :
             return  parameter
-            
+        case .CreatePackageQuestionnaireAnswersArray:
+            return nil
         case .FileType:
             return nil
         }
     }
+
+    // New: provide array payload for bulk answers
+    var arrayParameters: [Any]? {
+        switch self {
+        case .CreatePackageQuestionnaireAnswersArray(let items):
+            return items
+        default:
+            return nil
+        }
+    }
 }
+

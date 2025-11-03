@@ -12,7 +12,7 @@ class QuestionaireViewModel : ObservableObject {
     private let networkService: AsyncAwaitNetworkServiceProtocol
         
     var CustomerPackageId : Int?
-    @Published var questions : [CustomerPackageQuestM]? = mockQuestions
+    @Published var questions : [CustomerPackageQuestM]?
     @Published var userAnswers: [Int: String] = [:]
 
     @Published var isLoading:Bool? = false
@@ -46,28 +46,26 @@ extension QuestionaireViewModel{
         isLoading = true
         defer { isLoading = false }
 
-        // Current endpoint signature is single-object; send first if present
-        if let first = answersArray.first {
-            let target = DocActivePackagesServices.CreatePackageQuestionnaireAnswer(parameters: first)
-            do {
-                self.errorMessage = nil
-                struct EmptyResponse: Codable {}
-                _ = try await networkService.request(target, responseType: EmptyResponse.self)
-            } catch {
-                self.errorMessage = error.localizedDescription
-            }
+        // Send the whole array as top-level JSON
+        let target = DocActivePackagesServices.CreatePackageQuestionnaireAnswersArray(items: answersArray)
+        do {
+            self.errorMessage = nil
+            struct EmptyResponse: Codable {}
+            _ = try await networkService.request(target, responseType: EmptyResponse.self)
+        } catch {
+            self.errorMessage = error.localizedDescription
         }
     }
 
-    // New: send multiple answers by iterating single-object endpoint
+    // Send multiple answers (already prepared by caller)
     @MainActor
     func addAnswers(_ items: [(qid: Int, typeId: Int, answer: String, mcqId: Int?)]) async {
         guard let customerPackageId = CustomerPackageId else { return }
         isLoading = true
         defer { isLoading = false }
-        self.errorMessage = nil
 
-        for item in items {
+        // Build a single array payload
+        let payload: [[String: Any]] = items.map { item in
             var dict: [String: Any] = [
                 "customerPackageId": customerPackageId,
                 "packageQuestionId": item.qid,
@@ -77,15 +75,19 @@ extension QuestionaireViewModel{
             if item.typeId == 2 {
                 dict["mcqId"] = item.mcqId ?? 0
             }
-            let target = DocActivePackagesServices.CreatePackageQuestionnaireAnswer(parameters: dict)
-            do {
-                struct EmptyResponse: Codable {}
-                _ = try await networkService.request(target, responseType: EmptyResponse.self)
-            } catch {
-                // Stop on first error and surface message
-                self.errorMessage = error.localizedDescription
-                break
+            return dict
+        }
+
+        let target = DocActivePackagesServices.CreatePackageQuestionnaireAnswersArray(items: payload)
+        do {
+            struct EmptyResponse: Codable {}
+            _ = try await networkService.request(target, responseType: EmptyResponse.self)
+            self.errorMessage = nil
+            Task {
+                await getCustomerQuestions()
             }
+        } catch {
+            self.errorMessage = error.localizedDescription
         }
     }
         
@@ -112,3 +114,4 @@ extension QuestionaireViewModel{
         }
     }
 }
+

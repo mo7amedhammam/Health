@@ -159,7 +159,7 @@ struct QuestionaireView: View {
         ), message: viewModel.errorMessage)
         .task(id: CustomerPackageId) {
             viewModel.CustomerPackageId = CustomerPackageId
-//            await viewModel.getCustomerQuestions()
+            await viewModel.getCustomerQuestions()
             seedInitialAnswers()
         }
         .onChange(of: viewModel.questions) { _ in
@@ -233,12 +233,12 @@ struct QuestionaireView: View {
         }
 
         if itemsToSend.isEmpty {
-            viewModel.errorMessage = "لا توجد إجابات لإرسالها".localized
+            viewModel.errorMessage = "no_answers_to_be_sent".localized
             return
         }
 
         await viewModel.addAnswers(itemsToSend)
-        await viewModel.getCustomerQuestions()
+//        await viewModel.getCustomerQuestions()
 
         // Clear inputs after submit (keep TF optional: do not force to false)
         for q in questions {
