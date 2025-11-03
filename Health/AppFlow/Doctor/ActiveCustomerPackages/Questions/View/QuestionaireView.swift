@@ -30,7 +30,8 @@ struct QuestionaireView: View {
 
     // MARK: - Answers State (UI state to render controls)
     @State private var textAnswers: [Int: String] = [:]
-    @State private var mcqAnswersMulti: [Int: Set<String>] = [:]
+    // MCQ now tracks selected option IDs per question
+    @State private var mcqAnswersMultiIDs: [Int: Set<Int>] = [:]
     @State private var tfAnswers: [Int: Bool] = [:] // absence => no selection yet
 
     @State private var isSubmitting: Bool = false
@@ -49,12 +50,12 @@ struct QuestionaireView: View {
                             QuestionTypeBlock(
                                 question: q,
                                 previousAnswers: q.answer ?? [],
-                                mcqOptions: [],
+                                mcqOptions: [], // not used for text
                                 textAnswer: Binding(
                                     get: { textAnswers[qid] ?? "" },
                                     set: { textAnswers[qid] = $0 }
                                 ),
-                                mcqAnswers: .constant([]),
+                                mcqAnswers: .constant([]), // not used for text
                                 tfAnswer: .constant(false),
                                 selectedType: .text
                             )
@@ -67,15 +68,26 @@ struct QuestionaireView: View {
                         ForEach(mcqQuestions.indices, id: \.self) { idx in
                             let q = mcqQuestions[idx]
                             let qid = q.id ?? -1
-                            let options = deriveMcqOptions(for: q)
+                            let options = deriveMcqOptions(for: q) // [(id, title)]
                             QuestionTypeBlock(
                                 question: q,
                                 previousAnswers: q.answer ?? [],
-                                mcqOptions: options,
+                                mcqOptions: options.map { $0.title },
                                 textAnswer: .constant(""),
                                 mcqAnswers: Binding(
-                                    get: { mcqAnswersMulti[qid] ?? [] },
-                                    set: { mcqAnswersMulti[qid] = $0 }
+                                    get: {
+                                        // Convert selected IDs to titles set for the block’s interface
+                                        let selectedIDs = mcqAnswersMultiIDs[qid] ?? []
+                                        let idToTitle = Dictionary(uniqueKeysWithValues: options.map { ($0.id, $0.title) })
+                                        let titles = selectedIDs.compactMap { idToTitle[$0] }
+                                        return Set(titles)
+                                    },
+                                    set: { newTitles in
+                                        // Map titles back to IDs; ignore unknown titles
+                                        let titleToID = Dictionary(uniqueKeysWithValues: options.map { ($0.title, $0.id) })
+                                        let ids = Set(newTitles.compactMap { titleToID[$0] })
+                                        mcqAnswersMultiIDs[qid] = ids
+                                    }
                                 ),
                                 tfAnswer: .constant(false),
                                 selectedType: .mcq
@@ -171,17 +183,29 @@ struct QuestionaireView: View {
         viewModel.questions?.filter { QuestionType(rawValue: $0.typeID ?? 0) == type }
     }
 
-    // Updated: derive options from nested mcqList instead of previous answers
-    private func deriveMcqOptions(for q: CustomerPackageQuestM) -> [String] {
+    // Updated: derive options from nested mcqList with IDs and titles
+    private func deriveMcqOptions(for q: CustomerPackageQuestM) -> [(id: Int, title: String)] {
         guard let type = QuestionType(rawValue: q.typeID ?? 0), type == .mcq else { return [] }
-        let options = q.mcqList.map { ($0.answer ?? "").trimmingCharacters(in: .whitespacesAndNewlines) }
-        let unique = Array(Set(options)).filter { !$0.isEmpty }
+        let options: [(Int, String)] = q.mcqList.compactMap {
+            guard let id = $0.id else { return nil }
+            let title = ($0.answer ?? "").trimmingCharacters(in: .whitespacesAndNewlines)
+            return title.isEmpty ? nil : (id, title)
+        }
+        // Remove duplicates by id, keep first occurrence
+        var seen = Set<Int>()
+        var unique: [(Int, String)] = []
+        for opt in options {
+            if !seen.contains(opt.0) {
+                seen.insert(opt.0)
+                unique.append(opt)
+            }
+        }
         return unique
     }
 
     private func seedInitialAnswers() {
         textAnswers.removeAll()
-        mcqAnswersMulti.removeAll()
+        mcqAnswersMultiIDs.removeAll()
         tfAnswers.removeAll()
 
         guard let questions = viewModel.questions else { return }
@@ -192,7 +216,7 @@ struct QuestionaireView: View {
             case .text:
                 textAnswers[id] = ""
             case .mcq:
-                mcqAnswersMulti[id] = []
+                mcqAnswersMultiIDs[id] = []
             case .trueFalse:
                 // Do not pre-select a default; keep it optional until user chooses.
                 break
@@ -219,10 +243,13 @@ struct QuestionaireView: View {
                 itemsToSend.append((qid, typeId, value, nil))
 
             case .mcq:
-                let set = mcqAnswersMulti[qid] ?? []
-                if set.isEmpty { continue }
-                let value = set.sorted().joined(separator: ",")
-                itemsToSend.append((qid, typeId, value, 0)) // mcqId = 0 by current requirement
+                // Send one item per selected MCQ option ID
+                let selectedIDs = mcqAnswersMultiIDs[qid] ?? []
+                if selectedIDs.isEmpty { continue }
+                for id in selectedIDs {
+                    // For MCQ, the backend likely only needs mcqId; keep answer as empty or the label if required.
+                    itemsToSend.append((qid, typeId, "", id))
+                }
 
             case .trueFalse:
                 // Only send if user selected a value
@@ -238,14 +265,13 @@ struct QuestionaireView: View {
         }
 
         await viewModel.addAnswers(itemsToSend)
-//        await viewModel.getCustomerQuestions()
 
         // Clear inputs after submit (keep TF optional: do not force to false)
         for q in questions {
             guard let qid = q.id, let typeId = q.typeID, let qType = QuestionType(rawValue: typeId) else { continue }
             switch qType {
             case .text: textAnswers[qid] = ""
-            case .mcq: mcqAnswersMulti[qid] = []
+            case .mcq: mcqAnswersMultiIDs[qid] = []
             case .trueFalse: tfAnswers[qid] = nil
             }
         }
