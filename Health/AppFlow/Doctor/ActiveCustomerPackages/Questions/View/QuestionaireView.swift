@@ -31,7 +31,7 @@ struct QuestionaireView: View {
     // MARK: - Answers State (UI state to render controls)
     @State private var textAnswers: [Int: String] = [:]
     @State private var mcqAnswersMulti: [Int: Set<String>] = [:]
-    @State private var tfAnswers: [Int: Bool] = [:]
+    @State private var tfAnswers: [Int: Bool] = [:] // absence => no selection yet
 
     @State private var isSubmitting: Bool = false
 
@@ -43,7 +43,6 @@ struct QuestionaireView: View {
                 VStack(spacing: 28) {
                     // Text section
                     if let textQuestions = questions(of: .text), !textQuestions.isEmpty {
-//                        SectionHeaderView(title: QuestionType.text.title)
                         ForEach(textQuestions.indices, id: \.self) { idx in
                             let q = textQuestions[idx]
                             let qid = q.id ?? -1
@@ -65,7 +64,6 @@ struct QuestionaireView: View {
 
                     // MCQ section
                     if let mcqQuestions = questions(of: .mcq), !mcqQuestions.isEmpty {
-//                        SectionHeaderView(title: QuestionType.mcq.title)
                         ForEach(mcqQuestions.indices, id: \.self) { idx in
                             let q = mcqQuestions[idx]
                             let qid = q.id ?? -1
@@ -88,23 +86,51 @@ struct QuestionaireView: View {
 
                     // True/False section
                     if let tfQuestions = questions(of: .trueFalse), !tfQuestions.isEmpty {
-//                        SectionHeaderView(title: QuestionType.trueFalse.title)
                         ForEach(tfQuestions.indices, id: \.self) { idx in
                             let q = tfQuestions[idx]
                             let qid = q.id ?? -1
-                            QuestionTypeBlock(
-                                question: q,
-                                previousAnswers: q.answer ?? [],
-                                mcqOptions: [],
-                                textAnswer: .constant(""),
-                                mcqAnswers: .constant([]),
-                                tfAnswer: Binding(
-                                    get: { tfAnswers[qid] ?? false },
-                                    set: { tfAnswers[qid] = $0 }
-                                ),
-                                selectedType: .trueFalse
+                            // Bindings reflect optional selection:
+                            let yesBinding = Binding<Bool?>(
+                                get: { tfAnswers[qid] == true },
+                                set: { newValue in
+                                    // When tapping Yes row, set to true if selecting, or nil if deselecting
+                                    tfAnswers[qid] = (newValue == true) ? true : nil
+                                }
                             )
-                            .padding(.horizontal, 20)
+                            let noBinding = Binding<Bool?>(
+                                get: { tfAnswers[qid] == false },
+                                set: { newValue in
+                                    // When tapping No row, set to false if selecting, or nil if deselecting
+                                    tfAnswers[qid] = (newValue == true) ? false : nil
+                                }
+                            )
+
+                            // Inject the TF UI with optional selection below the block’s header
+                            VStack {
+                                QuestionTypeBlock(
+                                    question: q,
+                                    previousAnswers: q.answer ?? [],
+                                    mcqOptions: [],
+                                    textAnswer: .constant(""),
+                                    mcqAnswers: .constant([]),
+                                    tfAnswer: .constant(false), // unused in TF case inside block
+                                    selectedType: .trueFalse
+                                )
+                                .padding(.horizontal, 20)
+                                
+                                // Match the same spacing as in block
+                                VStack(alignment: .leading, spacing: 10) {
+
+                                    VStack(alignment: .leading, spacing: 12) {
+                                        RadioRow(title: "yes_".localized, isOn: yesBinding)
+                                        RadioRow(title: "no_".localized, isOn: noBinding)
+                                    }
+                                    .padding(.top, 4)
+                                }
+                                .padding(.top, 8)
+                                .padding(.horizontal, 20)
+
+                            }
                         }
                     }
 
@@ -145,14 +171,12 @@ struct QuestionaireView: View {
         viewModel.questions?.filter { QuestionType(rawValue: $0.typeID ?? 0) == type }
     }
 
+    // Updated: derive options from nested mcqList instead of previous answers
     private func deriveMcqOptions(for q: CustomerPackageQuestM) -> [String] {
         guard let type = QuestionType(rawValue: q.typeID ?? 0), type == .mcq else { return [] }
-        if let prev = q.answer, !prev.isEmpty {
-            let values = prev.compactMap { $0.answer?.trimmingCharacters(in: .whitespacesAndNewlines) }
-            let unique = Array(Set(values)).filter { !$0.isEmpty }
-            return unique
-        }
-        return []
+        let options = q.mcqList.map { ($0.answer ?? "").trimmingCharacters(in: .whitespacesAndNewlines) }
+        let unique = Array(Set(options)).filter { !$0.isEmpty }
+        return unique
     }
 
     private func seedInitialAnswers() {
@@ -170,7 +194,8 @@ struct QuestionaireView: View {
             case .mcq:
                 mcqAnswersMulti[id] = []
             case .trueFalse:
-                tfAnswers[id] = false
+                // Do not pre-select a default; keep it optional until user chooses.
+                break
             default:
                 break
             }
@@ -197,10 +222,11 @@ struct QuestionaireView: View {
                 let set = mcqAnswersMulti[qid] ?? []
                 if set.isEmpty { continue }
                 let value = set.sorted().joined(separator: ",")
-                itemsToSend.append((qid, typeId, value, 0)) // mcqId = 0 by requirement
+                itemsToSend.append((qid, typeId, value, 0)) // mcqId = 0 by current requirement
 
             case .trueFalse:
-                let boolVal = tfAnswers[qid] ?? false
+                // Only send if user selected a value
+                guard let boolVal = tfAnswers[qid] else { continue }
                 let value = boolVal ? "true" : "false"
                 itemsToSend.append((qid, typeId, value, nil))
             }
@@ -214,13 +240,13 @@ struct QuestionaireView: View {
         await viewModel.addAnswers(itemsToSend)
         await viewModel.getCustomerQuestions()
 
-        // Clear inputs after submit
+        // Clear inputs after submit (keep TF optional: do not force to false)
         for q in questions {
             guard let qid = q.id, let typeId = q.typeID, let qType = QuestionType(rawValue: typeId) else { continue }
             switch qType {
             case .text: textAnswers[qid] = ""
             case .mcq: mcqAnswersMulti[qid] = []
-            case .trueFalse: tfAnswers[qid] = false
+            case .trueFalse: tfAnswers[qid] = nil
             }
         }
     }
@@ -321,21 +347,11 @@ private struct QuestionTypeBlock: View {
                     }
 
                 case .trueFalse:
-                    VStack(alignment: .leading, spacing: 12) {
-                        RadioRow(title: "yes_".localized, isOn: Binding(
-                            get: { tfAnswer },
-                            set: { _ in tfAnswer = true }
-                        ))
-                        RadioRow(title: "no_".localized, isOn: Binding(
-                            get: { !tfAnswer },
-                            set: { _ in tfAnswer = false }
-                        ))
-                    }
-                    .padding(.top, 4)
+                    // Intentionally left empty here; TF UI is overlaid from the parent to support optional state.
+                    EmptyView()
 
                 case .text:
                     VStack(spacing: 8) {
-                        
                         CustomInputFieldUI(
                             title: "",
                             placeholder: "Type_Answer_here_",
@@ -345,7 +361,6 @@ private struct QuestionTypeBlock: View {
                             isIconOnTop: true,
                             trailingView: nil
                         )
-
                     }
                 }
             }
@@ -412,7 +427,7 @@ private struct MCQGrid: View {
 
 private struct RadioRow: View {
     let title: String
-    @Binding var isOn: Bool
+    @Binding var isOn: Bool?
 
     var body: some View {
         HStack(spacing: 10) {
@@ -421,14 +436,21 @@ private struct RadioRow: View {
                 .foregroundColor(.mainBlue)
 
             ZStack {
-                Image(isOn ? .radiofill : .radio)
+                Image(isOn == true ? .radiofill : .radio)
                     .resizable()
                     .frame(width: 17, height: 17)
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .contentShape(Rectangle())
-        .onTapGesture { isOn.toggle() }
+        .onTapGesture {
+            // Tap to select (true), tap again to clear (nil)
+            if isOn == true {
+                isOn = nil
+            } else {
+                isOn = true
+            }
+        }
     }
 }
 
