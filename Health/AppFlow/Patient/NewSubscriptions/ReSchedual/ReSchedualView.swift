@@ -12,6 +12,7 @@ import SwiftUI
 
 struct ReSchedualView: View {
     var doctorPackageId : Int?
+    var doctorId : Int?
     @StateObject var viewModel = ReSchedualViewModel.shared
     @State private var showingDatePicker = false
     @State private var selectedDate = Date()

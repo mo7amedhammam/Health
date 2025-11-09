@@ -14,6 +14,7 @@ struct NewHomeView: View {
 
     // UI-only state
     @State private var selectedPackage: FeaturedPackageItemM?
+    @State private var doctorId : Int?
     @State private var isRescheduling: Bool = false
 
     // Active tab for MostViewed/Booked
@@ -127,7 +128,9 @@ struct NewHomeView: View {
                         NextSessionSection(
                             upcomingSession: nextsession,
                             detailsAction: {},
-                            rescheduleAction: { isRescheduling = true }
+                            rescheduleAction: {
+//                                doctorId = nil
+                                isRescheduling = true }
                         )
                         .padding(.horizontal)
                         .accessibilityIdentifier("home_next_session")
@@ -222,7 +225,7 @@ struct NewHomeView: View {
             message: viewModel.errorMessage
         )
         .customSheet(isPresented: $isRescheduling) {
-            ReSchedualView(isPresentingNewMeasurementSheet: $isRescheduling, reschedualcase: .reschedualSession)
+            ReSchedualView(doctorId: 0, isPresentingNewMeasurementSheet: $isRescheduling ,reschedualcase: .reschedualSession)
         }
         .task {
             await viewModel.load()

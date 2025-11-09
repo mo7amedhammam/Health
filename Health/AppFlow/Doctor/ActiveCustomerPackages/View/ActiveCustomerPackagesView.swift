@@ -11,6 +11,7 @@ struct ActiveCustomerPackagesView: View {
     @StateObject private var viewModel: ActiveCusPackViewModel
 
     let customerPackageId: Int
+    var doctorId: Int?
 
     @State private var selectedSection: SectionType? = nil
     @State private var reschedualcase: reschedualCases? = .reschedualSession
@@ -238,6 +239,7 @@ struct ActiveCustomerPackagesView: View {
         .customSheet(isPresented: $isReschedualling){
             ReSchedualView(
                 doctorPackageId: customerPackageId,
+                doctorId: doctorId,
                 isPresentingNewMeasurementSheet: $isReschedualling,
                 reschedualcase: reschedualcase,
                 onRescheduleSuccess: {

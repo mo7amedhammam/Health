@@ -175,7 +175,7 @@ final class PackageMoreDetailsViewModel: ObservableObject {
         let dayParam = date.formatted(.customDateFormat("yyyy-MM-dd"))
         let params: [String: Any] = ["date": dayParam, "doctorId": doctorId, "appCountryId": appCountryId]
         let target = HomeServices.GetDoctorAvailableDayList(parameters: params)
-
+print("params:///", params)
         daysTask = Task {
             await MainActor.run { self.startLoading() }
             defer { Task { await MainActor.run { self.stopLoading() } } }

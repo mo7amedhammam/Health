@@ -16,7 +16,7 @@ class ReSchedualViewModel:ObservableObject {
     var maxResultCount: Int?              = 5
     @Published var skipCount: Int?        = 0
     
-//    var doctorId:Int                      = 0
+    var doctorId:Int?
     var doctorPackageId:Int?
     @Published var newDate                = Date()
     
@@ -73,14 +73,22 @@ extension ReSchedualViewModel{
     func getAvailableDays() async {
         isLoading = true
         defer { isLoading = false }
-        guard let doctorId = packageDetails?.doctorData?.doctorID,let appCountryId = Helper.shared.AppCountryId()  else {
+        guard let appCountryId = Helper.shared.AppCountryId()  else {
 //            // Handle missings
 //            self.errorMessage = "check inputs"
 //            //            throw NetworkError.unknown(code: 0, error: "check inputs")
             return
         }
-        let parametersarr : [String : Any] =  ["date":"\(newDate.formatted(.customDateFormat("YYYY-MM-dd")))","doctorId":doctorId,"appCountryId":appCountryId]
+        var parametersarr : [String : Any] =  ["date":"\(newDate.formatted(.customDateFormat("YYYY-MM-dd")))","appCountryId":appCountryId]
 
+        if let doctorId = packageDetails?.doctorData?.doctorID{
+            parametersarr["doctorId"] = doctorId
+        }else{
+            if let doctorId = doctorId{
+                parametersarr["doctorId"] = doctorId
+            }
+        }
+print("parametersarr,",parametersarr)
         let target = HomeServices.GetDoctorAvailableDayList(parameters: parametersarr)
         do {
             self.errorMessage = nil // Clear previous errors
