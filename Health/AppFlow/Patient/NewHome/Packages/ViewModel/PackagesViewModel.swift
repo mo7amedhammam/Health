@@ -81,10 +81,11 @@ extension PackagesViewModel {
         }
 
 
-        let parameters: [String: Any] = [
+        var parameters: [String: Any] = [
             "parentId": mainCategoryId,
             "maxResultCount": maxResultCount,
-            "skipCount": subcategoryskipCount
+            "skipCount": subcategoryskipCount,
+            "appCountryId" : env.appCountryId()
         ]
 
         let target = HomeServices.GetSubCategoryByParentId(parameters: parameters)

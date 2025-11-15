@@ -18,7 +18,7 @@ struct MyFileModel: Identifiable {
 }
 
 struct MyFilesView: View {
-    @State private var showUploadSheet = false
+//    @State private var showUploadSheet = false
     @StateObject var myfilesvm = MyFilesViewModel.shared
 
     @State private var files: [MyFileModel] = []
@@ -28,11 +28,10 @@ struct MyFilesView: View {
 //        NavigationView {
             VStack(spacing: 0) {
                 TitleBar(title: "MyFiles_Title",hasbackBtn: true)
-
                 
                 UploadButton {
                     Task{
-                        showUploadSheet = true
+                        myfilesvm.showUploadSheet = true
                         await lookupsvm.getFileTypes()
                     }
                 }
@@ -43,7 +42,7 @@ struct MyFilesView: View {
                     .padding([.top,.horizontal])
                     .padding(.top,20)
 
-                filesList()
+                filesList(files: myfilesvm.files)
 
                 Spacer()
             }
@@ -54,11 +53,21 @@ struct MyFilesView: View {
                 set: { if !$0 { myfilesvm.errorMessage = nil } }
             ), message: myfilesvm.errorMessage)
 
-            .customSheet(isPresented: $showUploadSheet,height: 440){
+            .customSheet(isPresented: $myfilesvm.showUploadSheet,height: 440){
 //            .sheet(isPresented: $showUploadSheet) {
-                UploadFileSheetView(isPresented: $showUploadSheet)
-                    .environmentObject(myfilesvm)
-                    .environmentObject(lookupsvm)
+//                UploadFileSheetView(isPresented: $myfilesvm.showUploadSheet)
+//                    .environmentObject(myfilesvm)
+//                    .environmentObject(lookupsvm)
+                
+                ReusableUploadFileSheetView(isPresented: $myfilesvm.showUploadSheet){file in
+                    myfilesvm.fileName = file.fileName
+                          myfilesvm.fileType = file.fileType
+                          myfilesvm.fileLink = file.link
+                          myfilesvm.image = file.image
+                          myfilesvm.fileURL = file.fileURL
+
+                          Task { await myfilesvm.addNewFile() }
+                }
 //                    .frame(height: 600)
 
 //                { newFile in
@@ -115,6 +124,7 @@ struct UploadButton: View {
 
 struct UploadFileSheetView: View {
     @EnvironmentObject var lookupsvm : LookupsViewModel
+    @EnvironmentObject var myfilesvm : MyFilesViewModel
     @Binding var isPresented: Bool
     
     @State private var fileName: String = ""
@@ -221,11 +231,17 @@ struct UploadFileSheetView: View {
             HStack(spacing: 12) {
                 
                 CustomButton(title: "new_cancel_",backgroundView : AnyView(Color(.secondary))){
-                    isPresented = false
+//                    isPresented = false
+                    myfilesvm.clearNewFiles()
                 }
                 
                 CustomButton(title: "new_confirm_",backgroundcolor: Color(.secondary)){
-                    
+                    myfilesvm.fileName = fileName
+                    myfilesvm.fileType = fileType
+                    myfilesvm.fileLink = fileLink
+                    myfilesvm.image = image
+                    myfilesvm.fileURL = fileURL
+                    Task{ await myfilesvm.addNewFile() }
                 }
             }
             .padding(.bottom, 16)
@@ -242,7 +258,6 @@ struct UploadFileSheetView: View {
             ImagePickerView(selectedImage: $image, sourceType: imagePickerSource)
         }.onChange(of: image){newval in
             pickedFileName = "Image is Selected Successfully_".localized
-
         }
         .fileImporter(
             isPresented: $showPdfPicker,
@@ -254,12 +269,12 @@ struct UploadFileSheetView: View {
                 if let file = file {
                     pickedFileName = file.lastPathComponent
 //                    fileData = try Data(contentsOf: file)
+                    fileURL = file
                 }
             } catch {
                 print("Error picking file: \(error.localizedDescription)")
             }
         }
- 
  
     }
 }

@@ -82,7 +82,7 @@ extension SubcripedPackageDetailsViewModel{
 
 //        isLoading = true
 //        defer { isLoading = false }
-        let target = HomeServices.GetUpcomingSession
+        let target = HomeServices.GetUpcomingSession(parameters: [:])
         do {
             self.errorMessage = nil // Clear previous errors
             let response = try await networkService.request(

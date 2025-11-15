@@ -15,6 +15,10 @@ struct AppointmentsView: View {
     @State var showFilter:Bool = false
     @State var showCancel: Bool = false
     @State var idToCancel:Int?
+    
+    @State private var doctorId : Int?
+    @State private var isRescheduling: Bool = false
+
     var body: some View {
         VStack(spacing:0){
             VStack(){
@@ -24,19 +28,37 @@ struct AppointmentsView: View {
                 ScrollView{
 
                     if let session = viewModel.upcomingSession{
-                        NextSessionSection(upcomingSession: session)
+                        NextSessionSection(upcomingSession: session,
+                                           detailsAction: {
+
+                                               if Helper.shared.getSelectedUserType() == .Customer {
+                                                   router.push( SubcripedPackageDetailsView( package: nil, CustomerPackageId: session.customerPackageId))
+               //                                    router.push(SubcripedPackageDetailsView( package: nil, CustomerPackageId: nextsession.customerPackageId))
+                                                   print("push to SubcripedPackageDetailsView ")
+                                               }else if Helper.shared.getSelectedUserType() == .Doctor{
+                                                   guard let customerPackageId = session.customerPackageId else { return }
+                                                   router.push( ActiveCustomerPackagesView( doctorId:session.doctorID,CustomerPackageId: customerPackageId))
+                                               }
+                                           },
+                                           rescheduleAction: {
+                                               //                                doctorId = nil
+               //                                doctorId = nextsession.doctorId
+                                               isRescheduling = true })
                             .padding([.horizontal])
                     }
                     
                     AppointmentsListView(appointments:viewModel.appointments?.items ,selectAction: {appointment in
-                        
-//                        print(appointment.doctorName ?? "")
-                        router.push(
-//                            SubcripedPackageDetailsView(package: nil, CustomerPackageId:appointment.customerPackageId ?? 0)
-                            ActiveCustomerPackagesView(CustomerPackageId: appointment.customerPackageId ?? 0)
-//                                .environmentObject(router)
-                        )
-                        
+                        guard let customerPackageId = appointment.customerPackageId else {return}
+                        if Helper.shared.getSelectedUserType() == .Customer{
+                            router.push(SubcripedPackageDetailsView( package: nil, CustomerPackageId: customerPackageId))
+                        }else{
+                            //                        print(appointment.doctorName ?? "")
+                            router.push(
+                                //                            SubcripedPackageDetailsView(package: nil, CustomerPackageId:appointment.customerPackageId ?? 0)
+                                ActiveCustomerPackagesView(doctorId:appointment.doctorID,CustomerPackageId: customerPackageId)
+                                //                                .environmentObject(router)
+                            )
+                        }
                                 },buttonAction:{item in
                                     idToCancel = item.packageID
 //                                    if item.canRenew ?? false{
@@ -100,6 +122,9 @@ struct AppointmentsView: View {
         }
         .customSheet(isPresented: $mustLogin ,height: 350){
             LoginSheetView()
+        }
+        .customSheet(isPresented: $isRescheduling) {
+            ReSchedualView(doctorId: 0, isPresentingNewMeasurementSheet: $isRescheduling ,reschedualcase: .reschedualSession)
         }
         if showCancel{
             CancelSubscriptionView(isPresent: $showCancel, customerPackageId: idToCancel ?? 0)
@@ -298,19 +323,21 @@ struct AppointmentCardView: View {
                     Spacer()
                 
                 VStack(alignment: .trailing, spacing: 8) { // Right aligned for Arabic
-                    Button(action: {
+                    if Helper.shared.getSelectedUserType() == .Doctor{
+                        Button(action: {
                             detaisactions()
                         },label:{
-//                            HStack(spacing:3){
-//                                Image("newreschedual")
-//                                    .resizable()
-//                                    .frame(width: 10, height: 8.5)
-                                Text("customer_details".localized)
-                                    .underline()
-//                            }
-                            .foregroundStyle(Color.white)
-                            .font(.regular(size: 12))
+                            //                            HStack(spacing:3){
+                            //                                Image("newreschedual")
+                            //                                    .resizable()
+                            //                                    .frame(width: 10, height: 8.5)
+                            Text("customer_details".localized)
+                                .underline()
+                            //                            }
+                                .foregroundStyle(Color.white)
+                                .font(.regular(size: 12))
                         })
+                    }
                     Spacer()
 
                     

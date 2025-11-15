@@ -75,10 +75,11 @@ struct Answer: Codable {
 
 extension Answer {
     var formattedCreationDate: String? {
+//        2025-11-15T11:50:09.47
         guard let date = self.creationDate else { return "" }
         let formatedDate = convertDateToString(
             inputDateString: date,
-            inputDateFormat: "yyyy-MM-dd'T'HH:mm:ss",
+            inputDateFormat: "yyyy-MM-dd'T'HH:mm:ss.SS",
             outputDateFormat: "yyyy MMM dd HH:mm a"
         )
         return formatedDate

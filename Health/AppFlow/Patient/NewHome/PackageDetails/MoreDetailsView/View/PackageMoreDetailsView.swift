@@ -220,7 +220,9 @@ struct PackageMoreDetailsView: View {
                                     Text(day.dayName ?? "")
                                         .font(.medium(size: 10))
                                 }
-                                .frame(width: 40, height: 50)
+                                .frame(height: 50)
+                                .frame(width: 50)
+
                             })
                             .foregroundStyle(Color.white)
                             .background(viewModel.selectedDay == day ? Color(.secondary) : Color(.mainBlue))
@@ -231,34 +233,40 @@ struct PackageMoreDetailsView: View {
                 }
                 .padding(.horizontal)
 
-                GeometryReader { geometry in
-                    ScrollView(.horizontal, showsIndicators: false) {
-                        HStack(alignment: .center, spacing: 5) {
-                            ForEach(viewModel.availableShifts) { shift in
-                                Button(action: {
-                                    Task { await viewModel.select(shift: shift) }
-                                }, label: {
-                                    VStack(spacing: 5) {
-                                        Text(shift.name ?? "")
-                                            .font(.bold(size: 10))
-
-                                        (Text("\(shift.timeFrom ?? "")".ChangeDateFormat(FormatFrom: "HH:mm:ss", FormatTo: "hh:mm a")) + Text(" - ") + Text("\(shift.timeTo ?? "")".ChangeDateFormat(FormatFrom: "HH:mm:ss", FormatTo: "hh:mm a")))
-                                            .font(.medium(size: 9))
-                                    }
-                                })
-                                .frame(height: 36)
-                                .frame(width: (geometry.size.width / 3) - 15)
-                                .foregroundStyle(viewModel.selectedShift == shift ? Color.white : Color(.secondary))
-                                .cardStyle(backgroundColor: viewModel.selectedShift == shift ? Color(.secondary) : Color(.wrongsurface), cornerRadius: 2, shadowOpacity: 0)
+                ZStack(){
+                    GeometryReader { geometry in
+                        ScrollView(.horizontal, showsIndicators: false) {
+                            HStack(alignment: .center, spacing: 5) {
+                                ForEach(viewModel.availableShifts) { shift in
+                                    Button(action: {
+                                        Task { await viewModel.select(shift: shift) }
+                                    }, label: {
+                                        VStack(spacing: 5) {
+                                            Text(shift.name ?? "")
+                                                .font(.bold(size: 10))
+                                            
+                                            (Text("\(shift.timeFrom ?? "")".ChangeDateFormat(FormatFrom: "HH:mm:ss", FormatTo: "hh:mm a")) + Text(" - ") + Text("\(shift.timeTo ?? "")".ChangeDateFormat(FormatFrom: "HH:mm:ss", FormatTo: "hh:mm a")))
+                                                .font(.medium(size: 9))
+                                        }
+                                    })
+                                    .frame(height: 36)
+                                    .frame(width: (geometry.size.width / 3) - 15)
+                                    .foregroundStyle(viewModel.selectedShift == shift ? Color.white : Color(.secondary))
+                                    .cardStyle(backgroundColor: viewModel.selectedShift == shift ? Color(.secondary) : Color(.wrongsurface), cornerRadius: 2, shadowOpacity: 0)
+                                }
                             }
+                            .padding(.horizontal)
                         }
                     }
-                    .padding(.horizontal)
                 }
+                .padding(.vertical)
+                .frame(height: 50)
+                .padding(.bottom)
+
 
                 if !viewModel.availableScheduals.isEmpty {
                     SshedualsGrid(scheduals: viewModel.availableScheduals, selectedschedual: $viewModel.selectedSchedual)
-                        .padding(.top)
+//                        .padding(.top)
                 }
 
                 CustomButton(title: "Continue_".localized, backgroundView:

@@ -60,9 +60,9 @@ struct TicketView: View {
                             let bookedTiming = viewmodel.ticketData?.bookedTimming ?? nil
                             VStack(alignment:.leading,spacing: 10){
                                 
-//                                Text("pack_Name".localized)
-//                                    .font(.regular(size: 14))
-//                                    .foregroundStyle(Color(.secondary))
+                                //                                Text("pack_Name".localized)
+                                //                                    .font(.regular(size: 14))
+                                //                                    .foregroundStyle(Color(.secondary))
                                 
                                 Text(packageData?.packageName ?? "pack_Name".localized )
                                     .font(.semiBold(size: 22))
@@ -70,8 +70,8 @@ struct TicketView: View {
                                 
                                 Group{
                                     Text( packageData?.categoryName ?? "category_Name".localized)
-//                                    Circle().fill(Color(.secondary))
-//                                        .frame(width: 4, height: 4)
+                                    //                                    Circle().fill(Color(.secondary))
+                                    //                                        .frame(width: 4, height: 4)
                                     Text(packageData?.mainCategoryName ?? "صحة عامة")
                                 }
                                 .font(.medium(size: 18))
@@ -163,11 +163,11 @@ struct TicketView: View {
                                         .font(.semiBold(size: 22))
                                         .foregroundStyle(Color(.main))
                                         .frame(maxWidth: .infinity,alignment:.leading)
-
-//                                    Text(doctorData.doctorName ?? "doc_name".localized)
-//                                        .font(.regular(size: 14))
-//                                        .foregroundStyle(Color(.secondary))
-//                                        .frame(maxWidth: .infinity,alignment:.leading)
+                                    
+                                    //                                    Text(doctorData.doctorName ?? "doc_name".localized)
+                                    //                                        .font(.regular(size: 14))
+                                    //                                        .foregroundStyle(Color(.secondary))
+                                    //                                        .frame(maxWidth: .infinity,alignment:.leading)
                                     
                                     HStack(spacing:2) {
                                         Text(doctorData?.nationality ?? "egyption_".localized)
@@ -177,12 +177,12 @@ struct TicketView: View {
                                         
                                         KFImageLoader(url:URL(string:Constants.imagesURL + (doctorData?.flag?.validateSlashs() ?? "")),placeholder: Image("egFlagIcon"), shouldRefetch: false)
                                             .frame(width: 12,height: 12)
-
-//                                        Image(.egFlagIcon)
-//                                            .resizable()
-//                                            .frame(width: 12,height:8)
-//                                            .scaledToFill()
-//                                            .padding(3)
+                                        
+                                        //                                        Image(.egFlagIcon)
+                                        //                                            .resizable()
+                                        //                                            .frame(width: 12,height:8)
+                                        //                                            .scaledToFill()
+                                        //                                            .padding(3)
                                     }
                                 }
                                 
@@ -226,20 +226,20 @@ struct TicketView: View {
                             HStack {
                                 HStack(spacing: 8) {
                                     Image("coponIcon")
-                                               .resizable()
-                                               .frame(width: 12, height: 17)
-
+                                        .resizable()
+                                        .frame(width: 12, height: 17)
+                                    
                                     TextField("enter_Copon_number".localized, text: $viewmodel.couponeCode)
-                                               .font(.regular(size: 16))
-                                               .foregroundColor(.mainBlue)
-                                       }
-                                       .padding(.vertical, 12)
-                                       .padding(.horizontal)
-                                       .frame(height:50)
-                                       .overlay(
-                                           RoundedRectangle(cornerRadius: 3)
-                                               .stroke(Color.mainBlue, lineWidth: 1)
-                                       )
+                                        .font(.regular(size: 16))
+                                        .foregroundColor(.mainBlue)
+                                }
+                                .padding(.vertical, 12)
+                                .padding(.horizontal)
+                                .frame(height:50)
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 3)
+                                        .stroke(Color.mainBlue, lineWidth: 1)
+                                )
                                 
                                 Button(action: {
                                     Task{
@@ -247,7 +247,7 @@ struct TicketView: View {
                                     }
                                 }){
                                     //
-                                    Text("Confirm_".localized)
+                                    Text("confirm_".localized)
                                         .underline()
                                         .font(.bold(size: 16))
                                         .padding(.horizontal,8)
@@ -264,7 +264,7 @@ struct TicketView: View {
                         .frame(height:80)
                         .padding(.bottom,8)
                         .frame(maxWidth:.infinity)
-
+                        
                         
                         ZStack {
                             
@@ -340,20 +340,30 @@ struct TicketView: View {
                         .shadow(radius: 3)
                         .padding()
                 }
+                
+                
+                CustomButton(title: "Continue_".localized, backgroundView:
+                                AnyView(Color.clear.horizontalGradientBackground())) {
+                    Task {
+                        await viewmodel.createCustomerPackage(paramters: parameters )
+                    }
+                }
+                
+                
             }
         }
         .task {
             viewmodel.ticketData = ticketData
         }
-//        .reversLocalizeView()
-//        .localizeView(reverse: true)
+        //        .reversLocalizeView()
+        //        .localizeView(reverse: true)
         .localizeView()
         .showHud(isShowing:  $viewmodel.isLoading)
         .errorAlert(isPresented:Binding(
             get: { viewmodel.errorMessage != nil },
             set: { if !$0 { viewmodel.errorMessage = nil } }
         ), message: viewmodel.errorMessage)
-
+        
     }
 }
 

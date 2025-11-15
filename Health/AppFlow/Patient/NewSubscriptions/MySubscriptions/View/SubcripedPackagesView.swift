@@ -10,7 +10,7 @@ import SwiftUI
 struct SubcripedPackagesView: View {
     //    var mainCategory:HomeCategoryItemM
     @EnvironmentObject var profileViewModel: EditProfileViewModel
-    @StateObject var router = NavigationRouter.shared
+    @StateObject var router = NavigationRouter()
     @StateObject private var viewModel = SubcripedPackagesViewModel.shared
     var hasbackBtn : Bool? = true
     //    var onBack: (() -> Void)? // for uikit dismissal
@@ -148,7 +148,6 @@ struct SubcripedPackagesView: View {
             Spacer().frame(height: hasbackBtn ?? true ? 0 : 80)
             
         }
-
         .localizeView()
         .withNavigation(router: router)
         .showHud(isShowing:  $viewModel.isLoading)

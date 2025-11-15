@@ -80,14 +80,14 @@ extension ReSchedualViewModel{
             return
         }
         var parametersarr : [String : Any] =  ["date":"\(newDate.formatted(.customDateFormat("YYYY-MM-dd")))","appCountryId":appCountryId]
-
-        if let doctorId = packageDetails?.doctorData?.doctorID{
-            parametersarr["doctorId"] = doctorId
-        }else{
             if let doctorId = doctorId{
                 parametersarr["doctorId"] = doctorId
+            }else{
+                if let doctorId = packageDetails?.doctorData?.doctorID{
+                    parametersarr["doctorId"] = doctorId
+                }
             }
-        }
+        
 print("parametersarr,",parametersarr)
         let target = HomeServices.GetDoctorAvailableDayList(parameters: parametersarr)
         do {

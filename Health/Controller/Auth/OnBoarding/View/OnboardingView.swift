@@ -32,7 +32,7 @@ struct OnboardingView: View {
                                 SkipSplash()
                             }
                         }
-//                        Spacer()
+                        //                        Spacer()
                         
                     }
                     .tag(index)
@@ -48,29 +48,29 @@ struct OnboardingView: View {
                         }) {
                             Image(.previousLeft).flipsForRightToLeftLayoutDirection(true)
                         }
-//                        .padding()
+                        //                        .padding()
                     }
                 }
                 .frame(width: 50)
-
+                
                 Spacer()
                 
                 ForEach(0..<pages.count, id: \.self) { indx in
-                        if indx == currentPage {
-                            withAnimation{
-                                Capsule().frame(width: 18,height: 5)
-                                    .padding(0)
-                                    .foregroundStyle(Color(.secondary))
-                            }
-                        }else{
-                            Circle().frame(width: 5)
+                    if indx == currentPage {
+                        withAnimation{
+                            Capsule().frame(width: 18,height: 5)
                                 .padding(0)
-                                .foregroundStyle(Color(.wrongsurface))
+                                .foregroundStyle(Color(.secondary))
                         }
+                    }else{
+                        Circle().frame(width: 5)
+                            .padding(0)
+                            .foregroundStyle(Color(.wrongsurface))
+                    }
                 }
                 
                 Spacer()
-
+                
                 Button(action: {
                     //'go home'
                     Helper.shared.onBoardOpened(opened: true)
@@ -80,21 +80,21 @@ struct OnboardingView: View {
                         .font(.semiBold(size: 14))
                         .foregroundColor(.blue)
                 }
-//                .padding()
-
+                //                .padding()
+                
             }
             .frame(height: 50)
             .padding(.horizontal)
-
+            
         }
         .localizeView()
         .edgesIgnoringSafeArea(.top)
     }
     
     func SkipSplash() {
-//        Helper.shared.changeRootVC(newroot: LoginVC.self,transitionFrom: .fromRight)
-
-//        let newHome = UIHostingController(rootView: LoginView())
+        //        Helper.shared.changeRootVC(newroot: LoginVC.self,transitionFrom: .fromRight)
+        
+        //        let newHome = UIHostingController(rootView: LoginView())
         let newHome = UIHostingController(rootView: NewTabView())
         Helper.shared.changeRootVC(newroot: newHome, transitionFrom: .fromLeft)
     }

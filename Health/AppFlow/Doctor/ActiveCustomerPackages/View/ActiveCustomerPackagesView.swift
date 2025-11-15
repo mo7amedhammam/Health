@@ -42,7 +42,8 @@ struct ActiveCustomerPackagesView: View {
         }
     }
 
-    init(package: SubcripedPackageItemM? = nil, CustomerPackageId: Int) {
+    init(package: SubcripedPackageItemM? = nil,doctorId:Int?=nil ,CustomerPackageId: Int) {
+        self.doctorId = doctorId
         self.customerPackageId = CustomerPackageId
         _viewModel = StateObject(wrappedValue: ActiveCusPackViewModel())
         // If you want to seed initial UI instantly:
@@ -196,11 +197,15 @@ struct ActiveCustomerPackagesView: View {
                 }
 
                 CustomButton(title: "select_next_session",isdisabled: false,backgroundView:AnyView(Color.clear.horizontalGradientBackground())){
+//                    guard let doctorId = viewModel.subscripedPackage?.docotrID else { return }
+//                    doctorId = doctorId
                     Task{ reschedualcase = .nextSession }
                     isReschedualling = true
                 }
 
                 SubcripedNextSession(upcomingSession: viewModel.upcomingSession,rescheduleAction: {
+//                    guard let doctorId = viewModel.doctorId else { return }
+//                    doctorId = viewModel.subscripedPackage?.docotrID ?? 10
                     Task{ reschedualcase = .reschedualSession }
                     isReschedualling = true
                 })
@@ -216,8 +221,8 @@ struct ActiveCustomerPackagesView: View {
 
                 
                 CustomerMesurmentsSection(measurements: viewModel.customerMeasurements){item in
-                    guard let item = item else { return }
-                    router.push(MeasurementDetailsView(stat: item))
+//                    guard let item = item else { return }
+//                    router.push(MeasurementDetailsView(stat: item))
                 }
                 
                 Spacer().frame(height: 55)
@@ -232,8 +237,12 @@ struct ActiveCustomerPackagesView: View {
             set: { if !$0 { viewModel.errorMessage = nil } }
         ), message: viewModel.errorMessage)
         .task(id: customerPackageId) {
+
             selectedSection = nil
             await viewModel.load(customerPackageId: customerPackageId)
+//            if doctorId == nil{
+//                doctorId = viewModel.subscripedPackage?.docotrID
+//            }
         }
         
         .customSheet(isPresented: $isReschedualling){
@@ -244,7 +253,7 @@ struct ActiveCustomerPackagesView: View {
                 reschedualcase: reschedualcase,
                 onRescheduleSuccess: {
                     Task {
-                        await viewModel.getUpcomingSession()
+                        await viewModel.getUpcomingSession(CustomerPackageId: customerPackageId)
                         await viewModel.getSubscripedPackageDetails(CustomerPackageId: customerPackageId)
                         await viewModel.getSubscripedPackagesList(customerPackageId: customerPackageId)
                     }

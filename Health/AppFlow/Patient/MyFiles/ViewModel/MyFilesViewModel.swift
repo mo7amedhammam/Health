@@ -14,13 +14,14 @@ class MyFilesViewModel : ObservableObject {
     private let networkService: AsyncAwaitNetworkServiceProtocol
     
 //    Add file
-    @Published private var fileName: String? = ""
-    @Published private var fileType: FileTypeM? = nil
-    @Published private var fileLink: String? = ""
+    @Published var fileName: String? = ""
+    @Published var fileType: FileTypeM? = nil
+    @Published var fileLink: String? = ""
 
-    @Published private var image: UIImage?
-    @Published private var fileURL: URL?
-        
+    @Published var image: UIImage?
+    @Published var fileURL: URL?
+    @Published var showUploadSheet:Bool = false
+
     // Published properties
     @Published var files : [MyFileM]? 
     
@@ -55,18 +56,70 @@ extension MyFilesViewModel{
             parametersarr["FilePath"] = data
         }else if let fileURL = fileURL {
             parametersarr["FilePath"] = fileURL
+        }else if let filelink = fileLink {
+            parametersarr["Url"] = filelink
         }
         
-        do {
-            self.errorMessage = nil // Clear previous errors
-            let response = try await networkService.request(
-                target,
-                responseType: [MyFileM].self
+//        let parametersarr : [String : Any] =  ["Name" : Name,"Mobile" : Mobile,"AppCountryId":AppCountryId,"GenderId" : GenderId]
+        var parts: [MultipartFormDataPart] = parametersarr.map { key, value in
+            MultipartFormDataPart(name: key, value: "\(value)")
+        }
+        
+        if let image = image,
+           let imageData = image.jpegData(compressionQuality: 0.8) {
+            parts.append(
+                MultipartFormDataPart(name: "FilePath", filename: "profile.jpg", mimeType: "image/jpeg", data: imageData)
             )
-            self.files = response
+        }
+        else if let fileURL = fileURL {
+            do {
+                let fileData = try Data(contentsOf: fileURL)
+                let fileName = fileURL.lastPathComponent
+                let mimeType = "application/pdf"
+
+                parts.append(
+                    MultipartFormDataPart(
+                        name: "FilePath",
+                        filename: fileName,
+                        mimeType: mimeType,
+                        data: fileData
+                    )
+                )
+            } catch {
+                print("Failed to read file: \(error)")
+            }
+        }
+        
+//        if let fileURL = fileURL,
+//           let imageData = image.jpegData(compressionQuality: 0.8) {
+//            parts.append(
+//                MultipartFormDataPart(name: "FilePath", filename: "profile.jpg", mimeType: "image/jpeg", data: imageData)
+//            )
+//        }
+        
+//            let target = ProfileServices.UpdateProfile(parameters: parametersarr)
+
+        do {
+            self.errorMessage = nil
+            _ = try await networkService.uploadMultipart(target, parts: parts, responseType: LoginM.self)
+            Task{await getMyFilesList() }
+            clearNewFiles()
         } catch {
+            clearNewFiles()
             self.errorMessage = error.localizedDescription
         }
+//        do {
+//            self.errorMessage = nil // Clear previous errors
+//            let response = try await networkService.request(
+//                target,
+//                responseType: [MyFileM].self
+//            )
+////            self.files = response
+//            Task{await getMyFilesList() }
+//            clearNewFiles()
+//        } catch {
+//            self.errorMessage = error.localizedDescription
+//        }
     }
     
     @MainActor
@@ -96,8 +149,16 @@ extension MyFilesViewModel{
     
 }
 
-//extension MyFilesViewModel {
-//    
+extension MyFilesViewModel {
+    func clearNewFiles() {
+        fileName = nil
+        fileType = nil
+        fileLink = nil
+        image = nil
+        fileURL = nil
+        showUploadSheet = false
+    }
+//
 //    @MainActor
 //    func refresh() async {
 //        skipCount = 0
@@ -115,4 +176,4 @@ extension MyFilesViewModel{
 //        skipCount = (skipCount ?? 0) + maxResultCount
 //        await getAppointmenstList()
 //    }
-//}
+}

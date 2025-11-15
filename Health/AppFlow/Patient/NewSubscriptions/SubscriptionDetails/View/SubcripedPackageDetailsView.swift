@@ -298,6 +298,7 @@ struct SubcripedPackageDetailsView: View {
         .localizeView()
         .withNavigation(router: router)
         .showHud(isShowing:  $viewmodel.isLoading)
+        
         .errorAlert(isPresented: Binding(
             get: { viewmodel.errorMessage != nil },
             set: { if !$0 { viewmodel.errorMessage = nil } }
@@ -305,6 +306,11 @@ struct SubcripedPackageDetailsView: View {
         .onAppear{
             Task{
                 if let CustomerPackageId = CustomerPackageId{
+                    if package == nil{
+                            async let package: () = viewmodel.getSubscripedPackageDetails(CustomerPackageId: CustomerPackageId)
+                            _ = await package
+                    }
+                    
                     async let upcoming: () = viewmodel.getUpcomingSession()
                     async let packages: () = viewmodel.getSubscripedSessionsList(customerPackageId: CustomerPackageId)
                     
@@ -314,22 +320,26 @@ struct SubcripedPackageDetailsView: View {
                 }
             }
         }
-        NavigationLink( "", destination: destination, isActive: $isactive)
             .customSheet(isPresented: $isReschedualling){
                 ReSchedualView(isPresentingNewMeasurementSheet: $isReschedualling,reschedualcase: .reschedualSession)
             }
-        if showCancel{
-            CancelSubscriptionView(isPresent: $showCancel, customerPackageId: idToCancel ?? 0,onCancelSuccess: {
-//                if let index = viewModel.subscripedPackages?.items?.firstIndex(where: { $0.customerPackageID == idToCancel }) {
-//                    viewModel.subscripedPackages?.items?[index].canCancel?.toggle()
-//                }
-                Task{
-                    if let CustomerPackageId = CustomerPackageId{
-                        await viewmodel.getSubscripedPackageDetails(CustomerPackageId: CustomerPackageId)
-                    }
+            .overlay{
+                if showCancel{
+                    CancelSubscriptionView(isPresent: $showCancel, customerPackageId: idToCancel ?? 0,onCancelSuccess: {
+                        //                if let index = viewModel.subscripedPackages?.items?.firstIndex(where: { $0.customerPackageID == idToCancel }) {
+                        //                    viewModel.subscripedPackages?.items?[index].canCancel?.toggle()
+                        //                }
+                        Task{
+                            if let CustomerPackageId = CustomerPackageId{
+                                await viewmodel.getSubscripedPackageDetails(CustomerPackageId: CustomerPackageId)
+                            }
+                        }
+                    })
                 }
-            })
-        }
+            }
+        NavigationLink( "", destination: destination, isActive: $isactive)
+
+
     }
 }
 
@@ -471,28 +481,28 @@ struct SubcripedNextSession: View {
                 
                 HStack(alignment:.bottom,spacing:3) {
                     
-                    Button(action: {
-                        detailsAction?()
-
-                    }){
-                        HStack(alignment: .center){
-                            Image(.newmoreicon)
-                                .renderingMode(.template)
-                                .resizable()
-                                .frame(width: 15, height: 15)
-                                .foregroundStyle(Color.white)
-                            
-                            Text("more_detail".localized)
-                                .font(.bold(size: 12))
-                                .foregroundStyle(Color.white)
-                        }
-                        
-                        //                            .padding(.horizontal,30)
-                        .frame(maxWidth: .infinity)
-                        .frame(height: 36)
-                        .background{Color(.secondaryMain)}
-                        .cardStyle( cornerRadius: 3)
-                    }
+//                    Button(action: {
+//                        detailsAction?()
+//
+//                    }){
+//                        HStack(alignment: .center){
+//                            Image(.newmoreicon)
+//                                .renderingMode(.template)
+//                                .resizable()
+//                                .frame(width: 15, height: 15)
+//                                .foregroundStyle(Color.white)
+//                            
+//                            Text("more_detail".localized)
+//                                .font(.bold(size: 12))
+//                                .foregroundStyle(Color.white)
+//                        }
+//                        
+//                        //                            .padding(.horizontal,30)
+//                        .frame(maxWidth: .infinity)
+//                        .frame(height: 36)
+//                        .background{Color(.secondaryMain)}
+//                        .cardStyle( cornerRadius: 3)
+//                    }
                     
                     Spacer()
                     

@@ -20,14 +20,14 @@
 /* onBoarding*/
 "bord1_tilte" = "Welcome to\nMy Health with Al Nadda!";
 "bord1_subtilte" = "Consultations with nutrition experts\nto help you achieve your goals.";
-"bord2_tilte" = "Welcome to\nMy Health with Al Nadda!";
-"bord2_subtilte" = "Consultations with nutrition experts\nto help you achieve your goals.";
-"bord3_tilte" = "Welcome to\nMy Health with Al Nadda!";
-"bord3_subtilte" = "Consultations with nutrition experts\nto help you achieve your goals.";
-"bord4_tilte" = "Welcome to\nMy Health with Al Nadda!";
-"bord4_subtilte" = "Consultations with nutrition experts\nto help you achieve your goals.";
-"bord5_tilte" = "Welcome to\nMy Health with Al Nadda!";
-"bord5_subtilte" = "Consultations with nutrition experts\nto help you achieve your goals.";
+"bord2_tilte" = "Healthy nutrition fits your goals!";
+"bord2_subtilte" = "Custom packages to improve your lifestyle.";
+"bord3_tilte" = "Follow your health \neasily!";
+"bord3_subtilte" = "Trace blood pressure, sugar, and hemoglobin with one touch.";
+"bord4_tilte" = "Don't miss your appointments and medicines!";
+"bord4_subtilte" = "Smart reminders for doses and medical appointments.";
+"bord5_tilte" = "Integrated medical and nutritional consultations!";
+"bord5_subtilte" = "Experts to help you with your health decisions.";
 
 "bord_btn_next" = "Next";
 "bord_btn_start" = "Start";
@@ -203,16 +203,16 @@
 //MARK: --- ticket ---
 "ticket_confirm_title" = "ticket confirm title";
 "confirm_Package_data" = "confirm Package data";
-"first_session" = "first_session";
+"first_session" = "first session";
 "sessions_selection_hint" = "*Doctor Will select remaining sessions";
 "confirm_Doctor_data" = "confirm Doctor data";
 "Add_Copon" = "Add Copon";
-"enter_Copon_number" = "enter Copon cumber";
+"enter_Copon_number" = "enter Copon number";
 "Payment_shortly" = "Payment shortly";
 "price_" = "price";
 "EGP_" = "EGP";
 "la_Discount" = "Discount";
-"Final_price_" = "Final_price";
+"Final_price_" = "Final price";
 
 //MARK: --- subsriptions ---
 "subscriped_title" = "my subscriptions";

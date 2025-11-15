@@ -42,7 +42,7 @@ extension ActiveCusPackViewModel {
 
         // Prepare targets
         let pkgTarget = SubscriptionServices.GetCustomerPackageById(parameters: ["CustomerPackageId": customerPackageId])
-        let upcTarget = HomeServices.GetUpcomingSession
+        let upcTarget = HomeServices.GetUpcomingSession(parameters: ["CustomerPackageId": customerPackageId])
         let measTarget = DocActivePackagesServices.GetCustomerMeasurements(parameters: ["customerId": customerPackageId])
 
         let sessionsTarget: TargetType1? = {
@@ -121,8 +121,10 @@ extension ActiveCusPackViewModel {
     }
 
     @MainActor
-    func getUpcomingSession() async {
-        let target = HomeServices.GetUpcomingSession
+    func getUpcomingSession(CustomerPackageId:Int?) async {
+        guard let CustomerPackageId = CustomerPackageId else { return }
+        let parameter: [String: Any] = ["CustomerPackageId": CustomerPackageId]
+        let target = HomeServices.GetUpcomingSession(parameters: parameter)
         do {
             self.errorMessage = nil
             let response = try await networkService.request(target, responseType: UpcomingSessionM.self)

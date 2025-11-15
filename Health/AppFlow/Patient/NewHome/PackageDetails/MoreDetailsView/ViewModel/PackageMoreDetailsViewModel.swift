@@ -8,19 +8,19 @@
 import Foundation
 
 final class PackageMoreDetailsViewModel: ObservableObject {
-
+    
     // MARK: - Dependencies
     private let networkService: AsyncAwaitNetworkServiceProtocol
-
+    
     // MARK: - Inputs
     var doctorPackageId: Int?
-
+    
     // Month anchor for fetching days
     @Published var newDate: Date = Date()
-
+    
     // MARK: - Outputs
     @Published var packageDetails: PackageMoreDetailsM?
-
+    
     @Published var availableDays: [AvailableDayM] = []
     @Published var availableShifts: [AvailableTimeShiftM] = []
     @Published var availableScheduals: [AvailableSchedualsM] = []
@@ -201,14 +201,15 @@ print("params:///", params)
         shiftsTask?.cancel()
         await MainActor.run { errorMessage = nil }
 
-        guard let appCountryPackageId = await MainActor.run(body: { packageDetails?.packageData?.appCountryPackageId }) else { return }
+//        guard let appCountryPackageId = await MainActor.run(body: { packageDetails?.packageData?.appCountryPackageId }) else { return }
+        guard let appCountryId = Helper.shared.AppCountryId() else { return }
 
-        if !force, let cached = shiftsCache[appCountryPackageId] {
+        if !force, let cached = shiftsCache[appCountryId] {
             await MainActor.run { self.availableShifts = cached }
             return
         }
 
-        let params: [String: Any] = ["AppCountryId": appCountryPackageId]
+        let params: [String: Any] = ["AppCountryId": appCountryId]
         let target = HomeServices.GetTimeShiftScheduleList(parameters: params)
 
         shiftsTask = Task {
@@ -218,7 +219,7 @@ print("params:///", params)
             do {
                 let response = try await networkService.request(target, responseType: [AvailableTimeShiftM].self)
                 await MainActor.run {
-                    self.shiftsCache[appCountryPackageId] = response
+                    self.shiftsCache[appCountryId] = response
                     self.availableShifts = response ?? []
                 }
             } catch {
@@ -238,7 +239,7 @@ print("params:///", params)
         // Collect inputs safely on main actor
         let inputs = await MainActor.run { () -> (appCountryId: Int, packageId: Int, doctorId: Int, shiftId: Int, dateString: String)? in
             guard
-                let appCountryId = packageDetails?.packageData?.appCountryPackageId,
+                let appCountryId = Helper.shared.AppCountryId(),
                 let packageId = packageDetails?.packageData?.packageID,
                 let doctorId = packageDetails?.doctorData?.doctorID,
                 let shiftId = selectedShift?.id
@@ -290,7 +291,7 @@ print("params:///", params)
 
     // MARK: - Booking
     func getBookingSession() async {
-        guard let params = prepareParamters() else { return }
+        guard let params = await prepareParamters() else { return }
         await MainActor.run { errorMessage = nil; startLoading() }
         defer { Task { await MainActor.run { self.stopLoading() } } }
 
@@ -303,10 +304,10 @@ print("params:///", params)
             await MainActor.run { self.errorMessage = error.localizedDescription }
         }
     }
-
+@MainActor
     func prepareParamters() -> [String: Any]? {
         // Ensure we read state on main actor
-        return MainActor.assumeIsolated { () -> [String: Any]? in
+//        return MainActor.assumeIsolated { () -> [String: Any]? in
             guard
                 let appCountryPackageId = packageDetails?.packageData?.appCountryPackageId,
                 let packageId = packageDetails?.packageData?.packageID,
@@ -332,7 +333,7 @@ print("params:///", params)
                 "timeTo": timeTo,
                 "appCountryPackageId": appCountryPackageId
             ]
-        }
+//        }
     }
 }
 

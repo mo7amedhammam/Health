@@ -88,7 +88,7 @@ struct DocProfileViewUI: View {
                             VStack{
                                 ProfileRow(title: "profile_Packages".localized, icon: "profile_packages"){
 //                                    router.push(DocScheduleView())
-                                    router.push( DocPackagesScreen())
+                                    router.push( DocPackagesScreen(hasbackBtn: true))
 
                                 }
                                 ProfileRow(title: "profile_drugnotifications".localized, icon: "profile_notification"){
@@ -110,16 +110,16 @@ struct DocProfileViewUI: View {
 ////                                    pushUIKitVC(VC)
 //
 //                                }
-                                ProfileRow(title: "profile_files".localized, icon: "profile_files"){
-                                    router.push( MyFilesView())
-                                }
+//                                ProfileRow(title: "profile_files".localized, icon: "profile_files"){
+//                                    router.push( MyFilesView())
+//                                }
                                 ProfileRow(title: "profile_Favourite".localized, icon: "profile_fav"){
                                     router.push( WishListView())
                                 }
-                                ProfileRow(title: "profile_allergies".localized, icon: "profile_alergy"){
-                                    router.push( AllergiesView())
-                                    
-                                }
+//                                ProfileRow(title: "profile_allergies".localized, icon: "profile_alergy"){
+//                                    router.push( AllergiesView())
+//                                    
+//                                }
                                 ProfileRow(title: "profile_Payments".localized, icon: "walletIcon",hasDivider:false){
                                     router.push( DocPaymentsView().environmentObject(paymentsVM) )
                                 }

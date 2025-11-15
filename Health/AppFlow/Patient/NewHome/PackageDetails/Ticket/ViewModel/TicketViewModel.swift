@@ -21,7 +21,7 @@ class TicketViewModel:ObservableObject {
     @Published var couponeCode                = ""
 
     // Published properties
-    @Published var ticketData: TicketM? = .init()
+    @Published var ticketData: TicketM? = nil
     @Published var availableDays: [AvailableDayM]?
     @Published var availableShifts: [AvailableTimeShiftM]?
     @Published var availableScheduals: [AvailableSchedualsM]? 
@@ -29,6 +29,8 @@ class TicketViewModel:ObservableObject {
     @Published var selectedDay: AvailableDayM?
     @Published var selectedShift: AvailableTimeShiftM?
     @Published var selectedSchedual: AvailableSchedualsM?
+
+    @Published var isBookingDone:Bool? = false
 
     @Published var isLoading:Bool? = false
     @Published var errorMessage: String? = nil
@@ -165,10 +167,11 @@ print(parametersarr)
         let target = HomeServices.CreateCustomerPackage(parameters: parametersarr)
         do {
             self.errorMessage = nil // Clear previous errors
-            let response = try await networkService.request(
+            _ = try await networkService.request(
                 target,
                 responseType: TicketM.self
             )
+        isBookingDone = true
 //            self.ticketData = response
         } catch {
             self.errorMessage = error.localizedDescription

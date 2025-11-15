@@ -93,7 +93,7 @@ extension NewHomeViewModel {
 
         do {
             async let upc: UpcomingSessionM? = env.isLoggedIn()
-                ? networkService.request(HomeServices.GetUpcomingSession, responseType: UpcomingSessionM.self)
+            ? networkService.request(HomeServices.GetUpcomingSession(parameters: [:]), responseType: UpcomingSessionM.self)
                 : nil
 
             async let categories: HomeCategoryM? = networkService.request(
@@ -219,7 +219,7 @@ extension NewHomeViewModel {
 
     // Targeted refreshers kept for reuse if needed elsewhere
     func getUpcomingSession() async {
-        let target = HomeServices.GetUpcomingSession
+        let target = HomeServices.GetUpcomingSession(parameters: [:])
         do {
             isError = false
             errorMessage = nil

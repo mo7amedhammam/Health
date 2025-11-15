@@ -10,11 +10,11 @@ import SwiftUI
 struct PackageFilesView: View {
     var CustomerPackageId : Int
     @StateObject var viewmodel = PackageFilesViewModel.shared
-
+    
     var body: some View {
         VStack(){
             TitleBar(title: "Package_Files",hasbackBtn: true)
-
+            
             Spacer()
             
             filesList(files: viewmodel.packageFiles?.items)
@@ -25,14 +25,14 @@ struct PackageFilesView: View {
             viewmodel.CustomerPackageId = CustomerPackageId
             await viewmodel.getSubscripedPackageFiles()
         }
-//        .reversLocalizeView()
+        //        .reversLocalizeView()
         .localizeView()
         .showHud(isShowing:  $viewmodel.isLoading)
         .errorAlert(isPresented: Binding(
             get: { viewmodel.errorMessage != nil },
             set: { if !$0 { viewmodel.errorMessage = nil } }
         ), message: viewmodel.errorMessage)
-
+        
     }
 }
 
@@ -42,7 +42,8 @@ struct PackageFilesView: View {
 
 
 struct filesList:View {
-    var files:[MyFileM]? = [.init(),.init(),.init()]
+    var files:[MyFileM]?
+    //    = [.init(),.init(),.init()]
     
     var body: some View {
         
@@ -53,42 +54,62 @@ struct filesList:View {
                         ForEach(files,id: \.self) { file in
                             VStack {
                                 HStack(alignment: .top){
-                                
+                                    
                                     Button(action: {
-                                     
-                                        if let filePath = file.filePath , let url = URL(string: filePath ) {
-                                            UIApplication.shared.open(url)
+                                        
+                                        //                                        if let filePath = file.filePath , let url = URL(string:Constants.baseURL + filePath ) {
+                                        //                                            UIApplication.shared.open(url)
+                                        //                                        }
+                                        if let filePath = file.filePath {
+                                            // Try to create a URL directly from filePath
+                                            if let directURL = URL(string: filePath), directURL.scheme != nil {
+                                                // filePath is already a valid absolute URL
+                                                UIApplication.shared.open(directURL)
+                                            } else {
+                                                
+                                                if let filePath = file.filePath , let url = URL(string:Constants.baseURL + filePath ) {
+                                                    UIApplication.shared.open(url)
+                                                }
+                                                
+                                                // filePath is likely a relative path — prepend baseURL
+                                                //                                                let fullURLString = Constants.baseURL + filePath
+                                                //                                                if let fullURL = URL(string: Constants.baseURL + filePath) {
+                                                //                                                    UIApplication.shared.open(fullURL)
+                                                //                                                } else {
+                                                //                                                    print("❌ Invalid URL: \(filePath)")
+                                                //                                                }
+                                            }
                                         }
                                         
                                     }, label: {
-                                    VStack(spacing:8){
-                                        Image("downloadicon")
-                                            .resizable()
-                                            .frame(width: 24, height: 24)
-                                            .horizontalGradientBackground()
-                                            .cardStyle(cornerRadius: 3)
-                                        
-                                        let title = switch file.fileTypeID ?? 0 {
-                                        case 1,2:
-                                            "Download_".localized
-                                        case 3,4:
-                                            "Watch_".localized
-                                        default:
-                                            "Open_".localized
+                                        VStack(spacing:8){
+                                            Image("downloadicon")
+                                                .resizable()
+                                                .frame(width: 24, height: 24)
+                                                .horizontalGradientBackground()
+                                                .cardStyle(cornerRadius: 3)
+                                            
+                                            let title = switch file.fileTypeID ?? 0 {
+                                            case 1,2:
+                                                "Download_".localized
+                                            case 3,4:
+                                                "Watch_".localized
+                                            default:
+                                                "Open_".localized
+                                            }
+                                            
+                                            Text(title)
+                                                .font(.medium(size: 12))
+                                                .foregroundStyle(Color(.main))
                                         }
-                                        
-                                        Text(title)
-                                            .font(.medium(size: 12))
-                                            .foregroundStyle(Color(.main))
-                                    }
                                     })
                                     
                                     VStack(alignment: .trailing,spacing: 12){
-                                        Text(file.fileName ?? "فيديو تمرينات الأسبوع الأول والثاني")
+                                        Text(file.fileName ?? "")
                                             .font(.semiBold(size: 16))
                                             .foregroundStyle(Color(.main))
                                         
-                                        Text(file.formattedCreationDate ?? "12 أكتوبر 2020")
+                                        Text(file.formattedCreationDate ?? "")
                                             .font(.medium(size: 14))
                                             .foregroundStyle(Color(.secondary))
                                     }
@@ -100,7 +121,7 @@ struct filesList:View {
                                     .frame(height:1)
                                     .padding(.horizontal)
                             }
-                        }                                                
+                        }
                     }
                     .padding(.bottom,5)
                     .cardStyle(cornerRadius: 3,shadowOpacity: 0.12)

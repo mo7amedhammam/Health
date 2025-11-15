@@ -183,6 +183,7 @@ struct ReSchedualView: View {
         .task {
             // Run sequentially and await completion on the view’s task context (non-blocking UI, but ordered)
             viewModel.doctorPackageId = doctorPackageId
+            viewModel.doctorId = doctorId
             await viewModel.getDoctorPackageDetails()
             await viewModel.getAvailableDays()
         }

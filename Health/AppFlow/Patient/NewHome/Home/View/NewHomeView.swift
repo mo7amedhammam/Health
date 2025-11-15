@@ -11,34 +11,34 @@ struct NewHomeView: View {
     @EnvironmentObject var router: NavigationRouter
     @StateObject private var viewModel: NewHomeViewModel
     @EnvironmentObject var profileViewModel: EditProfileViewModel
-
+    
     // UI-only state
     @State private var selectedPackage: FeaturedPackageItemM?
     @State private var doctorId : Int?
     @State private var isRescheduling: Bool = false
-
+    
     // Active tab for MostViewed/Booked
     @State private var mostTab: MostViewedBooked.mostcases = .mostviewed
-
+    
     // MARK: - Lightweight Equatable ViewState for subviews
     // These structs carry only the minimal, comparable "fingerprints" that matter to the subviews.
     // When the fingerprint arrays don't change, SwiftUI can skip re-rendering those subviews.
-
+    
     // VIP Packages section state
     private struct VipPackagesViewState: Equatable {
         let fingerprints: [String]
     }
-
+    
     // MostViewed/Booked section state
     private struct PackagesListViewState: Equatable {
         let fingerprints: [String]
     }
-
+    
     // Measurements section state
     private struct MeasurementsViewState: Equatable {
         let fingerprints: [String]
     }
-
+    
     // Produce a stable string that reflects all user-visible fields used by package cells.
     // If any of these fields change, the fingerprint changes -> view will re-render.
     private func fingerprint(for item: FeaturedPackageItemM) -> String {
@@ -55,7 +55,7 @@ struct NewHomeView: View {
             String(describing: item.discount)
         ].joined(separator: "|")
     }
-
+    
     // Produce a stable string for a measurement row (only fields that affect UI)
     private func fingerprint(for m: MyMeasurementsStatsM) -> String {
         [
@@ -68,13 +68,13 @@ struct NewHomeView: View {
             String(describing: m.normalRangValue)
         ].joined(separator: "|")
     }
-
+    
     // Derived states for EquatableByValue
     private var vipPackagesState: VipPackagesViewState {
         let items = viewModel.featuredPackages?.items ?? []
         return VipPackagesViewState(fingerprints: items.map(fingerprint(for:)))
     }
-
+    
     // Active MostViewed/Booked list state (depends on selected tab)
     private var mostListState: PackagesListViewState {
         let items: [FeaturedPackageItemM] = {
@@ -87,12 +87,12 @@ struct NewHomeView: View {
         }()
         return PackagesListViewState(fingerprints: items.map(fingerprint(for:)))
     }
-
+    
     private var measurementsState: MeasurementsViewState {
         let items = viewModel.myMeasurements ?? []
         return MeasurementsViewState(fingerprints: items.map(fingerprint(for:)))
     }
-
+    
     // Active packages array for the MostViewed/Booked section (used in the View body)
     private var activeMostPackages: [FeaturedPackageItemM] {
         switch mostTab {
@@ -102,34 +102,51 @@ struct NewHomeView: View {
             return viewModel.mostBookedPackages ?? []
         }
     }
-
+    @State var destination = AnyView(EmptyView())
+    @State var isactive: Bool = false
+    func pushTo(destination: any View) {
+        self.destination = AnyView(destination)
+        self.isactive = true
+    }
+    
     // Default init
     init() {
         _viewModel = StateObject(wrappedValue: NewHomeViewModel())
     }
-
+    
     // Test/preview-friendly init (dependency injection)
     init(viewModel: NewHomeViewModel) {
         _viewModel = StateObject(wrappedValue: viewModel)
     }
-
+    
     var body: some View {
         VStack {
             TitleBar(title: "home_navtitle")
-
+            
             ScrollView(showsIndicators: false) {
                 HeaderView()
                     .environmentObject(profileViewModel)
                     .padding(.horizontal)
                     .accessibilityIdentifier("home_header")
-
+                
                 VStack(alignment: .leading) {
                     if let nextsession = viewModel.upcomingSession {
                         NextSessionSection(
                             upcomingSession: nextsession,
-                            detailsAction: {},
+                            detailsAction: {
+
+                                if Helper.shared.getSelectedUserType() == .Customer {
+                                    pushTo(destination: SubcripedPackageDetailsView( package: nil, CustomerPackageId: nextsession.customerPackageId))
+//                                    router.push(SubcripedPackageDetailsView( package: nil, CustomerPackageId: nextsession.customerPackageId))
+                                    print("push to SubcripedPackageDetailsView ")
+                                }else if Helper.shared.getSelectedUserType() == .Doctor{
+                                    guard let customerPackageId = nextsession.customerPackageId else { return }
+                                    pushTo(destination: ActiveCustomerPackagesView( doctorId: nextsession.doctorID,CustomerPackageId: customerPackageId))
+                                }
+                            },
                             rescheduleAction: {
-//                                doctorId = nil
+                                //                                doctorId = nil
+//                                doctorId = nextsession.doctorId
                                 isRescheduling = true }
                         )
                         .padding(.horizontal)
@@ -137,30 +154,29 @@ struct NewHomeView: View {
                     }
                     
                     MainCategoriesSection(categories: viewModel.homeCategories) { category in
-                        router.push(PackagesView(mainCategory: category))
+                        pushTo(destination:PackagesView(mainCategory: category))
                     } loadMore:{
-                    Task {
-                        await viewModel.loadMoreCategoriesIfNeeded()
+                        Task {
+                            await viewModel.loadMoreCategoriesIfNeeded()
+                        }
                     }
-                }
                     
-
                     Image(.adsbg)
                         .resizable()
                         .frame(height: 137)
                         .padding(.horizontal)
-
+                    
                     if Helper.shared.CheckIfLoggedIn(){
                         // Last measurements wrapped with EquatableByValue
                         EquatableByValue(value: measurementsState) {
                             LastMesurmentsSection(measurements: viewModel.myMeasurements) { item in
                                 guard let item = item else { return }
-                                router.push(MeasurementDetailsView(stat: item))
+                                pushTo(destination:MeasurementDetailsView(stat: item))
                             }
                             .accessibilityIdentifier("home_measurements_section")
                         }
                     }
-
+                    
                     // VIP packages wrapped with EquatableByValue
                     EquatableByValue(value: vipPackagesState) {
                         VipPackagesSection(
@@ -172,12 +188,12 @@ struct NewHomeView: View {
                         )
                         .accessibilityIdentifier("home_vip_section")
                     }
-
+                    
                     Image(.adsbg2)
                         .resizable()
                         .frame(height: 229)
                         .padding(.horizontal)
-
+                    
                     // Most viewed/booked wrapped with EquatableByValue keyed to the active list
                     EquatableByValue(value: mostListState) {
                         MostViewedBooked(
@@ -207,7 +223,7 @@ struct NewHomeView: View {
                         .accessibilityIdentifier("home_most_section")
                     }
                 }
-
+                
                 Spacer()
                 Spacer().frame(height: 77)
             }
@@ -215,6 +231,7 @@ struct NewHomeView: View {
         .localizeView()
         .withNavigation(router: router)
         .showHud(isShowing: $viewModel.isLoading )
+        NavigationLink( "", destination: destination, isActive: $isactive)
 
         // Two-way binding so dismissing the alert clears the error
         .errorAlert(
@@ -238,7 +255,7 @@ struct NewHomeView: View {
         // Navigate on selection and reset so selecting the same item again works
         .onChange(of: selectedPackage) { newValue in
             guard let selected = newValue else { return }
-            router.push(PackageDetailsView(package: selected))
+            pushTo(destination:PackageDetailsView(package: selected))
             // reset selection after navigation
             selectedPackage = nil
         }
@@ -259,16 +276,16 @@ struct NewHomeView: View {
 struct EquatableByValue<Value: Equatable, Content: View>: View, Equatable {
     let value: Value
     let content: () -> Content
-
+    
     init(value: Value, @ViewBuilder content: @escaping () -> Content) {
         self.value = value
         self.content = content
     }
-
+    
     static func == (lhs: EquatableByValue<Value, Content>, rhs: EquatableByValue<Value, Content>) -> Bool {
         lhs.value == rhs.value
     }
-
+    
     var body: some View {
         content()
     }

@@ -103,7 +103,7 @@ struct DocPackagesScreen: View {
                         set: { if !$0 { viewModel.errorMessage = nil } }
                     ), message: viewModel.errorMessage)
         
-        .padding(.bottom,88)
+                    .padding(.bottom,hasbackBtn == true ? 0 : 88)
         .sheet(isPresented: $showFilter) {
             DocPackagesFilterView(viewmodel: viewModel)
         }

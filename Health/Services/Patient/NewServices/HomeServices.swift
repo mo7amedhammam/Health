@@ -9,7 +9,7 @@ import Alamofire
 
 
 enum HomeServices{
-    case GetUpcomingSession
+    case GetUpcomingSession(parameters : [String:Any])
     case GetAllHomeCategory(parameters : [String:Any])
     case GetMyMeasurementsStats
     case FeaturedPackageList(parameters : [String:Any])
@@ -161,7 +161,9 @@ extension HomeServices : TargetType1 {
             .GetBookingSession(parameters: let parameter),
             .CreateCustomerPackage(parameters: let parameter),
             .CustomerSessionCalender(parameters: let parameter),
-            .rescheduleSession(parameters: let parameter)
+            .rescheduleSession(parameters: let parameter),
+            .GetUpcomingSession(parameters: let parameter)
+
             :
 //            return .parameterRequest(Parameters: parameters, Encoding: encoding)
             return  parameter
@@ -172,7 +174,6 @@ extension HomeServices : TargetType1 {
         case
 //                .GetDistricts,
 //                .GetGenders,
-                .GetUpcomingSession,
                 .GetMyMeasurementsStats,
                 .GetTimeShiftScheduleList,
                 .GetWishList
