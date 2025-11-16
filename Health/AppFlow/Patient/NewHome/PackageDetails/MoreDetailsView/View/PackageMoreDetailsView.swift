@@ -291,11 +291,12 @@ struct PackageMoreDetailsView: View {
         ), message: viewModel.errorMessage)
         .edgesIgnoringSafeArea([.top, .horizontal])
         .task {
+            viewModel.ticketData = nil
             await viewModel.load(doctorPackageId: doctorPackageId)
         }
         .onChange(of: viewModel.ticketData) { newval in
             guard newval != nil else { return }
-            pushTo(destination: TicketView(ticketData: viewModel.ticketData, parameters: viewModel.prepareParamters()))
+            pushTo(destination: TicketView(ticketData: newval, parameters: viewModel.prepareParamters()))
         }
         .customSheet(isPresented: $mustLogin, height: 350) {
             LoginSheetView()

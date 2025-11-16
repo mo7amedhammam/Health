@@ -16,8 +16,10 @@ class ReSchedualViewModel:ObservableObject {
     var maxResultCount: Int?              = 5
     @Published var skipCount: Int?        = 0
     
-    var doctorId:Int?
-    var doctorPackageId:Int?
+    @Published var doctorId:Int?
+    @Published var doctorPackageId:Int?
+    @Published var PackageId:Int?
+
     @Published var newDate                = Date()
     
     // Published properties
@@ -34,7 +36,7 @@ class ReSchedualViewModel:ObservableObject {
     @Published var isReschedualed:Bool? = false
     @Published var isLoading:Bool? = false
     @Published var errorMessage: String? = nil
-    
+    var appcountryId:Int?{Helper.shared.AppCountryId()}
     // Init with DI
     init(networkService: AsyncAwaitNetworkServiceProtocol = AsyncAwaitNetworkService.shared) {
         self.networkService = networkService
@@ -48,7 +50,7 @@ extension ReSchedualViewModel{
     func getDoctorPackageDetails() async {
         isLoading = true
         defer { isLoading = false }
-        guard let doctorPackageId = doctorPackageId, let appCountryId = Helper.shared.AppCountryId() else {
+        guard let doctorPackageId = doctorPackageId, let appCountryId = appcountryId else {
 //            // Handle missings
 //            self.errorMessage = "check inputs"
 //            //            throw NetworkError.unknown(code: 0, error: "check inputs")
@@ -73,14 +75,15 @@ extension ReSchedualViewModel{
     func getAvailableDays() async {
         isLoading = true
         defer { isLoading = false }
-        guard let appCountryId = Helper.shared.AppCountryId()  else {
+        guard let appCountryId = appcountryId  else {
 //            // Handle missings
 //            self.errorMessage = "check inputs"
 //            //            throw NetworkError.unknown(code: 0, error: "check inputs")
             return
         }
         var parametersarr : [String : Any] =  ["date":"\(newDate.formatted(.customDateFormat("YYYY-MM-dd")))","appCountryId":appCountryId]
-            if let doctorId = doctorId{
+          
+        if let doctorId = doctorId{
                 parametersarr["doctorId"] = doctorId
             }else{
                 if let doctorId = packageDetails?.doctorData?.doctorID{
@@ -106,7 +109,7 @@ print("parametersarr,",parametersarr)
     func getAvailableShifts() async {
         isLoading = true
         defer { isLoading = false }
-        guard let AppCountryId = packageDetails?.packageData?.appCountryPackageId  else {
+        guard let AppCountryId = appcountryId  else {
 ////            // Handle missings
 ////            self.errorMessage = "check inputs"
 ////            //            throw NetworkError.unknown(code: 0, error: "check inputs")
@@ -131,14 +134,29 @@ print("parametersarr,",parametersarr)
     func getAvailableScheduals() async {
         isLoading = true
         defer { isLoading = false }
-        guard let appCountryId = packageDetails?.packageData?.appCountryPackageId ,let packageId = packageDetails?.packageData?.packageID  ,let doctorId = packageDetails?.doctorData?.doctorID,let shiftId = selectedShift?.id else {
+        guard let appCountryId = appcountryId ,let shiftId = selectedShift?.id else {
 //            // Handle missings
 //            self.errorMessage = "check inputs"
 //            //            throw NetworkError.unknown(code: 0, error: "check inputs")
             return
         }
-        let parametersarr : [String : Any] =  ["appCountryId":appCountryId,"date":"\(newDate.formatted(.customDateFormat("YYYY-MM-dd")))","packageId":packageId,"doctorId":doctorId,"shiftId":shiftId]
+        var parametersarr : [String : Any] =  ["appCountryId":appCountryId,"date":"\(newDate.formatted(.customDateFormat("YYYY-MM-dd")))","shiftId":shiftId]
 
+        if let doctorId = doctorId{
+                parametersarr["doctorId"] = doctorId
+            }else{
+                if let doctorId = packageDetails?.doctorData?.doctorID{
+                    parametersarr["doctorId"] = doctorId
+                }
+            }
+        if let PackageId = PackageId{
+            parametersarr["packageId"] = PackageId
+        }else{
+            if let PackageId = packageDetails?.packageData?.packageID{
+                parametersarr["packageId"] = PackageId
+            }
+        }
+        
         let target = HomeServices.GetAvailableDoctorSchedule(parameters: parametersarr)
         do {
             self.errorMessage = nil // Clear previous errors

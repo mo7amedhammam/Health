@@ -17,6 +17,7 @@ struct AppointmentsView: View {
     @State var idToCancel:Int?
     
     @State private var doctorId : Int?
+    @State private var packageId : Int?
     @State private var isRescheduling: Bool = false
 
     var body: some View {
@@ -30,21 +31,22 @@ struct AppointmentsView: View {
                     if let session = viewModel.upcomingSession{
                         NextSessionSection(upcomingSession: session,
                                            detailsAction: {
-
-                                               if Helper.shared.getSelectedUserType() == .Customer {
-                                                   router.push( SubcripedPackageDetailsView( package: nil, CustomerPackageId: session.customerPackageId))
-               //                                    router.push(SubcripedPackageDetailsView( package: nil, CustomerPackageId: nextsession.customerPackageId))
-                                                   print("push to SubcripedPackageDetailsView ")
-                                               }else if Helper.shared.getSelectedUserType() == .Doctor{
-                                                   guard let customerPackageId = session.customerPackageId else { return }
-                                                   router.push( ActiveCustomerPackagesView( doctorId:session.doctorID,CustomerPackageId: customerPackageId))
-                                               }
-                                           },
+                            
+                            if Helper.shared.getSelectedUserType() == .Customer {
+                                router.push( SubcripedPackageDetailsView( package: nil, CustomerPackageId: session.customerPackageId))
+                                //                                    router.push(SubcripedPackageDetailsView( package: nil, CustomerPackageId: nextsession.customerPackageId))
+                                print("push to SubcripedPackageDetailsView ")
+                            }else if Helper.shared.getSelectedUserType() == .Doctor{
+                                guard let customerPackageId = session.customerPackageId else { return }
+                                router.push( ActiveCustomerPackagesView( doctorId:session.doctorId,CustomerPackageId: customerPackageId))
+                            }
+                        },
                                            rescheduleAction: {
-                                               //                                doctorId = nil
-               //                                doctorId = nextsession.doctorId
-                                               isRescheduling = true })
-                            .padding([.horizontal])
+                            //                                doctorId = nil
+                            packageId = session.packageID
+                            doctorId = session.doctorId
+                            isRescheduling = true })
+                        .padding([.horizontal])
                     }
                     
                     AppointmentsListView(appointments:viewModel.appointments?.items ,selectAction: {appointment in
@@ -55,7 +57,7 @@ struct AppointmentsView: View {
                             //                        print(appointment.doctorName ?? "")
                             router.push(
                                 //                            SubcripedPackageDetailsView(package: nil, CustomerPackageId:appointment.customerPackageId ?? 0)
-                                ActiveCustomerPackagesView(doctorId:appointment.doctorID,CustomerPackageId: customerPackageId)
+                                ActiveCustomerPackagesView(doctorId:appointment.doctorId,CustomerPackageId: customerPackageId)
                                 //                                .environmentObject(router)
                             )
                         }
@@ -124,7 +126,7 @@ struct AppointmentsView: View {
             LoginSheetView()
         }
         .customSheet(isPresented: $isRescheduling) {
-            ReSchedualView(doctorId: 0, isPresentingNewMeasurementSheet: $isRescheduling ,reschedualcase: .reschedualSession)
+            ReSchedualView(doctorId: $doctorId, packageId: $packageId, isPresentingNewMeasurementSheet: $isRescheduling ,reschedualcase: .reschedualSession)
         }
         if showCancel{
             CancelSubscriptionView(isPresent: $showCancel, customerPackageId: idToCancel ?? 0)

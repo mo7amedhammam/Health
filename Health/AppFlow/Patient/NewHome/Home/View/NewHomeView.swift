@@ -15,6 +15,7 @@ struct NewHomeView: View {
     // UI-only state
     @State private var selectedPackage: FeaturedPackageItemM?
     @State private var doctorId : Int?
+    @State private var packageId : Int?
     @State private var isRescheduling: Bool = false
     
     // Active tab for MostViewed/Booked
@@ -141,12 +142,13 @@ struct NewHomeView: View {
                                     print("push to SubcripedPackageDetailsView ")
                                 }else if Helper.shared.getSelectedUserType() == .Doctor{
                                     guard let customerPackageId = nextsession.customerPackageId else { return }
-                                    pushTo(destination: ActiveCustomerPackagesView( doctorId: nextsession.doctorID,CustomerPackageId: customerPackageId))
+                                    pushTo(destination: ActiveCustomerPackagesView( doctorId: nextsession.doctorId,CustomerPackageId: customerPackageId))
                                 }
                             },
                             rescheduleAction: {
                                 //                                doctorId = nil
-//                                doctorId = nextsession.doctorId
+                                packageId = nextsession.packageID
+                                doctorId = nextsession.doctorId
                                 isRescheduling = true }
                         )
                         .padding(.horizontal)
@@ -242,7 +244,7 @@ struct NewHomeView: View {
             message: viewModel.errorMessage
         )
         .customSheet(isPresented: $isRescheduling) {
-            ReSchedualView(doctorId: 0, isPresentingNewMeasurementSheet: $isRescheduling ,reschedualcase: .reschedualSession)
+            ReSchedualView(doctorId: $doctorId,packageId: $packageId , isPresentingNewMeasurementSheet: $isRescheduling ,reschedualcase: .reschedualSession)
         }
         .task {
             await viewModel.load()

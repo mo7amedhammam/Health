@@ -14,7 +14,7 @@ final class PackageMoreDetailsViewModel: ObservableObject {
     
     // MARK: - Inputs
     var doctorPackageId: Int?
-    
+    var appCountryId: Int?{return Helper.shared.AppCountryId()}
     // Month anchor for fetching days
     @Published var newDate: Date = Date()
     
@@ -111,7 +111,6 @@ final class PackageMoreDetailsViewModel: ObservableObject {
             availableScheduals = []
             return false
         }) { return }
-
         await fetchAvailableShifts(force: false)
     }
 
@@ -123,7 +122,6 @@ final class PackageMoreDetailsViewModel: ObservableObject {
             selectedSchedual = nil
             return false
         }) { return }
-
         await fetchAvailableScheduals(force: false)
     }
 
@@ -132,10 +130,16 @@ final class PackageMoreDetailsViewModel: ObservableObject {
         detailsTask?.cancel()
         await MainActor.run { errorMessage = nil }
 
-        guard let doctorPackageId = doctorPackageId,
-              let appCountryId = Helper.shared.AppCountryId() else { return }
+        guard let appCountryId = appCountryId else { return }
 
-        let params: [String: Any] = ["Id": doctorPackageId, "AppCountryId": appCountryId]
+        var params: [String: Any] = [ "AppCountryId": appCountryId]
+        if let doctorPackageId = doctorPackageId {
+            params["Id"] = doctorPackageId
+        }else{
+            if let doctorPackageId = packageDetails?.id{
+                params["Id"] = doctorPackageId
+            }
+        }
         let target = HomeServices.GetDoctorPackageById(parameters: params)
 
         detailsTask = Task {
@@ -162,7 +166,7 @@ final class PackageMoreDetailsViewModel: ObservableObject {
         await MainActor.run { errorMessage = nil }
 
         guard let doctorId = await MainActor.run(body: { packageDetails?.doctorData?.doctorID }),
-              let appCountryId = Helper.shared.AppCountryId() else { return }
+              let appCountryId = appCountryId else { return }
 
         let monthKey = date.formatted(.customDateFormat("yyyy-MM"))
         let cacheKey = DaysKey(doctorId: doctorId, appCountryId: appCountryId, month: monthKey)
@@ -202,7 +206,7 @@ print("params:///", params)
         await MainActor.run { errorMessage = nil }
 
 //        guard let appCountryPackageId = await MainActor.run(body: { packageDetails?.packageData?.appCountryPackageId }) else { return }
-        guard let appCountryId = Helper.shared.AppCountryId() else { return }
+        guard let appCountryId = appCountryId else { return }
 
         if !force, let cached = shiftsCache[appCountryId] {
             await MainActor.run { self.availableShifts = cached }
@@ -239,7 +243,7 @@ print("params:///", params)
         // Collect inputs safely on main actor
         let inputs = await MainActor.run { () -> (appCountryId: Int, packageId: Int, doctorId: Int, shiftId: Int, dateString: String)? in
             guard
-                let appCountryId = Helper.shared.AppCountryId(),
+                let appCountryId = appCountryId,
                 let packageId = packageDetails?.packageData?.packageID,
                 let doctorId = packageDetails?.doctorData?.doctorID,
                 let shiftId = selectedShift?.id
@@ -291,6 +295,7 @@ print("params:///", params)
 
     // MARK: - Booking
     func getBookingSession() async {
+//        guard let params = await prepareParamters() else { return }
         guard let params = await prepareParamters() else { return }
         await MainActor.run { errorMessage = nil; startLoading() }
         defer { Task { await MainActor.run { self.stopLoading() } } }
@@ -303,18 +308,59 @@ print("params:///", params)
         } catch {
             await MainActor.run { self.errorMessage = error.localizedDescription }
         }
+
     }
-@MainActor
+
+    
+//    @MainActor
+//    func prepareParametersForAddingSession() -> [String: Any]? {
+//        guard
+//            let packageId = packageDetails?.packageData?.packageID,
+//            let doctorId = packageDetails?.doctorData?.doctorID,
+//            let doctorPackageId = packageDetails?.id,
+//            let shiftId = selectedShift?.id,
+//            let timeFrom = selectedSchedual?.timefrom,
+//            let timeTo = selectedSchedual?.timeTo,
+//            let dateRaw = selectedDay?.date
+//        else {
+//            return nil
+//        }
+//
+//        // Convert date → ISO8601 "yyyy-MM-dd'T'HH:mm:ss"
+//        let formattedDate = dateRaw.ChangeDateFormat(
+//            FormatFrom: "yyyy-MM-dd'T'HH:mm:ss",
+//            FormatTo: "yyyy-MM-dd'T'HH:mm:ss"
+//        )
+//
+//        var params: [String: Any] = [
+//            "doctorPackageId": doctorPackageId,
+//            "doctorId": doctorId,
+//            "packageId": packageId,
+//            "date": formattedDate,
+//            "shiftId": shiftId,
+//            "timeFrom": timeFrom,
+//            "timeTo": timeTo
+//        ]
+//
+//        // Add coupon only if user typed something
+////        if let coupon = couponeCode, !coupon.isEmpty {
+////            params["coupon"] = coupon
+////        }
+//
+//        return params
+//    }
+    
+    @MainActor
     func prepareParamters() -> [String: Any]? {
         // Ensure we read state on main actor
 //        return MainActor.assumeIsolated { () -> [String: Any]? in
             guard
-                let appCountryPackageId = packageDetails?.packageData?.appCountryPackageId,
+                let appCountryPackageId = packageDetails?.appCountryPackageId,
                 let packageId = packageDetails?.packageData?.packageID,
                 let doctorId = packageDetails?.doctorData?.doctorID,
                 let shiftId = selectedShift?.id,
-                let doctorPackageId = doctorPackageId,
-                let totalAfterDiscount = packageDetails?.packageData?.priceAfterDiscount,
+                let doctorPackageId = packageDetails?.id,
+//                let totalAfterDiscount = packageDetails?.packageData?.priceAfterDiscount,
                 let timeFrom = selectedSchedual?.timefrom,
                 let timeTo = selectedSchedual?.timeTo,
                 let date = selectedDay?.date?.ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "yyyy-MM-dd")
@@ -328,7 +374,7 @@ print("params:///", params)
                 "doctorId": doctorId,
                 "doctorPackageId": doctorPackageId,
                 "shiftId": shiftId,
-                "totalAfterDiscount": totalAfterDiscount,
+//                "totalAfterDiscount": totalAfterDiscount,
                 "timeFrom": timeFrom,
                 "timeTo": timeTo,
                 "appCountryPackageId": appCountryPackageId

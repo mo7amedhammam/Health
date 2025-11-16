@@ -9,6 +9,7 @@
 // MARK: - MoreDetailsPackageM
 struct PackageMoreDetailsM: Codable {
     var id: Int?
+    var appCountryPackageId:Int?
     var doctorData: DoctorData?
     var packageData: PackageData?
 }

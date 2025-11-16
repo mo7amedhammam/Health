@@ -163,6 +163,11 @@ extension TicketViewModel{
             parametersarr["coupon"] = couponeCode
         }
         
+//        parametersarr["customerPackageId"] = ticketData?.packageData?.appCountryPackageId
+//        parametersarr["appCountryPackageId"] = ticketData?.packageData?.appCountryPackageId
+        parametersarr["totalAfterDiscount"] = ticketData?.packageData?.priceAfterDiscount
+        parametersarr["doctorPackageId"] = nil
+
 print(parametersarr)
         let target = HomeServices.CreateCustomerPackage(parameters: parametersarr)
         do {

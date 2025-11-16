@@ -11,8 +11,8 @@ struct ActiveCustomerPackagesView: View {
     @StateObject private var viewModel: ActiveCusPackViewModel
 
     let customerPackageId: Int
-    var doctorId: Int?
-
+    @State var doctorId: Int?
+    @State var packageId: Int? = nil
     @State private var selectedSection: SectionType? = nil
     @State private var reschedualcase: reschedualCases? = .reschedualSession
     @State private var isReschedualling: Bool = false
@@ -157,7 +157,6 @@ struct ActiveCustomerPackagesView: View {
                             case .alergy:
                                 guard let customerID = viewModel.subscripedPackage?.customerPackageID else { return }
                                 router.push(CustomerAlergyView(customerID: customerID))
-
                             }
                         }) {
                             VStack(spacing: 7) {
@@ -197,16 +196,20 @@ struct ActiveCustomerPackagesView: View {
                 }
 
                 CustomButton(title: "select_next_session",isdisabled: false,backgroundView:AnyView(Color.clear.horizontalGradientBackground())){
-//                    guard let doctorId = viewModel.subscripedPackage?.docotrID else { return }
-//                    doctorId = doctorId
-                    Task{ reschedualcase = .nextSession }
+//                    guard let doctorId = viewModel.subscripedPackage?.docotrID,let packageId = customerPackageID else { return }
+                    doctorId = viewModel.subscripedPackage?.docotrID
+                    packageId = customerPackageId
+                   reschedualcase = .nextSession
                     isReschedualling = true
                 }
 
                 SubcripedNextSession(upcomingSession: viewModel.upcomingSession,rescheduleAction: {
 //                    guard let doctorId = viewModel.doctorId else { return }
 //                    doctorId = viewModel.subscripedPackage?.docotrID ?? 10
-                    Task{ reschedualcase = .reschedualSession }
+//                    guard let doctorId = viewModel.subscripedPackage?.docotrID,let packageId = customerPackageID else { return }
+                    doctorId = viewModel.subscripedPackage?.docotrID
+                    packageId = customerPackageId
+                   reschedualcase = .reschedualSession
                     isReschedualling = true
                 })
                 .padding(.horizontal)
@@ -219,7 +222,6 @@ struct ActiveCustomerPackagesView: View {
                 )
                 .padding(.horizontal)
 
-                
                 CustomerMesurmentsSection(measurements: viewModel.customerMeasurements){item in
 //                    guard let item = item else { return }
 //                    router.push(MeasurementDetailsView(stat: item))
@@ -248,7 +250,8 @@ struct ActiveCustomerPackagesView: View {
         .customSheet(isPresented: $isReschedualling){
             ReSchedualView(
                 doctorPackageId: customerPackageId,
-                doctorId: doctorId,
+                doctorId: .constant( doctorId ),
+                packageId:.constant( packageId ),
                 isPresentingNewMeasurementSheet: $isReschedualling,
                 reschedualcase: reschedualcase,
                 onRescheduleSuccess: {

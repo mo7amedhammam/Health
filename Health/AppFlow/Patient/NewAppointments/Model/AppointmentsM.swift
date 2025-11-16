@@ -25,7 +25,7 @@ struct AppointmentsItemM: Codable, Identifiable,Hashable {
     var sessionMethod: String?
     var packageID,appCountryPackageId: Int?
     var dayName,customerName: String?
-    var doctorID:Int?
+    var doctorId:Int?
     enum CodingKeys: String, CodingKey {
         case id,customerPackageId, doctorName, sessionDate, timeFrom, packageName, categoryName
         case mainCategoryID = "mainCategoryId"
@@ -34,7 +34,7 @@ struct AppointmentsItemM: Codable, Identifiable,Hashable {
         case sessionMethod
         case packageID = "packageId",appCountryPackageId
         case dayName,customerName
-        case doctorID
+        case doctorId
     }
     
     var formattedDate: String {

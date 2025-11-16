@@ -321,7 +321,7 @@ struct SubcripedPackageDetailsView: View {
             }
         }
             .customSheet(isPresented: $isReschedualling){
-                ReSchedualView(isPresentingNewMeasurementSheet: $isReschedualling,reschedualcase: .reschedualSession)
+                ReSchedualView(doctorId: .constant(nil), packageId: .constant(nil), isPresentingNewMeasurementSheet: $isReschedualling,reschedualcase: .reschedualSession)
             }
             .overlay{
                 if showCancel{

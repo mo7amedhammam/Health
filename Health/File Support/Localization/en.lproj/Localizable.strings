@@ -99,7 +99,7 @@
 
 //--- paswword forget ----
 "forget_title" = "Reset Password";
-"forget_subtitle" = "Password Changed successfully!";
+"forget_subtitle" = "Type your New Passowrd";
 "forget_pass_title" = "New Password";
 "forget_pass_placeholder" = "Type your New Passowrd";
 "forget_repass_title" = "Confirm New Password";

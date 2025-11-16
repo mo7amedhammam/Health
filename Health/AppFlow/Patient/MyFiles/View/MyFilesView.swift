@@ -68,6 +68,8 @@ struct MyFilesView: View {
 
                           Task { await myfilesvm.addNewFile() }
                 }
+                .environmentObject(lookupsvm)
+
 //                    .frame(height: 600)
 
 //                { newFile in

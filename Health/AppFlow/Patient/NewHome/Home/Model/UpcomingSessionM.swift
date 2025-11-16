@@ -19,7 +19,7 @@ struct UpcomingSessionM: Codable {
     var customerName, mainCategoryName, dayName:String?
     var appCountryPackageId:Int?
     var customerPackageId:Int?
-    var doctorID:Int?
+    var doctorId:Int?
     enum CodingKeys: String, CodingKey {
         case id, doctorName, sessionDate, timeFrom, packageName, categoryName
         case mainCategoryID = "mainCategoryId"
@@ -29,7 +29,7 @@ struct UpcomingSessionM: Codable {
         case customerName, mainCategoryName, dayName
         case appCountryPackageId
         case customerPackageId
-        case doctorID
+        case doctorId
     }
 }
 

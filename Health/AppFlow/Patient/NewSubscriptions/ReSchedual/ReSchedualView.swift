@@ -12,8 +12,9 @@ import SwiftUI
 
 struct ReSchedualView: View {
     var doctorPackageId : Int?
-    var doctorId : Int?
-    @StateObject var viewModel = ReSchedualViewModel.shared
+    @Binding var doctorId : Int?
+    @Binding var packageId : Int?
+    @StateObject var viewModel = ReSchedualViewModel() // fresh instance per sheet
     @State private var showingDatePicker = false
     @State private var selectedDate = Date()
     @Binding var isPresentingNewMeasurementSheet:Bool
@@ -44,8 +45,6 @@ struct ReSchedualView: View {
             }
             .padding()
             
-            //                    YearMonthPickerView(selectedDate: $selectedDate)
-            
             HStack{
                 Button(action: {
                     showingDatePicker = true
@@ -60,19 +59,17 @@ struct ReSchedualView: View {
                             .font(.system(size: 8))
                             .frame(width: 15, height: 15)
                             .foregroundStyle(Color.white)
-                        //                                    .padding(6)
                             .background(Color(.secondary).cornerRadius(1))
                     }
                 })
                 .customSheet(isPresented: $showingDatePicker,height: 250, radius: 12, content: {
                     VStack(spacing:0){
                         MonthYearPicker(date: $selectedDate)
-                            .frame(maxHeight: .infinity) // Adjust height
+                            .frame(maxHeight: .infinity)
                         Button(action: {
                             showingDatePicker = false
                             guard selectedDate != viewModel.newDate else {return}
                             viewModel.newDate = selectedDate
-                            
                         }) {
                             Text("Done".localized)
                                 .font(.bold(size: 16))
@@ -95,7 +92,6 @@ struct ReSchedualView: View {
             .padding(.horizontal)
             
             ScrollView(.horizontal,showsIndicators: false){
-                
                 HStack{
                     ForEach(viewModel.availableDays ?? [],id: \.self){day in
                         Button(action: {
@@ -125,9 +121,7 @@ struct ReSchedualView: View {
             .padding(.horizontal)
             
             GeometryReader { geometry in
-                
                 ScrollView(.horizontal,showsIndicators: false){
-                    
                     HStack(alignment: .center,spacing: 5){
                         ForEach(viewModel.availableShifts ?? [],id: \.self){shift in
                             Button(action: {
@@ -166,14 +160,11 @@ struct ReSchedualView: View {
 
                 CustomButton(title: "confirm_",backgroundcolor: Color(.mainBlue),backgroundView:nil){
                     Task{
-                        // Call the reschedule method (to be added in ViewModel)
                         switch reschedualcase {
                         case .nextSession:
                             await viewModel.createCustomerPackage(paramters: [:] )
-
                         case .reschedualSession,.none:
                             await viewModel.rescheduleCustomerPackage()
-
                         }
                     }
                 }
@@ -181,11 +172,20 @@ struct ReSchedualView: View {
             .padding(.top)
         }
         .task {
-            // Run sequentially and await completion on the view’s task context (non-blocking UI, but ordered)
+            // Push latest values into VM at presentation time
             viewModel.doctorPackageId = doctorPackageId
             viewModel.doctorId = doctorId
+            viewModel.PackageId = packageId
             await viewModel.getDoctorPackageDetails()
             await viewModel.getAvailableDays()
+        }
+        .onChange(of: doctorId) { newVal in
+            // reflect parent updates while sheet is up
+            viewModel.doctorId = newVal
+        }
+        .onChange(of: packageId) { newVal in
+            // reflect parent updates while sheet is up
+            viewModel.PackageId = newVal
         }
         // React to success
         .onChange(of: viewModel.isReschedualed) { newValue in
@@ -199,5 +199,5 @@ struct ReSchedualView: View {
 }
 
 #Preview {
-    ReSchedualView( doctorPackageId: 0,isPresentingNewMeasurementSheet: .constant(true),reschedualcase: .reschedualSession)
+    ReSchedualView( doctorPackageId: 0, doctorId: .constant(0), packageId: .constant(0), isPresentingNewMeasurementSheet: .constant(true),reschedualcase: .reschedualSession)
 }

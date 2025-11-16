@@ -346,6 +346,7 @@ struct TicketView: View {
                                 AnyView(Color.clear.horizontalGradientBackground())) {
                     Task {
                         await viewmodel.createCustomerPackage(paramters: parameters )
+                        
                     }
                 }
                 
