@@ -341,16 +341,12 @@ struct TicketView: View {
                         .padding()
                 }
                 
-                
                 CustomButton(title: "Continue_".localized, backgroundView:
                                 AnyView(Color.clear.horizontalGradientBackground())) {
                     Task {
                         await viewmodel.createCustomerPackage(paramters: parameters )
-                        
                     }
                 }
-                
-                
             }
         }
         .task {

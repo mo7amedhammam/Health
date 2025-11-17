@@ -101,12 +101,19 @@ case GetCustomerPackageById              = "CustomerPackage/GetCustomerPackageBy
 case GetDoctorById                       = "Doctor/GetDoctorById"
 case GetCustomerUpComingSession          = "Home/GetCustomerUpComingSession"
 case GetCustomerPackageSessionList       = "Subscription/GetCustomerPackageSessionList"
-case FileType                            = "Lookups/FileType"
-case GetCustomerPackageInstructionByCPId = "Subscription/GetCustomerPackageInstructionByCPId"
+//case GetCustomerPackageInstructionByCPId = "Subscription/GetCustomerPackageInstructionByCPId"
 //case CreateDoctorMessage                 = "CustomerPackageMessage/CreateDoctorMessage"
 case CreateCustomerMessage               = "CustomerPackageMessage/CreateCustomerMessage"
 case GetMessage                          = "CustomerPackageMessage/GetMessage"
 case CustomerPackageCancel               = "CustomerPackage/CustomerPackageCancel"
+    
+    case FileType                            = "Lookups/FileType"
+    case GetCustomerPackageInstructionByCPId = "CustomerPackageInstructions/GetCustomerPackageInstructionByCPID"
+    case CreateCustomerPackageInstructionByCPId = "CustomerPackageInstructions/CreateCustomerPackageInstruction"
+
+//    case GetCustomerPackageInstructionByCPId = "CustomerPackageInstructions/GetCustomerPackageInstructionByCPID"
+//    case CreateCustomerPackageInstructionByCPId = "CustomerPackageInstructions/CreateCustomerPackageInstruction"
+
 }
 
 enum AppointmentEndPoints : String{

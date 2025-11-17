@@ -173,6 +173,7 @@ print("parametersarr,",parametersarr)
     @MainActor
     func createCustomerPackage(paramters:[String:Any]?) async {
         isLoading = true
+        isReschedualed = false
         defer { isLoading = false }
         guard let paramters = prepareParamters() else {
 //            // Handle missings
@@ -192,7 +193,7 @@ print("parametersarr,",parametersarr)
         let target = HomeServices.CreateCustomerPackage(parameters: parametersarr)
         do {
             self.errorMessage = nil // Clear previous errors
-            let response = try await networkService.request(
+            _ = try await networkService.request(
                 target,
                 responseType: TicketM.self
             )
@@ -206,6 +207,7 @@ print("parametersarr,",parametersarr)
     @MainActor
     func rescheduleCustomerPackage() async {
         isLoading = true
+        isReschedualed = false
         defer { isLoading = false }
         // Validate required selections; adjust keys as needed for your API
         guard let newDate = selectedDay?.date?.ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "YYYY-MM-dd"),
@@ -216,12 +218,12 @@ print("parametersarr,",parametersarr)
             return
         }
 
-        let parametersarr : [String : Any] =  ["sessionId":sessionId,"date":newDate,"newTimeFrom":newTimeFrom,"newTimeTo":newTimeTo]
+        let parametersarr : [String : Any] =  ["sessionId":sessionId,"newDate":newDate,"newTimeFrom":newTimeFrom,"newTimeTo":newTimeTo]
 
         let target = HomeServices.rescheduleSession(parameters: parametersarr)
         do {
             self.errorMessage = nil // Clear previous errors
-            let response = try await networkService.request(
+            _ = try await networkService.request(
                 target,
                 responseType: [AvailableSchedualsM].self
             )

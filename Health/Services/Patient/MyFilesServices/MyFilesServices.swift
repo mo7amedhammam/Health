@@ -9,7 +9,7 @@ import Alamofire
 enum MyFilesServices{
     case AddFile(parameters : [String:Any])
     case UpdateFile(parameters : [String:Any])
-    case GetFiles
+    case GetFiles(parameters : [String:Any])
 
 
 }
@@ -53,7 +53,8 @@ extension MyFilesServices : TargetType1 {
         switch self {
         case
                 .AddFile(parameters: let parameter),
-                .UpdateFile(parameters: let parameter)
+                .UpdateFile(parameters: let parameter),
+                .GetFiles(parameters: let parameter)
             :
 //            return .parameterRequest(Parameters: parameters, Encoding: encoding)
             return  parameter
@@ -61,10 +62,10 @@ extension MyFilesServices : TargetType1 {
 //        case .GetMyScheduleDrugs(parameters: let parameters):
 //            return .BodyparameterRequest(Parameters: parameters, Encoding: encoding)
             
-        case
-                .GetFiles
-            :
-            return nil
+//        case
+//                .GetFiles
+//            :
+//            return nil
         }
     }
     

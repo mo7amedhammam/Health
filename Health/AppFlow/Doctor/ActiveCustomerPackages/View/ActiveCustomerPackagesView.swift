@@ -151,8 +151,8 @@ struct ActiveCustomerPackagesView: View {
 
                             case .files:
                                 guard let customerID = viewModel.subscripedPackage?.customerID,
-                                      let packageId = viewModel.subscripedPackage?.customerPackageID else { return }
-                                router.push( ActiveCustPackFiles(customerId: customerID,PackageId: packageId) )
+                                      let customerPackageId = viewModel.subscripedPackage?.customerPackageID else { return }
+                                router.push( ActiveCustPackFiles(customerId: customerID,CustomerPackageId: customerPackageId) )
                           
                             case .alergy:
                                 guard let customerID = viewModel.subscripedPackage?.customerPackageID else { return }

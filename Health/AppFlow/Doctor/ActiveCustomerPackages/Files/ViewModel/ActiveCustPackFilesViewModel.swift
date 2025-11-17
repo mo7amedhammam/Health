@@ -14,11 +14,14 @@ class ActiveCustomerPackFilesViewModel : ObservableObject {
     // Injected service
     private let networkService: AsyncAwaitNetworkServiceProtocol
     
+    var customerPackageId:Int?
+    var doctorId:Int?
     var CustomerId:Int?
 //    Add file
     @Published var fileName: String? = ""
     @Published var fileType: FileTypeM? = nil
     @Published var fileLink: String? = ""
+    @Published var notes : String?
 
     @Published var image: UIImage?
     @Published var fileURL: URL?
@@ -73,90 +76,91 @@ extension ActiveCustomerPackFilesViewModel{
 //        }
 //    }
   
-    @MainActor
-    func addNewCustomerFile() async {
-        isLoading = true
-        defer { isLoading = false }
-        guard let FileName = fileName ,let FileTypeId = fileType?.id else {
-//            // Handle missings
-//            self.errorMessage = "check inputs"
-//            //            throw NetworkError.unknown(code: 0, error: "check inputs")
-            return
-        }
-        var parametersarr : [String : Any] =  ["FileName":FileName,"FileTypeId":FileTypeId]
-        
-        let target = MyFilesServices.AddFile(parameters: parametersarr)
-        
-        if let image = image {
-            let data = image.imageWithColor(color1: .blue).imageWithColor(color1: .blue)
-            parametersarr["FilePath"] = data
-        }else if let fileURL = fileURL {
-            parametersarr["FilePath"] = fileURL
-        }else if let filelink = fileLink {
-            parametersarr["Url"] = filelink
-        }
-        
-//        let parametersarr : [String : Any] =  ["Name" : Name,"Mobile" : Mobile,"AppCountryId":AppCountryId,"GenderId" : GenderId]
-        var parts: [MultipartFormDataPart] = parametersarr.map { key, value in
-            MultipartFormDataPart(name: key, value: "\(value)")
-        }
-        
-        if let image = image,
-           let imageData = image.jpegData(compressionQuality: 0.8) {
-            parts.append(
-                MultipartFormDataPart(name: "FilePath", filename: "profile.jpg", mimeType: "image/jpeg", data: imageData)
-            )
-        }
-        else if let fileURL = fileURL {
-            do {
-                let fileData = try Data(contentsOf: fileURL)
-                let fileName = fileURL.lastPathComponent
-                let mimeType = "application/pdf"
-
-                parts.append(
-                    MultipartFormDataPart(
-                        name: "FilePath",
-                        filename: fileName,
-                        mimeType: mimeType,
-                        data: fileData
-                    )
-                )
-            } catch {
-                print("Failed to read file: \(error)")
-            }
-        }
-        do {
-            self.errorMessage = nil
-            _ = try await networkService.uploadMultipart(target, parts: parts, responseType: LoginM.self)
-            Task{await getCustomerFilesList() }
-            clearNewFiles()
-        } catch {
-            clearNewFiles()
-            self.errorMessage = error.localizedDescription
-        }
-    }
+//    @MainActor
+//    func addNewCustomerFile() async {
+//        isLoading = true
+//        defer { isLoading = false }
+//        guard let FileName = fileName ,let FileTypeId = fileType?.id else {
+////            // Handle missings
+////            self.errorMessage = "check inputs"
+////            //            throw NetworkError.unknown(code: 0, error: "check inputs")
+//            return
+//        }
+//        var parametersarr : [String : Any] =  ["FileName":FileName,"FileTypeId":FileTypeId]
+//        
+//        let target = MyFilesServices.AddFile(parameters: parametersarr)
+//        
+//        if let image = image {
+//            let data = image.imageWithColor(color1: .blue).imageWithColor(color1: .blue)
+//            parametersarr["FilePath"] = data
+//        }else if let fileURL = fileURL {
+//            parametersarr["FilePath"] = fileURL
+//        }else if let filelink = fileLink {
+//            parametersarr["Url"] = filelink
+//        }
+//        
+////        let parametersarr : [String : Any] =  ["Name" : Name,"Mobile" : Mobile,"AppCountryId":AppCountryId,"GenderId" : GenderId]
+//        var parts: [MultipartFormDataPart] = parametersarr.map { key, value in
+//            MultipartFormDataPart(name: key, value: "\(value)")
+//        }
+//        
+//        if let image = image,
+//           let imageData = image.jpegData(compressionQuality: 0.8) {
+//            parts.append(
+//                MultipartFormDataPart(name: "FilePath", filename: "profile.jpg", mimeType: "image/jpeg", data: imageData)
+//            )
+//        }
+//        else if let fileURL = fileURL {
+//            do {
+//                let fileData = try Data(contentsOf: fileURL)
+//                let fileName = fileURL.lastPathComponent
+//                let mimeType = "application/pdf"
+//
+//                parts.append(
+//                    MultipartFormDataPart(
+//                        name: "FilePath",
+//                        filename: fileName,
+//                        mimeType: mimeType,
+//                        data: fileData
+//                    )
+//                )
+//            } catch {
+//                print("Failed to read file: \(error)")
+//            }
+//        }
+//        do {
+//            self.errorMessage = nil
+//            _ = try await networkService.uploadMultipart(target, parts: parts, responseType: LoginM.self)
+//            Task{await getCustomerFilesList() }
+//            clearNewFiles()
+//        } catch {
+//            clearNewFiles()
+//            self.errorMessage = error.localizedDescription
+//        }
+//    }
     
     @MainActor
     func addNewPackageFile() async {
         isLoading = true
         defer { isLoading = false }
-        guard let FileName = fileName ,let FileTypeId = fileType?.id else {
+        guard let customerPackageId = customerPackageId,let doctorId = doctorId ,let FileName = fileName ,let FileTypeId = fileType?.id else {
 //            // Handle missings
 //            self.errorMessage = "check inputs"
 //            //            throw NetworkError.unknown(code: 0, error: "check inputs")
             return
         }
-        var parametersarr : [String : Any] =  ["FileName":FileName,"FileTypeId":FileTypeId]
+        var parametersarr : [String : Any] =  ["customerPackageId":customerPackageId,"doctorId":doctorId,"fileName":FileName,"fileTypeId":FileTypeId]
         
-        let target = MyFilesServices.AddFile(parameters: parametersarr)
+        let target = DocActivePackagesServices.CreateCustomerPackageInstructionByCPId(parameters: parametersarr)
         
         if let image = image {
             let data = image.imageWithColor(color1: .blue).imageWithColor(color1: .blue)
-            parametersarr["FilePath"] = data
+            parametersarr["filePath"] = data
         }else if let fileURL = fileURL {
-            parametersarr["FilePath"] = fileURL
-        }else if let filelink = fileLink {
-            parametersarr["Url"] = filelink
+            parametersarr["filePath"] = fileURL
+        }
+        if let notes = notes {
+            parametersarr["notes"] = notes
         }
         
 //        let parametersarr : [String : Any] =  ["Name" : Name,"Mobile" : Mobile,"AppCountryId":AppCountryId,"GenderId" : GenderId]
@@ -167,7 +171,7 @@ extension ActiveCustomerPackFilesViewModel{
         if let image = image,
            let imageData = image.jpegData(compressionQuality: 0.8) {
             parts.append(
-                MultipartFormDataPart(name: "FilePath", filename: "profile.jpg", mimeType: "image/jpeg", data: imageData)
+                MultipartFormDataPart(name: "filePath", filename: "profile.jpg", mimeType: "image/jpeg", data: imageData)
             )
         }
         else if let fileURL = fileURL {
@@ -178,7 +182,7 @@ extension ActiveCustomerPackFilesViewModel{
 
                 parts.append(
                     MultipartFormDataPart(
-                        name: "FilePath",
+                        name: "filePath",
                         filename: fileName,
                         mimeType: mimeType,
                         data: fileData
@@ -211,7 +215,7 @@ extension ActiveCustomerPackFilesViewModel{
         }
         let parametersarr : [String : Any] =  ["CustomerId":CustomerId]
         
-        let target = MyFilesServices.GetFiles
+        let target = MyFilesServices.GetFiles(parameters: parametersarr)
         do {
             self.errorMessage = nil // Clear previous errors
             let response = try await networkService.request(
@@ -227,15 +231,15 @@ extension ActiveCustomerPackFilesViewModel{
     func getPackageFilesList() async {
         isLoading = true
         defer { isLoading = false }
-//        guard let maxResultCount = maxResultCount,let skipCount = skipCount else {
+        guard let CustomerPackageId = customerPackageId else {
 ////            // Handle missings
 ////            self.errorMessage = "check inputs"
 ////            //            throw NetworkError.unknown(code: 0, error: "check inputs")
-//            return
-//        }
-//        let parametersarr : [String : Any] =  ["maxResultCount":maxResultCount,"skipCount":skipCount]
+            return
+        }
+        let parametersarr : [String : Any] =  ["CustomerPackageId":CustomerPackageId]
         
-        let target = MyFilesServices.GetFiles
+        let target = DocActivePackagesServices.GetCustomerPackageInstructionByCPId(parameters: parametersarr)
         do {
             self.errorMessage = nil // Clear previous errors
             let response = try await networkService.request(

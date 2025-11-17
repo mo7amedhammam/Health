@@ -244,7 +244,7 @@ print("params:///", params)
         let inputs = await MainActor.run { () -> (appCountryId: Int, packageId: Int, doctorId: Int, shiftId: Int, dateString: String)? in
             guard
                 let appCountryId = appCountryId,
-                let packageId = packageDetails?.packageData?.packageID,
+                let packageId = packageDetails?.packageData?.appCountryPackageId,
                 let doctorId = packageDetails?.doctorData?.doctorID,
                 let shiftId = selectedShift?.id
             else { return nil }

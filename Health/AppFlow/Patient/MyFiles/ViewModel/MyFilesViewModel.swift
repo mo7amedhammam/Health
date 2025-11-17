@@ -134,7 +134,7 @@ extension MyFilesViewModel{
 //        }
 //        let parametersarr : [String : Any] =  ["maxResultCount":maxResultCount,"skipCount":skipCount]
         
-        let target = MyFilesServices.GetFiles
+        let target = MyFilesServices.GetFiles(parameters: [:])
         do {
             self.errorMessage = nil // Clear previous errors
             let response = try await networkService.request(

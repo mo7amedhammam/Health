@@ -12,7 +12,7 @@ import UniformTypeIdentifiers
 
 struct ActiveCustPackFiles : View {
     var customerId:Int?
-    var PackageId:Int?
+    var CustomerPackageId:Int?
 
     @State private var showUploadSheet = false
     @StateObject var myfilesvm = ActiveCustomerPackFilesViewModel.shared
@@ -38,14 +38,16 @@ struct ActiveCustPackFiles : View {
                 }
                 .padding(.vertical,20)
                 
-                UploadButton {
-                    Task{
-                        showUploadSheet = true
-                        await lookupsvm.getFileTypes()
+                if filesCase == .Packages{
+                    UploadButton {
+                        Task{
+                            showUploadSheet = true
+                            await lookupsvm.getFileTypes()
+                        }
                     }
+                    .padding([.horizontal])
+                    //                .padding(.top,30)
                 }
-                .padding([.horizontal])
-//                .padding(.top,30)
                 
 //                SectionHeader(image: Image("docicon"),title: "Files_")
 //                    .padding([.top,.horizontal])
@@ -83,7 +85,23 @@ struct ActiveCustPackFiles : View {
             .onAppear(){
                 Task{
                     myfilesvm.CustomerId = customerId
+                    myfilesvm.customerPackageId = CustomerPackageId
                     await myfilesvm.getPackageFilesList()
+                }
+            }
+            .onChange(of: filesCase){ newval in
+                if newval != filesCase{
+                    switch newval {
+                    case .Customer:
+                        Task{
+                            await myfilesvm.getCustomerFilesList()
+                        }
+                    case .Packages:
+                        Task{
+                            await myfilesvm.getPackageFilesList()
+                        }
+
+                    }
                 }
             }
 //            .frame(height: 600)
