@@ -14,12 +14,30 @@ struct ActiveCustPackFiles : View {
     var customerId:Int?
     var CustomerPackageId:Int?
 
-    @State private var showUploadSheet = false
-    @StateObject var myfilesvm = ActiveCustomerPackFilesViewModel.shared
-
+//    @State private var showUploadSheet = false
+//    @StateObject var myfilesvm = ActiveCustomerPackFilesViewModel.shared
     @State private var files: [MyFileModel] = []
     @StateObject var lookupsvm = LookupsViewModel.shared
     @State var filesCase: filesCases = .Packages
+    
+    @StateObject var myfilesvm: ActiveCustomerPackFilesViewModel
+    init(customerId: Int? = nil, CustomerPackageId: Int? = nil) {
+        self.customerId = customerId
+        self.CustomerPackageId = CustomerPackageId
+
+        let repo = FilesRepository(network: AsyncAwaitNetworkService.shared)
+           let upload = UploadFileUseCase(repo: repo)
+           let fetch = FetchFilesUseCase(repo: repo)
+
+        _myfilesvm = StateObject(wrappedValue:
+               ActiveCustomerPackFilesViewModel(
+                   uploadUseCase: upload,
+                   fetchUseCase: fetch
+               )
+           )
+       }
+
+    
     var body: some View {
 //        NavigationView {
             VStack(spacing: 0) {
@@ -41,8 +59,9 @@ struct ActiveCustPackFiles : View {
                 if filesCase == .Packages{
                     UploadButton {
                         Task{
-                            showUploadSheet = true
                             await lookupsvm.getFileTypes()
+                            myfilesvm.showUploadSheet = true
+//                            await lookupsvm.getFileTypes()
                         }
                     }
                     .padding([.horizontal])
@@ -84,9 +103,10 @@ struct ActiveCustPackFiles : View {
             }
             .onAppear(){
                 Task{
-                    myfilesvm.CustomerId = customerId
+                    myfilesvm.customerId = customerId
                     myfilesvm.customerPackageId = CustomerPackageId
-                    await myfilesvm.getPackageFilesList()
+//                    await myfilesvm.getPackageFilesList()
+                    await myfilesvm.refreshFiles(forcase: .Packages)
                 }
             }
             .onChange(of: filesCase){ newval in
@@ -94,11 +114,13 @@ struct ActiveCustPackFiles : View {
                     switch newval {
                     case .Customer:
                         Task{
-                            await myfilesvm.getCustomerFilesList()
+//                            await myfilesvm.getCustomerFilesList()
+                            await myfilesvm.refreshFiles(forcase: .Customer)
                         }
                     case .Packages:
                         Task{
-                            await myfilesvm.getPackageFilesList()
+//                            await myfilesvm.getPackageFilesList()
+                            await myfilesvm.refreshFiles(forcase: .Packages)
                         }
 
                     }
