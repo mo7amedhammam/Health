@@ -239,7 +239,6 @@ struct ActiveCustomerPackagesView: View {
             set: { if !$0 { viewModel.errorMessage = nil } }
         ), message: viewModel.errorMessage)
         .task(id: customerPackageId) {
-
             selectedSection = nil
             await viewModel.load(customerPackageId: customerPackageId)
 //            if doctorId == nil{

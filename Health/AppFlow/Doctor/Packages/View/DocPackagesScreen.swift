@@ -11,6 +11,7 @@ import SwiftUI
 struct DocPackagesScreen: View {
     @StateObject var router: NavigationRouter = NavigationRouter()
     @StateObject private var viewModel = DocPackagesViewModel.shared
+    //    @StateObject private var lookupsVM = LookupsViewModel.shared
     
     @State private var packages: [String] = ["okkkkkk","done"] // Empty initially
     @State private var showFilter: Bool = false
@@ -77,6 +78,7 @@ struct DocPackagesScreen: View {
                     //                        pushTo(destination: PackageDetailsView(package: package))
                 },loadMore: {
                     Task {
+                        guard viewModel.isLoading == false && viewModel.canLoadMore ?? false else { return }
                         await viewModel.loadMoreIfNeeded()
                     }
                 })
@@ -96,14 +98,14 @@ struct DocPackagesScreen: View {
             
         }
         .localizeView()
-                    .withNavigation(router: router)
-                    .showHud(isShowing:  $viewModel.isLoading)
-                    .errorAlert(isPresented: Binding(
-                        get: { viewModel.errorMessage != nil },
-                        set: { if !$0 { viewModel.errorMessage = nil } }
-                    ), message: viewModel.errorMessage)
+        .withNavigation(router: router)
+        .showHud(isShowing:  $viewModel.isLoading)
+        .errorAlert(isPresented: Binding(
+            get: { viewModel.errorMessage != nil },
+            set: { if !$0 { viewModel.errorMessage = nil } }
+        ), message: viewModel.errorMessage)
         
-                    .padding(.bottom,hasbackBtn == true ? 0 : 88)
+        .padding(.bottom,hasbackBtn == true ? 0 : 88)
         .sheet(isPresented: $showFilter) {
             DocPackagesFilterView(viewmodel: viewModel)
         }
@@ -122,6 +124,7 @@ struct DocPackagesFilterView: View {
     @State private var subCategory: String = ""
     @State private var package: String = ""
     @ObservedObject var viewmodel: DocPackagesViewModel
+    @StateObject private var lookupsVM = LookupsViewModel.shared
     
     var body: some View {
         VStack(spacing: 20) {
@@ -142,6 +145,8 @@ struct DocPackagesFilterView: View {
                     ForEach(viewmodel.MainCategories ?? [],id: \.id) { cat in
                         Button(action: {
                             viewmodel.selectedMainCategory = cat
+                            viewmodel.selectedSubCategory = nil
+                            Task{ await viewmodel.getSubCategories()}
                         }, label: {
                             Text(cat.title ?? "")
                                 .font(.semiBold(size: 12))
@@ -162,6 +167,9 @@ struct DocPackagesFilterView: View {
                     ForEach(viewmodel.SubCategories ?? [],id: \.id) { cat in
                         Button(action: {
                             viewmodel.selectedSubCategory = cat
+                            viewmodel.PackagesList = nil
+                            Task{ await viewmodel.getPackagesList()}
+                            
                         }, label: {
                             Text(cat.title ?? "")
                                 .font(.semiBold(size: 12))
@@ -179,17 +187,18 @@ struct DocPackagesFilterView: View {
                 }
                 
                 Menu {
-                    ForEach(viewmodel.PackagesList ?? [],id: \.id) { cat in
+                    let packages = viewmodel.PackagesList ?? []
+                    ForEach(packages, id: \.id) { cat in
                         Button(action: {
                             viewmodel.SelectedPackage = cat
                             
                         }, label: {
-                            Text(cat.title ?? "")
+                            Text(cat.name ?? "")
                                 .font(.semiBold(size: 12))
                         })
                     }
                 } label: {
-                    CustomDropListInputFieldUI(title: "Package_title", placeholder: "Package_placeholder",text: .constant(viewmodel.SelectedPackage?.title ?? ""), isDisabled: true, showDropdownIndicator:true, trailingView:
+                    CustomDropListInputFieldUI(title: "Package_title", placeholder: "Package_placeholder",text: .constant(viewmodel.SelectedPackage?.name ?? ""), isDisabled: true, showDropdownIndicator:true, trailingView:
                                                 AnyView( Image("newvippackicon")
                                                     .renderingMode(.template)
                                                     .resizable()
@@ -198,25 +207,62 @@ struct DocPackagesFilterView: View {
                                                 ))
                 }
                 
+                
+                
                 Menu {
-                    ForEach(viewmodel.PackagesList ?? [],id: \.id) { cat in
+                    ForEach(lookupsVM.appCountries ?? [],id: \.self) { country in
                         Button(action: {
-                            viewmodel.SelectedPackage = cat
-                            
+                            viewmodel.selectedCountry = country
                         }, label: {
-                            Text(cat.title ?? "")
-                                .font(.semiBold(size: 12))
+                            Text(country.name ?? "")
                         })
                     }
                 } label: {
-                    CustomDropListInputFieldUI(title: "lang_Country_title", placeholder: "lang_Country_subitle",text: .constant(viewmodel.SelectedPackage?.title ?? ""), isDisabled: true, showDropdownIndicator:true, trailingView:
-                                                AnyView( Image("newvippackicon")
-                                                    .renderingMode(.template)
-                                                    .resizable()
-                                                    .foregroundStyle(Color(.secondary))
-                                                    .frame(width: 14,height: 14)
+                    CustomDropListInputFieldUI(title: "lang_Country_title", placeholder: "lang_Country_subitle",text: .constant(viewmodel.selectedCountry?.name ?? ""), isDisabled: true, showDropdownIndicator:true, trailingView:
+                                                AnyView(
+                                                    //                                                    Image("newvippackicon")
+                                                    KFImageLoader(url:URL(string:Constants.imagesURL + (viewmodel.selectedCountry?.flag?.validateSlashs() ?? "")),placeholder: Image("egFlagIcon"), shouldRefetch: true)
+                                                    //                                                        .frame(width: 30,height:17)
+                                                    //                                                    .renderingMode(.template)
+                                                    //                                                    .resizable()
+                                                        .foregroundStyle(Color(.secondary))
+                                                        .frame(width: 14,height: 14)
                                                 ))
+                    
+                    
+                    //                    HStack(spacing: 4) {
+                    //                        Image(systemName: "chevron.down")
+                    //                            .foregroundColor(.gray)
+                    //
+                    //                        KFImageLoader(url:URL(string:Constants.imagesURL + (selectedCountry?.flag?.validateSlashs() ?? "")),placeholder: Image("egFlagIcon"), shouldRefetch: true)
+                    //                            .frame(width: 30,height:17)
+                    //
+                    //                        //                                Text(selectedCountry?.flag ?? "")
+                    //                        //                                    .foregroundColor(.mainBlue)
+                    //                        //                                    .font(.medium(size: 22))
+                    //                    }
                 }
+                
+                
+                //                Menu {
+                //                    ForEach(viewmodel.PackagesList ?? [],id: \.id) { cat in
+                //                        Button(action: {
+                //                            viewmodel.SelectedPackage = cat
+                //
+                //                        }, label: {
+                //                            Text(cat.title ?? "")
+                //                                .font(.semiBold(size: 12))
+                //                        })
+                //                    }
+                //                } label: {
+                //                    CustomDropListInputFieldUI(title: "lang_Country_title", placeholder: "lang_Country_subitle",text: .constant(viewmodel.SelectedPackage?.title ?? ""), isDisabled: true, showDropdownIndicator:true, trailingView:
+                //                                                AnyView( Image("newvippackicon")
+                //                                                    .renderingMode(.template)
+                //                                                    .resizable()
+                //                                                    .foregroundStyle(Color(.secondary))
+                //                                                    .frame(width: 14,height: 14)
+                //                                                ))
+                //                }
                 
             }
             
@@ -236,12 +282,15 @@ struct DocPackagesFilterView: View {
         }
         .localizeView()
         .padding()
-        //        .onAppear{
-        //            Task{
-        //                async let sub: () = viewmodel.getSubCategories()
-        //                _ = await (sub)
-        //            }
-        //        }
+        .onAppear{
+            Task{
+                //                                    async let sub: () = viewmodel.getSubCategories()
+                //                                    _ = await (sub)
+                async let country : () = lookupsVM.getAppCountries()
+                _ = await (country)
+                
+            }
+        }
         .onDisappear{
             viewmodel.removeSelections()
         }
@@ -423,10 +472,8 @@ struct DocPackagesListView: View {
                                         .horizontalGradientBackground( reverse: true).opacity(0.89)
                                     //                                        LinearGradient(gradient: Gradient(colors: [.clear, .black.opacity(0.8)]), startPoint: .top, endPoint: .bottom)
                                 }
-                                
                             }
                         }
-                        
                     })
                     .onAppear {
                         if item == packages?.last {
@@ -455,6 +502,4 @@ struct DocPackagesListView: View {
         
     }
 }
-
-
 

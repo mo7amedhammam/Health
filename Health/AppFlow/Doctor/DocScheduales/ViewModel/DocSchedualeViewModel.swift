@@ -53,7 +53,7 @@ extension DocSchedualeViewModel{
 
         do {
             self.errorMessage = nil
-            let response = try await networkService.request(target, responseType: AllergiesM.self)
+            _ = try await networkService.request(target, responseType: AllergiesM.self)
 //            await getMyAllergies()
             showSuccess = true
         } catch {

@@ -89,7 +89,7 @@ enum newEndPoints : String{
     case GetAvailableDoctorSchedule    = "CustomerPackage/GetAvailableDoctorSchedule"
     case GetBookingSession             = "CustomerPackage/GetBookingSession"
     case CreateCustomerPackage         = "CustomerPackage/CreateCustomerPackage"
-    case ReschedualSession             = "CustomerPackage/RescheduleCustomerPackageSession"
+    case CreateReschedualRequest        = "CustomerPackageSession/CreateRescheduleRequest"
     
 }
 

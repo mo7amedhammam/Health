@@ -106,3 +106,20 @@ let mockAvailableSchedules: [AvailableSchedualsM] = [
 ]
 
 
+// MARK: - RescheduleRequestM
+struct RescheduleRequestM: Codable {
+    var customerPackageID, doctorID, sessionID, shiftID: Int?
+    var startDate: String?
+    var timeFrom: [String: Int]?
+    var rescheduleStatudID, id: Int?
+
+    enum CodingKeys: String, CodingKey {
+        case customerPackageID = "customerPackageId"
+        case doctorID = "doctorId"
+        case sessionID = "sessionId"
+        case shiftID = "shiftId"
+        case startDate, timeFrom
+        case rescheduleStatudID = "rescheduleStatudId"
+        case id
+    }
+}

@@ -27,6 +27,7 @@ class ReSchedualViewModel:ObservableObject {
     @Published var availableDays: [AvailableDayM]?
     @Published var availableShifts: [AvailableTimeShiftM]?
     @Published var availableScheduals: [AvailableSchedualsM]?
+    @Published var ReschedualRequests: [RescheduleRequestM]?
     
     @Published var selectedDay: AvailableDayM?
     @Published var selectedShift: AvailableTimeShiftM?
@@ -34,6 +35,8 @@ class ReSchedualViewModel:ObservableObject {
     @Published var ticketData: TicketM?
     
     @Published var isReschedualed:Bool? = false
+    @Published var isApprouved:Bool? = false
+
     @Published var isLoading:Bool? = false
     @Published var errorMessage: String? = nil
     var appcountryId:Int?{Helper.shared.AppCountryId()}
@@ -205,7 +208,7 @@ print("parametersarr,",parametersarr)
     }
     
     @MainActor
-    func rescheduleCustomerPackage() async {
+    func rescheduleCustomerPackage() async { // request by customer or direct reschedual by doctor
         isLoading = true
         isReschedualed = false
         defer { isLoading = false }
@@ -229,6 +232,73 @@ print("parametersarr,",parametersarr)
             )
 //            self.availableScheduals = response
             isReschedualed = true
+        } catch {
+            self.errorMessage = error.localizedDescription
+        }
+    }
+
+    @MainActor
+    func getReschedualRequests() async {
+        isLoading = true
+        defer { isLoading = false }
+        guard let appCountryId = appcountryId ,let shiftId = selectedShift?.id else {
+//            // Handle missings
+//            self.errorMessage = "check inputs"
+//            //            throw NetworkError.unknown(code: 0, error: "check inputs")
+            return
+        }
+        var parametersarr : [String : Any] =  ["appCountryId":appCountryId,"date":"\(newDate.formatted(.customDateFormat("YYYY-MM-dd")))","shiftId":shiftId]
+
+        if let doctorId = doctorId{
+                parametersarr["doctorId"] = doctorId
+            }else{
+                if let doctorId = packageDetails?.doctorData?.doctorID{
+                    parametersarr["doctorId"] = doctorId
+                }
+            }
+        if let PackageId = PackageId{
+            parametersarr["packageId"] = PackageId
+        }else{
+            if let PackageId = packageDetails?.packageData?.packageID{
+                parametersarr["packageId"] = PackageId
+            }
+        }
+        
+        let target = HomeServices.GetReschedualRequestList(parameters: parametersarr)
+        do {
+            self.errorMessage = nil // Clear previous errors
+            let response = try await networkService.request(
+                target,
+                responseType: [RescheduleRequestM].self
+            )
+            self.ReschedualRequests = response
+        } catch {
+            self.errorMessage = error.localizedDescription
+        }
+    }
+    
+    @MainActor
+    func approuveCustomerRescheduleRequest() async { // approuve by doctor
+        isLoading = true
+        isReschedualed = false
+        defer { isLoading = false }
+        // Validate required selections; adjust keys as needed for your API
+        guard let sessionId = selectedShift?.id else {
+            self.errorMessage = "check inputs"
+            return
+        }
+
+        let parametersarr : [String : Any] =  ["Id":sessionId]
+
+        let target = HomeServices.ApprouveCustomerReschedualRequest(parameters: parametersarr)
+        do {
+            self.errorMessage = nil // Clear previous errors
+            _ = try await networkService.request(
+                target,
+                responseType: [AvailableSchedualsM].self
+            )
+//            self.availableScheduals = response
+            isApprouved = true
         } catch {
             self.errorMessage = error.localizedDescription
         }

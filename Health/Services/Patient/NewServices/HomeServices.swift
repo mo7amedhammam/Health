@@ -34,6 +34,8 @@ enum HomeServices{
     case GetBookingSession(parameters : [String:Any])
     case CreateCustomerPackage(parameters : [String:Any])
     case rescheduleSession(parameters : [String:Any])
+    case GetReschedualRequestList(parameters : [String:Any])
+    case ApprouveCustomerReschedualRequest(parameters : [String:Any])
 
     case CustomerSessionCalender(parameters : [String:Any])
 }
@@ -98,7 +100,17 @@ extension HomeServices : TargetType1 {
         case .CreateCustomerPackage:
             return newEndPoints.CreateCustomerPackage.rawValue
         case .rescheduleSession:
-            return newEndPoints.ReschedualSession.rawValue
+            switch Helper.shared.getSelectedUserType() {
+            case .Customer,.none:
+                return newEndPoints.CreateReschedualRequest.rawValue
+            case .Doctor:
+                return DocEndPoints.ReschedualSession.rawValue
+            }
+            
+        case .GetReschedualRequestList:
+            return DocEndPoints.GetCustomerReschedualRequestList.rawValue
+        case .ApprouveCustomerReschedualRequest:
+            return DocEndPoints.ApprouveCustomerReschedualRequest.rawValue
             
         case .CustomerSessionCalender:
             switch Helper.shared.getSelectedUserType() {
@@ -137,7 +149,8 @@ extension HomeServices : TargetType1 {
                 .AddOrRemoveToWishList,
                 .GetWishList,
                 .GetDoctorPackageById,
-                .GetTimeShiftScheduleList
+                .GetTimeShiftScheduleList,
+                .GetReschedualRequestList,.ApprouveCustomerReschedualRequest
             :
             return .get
         }
@@ -162,7 +175,8 @@ extension HomeServices : TargetType1 {
             .CreateCustomerPackage(parameters: let parameter),
             .CustomerSessionCalender(parameters: let parameter),
             .rescheduleSession(parameters: let parameter),
-            .GetUpcomingSession(parameters: let parameter)
+            .GetUpcomingSession(parameters: let parameter),
+            .GetReschedualRequestList(parameters: let parameter),.ApprouveCustomerReschedualRequest(parameters: let parameter)
 
             :
 //            return .parameterRequest(Parameters: parameters, Encoding: encoding)

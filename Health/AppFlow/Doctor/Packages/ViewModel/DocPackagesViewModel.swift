@@ -12,7 +12,7 @@ class DocPackagesViewModel:ObservableObject {
     // Injected service
     private let networkService: AsyncAwaitNetworkServiceProtocol
     // -- Get List --
-    var maxResultCount: Int?              = 5
+    var maxResultCount: Int?              = 8
     @Published var skipCount: Int?        = 0
     
     // Published properties
@@ -20,21 +20,24 @@ class DocPackagesViewModel:ObservableObject {
 //    = SubcripedPackagesM(items: [SubcripedPackageItemM(customerPackageID: 2, docotrID: 2, status: "active", subscriptionDate: "", lastSessionDate: "", packageName: "nameeee", categoryName: "cateeee", mainCategoryName: "main cateee", doctorName: "doc doc", sessionCount: 4, attendedSessionCount: 2, packageImage: "", doctorSpeciality: "special", doctorNationality: "egegege", doctorImage: "", canCancel: true, canRenew: true )], totalCount: 1)
     
     @Published var MainCategories: [CategoriyListItemM]?
-    @Published var selectedMainCategory: CategoriyListItemM?{
-        didSet{
-//            guard selectedMainCategory != nil else { return }
-            selectedSubCategory = nil
-            Task{ await getSubCategories()}
-    }}
+    @Published var selectedMainCategory: CategoriyListItemM?
+//    {
+//        didSet{
+////            guard selectedMainCategory != nil else { return }
+//            selectedSubCategory = nil
+//            Task{ await getSubCategories()}
+//    }}
     @Published var SubCategories: [CategoriyListItemM]?
-    @Published var selectedSubCategory: CategoriyListItemM?{
-        didSet{
-//            guard selectedSubCategory != nil else { return }
-            SelectedPackage = nil
-        Task{ await getPackagesList()}
-    }}
-    @Published var PackagesList: [CategoriyListItemM]?
-    @Published var SelectedPackage: CategoriyListItemM?
+    @Published var selectedSubCategory: CategoriyListItemM?
+//    {
+//        didSet{
+////            guard selectedSubCategory != nil else { return }
+//            SelectedPackage = nil
+//        Task{ await getPackagesList()}
+//    }}
+    @Published var PackagesList: [SpecialityM]?
+    @Published var SelectedPackage: SpecialityM?
+    @Published var selectedCountry : AppCountryM?
     
     @Published var showSuccess : Bool = false
 
@@ -159,7 +162,7 @@ extension DocPackagesViewModel{
             self.errorMessage = nil // Clear previous errors
             let response = try await networkService.request(
                 target,
-                responseType: [CategoriyListItemM].self
+                responseType: [SpecialityM].self
             )
             self.PackagesList = response
         } catch {
@@ -172,18 +175,18 @@ extension DocPackagesViewModel{
         isLoading = true
         defer { isLoading = false }
 // paramter keys :  doctorId,packageId,appCountryIdList
-        guard let packageId = SelectedPackage?.id else {
+        guard let packageId = SelectedPackage?.id ,let appCountryIdList = selectedCountry?.id else {
             // Handle missings
             self.errorMessage = "check inputs"
             //            throw NetworkError.unknown(code: 0, error: "check inputs")
             return
         }
-        let parametersarr : [String : Any] =  ["packageId":packageId]
+        let parametersarr : [String : Any] =  ["packageId":packageId,"appCountryIdList":appCountryIdList]
 
         let target = DocPackagesServices.CreateDoctorPackageRequest(parameters: parametersarr)
         do {
             self.errorMessage = nil // Clear previous errors
-            let response = try await networkService.request(
+            _ = try await networkService.request(
                 target,
                 responseType: FeaturedPackagesM.self
             )
@@ -204,7 +207,7 @@ extension DocPackagesViewModel {
 
     @MainActor
     func loadMoreIfNeeded() async {
-        guard !(isLoading ?? false),
+        guard (canLoadMore ?? false && isLoading == false),
               let currentCount = ActivePackages?.items?.count,
               let totalCount = ActivePackages?.totalCount,
               currentCount < totalCount,
@@ -217,8 +220,8 @@ extension DocPackagesViewModel {
     func clear() {
         ActivePackages = nil
         skipCount = 0
-        
     }
+
     func removeSelections(){
         selectedMainCategory = nil
         SubCategories?.removeAll()

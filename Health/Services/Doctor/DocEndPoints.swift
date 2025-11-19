@@ -42,7 +42,10 @@ enum DocEndPoints : String{
     case DocCreateDoctorMessage = "CustomerPackageMessage/CreateDoctorMessage"
     case DocGetCustomerPackageInstructionByCPID = "CustomerPackageInstructions/GetCustomerPackageInstructionByCPID"
     case DocGetPatientMeasurements = "CustomerMedicalMeasurement/GetPatientMeasurements"
-    
+    case GetCustomerReschedualRequestList             = "CustomerPackageSession/GetRescheduleRequest"
+    case ApprouveCustomerReschedualRequest             = "CustomerPackageSession/ApproveSession"
+    case ReschedualSession                             = "CustomerPackage/RescheduleCustomerPackageSession"
+
 //-------MyPackages---------
     case DocGetPackageDoctorList = "PackageDoctor/GetPackageDoctorList"
     case DocGetMainCategoryDBForList = "Home/GetMainCategoryDBForList"
