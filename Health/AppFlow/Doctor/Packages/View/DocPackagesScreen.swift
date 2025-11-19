@@ -14,49 +14,18 @@ struct DocPackagesScreen: View {
     //    @StateObject private var lookupsVM = LookupsViewModel.shared
     
     @State private var packages: [String] = ["okkkkkk","done"] // Empty initially
-    @State private var showFilter: Bool = false
+//    @State private var showFilter: Bool = false
     var hasbackBtn:Bool?
     
     var docpacks = [SubcripedPackageItemM(customerPackageID: 2, docotrID: 2, status: "active", subscriptionDate: "", lastSessionDate: "", packageName: "nameeee", categoryName: "cateeee", mainCategoryName: "main cateee", doctorName: "doc doc", sessionCount: 4, attendedSessionCount: 2, packageImage: "", doctorSpeciality: "special", doctorNationality: "egegege", doctorImage: "", canCancel: true, canRenew: true )]
     
-    //    var appointments: [AppointmentsItemM]? = [AppointmentsItemM(
-    //        id: 1,
-    //        doctorName: "د. أحمد سامي",
-    //        sessionDate: "2025-08-05T15:15:00",
-    //        timeFrom: "2025-08-05T15:15:00",
-    //        packageName: "باقة الصحة العامة",
-    //        categoryName: "العلاج الطبيعي",
-    //        mainCategoryID: 1,
-    //        mainCategoryName: "الصحة",
-    //        categoryID: 2,
-    //        sessionMethod: "حضوري",
-    //        packageID: 10,
-    //        dayName: "الاثنين"
-    //    ),AppointmentsItemM(
-    //        id: 2,
-    //        doctorName: "د. أحمد سامي",
-    //        sessionDate: "2025-08-05T15:15:00",
-    //        timeFrom: "2025-08-05T15:15:00",
-    //        packageName: "باقة الصحة العامة",
-    //        categoryName: "العلاج الطبيعي",
-    //        mainCategoryID: 2,
-    //        mainCategoryName: "الصحة",
-    //        categoryID: 4,
-    //        sessionMethod: "حضوري",
-    //        packageID: 55,
-    //        dayName: "الاثنين"
-    //    )]
-    
-    //    var packages1: FeaturedPackagesM? = .init(items: [FeaturedPackageItemM.init()],totalCount: 5)
     var body: some View {
         VStack {
             TitleBar(title: "doc_packages", hasbackBtn: hasbackBtn ?? true)
             
             if packages.isEmpty {
-                // ✅ حالة الـ Empty
                 Spacer()
                 VStack(spacing: 20) {
-                    //                        Image(systemName: "gift.fill")
                     Image("nosubscription")
                         .resizable()
                         .scaledToFit()
@@ -73,15 +42,19 @@ struct DocPackagesScreen: View {
                 Spacer()
                 
             } else {
-                // ✅ حالة وجود باقات
-                DocPackagesListView(packages: viewModel.ActivePackages?.items,action: {package in
-                    //                        pushTo(destination: PackageDetailsView(package: package))
-                },loadMore: {
-                    Task {
-                        guard viewModel.isLoading == false && viewModel.canLoadMore ?? false else { return }
-                        await viewModel.loadMoreIfNeeded()
+                DocPackagesListView(
+                    packages: viewModel.ActivePackages?.items,
+                    isLoading: viewModel.isLoading ?? false,
+                    canLoadMore: viewModel.canLoadMore ?? false,
+                    action: { package in
+                        // push to details if needed
+                    },
+                    loadMore: {
+                        Task {
+                            await viewModel.loadMoreIfNeeded()
+                        }
                     }
-                })
+                )
                 .padding()
                 .refreshable {
                     await viewModel.refresh()
@@ -89,7 +62,7 @@ struct DocPackagesScreen: View {
             }
             
             CustomButton(title: "doc_package_request",isdisabled: false,backgroundView:AnyView(Color.clear.horizontalGradientBackground())){
-                showFilter.toggle()
+                viewModel.showAddSheet.toggle()
                 Task{
                     async let main: () = viewModel.getMainCategories()
                     _ = await (main)
@@ -104,9 +77,8 @@ struct DocPackagesScreen: View {
             get: { viewModel.errorMessage != nil },
             set: { if !$0 { viewModel.errorMessage = nil } }
         ), message: viewModel.errorMessage)
-        
         .padding(.bottom,hasbackBtn == true ? 0 : 88)
-        .sheet(isPresented: $showFilter) {
+        .sheet(isPresented: $viewModel.showAddSheet) {
             DocPackagesFilterView(viewmodel: viewModel)
         }
         .task {
@@ -137,7 +109,6 @@ struct DocPackagesFilterView: View {
                     .font(.medium(size: 12))
                     .frame(maxWidth:.infinity,alignment: .leading), MoreBtnimage: nil
                 ){
-                    //                            go to last mes package
                 }
                 .padding()
                 
@@ -207,8 +178,6 @@ struct DocPackagesFilterView: View {
                                                 ))
                 }
                 
-                
-                
                 Menu {
                     ForEach(lookupsVM.appCountries ?? [],id: \.self) { country in
                         Button(action: {
@@ -220,59 +189,17 @@ struct DocPackagesFilterView: View {
                 } label: {
                     CustomDropListInputFieldUI(title: "lang_Country_title", placeholder: "lang_Country_subitle",text: .constant(viewmodel.selectedCountry?.name ?? ""), isDisabled: true, showDropdownIndicator:true, trailingView:
                                                 AnyView(
-                                                    //                                                    Image("newvippackicon")
                                                     KFImageLoader(url:URL(string:Constants.imagesURL + (viewmodel.selectedCountry?.flag?.validateSlashs() ?? "")),placeholder: Image("egFlagIcon"), shouldRefetch: true)
-                                                    //                                                        .frame(width: 30,height:17)
-                                                    //                                                    .renderingMode(.template)
-                                                    //                                                    .resizable()
                                                         .foregroundStyle(Color(.secondary))
                                                         .frame(width: 14,height: 14)
                                                 ))
-                    
-                    
-                    //                    HStack(spacing: 4) {
-                    //                        Image(systemName: "chevron.down")
-                    //                            .foregroundColor(.gray)
-                    //
-                    //                        KFImageLoader(url:URL(string:Constants.imagesURL + (selectedCountry?.flag?.validateSlashs() ?? "")),placeholder: Image("egFlagIcon"), shouldRefetch: true)
-                    //                            .frame(width: 30,height:17)
-                    //
-                    //                        //                                Text(selectedCountry?.flag ?? "")
-                    //                        //                                    .foregroundColor(.mainBlue)
-                    //                        //                                    .font(.medium(size: 22))
-                    //                    }
                 }
-                
-                
-                //                Menu {
-                //                    ForEach(viewmodel.PackagesList ?? [],id: \.id) { cat in
-                //                        Button(action: {
-                //                            viewmodel.SelectedPackage = cat
-                //
-                //                        }, label: {
-                //                            Text(cat.title ?? "")
-                //                                .font(.semiBold(size: 12))
-                //                        })
-                //                    }
-                //                } label: {
-                //                    CustomDropListInputFieldUI(title: "lang_Country_title", placeholder: "lang_Country_subitle",text: .constant(viewmodel.SelectedPackage?.title ?? ""), isDisabled: true, showDropdownIndicator:true, trailingView:
-                //                                                AnyView( Image("newvippackicon")
-                //                                                    .renderingMode(.template)
-                //                                                    .resizable()
-                //                                                    .foregroundStyle(Color(.secondary))
-                //                                                    .frame(width: 14,height: 14)
-                //                                                ))
-                //                }
-                
             }
             
             Spacer()
             
-            // MARK: Footer Buttons
             HStack(spacing: 4) {
                 CustomButton(title: "new_send_btn",backgroundcolor: Color(.mainBlue)){
-                    //                    print("Selected Slots:", viewModel.selectedSlots)
-                    //                    showDialog = true
                     Task{await viewmodel.CreatePackageRequest()}
                 }
                 CustomButton(title: "remove_all_btn",backgroundView : AnyView(Color(.secondary))){
@@ -284,11 +211,8 @@ struct DocPackagesFilterView: View {
         .padding()
         .onAppear{
             Task{
-                //                                    async let sub: () = viewmodel.getSubCategories()
-                //                                    _ = await (sub)
                 async let country : () = lookupsVM.getAppCountries()
                 _ = await (country)
-                
             }
         }
         .onDisappear{
@@ -297,6 +221,10 @@ struct DocPackagesFilterView: View {
         .fullScreenCover(isPresented: $viewmodel.showSuccess, onDismiss: {}, content: {
             AnyView( DocPackageRequestSuccessView() )
         })
+        .errorAlert(isPresented: Binding(
+            get: { viewmodel.errorMessage != nil },
+            set: { if !$0 { viewmodel.errorMessage = nil } }
+        ), message: viewmodel.errorMessage)
     }
 }
 extension DocPackagesFilterView{
@@ -308,15 +236,9 @@ extension DocPackagesFilterView{
             subtitle2: "Package_success_subtitle2".localized,
             buttonTitle: "inbody_success_created_btn".localized,
             buttonAction: {
-                // Navigate to home or login
-                //                let login = UIHostingController(rootView: LoginView())
-                //                Helper.shared.changeRootVC(newroot: login, transitionFrom: .fromLeft)
-                
                 viewmodel.showSuccess = false
             }
         )
-        //        let newVC = UIHostingController(rootView: successView)
-        //        Helper.shared.changeRootVC(newroot: newVC, transitionFrom: .fromLeft)
         return successView
     }
 }
@@ -347,159 +269,125 @@ struct FilterRow: View {
 
 struct DocPackagesListView: View {
     var packages: [DocPackageItemM]?
+    var isLoading: Bool
+    var canLoadMore: Bool
     var action: ((DocPackageItemM) -> Void)?
-    //    var likeAction : ((Int) -> Void)?
     var loadMore: (() -> Void)?
+    
+    init(packages: [DocPackageItemM]?, isLoading: Bool, canLoadMore: Bool, action: ((DocPackageItemM) -> Void)? = nil, loadMore: (() -> Void)? = nil) {
+        self.packages = packages
+        self.isLoading = isLoading
+        self.canLoadMore = canLoadMore
+        self.action = action
+        self.loadMore = loadMore
+    }
     
     var body: some View {
         VStack{
-            
             SectionHeader(image: Image(.newvippackicon),title: "doc_your_packages",MoreBtnimage: nil){
-                //                //                            go to last mes package
             }
             
-            //            ScrollView(.horizontal,showsIndicators:false){
-            
             ScrollView{
-                ForEach(packages ?? [], id: \.self){ item in
-                    Button(action: {
-                        action?(item)
-                    }, label: {
-                        ZStack(alignment: .bottom){
-                            KFImageLoader(url:URL(string:Constants.imagesURL + (item.packageIamge?.validateSlashs() ?? "")),placeholder: Image("logo"), shouldRefetch: true)
-                                .frame( height: 180)
-                            
-                            
-                            //                                Image(.onboarding1)
-                            //                                    .resizable()
-                            //                                    .aspectRatio(contentMode: .fill)
-                            //                                //                                    .frame(width: 166, height: 221)
-                            //                                    .frame( height: 180)
-                            
-                            VStack {
-                                HStack(alignment:.top){
-                                    // Title
-                                    HStack (spacing:3){
-                                        Image(.newconversationicon)
-                                            .resizable()
-                                            .frame(width: 16, height: 9)
-                                        Text("\(item.sessionCount ?? 0) ").font(.semiBold(size: 16))
-                                        
-                                        Text("sessions".localized)
-                                    }
-                                    .font(.regular(size: 12))
-                                    .foregroundStyle(Color.white)
-                                    .frame(height:32)
-                                    .padding(.horizontal,10)
-                                    .background{Color(.secondaryMain)}
-                                    .cardStyle( cornerRadius: 3)
-                                    
-                                    Spacer()
-                                    //                                    Button(action: {
-                                    //                                        likeAction?(item.appCountryPackageId ?? 0)
-                                    //                                    }, label: {
-                                    //                                        Image( item.isWishlist ?? false ? .newlikeicon : .newunlikeicon)
-                                    //                                            .resizable()
-                                    //                                            .frame(width: 20, height: 20)
-                                    //                                    })
-                                    
-                                }
-                                .frame(maxWidth: .infinity,alignment:.leading)
-                                .padding(10)
-                                .background(
-                                    LinearGradient(gradient: Gradient(colors: [.black.opacity(0.5),.clear]), startPoint: .top, endPoint: .bottom)
-                                )
-                                
-                                Spacer()
+                LazyVStack(spacing: 8) {
+                    ForEach(packages ?? [], id: \.self){ item in
+                        Button(action: {
+                            action?(item)
+                        }, label: {
+                            ZStack(alignment: .bottom){
+                                KFImageLoader(url:URL(string:Constants.imagesURL + (item.packageIamge?.validateSlashs() ?? "")),placeholder: Image("logo"), shouldRefetch: true)
+                                    .frame( height: 180)
                                 
                                 VStack {
-                                    Text(item.packageName ?? "pack_Name".localized)
-                                        .font(.bold(size: 22))
-                                        .foregroundStyle(Color.white)
-                                    //                                                .frame(maxWidth: .infinity,alignment:.leading)
-                                    
-                                    HStack(alignment: .bottom){
-                                        VStack(alignment:.leading) {
+                                    HStack(alignment:.top){
+                                        HStack (spacing:3){
+                                            Image(.newconversationicon)
+                                                .resizable()
+                                                .frame(width: 16, height: 9)
+                                            Text("\(item.sessionCount ?? 0) ").font(.semiBold(size: 16))
                                             
-                                            HStack(alignment: .center,spacing: 5){
-                                                
-                                                ( Text(" \(item.participantCount ?? 0) ") + Text("subscribtions_".localized))
-                                                    .font(.medium(size: 12))
-                                                //                                                    .frame(maxWidth: .infinity,alignment:.leading)
-                                                
-                                                Image(.greenPerson)
-                                                //                                                    .renderingMode(.template)
-                                                    .resizable()
-                                                    .frame(width: 12,height:12)
-                                                    .scaledToFit()
-                                                //                                                    .foregroundStyle(.white)
-                                                //                                                    .padding(3)
-                                                //                                                    .background(Color(.secondary))
-                                                
-                                            }
-                                            .font(.medium(size: 12))
-                                            .foregroundStyle(Color.white)
-                                            .frame(maxWidth: .infinity,alignment:.leading)
+                                            Text("sessions".localized)
                                         }
+                                        .font(.regular(size: 12))
+                                        .foregroundStyle(Color.white)
+                                        .frame(height:32)
+                                        .padding(.horizontal,10)
+                                        .background{Color(.secondaryMain)}
+                                        .cardStyle( cornerRadius: 3)
                                         
                                         Spacer()
+                                    }
+                                    .frame(maxWidth: .infinity,alignment:.leading)
+                                    .padding(10)
+                                    .background(
+                                        LinearGradient(gradient: Gradient(colors: [.black.opacity(0.5),.clear]), startPoint: .top, endPoint: .bottom)
+                                    )
+                                    
+                                    Spacer()
+                                    
+                                    VStack {
+                                        Text(item.packageName ?? "pack_Name".localized)
+                                            .font(.bold(size: 22))
+                                            .foregroundStyle(Color.white)
                                         
-                                        VStack(alignment: .trailing){
-                                            (Text(item.priceAfterDiscount ?? 0,format:.number.precision(.fractionLength(1))) + Text(" "+"EGP".localized))
-                                                .font(.semiBold(size: 16))
+                                        HStack(alignment: .bottom){
+                                            VStack(alignment:.leading) {
+                                                HStack(alignment: .center,spacing: 5){
+                                                    ( Text(" \(item.participantCount ?? 0) ") + Text("subscribtions_".localized))
+                                                        .font(.medium(size: 12))
+                                                    Image(.greenPerson)
+                                                        .resizable()
+                                                        .frame(width: 12,height:12)
+                                                        .scaledToFit()
+                                                }
+                                                .font(.medium(size: 12))
                                                 .foregroundStyle(Color.white)
-                                            
-                                            HStack{
-                                                
-                                                (Text(item.price ?? 0,format:.number.precision(.fractionLength(1))) + Text(" "+"EGP".localized)).strikethrough().foregroundStyle(Color(.secondary))
-                                                    .font(.semiBold(size: 12))
-                                                
-                                                DiscountLine(discount: item.discount)
-                                                
-                                                //                                                (Text("(".localized + "Discount".localized ) + Text( " \(item.discount ?? 0)" + "%".localized + ")".localized))
-                                                //                                                    .font(.semiBold(size: 12))
-                                                //                                                    .foregroundStyle(Color.white)
-                                                
+                                                .frame(maxWidth: .infinity,alignment:.leading)
                                             }
-                                            .padding(.top,2)
+                                            
+                                            Spacer()
+                                            
+                                            VStack(alignment: .trailing){
+                                                (Text(item.priceAfterDiscount ?? 0,format:.number.precision(.fractionLength(1))) + Text(" "+"EGP".localized))
+                                                    .font(.semiBold(size: 16))
+                                                    .foregroundStyle(Color.white)
+                                                
+                                                HStack{
+                                                    (Text(item.price ?? 0,format:.number.precision(.fractionLength(1))) + Text(" "+"EGP".localized)).strikethrough().foregroundStyle(Color(.secondary))
+                                                        .font(.semiBold(size: 12))
+                                                    
+                                                    DiscountLine(discount: item.discount)
+                                                }
+                                                .padding(.top,2)
+                                            }
                                         }
                                     }
-                                }
-                                .padding(.top,5)
-                                .padding([.bottom,.horizontal],10)
-                                .background{
-                                    BlurView(radius: 5)
-                                        .horizontalGradientBackground( reverse: true).opacity(0.89)
-                                    //                                        LinearGradient(gradient: Gradient(colors: [.clear, .black.opacity(0.8)]), startPoint: .top, endPoint: .bottom)
+                                    .padding(.top,5)
+                                    .padding([.bottom,.horizontal],10)
+                                    .background{
+                                        BlurView(radius: 5)
+                                            .horizontalGradientBackground( reverse: true).opacity(0.89)
+                                    }
                                 }
                             }
-                        }
-                    })
-                    .onAppear {
-                        if item == packages?.last {
+                        })
+                        .cardStyle(cornerRadius: 3)
+                        .horizontalGradientBackground()
+                        .onAppear {
+                            // Trigger only when last item becomes visible and we are allowed to load
+                            guard item == packages?.last else { return }
+                            guard canLoadMore, !isLoading else { return }
                             loadMore?()
                         }
                     }
-                    .cardStyle(cornerRadius: 3)
-                    .horizontalGradientBackground()
-                    //                        .frame(width: 200, height: 356)
-                    //                    .padding()
                     
+                    if isLoading && canLoadMore {
+                        ProgressView()
+                            .padding(.vertical, 12)
+                    }
                 }
-                .buttonStyle(.plain)
-                //                    .listRowSpacing(0)
-                //                    .listRowSeparator(.hidden)
-                //                    .listRowBackground(Color.clear)
-                
+                .padding(.vertical,5)
+                .padding(.bottom,5)
             }
-            //            .listStyle(.plain)
-            //            .padding()
-            
-            //            .cardStyle(cornerRadius: 3,shadowOpacity:0.28)
-            .padding(.vertical,5)
-            .padding(.bottom,5)
         }
-        
     }
 }
-

@@ -19,6 +19,7 @@ class DocPackagesViewModel:ObservableObject {
     @Published var ActivePackages: DocPackagesM?
 //    = SubcripedPackagesM(items: [SubcripedPackageItemM(customerPackageID: 2, docotrID: 2, status: "active", subscriptionDate: "", lastSessionDate: "", packageName: "nameeee", categoryName: "cateeee", mainCategoryName: "main cateee", doctorName: "doc doc", sessionCount: 4, attendedSessionCount: 2, packageImage: "", doctorSpeciality: "special", doctorNationality: "egegege", doctorImage: "", canCancel: true, canRenew: true )], totalCount: 1)
     
+    @Published var showAddSheet : Bool = false
     @Published var MainCategories: [CategoriyListItemM]?
     @Published var selectedMainCategory: CategoriyListItemM?
 //    {
@@ -190,6 +191,7 @@ extension DocPackagesViewModel{
                 target,
                 responseType: FeaturedPackagesM.self
             )
+            showAddSheet = false
             self.showSuccess = true
         } catch {
             self.errorMessage = error.localizedDescription
