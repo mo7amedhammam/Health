@@ -131,6 +131,7 @@ struct ReSchedualView: View {
                             ForEach(viewModel.availableShifts ?? [],id: \.self){shift in
                                 Button(action: {
                                     viewModel.selectedShift = shift
+                                    viewModel.newDate = selectedDate
                                     viewModel.selectedSchedual = nil
                                     Task{
                                         await viewModel.getAvailableScheduals()

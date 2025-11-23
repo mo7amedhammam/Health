@@ -38,7 +38,9 @@ class DocPackagesViewModel:ObservableObject {
 //    }}
     @Published var PackagesList: [SpecialityM]?
     @Published var SelectedPackage: SpecialityM?
-    @Published var selectedCountry : AppCountryM?
+    
+    @Published var CountriesList : [AppCountryByPackIdM]?
+    @Published var selectedCountry : AppCountryByPackIdM?
     
     @Published var showSuccess : Bool = false
 
@@ -166,6 +168,31 @@ extension DocPackagesViewModel{
                 responseType: [SpecialityM].self
             )
             self.PackagesList = response
+        } catch {
+            self.errorMessage = error.localizedDescription
+        }
+    }
+    
+    @MainActor
+    func getCountryByPackageId() async {
+        isLoading = true
+        defer { isLoading = false }
+        guard let PackageId = SelectedPackage?.id else {
+            // Handle missings
+            self.errorMessage = "check inputs"
+            //            throw NetworkError.unknown(code: 0, error: "check inputs")
+            return
+        }
+        let parametersarr : [String : Any] =  ["PackageId":PackageId]
+
+        let target = DocPackagesServices.GetAppCountryByPackageId(parameters: parametersarr)
+        do {
+            self.errorMessage = nil // Clear previous errors
+            let response = try await networkService.request(
+                target,
+                responseType: [AppCountryByPackIdM].self
+            )
+            self.CountriesList = response
         } catch {
             self.errorMessage = error.localizedDescription
         }

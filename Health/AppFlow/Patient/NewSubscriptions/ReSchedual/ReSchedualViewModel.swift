@@ -39,7 +39,7 @@ class ReSchedualViewModel:ObservableObject {
 
     @Published var isLoading:Bool? = false
     @Published var errorMessage: String? = nil
-    var appcountryId:Int?{Helper.shared.AppCountryId()}
+    @Published var appcountryId: Int? = Helper.shared.AppCountryId()
     // Init with DI
     init(networkService: AsyncAwaitNetworkServiceProtocol = AsyncAwaitNetworkService.shared) {
         self.networkService = networkService
@@ -60,7 +60,8 @@ extension ReSchedualViewModel{
             return
         }
         let parametersarr : [String : Any] =  ["Id":doctorPackageId,"AppCountryId":appCountryId ]
-        
+        print("parametersarr",parametersarr)
+
         let target = HomeServices.GetDoctorPackageById(parameters: parametersarr)
         do {
             self.errorMessage = nil // Clear previous errors
@@ -84,7 +85,7 @@ extension ReSchedualViewModel{
 //            //            throw NetworkError.unknown(code: 0, error: "check inputs")
             return
         }
-        var parametersarr : [String : Any] =  ["date":"\(newDate.formatted(.customDateFormat("YYYY-MM-dd")))","appCountryId":appCountryId]
+        var parametersarr : [String : Any] =  ["date":"\(newDate.formatted(.customDateFormat("YYYY-MM-dd",timeZone:TimeZone(identifier: "Africa/Cairo") ?? TimeZone.current)))","appCountryId":appCountryId]
           
         if let doctorId = doctorId{
                 parametersarr["doctorId"] = doctorId
@@ -119,6 +120,7 @@ print("parametersarr,",parametersarr)
             return
         }
         let parametersarr : [String : Any] =  ["AppCountryId":AppCountryId]
+        print("parametersarr",parametersarr)
 
         let target = HomeServices.GetTimeShiftScheduleList(parameters: parametersarr)
         do {
@@ -143,7 +145,7 @@ print("parametersarr,",parametersarr)
 //            //            throw NetworkError.unknown(code: 0, error: "check inputs")
             return
         }
-        var parametersarr : [String : Any] =  ["appCountryId":appCountryId,"date":"\(newDate.formatted(.customDateFormat("YYYY-MM-dd")))","shiftId":shiftId]
+        var parametersarr : [String : Any] =  ["appCountryId":appCountryId,"date":"\(newDate.formatted(.customDateFormat("YYYY-MM-dd",timeZone:TimeZone(identifier: "Africa/Cairo") ?? TimeZone.current)))","shiftId":shiftId]
 
         if let doctorId = doctorId{
                 parametersarr["doctorId"] = doctorId
@@ -160,6 +162,7 @@ print("parametersarr,",parametersarr)
             }
         }
         
+        print("parametersarr",parametersarr)
         let target = HomeServices.GetAvailableDoctorSchedule(parameters: parametersarr)
         do {
             self.errorMessage = nil // Clear previous errors
@@ -222,6 +225,7 @@ print("parametersarr,",parametersarr)
         }
 
         let parametersarr : [String : Any] =  ["sessionId":sessionId,"newDate":newDate,"newTimeFrom":newTimeFrom,"newTimeTo":newTimeTo]
+        print("parametersarr",parametersarr)
 
         let target = HomeServices.rescheduleSession(parameters: parametersarr)
         do {
@@ -263,7 +267,8 @@ print("parametersarr,",parametersarr)
                 parametersarr["packageId"] = PackageId
             }
         }
-        
+        print("parametersarr",parametersarr)
+
         let target = HomeServices.GetReschedualRequestList(parameters: parametersarr)
         do {
             self.errorMessage = nil // Clear previous errors
@@ -289,6 +294,7 @@ print("parametersarr,",parametersarr)
         }
 
         let parametersarr : [String : Any] =  ["Id":sessionId]
+        print("parametersarr",parametersarr)
 
         let target = HomeServices.ApprouveCustomerReschedualRequest(parameters: parametersarr)
         do {

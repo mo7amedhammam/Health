@@ -168,7 +168,7 @@ struct NewHomeView: View {
                         .frame(height: 137)
                         .padding(.horizontal)
                     
-                    if Helper.shared.CheckIfLoggedIn(){
+                    if Helper.shared.CheckIfLoggedIn() && Helper.shared.getSelectedUserType() == .Customer{
                         // Last measurements wrapped with EquatableByValue
                         EquatableByValue(value: measurementsState) {
                             LastMesurmentsSection(measurements: viewModel.myMeasurements) { item in

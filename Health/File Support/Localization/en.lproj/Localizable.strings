@@ -466,3 +466,10 @@
 "new_answer_" = "new answer";
 "By._" = "By. ";
 "no_answers_to_be_sent" = "There are no answers to send it";
+
+
+//Doc Pack
+"docPackReq_title" = "Your request has been sent successfully";
+"docPackReq_subtitle1" = "Please check your inbox to check your flight.";
+"docPackReq_subtitle2" = "Quickly linked to popular email services.";
+"docPackReq_btn" = "Home";

@@ -39,3 +39,9 @@ struct CategoriyListItemM: Codable,Hashable {
 //        case status
 //    }
 }
+
+// MARK: - AppCountryM
+struct AppCountryByPackIdM : Codable , Hashable{
+    var id, appCountryPackageId: Int?
+    var name: String?
+}

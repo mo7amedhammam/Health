@@ -48,6 +48,8 @@ struct DocPackagesScreen: View {
                     canLoadMore: viewModel.canLoadMore ?? false,
                     action: { package in
                         // push to details if needed
+//                        guard let customerPackageId = package. else { return }  //customerPackageId not exist
+//                        pushTo(destination: ActiveCustomerPackagesView( doctorId: nextsession.doctorId,CustomerPackageId: customerPackageId))
                     },
                     loadMore: {
                         Task {
@@ -84,8 +86,30 @@ struct DocPackagesScreen: View {
         .task {
             await viewModel.getActivePackages()
         }
+//        .onChange(of: viewModel.showSuccess){ newval in
+//            guard newval else { return }
+//            RequestSent()
+//        }
         
     }
+    
+//    func RequestSent() {
+//            let successView = SuccessView(
+//                image: Image("successicon"),
+//                title: "docPackReq_title".localized,
+//                subtitle1: "docPackReq_subtitle1".localized,
+//                subtitle2: "docPackReq_subtitle2".localized,
+//                buttonTitle: "docPackReq_btn".localized,
+//                buttonAction: {
+//                    // Navigate to home or login
+//                    let root = UIHostingController(rootView: DocTabView())
+//                    Helper.shared.changeRootVC(newroot: root, transitionFrom: .fromLeft)
+//                }
+//            )
+//            let newVC = UIHostingController(rootView: successView)
+//            Helper.shared.changeRootVC(newroot: newVC, transitionFrom: .fromLeft)
+//            
+//    }
 }
 #Preview {
     DocPackagesScreen()
@@ -96,7 +120,7 @@ struct DocPackagesFilterView: View {
     @State private var subCategory: String = ""
     @State private var package: String = ""
     @ObservedObject var viewmodel: DocPackagesViewModel
-    @StateObject private var lookupsVM = LookupsViewModel.shared
+//    @StateObject private var lookupsVM = LookupsViewModel.shared
     
     var body: some View {
         VStack(spacing: 20) {
@@ -162,7 +186,8 @@ struct DocPackagesFilterView: View {
                     ForEach(packages, id: \.id) { cat in
                         Button(action: {
                             viewmodel.SelectedPackage = cat
-                            
+                            viewmodel.selectedCountry = nil
+                            Task{ await viewmodel.getCountryByPackageId() }
                         }, label: {
                             Text(cat.name ?? "")
                                 .font(.semiBold(size: 12))
@@ -179,7 +204,7 @@ struct DocPackagesFilterView: View {
                 }
                 
                 Menu {
-                    ForEach(lookupsVM.appCountries ?? [],id: \.self) { country in
+                    ForEach(viewmodel.CountriesList ?? [],id: \.self) { country in
                         Button(action: {
                             viewmodel.selectedCountry = country
                         }, label: {
@@ -187,12 +212,7 @@ struct DocPackagesFilterView: View {
                         })
                     }
                 } label: {
-                    CustomDropListInputFieldUI(title: "lang_Country_title", placeholder: "lang_Country_subitle",text: .constant(viewmodel.selectedCountry?.name ?? ""), isDisabled: true, showDropdownIndicator:true, trailingView:
-                                                AnyView(
-                                                    KFImageLoader(url:URL(string:Constants.imagesURL + (viewmodel.selectedCountry?.flag?.validateSlashs() ?? "")),placeholder: Image("egFlagIcon"), shouldRefetch: true)
-                                                        .foregroundStyle(Color(.secondary))
-                                                        .frame(width: 14,height: 14)
-                                                ))
+                    CustomDropListInputFieldUI(title: "lang_Country_title", placeholder: "lang_Country_subitle",text: .constant(viewmodel.selectedCountry?.name ?? ""), isDisabled: true, showDropdownIndicator:true)
                 }
             }
             
@@ -209,12 +229,12 @@ struct DocPackagesFilterView: View {
         }
         .localizeView()
         .padding()
-        .onAppear{
-            Task{
-                async let country : () = lookupsVM.getAppCountries()
-                _ = await (country)
-            }
-        }
+//        .onAppear{
+//            Task{
+//                async let country : () = lookupsVM.getAppCountries()
+//                _ = await (country)
+//            }
+//        }
         .onDisappear{
             viewmodel.removeSelections()
         }

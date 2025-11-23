@@ -308,17 +308,19 @@ final class FilesRepository: FilesRepositoryProtocol {
             "FileName": request.fileName,
             "FileTypeId": request.fileTypeId
         ]
-
+        
         if let link = request.link { params["Url"] = link }
         if let notes = request.notes { params["Notes"] = notes }
-        if let customerId = request.customerId { params["CustomerId"] = customerId }
-        if let doctorId = request.doctorId { params["DoctorId"] = doctorId }
+        //        if let customerId = request.customerId { params["CustomerId"] = customerId }
+        //        if let doctorId = request.doctorId {
+//        params["DoctorId"] = 10
+//    }
         if let packageId = request.customerPackageId { params["CustomerPackageId"] = packageId }
-
+print("params",params)
         let target: TargetType1 =
-            request.customerPackageId != nil
-            ? DocActivePackagesServices.CreateCustomerPackageInstructionByCPId(parameters: params)
-            : MyFilesServices.AddFile(parameters: params)
+//            request.customerPackageId != nil ?
+        DocActivePackagesServices.CreateCustomerPackageInstructionByCPId(parameters: params)
+//            : MyFilesServices.AddFile(parameters: params)
 
         var parts: [MultipartFormDataPart] = params.map {
             MultipartFormDataPart(name: $0.key, value: "\($0.value)")
@@ -380,7 +382,7 @@ struct FetchFilesUseCase: FetchFilesUseCaseProtocol {
 @MainActor
 final class ActiveCustomerPackFilesViewModel: ObservableObject {
 
-    @Published var files: [MyFileM] = []
+    @Published var files: [MyFileM]? = []
     @Published var showUploadSheet = false
     @Published var isLoading : Bool? = false
     @Published var errorMessage: String?
@@ -432,7 +434,9 @@ final class ActiveCustomerPackFilesViewModel: ObservableObject {
             try await uploadUseCase.execute(request)
             await refreshFiles(forcase: .Packages)
             clearForm()
+            showUploadSheet = false
         } catch {
+            showUploadSheet = false
             errorMessage = error.localizedDescription
         }
         isLoading = false
@@ -462,7 +466,7 @@ final class ActiveCustomerPackFilesViewModel: ObservableObject {
 //                files = try await fetchUseCase.fetchPackageFiles(id: pid)
 //                return
 //            }
-            files = []
+//            files = []
         } catch {
             errorMessage = error.localizedDescription
             files = []

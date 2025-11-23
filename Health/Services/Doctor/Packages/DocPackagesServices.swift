@@ -12,6 +12,7 @@ enum DocPackagesServices{
     case GetMainCategoryDBForList
     case GetSubCategoryForList(parameters : [String:Any])
     case GetPackageForList(parameters : [String:Any])
+    case GetAppCountryByPackageId(parameters : [String:Any])
     case CreateDoctorPackageRequest(parameters : [String:Any])
 }
 
@@ -33,6 +34,8 @@ extension DocPackagesServices : TargetType1 {
             
         case .GetPackageForList:
             return DocEndPoints.DocPackageForList.rawValue
+        case .GetAppCountryByPackageId:
+            return DocEndPoints.DocGetAppCountryByPackageId.rawValue
             
         case .CreateDoctorPackageRequest:
             return DocEndPoints.DocCreateDoctorPackageRequest.rawValue
@@ -51,7 +54,8 @@ extension DocPackagesServices : TargetType1 {
         case
                 .GetMainCategoryDBForList
             ,.GetSubCategoryForList
-            ,.GetPackageForList
+            ,.GetPackageForList,
+                .GetAppCountryByPackageId
             :
             return .get
         }
@@ -63,7 +67,8 @@ extension DocPackagesServices : TargetType1 {
                 .GetPackageDoctor(parameters: let parameter)
             ,.GetPackageForList(parameters: let parameter)
             ,.GetSubCategoryForList(parameters: let parameter)
-            ,.CreateDoctorPackageRequest(parameters: let parameter)
+            ,.CreateDoctorPackageRequest(parameters: let parameter),
+                .GetAppCountryByPackageId(parameters: let parameter)
             :
             ////            return .parameterRequest(Parameters: parameters, Encoding: encoding)
             return  parameter

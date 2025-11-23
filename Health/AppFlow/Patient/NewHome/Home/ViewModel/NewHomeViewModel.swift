@@ -264,6 +264,8 @@ extension NewHomeViewModel {
 }
 
     func getMyMeasurements() async {
+        guard Helper.shared.getSelectedUserType() == .Customer else{return}
+
         let target = HomeServices.GetMyMeasurementsStats
         do {
             isError = false

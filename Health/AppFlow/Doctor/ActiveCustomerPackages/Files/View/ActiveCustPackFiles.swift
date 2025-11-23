@@ -72,7 +72,7 @@ struct ActiveCustPackFiles : View {
 //                    .padding([.top,.horizontal])
 //                    .padding(.top,20)
 
-                filesList()
+                filesList(files: myfilesvm.files)
 
                 Spacer()
             }
@@ -110,7 +110,7 @@ struct ActiveCustPackFiles : View {
                 }
             }
             .onChange(of: filesCase){ newval in
-                if newval != filesCase{
+//                if newval != filesCase{
                     switch newval {
                     case .Customer:
                         Task{
@@ -124,7 +124,7 @@ struct ActiveCustPackFiles : View {
                         }
 
                     }
-                }
+//                }
             }
 //            .frame(height: 600)
 
