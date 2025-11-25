@@ -14,6 +14,8 @@ struct ReSchedualView: View {
     var doctorPackageId : Int?
     @Binding var doctorId : Int?
     @Binding var packageId : Int?
+    @Binding var SessionId : Int?
+
     @StateObject var viewModel = ReSchedualViewModel() // fresh instance per sheet
     @State private var showingDatePicker = false
     @State private var selectedDate = Date()
@@ -183,6 +185,7 @@ struct ReSchedualView: View {
             viewModel.doctorPackageId = doctorPackageId
             viewModel.doctorId = doctorId
             viewModel.PackageId = packageId
+            viewModel.SessionId = SessionId
             await viewModel.getDoctorPackageDetails()
             await viewModel.getAvailableDays()
         }
@@ -193,6 +196,10 @@ struct ReSchedualView: View {
         .onChange(of: packageId) { newVal in
             // reflect parent updates while sheet is up
             viewModel.PackageId = newVal
+        }
+        .onChange(of: SessionId) { newVal in
+            // reflect parent updates while sheet is up
+            viewModel.SessionId = newVal
         }
         // React to success
         .onChange(of: viewModel.isReschedualed) { newValue in
@@ -215,5 +222,5 @@ struct ReSchedualView: View {
 }
 
 #Preview {
-    ReSchedualView( doctorPackageId: 0, doctorId: .constant(0), packageId: .constant(0), isPresentingNewMeasurementSheet: .constant(true),reschedualcase: .reschedualSession)
+    ReSchedualView( doctorPackageId: 0, doctorId: .constant(0), packageId: .constant(0), SessionId: .constant(0), isPresentingNewMeasurementSheet: .constant(true),reschedualcase: .reschedualSession)
 }

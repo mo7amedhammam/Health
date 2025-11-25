@@ -321,7 +321,7 @@ struct SubcripedPackageDetailsView: View {
             }
         }
             .customSheet(isPresented: $isReschedualling){
-                ReSchedualView(doctorId: .constant(nil), packageId: .constant(nil), isPresentingNewMeasurementSheet: $isReschedualling,reschedualcase: .reschedualSession)
+                ReSchedualView(doctorId: .constant(nil), packageId: .constant(nil), SessionId: .constant(nil), isPresentingNewMeasurementSheet: $isReschedualling,reschedualcase: .reschedualSession)
             }
             .overlay{
                 if showCancel{
@@ -461,7 +461,7 @@ struct SubcripedNextSession: View {
                         
                         VStack(){
                             // Title
-                            Text(upcomingSession?.sessionDate ?? "12-05-2025")
+                            Text(upcomingSession?.formattedSessionDate ?? "12-05-2025")
                                 .font(.regular(size: 12))
                                 .foregroundStyle(Color.white)
                                 .frame(maxWidth: .infinity, alignment: .trailing)

@@ -16,6 +16,7 @@ struct NewHomeView: View {
     @State private var selectedPackage: FeaturedPackageItemM?
     @State private var doctorId : Int?
     @State private var packageId : Int?
+    @State private var SessoinId : Int?
     @State private var isRescheduling: Bool = false
     
     // Active tab for MostViewed/Booked
@@ -147,6 +148,7 @@ struct NewHomeView: View {
                             },
                             rescheduleAction: {
                                 //                                doctorId = nil
+                                SessoinId = nextsession.id
                                 packageId = nextsession.packageID
                                 doctorId = nextsession.doctorId
                                 isRescheduling = true }
@@ -244,7 +246,7 @@ struct NewHomeView: View {
             message: viewModel.errorMessage
         )
         .customSheet(isPresented: $isRescheduling) {
-            ReSchedualView(doctorId: $doctorId,packageId: $packageId , isPresentingNewMeasurementSheet: $isRescheduling ,reschedualcase: .reschedualSession)
+            ReSchedualView(doctorId: $doctorId,packageId: $packageId , SessionId: $SessoinId, isPresentingNewMeasurementSheet: $isRescheduling ,reschedualcase: .reschedualSession)
         }
         .task {
             await viewModel.load()

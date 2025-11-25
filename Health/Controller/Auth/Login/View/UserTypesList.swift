@@ -28,6 +28,12 @@ struct UserTypesList: View {
                 UserTypeCell(user: user, selectedUser: $selectedUser){
                     action?()
                 }
+                
+                if user == .Customer{
+                    Color(.mainBlue)
+                        .frame(width: 1.5)
+                        .padding(.vertical)
+                }
             }
         }
         .padding(.top)
@@ -52,9 +58,9 @@ enum UserTypeEnum:String,CaseIterable{
     
     var user:UserType { switch self {
     case .Customer:
-        return UserType(id: 0, title: "Customer",imgName: "Student-active",selectedimgName: "Student-active-selected" ,tintColor: .mainBlue)
+        return UserType(id: 0, title: "Customer",imgName: "customer_img",selectedimgName: "customer_img_selected" ,tintColor: Color(.btnDisabledTxt))
     case .Doctor:
-        return UserType(id: 1,title: "Doctor", imgName: "Parent-active",selectedimgName: "Parent-active-selected",tintColor: Color(.secondary))
+        return UserType(id: 1,title: "Doctor", imgName: "doctor_img",selectedimgName: "doctor_img_selected",tintColor: Color(.btnDisabledTxt))
 
     }
     }
@@ -62,10 +68,10 @@ enum UserTypeEnum:String,CaseIterable{
 struct UserType {
     var id : Int = 0
     var title : String = "Customer"
-    var imgName : String = "Student-active"
-    var selectedimgName : String = "Student-active-selected"
+    var imgName : String = "customer_img"
+    var selectedimgName : String = "customer_img_selected"
 //    var user : UserTypeEnum = .Customer
-    var tintColor : Color = Color(.secondary)
+    var tintColor : Color = Color(.btnDisabledTxt)
 }
 
 import SwiftUI
@@ -107,19 +113,19 @@ struct UserTypeCell: View {
                     .clipShape(.circle)
                     .padding(.top, 27.0)
                 Text(user.user.title.localized())
-                    .font(Font.bold(size: 12))
+                    .font(Font.bold(size: 16))
                     .fontWeight(.bold)
-                    .foregroundColor(user.user.id == selectedUser.user.id ? Color(.white) :user.user.tintColor)
+                    .foregroundColor(user.user.id == selectedUser.user.id ? Color(.mainBlue) :user.user.tintColor)
                     .multilineTextAlignment(.center)
                     .padding(.vertical, 15)
                     .frame(maxWidth: .infinity)
 
-                    .overlay(RoundedCorners(topLeft: 5.0, topRight: 5.0, bottomLeft: 5.0, bottomRight: 5.0)
-                        .stroke(user.user.id == selectedUser.user.id ? Color(.mainBlue) : user.user.tintColor,
-                                lineWidth: 1))
+//                    .overlay(RoundedCorners(topLeft: 5.0, topRight: 5.0, bottomLeft: 5.0, bottomRight: 5.0)
+//                        .stroke(user.user.id == selectedUser.user.id ? Color(.mainBlue) : user.user.tintColor,
+//                                lineWidth: 1))
                         
-                    .background(RoundedCorners(topLeft: 5.0, topRight: 5.0, bottomLeft: 5.0, bottomRight: 5.0)
-                        .fill(user.user.id == selectedUser.user.id ? Color(.mainBlue) : .clear))
+//                    .background(RoundedCorners(topLeft: 5.0, topRight: 5.0, bottomLeft: 5.0, bottomRight: 5.0)
+//                        .fill(user.user.id == selectedUser.user.id ? Color(.mainBlue) : .clear))
 
             }
             .frame(minWidth: 0,maxWidth: .infinity)

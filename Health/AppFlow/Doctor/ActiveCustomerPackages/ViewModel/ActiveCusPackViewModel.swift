@@ -43,7 +43,8 @@ extension ActiveCusPackViewModel {
         // Prepare targets
         let pkgTarget = SubscriptionServices.GetCustomerPackageById(parameters: ["CustomerPackageId": customerPackageId])
         let upcTarget = HomeServices.GetUpcomingSession(parameters: ["CustomerPackageId": customerPackageId])
-        let measTarget = DocActivePackagesServices.GetCustomerMeasurements(parameters: ["customerId": customerPackageId])
+//        guard let customerId = subscripedPackage?.customerID else { return }
+//        let measTarget = DocActivePackagesServices.GetCustomerMeasurements(parameters: ["customerId": customerId])
 
         let sessionsTarget: TargetType1? = {
             guard let max = maxResultCount, let skip = skipCount else { return nil }
@@ -55,22 +56,41 @@ extension ActiveCusPackViewModel {
         do {
             async let pkg: SubcripedPackageItemM? = networkService.request(pkgTarget, responseType: SubcripedPackageItemM.self)
             async let upc: UpcomingSessionM? = networkService.request(upcTarget, responseType: UpcomingSessionM.self)
-            async let meas: [MyMeasurementsStatsM]? = networkService.request(measTarget, responseType: [MyMeasurementsStatsM].self)
+//            async let meas: [MyMeasurementsStatsM]? = networkService.request(measTarget, responseType: [MyMeasurementsStatsM].self)
 
             var sessions: SubcripedSessionsListM? = subscripedSessions
             if let sessionsTarget {
                 sessions = try await networkService.request(sessionsTarget, responseType: SubcripedSessionsListM.self)
             }
 
-            let (p, u, m) = try await (pkg, upc, meas)
+            let (p, u) = try await (pkg, upc)
 
             // Single commit
             subscripedPackage = p
             upcomingSession = u
-            customerMeasurements = m
+//            customerMeasurements = m
             subscripedSessions = sessions
+           await loadMeasurements(customerId: p?.customerID)
         } catch {
             errorMessage = error.localizedDescription
+        }
+    }
+    
+    @MainActor
+    func loadMeasurements(customerId: Int?) async {
+        isLoading = true
+        defer { isLoading = false }
+
+        // Prepare targets
+        guard let customerId = customerId else { return }
+        let target = DocActivePackagesServices.GetCustomerMeasurements(parameters: ["customerId": customerId])
+//        let target = SubscriptionServices.GetCustomerPackageById(parameters: parametersarr)
+        do {
+            self.errorMessage = nil
+            let response = try await networkService.request(target, responseType: [MyMeasurementsStatsM].self)
+            self.customerMeasurements = response
+        } catch {
+            self.errorMessage = error.localizedDescription
         }
     }
 

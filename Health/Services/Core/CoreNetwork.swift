@@ -161,7 +161,7 @@ final class AsyncAwaitNetworkService: AsyncAwaitNetworkServiceProtocol {
                 return try decodeResponse(data, responseType)
 
             } catch let cancelError as CancellationError {
-                logger.info("Request was cancelled (CancellationError). Suppressing error.")
+                logger.info("Request was cancelled \(cancelError). Suppressing error.")
                 return nil
             } catch let urlErr as URLError where urlErr.code == .cancelled {
                 logger.info("Request was cancelled (URLError.cancelled). Suppressing error.")
@@ -467,6 +467,7 @@ final class AsyncAwaitNetworkService: AsyncAwaitNetworkServiceProtocol {
         #if DEBUG
         var lines: [String] = []
         lines.append("=== Response ===")
+        lines.append("url: \(response.url?.absoluteString ?? "nil")")
         lines.append("Status Code: \(response.statusCode)")
         lines.append("Duration: \(String(format: "%.2f", duration))s")
         lines.append("Headers: \(response.allHeaderFields)")

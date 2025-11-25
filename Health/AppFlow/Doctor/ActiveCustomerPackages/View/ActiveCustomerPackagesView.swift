@@ -13,6 +13,8 @@ struct ActiveCustomerPackagesView: View {
     let customerPackageId: Int
     @State var doctorId: Int?
     @State var packageId: Int? = nil
+    @State var sessionId: Int? = nil
+    
     @State private var selectedSection: SectionType? = nil
     @State private var reschedualcase: reschedualCases? = .reschedualSession
     @State private var isReschedualling: Bool = false
@@ -197,22 +199,27 @@ struct ActiveCustomerPackagesView: View {
 
                 CustomButton(title: "select_next_session",isdisabled: false,backgroundView:AnyView(Color.clear.horizontalGradientBackground())){
 //                    guard let doctorId = viewModel.subscripedPackage?.docotrID,let packageId = customerPackageID else { return }
+//                    sessionId = viewModel.subscripedPackage
                     doctorId = viewModel.subscripedPackage?.docotrID
-                    packageId = customerPackageId
+//                    packageId = customerPackageId
+                    packageId = viewModel.upcomingSession?.packageID
                    reschedualcase = .nextSession
                     isReschedualling = true
                 }
 
-                SubcripedNextSession(upcomingSession: viewModel.upcomingSession,rescheduleAction: {
-//                    guard let doctorId = viewModel.doctorId else { return }
-//                    doctorId = viewModel.subscripedPackage?.docotrID ?? 10
-//                    guard let doctorId = viewModel.subscripedPackage?.docotrID,let packageId = customerPackageID else { return }
-                    doctorId = viewModel.subscripedPackage?.docotrID
-                    packageId = customerPackageId
-                   reschedualcase = .reschedualSession
-                    isReschedualling = true
-                })
-                .padding(.horizontal)
+                if let upcomingSession = viewModel.upcomingSession{
+                    SubcripedNextSession(upcomingSession: upcomingSession,rescheduleAction: {
+                        //                    guard let doctorId = viewModel.doctorId else { return }
+                        //                    doctorId = viewModel.subscripedPackage?.docotrID ?? 10
+                        //                    guard let doctorId = viewModel.subscripedPackage?.docotrID,let packageId = customerPackageID else { return }
+                        sessionId = viewModel.upcomingSession?.id
+                        doctorId = viewModel.upcomingSession?.doctorId
+                        packageId = viewModel.upcomingSession?.packageID
+                        reschedualcase = .reschedualSession
+                        isReschedualling = true
+                    })
+                    .padding(.horizontal)
+                }
 
                 SubcripedSessionsList(
                     sessions: viewModel.subscripedSessions?.items,
@@ -249,8 +256,9 @@ struct ActiveCustomerPackagesView: View {
         .customSheet(isPresented: $isReschedualling){
             ReSchedualView(
                 doctorPackageId: customerPackageId,
-                doctorId: .constant( doctorId ),
-                packageId:.constant( packageId ),
+                doctorId: $doctorId,
+                packageId:$packageId,
+                SessionId:$sessionId ,
                 isPresentingNewMeasurementSheet: $isReschedualling,
                 reschedualcase: reschedualcase,
                 onRescheduleSuccess: {

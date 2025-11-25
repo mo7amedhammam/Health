@@ -105,10 +105,13 @@ extension NewHomeViewModel {
                 responseType: HomeCategoryM.self
             )
 
-            async let measurements: [MyMeasurementsStatsM]? = networkService.request(
-                HomeServices.GetMyMeasurementsStats,
-                responseType: [MyMeasurementsStatsM].self
-            )
+            if Helper.shared.getSelectedUserType() == .Customer{
+                async let measurements: [MyMeasurementsStatsM]? = networkService.request(
+                    HomeServices.GetMyMeasurementsStats,
+                    responseType: [MyMeasurementsStatsM].self
+                )
+                myMeasurements = try await measurements
+            }
 
             async let featured: FeaturedPackagesM? = networkService.request(
                 HomeServices.FeaturedPackageList(parameters: [
@@ -130,7 +133,7 @@ extension NewHomeViewModel {
             // Single commit
             upcomingSession = try await upc
             homeCategories = try await categories
-            myMeasurements = try await measurements
+//            if Helper.shared.getSelectedUserType() == .Customer{ myMeasurements = try await measurements }
             if Helper.shared.CheckIfLoggedIn(){  featuredPackages = try await featured }
             mostViewedPackages = try await mostViewed
             // Optionally also prefetch most booked

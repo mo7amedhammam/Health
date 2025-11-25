@@ -19,6 +19,7 @@ class ReSchedualViewModel:ObservableObject {
     @Published var doctorId:Int?
     @Published var doctorPackageId:Int?
     @Published var PackageId:Int?
+    @Published var SessionId:Int?
 
     @Published var newDate                = Date()
     
@@ -54,9 +55,6 @@ extension ReSchedualViewModel{
         isLoading = true
         defer { isLoading = false }
         guard let doctorPackageId = doctorPackageId, let appCountryId = appcountryId else {
-//            // Handle missings
-//            self.errorMessage = "check inputs"
-//            //            throw NetworkError.unknown(code: 0, error: "check inputs")
             return
         }
         let parametersarr : [String : Any] =  ["Id":doctorPackageId,"AppCountryId":appCountryId ]
@@ -80,22 +78,26 @@ extension ReSchedualViewModel{
         isLoading = true
         defer { isLoading = false }
         guard let appCountryId = appcountryId  else {
-//            // Handle missings
-//            self.errorMessage = "check inputs"
-//            //            throw NetworkError.unknown(code: 0, error: "check inputs")
             return
         }
-        var parametersarr : [String : Any] =  ["date":"\(newDate.formatted(.customDateFormat("YYYY-MM-dd",timeZone:TimeZone(identifier: "Africa/Cairo") ?? TimeZone.current)))","appCountryId":appCountryId]
+        // Prefer the tapped day; fall back to the month anchor (newDate)
+        let selectedDayString = selectedDay?.date?.ChangeDateFormat(
+            FormatFrom: "yyyy-MM-dd'T'HH:mm:ss",
+            FormatTo: "yyyy-MM-dd"
+        )
+        let dateString = selectedDayString ?? newDate.formatted(.customDateFormat("yyyy-MM-dd"))
+        
+        var parametersarr : [String : Any] =  ["date": dateString, "appCountryId": appCountryId]
           
         if let doctorId = doctorId{
+            parametersarr["doctorId"] = doctorId
+        }else{
+            if let doctorId = packageDetails?.doctorData?.doctorID{
                 parametersarr["doctorId"] = doctorId
-            }else{
-                if let doctorId = packageDetails?.doctorData?.doctorID{
-                    parametersarr["doctorId"] = doctorId
-                }
             }
+        }
         
-print("parametersarr,",parametersarr)
+        print("parametersarr,",parametersarr)
         let target = HomeServices.GetDoctorAvailableDayList(parameters: parametersarr)
         do {
             self.errorMessage = nil // Clear previous errors
@@ -114,9 +116,6 @@ print("parametersarr,",parametersarr)
         isLoading = true
         defer { isLoading = false }
         guard let AppCountryId = appcountryId  else {
-////            // Handle missings
-////            self.errorMessage = "check inputs"
-////            //            throw NetworkError.unknown(code: 0, error: "check inputs")
             return
         }
         let parametersarr : [String : Any] =  ["AppCountryId":AppCountryId]
@@ -140,20 +139,28 @@ print("parametersarr,",parametersarr)
         isLoading = true
         defer { isLoading = false }
         guard let appCountryId = appcountryId ,let shiftId = selectedShift?.id else {
-//            // Handle missings
-//            self.errorMessage = "check inputs"
-//            //            throw NetworkError.unknown(code: 0, error: "check inputs")
             return
         }
-        var parametersarr : [String : Any] =  ["appCountryId":appCountryId,"date":"\(newDate.formatted(.customDateFormat("YYYY-MM-dd",timeZone:TimeZone(identifier: "Africa/Cairo") ?? TimeZone.current)))","shiftId":shiftId]
+        // Prefer the tapped day; fall back to the month anchor (newDate)
+        let selectedDayString = selectedDay?.date?.ChangeDateFormat(
+            FormatFrom: "yyyy-MM-dd'T'HH:mm:ss",
+            FormatTo: "yyyy-MM-dd"
+        )
+        let dateString = selectedDayString ?? newDate.formatted(.customDateFormat("yyyy-MM-dd"))
+        
+        var parametersarr : [String : Any] =  [
+            "appCountryId": appCountryId,
+            "date": dateString,
+            "shiftId": shiftId
+        ]
 
         if let doctorId = doctorId{
+            parametersarr["doctorId"] = doctorId
+        }else{
+            if let doctorId = packageDetails?.doctorData?.doctorID{
                 parametersarr["doctorId"] = doctorId
-            }else{
-                if let doctorId = packageDetails?.doctorData?.doctorID{
-                    parametersarr["doctorId"] = doctorId
-                }
             }
+        }
         if let PackageId = PackageId{
             parametersarr["packageId"] = PackageId
         }else{
@@ -182,18 +189,12 @@ print("parametersarr,",parametersarr)
         isReschedualed = false
         defer { isLoading = false }
         guard let paramters = prepareParamters() else {
-//            // Handle missings
-//            self.errorMessage = "check inputs"
-//            //            throw NetworkError.unknown(code: 0, error: "check inputs")
             return
         }
         var parametersarr : [String : Any] = paramters
         if let doctorName = ticketData?.doctorData?.doctorName {
             parametersarr["doctorName"] = doctorName
         }
-//        if couponeCode.count > 0{
-//            parametersarr["coupon"] = couponeCode
-//        }
         
         print(parametersarr)
         let target = HomeServices.CreateCustomerPackage(parameters: parametersarr)
@@ -204,7 +205,6 @@ print("parametersarr,",parametersarr)
                 responseType: TicketM.self
             )
             isReschedualed = true
-//            self.ticketData = response
         } catch {
             self.errorMessage = error.localizedDescription
         }
@@ -216,8 +216,8 @@ print("parametersarr,",parametersarr)
         isReschedualed = false
         defer { isLoading = false }
         // Validate required selections; adjust keys as needed for your API
-        guard let newDate = selectedDay?.date?.ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "YYYY-MM-dd"),
-              let sessionId = selectedShift?.id,
+        guard let newDate = selectedDay?.date?.ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "yyyy-MM-dd"),
+              let sessionId = SessionId,
               let newTimeFrom = selectedSchedual?.timefrom,
               let newTimeTo = selectedSchedual?.timeTo else {
             self.errorMessage = "check inputs"
@@ -234,7 +234,6 @@ print("parametersarr,",parametersarr)
                 target,
                 responseType: [AvailableSchedualsM].self
             )
-//            self.availableScheduals = response
             isReschedualed = true
         } catch {
             self.errorMessage = error.localizedDescription
@@ -246,20 +245,17 @@ print("parametersarr,",parametersarr)
         isLoading = true
         defer { isLoading = false }
         guard let appCountryId = appcountryId ,let shiftId = selectedShift?.id else {
-//            // Handle missings
-//            self.errorMessage = "check inputs"
-//            //            throw NetworkError.unknown(code: 0, error: "check inputs")
             return
         }
-        var parametersarr : [String : Any] =  ["appCountryId":appCountryId,"date":"\(newDate.formatted(.customDateFormat("YYYY-MM-dd")))","shiftId":shiftId]
+        var parametersarr : [String : Any] =  ["appCountryId":appCountryId,"date":"\(newDate.formatted(.customDateFormat("yyyy-MM-dd")))","shiftId":shiftId]
 
         if let doctorId = doctorId{
+            parametersarr["doctorId"] = doctorId
+        }else{
+            if let doctorId = packageDetails?.doctorData?.doctorID{
                 parametersarr["doctorId"] = doctorId
-            }else{
-                if let doctorId = packageDetails?.doctorData?.doctorID{
-                    parametersarr["doctorId"] = doctorId
-                }
             }
+        }
         if let PackageId = PackageId{
             parametersarr["packageId"] = PackageId
         }else{
@@ -303,46 +299,52 @@ print("parametersarr,",parametersarr)
                 target,
                 responseType: [AvailableSchedualsM].self
             )
-//            self.availableScheduals = response
             isApprouved = true
         } catch {
             self.errorMessage = error.localizedDescription
         }
         
     }
-//    @MainActor
-//    func getBookingSession() async {
-//        isLoading = true
-//        defer { isLoading = false }
-//        guard let paramters = prepareParamters() else {
-////            // Handle missings
-////            self.errorMessage = "check inputs"
-////            //            throw NetworkError.unknown(code: 0, error: "check inputs")
-//            return
-//        }
-//        let parametersarr : [String : Any] = paramters
-//print(parametersarr)
-//        let target = HomeServices.GetBookingSession(parameters: parametersarr)
-//        do {
-//            self.errorMessage = nil // Clear previous errors
-//            let response = try await networkService.request(
-//                target,
-//                responseType: TicketM.self
-//            )
-//            self.ticketData = response
-//        } catch {
-//            self.errorMessage = error.localizedDescription
-//        }
-//    }
     
     func prepareParamters()->[String : Any]? {
-        guard let appCountryPackageId = packageDetails?.packageData?.appCountryPackageId ,let packageId = packageDetails?.packageData?.packageID ,let doctorId = packageDetails?.doctorData?.doctorID,let shiftId = selectedShift?.id,let doctorPackageId = doctorPackageId ,let totalAfterDiscount = packageDetails?.packageData?.priceAfterDiscount , let timeFrom = selectedSchedual?.timefrom ,let timeTo = selectedSchedual?.timeTo,let date = selectedDay?.date?.ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "YYYY-MM-dd") else {
-//            // Handle missings
-//            self.errorMessage = "check inputs"
-//            //            throw NetworkError.unknown(code: 0, error: "check inputs")
+        guard let appCountryPackageId = packageDetails?.packageData?.appCountryPackageId ,let packageId = packageDetails?.packageData?.packageID ,let doctorId = packageDetails?.doctorData?.doctorID,let shiftId = selectedShift?.id,let doctorPackageId = doctorPackageId ,let totalAfterDiscount = packageDetails?.packageData?.priceAfterDiscount , let timeFrom = selectedSchedual?.timefrom ,let timeTo = selectedSchedual?.timeTo,let date = selectedDay?.date?.ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "yyyy-MM-dd") else {
             return nil
         }
         return ["date":date,"packageId":packageId,"doctorId":doctorId,"customerPackageId":doctorPackageId,"shiftId":shiftId,"totalAfterDiscount":totalAfterDiscount,"timeFrom":timeFrom,"timeTo":timeTo
                 ,"appCountryPackageId":appCountryPackageId]
+    }
+    
+    
+    
+//    @MainActor
+    func prepareParamtersByDoctor() -> [String: Any]? {
+        // Ensure we read state on main actor
+//        return MainActor.assumeIsolated { () -> [String: Any]? in
+            guard
+                let appCountryPackageId = packageDetails?.appCountryPackageId,
+                let packageId = packageDetails?.packageData?.packageID,
+                let doctorId = packageDetails?.doctorData?.doctorID,
+                let shiftId = selectedShift?.id,
+                let doctorPackageId = packageDetails?.id,
+//                let totalAfterDiscount = packageDetails?.packageData?.priceAfterDiscount,
+                let timeFrom = selectedSchedual?.timefrom,
+                let timeTo = selectedSchedual?.timeTo,
+                let date = selectedDay?.date?.ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "yyyy-MM-dd")
+            else {
+                return nil
+            }
+
+            return [
+                "date": date,
+                "packageId": packageId,
+                "doctorId": doctorId,
+                "doctorPackageId": doctorPackageId,
+                "shiftId": shiftId,
+//                "totalAfterDiscount": totalAfterDiscount,
+                "timeFrom": timeFrom,
+                "timeTo": timeTo,
+                "appCountryPackageId": appCountryPackageId
+            ]
+//        }
     }
 }

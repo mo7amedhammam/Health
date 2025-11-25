@@ -53,6 +53,8 @@ struct LoginView: View {
                         .padding(.bottom,20)
                         .padding(.top,40)
                     
+                    CustomHeaderUI(title: "login_title".localized, subtitle: "login_subtitle".localized)
+
                     UserTypesList(selectedUser: $selectedUser){
                         Helper.shared.setSelectedUserType(userType:selectedUser)
                         
@@ -62,12 +64,9 @@ struct LoginView: View {
                             
                         case .Doctor:
                             destination = AnyView(DocTabView())
-                            
                         }
                     }
                     
-                    
-                    CustomHeaderUI(title: "login_title".localized, subtitle: "login_subtitle".localized)
                     
                     VStack(spacing: 30){
                         
