@@ -188,9 +188,15 @@ extension ReSchedualViewModel{
         isLoading = true
         isReschedualed = false
         defer { isLoading = false }
-        guard let paramters = prepareParamters() else {
-            return
-        }
+        guard let paramters =
+                switch Helper.shared.getSelectedUserType(){
+                case .Customer,.none:
+                    prepareParamters()
+                case .Doctor:
+                    prepareParamtersByDoctor()
+                }  else {
+                    return
+                }
         var parametersarr : [String : Any] = paramters
         if let doctorName = ticketData?.doctorData?.doctorName {
             parametersarr["doctorName"] = doctorName
@@ -306,6 +312,7 @@ extension ReSchedualViewModel{
         
     }
     
+    
     func prepareParamters()->[String : Any]? {
         guard let appCountryPackageId = packageDetails?.packageData?.appCountryPackageId ,let packageId = packageDetails?.packageData?.packageID ,let doctorId = packageDetails?.doctorData?.doctorID,let shiftId = selectedShift?.id,let doctorPackageId = doctorPackageId ,let totalAfterDiscount = packageDetails?.packageData?.priceAfterDiscount , let timeFrom = selectedSchedual?.timefrom ,let timeTo = selectedSchedual?.timeTo,let date = selectedDay?.date?.ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "yyyy-MM-dd") else {
             return nil
@@ -318,14 +325,23 @@ extension ReSchedualViewModel{
     
 //    @MainActor
     func prepareParamtersByDoctor() -> [String: Any]? {
+//        "doctorName": "string",
+//          "customerId": 0,
+//          "customerPackageId": 0,
+//          "packageId": 0,
+//          "date": "2025-11-25T12:53:21.063Z",
+//          "shiftId": 0,
+//          "timeFrom": "string",
+//          "timeTo": "string"
         // Ensure we read state on main actor
 //        return MainActor.assumeIsolated { () -> [String: Any]? in
+        print(packageDetails)
             guard
-                let appCountryPackageId = packageDetails?.appCountryPackageId,
-                let packageId = packageDetails?.packageData?.packageID,
-                let doctorId = packageDetails?.doctorData?.doctorID,
+//                let appCountryPackageId = packageDetails?.appCountryPackageId,
+                let packageId = PackageId,
+                let customerId = doctorId,
                 let shiftId = selectedShift?.id,
-                let doctorPackageId = packageDetails?.id,
+                let customerPackageId = doctorPackageId,
 //                let totalAfterDiscount = packageDetails?.packageData?.priceAfterDiscount,
                 let timeFrom = selectedSchedual?.timefrom,
                 let timeTo = selectedSchedual?.timeTo,
@@ -335,15 +351,15 @@ extension ReSchedualViewModel{
             }
 
             return [
-                "date": date,
                 "packageId": packageId,
-                "doctorId": doctorId,
-                "doctorPackageId": doctorPackageId,
+                "customerId": customerId,
+                "customerPackageId": customerPackageId,
                 "shiftId": shiftId,
-//                "totalAfterDiscount": totalAfterDiscount,
+                "date": date,
                 "timeFrom": timeFrom,
                 "timeTo": timeTo,
-                "appCountryPackageId": appCountryPackageId
+                //                "totalAfterDiscount": totalAfterDiscount,
+                //                "appCountryPackageId": appCountryPackageId
             ]
 //        }
     }

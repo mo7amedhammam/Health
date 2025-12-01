@@ -14,6 +14,7 @@
 		9005E4882E5B115600FB437E /* DocPaymentsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9005E4872E5B115600FB437E /* DocPaymentsView.swift */; };
 		9005E48E2E5B3CF700FB437E /* DocPackagesScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9005E48D2E5B3CF700FB437E /* DocPackagesScreen.swift */; };
 		900B50B82DAAC4E300EABA67 /* ExUiImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 900B50B72DAAC4E300EABA67 /* ExUiImage.swift */; };
+		901792A82EDDD3E00055EBD9 /* DocSchedualesServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 901792A72EDDD3D50055EBD9 /* DocSchedualesServices.swift */; };
 		901FC1222EAE1D22005489D8 /* CustomerAlergiesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 901FC1212EAE1D22005489D8 /* CustomerAlergiesViewModel.swift */; };
 		9020846C2E7FF2870001C55D /* ReSchedualViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9020846B2E7FF2790001C55D /* ReSchedualViewModel.swift */; };
 		90296D792E9BAB0600BC336B /* QuestionaireView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90296D782E9BAB0600BC336B /* QuestionaireView.swift */; };
@@ -364,6 +365,7 @@
 		9005E4872E5B115600FB437E /* DocPaymentsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocPaymentsView.swift; sourceTree = "<group>"; };
 		9005E48D2E5B3CF700FB437E /* DocPackagesScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocPackagesScreen.swift; sourceTree = "<group>"; };
 		900B50B72DAAC4E300EABA67 /* ExUiImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExUiImage.swift; sourceTree = "<group>"; };
+		901792A72EDDD3D50055EBD9 /* DocSchedualesServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocSchedualesServices.swift; sourceTree = "<group>"; };
 		901FC1212EAE1D22005489D8 /* CustomerAlergiesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomerAlergiesViewModel.swift; sourceTree = "<group>"; };
 		9020846B2E7FF2790001C55D /* ReSchedualViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReSchedualViewModel.swift; sourceTree = "<group>"; };
 		90296D782E9BAB0600BC336B /* QuestionaireView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionaireView.swift; sourceTree = "<group>"; };
@@ -831,6 +833,39 @@
 				90C7F3BB2E71BBED00907BF8 /* DocPackagesM.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		901792A32EDDD0520055EBD9 /* schedualesList */ = {
+			isa = PBXGroup;
+			children = (
+				901792A52EDDD08C0055EBD9 /* View */,
+			);
+			path = schedualesList;
+			sourceTree = "<group>";
+		};
+		901792A42EDDD0710055EBD9 /* creatScheduale */ = {
+			isa = PBXGroup;
+			children = (
+				9035280D2E48CD8A005DC7AF /* Model */,
+				9035280C2E48CD87005DC7AF /* ViewModel */,
+				9035280B2E48CD82005DC7AF /* View */,
+			);
+			path = creatScheduale;
+			sourceTree = "<group>";
+		};
+		901792A52EDDD08C0055EBD9 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		901792A62EDDD3C80055EBD9 /* Scheduales */ = {
+			isa = PBXGroup;
+			children = (
+				901792A72EDDD3D50055EBD9 /* DocSchedualesServices.swift */,
+			);
+			path = Scheduales;
 			sourceTree = "<group>";
 		};
 		90296D702E9B9FE000BC336B /* Questions */ = {
@@ -1308,9 +1343,8 @@
 		9035280A2E48CD49005DC7AF /* DocScheduales */ = {
 			isa = PBXGroup;
 			children = (
-				9035280D2E48CD8A005DC7AF /* Model */,
-				9035280C2E48CD87005DC7AF /* ViewModel */,
-				9035280B2E48CD82005DC7AF /* View */,
+				901792A32EDDD0520055EBD9 /* schedualesList */,
+				901792A42EDDD0710055EBD9 /* creatScheduale */,
 			);
 			path = DocScheduales;
 			sourceTree = "<group>";
@@ -1754,6 +1788,7 @@
 		90C7F3A22E6D9FDD00907BF8 /* Doctor */ = {
 			isa = PBXGroup;
 			children = (
+				901792A62EDDD3C80055EBD9 /* Scheduales */,
 				90CE587D2E7AC7B400A3D271 /* ActivePackages */,
 				904133942E76C259005726E7 /* Packages */,
 				90C7F3A72E6DA94F00907BF8 /* Payments */,
@@ -3485,6 +3520,7 @@
 				90C7F39D2E64706600907BF8 /* CustomerMesurmentsSection.swift in Sources */,
 				BB1B2FF42A7E9B44001677FD /* INBodyVC.swift in Sources */,
 				90C7F3AC2E6DB16100907BF8 /* DocPaymentsModel.swift in Sources */,
+				901792A82EDDD3E00055EBD9 /* DocSchedualesServices.swift in Sources */,
 				902B88352E2AA712009D5234 /* MedicationReminderView.swift in Sources */,
 				BB5116D22A829B4900CF5D11 /* MeasurementsCVCell.swift in Sources */,
 				9063C5ED2E2B093F00B92E0D /* LocationManager.swift in Sources */,

@@ -12,6 +12,7 @@ struct ActiveCustomerPackagesView: View {
 
     let customerPackageId: Int
     @State var doctorId: Int?
+    @State var customerId: Int?
     @State var packageId: Int? = nil
     @State var sessionId: Int? = nil
     
@@ -200,8 +201,10 @@ struct ActiveCustomerPackagesView: View {
                 CustomButton(title: "select_next_session",isdisabled: false,backgroundView:AnyView(Color.clear.horizontalGradientBackground())){
 //                    guard let doctorId = viewModel.subscripedPackage?.docotrID,let packageId = customerPackageID else { return }
 //                    sessionId = viewModel.subscripedPackage
-                    doctorId = viewModel.subscripedPackage?.docotrID
-//                    packageId = customerPackageId
+//                    doctorId = viewModel.subscripedPackage?.docotrID
+                    
+//                    customerPackageId = viewModel.subscripedPackage?.customerPackageID
+                    customerId = viewModel.subscripedPackage?.customerID
                     packageId = viewModel.upcomingSession?.packageID
                    reschedualcase = .nextSession
                     isReschedualling = true
@@ -260,7 +263,7 @@ struct ActiveCustomerPackagesView: View {
                 packageId:$packageId,
                 SessionId:$sessionId ,
                 isPresentingNewMeasurementSheet: $isReschedualling,
-                reschedualcase: reschedualcase,
+                reschedualcase: $reschedualcase,
                 onRescheduleSuccess: {
                     Task {
                         await viewModel.getUpcomingSession(CustomerPackageId: customerPackageId)

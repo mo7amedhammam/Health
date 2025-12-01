@@ -50,7 +50,7 @@ struct DocScheduleView: View {
                                     .frame(width: 91,height:91)
                                 if profileViewModel.Name.count > 0{
                                     Text(profileViewModel.Name)
-                                        .font(.semiBold(size: 14))
+                                        .font(.bold(size: 24))
                                         .foregroundStyle(Color.white)
                                 }else{
                                     Text("home_Welcome".localized)
@@ -137,7 +137,6 @@ struct DocScheduleView: View {
                     Spacer().frame(height: hasbackBtn ?? true ? 0 : 80)
                     
                 }
-                
                 .localizeView()
                 //            .withNavigation(router: router)
                 .showHud(isShowing:  $viewModel.isLoading)

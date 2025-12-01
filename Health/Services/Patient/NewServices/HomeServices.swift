@@ -98,7 +98,12 @@ extension HomeServices : TargetType1 {
         case .GetBookingSession:
             return newEndPoints.GetBookingSession.rawValue
         case .CreateCustomerPackage:
-            return newEndPoints.CreateCustomerPackage.rawValue
+            switch Helper.shared.getSelectedUserType() {
+            case .Customer,.none:
+                return newEndPoints.CreateCustomerPackage.rawValue
+            case .Doctor:
+                return DocEndPoints.DocCreateCustomerPackageByDoctor.rawValue
+            }
         case .rescheduleSession:
             switch Helper.shared.getSelectedUserType() {
             case .Customer,.none:

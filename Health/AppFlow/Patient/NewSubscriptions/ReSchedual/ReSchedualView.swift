@@ -20,7 +20,7 @@ struct ReSchedualView: View {
     @State private var showingDatePicker = false
     @State private var selectedDate = Date()
     @Binding var isPresentingNewMeasurementSheet:Bool
-    var reschedualcase:reschedualCases? = .reschedualSession
+    @Binding var reschedualcase:reschedualCases?
     // New: callback to run after success
     var onRescheduleSuccess: (() -> Void)? = nil
     
@@ -222,5 +222,5 @@ struct ReSchedualView: View {
 }
 
 #Preview {
-    ReSchedualView( doctorPackageId: 0, doctorId: .constant(0), packageId: .constant(0), SessionId: .constant(0), isPresentingNewMeasurementSheet: .constant(true),reschedualcase: .reschedualSession)
+    ReSchedualView( doctorPackageId: 0, doctorId: .constant(0), packageId: .constant(0), SessionId: .constant(0), isPresentingNewMeasurementSheet: .constant(true),reschedualcase: .constant(.reschedualSession))
 }
