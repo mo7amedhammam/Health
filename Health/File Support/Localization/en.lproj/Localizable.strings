@@ -407,10 +407,14 @@
 //MARK: - --------------> DOCTOR <--------------- -
 //MARK: --- My Schedule ---
 "doc_myscehdules" = "My Scehdules";
+"add_available_scheduale" = "add scheduale";
 "select_available_time_slots" = "available slots";
+"edit_" = "edit";
+"delete_" = "delete";
 "select_available_time_slots_subtitle" = "select availabal slots";
 "remove_all_btn" = "remove all";
 "confirm_title" = "are you sure you available in selected slots";
+"confirm_del_title" = "Are you sure this period's dates be deleted?";
 "doc_conf_succ_title" = "Your appointments have been successfully scheduled";
 "doc_conf_succ_subtitle1" = "Please check your inbox to confirm your trip.";
 "doc_conf_succ_subtitle2" = "Quickly linked with popular email services.";
@@ -466,7 +470,8 @@
 "new_answer_" = "new answer";
 "By._" = "By. ";
 "no_answers_to_be_sent" = "There are no answers to send it";
-
+//--- files ---
+"upload_New_File" = "upload New File";
 
 //Doc Pack
 "docPackReq_title" = "Your request has been sent successfully";

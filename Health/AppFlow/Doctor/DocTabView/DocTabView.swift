@@ -59,7 +59,7 @@ struct DocTabView: View{
                 case 3:
                     
 //                    MyMeasurementsView()
-                    DocScheduleView()
+                    SchedualListView(hasbackBtn: false)
                         .environmentObject(viewModel)
 
 //                    UIKitViewControllerWrapper(makeViewController: {

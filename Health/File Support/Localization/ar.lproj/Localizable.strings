@@ -408,10 +408,14 @@
 //MARK: - --------------> DOCTOR <--------------- -
 //MARK: --- My Schedule ---
 "doc_myscehdules" = "جدولي";
+"add_available_scheduale" = "إضافة فترة";
+"edit_" = "تعديل";
+"delete_" = "تعديل";
 "select_available_time_slots" = "تحديد الفترات المتاحة";
 "select_available_time_slots_subtitle" = "قم بتحديد الفترات المتاحة إليك خلال أيام الأسبوع";
 "remove_all_btn" = "مسح الكل";
 "confirm_title" = "هل أنت متأكد من تحديد المواعيد المتاحة إليك؟";
+"confirm_del_title" = "هل أنت متأكد من حذف مواعيد هذه الفترة؟";
 "doc_conf_succ_title" = "تم تحديد مواعيدك بنجاح";
 "doc_conf_succ_subtitle1" = "يرجى التحقق من صندوق الوارد الخاص بك للتحقق من رحلتك.";
 "doc_conf_succ_subtitle2" = "تم ربطه سريعًا بخدمات البريد الإلكتروني الشائعة.";
@@ -466,7 +470,8 @@
 "new_answer_" = "إجابة جديدة";
 "By._" = "بواسطة.";
 "no_answers_to_be_sent" = "لا توجد إجابات لإرسالها";
-
+//--- files ---
+"upload_New_File" = "اضافه ملف جديد";
 
 //Doc Pack
 "docPackReq_title" = "تم إرسال طلبك بنجاح";

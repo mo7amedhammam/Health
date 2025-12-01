@@ -12,7 +12,7 @@ class DocSchedualeViewModel : ObservableObject {
     // Injected service
     private let networkService: AsyncAwaitNetworkServiceProtocol
     
-    @Published var scheduales : [SchedualeM]?
+    @Published var scheduales : [SchedualeM]? = SchedualeM.mockList
 
     @Published var selectedSlots: [String: Set<TimeSlot>] = [:]
 
