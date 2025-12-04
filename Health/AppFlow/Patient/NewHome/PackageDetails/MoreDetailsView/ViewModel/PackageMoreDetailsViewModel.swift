@@ -244,13 +244,13 @@ print("params:///", params)
         let inputs = await MainActor.run { () -> (appCountryId: Int, packageId: Int, doctorId: Int, shiftId: Int, dateString: String)? in
             guard
                 let appCountryId = appCountryId,
-                let packageId = packageDetails?.packageData?.appCountryPackageId,
+                let packageId = packageDetails?.packageData?.packageID,
                 let doctorId = packageDetails?.doctorData?.doctorID,
                 let shiftId = selectedShift?.id
             else { return nil }
 
             let dateString =
-                selectedDay?.date?.ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "yyyy-MM-dd")
+            selectedDay?.date?.ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "yyyy-MM-dd",outputLocal: .english)
                 ?? newDate.formatted(.customDateFormat("yyyy-MM-dd"))
 
             return (appCountryId, packageId, doctorId, shiftId, dateString)
@@ -363,7 +363,7 @@ print("params:///", params)
 //                let totalAfterDiscount = packageDetails?.packageData?.priceAfterDiscount,
                 let timeFrom = selectedSchedual?.timefrom,
                 let timeTo = selectedSchedual?.timeTo,
-                let date = selectedDay?.date?.ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "yyyy-MM-dd")
+                let date = selectedDay?.date?.ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "yyyy-MM-dd",outputLocal: .english)
             else {
                 return nil
             }

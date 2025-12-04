@@ -85,7 +85,7 @@ extension ReSchedualViewModel{
             FormatFrom: "yyyy-MM-dd'T'HH:mm:ss",
             FormatTo: "yyyy-MM-dd"
         )
-        let dateString = selectedDayString ?? newDate.formatted(.customDateFormat("yyyy-MM-dd"))
+        let dateString = selectedDayString ?? newDate.formatted(.customDateFormat("yyyy-MM-dd",locale:Locale(identifier: "EN_US")))
         
         var parametersarr : [String : Any] =  ["date": dateString, "appCountryId": appCountryId]
           
@@ -146,7 +146,7 @@ extension ReSchedualViewModel{
             FormatFrom: "yyyy-MM-dd'T'HH:mm:ss",
             FormatTo: "yyyy-MM-dd"
         )
-        let dateString = selectedDayString ?? newDate.formatted(.customDateFormat("yyyy-MM-dd"))
+        let dateString = selectedDayString ?? newDate.formatted(.customDateFormat("yyyy-MM-dd",locale: Locale(identifier: "EN")))
         
         var parametersarr : [String : Any] =  [
             "appCountryId": appCountryId,
@@ -222,7 +222,7 @@ extension ReSchedualViewModel{
         isReschedualed = false
         defer { isLoading = false }
         // Validate required selections; adjust keys as needed for your API
-        guard let newDate = selectedDay?.date?.ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "yyyy-MM-dd"),
+        guard let newDate = selectedDay?.date?.ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "yyyy-MM-dd",outputLocal: .english),
               let sessionId = SessionId,
               let newTimeFrom = selectedSchedual?.timefrom,
               let newTimeTo = selectedSchedual?.timeTo else {
@@ -253,7 +253,7 @@ extension ReSchedualViewModel{
         guard let appCountryId = appcountryId ,let shiftId = selectedShift?.id else {
             return
         }
-        var parametersarr : [String : Any] =  ["appCountryId":appCountryId,"date":"\(newDate.formatted(.customDateFormat("yyyy-MM-dd")))","shiftId":shiftId]
+        var parametersarr : [String : Any] =  ["appCountryId":appCountryId,"date":"\(newDate.formatted(.customDateFormat("yyyy-MM-dd",locale: .init(identifier: "EN"))))","shiftId":shiftId]
 
         if let doctorId = doctorId{
             parametersarr["doctorId"] = doctorId
@@ -314,7 +314,7 @@ extension ReSchedualViewModel{
     
     
     func prepareParamters()->[String : Any]? {
-        guard let appCountryPackageId = packageDetails?.packageData?.appCountryPackageId ,let packageId = packageDetails?.packageData?.packageID ,let doctorId = packageDetails?.doctorData?.doctorID,let shiftId = selectedShift?.id,let doctorPackageId = doctorPackageId ,let totalAfterDiscount = packageDetails?.packageData?.priceAfterDiscount , let timeFrom = selectedSchedual?.timefrom ,let timeTo = selectedSchedual?.timeTo,let date = selectedDay?.date?.ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "yyyy-MM-dd") else {
+        guard let appCountryPackageId = packageDetails?.packageData?.appCountryPackageId ,let packageId = packageDetails?.packageData?.packageID ,let doctorId = packageDetails?.doctorData?.doctorID,let shiftId = selectedShift?.id,let doctorPackageId = doctorPackageId ,let totalAfterDiscount = packageDetails?.packageData?.priceAfterDiscount , let timeFrom = selectedSchedual?.timefrom ,let timeTo = selectedSchedual?.timeTo,let date = selectedDay?.date?.ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "yyyy-MM-dd",outputLocal: .english) else {
             return nil
         }
         return ["date":date,"packageId":packageId,"doctorId":doctorId,"customerPackageId":doctorPackageId,"shiftId":shiftId,"totalAfterDiscount":totalAfterDiscount,"timeFrom":timeFrom,"timeTo":timeTo
@@ -345,7 +345,7 @@ extension ReSchedualViewModel{
 //                let totalAfterDiscount = packageDetails?.packageData?.priceAfterDiscount,
                 let timeFrom = selectedSchedual?.timefrom,
                 let timeTo = selectedSchedual?.timeTo,
-                let date = selectedDay?.date?.ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "yyyy-MM-dd")
+                let date = selectedDay?.date?.ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "yyyy-MM-dd",outputLocal: .english)
             else {
                 return nil
             }
