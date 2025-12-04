@@ -11,8 +11,10 @@ struct SelectLanguageView : View {
     @Environment(\.dismiss) var dismiss
     @StateObject var localizationManager = LocalizationManager.shared
     @StateObject private var lookupsVM = LookupsViewModel.shared
-    @State private var selectedCountry:AppCountryM? = .init(id: 1, name: "Egypt", flag: "🇪🇬")
-    @State private var selectedLanguage:LanguageM? = .init(id: 1, lang1: "Arabic", flag: "🇪🇬")
+    @State private var selectedCountry:AppCountryM?
+//    = .init(id: 1, name: "Egypt", flag: "🇪🇬")
+    @State private var selectedLanguage:LanguageM?
+//    = .init(id: 1, lang1: "Arabic", flag: "🇪🇬")
     @State private var isLoading:Bool? = false
 
     var hasbackBtn:Bool = false
@@ -160,7 +162,9 @@ struct SelectLanguageView : View {
             
             Spacer()
 
-            CustomButton(title: "lang_Ok_Btn",isdisabled: LocalizationManager.shared.currentLanguage.isEmpty,backgroundView:AnyView(Color.clear.horizontalGradientBackground())){
+            CustomButton(title: "lang_Ok_Btn",isdisabled:
+                            LocalizationManager.shared.currentLanguage.isEmpty || selectedCountry == nil
+                         ,backgroundView:AnyView(Color.clear.horizontalGradientBackground())){
                 
                 Task{ await setLanguage(selectedLanguage?.lang1?.lowercased() ?? Helper.shared.getLanguage()) }
                 
@@ -189,8 +193,9 @@ struct SelectLanguageView : View {
 
                 _ = await (countries,languages)
                 
-                if let countries = lookupsVM.appCountries {
-                    selectedCountry = countries.first(where: { $0.id == Helper.shared.AppCountryId() ?? 0 }) ?? countries.first
+                if let countries = lookupsVM.appCountries ,let savedCountryId = Helper.shared.AppCountryId() {
+                    selectedCountry = countries.first(where: { $0.id == savedCountryId }) ?? countries.first
+//                    Helper.shared.AppCountryId(Id: selectedCountry?.id)
                 }
                 if let languages = lookupsVM.languages {
                     selectedLanguage = languages.first(where: { $0.lang1?.lowercased() == localizationManager.currentLanguage.lowercased() }) ?? languages.first
@@ -206,7 +211,7 @@ struct SelectLanguageView : View {
 //        changeLanguage(to: language)
         LocalizationManager.shared.changeLanguage(to: language) {
         }
-        
+        Helper.shared.AppCountryId(Id: selectedCountry?.id)
 //        localizationManager.setLanguage(language) {_ in
              // Option 1: Force immediate reload (works for most cases)
 //             DispatchQueue.main.async {
