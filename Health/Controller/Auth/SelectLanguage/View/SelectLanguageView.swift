@@ -76,12 +76,11 @@ struct SelectLanguageView : View {
                                     Button(action: {
                                         selectedLanguage = language  // ✅ Trigger state update
                                         Task{
-                                            setLanguage(language.lang1 ?? "ar")
+                                          await  setLanguage(language.lang1 ?? "ar")
                                         }
                                     }, label: {
                                         HStack{
-//                                            Text(language.lang1 ?? "")
-                                            
+                                            Text(language.lang1 ?? "")
                                             KFImageLoader(url:URL(string:Constants.imagesURL + (language.flag?.validateSlashs() ?? "")),placeholder: Image("egFlagIcon"), shouldRefetch: true)
                                                 .frame(width: 30,height:17)
                                         }
@@ -163,7 +162,7 @@ struct SelectLanguageView : View {
 
             CustomButton(title: "lang_Ok_Btn",isdisabled: LocalizationManager.shared.currentLanguage.isEmpty,backgroundView:AnyView(Color.clear.horizontalGradientBackground())){
                 
-                setLanguage(selectedLanguage?.lang1?.lowercased() ?? Helper.shared.getLanguage())
+                Task{ await setLanguage(selectedLanguage?.lang1?.lowercased() ?? Helper.shared.getLanguage()) }
                 
                 if !Helper.shared.CheckIfLoggedIn() && !Helper.shared.checkOnBoard(){
                     let rootVC = UIHostingController(rootView: OnboardingView())
@@ -201,7 +200,7 @@ struct SelectLanguageView : View {
         .localizeView()
     }
     
-    private func setLanguage(_ language: String) {
+    private func setLanguage(_ language: String) async {
         Helper.shared.languageSelected(opened: true)
 
 //        changeLanguage(to: language)
