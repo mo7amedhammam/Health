@@ -30,6 +30,7 @@ struct SelectLanguageView : View {
                 
                 Text("lang_Subtitle".localized)
                     .frame(maxWidth:.infinity)
+                    .multilineTextAlignment(.center)
                     .font(.semiBold(size: 22))
                     .foregroundStyle(Color(.wrong))
                     .padding(.top,40)
@@ -63,47 +64,124 @@ struct SelectLanguageView : View {
 //                }
 //                    .frame(width:200)
                 
-                VStack(spacing:30){
-                    CustomInputFieldUI(
-                        title: "lang_Language_title",
-                        placeholder: "lang_Language_subtitle",
-//                        placeholder: "",
 
-                        text: .constant( ""),
-                        isValid: true,
-                        isDisabled: true,
-                        trailingView: AnyView(
-                            Menu {
-                                ForEach(lookupsVM.languages ?? [],id: \.self) { language in
-                                    Button(action: {
-                                        selectedLanguage = language  // ✅ Trigger state update
-                                        Task{
-                                          await  setLanguage(language.lang1 ?? "ar")
-                                        }
-                                    }, label: {
-                                        HStack{
-                                            Text(language.lang1 ?? "")
-                                            KFImageLoader(url:URL(string:Constants.imagesURL + (language.flag?.validateSlashs() ?? "")),placeholder: Image("egFlagIcon"), shouldRefetch: true)
-                                                .frame(width: 30,height:17)
-                                        }
-                                    })
+                
+                
+                VStack(spacing:30){
+                    
+                    Menu {
+                        ForEach(lookupsVM.languages ?? [],id: \.self) { language in
+                            Button(action: {
+                                selectedLanguage = language  // ✅ Trigger state update
+                                Task{
+                                  await  setLanguage(language.lang1 ?? "ar")
                                 }
-                            } label: {
-                                HStack(spacing: 4) {
-                                    Image(systemName: "chevron.down")
-                                        .foregroundColor(.gray)
-                                    
-//                                    Image(.languageBook)
-//                                        .resizable()
-//                                        .frame(width: 23,height:20)
-                                                                        
-                                    KFImageLoader(url:URL(string:Constants.imagesURL + (selectedLanguage?.flag?.validateSlashs() ?? "")),placeholder: Image("egFlagIcon"), shouldRefetch: true)
-                                        .frame(width: 30,height:17)
+                            }, label: {
+                                HStack{
+                                    Text(language.lang1 ?? "")
+                                    KFImageLoader(url:URL(string:Constants.imagesURL + (language.flag?.validateSlashs() ?? "")),placeholder: Image("egFlagIcon"), shouldRefetch: true)
+                                        .frame(width: 30,height:20)
                                 }
-                            }
-                        )
-                    )
+                            })
+                        }
+                    } label: {
+                        CustomDropListInputFieldUI(
+                            title: "lang_Language_title",
+                            placeholder: "lang_Language_subtitle",
+    //                        placeholder: "",
+                            text: .constant( selectedLanguage?.lang1 ?? ""),
+                            isValid: true,
+                            isDisabled: true,
+                            showDropdownIndicator:true,
+                            trailingView: AnyView(
+                                KFImageLoader(url:URL(string:Constants.imagesURL + (selectedLanguage?.flag?.validateSlashs() ?? "")),placeholder: Image("egFlagIcon"), shouldRefetch: true)
+                                    .frame(width: 30,height:20)
+                            )
+                            )
+                    }
                     .keyboardType(.asciiCapableNumberPad)
+                    
+                    
+                    
+                    Menu {
+                        ForEach(lookupsVM.appCountries ?? [],id: \.self) { country in
+                            
+                            Button(action: {
+                                Task {
+                                    await MainActor.run(){
+                                        selectedCountry = country
+                                        //                                        setLanguage("en")
+                                        if let selectedCountryId = country.id {
+                                            Helper.shared.AppCountryId(Id: selectedCountryId)
+                                        }
+                                    }
+                                }
+                            }, label: {
+                                HStack{
+                                    Text(country.name ?? "")
+                                    
+                                    KFImageLoader(url:URL(string:Constants.imagesURL + (country.flag?.validateSlashs() ?? "")),placeholder: Image("egFlagIcon"), shouldRefetch: true)
+                                        .frame(width: 30,height:20)
+                                }
+                            })
+                        }
+                    } label: {
+                        
+                        CustomDropListInputFieldUI(
+                            title: "lang_Country_title",
+                            placeholder: "lang_Country_subitle",
+                            text: .constant(selectedCountry?.name ?? ""),
+                            isValid: true,
+                            isDisabled: true,
+                            showDropdownIndicator:true,
+                            trailingView: AnyView(
+                                KFImageLoader(url:URL(string:Constants.imagesURL + (selectedCountry?.flag?.validateSlashs() ?? "")),placeholder: Image("egFlagIcon"), shouldRefetch: true)
+                                    .frame(width: 30,height:20)
+                            )
+                            )
+                    }
+                    .keyboardType(.asciiCapableNumberPad)
+
+//                    CustomInputFieldUI(
+//                        title: "lang_Language_title",
+//                        placeholder: "lang_Language_subtitle",
+////                        placeholder: "",
+//
+//                        text: .constant( ""),
+//                        isValid: true,
+//                        isDisabled: true,
+//                        trailingView: AnyView(
+//                            Menu {
+//                                ForEach(lookupsVM.languages ?? [],id: \.self) { language in
+//                                    Button(action: {
+//                                        selectedLanguage = language  // ✅ Trigger state update
+//                                        Task{
+//                                          await  setLanguage(language.lang1 ?? "ar")
+//                                        }
+//                                    }, label: {
+//                                        HStack{
+//                                            Text(language.lang1 ?? "")
+//                                            KFImageLoader(url:URL(string:Constants.imagesURL + (language.flag?.validateSlashs() ?? "")),placeholder: Image("egFlagIcon"), shouldRefetch: true)
+//                                                .frame(width: 30,height:17)
+//                                        }
+//                                    })
+//                                }
+//                            } label: {
+//                                HStack(spacing: 4) {
+//                                    Image(systemName: "chevron.down")
+//                                        .foregroundColor(.gray)
+//                                    
+////                                    Image(.languageBook)
+////                                        .resizable()
+////                                        .frame(width: 23,height:20)
+//                                                                        
+//                                    KFImageLoader(url:URL(string:Constants.imagesURL + (selectedLanguage?.flag?.validateSlashs() ?? "")),placeholder: Image("egFlagIcon"), shouldRefetch: true)
+//                                        .frame(width: 30,height:17)
+//                                }
+//                            }
+//                        )
+//                    )
+//                    .keyboardType(.asciiCapableNumberPad)
 //                    .task {
 //                        await lookupsVM.getLanguages()
 //                        if let languages = lookupsVM.languages {
@@ -111,51 +189,51 @@ struct SelectLanguageView : View {
 //                        }
 //                    }
                     
-                    CustomInputFieldUI(
-                        title: "lang_Country_title",
-                        placeholder: "lang_Country_subitle",
-                        text: .constant(selectedCountry?.name ?? ""),
-                        isValid: true,
-                        isDisabled: true,
-                        trailingView: AnyView(
-                            Menu {
-                                ForEach(lookupsVM.appCountries ?? [],id: \.self) { country in
-                                    
-                                    Button(action: {
-                                        Task {
-                                            await MainActor.run(){
-                                                selectedCountry = country
-                                                //                                        setLanguage("en")
-                                                if let selectedCountryId = country.id {
-                                                    Helper.shared.AppCountryId(Id: selectedCountryId)
-                                                }
-                                            }
-                                        }
-                                    }, label: {
-                                        HStack{
-                                            Text(country.name ?? "")
-                                            
-                                            KFImageLoader(url:URL(string:Constants.imagesURL + (country.flag?.validateSlashs() ?? "")),placeholder: Image("egFlagIcon"), shouldRefetch: true)
-                                                .frame(width: 30,height:17)
-                                        }
-                                    })
-                                }
-                            } label: {
-                                HStack(spacing: 4) {
-                                    Image(systemName: "chevron.down")
-                                        .foregroundColor(.gray)
-                                    
-                                    KFImageLoader(url:URL(string:Constants.imagesURL + (selectedCountry?.flag?.validateSlashs() ?? "")),placeholder: Image("egFlagIcon"), shouldRefetch: true)
-                                        .frame(width: 30,height:17)
-                                    
-                                    //                                Text(selectedCountry?.flag ?? "")
-                                    //                                    .foregroundColor(.mainBlue)
-                                    //                                    .font(.medium(size: 22))
-                                }
-                            }
-                        )
-                    )
-                    .keyboardType(.asciiCapableNumberPad)
+//                    CustomInputFieldUI(
+//                        title: "lang_Country_title",
+//                        placeholder: "lang_Country_subitle",
+//                        text: .constant(selectedCountry?.name ?? ""),
+//                        isValid: true,
+//                        isDisabled: true,
+//                        trailingView: AnyView(
+//                            Menu {
+//                                ForEach(lookupsVM.appCountries ?? [],id: \.self) { country in
+//                                    
+//                                    Button(action: {
+//                                        Task {
+//                                            await MainActor.run(){
+//                                                selectedCountry = country
+//                                                //                                        setLanguage("en")
+//                                                if let selectedCountryId = country.id {
+//                                                    Helper.shared.AppCountryId(Id: selectedCountryId)
+//                                                }
+//                                            }
+//                                        }
+//                                    }, label: {
+//                                        HStack{
+//                                            Text(country.name ?? "")
+//                                            
+//                                            KFImageLoader(url:URL(string:Constants.imagesURL + (country.flag?.validateSlashs() ?? "")),placeholder: Image("egFlagIcon"), shouldRefetch: true)
+//                                                .frame(width: 30,height:17)
+//                                        }
+//                                    })
+//                                }
+//                            } label: {
+//                                HStack(spacing: 4) {
+//                                    Image(systemName: "chevron.down")
+//                                        .foregroundColor(.gray)
+//                                    
+//                                    KFImageLoader(url:URL(string:Constants.imagesURL + (selectedCountry?.flag?.validateSlashs() ?? "")),placeholder: Image("egFlagIcon"), shouldRefetch: true)
+//                                        .frame(width: 30,height:17)
+//                                    
+//                                    //                                Text(selectedCountry?.flag ?? "")
+//                                    //                                    .foregroundColor(.mainBlue)
+//                                    //                                    .font(.medium(size: 22))
+//                                }
+//                            }
+//                        )
+//                    )
+//                    .keyboardType(.asciiCapableNumberPad)
                 }
             }
             .padding(.horizontal)
