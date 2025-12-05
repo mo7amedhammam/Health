@@ -376,6 +376,7 @@ struct CustomDropListInputFieldUI: View {
                     .textInputAutocapitalization(.never)
                     .disableAutocorrection(true)
                     .disabled(isDisabled ?? false )
+                    .frame(maxWidth: .infinity, alignment: .leading)
 //                    .onTapGesture {
 //                        isMenuPresented.toggle()
 //                    }
@@ -410,7 +411,7 @@ struct CustomDropListInputFieldUI: View {
         .padding(.horizontal, 12)
 //        .padding(.trailing, 12)
         .padding(.top, 12)
-
+        .localizeView()
     }
     
     @ViewBuilder

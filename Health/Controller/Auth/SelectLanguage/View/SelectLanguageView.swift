@@ -17,10 +17,34 @@ struct SelectLanguageView : View {
 //    = .init(id: 1, lang1: "Arabic", flag: "🇪🇬")
     @State private var isLoading:Bool? = false
 
+    // Bottom sheet controls
+    @State private var showLanguageSheet = false
+    @State private var showCountrySheet = false
+
+    // Temporary selections while the sheet is open
+    @State private var tempLanguage: LanguageM?
+    @State private var tempCountry: AppCountryM?
+
     var hasbackBtn:Bool = false
+
+    fileprivate func LoadData() async {
+        isLoading = true
+        defer { isLoading = false }
+        async let countries:() = await lookupsVM.getAppCountries()
+        async let languages:() = await lookupsVM.getLanguages()
+        
+        _ = await (countries,languages)
+        
+        if let countries = lookupsVM.appCountries ,let savedCountryId = Helper.shared.AppCountryId() {
+            selectedCountry = countries.first(where: { $0.id == savedCountryId }) ?? countries.first
+        }
+        if let languages = lookupsVM.languages {
+            selectedLanguage = languages.first(where: { $0.lang1?.lowercased() == localizationManager.currentLanguage.lowercased() }) ?? languages.first
+        }
+    }
+    
     var body: some View {
         VStack{
-//            CustomNavBar(title: "lang_Title".localized,hasBackBtn:hasackBtn)
             TitleBar(title: "lang_Title".localized,hasbackBtn: hasbackBtn)
             
             Spacer()
@@ -34,207 +58,49 @@ struct SelectLanguageView : View {
                     .font(.semiBold(size: 22))
                     .foregroundStyle(Color(.wrong))
                     .padding(.top,40)
-                    .padding(.bottom,40)
-
-//                CustomButton(title: "lang_Ar_Btn"){
-////                    localizationManager.currentLanguage = "ar"
-//                    setLanguage("ar")
-//
-////                    LocalizationManager.shared.setLanguage("ar"){ success in
-////                        if success {
-////                            print("✅ Localization updated successfully")
-////                        } else {
-////                            print("❌ Failed to update localization")
-////                        }
-////                    }
-//                }
-//                    .frame(width:200)
-//
-//                CustomButton(title: "lang_En_Btn",backgroundcolor: Color(.secondaryMain)){
-//                    setLanguage("en")
-//
-////                    localizationManager.currentLanguage = "en"
-////                    LocalizationManager.shared.setLanguage("en"){ success in
-////                        if success {
-////                            print("✅ Localization updated successfully")
-////                        } else {
-////                            print("❌ Failed to update localization")
-////                        }
-////                    }
-//                }
-//                    .frame(width:200)
+                    .padding(.bottom,20)
                 
-
-                
-                
-                VStack(spacing:30){
+                VStack(spacing:20){
                     
-                    Menu {
-                        ForEach(lookupsVM.languages ?? [],id: \.self) { language in
-                            Button(action: {
-                                selectedLanguage = language  // ✅ Trigger state update
-                                Task{
-                                  await  setLanguage(language.lang1 ?? "ar")
-                                }
-                            }, label: {
-                                HStack{
-                                    Text(language.lang1 ?? "")
-                                    KFImageLoader(url:URL(string:Constants.imagesURL + (language.flag?.validateSlashs() ?? "")),placeholder: Image("egFlagIcon"), shouldRefetch: true)
-                                        .frame(width: 30,height:20)
-                                }
-                            })
-                        }
-                    } label: {
-                        CustomDropListInputFieldUI(
-                            title: "lang_Language_title",
-                            placeholder: "lang_Language_subtitle",
-    //                        placeholder: "",
-                            text: .constant( selectedLanguage?.lang1 ?? ""),
-                            isValid: true,
-                            isDisabled: true,
-                            showDropdownIndicator:true,
-                            trailingView: AnyView(
-                                KFImageLoader(url:URL(string:Constants.imagesURL + (selectedLanguage?.flag?.validateSlashs() ?? "")),placeholder: Image("egFlagIcon"), shouldRefetch: true)
-                                    .frame(width: 30,height:20)
-                            )
-                            )
+                    // Tappable field opens language bottom sheet
+                    CustomDropListInputFieldUI(
+                        title: "lang_Language_title",
+                        placeholder: "lang_Language_subtitle",
+                        text: .constant(selectedLanguage?.lang1 ?? ""),
+                        isValid: true,
+                        isDisabled: true,
+                        showDropdownIndicator:true,
+                        trailingView: AnyView(
+                            KFImageLoader(url:URL(string:Constants.imagesURL + (selectedLanguage?.flag?.validateSlashs() ?? "")),placeholder: Image("egFlagIcon"), shouldRefetch: true)
+                                .frame(width: 30,height:20)
+                        )
+                    )
+                    .contentShape(Rectangle())
+                    .onTapGesture {
+                        tempLanguage = selectedLanguage
+                        showLanguageSheet = true
                     }
-                    .keyboardType(.asciiCapableNumberPad)
                     
-                    
-                    
-                    Menu {
-                        ForEach(lookupsVM.appCountries ?? [],id: \.self) { country in
-                            
-                            Button(action: {
-                                Task {
-                                    await MainActor.run(){
-                                        selectedCountry = country
-                                        //                                        setLanguage("en")
-                                        if let selectedCountryId = country.id {
-                                            Helper.shared.AppCountryId(Id: selectedCountryId)
-                                        }
-                                    }
-                                }
-                            }, label: {
-                                HStack{
-                                    Text(country.name ?? "")
-                                    
-                                    KFImageLoader(url:URL(string:Constants.imagesURL + (country.flag?.validateSlashs() ?? "")),placeholder: Image("egFlagIcon"), shouldRefetch: true)
-                                        .frame(width: 30,height:20)
-                                }
-                            })
-                        }
-                    } label: {
-                        
-                        CustomDropListInputFieldUI(
-                            title: "lang_Country_title",
-                            placeholder: "lang_Country_subitle",
-                            text: .constant(selectedCountry?.name ?? ""),
-                            isValid: true,
-                            isDisabled: true,
-                            showDropdownIndicator:true,
-                            trailingView: AnyView(
-                                KFImageLoader(url:URL(string:Constants.imagesURL + (selectedCountry?.flag?.validateSlashs() ?? "")),placeholder: Image("egFlagIcon"), shouldRefetch: true)
-                                    .frame(width: 30,height:20)
-                            )
-                            )
+                    // Tappable field opens country bottom sheet
+                    CustomDropListInputFieldUI(
+                        title: "lang_Country_title",
+                        placeholder: "lang_Country_subitle",
+                        text: .constant(selectedCountry?.name ?? ""),
+                        isValid: true,
+                        isDisabled: true,
+                        showDropdownIndicator:true,
+                        trailingView: AnyView(
+                            KFImageLoader(url:URL(string:Constants.imagesURL + (selectedCountry?.flag?.validateSlashs() ?? "")),placeholder: Image("egFlagIcon"), shouldRefetch: true)
+                                .frame(width: 30,height:20)
+                        )
+                    )
+                    .contentShape(Rectangle())
+                    .onTapGesture {
+                        tempCountry = selectedCountry
+                        showCountrySheet = true
                     }
-                    .keyboardType(.asciiCapableNumberPad)
-
-//                    CustomInputFieldUI(
-//                        title: "lang_Language_title",
-//                        placeholder: "lang_Language_subtitle",
-////                        placeholder: "",
-//
-//                        text: .constant( ""),
-//                        isValid: true,
-//                        isDisabled: true,
-//                        trailingView: AnyView(
-//                            Menu {
-//                                ForEach(lookupsVM.languages ?? [],id: \.self) { language in
-//                                    Button(action: {
-//                                        selectedLanguage = language  // ✅ Trigger state update
-//                                        Task{
-//                                          await  setLanguage(language.lang1 ?? "ar")
-//                                        }
-//                                    }, label: {
-//                                        HStack{
-//                                            Text(language.lang1 ?? "")
-//                                            KFImageLoader(url:URL(string:Constants.imagesURL + (language.flag?.validateSlashs() ?? "")),placeholder: Image("egFlagIcon"), shouldRefetch: true)
-//                                                .frame(width: 30,height:17)
-//                                        }
-//                                    })
-//                                }
-//                            } label: {
-//                                HStack(spacing: 4) {
-//                                    Image(systemName: "chevron.down")
-//                                        .foregroundColor(.gray)
-//                                    
-////                                    Image(.languageBook)
-////                                        .resizable()
-////                                        .frame(width: 23,height:20)
-//                                                                        
-//                                    KFImageLoader(url:URL(string:Constants.imagesURL + (selectedLanguage?.flag?.validateSlashs() ?? "")),placeholder: Image("egFlagIcon"), shouldRefetch: true)
-//                                        .frame(width: 30,height:17)
-//                                }
-//                            }
-//                        )
-//                    )
-//                    .keyboardType(.asciiCapableNumberPad)
-//                    .task {
-//                        await lookupsVM.getLanguages()
-//                        if let languages = lookupsVM.languages {
-//                            selectedLanguage = languages.first(where: { $0.lang1?.lowercased() == localizationManager.currentLanguage?.lowercased() }) ?? languages.first
-//                        }
-//                    }
-                    
-//                    CustomInputFieldUI(
-//                        title: "lang_Country_title",
-//                        placeholder: "lang_Country_subitle",
-//                        text: .constant(selectedCountry?.name ?? ""),
-//                        isValid: true,
-//                        isDisabled: true,
-//                        trailingView: AnyView(
-//                            Menu {
-//                                ForEach(lookupsVM.appCountries ?? [],id: \.self) { country in
-//                                    
-//                                    Button(action: {
-//                                        Task {
-//                                            await MainActor.run(){
-//                                                selectedCountry = country
-//                                                //                                        setLanguage("en")
-//                                                if let selectedCountryId = country.id {
-//                                                    Helper.shared.AppCountryId(Id: selectedCountryId)
-//                                                }
-//                                            }
-//                                        }
-//                                    }, label: {
-//                                        HStack{
-//                                            Text(country.name ?? "")
-//                                            
-//                                            KFImageLoader(url:URL(string:Constants.imagesURL + (country.flag?.validateSlashs() ?? "")),placeholder: Image("egFlagIcon"), shouldRefetch: true)
-//                                                .frame(width: 30,height:17)
-//                                        }
-//                                    })
-//                                }
-//                            } label: {
-//                                HStack(spacing: 4) {
-//                                    Image(systemName: "chevron.down")
-//                                        .foregroundColor(.gray)
-//                                    
-//                                    KFImageLoader(url:URL(string:Constants.imagesURL + (selectedCountry?.flag?.validateSlashs() ?? "")),placeholder: Image("egFlagIcon"), shouldRefetch: true)
-//                                        .frame(width: 30,height:17)
-//                                    
-//                                    //                                Text(selectedCountry?.flag ?? "")
-//                                    //                                    .foregroundColor(.mainBlue)
-//                                    //                                    .font(.medium(size: 22))
-//                                }
-//                            }
-//                        )
-//                    )
-//                    .keyboardType(.asciiCapableNumberPad)
                 }
+                .padding(.top,10)
             }
             .padding(.horizontal)
             
@@ -252,55 +118,189 @@ struct SelectLanguageView : View {
                     rootVC.navigationController?.toolbar.isHidden = true
                     Helper.shared.changeRootVC(newroot: rootVC, transitionFrom: .fromRight)
                 }else{
-//                    dismiss()
                     let rootVC = UIHostingController(rootView: NewTabView(selectedTab: 0))
                     rootVC.navigationController?.isNavigationBarHidden = true
                     rootVC.navigationController?.toolbar.isHidden = true
                     Helper.shared.changeRootVC(newroot: rootVC, transitionFrom: .fromRight)
                 }
-//                Helper.shared.changeRootVC(newroot: HTBC.self, transitionFrom: .fromRight)
-            }
-        }
-        .showHud(isShowing: $isLoading)
-        .onAppear() {
-            Task{
-                isLoading = true
-                defer { isLoading = false }
-                async let countries:() = await lookupsVM.getAppCountries()
-                async let languages:() = await lookupsVM.getLanguages()
-
-                _ = await (countries,languages)
-                
-                if let countries = lookupsVM.appCountries ,let savedCountryId = Helper.shared.AppCountryId() {
-                    selectedCountry = countries.first(where: { $0.id == savedCountryId }) ?? countries.first
-//                    Helper.shared.AppCountryId(Id: selectedCountry?.id)
-                }
-                if let languages = lookupsVM.languages {
-                    selectedLanguage = languages.first(where: { $0.lang1?.lowercased() == localizationManager.currentLanguage.lowercased() }) ?? languages.first
-                }
             }
         }
         .localizeView()
+        .showHud(isShowing: $isLoading)
+        .onAppear() {
+            Task{
+                await LoadData()
+            }
+        }
+        // Language bottom sheet using customSheet with tap-to-select list (no Picker)
+        .customSheet(isPresented: $showLanguageSheet, height: 250) {
+            BottomListSheet(
+                title: "lang_Language_title".localized,
+                selection: Binding<LanguageM?>(
+                    get: { tempLanguage },
+                    set: { tempLanguage = $0 }
+                ),
+                data: lookupsVM.languages ?? [],
+                rowHeight: 55
+            ) { language, isSelected in
+                HStack {
+                    if isSelected {
+                        Image(systemName: "checkmark.circle.fill")
+                            .foregroundColor(Color(.secondaryMain))
+                    }
+                    Text(language.lang1 ?? "")
+                        .font(.semiBold(size: 18))
+                        .foregroundStyle(isSelected ? Color(.mainBlue) : Color(.main))
+                    Spacer()
+                    KFImageLoader(
+                        url: URL(string: Constants.imagesURL + (language.flag?.validateSlashs() ?? "")),
+                        placeholder: Image("egFlagIcon"),
+                        shouldRefetch: true
+                    )
+                    .frame(width: 30, height: 20)
+                }
+                .padding(.horizontal)
+                .frame(height: 55)
+                .contentShape(Rectangle())
+            } onTapRow: { tapped in
+                tempLanguage = tapped
+            } onDone: {
+                selectedLanguage = tempLanguage
+                if let code = selectedLanguage?.lang1 {
+                    Task { await setLanguage(code) }
+                }
+                showLanguageSheet = false
+            } onCancel: {
+                showLanguageSheet = false
+            }
+        }
+        // Country bottom sheet using customSheet with tap-to-select list (no Picker)
+        .customSheet(isPresented: $showCountrySheet, height: 250) {
+            BottomListSheet(
+                title: "lang_Country_title".localized,
+                selection: Binding<AppCountryM?>(
+                    get: { tempCountry },
+                    set: { tempCountry = $0 }
+                ),
+                data: lookupsVM.appCountries ?? [],
+                rowHeight: 55
+            ) { country, isSelected in
+                HStack {
+                    if isSelected {
+                        Image(systemName: "checkmark.circle.fill")
+                            .foregroundColor(Color(.secondaryMain))
+                    }
+                    Text(country.name ?? "")
+                        .font(.semiBold(size: 18))
+                        .foregroundStyle(isSelected ? Color(.mainBlue) : Color(.main))
+                    Spacer()
+                    KFImageLoader(
+                        url: URL(string: Constants.imagesURL + (country.flag?.validateSlashs() ?? "")),
+                        placeholder: Image("egFlagIcon"),
+                        shouldRefetch: true
+                    )
+                    .frame(width: 30, height: 20)
+                }
+                .padding(.horizontal)
+                .frame(height: 55)
+                .contentShape(Rectangle())
+            } onTapRow: { tapped in
+                tempCountry = tapped
+            } onDone: {
+                selectedCountry = tempCountry
+                if let id = selectedCountry?.id {
+                    Helper.shared.AppCountryId(Id: id)
+                }
+                showCountrySheet = false
+            } onCancel: {
+                showCountrySheet = false
+            }
+        }
     }
     
     private func setLanguage(_ language: String) async {
         Helper.shared.languageSelected(opened: true)
-
-//        changeLanguage(to: language)
         LocalizationManager.shared.changeLanguage(to: language) {
         }
         Helper.shared.AppCountryId(Id: selectedCountry?.id)
-//        localizationManager.setLanguage(language) {_ in
-             // Option 1: Force immediate reload (works for most cases)
-//             DispatchQueue.main.async {
-//                 UIApplication.shared.windows.first?.rootViewController = UIHostingController(rootView: SelectLanguageView())
-//             }
-//         }
+       
+        await LoadData()
      }
+}
+
+// MARK: - BottomListSheet (no Picker, tap to select)
+private struct BottomListSheet<Item: Hashable>: View {
+    let title: String
+    @Binding var selection: Item?
+    let data: [Item]
+    let rowHeight: CGFloat
+    let rowContent: (Item, Bool) -> AnyView
+    let onTapRow: (Item) -> Void
+    let onDone: () -> Void
+    let onCancel: () -> Void
+    
+    init(
+        title: String,
+        selection: Binding<Item?>,
+        data: [Item],
+        rowHeight: CGFloat = 55,
+        @ViewBuilder rowContent: @escaping (Item, Bool) -> some View,
+        onTapRow: @escaping (Item) -> Void,
+        onDone: @escaping () -> Void,
+        onCancel: @escaping () -> Void
+    ) {
+        self.title = title
+        self._selection = selection
+        self.data = data
+        self.rowHeight = rowHeight
+        self.rowContent = { item, isSel in AnyView(rowContent(item, isSel)) }
+        self.onTapRow = onTapRow
+        self.onDone = onDone
+        self.onCancel = onCancel
+    }
+    
+    var body: some View {
+        VStack(spacing: 12) {
+            HStack {
+                Button(action: onCancel) {
+                    Image(systemName: "xmark.circle")
+                        .resizable()
+                        .frame(width: 24, height: 24)
+                        .foregroundColor(.pink)
+                }
+                Spacer()
+                Text(title)
+                    .font(.semiBold(size: 18))
+                    .foregroundStyle(Color(.main))
+                Spacer()
+                Button("Done_".localized, action: onDone)
+                    .font(.semiBold(size: 16))
+                    .foregroundStyle(Color(.mainBlue))
+            }
+            .padding(.horizontal)
+            .padding(.top, 20)
+            
+            ScrollView {
+                LazyVStack(spacing: 0) {
+                    ForEach(Array(data), id: \.self) { item in
+                        Button {
+                            onTapRow(item)
+                        } label: {
+                            rowContent(item, selection == item)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                        }
+                        .buttonStyle(.plain)
+                        Divider()
+                            .padding(.leading)
+                    }
+                }
+                .padding(.vertical, 4)
+            }
+        }
+        .localizeView()
+    }
 }
 
 #Preview {
     SelectLanguageView()
 }
-
-
