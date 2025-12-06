@@ -51,7 +51,7 @@ struct PackageMoreDetailsView: View {
                 HStack {
                     VStack(alignment: .leading) {
                         (Text("doc".localized + "/".localized) + Text(doctorData?.doctorName ?? "name".localized))
-                            .font(.bold(size: 16))
+                            .font(.semiBold(size: 22))
                             .foregroundStyle(.white)
                             .frame(maxWidth: .infinity, alignment: .leading)
 
@@ -63,7 +63,7 @@ struct PackageMoreDetailsView: View {
                                 .padding(3)
 
                             Text(doctorData?.speciality ?? "speciality".localized)
-                                .font(.medium(size: 10))
+                                .font(.semiBold(size: 12))
                                 .foregroundStyle(Color.white)
                         }
                     }
@@ -72,8 +72,8 @@ struct PackageMoreDetailsView: View {
                         KFImageLoader(url: URL(string: Constants.imagesURL + (doctorData?.flag?.validateSlashs() ?? "")), placeholder: Image("egFlagIcon"), shouldRefetch: false)
                             .frame(width: 12, height: 12)
 
-                        Text(doctorData?.nationality ?? "")
-                            .font(.medium(size: 10))
+                        Text(doctorData?.nationality ?? "nationality".localized)
+                            .font(.semiBold(size: 12))
                             .foregroundStyle(Color.white)
                     }
                 }
@@ -98,14 +98,14 @@ struct PackageMoreDetailsView: View {
                         VStack(alignment: .leading, spacing: 8) {
 
                             Text(packageData?.packageName ?? "باقة الصحة العامة")
-                                .font(.semiBold(size: 20))
+                                .font(.semiBold(size: 22))
                                 .foregroundStyle(.white)
 
                             Group {
                                 Text(packageData?.categoryName ?? "صحة عامة")
                                 Text(packageData?.mainCategoryName ?? "التغذية العلاجية")
                             }
-                            .font(.medium(size: 16))
+                            .font(.medium(size: 18))
                             .foregroundStyle(Color.white)
 
                             HStack(spacing: 0) {
@@ -117,13 +117,13 @@ struct PackageMoreDetailsView: View {
 
                                 (Text(" \(packageData?.sessionCount ?? 0) ")
                                     .font(.semiBold(size: 16)) + Text("sessions".localized)
-                                    .font(.regular(size: 10)))
+                                    .font(.regular(size: 12)))
 
                                 Text(" - " + "sessions_Duration".localized)
-                                    .font(.regular(size: 10))
+                                    .font(.regular(size: 12))
 
                                 Text(" \(packageData?.duration ?? 0) " + "Minutes".localized)
-                                    .font(.regular(size: 10))
+                                    .font(.regular(size: 12))
                             }
                             .foregroundStyle(Color.white)
                         }
@@ -157,7 +157,7 @@ struct PackageMoreDetailsView: View {
                 SectionHeader(image: Image(.newreschedual), imageForground: Color(.secondary), title: "Schedualling_".localized, subTitle:
                         Text("schedualling_Hint".localized)
                         .foregroundStyle(Color(.secondary))
-                        .font(.medium(size: 10))
+                        .font(.medium(size: 12))
                         .frame(maxWidth: .infinity, alignment: .leading)
                 ) {
                     // go to last mes package
@@ -169,9 +169,9 @@ struct PackageMoreDetailsView: View {
                         showingDatePicker = true
                     }, label: {
                         HStack(alignment: .center) {
-                            Text(viewModel.newDate, format: .customDateFormat("MMM - yyyy"))
+                            Text(viewModel.newDate, format:.customDateFormat("MMM - yyyy"))
                                 .foregroundStyle(Color(.mainBlue))
-                                .font(.medium(size: 12))
+                                .font(.medium(size: 14))
 
                             Image(systemName: "chevron.forward")
                                 .font(.system(size: 8))
@@ -215,13 +215,13 @@ struct PackageMoreDetailsView: View {
                             }, label: {
                                 VStack {
                                     Text("\(day.date ?? "")".ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "dd"))
-                                        .font(.semiBold(size: 14))
+                                        .font(.semiBold(size: 16))
 
                                     Text(day.dayName ?? "")
-                                        .font(.medium(size: 10))
+                                        .font(.medium(size: 14))
                                 }
                                 .frame(height: 50)
-                                .frame(width: 50)
+                                .frame(width: 60)
 
                             })
                             .foregroundStyle(Color.white)
@@ -243,10 +243,14 @@ struct PackageMoreDetailsView: View {
                                     }, label: {
                                         VStack(spacing: 5) {
                                             Text(shift.name ?? "")
-                                                .font(.bold(size: 10))
+                                                .font(.bold(size: 14))
                                             
-                                            (Text("\(shift.timeFrom ?? "")".ChangeDateFormat(FormatFrom: "HH:mm:ss", FormatTo: "hh:mm a")) + Text(" - ") + Text("\(shift.timeTo ?? "")".ChangeDateFormat(FormatFrom: "HH:mm:ss", FormatTo: "hh:mm a")))
-                                                .font(.medium(size: 9))
+                                            HStack(spacing: 0){
+                                                Text("\(shift.formattedtimeFrom ?? "")")
+                                                Text(" - ")
+                                                Text("\(shift.formattedtimeTo ?? "")")
+                                            }
+                                                .font(.medium(size: 10))
                                         }
                                     })
                                     .frame(height: 36)
@@ -327,8 +331,12 @@ struct SshedualsGrid: View {
                     Button(action: {
                         selectedschedual = item
                     }, label: {
-                        (Text("\(item.timefrom ?? "")".ChangeDateFormat(FormatFrom: "HH:mm:ss", FormatTo: "hh:mm a")) + Text(" - ") + Text("\(item.timeTo ?? "")".ChangeDateFormat(FormatFrom: "HH:mm:ss", FormatTo: "hh:mm a")))
-                            .font(.medium(size: 8))
+                        HStack(spacing: 0){
+                            Text("\(item.formattedtimeFrom ?? "")")
+                            Text(" - ")
+                            Text("\(item.formattedtimeTo ?? "")")
+                        }
+                            .font(.medium(size: 10))
                             .foregroundStyle(item.booked ?? false ? Color(.btnDisabledTxt) : (selectedschedual == item ? Color(.white) : Color(.secondary)))
                     })
                     .padding()

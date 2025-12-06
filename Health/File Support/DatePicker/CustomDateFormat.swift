@@ -24,9 +24,9 @@ struct CustomDateFormat: FormatStyle, Sendable {
 extension FormatStyle where Self == CustomDateFormat {
     static func customDateFormat(
         _ format: String,
-        locale: Locale? = .current,
+        locale: SupportedLocale? = LocalizationManager.shared.currentLanguage.lowercased() == "en" ? .english:.arabic,
         timeZone: TimeZone? = TimeZone(identifier: "Africa/Cairo") ?? TimeZone.current
     ) -> CustomDateFormat {
-        CustomDateFormat(format: format, locale: locale ?? .current, timeZone: timeZone ?? TimeZone(identifier: "Africa/Cairo") ?? TimeZone.current)
+        CustomDateFormat(format: format, locale: locale?.locale ?? .current, timeZone: timeZone ?? TimeZone(identifier: "Africa/Cairo") ?? TimeZone.current)
     }
 }

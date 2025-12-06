@@ -83,9 +83,10 @@ extension ReSchedualViewModel{
         // Prefer the tapped day; fall back to the month anchor (newDate)
         let selectedDayString = selectedDay?.date?.ChangeDateFormat(
             FormatFrom: "yyyy-MM-dd'T'HH:mm:ss",
-            FormatTo: "yyyy-MM-dd"
+            FormatTo: "yyyy-MM-dd",
+            outputLocal: .english
         )
-        let dateString = selectedDayString ?? newDate.formatted(.customDateFormat("yyyy-MM-dd",locale:Locale(identifier: "EN_US")))
+        let dateString = selectedDayString ?? newDate.formatted(.customDateFormat("yyyy-MM-dd",locale:.english))
         
         var parametersarr : [String : Any] =  ["date": dateString, "appCountryId": appCountryId]
           
@@ -144,9 +145,10 @@ extension ReSchedualViewModel{
         // Prefer the tapped day; fall back to the month anchor (newDate)
         let selectedDayString = selectedDay?.date?.ChangeDateFormat(
             FormatFrom: "yyyy-MM-dd'T'HH:mm:ss",
-            FormatTo: "yyyy-MM-dd"
+            FormatTo: "yyyy-MM-dd",
+            outputLocal: .english
         )
-        let dateString = selectedDayString ?? newDate.formatted(.customDateFormat("yyyy-MM-dd",locale: Locale(identifier: "EN")))
+        let dateString = selectedDayString ?? newDate.formatted(.customDateFormat("yyyy-MM-dd",locale: .english))
         
         var parametersarr : [String : Any] =  [
             "appCountryId": appCountryId,
@@ -253,7 +255,7 @@ extension ReSchedualViewModel{
         guard let appCountryId = appcountryId ,let shiftId = selectedShift?.id else {
             return
         }
-        var parametersarr : [String : Any] =  ["appCountryId":appCountryId,"date":"\(newDate.formatted(.customDateFormat("yyyy-MM-dd",locale: .init(identifier: "EN"))))","shiftId":shiftId]
+        var parametersarr : [String : Any] =  ["appCountryId":appCountryId,"date":"\(newDate.formatted(.customDateFormat("yyyy-MM-dd",locale: .english)))","shiftId":shiftId]
 
         if let doctorId = doctorId{
             parametersarr["doctorId"] = doctorId

@@ -78,6 +78,22 @@ struct AvailableTimeShiftM: Codable,Hashable {
         case name,timeFrom,timeTo
     }
 }
+extension AvailableTimeShiftM{
+    var formattedtimeFrom: String? {
+        guard let date = self.timeFrom else { return "" }
+
+        let formatedDate = date.ChangeDateFormat(FormatFrom: "HH:mm:ss", FormatTo: "hh:mm a")
+        return formatedDate // fallback to original string if parsing fails
+    }
+    var formattedtimeTo: String? {
+        guard let date = self.timeTo else { return "" }
+
+        let formatedDate = date.ChangeDateFormat(FormatFrom: "HH:mm:ss", FormatTo: "hh:mm a")
+        return formatedDate // fallback to original string if parsing fails
+    }
+}
+
+
 let mockAvailableTimeShifts: [AvailableTimeShiftM] = [
     AvailableTimeShiftM(id: 1, name: "Morning",   timeFrom: "08:00:00", timeTo: "12:00:00"),
     AvailableTimeShiftM(id: 2, name: "Afternoon", timeFrom: "12:00:00", timeTo: "16:00:00"),
@@ -94,6 +110,21 @@ struct AvailableSchedualsM: Codable,Hashable {
         case timefrom,timeTo
     }
 }
+extension AvailableSchedualsM{
+    var formattedtimeFrom: String? {
+        guard let date = self.timefrom else { return "" }
+
+        let formatedDate = date.ChangeDateFormat(FormatFrom: "HH:mm:ss", FormatTo: "hh:mm a")
+        return formatedDate // fallback to original string if parsing fails
+    }
+    var formattedtimeTo: String? {
+        guard let date = self.timeTo else { return "" }
+
+        let formatedDate = date.ChangeDateFormat(FormatFrom: "HH:mm:ss", FormatTo: "hh:mm a")
+        return formatedDate // fallback to original string if parsing fails
+    }
+}
+
 let mockAvailableSchedules: [AvailableSchedualsM] = [
     AvailableSchedualsM(booked: false, timefrom: "08:00:00", timeTo: "08:30:00"),
     AvailableSchedualsM(booked: true,  timefrom: "08:30:00", timeTo: "09:00:00"),

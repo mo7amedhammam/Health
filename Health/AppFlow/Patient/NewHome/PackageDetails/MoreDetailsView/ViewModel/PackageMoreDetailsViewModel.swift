@@ -176,7 +176,7 @@ final class PackageMoreDetailsViewModel: ObservableObject {
             return
         }
 
-        let dayParam = date.formatted(.customDateFormat("yyyy-MM-dd"))
+        let dayParam = date.formatted(.customDateFormat("yyyy-MM-dd",locale: .english))
         let params: [String: Any] = ["date": dayParam, "doctorId": doctorId, "appCountryId": appCountryId]
         let target = HomeServices.GetDoctorAvailableDayList(parameters: params)
 print("params:///", params)
@@ -251,7 +251,7 @@ print("params:///", params)
 
             let dateString =
             selectedDay?.date?.ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "yyyy-MM-dd",outputLocal: .english)
-                ?? newDate.formatted(.customDateFormat("yyyy-MM-dd"))
+            ?? newDate.formatted(.customDateFormat("yyyy-MM-dd",locale: .english))
 
             return (appCountryId, packageId, doctorId, shiftId, dateString)
         }
