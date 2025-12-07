@@ -24,9 +24,11 @@ struct LoginView: View {
 
     @State private var destination = AnyView(EmptyView())
     @State private var isactive: Bool = false
+    var skipToSignUp : Bool = false
     @State private var selectedUser: UserTypeEnum = Helper.shared.getSelectedUserType() ?? .Customer
 
-    init() {
+    init( skipToSignUp : Bool = false) {
+        self.skipToSignUp = skipToSignUp
         _loginViewModel = StateObject(wrappedValue: LoginViewModel())
         _otpViewModel = StateObject(wrappedValue: OtpVM())
     }
@@ -202,6 +204,10 @@ private extension LoginView {
     }
     
     func onAppearFetchCountries() {
+        if skipToSignUp{
+            pushTo(destination: SignUpView())
+        }
+        
         if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] == "1" {
             if selectedCountry == nil {
                 selectedCountry = AppCountryM(id: 1, name: "Egypt", flag: "")

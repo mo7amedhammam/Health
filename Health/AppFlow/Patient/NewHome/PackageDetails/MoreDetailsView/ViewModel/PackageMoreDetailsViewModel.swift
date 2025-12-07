@@ -215,7 +215,7 @@ print("params:///", params)
 
         let params: [String: Any] = ["AppCountryId": appCountryId]
         let target = HomeServices.GetTimeShiftScheduleList(parameters: params)
-
+        print(params)
         shiftsTask = Task {
             await MainActor.run { self.startLoading() }
             defer { Task { await MainActor.run { self.stopLoading() } } }

@@ -265,9 +265,7 @@ struct TicketView: View {
                         .padding(.bottom,8)
                         .frame(maxWidth:.infinity)
                         
-                        
                         ZStack {
-                            
                             Image(.logoWaterMarkIcon)
                                 .resizable()
                                 .aspectRatio(contentMode: .fill)
@@ -360,6 +358,9 @@ struct TicketView: View {
             get: { viewmodel.errorMessage != nil },
             set: { if !$0 { viewmodel.errorMessage = nil } }
         ), message: viewmodel.errorMessage)
+        .fullScreenCover(isPresented: $viewmodel.showSuccess, onDismiss: {}, content: {
+            AnyView( PackageSchedualeBookedView() )
+        })
         
     }
 }
@@ -367,6 +368,28 @@ struct TicketView: View {
 #Preview {
     TicketView( ticketData: .init())
 }
+extension TicketView{
+    private func PackageSchedualeBookedView()->any View {
+        let successView = SuccessView(
+            image: Image("successicon"),
+            title: "ticket_success_title".localized,
+            subtitle1: "ticket_success_subtitle1".localized,
+            subtitle2: "ticket_success_subtitle2".localized,
+            buttonTitle: "ticket_success_created_btn".localized,
+            buttonAction: {
+                // Navigate to home or login
+                let login = UIHostingController(rootView: NewTabView())
+                Helper.shared.changeRootVC(newroot: login, transitionFrom: .fromLeft)
+                
+//                viewModel.showSuccess = false
+            }
+        )
+//        let newVC = UIHostingController(rootView: successView)
+//        Helper.shared.changeRootVC(newroot: newVC, transitionFrom: .fromLeft)
+        return successView
+    }
+}
+
 
 struct TicketShape: Shape {
     /// The vertical offset (0 to 1) where the cutout appears vertically

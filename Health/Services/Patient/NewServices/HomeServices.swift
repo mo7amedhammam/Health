@@ -175,6 +175,7 @@ extension HomeServices : TargetType1 {
             .GetAvailableShiftDoctors(parameters: let parameter),
             .GetDoctorPackageById(parameters: let parameter),
             .GetDoctorAvailableDayList(parameters: let parameter),
+            .GetTimeShiftScheduleList(parameters: let parameter),
             .GetAvailableDoctorSchedule(parameters: let parameter),
             .GetBookingSession(parameters: let parameter),
             .CreateCustomerPackage(parameters: let parameter),
@@ -194,7 +195,6 @@ extension HomeServices : TargetType1 {
 //                .GetDistricts,
 //                .GetGenders,
                 .GetMyMeasurementsStats,
-                .GetTimeShiftScheduleList,
                 .GetWishList
             :
             return nil

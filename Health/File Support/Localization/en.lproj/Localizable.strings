@@ -213,6 +213,10 @@
 "EGP_" = "EGP";
 "la_Discount" = "Discount";
 "Final_price_" = "Final price";
+"ticket_success_title" = "The package subscription has been successful.";
+"ticket_success_subtitle1" = "Please check your inbox to check your flight.";
+"ticket_success_subtitle2" = "It was quickly integrated with popular email services.";
+"ticket_success_created_btn" = "Home Page";
 
 //MARK: --- subsriptions ---
 "subscriped_title" = "my subscriptions";

@@ -102,8 +102,8 @@ struct PackageDetailsView: View {
                         Spacer()
 
                         HStack(alignment: .center, spacing: 5) {
-                            (Text(" \(package.doctorCount ?? 0) ") + Text("avilable_doc".localized))
-                                .font(.regular(size: 10))
+                            (Text(" \(package.doctorCount ?? 0) ").font(.bold(size: 14)) + Text("avilable_doc".localized))
+                                .font(.regular(size: 12))
 
                             Image(.newdocicon)
                                 .renderingMode(.template)
@@ -148,7 +148,7 @@ struct PackageDetailsView: View {
                     (Text(package.priceBeforeDiscount ?? 0, format: .number.precision(.fractionLength(1))) + Text(" " + "EGP".localized))
                         .strikethrough()
                         .foregroundStyle(Color(.secondary))
-                        .font(.semiBold(size: 12))
+                        .font(.medium(size: 12))
 
                     DiscountLine(discount: package.discount)
                 }
@@ -162,10 +162,10 @@ struct PackageDetailsView: View {
                     .resizable()
                     .frame(width: 16, height: 9)
                 Text("\(package.sessionCount ?? 0) ")
-                    .font(.semiBold(size: 16))
+                    .font(.semiBold(size: 18))
                 Text("sessions".localized)
             }
-            .font(.regular(size: 10))
+            .font(.regular(size: 12))
             .foregroundStyle(Color.white)
             .frame(height: 32)
             .padding(.horizontal, 10)
@@ -221,7 +221,7 @@ struct AvailableDoctorsListView: View {
                             }
 
                             Text("job title" + " - " + "uiniverrsity name")
-                                .font(.medium(size: 10))
+                                .font(.semiBold(size: 14))
                                 .frame(maxWidth: .infinity, alignment: .leading)
                                 .foregroundStyle(Color(.secondary))
                                 .padding(.bottom, 2)
@@ -258,11 +258,17 @@ struct AvailableDoctorsListView: View {
 
 struct DiscountLine: View {
     let discount: Double?
+    private var percentFraction: Double {
+          let value = discount ?? 0
+          // If the caller passed whole percent (e.g. 20) convert to fraction 0.2
+          return value > 1 ? value / 100.0 : value
+      }
+    
     var body: some View {
         HStack(spacing: 0) {
             Text("(".localized)
             Text("Discount".localized + " ")
-            Text(discount ?? 0, format: .percent)
+            Text(percentFraction , format: .percent)
             Text(")".localized)
         }
         .font(.semiBold(size: 12))

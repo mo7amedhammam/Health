@@ -34,15 +34,15 @@ struct LoginSheetView: View {
             VStack(spacing: 12) {
                 
                 CustomButton(title: "login_title",backgroundcolor: Color(.mainBlue),backgroundView:nil){
-                    let newHome = UIHostingController(rootView: LoginView())
+                    let newHome = UIHostingController(rootView: LoginView(skipToSignUp: false))
                     Helper.shared.changeRootVC(newroot: newHome, transitionFrom: .fromLeft)
                 }
-
-                CustomButton(title: "Signup_title",backgroundcolor: Color(.secondary),backgroundView:nil){
-                    let newHome = UIHostingController(rootView: LoginView())
-                    Helper.shared.changeRootVC(newroot: newHome, transitionFrom: .fromLeft)
+                if Helper.shared.getSelectedUserType() == .Customer{
+                    CustomButton(title: "Signup_title",backgroundcolor: Color(.secondary),backgroundView:nil){
+                        let newHome = UIHostingController(rootView: LoginView(skipToSignUp: true))
+                        Helper.shared.changeRootVC(newroot: newHome, transitionFrom: .fromLeft)
+                    }
                 }
-                
             }
             .padding(.horizontal)
 

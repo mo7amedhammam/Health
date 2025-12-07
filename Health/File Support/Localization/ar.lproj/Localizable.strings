@@ -213,6 +213,10 @@
 "EGP_" = "جنية مصري";
 "la_Discount" = "الخصم";
 "Final_price_" = "السعر النهائي";
+"ticket_success_title" = "تم الاشتراك في الباقة بنجاح";
+"ticket_success_subtitle1" = "يرجى التحقق من صندوق الوارد الخاص بك للتحقق من رحلتك.";
+"ticket_success_subtitle2" = "تم ربطه سريعًا بخدمات البريد الإلكتروني الشائعة.";
+"ticket_success_created_btn" = "الصفحة الرئيسية";
 
 //MARK: --- subsriptions ---
 "subscriped_title" = "اشتراكاتي";

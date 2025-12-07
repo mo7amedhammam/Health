@@ -53,6 +53,14 @@ struct AvailableDayM: Codable,Hashable {
         case date,dayName
     }
 }
+extension AvailableDayM{
+    var formattedDate: String? {
+        guard let date = self.date else { return "" }
+
+        let formatedDate = date.ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "dd")
+        return formatedDate // fallback to original string if parsing fails
+    }
+}
 let mockAvailableDays: [AvailableDayM] = [
     AvailableDayM(dayId: 6, date: "2025-11-01T00:00:00", dayName: "Saturday"),
     AvailableDayM(dayId: 6, date: "2025-11-08T00:00:00", dayName: "Saturday"),

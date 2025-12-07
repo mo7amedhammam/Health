@@ -60,7 +60,7 @@ struct ReSchedualView: View {
                         HStack(alignment: .center){
                             Text(selectedDate,format:.customDateFormat("MMM - yyyy"))
                                 .foregroundStyle(Color(.mainBlue))
-                                .font(.medium(size: 12))
+                                .font(.medium(size: 14))
                             
                             Image(systemName: "chevron.forward")
                                 .font(.system(size: 8))
@@ -110,13 +110,13 @@ struct ReSchedualView: View {
                                 }
                             }, label: {
                                 VStack{
-                                    Text("\(day.date ?? "")".ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "dd"))
-                                        .font(.semiBold(size: 14))
+                                    Text("\(day.formattedDate ?? "")")
+                                        .font(.semiBold(size: 16))
                                     
                                     Text(day.dayName ?? "")
-                                        .font(.medium(size: 10))
+                                        .font(.medium(size: 14))
                                 }
-                                .frame(width: 40, height: 50)
+                                .frame(width: 50, height: 60)
                             })
                             .foregroundStyle(Color.white)
                             .background(viewModel.selectedDay == day ? Color(.secondary) : Color(.mainBlue))
@@ -141,10 +141,14 @@ struct ReSchedualView: View {
                                 }, label: {
                                     VStack(spacing: 5){
                                         Text(shift.name ?? "")
-                                            .font(.bold(size: 10))
+                                            .font(.bold(size: 14))
                                         
-                                        (Text("\(shift.timeFrom ?? "")".ChangeDateFormat(FormatFrom: "HH:mm:ss", FormatTo: "hh:mm a")) + Text(" - ") + Text("\(shift.timeTo ?? "")".ChangeDateFormat(FormatFrom: "HH:mm:ss", FormatTo: "hh:mm a")))
-                                            .font(.medium(size: 9))
+                                        HStack(spacing:0){
+                                            Text("\(shift.formattedtimeFrom ?? "")")
+                                            Text(" - ")
+                                            Text("\(shift.formattedtimeTo ?? "")")
+                                        }
+                                            .font(.medium(size: 10))
                                     }
                                 })
                                 .frame( height: 36)

@@ -132,29 +132,30 @@ struct NewHomeView: View {
                     .accessibilityIdentifier("home_header")
                 
                 VStack(alignment: .leading) {
-                    if let nextsession = viewModel.upcomingSession {
-                        NextSessionSection(
-                            upcomingSession: nextsession,
-                            detailsAction: {
-
-                                if Helper.shared.getSelectedUserType() == .Customer {
-                                    pushTo(destination: SubcripedPackageDetailsView( package: nil, CustomerPackageId: nextsession.customerPackageId))
-//                                    router.push(SubcripedPackageDetailsView( package: nil, CustomerPackageId: nextsession.customerPackageId))
-                                    print("push to SubcripedPackageDetailsView ")
-                                }else if Helper.shared.getSelectedUserType() == .Doctor{
-                                    guard let customerPackageId = nextsession.customerPackageId else { return }
-                                    pushTo(destination: ActiveCustomerPackagesView( doctorId: nextsession.doctorId,CustomerPackageId: customerPackageId))
-                                }
-                            },
-                            rescheduleAction: {
-                                //                                doctorId = nil
-                                SessoinId = nextsession.id
-                                packageId = nextsession.packageID
-                                doctorId = nextsession.doctorId
-                                isRescheduling = true }
-                        )
-                        .padding(.horizontal)
-                        .accessibilityIdentifier("home_next_session")
+                    if Helper.shared.CheckIfLoggedIn(){
+                        if let nextsession = viewModel.upcomingSession {
+                            NextSessionSection(
+                                upcomingSession: nextsession,
+                                detailsAction: {
+                                    if Helper.shared.getSelectedUserType() == .Customer {
+                                        pushTo(destination: SubcripedPackageDetailsView( package: nil, CustomerPackageId: nextsession.customerPackageId))
+                                        //                                    router.push(SubcripedPackageDetailsView( package: nil, CustomerPackageId: nextsession.customerPackageId))
+                                        print("push to SubcripedPackageDetailsView ")
+                                    }else if Helper.shared.getSelectedUserType() == .Doctor{
+                                        guard let customerPackageId = nextsession.customerPackageId else { return }
+                                        pushTo(destination: ActiveCustomerPackagesView( doctorId: nextsession.doctorId,CustomerPackageId: customerPackageId))
+                                    }
+                                },
+                                rescheduleAction: {
+                                    //                                doctorId = nil
+                                    SessoinId = nextsession.id
+                                    packageId = nextsession.packageID
+                                    doctorId = nextsession.doctorId
+                                    isRescheduling = true }
+                            )
+                            .padding(.horizontal)
+                            .accessibilityIdentifier("home_next_session")
+                        }
                     }
                     
                     MainCategoriesSection(categories: viewModel.homeCategories) { category in
