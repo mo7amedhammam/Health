@@ -29,6 +29,9 @@ struct SubcripedPackageDetailsView: View {
         }
    
     }
+    @State private var doctorId : Int? = nil
+    @State private var packageId : Int? = nil
+    @State private var SessoinId : Int? = nil
     @State var isReschedualling: Bool = false
 
     enum SectionType: CaseIterable,Hashable {
@@ -256,7 +259,6 @@ struct SubcripedPackageDetailsView: View {
                                 .foregroundStyle(Color.white)
                         }
                         .frame(maxWidth: .infinity,alignment:.leading)
-                        
                     }
                     .padding(8)
                 }
@@ -264,13 +266,18 @@ struct SubcripedPackageDetailsView: View {
                 .cardStyle(cornerRadius: 3,shadowOpacity: 0.1)
                 .padding(.horizontal)
                 
-                SubcripedNextSession(upcomingSession: viewmodel.upcomingSession,detailsAction: {
-                    
-                },rescheduleAction: {
-                    isReschedualling = true
-                })
+                if let upcomingSession = viewmodel.upcomingSession{
+                    SubcripedNextSession(upcomingSession: upcomingSession,detailsAction: {
+                        
+                    },rescheduleAction: {
+                        SessoinId = upcomingSession.id
+                        packageId = upcomingSession.packageID
+                        doctorId = upcomingSession.doctorId
+                        isReschedualling = true
+                    })
                     .padding(.horizontal)
-                
+                }
+                    
                 SubcripedSessionsList(sessions: viewmodel.subscripedSessions?.items)
                     .padding(.horizontal)
                 
@@ -321,7 +328,7 @@ struct SubcripedPackageDetailsView: View {
             }
         }
             .customSheet(isPresented: $isReschedualling){
-                ReSchedualView(doctorId: .constant(nil), packageId: .constant(nil), SessionId: .constant(nil), isPresentingNewMeasurementSheet: $isReschedualling,reschedualcase: .constant(.reschedualSession))
+                ReSchedualView(doctorId: $doctorId, packageId: $packageId, SessionId: $SessoinId, isPresentingNewMeasurementSheet: $isReschedualling,reschedualcase: .constant(.reschedualSession))
             }
             .overlay{
                 if showCancel{

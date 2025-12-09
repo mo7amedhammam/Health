@@ -213,6 +213,7 @@ struct ReSchedualView: View {
             // reset so future sheets can trigger again if needed
             viewModel.isReschedualed = false
         }
+        .localizeView()
         .showHud(isShowing: $viewModel.isLoading )
         // Two-way binding so dismissing the alert clears the error
         .errorAlert(

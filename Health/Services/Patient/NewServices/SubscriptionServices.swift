@@ -90,15 +90,15 @@ extension SubscriptionServices : TargetType1 {
                 .GetCustomerPackageSessionList,
 //                .CreateDoctorMessage,
                 .CreateCustomerMessage,
-                .CancelSubscription,
-                .GetCustomerPackageInstructionByCPId
+                .CancelSubscription
             :
             return .post
             
         case
                 .FileType,
                 .GetCustomerPackageById,
-                .GetMessage
+                .GetMessage,
+                .GetCustomerPackageInstructionByCPId
             :
             return .get
         }
