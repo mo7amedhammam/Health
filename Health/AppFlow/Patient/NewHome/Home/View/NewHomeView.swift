@@ -166,10 +166,35 @@ struct NewHomeView: View {
                         }
                     }
                     
-                    Image(.adsbg)
-                        .resizable()
-                        .frame(height: 137)
-                        .padding(.horizontal)
+                    ZStack(alignment: .leading) {
+                        Image(.adsbg)
+                            .resizable()
+                            .frame(height: 137)
+                            .padding(.horizontal)
+                        
+                        VStack{
+                            VStack(alignment: .leading){
+                                Text("add1_title".localized)
+                                    .foregroundStyle(.white)
+                                    .font(.bold(size: 15.4))
+                                //                                .padding(.leading)
+                                
+                                Text("add1_subtitle".localized)
+                                    .foregroundStyle(.white)
+                                    .font(.medium(size: 12.5))
+                                //                                .padding(.leading)
+                                    .padding(.vertical,2)
+                            }
+                            
+                            CustomButton(title: "add1_button",font: .bold(size: 13),foregroundcolor: Color(.white), backgroundcolor : Color(.mainBlue), height:35,backgroundView: nil){
+//action
+                            }
+                            .padding(.top,5)
+                            
+                        }
+                            .frame(width: 200)
+                            .padding(.leading,20)
+                    }
                     
                     if Helper.shared.CheckIfLoggedIn() && Helper.shared.getSelectedUserType() == .Customer{
                         // Last measurements wrapped with EquatableByValue
@@ -194,11 +219,39 @@ struct NewHomeView: View {
                         .accessibilityIdentifier("home_vip_section")
                     }
                     
-                    Image(.adsbg2)
-                        .resizable()
-                        .frame(height: 229)
-                        .padding(.horizontal)
-                    
+                    ZStack(alignment: .leading) {
+                        
+                        Image(.adsbg2)
+                            .resizable()
+                            .frame(height: 229)
+                            .padding(.horizontal)
+                        
+                        VStack(){
+                            VStack(alignment: .leading){
+                                Text("add2_title".localized)
+                                    .foregroundStyle(Color(.mainBlue))
+                                    .font(.bold(size: 15.4))
+                                //                                .padding(.leading)
+                                
+                                Text("add2_subtitle".localized)
+                                    .foregroundStyle(Color(.secondary))
+                                    .font(.medium(size: 12.5))
+                                //                                .padding(.leading)
+                                    .padding(.vertical,5)
+                                    .lineSpacing(5)
+                                
+                            }
+                            
+                            CustomButton(title: "add2_button",font: .bold(size: 13),foregroundcolor: Color(.white), backgroundcolor : Color(.secondary), height:35,backgroundView: nil){
+                                //action
+                            }
+                            .padding(.top,8)
+                        }
+                        .frame(width: 200)
+                        .padding(.leading,20)
+                        
+                    }
+                        
                     // Most viewed/booked wrapped with EquatableByValue keyed to the active list
                     EquatableByValue(value: mostListState) {
                         MostViewedBooked(

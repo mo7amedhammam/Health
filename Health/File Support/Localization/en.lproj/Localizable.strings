@@ -482,3 +482,13 @@
 "docPackReq_subtitle1" = "Please check your inbox to check your flight.";
 "docPackReq_subtitle2" = "Quickly linked to popular email services.";
 "docPackReq_btn" = "Home";
+
+//Home ads
+"add1_title" = "Consultations with nutritionists";
+"add1_subtitle" = "To achieve your goals.";
+"add1_button" = "Choose your package";
+
+"add2_title" = "Sehaty With AlNada App!";
+"add2_subtitle" = "Consultations with nutritionists To achieve your goals.";
+"add2_button" = "Choose your package";
+

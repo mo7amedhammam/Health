@@ -52,7 +52,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 nav.navigationBar.isHidden = true
                 window?.rootViewController = nav
             
-            
 //                let initialVC: UIViewController = initiateViewController(storyboardName: .main, viewControllerIdentifier: HTBC.self)!
 //
 //            let nav = UINavigationController(rootViewController: initialVC)
@@ -63,7 +62,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 //                let initialVC: UIViewController = Helper.shared.CheckIfLoggedIn()
 //                ? initiateViewController(storyboardName: .main, viewControllerIdentifier: HTBC.self)!
 //                : initiateViewController(storyboardName: .main, viewControllerIdentifier: LoginVC.self)!
-                
                 
                 if Helper.shared.AppCountryId() != nil{
                     let vc = Helper.shared.getSelectedUserType() == .Doctor ? UIHostingController(rootView:  DocTabView().environmentObject(EditProfileViewModel.shared)) : UIHostingController(rootView: NewTabView().environmentObject(EditProfileViewModel.shared))

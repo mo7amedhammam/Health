@@ -60,11 +60,11 @@ struct ReSchedualView: View {
                         HStack(alignment: .center){
                             Text(selectedDate,format:.customDateFormat("MMM - yyyy"))
                                 .foregroundStyle(Color(.mainBlue))
-                                .font(.medium(size: 14))
-                            
+                                .font(.medium(size: 16))
+
                             Image(systemName: "chevron.forward")
-                                .font(.system(size: 8))
-                                .frame(width: 15, height: 15)
+                                .font(.system(size: 10, weight: .bold, design: .default))
+                                .frame(width: 17, height: 17)
                                 .foregroundStyle(Color.white)
                                 .background(Color(.secondary).cornerRadius(1))
                         }
@@ -99,7 +99,7 @@ struct ReSchedualView: View {
                 .padding(.horizontal)
                 
                 ScrollView(.horizontal,showsIndicators: false){
-                    HStack{
+                    HStack(spacing:2.5){
                         ForEach(viewModel.availableDays ?? [],id: \.self){day in
                             Button(action: {
                                 viewModel.selectedDay = day
@@ -109,14 +109,15 @@ struct ReSchedualView: View {
                                     await viewModel.getAvailableShifts()
                                 }
                             }, label: {
-                                VStack{
+                                VStack(spacing:5) {
                                     Text("\(day.formattedDate ?? "")")
                                         .font(.semiBold(size: 16))
                                     
                                     Text(day.dayName ?? "")
                                         .font(.medium(size: 14))
                                 }
-                                .frame(width: 50, height: 60)
+                                .frame(height: 60)
+                                .frame(width: 66)
                             })
                             .foregroundStyle(Color.white)
                             .background(viewModel.selectedDay == day ? Color(.secondary) : Color(.mainBlue))
@@ -125,9 +126,10 @@ struct ReSchedualView: View {
                         }
                     }
                 }
-                .padding(.horizontal)
-                
-                GeometryReader { geometry in
+                .padding(.horizontal,12)
+                .padding(.top,10)
+
+//                GeometryReader { geometry in
                     ScrollView(.horizontal,showsIndicators: false){
                         HStack(alignment: .center,spacing: 5){
                             ForEach(viewModel.availableShifts ?? [],id: \.self){shift in
@@ -139,27 +141,31 @@ struct ReSchedualView: View {
                                         await viewModel.getAvailableScheduals()
                                     }
                                 }, label: {
-                                    VStack(spacing: 5){
+                                    VStack(spacing: 7){
                                         Text(shift.name ?? "")
-                                            .font(.bold(size: 14))
+                                            .font(.bold(size: 15))
                                         
                                         HStack(spacing:0){
                                             Text("\(shift.formattedtimeFrom ?? "")")
                                             Text(" - ")
                                             Text("\(shift.formattedtimeTo ?? "")")
                                         }
-                                            .font(.medium(size: 10))
+                                            .font(.medium(size: 13))
                                     }
                                 })
-                                .frame( height: 36)
-                                .frame(width: (geometry.size.width/3) - 15)
+                                .padding(7.5)
+//                                .frame( height: 36)
+//                                .frame(width: (geometry.size.width/3) - 15)
                                 .foregroundStyle(viewModel.selectedShift == shift ? Color.white : Color(.secondary))
                                 .cardStyle(backgroundColor: viewModel.selectedShift == shift ? Color(.secondary) : Color(.wrongsurface),cornerRadius: 2,shadowOpacity:0)
                             }
                         }
                     }
-                    .padding(.horizontal)
-                }
+//                    .padding(.horizontal)
+                    .padding(.top,8)
+                    .padding(.bottom,4)
+
+//                }
                 if let scheduals = viewModel.availableScheduals,scheduals.count > 0{
                     SshedualsGrid(scheduals:scheduals,selectedschedual:$viewModel.selectedSchedual)
                         .padding(.top)

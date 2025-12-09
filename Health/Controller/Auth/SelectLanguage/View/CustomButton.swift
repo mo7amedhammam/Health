@@ -13,6 +13,8 @@ struct CustomButton: View {
     var foregroundcolor: Color? = .white
     var backgroundcolor: Color? = Color.mainBlue
     var cornerRadius: CGFloat? = 5
+    var height: CGFloat? = 55
+
     var isdisabled: Bool? = false
     var backgroundView: AnyView? = AnyView(Color.mainBlue)
 
@@ -26,7 +28,7 @@ struct CustomButton: View {
                 .font(font)
                 .foregroundStyle(isdisabled ?? false ? Color(.btnDisabledTxt) : foregroundcolor ?? .white)
                 .frame(maxWidth: .infinity)
-                .frame(height: 55)
+                .frame(height: height)
                 .background{
                     if let backgroundView = backgroundView {
                         backgroundView

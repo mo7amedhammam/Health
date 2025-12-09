@@ -151,13 +151,13 @@ struct PackageMoreDetailsView: View {
                     .background(Color.mainBlue)
                     .cardStyle(cornerRadius: 3)
                 }
-                .padding([.horizontal, .top], 15)
+                .padding([.horizontal, .top], 11)
                 .padding(.top, 5)
 
                 SectionHeader(image: Image(.newreschedual), imageForground: Color(.secondary), title: "Schedualling_".localized, subTitle:
                         Text("schedualling_Hint".localized)
                         .foregroundStyle(Color(.secondary))
-                        .font(.medium(size: 12))
+                        .font(.medium(size: 13))
                         .frame(maxWidth: .infinity, alignment: .leading)
                 ) {
                     // go to last mes package
@@ -171,11 +171,11 @@ struct PackageMoreDetailsView: View {
                         HStack(alignment: .center) {
                             Text(viewModel.newDate, format:.customDateFormat("MMM - yyyy"))
                                 .foregroundStyle(Color(.mainBlue))
-                                .font(.medium(size: 14))
+                                .font(.medium(size: 16))
 
                             Image(systemName: "chevron.forward")
-                                .font(.system(size: 8))
-                                .frame(width: 15, height: 15)
+                                .font(.system(size: 10, weight: .bold, design: .default))
+                                .frame(width: 17, height: 17)
                                 .foregroundStyle(Color.white)
                                 .background(Color(.secondary).cornerRadius(1))
                         }
@@ -208,20 +208,20 @@ struct PackageMoreDetailsView: View {
 
                 // Days row
                 ScrollView(.horizontal, showsIndicators: false) {
-                    HStack {
+                    HStack (spacing:2.5){
                         ForEach(viewModel.availableDays) { day in
                             Button(action: {
                                 Task { await viewModel.select(day: day) }
                             }, label: {
-                                VStack {
-                                    Text("\(day.date ?? "")".ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "dd"))
+                                VStack(spacing:5) {
+                                    Text("\(day.formattedDate ?? "")")
                                         .font(.semiBold(size: 16))
 
                                     Text(day.dayName ?? "")
                                         .font(.medium(size: 14))
                                 }
-                                .frame(height: 50)
-                                .frame(width: 60)
+                                .frame(height: 60)
+                                .frame(width: 66)
 
                             })
                             .foregroundStyle(Color.white)
@@ -231,42 +231,43 @@ struct PackageMoreDetailsView: View {
                         }
                     }
                 }
-                .padding(.horizontal)
+                .padding(.horizontal,12)
+                .padding(.top,10)
 
                 ZStack(){
-                    GeometryReader { geometry in
+//                    GeometryReader { geometry in
                         ScrollView(.horizontal, showsIndicators: false) {
                             HStack(alignment: .center, spacing: 5) {
                                 ForEach(viewModel.availableShifts) { shift in
                                     Button(action: {
                                         Task { await viewModel.select(shift: shift) }
                                     }, label: {
-                                        VStack(spacing: 5) {
+                                        VStack(spacing: 7) {
                                             Text(shift.name ?? "")
-                                                .font(.bold(size: 14))
+                                                .font(.bold(size: 15))
                                             
                                             HStack(spacing: 0){
                                                 Text("\(shift.formattedtimeFrom ?? "")")
                                                 Text(" - ")
                                                 Text("\(shift.formattedtimeTo ?? "")")
                                             }
-                                                .font(.medium(size: 10))
+                                                .font(.medium(size: 13))
                                         }
                                     })
-                                    .frame(height: 36)
-                                    .frame(width: (geometry.size.width / 3) - 15)
+                                    .padding(7.5)
+//                                    .frame(height: 36)
+//                                    .frame(width: (geometry.size.width / 3) - 15)
                                     .foregroundStyle(viewModel.selectedShift == shift ? Color.white : Color(.secondary))
                                     .cardStyle(backgroundColor: viewModel.selectedShift == shift ? Color(.secondary) : Color(.wrongsurface), cornerRadius: 2, shadowOpacity: 0)
                                 }
                             }
                             .padding(.horizontal)
                         }
-                    }
+//                    }
                 }
-                .padding(.vertical)
-                .frame(height: 50)
-                .padding(.bottom)
-
+                .padding(.top,8)
+//                .frame(height: 50)
+                .padding(.bottom,4)
 
                 if !viewModel.availableScheduals.isEmpty {
                     SshedualsGrid(scheduals: viewModel.availableScheduals, selectedschedual: $viewModel.selectedSchedual)
@@ -336,11 +337,15 @@ struct SshedualsGrid: View {
                             Text(" - ")
                             Text("\(item.formattedtimeTo ?? "")")
                         }
-                            .font(.medium(size: 10))
+                        .font(.medium(size: 10))
                             .foregroundStyle(item.booked ?? false ? Color(.btnDisabledTxt) : (selectedschedual == item ? Color(.white) : Color(.secondary)))
+//                            .padding(3)
                     })
-                    .padding()
-                    .frame(height: 20)
+                    .padding(2)
+//                    .frame(height: 20)
+                    .frame(maxWidth: .infinity)
+                    .frame(minHeight: 30)
+
                     .cardStyle(
                         backgroundColor: (item.booked ?? false ? Color(.btnDisabledBg) : (selectedschedual == item ? Color(.secondary) : Color(.clear))),
                         cornerRadius: 3,
@@ -348,15 +353,19 @@ struct SshedualsGrid: View {
                         borderColor: item.booked ?? false ? .clear : Color(.secondary)
                     )
                     .disabled(item.booked ?? false)
+                    
                 }
             }
-            .padding(10)
-            .cardStyle(backgroundColor: .white, cornerRadius: 5, shadowOpacity: 0.09)
-            .padding()
+            .padding(12)
+            .cardStyle(backgroundColor: .white, cornerRadius: 5, shadowOpacity: 0.099)
+            .padding(12)
         }
         .padding(.vertical, 5)
         .padding(.bottom, 5)
     }
+}
+#Preview(){
+    SshedualsGrid( scheduals: mockAvailableSchedules, selectedschedual: .constant(nil))
 }
 
 // MARK: - Identifiable helpers to stabilize ForEach
