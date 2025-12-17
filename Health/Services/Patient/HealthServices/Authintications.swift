@@ -45,7 +45,13 @@ extension Authintications : TargetType {
             return EndPoints.Login.rawValue
 
         case .SendOtp:
-            return EndPoints.sendOTP.rawValue
+            switch Helper.shared.getSelectedUserType() {
+            case .Customer,.none:
+                return EndPoints.sendOTP.rawValue
+            case .Doctor:
+                return DocEndPoints.DocsendOTP.rawValue
+
+            }
 
         case .VerifyOtp(let otpfor,_):
             switch otpfor {
@@ -53,7 +59,13 @@ extension Authintications : TargetType {
                 return EndPoints.VerifyUser.rawValue
 
             case .forgetPassword:
-                return EndPoints.VerifyOTP.rawValue
+                switch Helper.shared.getSelectedUserType() {
+                case .Customer,.none:
+                    return EndPoints.VerifyOTP.rawValue
+                case .Doctor:
+                    return DocEndPoints.DocVerifyOTP.rawValue
+
+                }
         }
             
 
@@ -63,10 +75,20 @@ extension Authintications : TargetType {
             return EndPoints.GetAllGenders.rawValue
 
         case .ResetPassword:
-            return EndPoints.ResetPassword.rawValue
+            switch Helper.shared.getSelectedUserType() {
+            case .Customer,.none:
+                return EndPoints.ResetPassword.rawValue
+            case .Doctor:
+                return DocEndPoints.DocResetPassword.rawValue
+            }
 
         case .ChangePassword:
-            return EndPoints.ChangePassword.rawValue
+            switch Helper.shared.getSelectedUserType() {
+            case .Customer,.none:
+                return EndPoints.ChangePassword.rawValue
+            case .Doctor:
+                return DocEndPoints.DocChangePassword.rawValue
+            }
 
             // -- schedual --
         case .GetMySchedulePrescriptions:
@@ -218,7 +240,13 @@ extension NewAuthontications : TargetType1 {
             return EndPoints.GetAllGenders.rawValue
             
         case .ResetPassword:
-            return EndPoints.ResetPassword.rawValue
+            switch Helper.shared.getSelectedUserType() {
+            case .Customer,.none:
+                return EndPoints.ResetPassword.rawValue
+
+            case .Doctor:
+                return DocEndPoints.DocResetPassword.rawValue
+            }
             
         case .ChangePassword:
             switch Helper.shared.getSelectedUserType() {

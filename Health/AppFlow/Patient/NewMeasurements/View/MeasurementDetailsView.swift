@@ -431,6 +431,7 @@ struct NewMeasurementSheetView: View {
         
         HStack(spacing: 16) {
             CustomButton(title: "cancel_",backgroundcolor: Color(.secondary),backgroundView:nil){
+                viewModel.clearNewMeasurement()
                 viewModel.isPresentingNewMeasurementSheet = false
             }
 

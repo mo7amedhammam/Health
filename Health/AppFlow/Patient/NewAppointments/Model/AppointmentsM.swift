@@ -36,48 +36,30 @@ struct AppointmentsItemM: Codable, Identifiable,Hashable {
         case dayName,customerName
         case doctorId
     }
-    
-    var formattedDate: String {
-        guard let sessionDate = sessionDate else { return "" }
-        let formatter = ISO8601DateFormatter()
-        formatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
-        if let date = formatter.date(from: sessionDate) {
-            let displayFormatter = DateFormatter()
-//            displayFormatter.locale = Locale(identifier: "ar")
-            displayFormatter.dateStyle = .medium
-            return displayFormatter.string(from: date)
-        } else {
-            // Try without fractional seconds
-            let fallbackFormatter = ISO8601DateFormatter()
-            if let date = fallbackFormatter.date(from: sessionDate) {
-                let displayFormatter = DateFormatter()
-//                displayFormatter.locale = Locale(identifier: "ar")
-                displayFormatter.dateStyle = .medium
-                return displayFormatter.string(from: date)
-            }
+
+    var displayName: String? {
+        guard let doctorName = self.doctorName, let customerName = self.customerName else { return "" }
+
+        let name = switch Helper.shared.getSelectedUserType() {
+        case .Customer,.none:
+            customerName
+        case .Doctor:
+            doctorName
         }
-        return sessionDate
+        return name 
     }
     
-    var formattedTime: String {
-        guard let timeFrom = timeFrom else { return "" }
-        let formatter = ISO8601DateFormatter()
-        formatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
-        if let date = formatter.date(from: timeFrom) {
-            let displayFormatter = DateFormatter()
-//            displayFormatter.locale = Locale(identifier: "ar")
-            displayFormatter.timeStyle = .short
-            return displayFormatter.string(from: date)
-        } else {
-            // Try without fractional seconds
-            let fallbackFormatter = ISO8601DateFormatter()
-            if let date = fallbackFormatter.date(from: timeFrom) {
-                let displayFormatter = DateFormatter()
-//                displayFormatter.locale = Locale(identifier: "ar")
-                displayFormatter.timeStyle = .short
-                return displayFormatter.string(from: date)
-            }
-        }
-        return timeFrom
+    var formattedDate: String? {
+        guard let date = self.sessionDate else { return "" }
+
+        let formatedDate = convertDateToString(inputDateString: date , inputDateFormat: "yyyy-MM-dd'T'HH:mm:ss", outputDateFormat: "yyyy MMM dd")
+        return formatedDate // fallback to original string if parsing fails
+    }
+    
+    var formattedTime: String? {
+        guard let date = self.timeFrom else { return "" }
+
+        let formatedDate = convertDateToString(inputDateString: date , inputDateFormat: "HH:mm:ss", outputDateFormat: "HH:mm a")
+        return formatedDate // fallback to original string if parsing fails
     }
 }

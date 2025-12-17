@@ -281,9 +281,9 @@ struct AppointmentCardView: View {
                 HStack {
                     // Date
                     HStack(spacing:3){
-                        Text(appointment.dayName ?? "الإثنين")
+                        Text(appointment.dayName ?? "")
                         
-                        Text(appointment.formattedDate)
+                        Text(appointment.formattedDate ?? "")
 //                            .font(.medium(size: 14))
                     }
                     .font(.medium(size: 12))
@@ -296,7 +296,7 @@ struct AppointmentCardView: View {
                             .foregroundColor(.mainBlue)
 
                     // Time
-                    Text(appointment.formattedTime)
+                    Text(appointment.formattedTime ?? "")
                 }
                     .font(.medium(size: 12))
                     .foregroundColor(Color(.secondary))
@@ -313,11 +313,12 @@ struct AppointmentCardView: View {
                 
             // Bottom Section (Dark Blue background)
                 VStack(alignment: .leading, spacing: 8) { // Right aligned for Arabic
-                    Text("doc_name".localized)
+                    let nametitle = Helper.shared.getSelectedUserType() == .Doctor ? "patient_name".localized : "doc_name".localized
+                    Text(nametitle)
                         .font(.medium(size: 16))
                         .foregroundColor(.white)
                     
-                    Text(appointment.doctorName ?? "doctorName")
+                    Text(appointment.displayName ?? "Name")
                         .font(.semiBold(size: 22))
                         .foregroundColor(.white)
                 }

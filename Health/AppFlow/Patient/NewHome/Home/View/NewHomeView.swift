@@ -187,14 +187,16 @@ struct NewHomeView: View {
                             }
                             
                             CustomButton(title: "add1_button",font: .bold(size: 13),foregroundcolor: Color(.white), backgroundcolor : Color(.mainBlue), height:35,backgroundView: nil){
-//action
+                                //action
                             }
                             .padding(.top,5)
                             
                         }
-                            .frame(width: 200)
-                            .padding(.leading,20)
+                        .frame(width: 200)
+                        .padding(.leading,20)
                     }
+                    .environment(\.layoutDirection, .leftToRight)
+                    
                     
                     if Helper.shared.CheckIfLoggedIn() && Helper.shared.getSelectedUserType() == .Customer{
                         // Last measurements wrapped with EquatableByValue
@@ -239,7 +241,6 @@ struct NewHomeView: View {
                                 //                                .padding(.leading)
                                     .padding(.vertical,5)
                                     .lineSpacing(5)
-                                
                             }
                             
                             CustomButton(title: "add2_button",font: .bold(size: 13),foregroundcolor: Color(.white), backgroundcolor : Color(.secondary), height:35,backgroundView: nil){
@@ -251,7 +252,9 @@ struct NewHomeView: View {
                         .padding(.leading,20)
                         
                     }
-                        
+                    .environment(\.layoutDirection, .leftToRight)
+                    
+                    if Helper.shared.getSelectedUserType() != .Doctor{
                     // Most viewed/booked wrapped with EquatableByValue keyed to the active list
                     EquatableByValue(value: mostListState) {
                         MostViewedBooked(
@@ -280,6 +283,7 @@ struct NewHomeView: View {
                         )
                         .accessibilityIdentifier("home_most_section")
                     }
+                }
                 }
                 
                 Spacer()

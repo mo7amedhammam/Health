@@ -590,7 +590,7 @@ struct SubcripedSessionsList: View {
                                     .resizable()
                                     .frame(width: 16, height: 16)
                                 
-                                ( Text("\(session.timeFrom ?? "")".ChangeDateFormat(FormatFrom: "HH:mm:ss", FormatTo: "hh:mm a")) + Text(" - ") + Text("\(session.timeTo ?? "")".ChangeDateFormat(FormatFrom: "HH:mm:ss", FormatTo: "hh:mm a")))
+                                ( Text("\(session.formattedTimeFrom ?? "")") + Text(" - ") + Text("\(session.formattedTimeTo ?? "")"))
                                     .font(.medium(size: 12))
                                     .foregroundStyle(Color(.main))
                                     .frame(maxWidth: .infinity, alignment: .trailing)
@@ -606,7 +606,7 @@ struct SubcripedSessionsList: View {
                                 .resizable()
                                 .frame(width: 16, height: 16)
                             
-                            Text(session.date ?? "12-05-2025")
+                            Text(session.formattedDate ?? "")
                                 .font(.medium(size: 12))
                                 .foregroundStyle(Color(.main))
                                 .frame(maxWidth: .infinity, alignment: .leading)

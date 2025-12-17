@@ -122,20 +122,22 @@ extension NewHomeViewModel {
                 responseType: FeaturedPackagesM.self
             )
 
-            async let mostViewed: [FeaturedPackageItemM]? = networkService.request(
-                HomeServices.MostViewedPackage(parameters: [
-                    "top": max,
-                    "AppCountryId": appCountryId
-                ]),
-                responseType: [FeaturedPackageItemM].self
-            )
-
+            if Helper.shared.getSelectedUserType() == .Customer{
+                async let mostViewed: [FeaturedPackageItemM]? = networkService.request(
+                    HomeServices.MostViewedPackage(parameters: [
+                        "top": max,
+                        "AppCountryId": appCountryId
+                    ]),
+                    responseType: [FeaturedPackageItemM].self
+                )
+                mostViewedPackages = try await mostViewed
+            }
+            
             // Single commit
             upcomingSession = try await upc
             homeCategories = try await categories
 //            if Helper.shared.getSelectedUserType() == .Customer{ myMeasurements = try await measurements }
-            if Helper.shared.CheckIfLoggedIn(){  featuredPackages = try await featured }
-            mostViewedPackages = try await mostViewed
+            if env.isLoggedIn(){  featuredPackages = try await featured }
             // Optionally also prefetch most booked
             mostBookedPackages = nil
 

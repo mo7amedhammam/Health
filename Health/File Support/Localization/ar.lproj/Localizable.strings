@@ -131,6 +131,7 @@
 "Most_Booked" =  "الأكثر حجزا";
 "Most_Viewed" = "الأكثر مشاهدة";
 "Doctor" = "دكتور";
+"Patient" = "العميل";
 
 "mesurement_det_title" = "قياس ";
 
@@ -190,7 +191,6 @@
 //MARK: --- packages ---
 "pack_subcat" = "التصنيفات الفرعية";
 "pack_packages" = "الباقات";
-"avilable_doc" = "دكتور متاح";
 
 //MARK: --- packages Details ---
 "sessions" = "سيشنز";
@@ -254,6 +254,7 @@
 "no_appointments" = "لا يوجد أي مواعيد لديك";
 "other_sessions" = "باقي السيشنز";
 "doc_name" = "اسم الدكتور";
+"patient_name" = "اسم المريض";
 "renew_subscription" = "إعادة جدولة";
 
 "filter_" = "فلتر";

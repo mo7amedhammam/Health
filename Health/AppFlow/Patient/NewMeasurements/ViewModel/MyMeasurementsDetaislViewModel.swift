@@ -145,6 +145,7 @@ class MyMeasurementsDetaislViewModel: ObservableObject {
             if let current = currentStats?.measurementsCount {
                 currentStats?.measurementsCount = current + 1
                 await fetchMeasurementDetails()
+                clearNewMeasurement()
             }
             isPresentingNewMeasurementSheet = false
 //            self.ArrNormalRange = response

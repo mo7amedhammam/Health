@@ -131,6 +131,7 @@
 "Most_Booked" = "Most Booked";
 "Most_Viewed" = "Most Viewed";
 "Doctor" = "Doctor";
+"Patient" = "Patient";
 
 "mesurement_det_title" = "mesurement of ";
 
@@ -190,7 +191,6 @@
 //MARK: --- packages ---
 "pack_subcat" = "sub Categories";
 "pack_packages" = "Packages";
-"avilable_doc" = "avilable doctor";
 
 //MARK: --- packages Details ---
 "sessions" = "sessions";
@@ -254,6 +254,7 @@
 "no_appointments" = "no appointments found";
 "other_sessions" = "other sessions";
 "doc_name" = "doctor name";
+"patient_name" = "patient name";
 "renew_subscription" = "renew";
 
 "filter_" = "filter";

@@ -354,24 +354,27 @@ struct PackagesListView: View {
                                         .foregroundStyle(Color.white)
                                     
                                     HStack(alignment: .bottom){
-                                        VStack(alignment:.leading) {
-                                            
-                                            HStack(alignment: .center,spacing: 5){
-                                                Image(.newdocicon)
-                                                    .renderingMode(.template)
-                                                    .resizable()
-                                                    .frame(width: 8,height:9)
-                                                    .scaledToFit()
-                                                    .foregroundStyle(.white)
-                                                    .padding(3)
-                                                    .background(Color(.secondary))
+                                        
+                                        if Helper.shared.getSelectedUserType() != .Doctor{
+                                            VStack(alignment:.leading) {
                                                 
-                                                ( Text(" \(item.doctorCount ?? 0) ") + Text("avilable_doc".localized))
-                                                    .font(.medium(size: 12))
-                                                    .frame(maxWidth: .infinity,alignment:.leading)
+                                                HStack(alignment: .center,spacing: 5){
+                                                    Image(.newdocicon)
+                                                        .renderingMode(.template)
+                                                        .resizable()
+                                                        .frame(width: 8,height:9)
+                                                        .scaledToFit()
+                                                        .foregroundStyle(.white)
+                                                        .padding(3)
+                                                        .background(Color(.secondary))
+                                                    
+                                                    ( Text(" \(item.doctorCount ?? 0) ") + Text("available_doc".localized))
+                                                        .font(.medium(size: 12))
+                                                        .frame(maxWidth: .infinity,alignment:.leading)
+                                                }
+                                                .font(.medium(size: 12))
+                                                .foregroundStyle(Color.white)
                                             }
-                                            .font(.medium(size: 12))
-                                            .foregroundStyle(Color.white)
                                         }
                                         
                                         Spacer()

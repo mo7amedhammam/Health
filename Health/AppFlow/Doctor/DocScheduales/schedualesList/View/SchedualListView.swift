@@ -120,15 +120,15 @@ struct SchedualListView: View{
                         }
                         .padding()
                         // MARK: Footer Buttons
-                        HStack(spacing: 4) {
-                            CustomButton(title: "new_confirm_",backgroundcolor: Color(.mainBlue)){
-                                print("Selected Slots:", viewModel.selectedSlots)
-                                showDialog = true
-                            }
-                            CustomButton(title: "remove_all_btn",backgroundView : AnyView(Color(.secondary))){
-                                viewModel.clear()
-                            }
-                        }
+//                        HStack(spacing: 4) {
+//                            CustomButton(title: "new_confirm_",backgroundcolor: Color(.mainBlue)){
+//                                print("Selected Slots:", viewModel.selectedSlots)
+//                                showDialog = true
+//                            }
+//                            CustomButton(title: "remove_all_btn",backgroundView : AnyView(Color(.secondary))){
+//                                viewModel.clear()
+//                            }
+//                        }
                     }
                     .frame(maxWidth: .infinity)
                     

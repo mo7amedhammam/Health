@@ -92,10 +92,12 @@ struct NextSessionDoctorView: View {
     var body: some View {
         HStack {
             VStack(alignment: .leading, spacing: 2) {
-                Text("Doctor".localized)
-                    .font(.regular(size: 14))
-                    .foregroundColor(.white)
-                Text(session?.doctorName ?? "")
+                let nametitle = Helper.shared.getSelectedUserType() == .Doctor ? "Patient".localized : "Doctor".localized
+
+                    Text(nametitle)
+                        .font(.regular(size: 14))
+                        .foregroundColor(.white)
+                Text(session?.displayName ?? "")
                     .font(.semiBold(size: 18))
                     .foregroundColor(.white)
             }

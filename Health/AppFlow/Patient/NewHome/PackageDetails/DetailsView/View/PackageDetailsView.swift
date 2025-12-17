@@ -102,7 +102,7 @@ struct PackageDetailsView: View {
                         Spacer()
 
                         HStack(alignment: .center, spacing: 5) {
-                            (Text(" \(package.doctorCount ?? 0) ").font(.bold(size: 14)) + Text("avilable_doc".localized))
+                            (Text(" \(package.doctorCount ?? 0) ").font(.bold(size: 14)) + Text("available_doc".localized))
                                 .font(.regular(size: 12))
 
                             Image(.newdocicon)

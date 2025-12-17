@@ -34,25 +34,37 @@ struct UpcomingSessionM: Codable {
 }
 
 extension UpcomingSessionM{
-   var formattedSessionDate: String? {
+    var displayName: String? {
+        guard let doctorName = self.doctorName, let customerName = self.customerName else { return "" }
+        
+        let name = switch Helper.shared.getSelectedUserType() {
+        case .Customer,.none:
+            customerName
+        case .Doctor:
+            doctorName
+        }
+        return name 
+    }
+    
+    var formattedSessionDate: String? {
         guard let date =  sessionDate else { return nil }
-       return date.ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo:"dd MMM yyyy")
+        return date.ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo:"dd MMM yyyy")
     }
     var formattedSessionTime: String? {
-         guard let date =  timeFrom else { return nil }
+        guard let date =  timeFrom else { return nil }
         return date.ChangeDateFormat(FormatFrom: "HH:mm:ss", FormatTo: "hh:mm a")
-     }
+    }
     
     var sessionDateTime: Date? {
         guard let dateStr = sessionDate, let timeStr = timeFrom else { return nil }
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
         guard let datePart = formatter.date(from: dateStr) else { return nil }
-
+        
         let timeFormatter = DateFormatter()
         timeFormatter.dateFormat = "HH:mm:ss"
         guard let timePart = timeFormatter.date(from: timeStr) else { return nil }
-
+        
         let calendar = Calendar.current
         let timeComponents = calendar.dateComponents([.hour, .minute, .second], from: timePart)
         return calendar.date(bySettingHour: timeComponents.hour ?? 0,
@@ -61,24 +73,24 @@ extension UpcomingSessionM{
                              of: datePart)
     }
     func timeDifference() -> (days: Int, hours: Int, minutes: Int) {
-           guard let sessionDate = sessionDate,
-                 let timeFrom = timeFrom,
-                 let date = "\(sessionDate) \(timeFrom)".toDate(format: "yyyy-MM-dd'T'HH:mm:ss HH:mm:ss") else {
-               return (0, 0, 0)
-           }
-
-           let interval = Int(date.timeIntervalSinceNow)
-           if interval <= 0 { return (0, 0, 0) }
-
-           let days = interval / (60 * 60 * 24)
-           let hours = (interval % (60 * 60 * 24)) / 3600
-           let minutes = (interval % 3600) / 60
-
-           return (days, hours, minutes)
-       }
-
-//    var isJoinAvailable: Bool {
-//        guard let session = sessionDateTime else { return false }
-//        return Date() >= session
-//    }
+        guard let sessionDate = sessionDate,
+              let timeFrom = timeFrom,
+              let date = "\(sessionDate) \(timeFrom)".toDate(format: "yyyy-MM-dd'T'HH:mm:ss HH:mm:ss") else {
+            return (0, 0, 0)
+        }
+        
+        let interval = Int(date.timeIntervalSinceNow)
+        if interval <= 0 { return (0, 0, 0) }
+        
+        let days = interval / (60 * 60 * 24)
+        let hours = (interval % (60 * 60 * 24)) / 3600
+        let minutes = (interval % 3600) / 60
+        
+        return (days, hours, minutes)
+    }
+    
+    //    var isJoinAvailable: Bool {
+    //        guard let session = sessionDateTime else { return false }
+    //        return Date() >= session
+    //    }
 }
