@@ -229,7 +229,7 @@ struct SelectLanguageView : View {
 }
 
 // MARK: - BottomListSheet (no Picker, tap to select)
-private struct BottomListSheet<Item: Hashable>: View {
+ struct BottomListSheet<Item: Hashable>: View {
     let title: String
     @Binding var selection: Item?
     let data: [Item]
