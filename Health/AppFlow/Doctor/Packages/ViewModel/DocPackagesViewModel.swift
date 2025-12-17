@@ -7,7 +7,7 @@
 
 import Foundation
 
-class DocPackagesViewModel:ObservableObject {
+class DocPackagesViewModel: ObservableObject {
     static let shared = DocPackagesViewModel()
     // Injected service
     private let networkService: AsyncAwaitNetworkServiceProtocol
@@ -17,35 +17,28 @@ class DocPackagesViewModel:ObservableObject {
     
     // Published properties
     @Published var ActivePackages: DocPackagesM?
-//    = SubcripedPackagesM(items: [SubcripedPackageItemM(customerPackageID: 2, docotrID: 2, status: "active", subscriptionDate: "", lastSessionDate: "", packageName: "nameeee", categoryName: "cateeee", mainCategoryName: "main cateee", doctorName: "doc doc", sessionCount: 4, attendedSessionCount: 2, packageImage: "", doctorSpeciality: "special", doctorNationality: "egegege", doctorImage: "", canCancel: true, canRenew: true )], totalCount: 1)
     
-    @Published var showAddSheet : Bool = false
+    @Published var showAddSheet: Bool = false
     @Published var MainCategories: [CategoriyListItemM]?
     @Published var selectedMainCategory: CategoriyListItemM?
-//    {
-//        didSet{
-////            guard selectedMainCategory != nil else { return }
-//            selectedSubCategory = nil
-//            Task{ await getSubCategories()}
-//    }}
+    
     @Published var SubCategories: [CategoriyListItemM]?
     @Published var selectedSubCategory: CategoriyListItemM?
-//    {
-//        didSet{
-////            guard selectedSubCategory != nil else { return }
-//            SelectedPackage = nil
-//        Task{ await getPackagesList()}
-//    }}
+    
     @Published var PackagesList: [SpecialityM]?
     @Published var SelectedPackage: SpecialityM?
     
-    @Published var CountriesList : [AppCountryByPackIdM]?
-    @Published var selectedCountry : AppCountryByPackIdM?
+    // Countries
+    @Published var CountriesList: [AppCountryByPackIdM]?
+    // Legacy single selection (keep if some screens still bind to it)
+    @Published var selectedCountry: AppCountryByPackIdM?
+    // New: multiple country selection
+    @Published var selectedCountries: [AppCountryByPackIdM] = []
     
-    @Published var showSuccess : Bool = false
+    @Published var showSuccess: Bool = false
 
-    @Published var isLoading:Bool? = false
-    @Published var canLoadMore:Bool? = false
+    @Published var isLoading: Bool? = false
+    @Published var canLoadMore: Bool? = false
     @Published var errorMessage: String? = nil
     
     // Init with DI
@@ -55,36 +48,35 @@ class DocPackagesViewModel:ObservableObject {
 }
 
 //MARK: -- Functions --
-extension DocPackagesViewModel{
+extension DocPackagesViewModel {
     
     @MainActor
     func getActivePackages() async {
         isLoading = true
         defer { isLoading = false }
-        guard let maxResultCount = maxResultCount,let skipCount = skipCount else {
-//            // Handle missings
-//            self.errorMessage = "check inputs"
-//            //            throw NetworkError.unknown(code: 0, error: "check inputs")
+        guard let maxResultCount = maxResultCount, let skipCount = skipCount else {
             return
         }
-        let parametersarr : [String : Any] =  ["maxResultCount":maxResultCount,"skipCount":skipCount,"isExpired":false]
+        let parametersarr: [String: Any] = [
+            "maxResultCount": maxResultCount,
+            "skipCount": skipCount,
+            "isExpired": false
+        ]
         
         let target = DocPackagesServices.GetPackageDoctor(parameters: parametersarr)
         do {
-            self.errorMessage = nil // Clear previous errors
+            self.errorMessage = nil
             let response = try await networkService.request(
                 target,
                 responseType: DocPackagesM.self
             )
 
             if skipCount == 0 {
-                // Fresh load
-               await MainActor.run(){
+               await MainActor.run {
                    ActivePackages = response
-                   print("subscripedPackages:",ActivePackages ?? .init())
-                }
+                   print("subscripedPackages:", ActivePackages ?? .init())
+               }
             } else {
-                // Append for pagination
                 if var existing = self.ActivePackages,
                    let newItems = response?.items {
                     existing.items?.append(contentsOf: newItems)
@@ -92,7 +84,7 @@ extension DocPackagesViewModel{
                     ActivePackages = existing
                 }
             }
-            canLoadMore = response?.items?.count ?? 0 < response?.totalCount ?? 0
+            canLoadMore = (response?.items?.count ?? 0) < (response?.totalCount ?? 0)
 
         } catch {
             self.errorMessage = error.localizedDescription
@@ -103,17 +95,10 @@ extension DocPackagesViewModel{
     func getMainCategories() async {
         isLoading = true
         defer { isLoading = false }
-//        guard let maxResultCount = maxResultCount, let skipCount = skipCount else {
-//            // Handle missings
-//            self.errorMessage = "check inputs"
-//            //            throw NetworkError.unknown(code: 0, error: "check inputs")
-//            return
-//        }
-//        let parametersarr : [String : Any] =  ["parentId":mainCategoryId,"maxResultCount" : maxResultCount ,"skipCount" : skipCount]
         
         let target = DocPackagesServices.GetMainCategoryDBForList
         do {
-            self.errorMessage = nil // Clear previous errors
+            self.errorMessage = nil
             let response = try await networkService.request(
                 target,
                 responseType: [CategoriyListItemM].self
@@ -123,21 +108,20 @@ extension DocPackagesViewModel{
             self.errorMessage = error.localizedDescription
         }
     }
+    
     @MainActor
     func getSubCategories() async {
         isLoading = true
         defer { isLoading = false }
         guard let ParentId = selectedMainCategory?.id else {
-//            // Handle missings
             self.errorMessage = "check inputs"
-//            //            throw NetworkError.unknown(code: 0, error: "check inputs")
             return
         }
-        let parametersarr : [String : Any] =  ["parentId" : ParentId]
+        let parametersarr: [String: Any] = ["parentId": ParentId]
         
         let target = DocPackagesServices.GetSubCategoryForList(parameters: parametersarr)
         do {
-            self.errorMessage = nil // Clear previous errors
+            self.errorMessage = nil
             let response = try await networkService.request(
                 target,
                 responseType: [CategoriyListItemM].self
@@ -153,16 +137,14 @@ extension DocPackagesViewModel{
         isLoading = true
         defer { isLoading = false }
         guard let CategoryId = selectedSubCategory?.id else {
-            // Handle missings
             self.errorMessage = "check inputs"
-            //            throw NetworkError.unknown(code: 0, error: "check inputs")
             return
         }
-        let parametersarr : [String : Any] =  ["CategoryId":CategoryId]
+        let parametersarr: [String: Any] = ["CategoryId": CategoryId]
 
         let target = DocPackagesServices.GetPackageForList(parameters: parametersarr)
         do {
-            self.errorMessage = nil // Clear previous errors
+            self.errorMessage = nil
             let response = try await networkService.request(
                 target,
                 responseType: [SpecialityM].self
@@ -178,16 +160,14 @@ extension DocPackagesViewModel{
         isLoading = true
         defer { isLoading = false }
         guard let PackageId = SelectedPackage?.id else {
-            // Handle missings
             self.errorMessage = "check inputs"
-            //            throw NetworkError.unknown(code: 0, error: "check inputs")
             return
         }
-        let parametersarr : [String : Any] =  ["PackageId":PackageId]
+        let parametersarr: [String: Any] = ["PackageId": PackageId]
 
         let target = DocPackagesServices.GetAppCountryByPackageId(parameters: parametersarr)
         do {
-            self.errorMessage = nil // Clear previous errors
+            self.errorMessage = nil
             let response = try await networkService.request(
                 target,
                 responseType: [AppCountryByPackIdM].self
@@ -202,23 +182,39 @@ extension DocPackagesViewModel{
     func CreatePackageRequest() async {
         isLoading = true
         defer { isLoading = false }
-// paramter keys :  doctorId,packageId,appCountryIdList
-        guard let packageId = SelectedPackage?.id ,let appCountryIdList = selectedCountry?.id else {
-            // Handle missings
+        // param keys: doctorId (server-side inferred?), packageId, appCountryIdList
+        
+        guard let packageId = SelectedPackage?.id else {
             self.errorMessage = "check inputs"
-            //            throw NetworkError.unknown(code: 0, error: "check inputs")
             return
         }
-        let parametersarr : [String : Any] =  ["packageId":packageId,"appCountryIdList":appCountryIdList]
+        
+        // Build array of selected country IDs.
+        // Prefer multi-select; if empty and legacy single selection exists, wrap it.
+        var countryIds: [Int] = selectedCountries.compactMap { $0.id }
+        if countryIds.isEmpty, let singleId = selectedCountry?.id {
+            countryIds = [singleId]
+        }
+        
+        guard countryIds.isEmpty == false else {
+            self.errorMessage = "Please select at least one country"
+            return
+        }
+        
+        let parametersarr: [String: Any] = [
+            "packageId": packageId,
+            "appCountryIdList": countryIds
+        ]
 
         let target = DocPackagesServices.CreateDoctorPackageRequest(parameters: parametersarr)
         do {
-            self.errorMessage = nil // Clear previous errors
+            self.errorMessage = nil
             _ = try await networkService.request(
                 target,
                 responseType: FeaturedPackagesM.self
             )
             showAddSheet = false
+            removeSelections()
             self.showSuccess = true
         } catch {
             self.errorMessage = error.localizedDescription
@@ -251,11 +247,14 @@ extension DocPackagesViewModel {
         skipCount = 0
     }
 
-    func removeSelections(){
+    func removeSelections() {
         selectedMainCategory = nil
         SubCategories?.removeAll()
         selectedSubCategory = nil
         PackagesList?.removeAll()
         SelectedPackage = nil
+        // Clear countries selections too
+        selectedCountry = nil
+        selectedCountries.removeAll()
     }
 }
