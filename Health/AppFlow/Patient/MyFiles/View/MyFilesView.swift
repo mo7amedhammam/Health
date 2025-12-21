@@ -25,73 +25,70 @@ struct MyFilesView: View {
     @StateObject var lookupsvm = LookupsViewModel.shared
 
     var body: some View {
-//        NavigationView {
-            VStack(spacing: 0) {
-                TitleBar(title: "MyFiles_Title",hasbackBtn: true)
-                
-                UploadButton {
-                    Task{
-                        myfilesvm.showUploadSheet = true
-                        await lookupsvm.getFileTypes()
-                    }
+        VStack(spacing: 0) {
+            TitleBar(title: "MyFiles_Title",hasbackBtn: true)
+                        UploadButton {
+                            Task{
+                                myfilesvm.showUploadSheet = true
+                                await lookupsvm.getFileTypes()
+                            }
+                        }
+                        .padding([.top,.horizontal])
+                        .padding(.top,30)
+
+                        SectionHeader(image: Image("docicon"),title: "Files_")
+                            .padding([.top,.horizontal])
+                            .padding(.top,20)
+
+                        filesList(files: myfilesvm.files)
+                .refreshable {
+                    await myfilesvm.refresh()
                 }
-                .padding([.top,.horizontal])
-                .padding(.top,30)
-                
-                SectionHeader(image: Image("docicon"),title: "Files_")
-                    .padding([.top,.horizontal])
-                    .padding(.top,20)
+        }
+        .localizeView()
+        .showHud(isShowing:  $myfilesvm.isLoading)
+        .errorAlert(isPresented: Binding(
+            get: { myfilesvm.errorMessage != nil },
+            set: { if !$0 { myfilesvm.errorMessage = nil } }
+        ), message: myfilesvm.errorMessage)
 
-                filesList(files: myfilesvm.files)
-                
-                Spacer()
-            }
-            .localizeView()
-            .showHud(isShowing:  $myfilesvm.isLoading)
-            .errorAlert(isPresented: Binding(
-                get: { myfilesvm.errorMessage != nil },
-                set: { if !$0 { myfilesvm.errorMessage = nil } }
-            ), message: myfilesvm.errorMessage)
-
-            .customSheet(isPresented: $myfilesvm.showUploadSheet,height: 440){
+        .customSheet(isPresented: $myfilesvm.showUploadSheet,height: 440){
 //            .sheet(isPresented: $showUploadSheet) {
 //                UploadFileSheetView(isPresented: $myfilesvm.showUploadSheet)
 //                    .environmentObject(myfilesvm)
 //                    .environmentObject(lookupsvm)
-                
-                ReusableUploadFileSheetView(isPresented: $myfilesvm.showUploadSheet){file in
-                    myfilesvm.fileName = file.fileName
-                          myfilesvm.fileType = file.fileType
-                          myfilesvm.fileLink = file.link
-                          myfilesvm.image = file.image
-                          myfilesvm.fileURL = file.fileURL
+            
+            ReusableUploadFileSheetView(isPresented: $myfilesvm.showUploadSheet){file in
+                myfilesvm.fileName = file.fileName
+                      myfilesvm.fileType = file.fileType
+                      myfilesvm.fileLink = file.link
+                      myfilesvm.image = file.image
+                      myfilesvm.fileURL = file.fileURL
 
-                          Task { await myfilesvm.addNewFile() }
-                }
-                .environmentObject(lookupsvm)
+                      Task { await myfilesvm.addNewFile() }
+            }
+            .environmentObject(lookupsvm)
 
 //                    .frame(height: 600)
 
 //                { newFile in
 //                    files.append(newFile)
 //                }
-            }
-            .task {
-                await myfilesvm.getMyFilesList()
-            }
-            .refreshable(action: {
-                await myfilesvm.refresh()
-            })
-
-//            .onAppear(){
-//                Task{
-//                    await myfilesvm.getMyFilesList()
-//                }
+        }
+        .task {
+              if myfilesvm.files.isEmpty {
+                  await myfilesvm.getMyFilesList()
+              }
+          }
+//        .onAppear(){
+//            Task{
+//                await myfilesvm.getMyFilesList()
 //            }
-//            .frame(height: 600)
-
-//            .navigationBarHidden(true)
 //        }
+//        .frame(height: 600)
+
+//        .navigationBarHidden(true)
+//    }
     }
 }
 

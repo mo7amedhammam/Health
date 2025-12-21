@@ -17,9 +17,8 @@ struct PackageFilesView: View {
             
             Spacer()
             
-            if let packageFiles = viewmodel.packageFiles{
-                filesList(files: packageFiles.items)
-            }
+            filesList(files: viewmodel.packageFiles?.items)
+            
         }
         .background(Color(.bg))
         .task {
@@ -48,17 +47,19 @@ struct filesList:View {
     
     var body: some View {
         
-//        GeometryReader{ geometry in
+        GeometryReader{ geometry in
             ScrollView{
                 if let files = files, files.count > 0{
                     VStack(spacing: 0) {
                         ForEach(files,id: \.self) { file in
                             VStack {
                                 HStack(alignment: .top){
+                                    
                                     Button(action: {
                                         if let filePath = file.filePath {
                                             openFile(filePath)
                                         }
+                                        
                                     }, label: {
                                         VStack(spacing:8){
                                             Image("downloadicon")
@@ -120,13 +121,11 @@ struct filesList:View {
                             .multilineTextAlignment(.center)
                             .lineSpacing(12)
                     }
-//                    .frame(width: geometry.size.width,height:geometry.size.height)
-                    .frame(width:.infinity,height:.infinity)
-
+                    .frame(width: geometry.size.width,height:geometry.size.height)
                     
                 }
             }
-//        }
+        }
     }
 }
 

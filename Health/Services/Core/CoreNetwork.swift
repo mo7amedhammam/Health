@@ -161,11 +161,11 @@ final class AsyncAwaitNetworkService: AsyncAwaitNetworkServiceProtocol {
                 return try decodeResponse(data, responseType)
 
             } catch let cancelError as CancellationError {
-                logger.info("Request was cancelled \(cancelError). Suppressing error.")
-                return nil
+                logger.info("Request was cancelled \(cancelError).")
+                throw cancelError
             } catch let urlErr as URLError where urlErr.code == .cancelled {
-                logger.info("Request was cancelled (URLError.cancelled). Suppressing error.")
-                return nil
+                logger.info("Request was cancelled (URLError.cancelled).")
+                throw urlErr
             } catch {
                 let mapped = mapToNetworkError(error: error)
                 lastError = mapped

@@ -44,6 +44,9 @@ final class NewHomeViewModel: ObservableObject {
     private let networkService: AsyncAwaitNetworkServiceProtocol
     private let wishlistManager: WishlistManaging
     private let env: AppEnvironmentProviding
+    
+    // Serialize unified home load to avoid overlapping requests
+    private var loadTask: Task<Void, Never>? = nil
 
     // Pagination/state
     var maxResultCount: Int = 5
@@ -81,77 +84,82 @@ extension NewHomeViewModel {
 
     // Unified loader to minimize UI invalidations
     func load() async {
-        guard isLoading == false else { return }
-        isLoading = true
-        isError = false
-        errorMessage = nil
+        // Cancel any in-flight unified load to prevent overlap
+        loadTask?.cancel()
+        loadTask = Task { [weak self] in
+            guard let self else { return }
+            // Guard isLoading is not necessary if we serialize, but keep it for UI flags
+            if self.isLoading == true { return }
+            self.isLoading = true
+            self.isError = false
+            self.errorMessage = nil
 
-        let appCountryId = env.appCountryId()
-        let max = maxResultCount
-        let categoriesSkip = 0
-        let featuredSkip = 0
+            let appCountryId = self.env.appCountryId()
+            let max = self.maxResultCount
+            let categoriesSkip = 0
+            let featuredSkip = 0
 
-        do {
-            async let upc: UpcomingSessionM? = env.isLoggedIn()
-            ? networkService.request(HomeServices.GetUpcomingSession(parameters: [:]), responseType: UpcomingSessionM.self)
-                : nil
+            do {
+                async let upc: UpcomingSessionM? = self.env.isLoggedIn()
+                ? self.networkService.request(HomeServices.GetUpcomingSession(parameters: [:]), responseType: UpcomingSessionM.self)
+                    : nil
 
-            async let categories: HomeCategoryM? = networkService.request(
-                HomeServices.GetAllHomeCategory(parameters: [
-                    "maxResultCount": max,
-                    "skipCount": categoriesSkip,
-                    "appCountryId": appCountryId
-                ]),
-                responseType: HomeCategoryM.self
-            )
-
-            if Helper.shared.getSelectedUserType() == .Customer{
-                async let measurements: [MyMeasurementsStatsM]? = networkService.request(
-                    HomeServices.GetMyMeasurementsStats,
-                    responseType: [MyMeasurementsStatsM].self
-                )
-                myMeasurements = try await measurements
-            }
-
-            async let featured: FeaturedPackagesM? = networkService.request(
-                HomeServices.FeaturedPackageList(parameters: [
-                    "maxResultCount": max,
-                    "skipCount": featuredSkip,
-                    "appCountryId": appCountryId
-                ]),
-                responseType: FeaturedPackagesM.self
-            )
-
-            if Helper.shared.getSelectedUserType() == .Customer{
-                async let mostViewed: [FeaturedPackageItemM]? = networkService.request(
-                    HomeServices.MostViewedPackage(parameters: [
-                        "top": max,
-                        "AppCountryId": appCountryId
+                async let categories: HomeCategoryM? = self.networkService.request(
+                    HomeServices.GetAllHomeCategory(parameters: [
+                        "maxResultCount": max,
+                        "skipCount": categoriesSkip,
+                        "appCountryId": appCountryId
                     ]),
-                    responseType: [FeaturedPackageItemM].self
+                    responseType: HomeCategoryM.self
                 )
-                mostViewedPackages = try await mostViewed
+
+                if Helper.shared.getSelectedUserType() == .Customer{
+                    async let measurements: [MyMeasurementsStatsM]? = self.networkService.request(
+                        HomeServices.GetMyMeasurementsStats,
+                        responseType: [MyMeasurementsStatsM].self
+                    )
+                    self.myMeasurements = try await measurements
+                }
+
+                async let featured: FeaturedPackagesM? = self.networkService.request(
+                    HomeServices.FeaturedPackageList(parameters: [
+                        "maxResultCount": max,
+                        "skipCount": featuredSkip,
+                        "appCountryId": appCountryId
+                    ]),
+                    responseType: FeaturedPackagesM.self
+                )
+
+                if Helper.shared.getSelectedUserType() == .Customer{
+                    async let mostViewed: [FeaturedPackageItemM]? = self.networkService.request(
+                        HomeServices.MostViewedPackage(parameters: [
+                            "top": max,
+                            "AppCountryId": appCountryId
+                        ]),
+                        responseType: [FeaturedPackageItemM].self
+                    )
+                    self.mostViewedPackages = try await mostViewed
+                }
+                
+                // Single commit
+                self.upcomingSession = try await upc
+                self.homeCategories = try await categories
+                if self.env.isLoggedIn(){  self.featuredPackages = try await featured }
+                // Optionally also prefetch most booked
+                self.mostBookedPackages = nil
+            } catch is CancellationError {
+                // Ignore cancellations; keep current state
+            } catch {
+                self.isError = true
+                self.errorMessage = error.localizedDescription
             }
-            
-            // Single commit
-            upcomingSession = try await upc
-            homeCategories = try await categories
-//            if Helper.shared.getSelectedUserType() == .Customer{ myMeasurements = try await measurements }
-            if env.isLoggedIn(){  featuredPackages = try await featured }
-            // Optionally also prefetch most booked
-            mostBookedPackages = nil
 
-        } catch {
-            isError = true
-//            errorMessage = (error as? LocalizedError)?.errorDescription ?? error.localizedDescription
-            self.errorMessage = error.localizedDescription
-
+            self.isLoading = false
+            // reset pagination for a new load
+            self.HomeCategoriesSkipCount = 0
+            self.FeaturedPackagesSkipCount = 0
         }
-
-        isLoading = false
-        // reset pagination for a new load
-        HomeCategoriesSkipCount = 0
-        FeaturedPackagesSkipCount = 0
+        await loadTask?.value
     }
 
     enum MostCases {
@@ -363,3 +371,4 @@ extension NewHomeViewModel {
         await getFeaturedPackages()
     }
 }
+

@@ -285,9 +285,11 @@ struct NewHomeView: View {
                     }
                 }
                 }
-                
                 Spacer()
                 Spacer().frame(height: 77)
+            }
+            .refreshable {
+                await viewModel.load()
             }
         }
         .localizeView()
@@ -321,9 +323,7 @@ struct NewHomeView: View {
             // reset selection after navigation
             selectedPackage = nil
         }
-        .refreshable {
-            await viewModel.load()
-        }
+     
     }
 }
 
