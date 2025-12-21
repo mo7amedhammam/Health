@@ -147,6 +147,7 @@ extension MyFilesViewModel{
         }
     }
     
+    
 }
 
 extension MyFilesViewModel {
@@ -159,11 +160,12 @@ extension MyFilesViewModel {
         showUploadSheet = false
     }
 //
-//    @MainActor
-//    func refresh() async {
+    @MainActor
+    func refresh() async {
 //        skipCount = 0
-//        await getAppointmenstList()
-//    }
+        self.files?.removeAll()
+        await getMyFilesList()
+    }
 //
 //    @MainActor
 //    func loadMoreIfNeeded() async {

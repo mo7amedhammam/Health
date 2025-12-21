@@ -17,8 +17,9 @@ struct PackageFilesView: View {
             
             Spacer()
             
-            filesList(files: viewmodel.packageFiles?.items)
-            
+            if let packageFiles = viewmodel.packageFiles{
+                filesList(files: packageFiles.items)
+            }
         }
         .background(Color(.bg))
         .task {
@@ -47,40 +48,17 @@ struct filesList:View {
     
     var body: some View {
         
-        GeometryReader{ geometry in
+//        GeometryReader{ geometry in
             ScrollView{
                 if let files = files, files.count > 0{
                     VStack(spacing: 0) {
                         ForEach(files,id: \.self) { file in
                             VStack {
                                 HStack(alignment: .top){
-                                    
                                     Button(action: {
-                                        
-                                        //                                        if let filePath = file.filePath , let url = URL(string:Constants.baseURL + filePath ) {
-                                        //                                            UIApplication.shared.open(url)
-                                        //                                        }
                                         if let filePath = file.filePath {
-                                            // Try to create a URL directly from filePath
-                                            if let directURL = URL(string: filePath), directURL.scheme != nil {
-                                                // filePath is already a valid absolute URL
-                                                UIApplication.shared.open(directURL)
-                                            } else {
-                                                
-                                                if let filePath = file.filePath , let url = URL(string:Constants.baseURL + filePath ) {
-                                                    UIApplication.shared.open(url)
-                                                }
-                                                
-                                                // filePath is likely a relative path — prepend baseURL
-                                                //                                                let fullURLString = Constants.baseURL + filePath
-                                                //                                                if let fullURL = URL(string: Constants.baseURL + filePath) {
-                                                //                                                    UIApplication.shared.open(fullURL)
-                                                //                                                } else {
-                                                //                                                    print("❌ Invalid URL: \(filePath)")
-                                                //                                                }
-                                            }
+                                            openFile(filePath)
                                         }
-                                        
                                     }, label: {
                                         VStack(spacing:8){
                                             Image("downloadicon")
@@ -142,10 +120,43 @@ struct filesList:View {
                             .multilineTextAlignment(.center)
                             .lineSpacing(12)
                     }
-                    .frame(width: geometry.size.width,height:geometry.size.height)
+//                    .frame(width: geometry.size.width,height:geometry.size.height)
+                    .frame(width:.infinity,height:.infinity)
+
                     
                 }
             }
+//        }
+    }
+}
+
+extension filesList{
+    func openFile(_ filePath: String) {
+        let finalURL: URL?
+
+        if let url = URL(string: filePath),
+           url.scheme != nil {
+            // Absolute URL
+            finalURL = url
+        } else {
+            // Relative path → prepend base URL
+            let fullPath = Constants.baseURL + filePath
+            finalURL = URL(string: fullPath)
+        }
+
+        guard
+            let url = finalURL?.absoluteString.addingPercentEncoding(
+                withAllowedCharacters: .urlQueryAllowed
+            ).flatMap(URL.init)
+        else {
+            print("❌ Invalid URL: \(filePath)")
+            return
+        }
+
+        if UIApplication.shared.canOpenURL(url) {
+            UIApplication.shared.open(url)
+        } else {
+            print("❌ Cannot open URL: \(url)")
         }
     }
 }

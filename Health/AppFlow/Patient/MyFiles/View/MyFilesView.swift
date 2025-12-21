@@ -43,7 +43,7 @@ struct MyFilesView: View {
                     .padding(.top,20)
 
                 filesList(files: myfilesvm.files)
-
+                
                 Spacer()
             }
             .localizeView()
@@ -76,11 +76,18 @@ struct MyFilesView: View {
 //                    files.append(newFile)
 //                }
             }
-            .onAppear(){
-                Task{
-                    await myfilesvm.getMyFilesList()
-                }
+            .task {
+                await myfilesvm.getMyFilesList()
             }
+            .refreshable(action: {
+                await myfilesvm.refresh()
+            })
+
+//            .onAppear(){
+//                Task{
+//                    await myfilesvm.getMyFilesList()
+//                }
+//            }
 //            .frame(height: 600)
 
 //            .navigationBarHidden(true)
