@@ -13,7 +13,7 @@ class ChatsViewModel:ObservableObject {
     static let shared = ChatsViewModel()
     // Injected service
     private let networkService: AsyncAwaitNetworkServiceProtocol
-    
+    private var loadTask: Task<Void,Never>? = nil
     
     var CustomerPackageId : Int?
     
@@ -93,27 +93,35 @@ extension ChatsViewModel{
     
     @MainActor
     func getMessages() async {
-        isLoading = true
-        defer { isLoading = false }
-        guard let CustomerPackageId = CustomerPackageId else {
-//            // Handle missings
-//            self.errorMessage = "check inputs"
-//            //            throw NetworkError.unknown(code: 0, error: "check inputs")
-            return
+        // Cancel any in-flight unified load to prevent overlap
+        loadTask?.cancel()
+        loadTask = Task { [weak self] in
+            guard let self else { return }
+            if self.isLoading == true { return }
+
+            isLoading = true
+            defer { isLoading = false }
+            guard let CustomerPackageId = CustomerPackageId else {
+                //            // Handle missings
+                //            self.errorMessage = "check inputs"
+                //            //            throw NetworkError.unknown(code: 0, error: "check inputs")
+                return
+            }
+            let parametersarr : [String : Any] =  ["CustomerPackageId":CustomerPackageId]
+            
+            let target = SubscriptionServices.GetMessage(parameters: parametersarr)
+            do {
+                self.errorMessage = nil // Clear previous errors
+                let response = try await networkService.request(
+                    target,
+                    responseType: [ChatsMessageM].self
+                )
+                self.ChatMessages = response?.compactMap({($0.messageText.count > 0 || $0.voicePath?.count ?? 0 > 0) ? $0 : nil})
+            } catch {
+                self.errorMessage = error.localizedDescription
+            }
         }
-        let parametersarr : [String : Any] =  ["CustomerPackageId":CustomerPackageId]
-        
-        let target = SubscriptionServices.GetMessage(parameters: parametersarr)
-        do {
-            self.errorMessage = nil // Clear previous errors
-            let response = try await networkService.request(
-                target,
-                responseType: [ChatsMessageM].self
-            )
-            self.ChatMessages = response?.compactMap({($0.messageText.count > 0 || $0.voicePath?.count ?? 0 > 0) ? $0 : nil})
-        } catch {
-            self.errorMessage = error.localizedDescription
-        }
+        await loadTask?.value
     }
     
     @MainActor

@@ -402,6 +402,7 @@ final class ActiveCustomerPackFilesViewModel: ObservableObject {
     // Use cases
     private let uploadUseCase: UploadFileUseCaseProtocol
     private let fetchUseCase: FetchFilesUseCaseProtocol
+    private var loadTask: Task<Void,Never>? = nil
 
     init(
         uploadUseCase: UploadFileUseCaseProtocol = UploadFileUseCase(repo: FilesRepository()),
@@ -444,33 +445,40 @@ final class ActiveCustomerPackFilesViewModel: ObservableObject {
 
     @MainActor
     func refreshFiles(forcase : filesCases) async {
-        isLoading = true
-        defer { isLoading = false }
-
-        do {
-            switch forcase {
-            case .Customer:
-                guard let customerId else { return }
-                files = try await fetchUseCase.fetchCustomerFiles(id: customerId)
-
-            case .Packages:
-                guard let customerPackageId else { return }
-                files = try await fetchUseCase.fetchPackageFiles(id:customerPackageId )
-
+        loadTask?.cancel()
+        loadTask = Task { [weak self] in
+            guard let self else { return }
+            if self.isLoading == true { return }
+            
+            isLoading = true
+            defer { isLoading = false }
+            
+            do {
+                switch forcase {
+                case .Customer:
+                    guard let customerId else { return }
+                    files = try await fetchUseCase.fetchCustomerFiles(id: customerId)
+                    
+                case .Packages:
+                    guard let customerPackageId else { return }
+                    files = try await fetchUseCase.fetchPackageFiles(id:customerPackageId )
+                    
+                }
+                //            if let cid = customerId {
+                //                files = try await fetchUseCase.fetchCustomerFiles(id: cid)
+                //                return
+                //            }
+                //            if let pid = customerPackageId {
+                //                files = try await fetchUseCase.fetchPackageFiles(id: pid)
+                //                return
+                //            }
+                //            files = []
+            } catch {
+                errorMessage = error.localizedDescription
+                files = []
             }
-//            if let cid = customerId {
-//                files = try await fetchUseCase.fetchCustomerFiles(id: cid)
-//                return
-//            }
-//            if let pid = customerPackageId {
-//                files = try await fetchUseCase.fetchPackageFiles(id: pid)
-//                return
-//            }
-//            files = []
-        } catch {
-            errorMessage = error.localizedDescription
-            files = []
         }
+        await loadTask?.value
     }
 
     private func extractFileData() async -> (fileData: Data?, fileName: String?, mimeType: String?) {

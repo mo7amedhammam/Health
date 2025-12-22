@@ -101,13 +101,19 @@ struct ActiveCustPackFiles : View {
 //                    files.append(newFile)
 //                }
             }
-            .onAppear(){
-                Task{
+            .task{
+//                Task{
                     myfilesvm.customerId = customerId
                     myfilesvm.customerPackageId = CustomerPackageId
 //                    await myfilesvm.getPackageFilesList()
                     await myfilesvm.refreshFiles(forcase: .Packages)
-                }
+//                }
+            }
+            .refreshable {
+                myfilesvm.customerId = customerId
+                myfilesvm.customerPackageId = CustomerPackageId
+//                    await myfilesvm.getPackageFilesList()
+                await myfilesvm.refreshFiles(forcase: filesCase)
             }
             .onChange(of: filesCase){ newval in
 //                if newval != filesCase{

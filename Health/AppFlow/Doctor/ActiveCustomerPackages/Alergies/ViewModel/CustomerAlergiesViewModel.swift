@@ -11,6 +11,7 @@ class CustomerAlergiesViewModel : ObservableObject {
     static let shared = CustomerAlergiesViewModel()
     // Injected service
     private let networkService: AsyncAwaitNetworkServiceProtocol
+    private var loadTask: Task<Void, Never>? = nil
     
     var CustomerPackageId : Int?
 
@@ -32,24 +33,31 @@ extension CustomerAlergiesViewModel{
         
     @MainActor
     func getCustomerAllergies() async {
-        isLoading = true
-        defer { isLoading = false }
-        guard let customerPackageId = CustomerPackageId else {
-            return
+        loadTask?.cancel()
+        loadTask = Task { [weak self] in
+            guard let self else { return }
+            if self.isLoading == true { return }
+            
+            isLoading = true
+            defer { isLoading = false }
+            guard let customerPackageId = CustomerPackageId else {
+                return
+            }
+            let parametersarr : [String : Any] =  ["CustomerPackageId":customerPackageId]
+            
+            let target = DocActivePackagesServices.GetCustomerAllergy(parameters: parametersarr)
+            do {
+                self.errorMessage = nil // Clear previous errors
+                let response = try await networkService.request(
+                    target,
+                    responseType: [CustomerAllergyListM].self
+                )
+                self.allergies = response
+            } catch {
+                self.errorMessage = error.localizedDescription
+            }
         }
-        let parametersarr : [String : Any] =  ["CustomerPackageId":customerPackageId]
-        
-        let target = DocActivePackagesServices.GetCustomerAllergy(parameters: parametersarr)
-        do {
-            self.errorMessage = nil // Clear previous errors
-            let response = try await networkService.request(
-                target,
-                responseType: [CustomerAllergyListM].self
-            )
-            self.allergies = response
-        } catch {
-            self.errorMessage = error.localizedDescription
-        }
+        await loadTask?.value
     }
     
 //    @MainActor

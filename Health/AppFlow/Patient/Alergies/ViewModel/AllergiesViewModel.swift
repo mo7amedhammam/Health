@@ -10,7 +10,7 @@ class AllergiesViewModel : ObservableObject {
     static let shared = AllergiesViewModel()
     // Injected service
     private let networkService: AsyncAwaitNetworkServiceProtocol
-    
+    private var loadTask: Task<Void,Never>? = nil
 //    Add file
 //    @Published private var fileName: String? = ""
 //    @Published private var fileType: FileTypeM? = nil
@@ -100,27 +100,34 @@ extension AllergiesViewModel{
     
     @MainActor
     func getMyAllergies() async {
-        isLoading = true
-        defer { isLoading = false }
-//        guard let maxResultCount = maxResultCount,let skipCount = skipCount else {
-////            // Handle missings
-////            self.errorMessage = "check inputs"
-////            //            throw NetworkError.unknown(code: 0, error: "check inputs")
-//            return
-//        }
-//        let parametersarr : [String : Any] =  ["maxResultCount":maxResultCount,"skipCount":skipCount]
-        
-        let target = MyAllergiesServices.GetAllergies
-        do {
-            self.errorMessage = nil // Clear previous errors
-            let response = try await networkService.request(
-                target,
-                responseType: AllergiesM.self
-            )
-            self.allergies = response
-        } catch {
-            self.errorMessage = error.localizedDescription
+        loadTask?.cancel()
+        loadTask = Task { [weak self] in
+            guard let self else { return }
+            if self.isLoading == true { return }
+            
+            isLoading = true
+            defer { isLoading = false }
+            //        guard let maxResultCount = maxResultCount,let skipCount = skipCount else {
+            ////            // Handle missings
+            ////            self.errorMessage = "check inputs"
+            ////            //            throw NetworkError.unknown(code: 0, error: "check inputs")
+            //            return
+            //        }
+            //        let parametersarr : [String : Any] =  ["maxResultCount":maxResultCount,"skipCount":skipCount]
+            
+            let target = MyAllergiesServices.GetAllergies
+            do {
+                self.errorMessage = nil // Clear previous errors
+                let response = try await networkService.request(
+                    target,
+                    responseType: AllergiesM.self
+                )
+                self.allergies = response
+            } catch {
+                self.errorMessage = error.localizedDescription
+            }
         }
+        await loadTask?.value
     }
     
 }

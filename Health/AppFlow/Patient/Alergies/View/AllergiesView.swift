@@ -105,6 +105,18 @@ struct AllergiesView: View {
                 }
                }
         }
+        .refreshable {
+            await viewModel.getMyAllergies()
+         if let allergies = viewModel.allergies {
+             for category in allergies {
+                 for item in category.allergyList ?? [] {
+                     if (item.hasAllergy ?? false), let id = item.id {
+                         selectedAllergyIds.insert(id)
+                     }
+                 }
+             }
+         }
+        }
         .localizeView()
         .showHud(isShowing:  $viewModel.isLoading)
         .errorAlert(isPresented: Binding(

@@ -12,6 +12,7 @@ class TipDetailsViewModel: ObservableObject {
     static let shared = TipDetailsViewModel()
     
     private let networkService: AsyncAwaitNetworkServiceProtocol
+    private var loadTask: Task<Void, Never>? = nil
     
     var maxResultCount: Int? = 10
     var skipCount: Int? = 0
@@ -39,34 +40,42 @@ extension TipDetailsViewModel{
     
     @MainActor
     func GetTipsByCategory() async {
-        guard let maxResultCount = maxResultCount, let skipCount = skipCount,let categoryId = tipId else {
-            // Handle missings
-            self.errorMessage = "check_inputs".localized
-            return
-        }
-        let parametersarr : [String : Any] =  ["maxResultCount" : maxResultCount ,"skipCount" : skipCount,"categoryId" : categoryId]
-        print("param",parametersarr)
+        // Cancel any in-flight unified load to prevent overlap
+        loadTask?.cancel()
+        loadTask = Task { [weak self] in
+            guard let self else { return }
+            if self.isLoading == true { return }
 
-        isLoading = true
-        errorMessage = nil
-        defer { isLoading = false }
-        
-        let target = NewTipsServices.getTipsByCategory(parameters: parametersarr)
-        do {
-            self.errorMessage = nil // Clear previous errors
-            let response = try await networkService.request(
-                target,
-                responseType: TipsByCategoryM.self
-            )
-            if skipCount == 0 {
-                tipsByCategory = response
-            }else{
-                tipsByCategory?.items?.append(contentsOf: response?.items ?? [])
+            guard let maxResultCount = maxResultCount, let skipCount = skipCount,let categoryId = tipId else {
+                // Handle missings
+                self.errorMessage = "check_inputs".localized
+                return
             }
-
-        } catch {
-            self.errorMessage = error.localizedDescription
+            let parametersarr : [String : Any] =  ["maxResultCount" : maxResultCount ,"skipCount" : skipCount,"categoryId" : categoryId]
+            print("param",parametersarr)
+            
+            isLoading = true
+            errorMessage = nil
+            defer { isLoading = false }
+            
+            let target = NewTipsServices.getTipsByCategory(parameters: parametersarr)
+            do {
+                self.errorMessage = nil // Clear previous errors
+                let response = try await networkService.request(
+                    target,
+                    responseType: TipsByCategoryM.self
+                )
+                if skipCount == 0 {
+                    tipsByCategory = response
+                }else{
+                    tipsByCategory?.items?.append(contentsOf: response?.items ?? [])
+                }
+                
+            } catch {
+                self.errorMessage = error.localizedDescription
+            }
         }
+        await loadTask?.value
     }
     
     @MainActor

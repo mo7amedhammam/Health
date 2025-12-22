@@ -12,7 +12,7 @@ class MyPaymentsViewModel : ObservableObject {
     static let shared = MyPaymentsViewModel()
     // Injected service
     private let networkService: AsyncAwaitNetworkServiceProtocol
-    
+    private var loadTask: Task<Void,Never>? = nil
         
     // Published properties
     @Published var ballance : CustomerBallanceM?
@@ -180,14 +180,24 @@ extension MyPaymentsViewModel{
     
 }
 
-//extension AllergiesViewModel {
-//
-//    @MainActor
-//    func refresh() async {
-//        skipCount = 0
-//        await getAppointmenstList()
-//    }
-//
+extension MyPaymentsViewModel {
+
+    @MainActor
+    func refresh() async {
+        loadTask?.cancel()
+        loadTask = Task { [weak self] in
+            guard let self else { return }
+            if self.isLoading == true { return }
+            
+            //        skipCount = 0
+            async let balance:() = self.getMyBallance()
+            async let prevpayments:() = self.getPreviousSubsriptions()
+            async let refunded:() = self.getRefundedSubsriptions()
+            _ = await (balance,prevpayments,refunded)
+        }
+        await loadTask?.value
+    }
+
 //    @MainActor
 //    func loadMoreIfNeeded() async {
 //        guard !(isLoading ?? false),
@@ -199,4 +209,4 @@ extension MyPaymentsViewModel{
 //        skipCount = (skipCount ?? 0) + maxResultCount
 //        await getAppointmenstList()
 //    }
-//}
+}

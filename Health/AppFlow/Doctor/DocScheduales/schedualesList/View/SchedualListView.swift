@@ -145,18 +145,30 @@ struct SchedualListView: View{
                     set: { if !$0 { viewModel.errorMessage = nil } }
                 ), message: viewModel.errorMessage)
                 .edgesIgnoringSafeArea([.top,.horizontal])
-                .onAppear {
-                    Task{
+                .task{
+//                    Task{
                         if (Helper.shared.CheckIfLoggedIn()) {
                             async let Profile:() = profileViewModel.getProfile()
-                            //                        async let Packages:() = viewModel.refresh()
+                                async let scheduales:() = viewModel.getMyScheduales()
                             //                    await viewModel.getSubscripedPackages()
-//                            _ = await (Profile)
+                            _ = await (Profile,scheduales)
                         } else {
                             profileViewModel.cleanup()
                             viewModel.clear()
                             mustLogin = true
                         }
+//                    }
+                }
+                .refreshable {
+                    if (Helper.shared.CheckIfLoggedIn()) {
+                        async let Profile:() = profileViewModel.getProfile()
+                            async let scheduales:() = viewModel.refreshScheduales()
+                        //                    await viewModel.getSubscripedPackages()
+                        _ = await (Profile,scheduales)
+                    } else {
+                        profileViewModel.cleanup()
+                        viewModel.clear()
+                        mustLogin = true
                     }
                 }
                 

@@ -85,6 +85,14 @@ struct MyMeasurementsView: View {
                 }
             }
         }
+        .refreshable {
+            if Helper.shared.CheckIfLoggedIn(){
+                await viewModel.fetchStats()
+            }else{
+                viewModel.clear()
+                mustLogin = true
+            }
+        }
 //        NavigationLink( "", destination: destination, isActive: $isactive)
 
     }

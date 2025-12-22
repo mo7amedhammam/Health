@@ -214,7 +214,9 @@ struct ProfileViewUI: View {
         //        .environment(\.layoutDirection,localizationManager.currentLanguage == "ar" ? .rightToLeft : .leftToRight)
         //        .localizeView()
         .background(Color(.bg))
-        
+        .task {
+           await paymentsVM.getMyBallance()
+        }
         // Add this modifier to your main view
         //             .alert(isPresented: $showLogoutAlert) {
         //                 Alert(

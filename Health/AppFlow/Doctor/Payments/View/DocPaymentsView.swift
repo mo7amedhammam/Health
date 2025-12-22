@@ -147,6 +147,9 @@ struct DocPaymentsView: View {
         .task {
             await viewModel.getdata()
         }
+        .refreshable {
+            await viewModel.refresh()
+        }
         .background(Color(.systemGray6).ignoresSafeArea())
         .localizeView()
         .showHud(isShowing:  $viewModel.isLoading)

@@ -106,6 +106,8 @@ extension MyFilesViewModel{
         loadTask?.cancel()
         loadTask = Task { [weak self] in
             guard let self else { return }
+            if self.isLoading == true { return }
+            
             do {
                 self.isLoading = true
                 defer { self.isLoading = false }

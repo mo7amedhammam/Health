@@ -255,6 +255,10 @@ struct ActiveCustomerPackagesView: View {
 //                doctorId = viewModel.subscripedPackage?.docotrID
 //            }
         }
+        .refreshable {
+            selectedSection = nil
+            await viewModel.load(customerPackageId: customerPackageId)
+        }
         
         .customSheet(isPresented: $isReschedualling){
             ReSchedualView(

@@ -11,7 +11,8 @@ import UIKit
 class InbodyViewModel:ObservableObject {
     static let shared = InbodyViewModel()
     private let networkService: AsyncAwaitNetworkServiceProtocol
-
+    private var loadTask: Task<Void,Never>? = nil
+    
     // -- Get List --
     var maxResultCount: Int? = 10
     @Published var skipCount: Int? = 0
@@ -106,7 +107,7 @@ extension InbodyViewModel{
         let target = NewAuthontications.CreateCustomerInboy(parameters: parametersarr)
         do {
             self.errorMessage = nil
-            let response = try await networkService.uploadMultipart(target, parts: parts, responseType: InbodyListItemM.self)
+            _ = try await networkService.uploadMultipart(target, parts: parts, responseType: InbodyListItemM.self)
             clear()
             await getInbodyList()
         } catch {
@@ -117,26 +118,34 @@ extension InbodyViewModel{
     
     @MainActor
     func getInbodyList() async {
-        isLoading = true
-        defer { isLoading = false }
-        guard let maxResultCount = maxResultCount, let skipCount = skipCount else {
-            // Handle missing username or password
-            return
-        }
-        let parametersarr : [String : Any] =  ["maxResultCount" : maxResultCount ,"skipCount" : skipCount]
+        // Cancel any in-flight unified load to prevent overlap
+        loadTask?.cancel()
+        loadTask = Task { [weak self] in
+            guard let self else { return }
+            if self.isLoading == true { return }
 
-        // Create your API request with the username and password
-        let target = NewAuthontications.GetCustomerInbody(parameters: parametersarr)
-        do {
-            self.errorMessage = nil // Clear previous errors
-            let response = try await networkService.request(
-                target,
-                responseType: InbodyListM.self
-            )
-            self.files = response
-        } catch {
-            self.errorMessage = error.localizedDescription
+            isLoading = true
+            defer { isLoading = false }
+            guard let maxResultCount = maxResultCount, let skipCount = skipCount else {
+                // Handle missing username or password
+                return
+            }
+            let parametersarr : [String : Any] =  ["maxResultCount" : maxResultCount ,"skipCount" : skipCount]
+            
+            // Create your API request with the username and password
+            let target = NewAuthontications.GetCustomerInbody(parameters: parametersarr)
+            do {
+                self.errorMessage = nil // Clear previous errors
+                let response = try await networkService.request(
+                    target,
+                    responseType: InbodyListM.self
+                )
+                self.files = response
+            } catch {
+                self.errorMessage = error.localizedDescription
+            }
         }
+        await loadTask?.value
     }
     
 }

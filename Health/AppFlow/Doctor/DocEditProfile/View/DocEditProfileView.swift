@@ -61,6 +61,35 @@ struct DocEditProfileView: View {
 //    }
     
     
+    fileprivate func initLoad() async {
+        //            Task{
+        async let countries:() = await lookupsVM.getAppCountries()
+        async let genders:() = await lookupsVM.getGenders()
+        async let specialities:() = await lookupsVM.getSpecialities()
+        async let profil:() = await viewModel.getProfile()
+        
+        _ = await (countries,genders,specialities,profil)
+        
+        bio = viewModel.Bio
+        fullName = viewModel.Name
+        phoneNumber = viewModel.Mobile
+        email = viewModel.Email
+        
+        //                image =  viewModel.Image
+        //                selectedGender = viewModel.Gender
+        //                selectedCountry = viewModel.Country
+        
+        if let countries = lookupsVM.appCountries {
+            selectedCountry = countries.first(where: { $0.id == viewModel.DocProfile?.countryID ?? 0 }) ?? countries.first
+        }
+        if let genders = lookupsVM.genders {
+            selectedGender = genders.first(where: { $0.id == viewModel.DocProfile?.genderId ?? 0 }) ?? genders.first
+        }
+        if let specialities = lookupsVM.specialities {
+            selectedSpeciality = specialities.first(where: { $0.id == viewModel.DocProfile?.specialityID ?? 0 }) ?? specialities.first
+        }
+    }
+    
     var body: some View {
         VStack(spacing: 16) {
             // MARK: - TitleBar
@@ -303,34 +332,12 @@ struct DocEditProfileView: View {
         }
 //        .padding()
         .localizeView()
-        .onAppear() {
-            Task{
-                async let countries:() = await lookupsVM.getAppCountries()
-                async let genders:() = await lookupsVM.getGenders()
-                async let specialities:() = await lookupsVM.getSpecialities()
-                async let profil:() = await viewModel.getProfile()
-
-                _ = await (countries,genders,specialities,profil)
-                
-                bio = viewModel.Bio
-                fullName = viewModel.Name
-                phoneNumber = viewModel.Mobile
-                email = viewModel.Email
-                
-//                image =  viewModel.Image
-//                selectedGender = viewModel.Gender
-//                selectedCountry = viewModel.Country
-                
-                if let countries = lookupsVM.appCountries {
-                    selectedCountry = countries.first(where: { $0.id == viewModel.DocProfile?.countryID ?? 0 }) ?? countries.first
-                }
-                if let genders = lookupsVM.genders {
-                    selectedGender = genders.first(where: { $0.id == viewModel.DocProfile?.genderId ?? 0 }) ?? genders.first
-                }
-                if let specialities = lookupsVM.specialities {
-                    selectedSpeciality = specialities.first(where: { $0.id == viewModel.DocProfile?.specialityID ?? 0 }) ?? specialities.first
-                }
-            }
+        .task{
+            await initLoad()
+//            }
+        }
+        .refreshable {
+            await initLoad()
         }
         .onDisappear() {
             viewModel.cleanup()

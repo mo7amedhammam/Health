@@ -12,6 +12,7 @@ class EditProfileViewModel : ObservableObject {
     static let shared = EditProfileViewModel()
     // Injected service
     private let networkService: AsyncAwaitNetworkServiceProtocol
+    private var loadTask: Task<Void,Never>? = nil
     
     // Add file
     @Published var imageURL: String?
@@ -243,37 +244,44 @@ extension EditProfileViewModel{
     
     @MainActor
     func getProfile() async {
-        isLoading = true
-        defer { isLoading = false }
-        
-        let target = ProfileServices.GetProfile
-        do {
-            self.errorMessage = nil // Clear previous errors
+        loadTask?.cancel()
+        loadTask = Task { [weak self] in
+            guard let self else { return }
+            if self.isLoading == true { return }
             
-            switch Helper.shared.getSelectedUserType() {
-            case .Customer,.none:
-                let response = try await networkService.request(
-                    target,
-                    responseType: CustProfileM.self
-                )
-                self.profile = response
-                if let data = response{
-                    fillData(from: data)
-                }
+            isLoading = true
+            defer { isLoading = false }
+            
+            let target = ProfileServices.GetProfile
+            do {
+                self.errorMessage = nil // Clear previous errors
                 
-            case .Doctor:
-                let response = try await networkService.request(
-                    target,
-                    responseType: DocProfileM.self
-                )
-                self.DocProfile = response
-                if let data = response{
-                    fillData(from: data)
+                switch Helper.shared.getSelectedUserType() {
+                case .Customer,.none:
+                    let response = try await networkService.request(
+                        target,
+                        responseType: CustProfileM.self
+                    )
+                    self.profile = response
+                    if let data = response{
+                        fillData(from: data)
+                    }
+                    
+                case .Doctor:
+                    let response = try await networkService.request(
+                        target,
+                        responseType: DocProfileM.self
+                    )
+                    self.DocProfile = response
+                    if let data = response{
+                        fillData(from: data)
+                    }
                 }
+            } catch {
+                self.errorMessage = error.localizedDescription
             }
-        } catch {
-            self.errorMessage = error.localizedDescription
         }
+        await loadTask?.value
     }
     
     func fillData(from profile: CustProfileM) {

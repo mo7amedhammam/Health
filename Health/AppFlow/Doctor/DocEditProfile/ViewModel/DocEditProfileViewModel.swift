@@ -12,6 +12,7 @@ class DocEditProfileViewModel : ObservableObject {
     static let shared = DocEditProfileViewModel()
     // Injected service
     private let networkService: AsyncAwaitNetworkServiceProtocol
+    private var loadTask:Task<Void,Never>? = nil
     
 //    Add file
     @Published var imageURL: String?
@@ -91,30 +92,37 @@ extension DocEditProfileViewModel{
     
     @MainActor
     func getProfile() async {
-        isLoading = true
-        defer { isLoading = false }
-//        guard let maxResultCount = maxResultCount,let skipCount = skipCount else {
-////            // Handle missings
-////            self.errorMessage = "check inputs"
-////            //            throw NetworkError.unknown(code: 0, error: "check inputs")
-//            return
-//        }
-//        let parametersarr : [String : Any] =  ["maxResultCount":maxResultCount,"skipCount":skipCount]
-        
-        let target = ProfileServices.GetProfile
-        do {
-            self.errorMessage = nil // Clear previous errors
-            let response = try await networkService.request(
-                target,
-                responseType: LoginM.self
-            )
-            self.profile = response
-            if let data = response{
-                fillData(from: data)
+        loadTask?.cancel()
+        loadTask = Task { [weak self] in
+            guard let self else { return }
+            if self.isLoading == true { return }
+            
+            isLoading = true
+            defer { isLoading = false }
+            //        guard let maxResultCount = maxResultCount,let skipCount = skipCount else {
+            ////            // Handle missings
+            ////            self.errorMessage = "check inputs"
+            ////            //            throw NetworkError.unknown(code: 0, error: "check inputs")
+            //            return
+            //        }
+            //        let parametersarr : [String : Any] =  ["maxResultCount":maxResultCount,"skipCount":skipCount]
+            
+            let target = ProfileServices.GetProfile
+            do {
+                self.errorMessage = nil // Clear previous errors
+                let response = try await networkService.request(
+                    target,
+                    responseType: LoginM.self
+                )
+                self.profile = response
+                if let data = response{
+                    fillData(from: data)
+                }
+            } catch {
+                self.errorMessage = error.localizedDescription
             }
-        } catch {
-            self.errorMessage = error.localizedDescription
         }
+        await loadTask?.value
     }
     
     func fillData(from:LoginM) {

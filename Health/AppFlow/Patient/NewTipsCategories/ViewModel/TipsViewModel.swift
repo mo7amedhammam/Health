@@ -11,6 +11,7 @@ class TipsViewModel: ObservableObject {
     static let shared = TipsViewModel()
     
     private let networkService: AsyncAwaitNetworkServiceProtocol
+    private var loadTask: Task<Void,Never>? =  nil
     
     var maxResultCount: Int? = 10
     var skipCount: Int? = 0
@@ -125,16 +126,24 @@ extension TipsViewModel {
     
     @MainActor
     func refresh() async {
-        skipCount = 0
-        isLoading = true
-        defer { isLoading = false }
+        // Cancel any in-flight unified load to prevent overlap
+        loadTask?.cancel()
+        loadTask = Task { [weak self] in
+            guard let self else { return }
+            if self.isLoading == true { return }
 
-        async let allTips: () = GetHomeAllTips()
-        async let newestTips: () = GetNewestTips()
-        async let interesting: () = GetInterestingTips()
-        async let mostViewed: () = GetMostViewedTips()
-
-        await _ = ( allTips, newestTips, interesting, mostViewed )
+            skipCount = 0
+            isLoading = true
+            defer { isLoading = false }
+            
+            async let allTips: () = GetHomeAllTips()
+            async let newestTips: () = GetNewestTips()
+            async let interesting: () = GetInterestingTips()
+            async let mostViewed: () = GetMostViewedTips()
+            
+            await _ = ( allTips, newestTips, interesting, mostViewed )
+        }
+        await loadTask?.value
     }
 
     @MainActor

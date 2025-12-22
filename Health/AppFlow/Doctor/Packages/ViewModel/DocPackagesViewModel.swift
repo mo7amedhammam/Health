@@ -11,6 +11,8 @@ class DocPackagesViewModel: ObservableObject {
     static let shared = DocPackagesViewModel()
     // Injected service
     private let networkService: AsyncAwaitNetworkServiceProtocol
+    
+    private var loadTask : Task<Void, Never>? = nil
     // -- Get List --
     var maxResultCount: Int?              = 8
     @Published var skipCount: Int?        = 0
@@ -52,42 +54,49 @@ extension DocPackagesViewModel {
     
     @MainActor
     func getActivePackages() async {
-        isLoading = true
-        defer { isLoading = false }
-        guard let maxResultCount = maxResultCount, let skipCount = skipCount else {
-            return
-        }
-        let parametersarr: [String: Any] = [
-            "maxResultCount": maxResultCount,
-            "skipCount": skipCount,
-            "isExpired": false
-        ]
-        
-        let target = DocPackagesServices.GetPackageDoctor(parameters: parametersarr)
-        do {
-            self.errorMessage = nil
-            let response = try await networkService.request(
-                target,
-                responseType: DocPackagesM.self
-            )
+        // Cancel any in-flight unified load to prevent overlap
+        loadTask?.cancel()
+        loadTask = Task { [weak self] in
+            guard let self else { return }
+            if self.isLoading == true { return }
 
-            if skipCount == 0 {
-               await MainActor.run {
-                   ActivePackages = response
-                   print("subscripedPackages:", ActivePackages ?? .init())
-               }
-            } else {
-                if var existing = self.ActivePackages,
-                   let newItems = response?.items {
-                    existing.items?.append(contentsOf: newItems)
-                    existing.totalCount = response?.totalCount
-                    ActivePackages = existing
-                }
+            isLoading = true
+            defer { isLoading = false }
+            guard let maxResultCount = maxResultCount, let skipCount = skipCount else {
+                return
             }
-            canLoadMore = (response?.items?.count ?? 0) < (response?.totalCount ?? 0)
-
-        } catch {
-            self.errorMessage = error.localizedDescription
+            let parametersarr: [String: Any] = [
+                "maxResultCount": maxResultCount,
+                "skipCount": skipCount,
+                "isExpired": false
+            ]
+            
+            let target = DocPackagesServices.GetPackageDoctor(parameters: parametersarr)
+            do {
+                self.errorMessage = nil
+                let response = try await networkService.request(
+                    target,
+                    responseType: DocPackagesM.self
+                )
+                if skipCount == 0 {
+//                    await MainActor.run {
+                        ActivePackages = response
+//                        print("subscripedPackages:", ActivePackages ?? .init())
+//                    }
+                } else {
+                    if var existing = self.ActivePackages,
+                       let newItems = response?.items {
+                        existing.items?.append(contentsOf: newItems)
+                        existing.totalCount = response?.totalCount
+                        ActivePackages = existing
+                    }
+                }
+                canLoadMore = (response?.items?.count ?? 0) < (response?.totalCount ?? 0)
+                
+            } catch {
+                self.errorMessage = error.localizedDescription
+            }
+            await loadTask?.value
         }
     }
 

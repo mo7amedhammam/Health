@@ -43,6 +43,29 @@ struct EditProfileView: View {
     }
     
     
+    fileprivate func initLoad() async {
+        //            Task{
+        async let countries:() = await lookupsVM.getAppCountries()
+        async let genders:() = await lookupsVM.getGenders()
+        async let profil:() = await viewModel.getProfile()
+        
+        _ = await (countries,genders,profil)
+        
+        fullName = viewModel.Name
+        phoneNumber = viewModel.Mobile
+        //                image =  viewModel.Image
+        
+        //                selectedGender = viewModel.Gender
+        //                selectedCountry = viewModel.Country
+        
+        if let countries = lookupsVM.appCountries {
+            selectedCountry = countries.first(where: { $0.id == viewModel.profile?.countryID ?? 0 }) ?? countries.first
+        }
+        if let genders = lookupsVM.genders {
+            selectedGender = genders.first(where: { $0.id == viewModel.profile?.genderID ?? 0 }) ?? genders.first
+        }
+    }
+    
     var body: some View {
         VStack(spacing: 16) {
             // MARK: - TitleBar
@@ -202,28 +225,12 @@ struct EditProfileView: View {
 //        .padding()
         .localizeView()
 
-        .onAppear() {
-            Task{
-                async let countries:() = await lookupsVM.getAppCountries()
-                async let genders:() = await lookupsVM.getGenders()
-                async let profil:() = await viewModel.getProfile()
-
-                _ = await (countries,genders,profil)
-                
-                  fullName = viewModel.Name
-                phoneNumber = viewModel.Mobile
-//                image =  viewModel.Image
-
-//                selectedGender = viewModel.Gender
-//                selectedCountry = viewModel.Country
-                
-                if let countries = lookupsVM.appCountries {
-                    selectedCountry = countries.first(where: { $0.id == viewModel.profile?.countryID ?? 0 }) ?? countries.first
-                }
-                if let genders = lookupsVM.genders {
-                    selectedGender = genders.first(where: { $0.id == viewModel.profile?.genderID ?? 0 }) ?? genders.first
-                }
-            }
+        .task {
+            await initLoad()
+//            }
+        }
+        .refreshable {
+            await initLoad()
         }
         .onDisappear() {
             viewModel.cleanup()

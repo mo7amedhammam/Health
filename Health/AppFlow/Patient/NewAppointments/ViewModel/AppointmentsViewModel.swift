@@ -11,6 +11,7 @@ class AppointmentsViewModel : ObservableObject {
     static let shared = AppointmentsViewModel()
     // Injected service
     private let networkService: AsyncAwaitNetworkServiceProtocol
+    private var loadTask: Task<Void,Never>? = nil
     
     // -- Get List --
     var maxResultCount: Int?              = 5
@@ -108,14 +109,22 @@ extension AppointmentsViewModel {
     
     @MainActor
     func refresh() async {
-        skipCount = 0
-        isLoading = true
-        defer { isLoading = false }
+        // Cancel any in-flight unified load to prevent overlap
+        loadTask?.cancel()
+        loadTask = Task { [weak self] in
+            guard let self else { return }
+            if self.isLoading == true { return }
 
-        async let upcommingsession: () = getUpcomingSession()
-        async let appointmenstList: () = getAppointmenstList()
-
-        await _ = (upcommingsession,appointmenstList)
+            skipCount = 0
+            isLoading = true
+            defer { isLoading = false }
+            
+            async let upcommingsession: () = getUpcomingSession()
+            async let appointmenstList: () = getAppointmenstList()
+            
+            await _ = (upcommingsession,appointmenstList)
+        }
+        await loadTask?.value
     }
 
     @MainActor

@@ -15,7 +15,8 @@ enum FrequencyUnit: String, CaseIterable {
 class MedicationReminderViewModel:ObservableObject {
     static let shared = MedicationReminderViewModel()
     private let networkService: AsyncAwaitNetworkServiceProtocol
-
+    private var loadTask: Task<Void,Never>? = nil
+    
 //    var customerId: Int?
     var maxResultCount: Int = 5
     @Published var skipCount: Int = 0
@@ -76,29 +77,38 @@ class MedicationReminderViewModel:ObservableObject {
     
     @MainActor
     func GetNotifications() async {
-//        guard let customerId = customerId else {return}
-        let Parameters:[String: Any] =  ["maxResultCount" : maxResultCount ,"skipCount" : skipCount ]
- 
-        isLoading = true
-        errorMessage = nil
-        defer { isLoading = false }
-        let target = NewNotificationServices.GetNotification(parameters: Parameters)
-        
-        do {
-            self.errorMessage = nil // Clear previous errors
-            let response = try await networkService.request(
-                target,
-                responseType: ModelNotification.self
-            )
+        // Cancel any in-flight unified load to prevent overlap
+        loadTask?.cancel()
+        loadTask = Task { [weak self] in
+            guard let self else { return }
+            if self.isLoading == true { return }
+
+            //        guard let customerId = customerId else {return}
+            let Parameters:[String: Any] =  ["maxResultCount" : maxResultCount ,"skipCount" : skipCount ]
             
-            if skipCount == 0 {
-                self.reminders = response
-            }else{
-                self.reminders?.items?.append(contentsOf: response?.items ?? [])
+            isLoading = true
+            errorMessage = nil
+            defer { isLoading = false }
+            let target = NewNotificationServices.GetNotification(parameters: Parameters)
+            
+            do {
+                self.errorMessage = nil // Clear previous errors
+                let response = try await networkService.request(
+                    target,
+                    responseType: ModelNotification.self
+                )
+                
+                if skipCount == 0 {
+                    self.reminders = response
+                }else{
+                    self.reminders?.items?.append(contentsOf: response?.items ?? [])
+                }
+            } catch {
+                self.errorMessage = error.localizedDescription
             }
-        } catch {
-            self.errorMessage = error.localizedDescription
         }
+        await loadTask?.value
+        
     }
     
     @MainActor

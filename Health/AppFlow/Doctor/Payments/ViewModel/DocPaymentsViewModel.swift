@@ -11,7 +11,7 @@ class DocPaymentsViewModel : ObservableObject {
     static let shared = DocPaymentsViewModel()
     // Injected service
     private let networkService: AsyncAwaitNetworkServiceProtocol
-    
+    private var loadTask : Task<Void,Never>? = nil
         
     // Published properties
     @Published var ballance : DocBallanceM?
@@ -81,6 +81,18 @@ extension DocPaymentsViewModel{
         async let ballance: () = getMyBallance()
         async let previousSubsriptions: () = getPreviousSubsriptions()
         await _ = (ballance,previousSubsriptions)
+    }
+    func refresh() async{
+        loadTask?.cancel()
+        loadTask = Task { [weak self] in
+            guard let self else { return }
+            if self.isLoading == true { return }
+            
+            async let balamce: () = self.getMyBallance()
+            async let previousSubsriptions: () = self.getPreviousSubsriptions()
+            await _ = (balamce,previousSubsriptions)
+        }
+        await loadTask?.value
     }
 }
 

@@ -62,6 +62,9 @@ struct CustomerAlergyView: View {
             viewModel.CustomerPackageId = customerID
             await viewModel.getCustomerAllergies()
         }
+        .refreshable {
+            await viewModel.getCustomerAllergies()
+        }
     }
 }
 

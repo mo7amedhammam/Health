@@ -11,6 +11,7 @@ class ActiveCusPackViewModel:ObservableObject {
     static let shared = ActiveCusPackViewModel()
     // Injected service
     private let networkService: AsyncAwaitNetworkServiceProtocol
+    private var loadTask:Task<Void,Never>? = nil
 
     // -- Pagination --
     var maxResultCount: Int? = 5
@@ -36,44 +37,51 @@ extension ActiveCusPackViewModel {
     // Consolidated loader to minimize UI invalidations
     @MainActor
     func load(customerPackageId: Int) async {
-        isLoading = true
-        defer { isLoading = false }
-        errorMessage = nil
-
-        // Prepare targets
-        let pkgTarget = SubscriptionServices.GetCustomerPackageById(parameters: ["CustomerPackageId": customerPackageId])
-        let upcTarget = HomeServices.GetUpcomingSession(parameters: ["CustomerPackageId": customerPackageId])
-//        guard let customerId = subscripedPackage?.customerID else { return }
-//        let measTarget = DocActivePackagesServices.GetCustomerMeasurements(parameters: ["customerId": customerId])
-
-        let sessionsTarget: TargetType1? = {
-            guard let max = maxResultCount, let skip = skipCount else { return nil }
-            return DocActivePackagesServices.GetCustomerPackageList(
-                parameters: ["maxResultCount": max, "skipCount": skip, "customerPackageId": customerPackageId]
-            )
-        }()
-
-        do {
-            async let pkg: SubcripedPackageItemM? = networkService.request(pkgTarget, responseType: SubcripedPackageItemM.self)
-            async let upc: UpcomingSessionM? = networkService.request(upcTarget, responseType: UpcomingSessionM.self)
-//            async let meas: [MyMeasurementsStatsM]? = networkService.request(measTarget, responseType: [MyMeasurementsStatsM].self)
-
-            var sessions: SubcripedSessionsListM? = subscripedSessions
-            if let sessionsTarget {
-                sessions = try await networkService.request(sessionsTarget, responseType: SubcripedSessionsListM.self)
+        loadTask?.cancel()
+        loadTask = Task { [weak self] in
+            guard let self else { return }
+            if self.isLoading == true { return }
+            
+            isLoading = true
+            defer { isLoading = false }
+            errorMessage = nil
+            
+            // Prepare targets
+            let pkgTarget = SubscriptionServices.GetCustomerPackageById(parameters: ["CustomerPackageId": customerPackageId])
+            let upcTarget = HomeServices.GetUpcomingSession(parameters: ["CustomerPackageId": customerPackageId])
+            //        guard let customerId = subscripedPackage?.customerID else { return }
+            //        let measTarget = DocActivePackagesServices.GetCustomerMeasurements(parameters: ["customerId": customerId])
+            
+            let sessionsTarget: TargetType1? = {
+                guard let max = maxResultCount, let skip = skipCount else { return nil }
+                return DocActivePackagesServices.GetCustomerPackageList(
+                    parameters: ["maxResultCount": max, "skipCount": skip, "customerPackageId": customerPackageId]
+                )
+            }()
+            
+            do {
+                async let pkg: SubcripedPackageItemM? = networkService.request(pkgTarget, responseType: SubcripedPackageItemM.self)
+                async let upc: UpcomingSessionM? = networkService.request(upcTarget, responseType: UpcomingSessionM.self)
+                //            async let meas: [MyMeasurementsStatsM]? = networkService.request(measTarget, responseType: [MyMeasurementsStatsM].self)
+                
+                var sessions: SubcripedSessionsListM? = subscripedSessions
+                if let sessionsTarget {
+                    sessions = try await networkService.request(sessionsTarget, responseType: SubcripedSessionsListM.self)
+                }
+                
+                let (p, u) = try await (pkg, upc)
+                
+                // Single commit
+                subscripedPackage = p
+                upcomingSession = u
+                //            customerMeasurements = m
+                subscripedSessions = sessions
+                await loadMeasurements(customerId: p?.customerID)
+            } catch {
+                errorMessage = error.localizedDescription
             }
-
-            let (p, u) = try await (pkg, upc)
-
-            // Single commit
-            subscripedPackage = p
-            upcomingSession = u
-//            customerMeasurements = m
-            subscripedSessions = sessions
-           await loadMeasurements(customerId: p?.customerID)
-        } catch {
-            errorMessage = error.localizedDescription
         }
+        await loadTask?.value
     }
     
     @MainActor

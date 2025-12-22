@@ -138,6 +138,9 @@ struct MyPaymentsView: View {
                 _ = await (balance, previous, refunded)
             }
         }
+        .refreshable {
+            await viewModel.refresh()
+        }
         .localizeView()
 //        .reversLocalizeView()
         .showHud(isShowing:  $viewModel.isLoading)

@@ -13,7 +13,8 @@ class PackagesViewModel: ObservableObject {
     private let networkService: AsyncAwaitNetworkServiceProtocol
     private let wishlistManager: WishlistManaging
     private let env: AppEnvironmentProviding
-
+    private var loadTask:Task<Void,Never>? = nil
+    
     // Pagination
     var maxResultCount: Int = 10
     var subcategoryskipCount: Int      = 0
@@ -65,10 +66,18 @@ extension PackagesViewModel {
     }
 
     func refresh(mainCategoryId: Int) async {
-        // Reset pagination and reload everything, but keep current data visible
-        subcategoryskipCount = 0
-        PackagesSkipCount = 0
-        await loadInitial(mainCategoryId: mainCategoryId)
+        // Cancel any in-flight unified load to prevent overlap
+        loadTask?.cancel()
+        loadTask = Task { [weak self] in
+            guard let self else { return }
+            if self.isLoading == true { return }
+
+            // Reset pagination and reload everything, but keep current data visible
+            subcategoryskipCount = 0
+            PackagesSkipCount = 0
+            await loadInitial(mainCategoryId: mainCategoryId)
+        }
+        await loadTask?.value
     }
 
     // Backwards-compatible signature
@@ -80,8 +89,7 @@ extension PackagesViewModel {
             if !isLoadingPackages { isLoading = false }
         }
 
-
-        var parameters: [String: Any] = [
+        let parameters: [String: Any] = [
             "parentId": mainCategoryId,
             "maxResultCount": maxResultCount,
             "skipCount": subcategoryskipCount,

@@ -11,6 +11,7 @@ class DocSchedualeViewModel : ObservableObject {
     static let shared = DocSchedualeViewModel()
     // Injected service
     private let networkService: AsyncAwaitNetworkServiceProtocol
+    private var loadTask: Task<Void,Never>? = nil
     
     @Published var scheduales : [SchedualeM]? = SchedualeM.mockList
 
@@ -129,7 +130,7 @@ extension DocSchedualeViewModel{
         let target = MyAllergiesServices.GetAllergies
         do {
             self.errorMessage = nil // Clear previous errors
-            let response = try await networkService.request(
+            _ = try await networkService.request(
                 target,
                 responseType: AllergiesM.self
             )
@@ -152,5 +153,26 @@ extension DocSchedualeViewModel{
     func clear() {
         self.scheduales = nil
         selectedSlots.removeAll()
+    }
+    
+    func refreshScheduales() async {
+        loadTask?.cancel()
+        loadTask = Task { [weak self] in
+            guard let self else { return }
+            if self.isLoading == true { return }
+            
+            await getMyScheduales()
+        }
+        await loadTask?.value
+    }
+    func refreshShifts() async {
+        loadTask?.cancel()
+        loadTask = Task { [weak self] in
+            guard let self else { return }
+            if self.isLoading == true { return }
+            
+            await getMySchedualeShift()
+        }
+        await loadTask?.value
     }
 }

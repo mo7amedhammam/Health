@@ -10,7 +10,8 @@ import Foundation
 class QuestionaireViewModel : ObservableObject {
     static let shared = QuestionaireViewModel()
     private let networkService: AsyncAwaitNetworkServiceProtocol
-        
+    private var loadTask:Task<Void,Never>? = nil
+    
     var CustomerPackageId : Int?
     @Published var questions : [CustomerPackageQuestM]?
     @Published var userAnswers: [Int: String] = [:]
@@ -97,21 +98,28 @@ extension QuestionaireViewModel{
       
     @MainActor
     func getCustomerQuestions() async {
-        isLoading = true
-        defer { isLoading = false }
-        guard let customerPackageId = CustomerPackageId else { return }
-        let parametersarr : [String : Any] =  ["CustomerPackageId": customerPackageId]
-        let target = DocActivePackagesServices.GetCustomerPackageQuest(parameters: parametersarr)
-        do {
-            self.errorMessage = nil
-            let response = try await networkService.request(
-                target,
-                responseType: [CustomerPackageQuestM].self
-            )
-            self.questions = response
-        } catch {
-            self.errorMessage = error.localizedDescription
+        loadTask?.cancel()
+        loadTask = Task { [weak self] in
+            guard let self else { return }
+            if self.isLoading == true { return }
+            
+            isLoading = true
+            defer { isLoading = false }
+            guard let customerPackageId = CustomerPackageId else { return }
+            let parametersarr : [String : Any] =  ["CustomerPackageId": customerPackageId]
+            let target = DocActivePackagesServices.GetCustomerPackageQuest(parameters: parametersarr)
+            do {
+                self.errorMessage = nil
+                let response = try await networkService.request(
+                    target,
+                    responseType: [CustomerPackageQuestM].self
+                )
+                self.questions = response
+            } catch {
+                self.errorMessage = error.localizedDescription
+            }
         }
+        await loadTask?.value
     }
 }
 

@@ -174,6 +174,10 @@ struct QuestionaireView: View {
             await viewModel.getCustomerQuestions()
             seedInitialAnswers()
         }
+        .refreshable {
+            await viewModel.getCustomerQuestions()
+            seedInitialAnswers()
+        }
         .onChange(of: viewModel.questions) { _ in
             seedInitialAnswers()
         }

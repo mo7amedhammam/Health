@@ -10,6 +10,8 @@ class SubcripedPackagesViewModel:ObservableObject {
     static let shared = SubcripedPackagesViewModel()
     // Injected service
     private let networkService: AsyncAwaitNetworkServiceProtocol
+    private var loadTask: Task<Void,Never>? = nil
+    
     // -- Get List --
     var maxResultCount: Int?              = 5
     @Published var skipCount: Int?        = 0
@@ -34,44 +36,52 @@ extension SubcripedPackagesViewModel{
     
     @MainActor
     func getSubscripedPackages() async {
-        isLoading = true
-        defer { isLoading = false }
-        guard let maxResultCount = maxResultCount,let skipCount = skipCount else {
-//            // Handle missings
-//            self.errorMessage = "check inputs"
-//            //            throw NetworkError.unknown(code: 0, error: "check inputs")
-            return
-        }
-        let parametersarr : [String : Any] =  ["maxResultCount":maxResultCount,"skipCount":skipCount,"isExpired":false]
-        
-        let target = SubscriptionServices.GetCustomerPackageList(parameters: parametersarr)
-        do {
-            self.errorMessage = nil // Clear previous errors
-            let response = try await networkService.request(
-                target,
-                responseType: SubcripedPackagesM.self
-            )
+        // Cancel any in-flight unified load to prevent overlap
+        loadTask?.cancel()
+        loadTask = Task { [weak self] in
+            guard let self else { return }
+            if self.isLoading == true { return }
 
-            if skipCount == 0 {
-                // Fresh load
-               await MainActor.run(){
-                    subscripedPackages = response
-                   print("subscripedPackages:",subscripedPackages ?? .init())
-                }
-            } else {
-                // Append for pagination
-                if var existing = self.subscripedPackages,
-                   let newItems = response?.items {
-                    existing.items?.append(contentsOf: newItems)
-                    existing.totalCount = response?.totalCount
-                    subscripedPackages = existing
-                }
+            isLoading = true
+            defer { isLoading = false }
+            guard let maxResultCount = maxResultCount,let skipCount = skipCount else {
+                //            // Handle missings
+                //            self.errorMessage = "check inputs"
+                //            //            throw NetworkError.unknown(code: 0, error: "check inputs")
+                return
             }
-            canLoadMore = response?.items?.count ?? 0 < response?.totalCount ?? 0
-
-        } catch {
-            self.errorMessage = error.localizedDescription
+            let parametersarr : [String : Any] =  ["maxResultCount":maxResultCount,"skipCount":skipCount,"isExpired":false]
+            
+            let target = SubscriptionServices.GetCustomerPackageList(parameters: parametersarr)
+            do {
+                self.errorMessage = nil // Clear previous errors
+                let response = try await networkService.request(
+                    target,
+                    responseType: SubcripedPackagesM.self
+                )
+                
+                if skipCount == 0 {
+                    // Fresh load
+//                    await MainActor.run(){
+                        subscripedPackages = response
+                        print("subscripedPackages:",subscripedPackages ?? .init())
+//                    }
+                } else {
+                    // Append for pagination
+                    if var existing = self.subscripedPackages,
+                       let newItems = response?.items {
+                        existing.items?.append(contentsOf: newItems)
+                        existing.totalCount = response?.totalCount
+                        subscripedPackages = existing
+                    }
+                }
+                canLoadMore = response?.items?.count ?? 0 < response?.totalCount ?? 0
+                
+            } catch {
+                self.errorMessage = error.localizedDescription
+            }
         }
+        await loadTask?.value
     }
     
 }

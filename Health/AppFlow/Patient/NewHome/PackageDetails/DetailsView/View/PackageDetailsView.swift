@@ -38,6 +38,9 @@ struct PackageDetailsView: View {
         .task {
             await viewModel.loadOnce()
         }
+        .refreshable {
+            await viewModel.refresh()
+        }
         .localizeView()
         .showHud(isShowing: $viewModel.isLoading)
         .errorAlert(isPresented:Binding(
