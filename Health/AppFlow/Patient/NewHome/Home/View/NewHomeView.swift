@@ -209,6 +209,7 @@ struct NewHomeView: View {
                         }
                     }
                     
+                    if Helper.shared.getSelectedUserType() != .Doctor{
                     // VIP packages wrapped with EquatableByValue
                     EquatableByValue(value: vipPackagesState) {
                         VipPackagesSection(
@@ -220,6 +221,7 @@ struct NewHomeView: View {
                         )
                         .accessibilityIdentifier("home_vip_section")
                     }
+                }
                     
                     ZStack(alignment: .leading) {
                         

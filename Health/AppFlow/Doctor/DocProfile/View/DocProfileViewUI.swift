@@ -236,6 +236,7 @@ extension DocProfileViewUI{
     private func logoutAction() {
         if isLogedin {
             Helper.shared.logout()
+            Helper.shared.setSelectedUserType(userType: .Customer)
             // Change root view to NewTabView
             let newHome = UIHostingController(rootView: DocTabView())
             Helper.shared.changeRootVC(newroot: newHome, transitionFrom: .fromLeft)

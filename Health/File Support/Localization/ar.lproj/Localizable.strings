@@ -492,3 +492,9 @@
 "add2_title" = "تطبيق صحتي مع الندى!";
 "add2_subtitle" = "استشارات مع خبراء تغذية لمساعدتك على تحقيق أهدافك.";
 "add2_button" = "اختر باقتك الآن";
+
+//rescheduale request
+"old_schedual_" = "المعاد القديم";
+"new_schedual_" = "المعاد الجديد";
+"accept_" = "قبول";
+"reject_" = "رفض";

@@ -16,6 +16,7 @@
 		900B50B82DAAC4E300EABA67 /* ExUiImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 900B50B72DAAC4E300EABA67 /* ExUiImage.swift */; };
 		901792A82EDDD3E00055EBD9 /* DocSchedualesServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 901792A72EDDD3D50055EBD9 /* DocSchedualesServices.swift */; };
 		901792AA2EDDF5910055EBD9 /* SchedualListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 901792A92EDDF5910055EBD9 /* SchedualListView.swift */; };
+		901EDC9F2EFC763C00C1BBD5 /* ReschedualRequestCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 901EDC9E2EFC763C00C1BBD5 /* ReschedualRequestCard.swift */; };
 		901FC1222EAE1D22005489D8 /* CustomerAlergiesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 901FC1212EAE1D22005489D8 /* CustomerAlergiesViewModel.swift */; };
 		9020846C2E7FF2870001C55D /* ReSchedualViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9020846B2E7FF2790001C55D /* ReSchedualViewModel.swift */; };
 		90296D792E9BAB0600BC336B /* QuestionaireView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90296D782E9BAB0600BC336B /* QuestionaireView.swift */; };
@@ -368,6 +369,7 @@
 		900B50B72DAAC4E300EABA67 /* ExUiImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExUiImage.swift; sourceTree = "<group>"; };
 		901792A72EDDD3D50055EBD9 /* DocSchedualesServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocSchedualesServices.swift; sourceTree = "<group>"; };
 		901792A92EDDF5910055EBD9 /* SchedualListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchedualListView.swift; sourceTree = "<group>"; };
+		901EDC9E2EFC763C00C1BBD5 /* ReschedualRequestCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReschedualRequestCard.swift; sourceTree = "<group>"; };
 		901FC1212EAE1D22005489D8 /* CustomerAlergiesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomerAlergiesViewModel.swift; sourceTree = "<group>"; };
 		9020846B2E7FF2790001C55D /* ReSchedualViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReSchedualViewModel.swift; sourceTree = "<group>"; };
 		90296D782E9BAB0600BC336B /* QuestionaireView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionaireView.swift; sourceTree = "<group>"; };
@@ -871,6 +873,38 @@
 			path = Scheduales;
 			sourceTree = "<group>";
 		};
+		901EDC9A2EFC6AC900C1BBD5 /* ReschedualRequests */ = {
+			isa = PBXGroup;
+			children = (
+				901EDC9D2EFC6AEC00C1BBD5 /* Model */,
+				901EDC9C2EFC6AE700C1BBD5 /* ViewModel */,
+				901EDC9B2EFC6AE100C1BBD5 /* View */,
+			);
+			path = ReschedualRequests;
+			sourceTree = "<group>";
+		};
+		901EDC9B2EFC6AE100C1BBD5 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				901EDC9E2EFC763C00C1BBD5 /* ReschedualRequestCard.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		901EDC9C2EFC6AE700C1BBD5 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		901EDC9D2EFC6AEC00C1BBD5 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		90296D702E9B9FE000BC336B /* Questions */ = {
 			isa = PBXGroup;
 			children = (
@@ -1331,6 +1365,7 @@
 		903528092E48CD40005DC7AF /* Doctor */ = {
 			isa = PBXGroup;
 			children = (
+				901EDC9A2EFC6AC900C1BBD5 /* ReschedualRequests */,
 				90C7F3B12E70660A00907BF8 /* DocEditProfile */,
 				90C7F3962E6459F400907BF8 /* DocProfile */,
 				90C7F38F2E64459A00907BF8 /* ActiveCustomerPackages */,
@@ -3598,6 +3633,7 @@
 				902B880D2E1D57B7009D5234 /* MyMeasurementsView.swift in Sources */,
 				902B88072E1AA401009D5234 /* ProfileServices.swift in Sources */,
 				902B883E2E2AA9AE009D5234 /* MyMeasurementsModel.swift in Sources */,
+				901EDC9F2EFC763C00C1BBD5 /* ReschedualRequestCard.swift in Sources */,
 				BBBD00112A73101700F066DF /* RecieveImageVC.swift in Sources */,
 				BBBD00122A73101700F066DF /* UITableView+Extensions.swift in Sources */,
 				C82DCAB22AACB42F00322B55 /* MedicationScheduleDetailsVM.swift in Sources */,

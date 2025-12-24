@@ -142,6 +142,7 @@ struct PackagesView: View {
                                     inFlightWishlist: viewModel.inFlightWishlist,
                                     isLoadingMore: viewModel.isLoadingMore,
                                     action: { package in
+                                        guard Helper.shared.getSelectedUserType() != .Doctor else { return }
                                         pushTo(destination: PackageDetailsView(package: package))
                                     },
                                     likeAction: { packageId in

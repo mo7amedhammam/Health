@@ -62,7 +62,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 //                let initialVC: UIViewController = Helper.shared.CheckIfLoggedIn()
 //                ? initiateViewController(storyboardName: .main, viewControllerIdentifier: HTBC.self)!
 //                : initiateViewController(storyboardName: .main, viewControllerIdentifier: LoginVC.self)!
-                
+            
+                Helper.shared.setSelectedUserType(userType: .Customer)
                 if Helper.shared.AppCountryId() != nil{
                     let vc = Helper.shared.getSelectedUserType() == .Doctor ? UIHostingController(rootView:  DocTabView().environmentObject(EditProfileViewModel.shared)) : UIHostingController(rootView: NewTabView().environmentObject(EditProfileViewModel.shared))
                     let nav = UINavigationController(rootViewController: vc)

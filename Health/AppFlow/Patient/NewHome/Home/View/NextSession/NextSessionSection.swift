@@ -42,7 +42,7 @@ struct NextSessionSection: View {
 }
 
 #Preview {
-    NextSessionSection(upcomingSession: UpcomingSessionM(id: 1, doctorName: "أحمد سامي", sessionDate: "2025-07-02T10:22:00", timeFrom: "08:12:00", packageName: "باقات كبار السن (أهالينا)", categoryName: "التغذية العلاجية", mainCategoryID: 3, categoryID: 2, sessionMethod: "method", packageID: 3,mainCategoryName: "باقات الصحة العامة") )
+    NextSessionSection(upcomingSession: UpcomingSessionM(id: 1, doctorName: "أحمد سامي",sessionDate: "2025-07-02T10:22:00", timeFrom: "08:12:00", packageName: "باقات كبار السن (أهالينا)", categoryName: "التغذية العلاجية", mainCategoryID: 3, categoryID: 2, sessionMethod: nil, packageID: 3, customerName:"customer name",mainCategoryName: "باقات الصحة العامة") )
 }
 
 struct NextSessionHeaderView: View {
@@ -65,7 +65,6 @@ struct NextSessionHeaderView: View {
                 Text(session?.categoryName ?? "")
                     .font(.semiBold(size: 14))
                     .foregroundColor(.white)
-                
             }
             
             Spacer()
@@ -73,10 +72,10 @@ struct NextSessionHeaderView: View {
             HStack(alignment: .top) {
                 VStack(alignment: .trailing, spacing: 4) {
                     Text(session?.formattedSessionDate ?? "")
-                        .font(.regular(size: 12))
+                        .font(.regular(size: 13))
                         .foregroundColor(.white)
                     Text(session?.formattedSessionTime ?? "")
-                        .font(.regular(size: 12))
+                        .font(.regular(size: 13))
                         .foregroundColor(.white)
                 }
                 Image(.newcal)
@@ -172,7 +171,7 @@ struct NextSessionActionsView: View {
     var detailsAction: (() -> Void)?
     var rescheduleAction: (() -> Void)?
     var body: some View {
-        HStack(alignment: .bottom) {
+        HStack(alignment: .bottom,spacing: 10) {
             Button(action: {
                 // More details action
                 detailsAction?()
@@ -224,7 +223,7 @@ struct CountdownTimerView: View {
     
     var body: some View {
         HStack(spacing: 3) {
-            Spacer()
+//            Spacer()
             ForEach([
                 ("Days".localized, days),
                 ("Hours".localized, hours),
@@ -244,241 +243,18 @@ struct CountdownTimerView: View {
                     //                        .minimumScaleFactor(0.8)
                         .lineLimit(1)
                         .layoutPriority(1)
+                        .frame(maxWidth: .infinity)
                 }
                 
                 if label != "Minutes".localized {
                     Text(":")
-                        .font(.medium(size: 12))
+                        .font(.semiBold(size: 12))
                         .foregroundColor(.white)
                         .offset(y: -7)
                 }
             }
         }
+        .padding(.horizontal)
     }
 }
 
-//struct NextSessionSection: View {
-//    var upcomingSession: UpcomingSessionM?
-//    var canJoin = true
-//
-//    var body: some View {
-//        VStack{
-//            SectionHeader(image: Image(.newnxtsessionicon),title: "home_nextSession"){
-//                //                            go to last mes package
-//            }
-//
-//            ZStack(alignment: .bottomTrailing){
-//                HStack {
-//                    Image(.nextsessionbg)
-//                    Spacer()
-//                }.padding(8)
-//
-//                VStack{
-//                    HStack{
-//                        VStack{
-//                            // Title
-//                            Text("pack_name".localized)
-//                                .font(.semiBold(size: 14))
-//                                .foregroundStyle(Color.white)
-//                                .frame(maxWidth: .infinity, alignment: .leading)
-//                                .padding(.bottom,1)
-//                            // Title
-//                            Text(upcomingSession?.packageName ?? "")
-//                                .font(.medium(size: 10))
-//                                .foregroundStyle(Color.white)
-//                                .frame(maxWidth: .infinity, alignment: .leading)
-//                        }
-//
-//                        Spacer()
-//
-//                        HStack(alignment:.top) {
-//
-//                            VStack(){
-//                                // Title
-//                                Text(upcomingSession?.formatedSessionDate ?? "")
-//                                    .font(.regular(size: 12))
-//                                    .foregroundStyle(Color.white)
-//                                    .frame(maxWidth: .infinity, alignment: .trailing)
-//                                    .padding(.bottom,1)
-//
-//                                // Title
-//                                Text(upcomingSession?.fformatedSessionTime ?? "")
-//                                    .font(.regular(size: 12))
-//                                    .foregroundStyle(Color.white)
-//                                    .frame(maxWidth: .infinity, alignment: .trailing)
-//                            }
-//                            Image(.newcal)
-//                                .resizable()
-//                                .frame(width: 15, height: 15)
-//                        }
-//                    }
-//                    Spacer()
-//
-//                    HStack{
-//                        VStack{
-//                            // Title
-//                            Text("Doctor".localized)
-//                                .font(.regular(size: 12))
-//                                .foregroundStyle(Color.white)
-//                                .frame(maxWidth: .infinity, alignment: .leading)
-//                                .padding(.bottom,1)
-//                            // Title
-//                            Text(upcomingSession?.doctorName ?? "")
-//                                .font(.semiBold(size: 16))
-//                                .foregroundStyle(Color.white)
-//                                .frame(maxWidth: .infinity, alignment: .leading)
-//                        }
-//
-//                        Spacer()
-//
-//                        if canJoin{
-//                            Button(action: {
-//
-//                            }){
-//                                HStack(alignment: .center){
-//                                    Image(.newjoinicon)
-//                                        .resizable()
-//                                        .frame(width: 15, height: 15)
-//
-//                                    Text("Join_now".localized)
-//                                        .font(.bold(size: 12))
-//                                        .foregroundStyle(Color(.secondary))
-//
-//                                }
-//                                .padding(.horizontal,13)
-//                                .frame(height: 30)
-//                                //                                            .padding(.vertical,15)
-//                                .background{Color(.white)}
-//                                .cardStyle( cornerRadius: 3)
-//                            }
-//                        }else{
-//                            HStack(alignment:.top,spacing:3) {
-//                                VStack(){
-//                                    // Title
-//                                    Text("2")
-//                                        .font(.medium(size: 14))
-//                                        .foregroundStyle(Color.white)
-//                                        .frame(width: 31, height: 31)
-//                                        .background{Color(.secondaryMain)}
-//                                        .cardStyle( cornerRadius: 3)
-//
-//                                    // Title
-//                                    Text("Days".localized)
-//                                        .font(.regular(size: 8))
-//                                        .foregroundStyle(Color.white)
-//                                        .minimumScaleFactor(0.5)
-//                                        .lineLimit(1)
-//                                }
-//
-//                                Text(":")
-//                                    .font(.regular(size: 12))
-//                                    .foregroundStyle(Color.white)
-//                                    .offset(y:10)
-//
-//                                VStack(){
-//                                    // Title
-//                                    Text("11")
-//                                        .font(.medium(size: 14))
-//                                        .foregroundStyle(Color.white)
-//                                        .frame(width: 31, height: 31)
-//                                        .background{Color(.secondaryMain)}
-//                                        .cardStyle( cornerRadius: 3)
-//
-//                                    // Title
-//                                    Text("Hours".localized)
-//                                        .font(.regular(size: 8))
-//                                        .foregroundStyle(Color.white)
-//                                        .minimumScaleFactor(0.5)
-//                                        .lineLimit(1)
-//                                }
-//
-//                                Text(":")
-//                                    .font(.regular(size: 12))
-//                                    .foregroundStyle(Color.white)
-//                                    .offset(y:10)
-//
-//                                VStack(){
-//                                    // Title
-//                                    Text("31")
-//                                        .font(.medium(size: 14))
-//                                        .foregroundStyle(Color.white)
-//                                        .frame(width: 31, height: 31)
-//                                        .background{Color(.secondaryMain)}
-//                                        .cardStyle( cornerRadius: 3)
-//
-//                                    // Title
-//                                    Text("Minutes".localized)
-//                                        .font(.regular(size: 8))
-//                                        .foregroundStyle(Color.white)
-//                                        .minimumScaleFactor(0.5)
-//                                        .lineLimit(1)
-//                                }
-//                            }
-//                        }
-//                        Spacer()
-//
-//                    }
-//
-//                    Spacer()
-//
-//                    HStack(alignment:.bottom,spacing:3) {
-//
-//                        Button(action: {
-//
-//                        }){
-//                            HStack(alignment: .center){
-//                                Image( .newmoreicon)
-//                                    .renderingMode(.template)
-//                                    .resizable()
-//                                    .frame(width: 15, height: 15)
-//                                    .foregroundStyle(Color.white)
-//
-//                                Text("more_detail".localized)
-//                                    .font(.bold(size: 12))
-//                                    .foregroundStyle(Color.white)
-//                            }
-//                            //                                        .padding(.horizontal,30)
-//                            .frame(maxWidth: .infinity)
-//                            .frame(height: 30)
-//                            .background{Color(.secondaryMain)}
-//                            .cardStyle( cornerRadius: 3)
-//                        }
-//
-//                        Spacer()
-//
-//                        Button(action: {
-//
-//                        }){
-//                            HStack(alignment: .bottom){
-//                                Image(.newreschedual)
-//                                    .renderingMode(.template)
-//                                    .resizable()
-//                                    .frame(width: 15, height: 15)
-//
-//                                    .foregroundStyle(Color.white)
-//
-//                                Text("reSchedual".localized)
-//                                    .underline()
-//                                    .font(.regular(size: 12))
-//                                    .foregroundStyle(Color.white)
-//                            }
-//                            .padding(.horizontal,10)
-//                            .padding(.bottom,5)
-//                            .frame(alignment:.bottom)
-//                        }
-//                    }
-//                }
-//                .padding()
-//            }
-//            .frame(maxWidth: .infinity, maxHeight: 200)
-////            .background(Color.mainBlue)
-//            .horizontalGradientBackground()
-//            .cardStyle(cornerRadius: 4,shadowOpacity: 0.4)
-//            .padding(.bottom,5)
-//
-//        }
-//        .padding(.vertical,5)
-//        .padding(.bottom,5)
-//
-//    }
-//}

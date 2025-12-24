@@ -493,3 +493,8 @@
 "add2_subtitle" = "Consultations with nutritionists To achieve your goals.";
 "add2_button" = "Choose your package";
 
+//rescheduale request
+"old_schedual_" = "old schedual";
+"new_schedual_" = "new schedual";
+"accept_" = "accept";
+"reject_" = "reject";

@@ -122,7 +122,7 @@ struct PackageMoreDetailsView: View {
                                 Text(" - " + "sessions_Duration".localized)
                                     .font(.regular(size: 12))
 
-                                Text(" \(packageData?.duration ?? 0) " + "Minutes".localized)
+                                Text("+/- \(packageData?.duration ?? 0) " + "Minutes".localized)
                                     .font(.regular(size: 12))
                             }
                             .foregroundStyle(Color.white)
