@@ -179,6 +179,7 @@ struct PackageMoreDetailsView: View {
                                 .foregroundStyle(Color.white)
                                 .background(Color(.secondary).cornerRadius(1))
                         }
+                        .padding(8)
                     })
                     .customSheet(isPresented: $showingDatePicker, height: 250, radius: 12, content: {
                         VStack(spacing: 0) {
@@ -232,7 +233,7 @@ struct PackageMoreDetailsView: View {
                     }
                 }
                 .padding(.horizontal,12)
-                .padding(.top,10)
+//                .padding(.top,10)
 
                 ZStack(){
 //                    GeometryReader { geometry in

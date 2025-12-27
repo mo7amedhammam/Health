@@ -18,14 +18,15 @@ final class AvailableDoctorsViewModel:ObservableObject {
     private var loadTask:Task<Void,Never>? = nil
     
     // Pagination (if needed)
-    var maxResultCount: Int? = 5
-    var skipCount: Int? = 0
+    var maxResultCount: Int = 5
+    var skipCount: Int = 0
     
     // Outputs
-    @Published var availableDoctors: [AvailabeDoctorsItemM] = []
+    @Published var availableDoctors: AvailabeDoctorsM?
     @Published var isLoading: Bool? = false
     @Published var errorMessage: String? = nil
-    
+    @Published var isLoadingMore: Bool = false
+
     // Navigation state
     @Published var selectedDoctorPackageId: Int? = nil
     
@@ -52,10 +53,10 @@ final class AvailableDoctorsViewModel:ObservableObject {
         isLoading = true
         defer { isLoading = false }
         
-        guard let maxResultCount, let skipCount else {
-            self.errorMessage = "check inputs"
-            return
-        }
+//        guard let maxResultCount, let skipCount else {
+//            self.errorMessage = "check inputs"
+//            return
+//        }
         
         let parameters: [String: Any] = [
             "appCountryPackageId": appCountryPackageId,
@@ -70,7 +71,7 @@ final class AvailableDoctorsViewModel:ObservableObject {
                 target,
                 responseType: AvailabeDoctorsM.self
             )
-            self.availableDoctors = response?.items ?? []
+            self.availableDoctors = response
         } catch {
             self.errorMessage = error.localizedDescription
         }
@@ -83,6 +84,15 @@ final class AvailableDoctorsViewModel:ObservableObject {
     
     func clearSelection() {
         selectedDoctorPackageId = nil
+    }
+    func loadMoreDoctorsIfNeeded() async {
+        guard isLoading == false,
+              let currentCount = availableDoctors?.items?.count,
+              let totalCount = availableDoctors?.totalCount,
+              currentCount < totalCount else { return }
+
+        skipCount = skipCount + maxResultCount
+        await self.getAvailableDoctors()
     }
     func refresh() async{
         loadTask?.cancel()

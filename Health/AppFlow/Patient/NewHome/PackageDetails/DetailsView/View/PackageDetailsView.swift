@@ -22,12 +22,16 @@ struct PackageDetailsView: View {
 
             ScrollView(showsIndicators: false) {
                 VStack(alignment: .leading) {
-                    AvailableDoctorsListView(
-                        doctors: viewModel.availableDoctors,
-                        action: { doctor in
-                            viewModel.selectDoctor(doctor)
-                        }
-                    )
+                    if let doctors = viewModel.availableDoctors?.items {
+                        AvailableDoctorsListView(
+                            doctors: doctors,
+                            action: { doctor in
+                                viewModel.selectDoctor(doctor)
+                            }, loadMore: {
+                                Task {await viewModel.loadMoreDoctorsIfNeeded()}
+                            }
+                        )
+                    }
                 }
                 .padding([.horizontal, .top], 10)
 
@@ -188,7 +192,8 @@ struct PackageDetailsView: View {
 struct AvailableDoctorsListView: View {
     let doctors: [AvailabeDoctorsItemM]
     var action: ((AvailabeDoctorsItemM) -> Void)?
-
+    var loadMore: (() -> Void)?
+    
     var body: some View {
         VStack {
             ScrollView {
@@ -250,6 +255,14 @@ struct AvailableDoctorsListView: View {
                     .background { Color.white }
                     .padding(10)
                     .cardStyle(cornerRadius: 3)
+                    .onAppear {
+                        if item == doctors.last {
+                                loadMore?()
+//                            Task {
+//                                await viewModel.loadMoreCategoriesIfNeeded()
+//                            }
+                        }
+                    }
                 }
                 .padding(10)
             }
