@@ -494,7 +494,10 @@
 "add2_button" = "اختر باقتك الآن";
 
 //rescheduale request
+"rescheduale_requests_" = "طلبات تغيير المواعيد";
+"requests_" = "الطلبات";
 "old_schedual_" = "المعاد القديم";
 "new_schedual_" = "المعاد الجديد";
 "accept_" = "قبول";
 "reject_" = "رفض";
+"no_requests_found" = "لم يتم العثور على طلبات";

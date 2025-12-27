@@ -494,7 +494,10 @@
 "add2_button" = "Choose your package";
 
 //rescheduale request
+"rescheduale_requests_" = "rescheduale requests";
+"requests_" = "requests";
 "old_schedual_" = "old schedual";
 "new_schedual_" = "new schedual";
 "accept_" = "accept";
 "reject_" = "reject";
+"no_requests_found" = "no requests found";

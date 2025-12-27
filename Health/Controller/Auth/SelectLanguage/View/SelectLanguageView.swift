@@ -118,7 +118,12 @@ struct SelectLanguageView : View {
                     rootVC.navigationController?.toolbar.isHidden = true
                     Helper.shared.changeRootVC(newroot: rootVC, transitionFrom: .fromRight)
                 }else{
-                    let rootVC = UIHostingController(rootView: NewTabView(selectedTab: 0))
+                    let rootVC = Helper.shared.getSelectedUserType() == .Doctor ?
+                    UIHostingController(rootView: DocTabView(selectedTab: 0).environmentObject(EditProfileViewModel.shared)) :
+                    UIHostingController(rootView: NewTabView(selectedTab: 0).environmentObject(EditProfileViewModel.shared))
+                                    
+//                    let rootVC = UIHostingController(rootView: NewTabView(selectedTab: 0))
+
                     rootVC.navigationController?.isNavigationBarHidden = true
                     rootVC.navigationController?.toolbar.isHidden = true
                     Helper.shared.changeRootVC(newroot: rootVC, transitionFrom: .fromRight)

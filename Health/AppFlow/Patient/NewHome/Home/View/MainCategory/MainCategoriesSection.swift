@@ -11,11 +11,12 @@ struct MainCategoriesSection: View {
     let categories: HomeCategoryM?
     let action: ((HomeCategoryItemM) -> Void)?
     let loadMore: (() -> Void)?
-
+    let moreBtnAction: (() -> Void)?
     var body: some View {
         VStack(spacing: 5) {
             SectionHeader(image: Image(.newcategicon), title: "home_maincat") {
                 // go to last mes package
+                moreBtnAction?()
             }
             .padding(.horizontal)
             
@@ -93,8 +94,8 @@ struct MainCategoriesSection: View {
 //        .padding(.bottom, 5)
 //    }
 //}
-
-private struct MainCategoryCardView: View, Equatable {
+ 
+struct MainCategoryCardView: View, Equatable {
     let item: HomeCategoryItemM
     let action: ((HomeCategoryItemM) -> Void)?
     
@@ -161,7 +162,8 @@ private struct MainCategoryCardView: View, Equatable {
 }
 
 // Stable identity for diffing in ForEach
-private extension HomeCategoryItemM {
+
+extension HomeCategoryItemM {
     var stableID: Int {
         if let id { return id }
         // Fallback: combine several fields to reduce collision risk
@@ -176,5 +178,5 @@ private extension HomeCategoryItemM {
 }
 
 #Preview {
-    MainCategoriesSection(categories: nil, action: nil, loadMore: {})
+    MainCategoriesSection(categories: nil, action: nil, loadMore: {}, moreBtnAction: {})
 }

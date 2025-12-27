@@ -352,13 +352,34 @@ private extension NewHomeViewModel {
 // MARK: - Pagination helpers (optional)
 extension NewHomeViewModel {
     func loadMoreCategoriesIfNeeded() async {
-        guard isLoading == false,
-              let currentCount = homeCategories?.items?.count,
-              let totalCount = homeCategories?.totalCount,
-              currentCount < totalCount else { return }
-
-        HomeCategoriesSkipCount = HomeCategoriesSkipCount + maxResultCount
-        await getHomeCategories()
+//        loadTask?.cancel()
+//        loadTask = Task { [weak self] in
+//            guard let self else { return }
+            // Guard isLoading is not necessary if we serialize, but keep it for UI flags
+            if self.isLoading == true { return }
+            
+            guard isLoading == false,
+                  let currentCount = homeCategories?.items?.count,
+                  let totalCount = homeCategories?.totalCount,
+                  currentCount < totalCount else { return }
+            
+            HomeCategoriesSkipCount = HomeCategoriesSkipCount + maxResultCount
+            await getHomeCategories()
+//        }
+//        await loadTask?.value
+    }
+    func refreshMoreCategories() async {
+        
+        loadTask?.cancel()
+        loadTask = Task { [weak self] in
+            guard let self else { return }
+            // Guard isLoading is not necessary if we serialize, but keep it for UI flags
+            if self.isLoading == true { return }
+        
+            HomeCategoriesSkipCount = 0
+            await getHomeCategories()
+        }
+        await loadTask?.value
     }
 
     func loadMoreFeaturedPackagesIfNeeded() async {

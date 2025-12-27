@@ -17,6 +17,9 @@
 		901792A82EDDD3E00055EBD9 /* DocSchedualesServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 901792A72EDDD3D50055EBD9 /* DocSchedualesServices.swift */; };
 		901792AA2EDDF5910055EBD9 /* SchedualListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 901792A92EDDF5910055EBD9 /* SchedualListView.swift */; };
 		901EDC9F2EFC763C00C1BBD5 /* ReschedualRequestCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 901EDC9E2EFC763C00C1BBD5 /* ReschedualRequestCard.swift */; };
+		901EDCA12F001F2800C1BBD5 /* MainCategoriesListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 901EDCA02F001F2800C1BBD5 /* MainCategoriesListView.swift */; };
+		901EDCA32F002F1E00C1BBD5 /* ReschedualeRequestsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 901EDCA22F002F1E00C1BBD5 /* ReschedualeRequestsView.swift */; };
+		901EDCA52F002FAF00C1BBD5 /* ReschedualeRequestViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 901EDCA42F002FA200C1BBD5 /* ReschedualeRequestViewModel.swift */; };
 		901FC1222EAE1D22005489D8 /* CustomerAlergiesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 901FC1212EAE1D22005489D8 /* CustomerAlergiesViewModel.swift */; };
 		9020846C2E7FF2870001C55D /* ReSchedualViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9020846B2E7FF2790001C55D /* ReSchedualViewModel.swift */; };
 		90296D792E9BAB0600BC336B /* QuestionaireView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90296D782E9BAB0600BC336B /* QuestionaireView.swift */; };
@@ -370,6 +373,9 @@
 		901792A72EDDD3D50055EBD9 /* DocSchedualesServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocSchedualesServices.swift; sourceTree = "<group>"; };
 		901792A92EDDF5910055EBD9 /* SchedualListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchedualListView.swift; sourceTree = "<group>"; };
 		901EDC9E2EFC763C00C1BBD5 /* ReschedualRequestCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReschedualRequestCard.swift; sourceTree = "<group>"; };
+		901EDCA02F001F2800C1BBD5 /* MainCategoriesListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCategoriesListView.swift; sourceTree = "<group>"; };
+		901EDCA22F002F1E00C1BBD5 /* ReschedualeRequestsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReschedualeRequestsView.swift; sourceTree = "<group>"; };
+		901EDCA42F002FA200C1BBD5 /* ReschedualeRequestViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReschedualeRequestViewModel.swift; sourceTree = "<group>"; };
 		901FC1212EAE1D22005489D8 /* CustomerAlergiesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomerAlergiesViewModel.swift; sourceTree = "<group>"; };
 		9020846B2E7FF2790001C55D /* ReSchedualViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReSchedualViewModel.swift; sourceTree = "<group>"; };
 		90296D782E9BAB0600BC336B /* QuestionaireView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionaireView.swift; sourceTree = "<group>"; };
@@ -886,6 +892,7 @@
 		901EDC9B2EFC6AE100C1BBD5 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				901EDCA22F002F1E00C1BBD5 /* ReschedualeRequestsView.swift */,
 				901EDC9E2EFC763C00C1BBD5 /* ReschedualRequestCard.swift */,
 			);
 			path = View;
@@ -894,6 +901,7 @@
 		901EDC9C2EFC6AE700C1BBD5 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				901EDCA42F002FA200C1BBD5 /* ReschedualeRequestViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -1152,6 +1160,7 @@
 			isa = PBXGroup;
 			children = (
 				902B87EF2E182CCE009D5234 /* MainCategoriesSection.swift */,
+				901EDCA02F001F2800C1BBD5 /* MainCategoriesListView.swift */,
 			);
 			path = MainCategory;
 			sourceTree = "<group>";
@@ -3479,6 +3488,7 @@
 				90FDD3092DDF2B6E00C3BABB /* TicketView.swift in Sources */,
 				BB518CE62A9A123200242FAD /* TipsCategoriesCVCell1.swift in Sources */,
 				BBBEB1BF2B56F4D700502D3E /* TipsCVCell.swift in Sources */,
+				901EDCA52F002FAF00C1BBD5 /* ReschedualeRequestViewModel.swift in Sources */,
 				902B88262E21D0C6009D5234 /* TipDetailsView.swift in Sources */,
 				90FDD3412DE7882300C3BABB /* SubcripedPackageDetailsViewModel.swift in Sources */,
 				BB14DAE32A7AFA0700389B96 /* MeasurementsVC.swift in Sources */,
@@ -3499,6 +3509,7 @@
 				902B87FC2E1A7BA8009D5234 /* BiometricLoginButton.swift in Sources */,
 				BBA1DA182AB11E5C0042713A /* NotificationVM.swift in Sources */,
 				BBC3C3ED2ACC912400805524 /* HomeCVCell3.swift in Sources */,
+				901EDCA32F002F1E00C1BBD5 /* ReschedualeRequestsView.swift in Sources */,
 				BB5A26712B2E1F000005C9B8 /* HelpVM.swift in Sources */,
 				BBC7B45B2A72CC820079355E /* AppDelegate.swift in Sources */,
 				90FDD34B2DEB1CE100C3BABB /* PackageFilesViewModel.swift in Sources */,
@@ -3626,6 +3637,7 @@
 				90FDD3602DF74D4000C3BABB /* ChatsView.swift in Sources */,
 				BB48F8A32A7482480051F12C /* OtpVC.swift in Sources */,
 				902B87B52E05BC9F009D5234 /* LookUpsServices.swift in Sources */,
+				901EDCA12F001F2800C1BBD5 /* MainCategoriesListView.swift in Sources */,
 				90C7F3B82E7066F300907BF8 /* DocEditProfileViewModel.swift in Sources */,
 				904748552DD4C7F90016C3DC /* KFImageLoader.swift in Sources */,
 				BBBD001A2A73101700F066DF /* ImageFromGallary.swift in Sources */,

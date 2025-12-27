@@ -117,9 +117,9 @@ struct DocProfileViewUI: View {
                                     router.push( WishListView())
                                 }
                                 
-//                                ProfileRow(title: "profile_allergies".localized, icon: "profile_alergy"){
-//                                    router.push( AllergiesView())
-//                                }
+                                ProfileRow(title: "rescheduale_requests_".localized, icon: "reschedualeRequestIcn"){
+                                    router.push( ReschedualeRequestsView())
+                                }
                                 
                                 ProfileRow(title: "profile_Payments".localized, icon: "walletIcon",hasDivider:false){
                                     router.push( DocPaymentsView().environmentObject(paymentsVM) )

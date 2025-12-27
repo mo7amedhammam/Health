@@ -9,7 +9,7 @@
 import Foundation
 
 // MARK: - UpcomingSessionM
-struct UpcomingSessionM: Codable {
+struct UpcomingSessionM: Codable,Hashable {
     var id: Int?
     var doctorName, sessionDate, timeFrom, packageName: String?
     var categoryName: String?

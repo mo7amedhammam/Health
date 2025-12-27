@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct NewHomeView: View {
-    @EnvironmentObject var router: NavigationRouter
+//    @EnvironmentObject var router: NavigationRouter
     @StateObject private var viewModel: NewHomeViewModel
     @EnvironmentObject var profileViewModel: EditProfileViewModel
     
@@ -161,9 +161,11 @@ struct NewHomeView: View {
                     MainCategoriesSection(categories: viewModel.homeCategories) { category in
                         pushTo(destination:PackagesView(mainCategory: category))
                     } loadMore:{
-                        Task {
-                            await viewModel.loadMoreCategoriesIfNeeded()
-                        }
+//                        Task {
+//                            await viewModel.loadMoreCategoriesIfNeeded()
+//                        }
+                    } moreBtnAction: {
+                        pushTo(destination:MainCategoriesListView().environmentObject(viewModel) )
                     }
                     
                     ZStack(alignment: .leading) {
@@ -295,7 +297,7 @@ struct NewHomeView: View {
             }
         }
         .localizeView()
-        .withNavigation(router: router)
+//        .withNavigation(router: router)
         .showHud(isShowing: $viewModel.isLoading )
         NavigationLink( "", destination: destination, isActive: $isactive)
 

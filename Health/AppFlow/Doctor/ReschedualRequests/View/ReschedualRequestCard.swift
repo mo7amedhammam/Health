@@ -14,7 +14,7 @@ struct ReschedualRequestCard: View {
 
     var body: some View {
         VStack {
-//            SectionHeader(image: Image(.newnxtsessionicon), title: "home_nextSession") {}
+            SectionHeader(image: Image(.reschedualeRequestIcn), title: "requests_",MoreBtnimage: nil) {}
             
             ZStack(alignment: .bottomTrailing) {
                 HStack {
