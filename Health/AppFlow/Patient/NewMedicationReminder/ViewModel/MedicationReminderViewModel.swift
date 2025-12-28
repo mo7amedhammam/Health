@@ -15,7 +15,7 @@ enum FrequencyUnit: String, CaseIterable {
 class MedicationReminderViewModel:ObservableObject {
     static let shared = MedicationReminderViewModel()
     private let networkService: AsyncAwaitNetworkServiceProtocol
-    private var loadTask: Task<Void,Never>? = nil
+//    private var loadTask: Task<Void,Never>? = nil
     
 //    var customerId: Int?
     var maxResultCount: Int = 5
@@ -78,10 +78,10 @@ class MedicationReminderViewModel:ObservableObject {
     @MainActor
     func GetNotifications() async {
         // Cancel any in-flight unified load to prevent overlap
-        loadTask?.cancel()
-        loadTask = Task { [weak self] in
-            guard let self else { return }
-            if self.isLoading == true { return }
+//        loadTask?.cancel()
+//        loadTask = Task { [weak self] in
+//            guard let self else { return }
+//            if self.isLoading == true { return }
 
             //        guard let customerId = customerId else {return}
             let Parameters:[String: Any] =  ["maxResultCount" : maxResultCount ,"skipCount" : skipCount ]
@@ -106,8 +106,8 @@ class MedicationReminderViewModel:ObservableObject {
             } catch {
                 self.errorMessage = error.localizedDescription
             }
-        }
-        await loadTask?.value
+//        }
+//        await loadTask?.value
         
     }
     
@@ -188,6 +188,7 @@ class MedicationReminderViewModel:ObservableObject {
                 responseType: ModelCreateNotification.self
             )
             showAddSheet = false
+            removeInputs()
             await GetNotifications()
             
         } catch {
@@ -234,23 +235,20 @@ class MedicationReminderViewModel:ObservableObject {
     //.............................................
     //.............................................
     //.............................................
-
-    
-    
 }
 
-
 extension MedicationReminderViewModel {
-    
     @MainActor
     func refresh() async {
         skipCount = 0
         isLoading = true
         defer { isLoading = false }
 //        async let normalRang: () = fetchNormalRange()
-        async let details: () = GetNotifications()
+//        async let details: () = GetNotifications()
 
-         _ = await (details)
+        await GetNotifications()
+//         _ = await (details)
+        
     }
 
     @MainActor
@@ -268,4 +266,14 @@ extension MedicationReminderViewModel {
         skipCount = 0
         reminders = nil
     }
+    
+    func removeInputs() {
+        drugName.removeAll()
+        selectedDrug = nil
+        frequencyValue.removeAll()
+        durationDays.removeAll()
+        startDate = nil
+        startTime = nil
+    }
+    
 }

@@ -5,7 +5,6 @@
 //  Created by mohamed hammam on 18/07/2025.
 //
 
-
 import SwiftUI
 
 struct MedicationReminderView: View {
@@ -53,7 +52,6 @@ struct MedicationReminderView: View {
                     //                            go to last mes package
                 }
                 .padding([.horizontal])
-
                         List(viewModel.reminders?.items ?? [],id: \.self) { reminder in
                             ReminderCardView(item: reminder)
                                 .listRowSeparator(.hidden)
@@ -70,20 +68,20 @@ struct MedicationReminderView: View {
                         }
             }
         }
-        .onAppear(){
-            Task{
+        .task(){
+//            Task{
                 await viewModel.refresh()
-            }
+//            }
         }
         .localizeView()
-        .showHud(isShowing:  $viewModel.isLoading)
+        .showHud(isShowing: $viewModel.isLoading)
+        .customSheet(isPresented: $viewModel.showAddSheet,height: 570){
+            AddReminderSheet().environmentObject(viewModel)
+        }
         .errorAlert(isPresented: Binding(
             get: { viewModel.errorMessage != nil },
             set: { if !$0 { viewModel.errorMessage = nil } }
         ), message: viewModel.errorMessage)
-        .customSheet(isPresented: $viewModel.showAddSheet,height: 570){
-            AddReminderSheet().environmentObject(viewModel)
-        }
 
 //        .sheet(isPresented: $showFilterSheet) {
 //            FilterReminderSheet(filter: $viewModel.filter)
@@ -203,6 +201,7 @@ struct AddReminderSheet: View {
                 }
 
                 CustomDropListInputFieldUI(title: "add_medication_frequency_title", placeholder: "add_medication_frequency_placeholder",text: $viewModel.frequencyValue, isDisabled: false, showDropdownIndicator:false, trailingView: AnyView(Image(.reminderDura)))
+                    .keyboardType(.asciiCapableNumberPad)
 
                 // Frequency Unit Radio Buttons
                 HStack {
@@ -222,7 +221,7 @@ struct AddReminderSheet: View {
                 }
                 
                 CustomDropListInputFieldUI(title: "add_duration_title", placeholder: "add_duration_placeholder",text: $viewModel.durationDays, isDisabled: false, showDropdownIndicator:false, trailingView: AnyView(Image(.reminderDura)))
-
+                    .keyboardType(.asciiCapableNumberPad)
             }
 
             HStack(spacing: 20) {
@@ -240,5 +239,10 @@ struct AddReminderSheet: View {
             .padding(.top)
         }
         .padding()
+        .errorAlert(isPresented: Binding(
+            get: { viewModel.errorMessage != nil },
+            set: { if !$0 { viewModel.errorMessage = nil } }
+        ), message: viewModel.errorMessage)
+
     }
 }

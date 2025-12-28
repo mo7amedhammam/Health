@@ -117,7 +117,7 @@ struct DocProfileViewUI: View {
                                     router.push( WishListView())
                                 }
                                 
-                                ProfileRow(title: "rescheduale_requests_".localized, icon: "reschedualeRequestIcn"){
+                                ProfileRow(title: "rescheduale_requests_".localized, icon: "rescheduale_request_icn_Wh"){
                                     router.push( ReschedualeRequestsView())
                                 }
                                 
