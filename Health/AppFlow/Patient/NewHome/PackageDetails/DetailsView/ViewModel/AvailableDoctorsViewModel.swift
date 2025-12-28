@@ -25,7 +25,7 @@ final class AvailableDoctorsViewModel:ObservableObject {
     @Published var availableDoctors: AvailabeDoctorsM?
     @Published var isLoading: Bool? = false
     @Published var errorMessage: String? = nil
-    @Published var isLoadingMore: Bool = false
+    @Published var canLoadMore: Bool? = false
 
     // Navigation state
     @Published var selectedDoctorPackageId: Int? = nil
@@ -41,11 +41,11 @@ final class AvailableDoctorsViewModel:ObservableObject {
         self.networkService = networkService
     }
     
-    func loadOnce() async {
-        guard !didLoad else { return }
-        didLoad = true
-        await getAvailableDoctors()
-    }
+//    func loadOnce() async {
+//        guard !didLoad else { return }
+//        didLoad = true
+//        await getAvailableDoctors()
+//    }
     
     func getAvailableDoctors() async {
         guard let appCountryPackageId = package.appCountryPackageId else { return }
@@ -71,7 +71,18 @@ final class AvailableDoctorsViewModel:ObservableObject {
                 target,
                 responseType: AvailabeDoctorsM.self
             )
-            self.availableDoctors = response
+            if skipCount == 0 {
+                availableDoctors = response
+            } else {
+                if var existing = self.availableDoctors,
+                   let newItems = response?.items {
+                    existing.items?.append(contentsOf: newItems)
+                    existing.totalCount = response?.totalCount
+                    availableDoctors = existing
+                }
+            }
+            canLoadMore = (response?.items?.count ?? 0) < (response?.totalCount ?? 0)
+
         } catch {
             self.errorMessage = error.localizedDescription
         }
@@ -86,7 +97,7 @@ final class AvailableDoctorsViewModel:ObservableObject {
         selectedDoctorPackageId = nil
     }
     func loadMoreDoctorsIfNeeded() async {
-        guard isLoading == false,
+        guard (canLoadMore ?? false && isLoading == false),
               let currentCount = availableDoctors?.items?.count,
               let totalCount = availableDoctors?.totalCount,
               currentCount < totalCount else { return }

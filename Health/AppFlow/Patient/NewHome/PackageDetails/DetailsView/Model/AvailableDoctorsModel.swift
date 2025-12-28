@@ -23,3 +23,44 @@ struct AvailabeDoctorsItemM: Codable,Hashable {
         case doctorImage, doctorName, speciality
     }
 }
+
+extension AvailabeDoctorsItemM {
+    
+    static let mockList: [AvailabeDoctorsItemM] = [
+        AvailabeDoctorsItemM(
+            packageDoctorID: 101,
+            doctorID: 1,
+            doctorImage: "https://randomuser.me/api/portraits/men/32.jpg",
+            doctorName: "Dr. Ahmed Hassan",
+            speciality: "Cardiology"
+        ),
+        AvailabeDoctorsItemM(
+            packageDoctorID: 102,
+            doctorID: 2,
+            doctorImage: "https://randomuser.me/api/portraits/women/44.jpg",
+            doctorName: "Dr. Sara Mohamed",
+            speciality: "Dermatology"
+        ),
+        AvailabeDoctorsItemM(
+            packageDoctorID: 103,
+            doctorID: 3,
+            doctorImage: "https://randomuser.me/api/portraits/men/76.jpg",
+            doctorName: "Dr. Omar Ali",
+            speciality: "Orthopedics"
+        ),
+        AvailabeDoctorsItemM(
+            packageDoctorID: 104,
+            doctorID: 4,
+            doctorImage: "https://randomuser.me/api/portraits/women/65.jpg",
+            doctorName: "Dr. Nour Khaled",
+            speciality: "Pediatrics"
+        ),
+        AvailabeDoctorsItemM(
+            packageDoctorID: 105,
+            doctorID: 5,
+            doctorImage: "https://randomuser.me/api/portraits/men/11.jpg",
+            doctorName: "Dr. Youssef Mahmoud",
+            speciality: "Neurology"
+        )
+    ]
+}

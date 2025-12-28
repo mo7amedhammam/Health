@@ -20,27 +20,32 @@ struct PackageDetailsView: View {
 
             pricingBar(package: viewModel.package)
 
-            ScrollView(showsIndicators: false) {
-                VStack(alignment: .leading) {
-                    if let doctors = viewModel.availableDoctors?.items {
+            Spacer()
+            
+//            ScrollView(showsIndicators: false) {
+//                VStack(alignment: .leading) {
+            if let doctors = viewModel.availableDoctors?.items{
                         AvailableDoctorsListView(
                             doctors: doctors,
                             action: { doctor in
                                 viewModel.selectDoctor(doctor)
-                            }, loadMore: {
+                            },
+                            isLoading: viewModel.isLoading ?? false,
+                            canLoadMore: viewModel.canLoadMore ?? false,
+                            loadMore: {
+//                                guard viewModel.canLoadMore == true,viewModel.isLoading == false else { return }
                                 Task {await viewModel.loadMoreDoctorsIfNeeded()}
                             }
                         )
-                    }
-                }
-                .padding([.horizontal, .top], 10)
+//                    }
+//                }
 
                 Spacer().frame(height: 55)
             }
         }
         .edgesIgnoringSafeArea([.top, .horizontal])
         .task {
-            await viewModel.loadOnce()
+            await viewModel.getAvailableDoctors()
         }
         .refreshable {
             await viewModel.refresh()
@@ -192,11 +197,20 @@ struct PackageDetailsView: View {
 struct AvailableDoctorsListView: View {
     let doctors: [AvailabeDoctorsItemM]
     var action: ((AvailabeDoctorsItemM) -> Void)?
+    var isLoading: Bool
+    var canLoadMore: Bool
     var loadMore: (() -> Void)?
-    
+
+    init(doctors: [AvailabeDoctorsItemM], action: ((AvailabeDoctorsItemM) -> Void)? = nil,isLoading: Bool, canLoadMore: Bool, loadMore: (() -> Void)? = nil) {
+        self.doctors = doctors
+        self.action = action
+        self.isLoading = isLoading
+        self.canLoadMore = canLoadMore
+        self.loadMore = loadMore
+    }
     var body: some View {
-        VStack {
-            ScrollView {
+        ScrollView {
+        LazyVStack {
                 ForEach(doctors, id: \.self) { item in
                     Button(action: { action?(item) }) {
                         VStack {
@@ -256,19 +270,17 @@ struct AvailableDoctorsListView: View {
                     .padding(10)
                     .cardStyle(cornerRadius: 3)
                     .onAppear {
-                        if item == doctors.last {
+                        guard item == doctors.last else{ return }
+                            guard canLoadMore ,!isLoading else { return }
                                 loadMore?()
-//                            Task {
-//                                await viewModel.loadMoreCategoriesIfNeeded()
-//                            }
-                        }
                     }
                 }
-                .padding(10)
+                .padding(.horizontal,10)
             }
-            .padding(-10)
+            .padding([.top], 10)
         }
         .padding(.bottom, 5)
+
     }
 }
 

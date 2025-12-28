@@ -90,3 +90,65 @@ struct FeaturedPackageItemM: Codable,Hashable {
 //    }
 //}
 
+
+extension MyMeasurementsStatsM {
+    
+    static let mockList: [MyMeasurementsStatsM] = [
+        MyMeasurementsStatsM(
+            medicalMeasurementID: 1,
+            image: "blood_pressure",
+            title: "Blood Pressure",
+            measurementsCount: 12,
+            lastMeasurementValue: "120/80",
+            lastMeasurementDate: "2025-11-30",
+            formatValue: "mmHg",
+            regExpression: #"^\d{2,3}/\d{2,3}$"#,
+            normalRangValue: "90/60 - 120/80"
+        ),
+        MyMeasurementsStatsM(
+            medicalMeasurementID: 2,
+            image: "heart_rate",
+            title: "Heart Rate",
+            measurementsCount: 20,
+            lastMeasurementValue: "72",
+            lastMeasurementDate: "2025-11-29",
+            formatValue: "bpm",
+            regExpression: #"^\d{2,3}$"#,
+            normalRangValue: "60 - 100"
+        ),
+        MyMeasurementsStatsM(
+            medicalMeasurementID: 3,
+            image: "blood_sugar",
+            title: "Blood Sugar",
+            measurementsCount: 8,
+            lastMeasurementValue: "105",
+            lastMeasurementDate: "2025-11-28",
+            formatValue: "mg/dL",
+            regExpression: #"^\d{2,3}$"#,
+            normalRangValue: "70 - 140"
+        ),
+        MyMeasurementsStatsM(
+            medicalMeasurementID: 4,
+            image: "weight",
+            title: "Weight",
+            measurementsCount: 15,
+            lastMeasurementValue: "78",
+            lastMeasurementDate: "2025-11-27",
+            formatValue: "kg",
+            regExpression: #"^\d{2,3}$"#,
+            normalRangValue: "—"
+        ),
+        MyMeasurementsStatsM(
+            medicalMeasurementID: 5,
+            image: "temperature",
+            title: "Body Temperature",
+            measurementsCount: 6,
+            lastMeasurementValue: "36.8",
+            lastMeasurementDate: "2025-11-26",
+            formatValue: "°C",
+            regExpression: #"^\d{2}(\.\d)?$"#,
+            normalRangValue: "36.1 - 37.2"
+        )
+    ]
+}
+

@@ -77,7 +77,7 @@ struct MyMeasurementsView: View {
         }
         .onAppear{
             Task{
-                if Helper.shared.CheckIfLoggedIn(){
+                if !Helper.shared.CheckIfLoggedIn(){
                     await viewModel.fetchStats()
                 }else{
                     viewModel.clear()
@@ -104,7 +104,7 @@ struct MeasurementCard: View {
 
     var body: some View {
         VStack(alignment: .trailing, spacing: 6) {
-            HStack {
+            HStack() {
                 VStack(alignment: .leading,spacing: 5){
                     Text(item.title ?? "")
                         .font(.bold(size: 16))
@@ -124,21 +124,23 @@ struct MeasurementCard: View {
 //                            .resizable()
 //                        .clipShape(Circle())
                     .scaledToFit()
-                    .frame(width: 35, height: 35)
+                    .frame(width: 36, height: 36)
                 }
             }
+            .frame(maxHeight: .infinity,alignment: .center)
 
             Divider()
 
-            HStack {
-                Text("Last_Measurement".localized)
+            HStack (){
+                (Text("Last_Measurement".localized)
                     .font(.regular(size: 10))
-                    .foregroundColor(.gray)
                     .foregroundColor(.mainBlue)
-
-                Text(item.lastMeasurementValue ?? "--")
+                 + Text(item.lastMeasurementValue ?? "--")
                     .font(.bold(size: 10))
                     .foregroundColor(Color(.secondary))
+            )
+//                .frame(maxWidth: .infinity,alignment: .leading)
+
 
                 Spacer()
 
@@ -149,13 +151,17 @@ struct MeasurementCard: View {
                      + Text("\( date)"))
                     .font(.regular(size: 6))
                     .foregroundColor(.mainBlue)
+//                    .frame(maxWidth: .infinity,alignment: .trailing)
                 }
             }
+            .padding(.vertical,3)
+
         }
         .frame(height: 88)
-        .padding(.horizontal)
+        .padding(.horizontal,10)
+        .padding(.vertical,10)
         .background(Color.white)
-        .cardStyle(cornerRadius: 3,shadowOpacity: 0.066)
+        .cardStyle(cornerRadius: 6,shadowOpacity: 0.0696)
     }
 }
 

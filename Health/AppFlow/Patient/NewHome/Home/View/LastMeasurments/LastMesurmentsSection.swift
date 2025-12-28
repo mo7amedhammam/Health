@@ -79,7 +79,7 @@ private struct MeasurementCell: View, Equatable {
                     placeholder: Image("logo"),
                     shouldRefetch: true
                 )
-                .frame(width: 30, height: 30)
+                .frame(width: 32, height: 32)
 
                 Text(item.lastMeasurementValue ?? "")
                     .font(.bold(size: 16))
@@ -88,7 +88,7 @@ private struct MeasurementCell: View, Equatable {
                     .padding(.vertical, 0)
 
                 Text(item.formatteddate ?? "")
-                    .font(.medium(size: 10))
+                    .font(.medium(size: 11))
                     .foregroundStyle(Color.mainBlue)
                     .frame(maxWidth: .infinity)
             }

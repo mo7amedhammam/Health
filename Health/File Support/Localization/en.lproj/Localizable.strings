@@ -367,8 +367,8 @@
 "your_reminders" = "your reminders";
 "rem_start_date" = "start date";
 "rem_start_time" = "start time";
-"red_drug_every" = "drug every";
-"rem_drug_duration" = "rem_drug_duration";
+"rem_drug_every" = "drug every";
+"rem_drug_duration" = "rem drug duration";
 "hours_" = "hours";
 "days_" = "days";
 "rem_end_date" = "end date";
@@ -403,10 +403,10 @@
 "Image" = "Image";
 "Image is Selected Successfully_" = "Image is Selected Successfully";
 
-"new_fileName" = "new_fileName";
-"new_filenameplaceholder" = "new_filenameplaceholder";
-"new_filecomments" = "new_filecomments";
-"new_filecommentsplaceholder" = "new_filecommentsplaceholder";
+"new_fileName" = "new fileName";
+"new_filenameplaceholder" = "new filenameplaceholder";
+"new_filecomments" = "new filecomments";
+"new_filecommentsplaceholder" = "new filecommentsplaceholder";
 
 
 //MARK: - --------------> DOCTOR <--------------- -
