@@ -243,6 +243,7 @@ extension DocProfileViewUI{
             
         } else {
             // Change root view to LoginView
+            Helper.shared.setSelectedUserType(userType: .Customer)
             let newHome = UIHostingController(rootView: LoginView())
             Helper.shared.changeRootVC(newroot: newHome, transitionFrom: .fromLeft)
             

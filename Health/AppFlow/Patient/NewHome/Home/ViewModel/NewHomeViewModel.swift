@@ -113,7 +113,7 @@ extension NewHomeViewModel {
                     responseType: HomeCategoryM.self
                 )
 
-                if Helper.shared.getSelectedUserType() == .Customer{
+                if Helper.shared.getSelectedUserType() != .Doctor{
                     async let measurements: [MyMeasurementsStatsM]? = self.networkService.request(
                         HomeServices.GetMyMeasurementsStats,
                         responseType: [MyMeasurementsStatsM].self
@@ -130,7 +130,7 @@ extension NewHomeViewModel {
                     responseType: FeaturedPackagesM.self
                 )
 
-                if Helper.shared.getSelectedUserType() == .Customer{
+                if Helper.shared.getSelectedUserType() != .Doctor{
                     async let mostViewed: [FeaturedPackageItemM]? = self.networkService.request(
                         HomeServices.MostViewedPackage(parameters: [
                             "top": max,
@@ -144,7 +144,9 @@ extension NewHomeViewModel {
                 // Single commit
                 self.upcomingSession = try await upc
                 self.homeCategories = try await categories
-                if self.env.isLoggedIn(){  self.featuredPackages = try await featured }
+                if Helper.shared.getSelectedUserType() != .Doctor{
+                    self.featuredPackages = try await featured
+                }
                 // Optionally also prefetch most booked
                 self.mostBookedPackages = nil
             } catch is CancellationError {

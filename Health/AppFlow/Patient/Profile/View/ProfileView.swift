@@ -300,9 +300,9 @@ struct ProfileViewUI_Previews: PreviewProvider {
 
 
 extension ProfileViewUI{
-    
     private func logoutAction() {
         if isLogedin {
+            Helper.shared.IsLoggedIn(value: false)
             Helper.shared.logout()
             // Change root view to NewTabView
             let newHome = UIHostingController(rootView: NewTabView())

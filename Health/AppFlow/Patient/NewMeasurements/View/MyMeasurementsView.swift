@@ -77,7 +77,7 @@ struct MyMeasurementsView: View {
         }
         .onAppear{
             Task{
-                if !Helper.shared.CheckIfLoggedIn(){
+                if Helper.shared.CheckIfLoggedIn(){
                     await viewModel.fetchStats()
                 }else{
                     viewModel.clear()
