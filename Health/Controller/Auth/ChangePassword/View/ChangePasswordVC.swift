@@ -2,22 +2,22 @@
 import SwiftUI
 
 //class ChangePasswordVC: UIViewController {
-//    
+//
 //    @IBOutlet weak var LaNavTitle: UILabel!
 //    @IBOutlet weak var TFPassword: CustomInputField!
 //    @IBOutlet weak var TFNewPassword: CustomInputField!
 //    @IBOutlet weak var TFRe_Password: CustomInputField!
 //    @IBOutlet weak var BtnChange: UIButton!
-//    
+//
 //    @IBOutlet weak var BtnBack: UIButton!
-//    
+//
 //    let ViewModel = ChangePasswordVM()
 //    override func viewDidLoad() {
 //        super.viewDidLoad()
 //        setupUI()
 //        setupPasswordValidations()
 //    }
-//    
+//
 //    func setupUI(){
 //        BtnChange.isEnabled(false)
 //        hideKeyboardWhenTappedAround()
@@ -34,30 +34,30 @@ import SwiftUI
 //            guard let text = text else { return false }
 //            return text.count >= 6
 //        }
-//        
+//
 //        // Set minimum 6 characters for password
 //        TFNewPassword.validationRule = { text in
 //            guard let text = text else { return false }
 //            return text.count >= 6
 //        }
-//        
+//
 //        // Set confirmation must match password and have 6+ chars
 //        TFRe_Password.validationRule = { [weak self] text in
 //            guard let self = self, let text = text else { return false }
 //            return text.count >= 6 && text == self.TFNewPassword.text()
 //        }
-//        
+//
 //        // Handle validation changes
 //        [TFPassword,TFNewPassword,TFRe_Password].forEach{$0.onValidationChanged = { [weak self] isValid in
 //            self?.validateForm()
 //        }}
 //    }
-//    
+//
 //    private func validateForm() {
 //        let isPasswordValid = TFPassword.textField.hasText && TFPassword.isValid
 //        let isNewPasswordValid = TFNewPassword.textField.hasText && TFNewPassword.isValid
 //        let isConfirmationValid = TFRe_Password.textField.hasText && TFRe_Password.isValid
-//        
+//
 //        BtnChange.isEnabled(isPasswordValid && isNewPasswordValid && isConfirmationValid)
 //        if (isPasswordValid && isNewPasswordValid && isConfirmationValid){
 //            applyHorizontalGradient(to: BtnChange)
@@ -66,18 +66,18 @@ import SwiftUI
 //    @IBAction func BUBack(_ sender: Any) {
 //        self.navigationController?.popViewController(animated: true)
 //    }
-//    
+//
 //    @IBAction func BUChange(_ sender: Any) {
 //        ChangePassword()
 //    }
-//    
+//
 //}
 
 //extension ChangePasswordVC {
 //    func ChangePassword(){
 //        ViewModel.oldPassword = TFPassword.text()
 //        ViewModel.newPassword = TFRe_Password.text()
-//        
+//
 //        ViewModel.ChangePassword{[weak self] state in
 //            guard let self = self else{return}
 //            guard let state = state else{
@@ -107,7 +107,7 @@ import SwiftUI
 //            viewDone.subtitle1 = "changed_subtitle1"
 //            viewDone.subtitle2 = "changed_subtitle2"
 //            viewDone.ButtonTitle = "changed_btn"
-//            
+//
 //            viewDone.imgStr = "successicon"
 //            viewDone.action = {
 //                viewDone.removeFromSuperview()
@@ -124,14 +124,14 @@ import SwiftUI
 
 struct ChangePasswordView: View {
     @State private var oldPassword = ""
-
+    
     @State private var newPassword = ""
     @State private var confirmPassword = ""
     
     @State private var isoldPasswordValid = true
     @State private var isNewPasswordValid = true
     @State private var isConfirmPasswordValid = true
-
+    
     @StateObject private var viewModel = ChangePasswordVM()
     
     var body: some View {
@@ -139,9 +139,9 @@ struct ChangePasswordView: View {
             TitleBar(title: "change_sc_title", hasbackBtn: true)
                 .padding(.top)
             
-                VStack(spacing: 20){
-                    ScrollView{
-
+            VStack(spacing: 20){
+                ScrollView{
+                    
                     
                     //                Text("change_sc_subtitle".localized)
                     //                    .font(.medium(size: 18))
@@ -204,15 +204,15 @@ struct ChangePasswordView: View {
             set: { if !$0 { viewModel.errorMessage = nil } }
         ), message: viewModel.errorMessage)
         .onChange(of: viewModel.isSuccess ){newval in
-        guard newval else { return }
-            PassChangedDone()
+            guard newval else { return }
+             ()
         }
     }
     private var isFormValid: Bool {
         (oldPassword.count > 0 && isoldPasswordValid)
         && (newPassword.count > 0 && isNewPasswordValid)
         && (confirmPassword.count > 0 && isConfirmPasswordValid)
-//        && (newPassword == isConfirmPasswordValid)
+        //        && (newPassword == isConfirmPasswordValid)
     }
     func changePassword() {
         guard isFormValid else { return }
@@ -220,52 +220,57 @@ struct ChangePasswordView: View {
         viewModel.newPassword = confirmPassword
         viewModel.changePassword()
     }
-
-//    func handleChangePasswordState() {
-//        guard let state = state else { return }
-//        switch state {
-//        case .loading:
-//            Hud.showHud()
-//        case .stopLoading:
-//            Hud.dismiss()
-//        case .success:
-//            Hud.dismiss()
-//            if let viewDone: ViewDone = showView(fromNib: ViewDone.self) {
-//                viewDone.title = "changed_title"
-//                viewDone.subtitle1 = "changed_subtitle1"
-//                viewDone.subtitle2 = "changed_subtitle2"
-//                viewDone.ButtonTitle = "changed_btn"
-//                viewDone.imgStr = "successicon"
-//                viewDone.action = {
-//                    viewDone.removeFromSuperview()
-//                    let newHome = UIHostingController(rootView: LoginView())
-//                    Helper.shared.changeRootVC(newroot: newHome, transitionFrom: .fromLeft)
-//                }
-//            }
-//        case .error(_, let error):
-//            Hud.dismiss()
-//            SimpleAlert.shared.showAlert(title: error ?? "", message: "")
-//        case .none:
-//            break
-//        }
-//    }
+    
+    //    func handleChangePasswordState() {
+    //        guard let state = state else { return }
+    //        switch state {
+    //        case .loading:
+    //            Hud.showHud()
+    //        case .stopLoading:
+    //            Hud.dismiss()
+    //        case .success:
+    //            Hud.dismiss()
+    //            if let viewDone: ViewDone = showView(fromNib: ViewDone.self) {
+    //                viewDone.title = "changed_title"
+    //                viewDone.subtitle1 = "changed_subtitle1"
+    //                viewDone.subtitle2 = "changed_subtitle2"
+    //                viewDone.ButtonTitle = "changed_btn"
+    //                viewDone.imgStr = "successicon"
+    //                viewDone.action = {
+    //                    viewDone.removeFromSuperview()
+    //                    let newHome = UIHostingController(rootView: LoginView())
+    //                    Helper.shared.changeRootVC(newroot: newHome, transitionFrom: .fromLeft)
+    //                }
+    //            }
+    //        case .error(_, let error):
+    //            Hud.dismiss()
+    //            SimpleAlert.shared.showAlert(title: error ?? "", message: "")
+    //        case .none:
+    //            break
+    //        }
+    //    }
     
     func PassChangedDone() {
-            let successView = SuccessView(
-                image: Image("successicon"),
-                title: "changed_title".localized,
-                subtitle1: "changed_subtitle1".localized,
-                subtitle2: "changed_subtitle2".localized,
-                buttonTitle: "changed_btn".localized,
-                buttonAction: {
-                    // Navigate to home or login
-                    let login = UIHostingController(rootView: LoginView())
-                    Helper.shared.changeRootVC(newroot: login, transitionFrom: .fromLeft)
+        let successView = SuccessView(
+            image: Image("successicon"),
+            title: "changed_title".localized,
+            subtitle1: "changed_subtitle1".localized,
+            subtitle2: "changed_subtitle2".localized,
+            buttonTitle: "changed_btn".localized,
+            buttonAction: {
+                // Navigate to home or login
+                let newHome = switch Helper.shared.getSelectedUserType() {
+                case .Customer,.none:
+                    UIHostingController(rootView: NewTabView())
+                case .Doctor:
+                    UIHostingController(rootView: DocTabView())
                 }
-            )
-            let newVC = UIHostingController(rootView: successView)
-            Helper.shared.changeRootVC(newroot: newVC, transitionFrom: .fromLeft)
-            
+                Helper.shared.changeRootVC(newroot: newHome, transitionFrom: .fromLeft)
+            }
+        )
+        let newVC = UIHostingController(rootView: successView)
+        Helper.shared.changeRootVC(newroot: newVC, transitionFrom: .fromLeft)
+        
     }
 }
 
