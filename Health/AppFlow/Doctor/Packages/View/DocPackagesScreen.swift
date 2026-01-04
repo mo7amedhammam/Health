@@ -76,7 +76,7 @@ struct DocPackagesScreen: View {
         .withNavigation(router: router)
         .showHud(isShowing:  $viewModel.isLoading)
         .errorAlert(isPresented: Binding(
-            get: { viewModel.errorMessage != nil },
+            get: { viewModel.errorMessage != nil && !viewModel.showAddSheet },
             set: { if !$0 { viewModel.errorMessage = nil } }
         ), message: viewModel.errorMessage)
         .padding(.bottom,hasbackBtn == true ? 0 : 88)
@@ -276,7 +276,7 @@ struct DocPackagesFilterView: View {
             AnyView( DocPackageRequestSuccessView() )
         })
         .errorAlert(isPresented: Binding(
-            get: { viewmodel.errorMessage != nil },
+            get: { viewmodel.errorMessage != nil  },
             set: { if !$0 { viewmodel.errorMessage = nil } }
         ), message: viewmodel.errorMessage)
 

@@ -68,13 +68,17 @@ struct MyFilesView: View {
                       Task { await myfilesvm.addNewFile() }
             }
             .environmentObject(lookupsvm)
-
+            .errorAlert(isPresented: Binding(
+                get: { myfilesvm.errorMessage != nil },
+                set: { if !$0 { myfilesvm.errorMessage = nil } }
+            ), message: myfilesvm.errorMessage)
 //                    .frame(height: 600)
 
 //                { newFile in
 //                    files.append(newFile)
 //                }
         }
+        
         .task {
               if myfilesvm.files.isEmpty {
                   await myfilesvm.getMyFilesList()

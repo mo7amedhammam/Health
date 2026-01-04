@@ -79,7 +79,7 @@ struct MedicationReminderView: View {
             AddReminderSheet().environmentObject(viewModel)
         }
         .errorAlert(isPresented: Binding(
-            get: { viewModel.errorMessage != nil },
+            get: { viewModel.errorMessage != nil && !viewModel.showAddSheet},
             set: { if !$0 { viewModel.errorMessage = nil } }
         ), message: viewModel.errorMessage)
 
@@ -173,6 +173,7 @@ struct AddReminderSheet: View {
                 
                 Button(action: {
                     viewModel.showAddSheet = false
+                    viewModel.clear()
                 }) {
                     Image(systemName: "xmark.circle")
                         .resizable()

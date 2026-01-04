@@ -294,8 +294,16 @@
 "profile_termsandconditions" = "الشروط والأحكام";
 
 //MARK:   ---- my files ----
+"MyFiles Title" = "ملفاتي";
+"new_fileType" = "نوع الملف";
+"new_filetypeplaceholder" = "اختر النوع";
+"new_filelink" = "رابط الملف";
+"new_filelinkplaceholder" = "أدخل رابط الملف";
 "new_cancel_" = "إلغاء";
 "new_confirm_" = "تأكيد";
+"please_enter_file_name" = "please enter file name";
+"please_select_file_type" = "please select file type";
+"please_select_image_file_or_link" = "please select image file or link";
 
 //MARK:   ---- Allergies ----
 "allergies_title" = "الحساسية";

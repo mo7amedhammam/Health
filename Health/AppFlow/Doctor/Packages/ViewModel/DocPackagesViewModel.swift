@@ -20,7 +20,7 @@ class DocPackagesViewModel: ObservableObject {
     // Published properties
     @Published var ActivePackages: DocPackagesM?
     
-    @Published var showAddSheet: Bool = false
+    @Published var showAddSheet: Bool = false{didSet{errorMessage=nil}}
     @Published var MainCategories: [CategoriyListItemM]?
     @Published var selectedMainCategory: CategoriyListItemM?
     

@@ -383,7 +383,7 @@ struct FetchFilesUseCase: FetchFilesUseCaseProtocol {
 final class ActiveCustomerPackFilesViewModel: ObservableObject {
 
     @Published var files: [MyFileM]? = []
-    @Published var showUploadSheet = false
+    @Published var showUploadSheet = false{didSet{errorMessage=nil}}
     @Published var isLoading : Bool? = false
     @Published var errorMessage: String?
 

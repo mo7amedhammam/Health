@@ -73,7 +73,6 @@ struct MyMeasurementsView: View {
         ), message: viewModel.errorMessage)
         .customSheet(isPresented: $mustLogin ,height: 350){
             LoginSheetView()
-            
         }
         .onAppear{
             Task{
@@ -111,10 +110,10 @@ struct MeasurementCard: View {
                         .foregroundColor(.mainBlue)
                     
                     (Text("\(item.measurementsCount ?? 0) ")
-                        .font(.bold(size: 8))
+                        .font(.bold(size: 10))
 
                      + Text("available_measurements".localized))
-                        .font(.regular(size: 8))
+                        .font(.regular(size: 10))
                         .foregroundColor(.mainBlue)
                 }
                 .frame(maxWidth: .infinity , alignment: .leading)
@@ -131,35 +130,43 @@ struct MeasurementCard: View {
 
             Divider()
 
-            HStack (){
-                (Text("Last_Measurement".localized)
-                    .font(.regular(size: 10))
-                    .foregroundColor(.mainBlue)
-                 + Text(item.lastMeasurementValue ?? "--")
-                    .font(.bold(size: 10))
-                    .foregroundColor(Color(.secondary))
-            )
-//                .frame(maxWidth: .infinity,alignment: .leading)
+            VStack (spacing:5){
+                HStack(spacing:4){
+                    Text("Last_Measurement".localized)
+                        .font(.regular(size: 11))
+                        .foregroundColor(.mainBlue)
+                    
+                    Text(item.lastMeasurementValue ?? "--")
+                        .font(.bold(size: 11))
+                        .foregroundColor(Color(.secondary))
+                                    }
+                .frame(maxWidth: .infinity,alignment: .leading)
 
 
-                Spacer()
+//                Spacer()
+//                Divider()
 
                 if let date = item.formatteddate{
-                    (Text("in_Date_".localized)
-                        .font(.semiBold(size: 6))
-                     
-                     + Text("\( date)"))
-                    .font(.regular(size: 6))
-                    .foregroundColor(.mainBlue)
-//                    .frame(maxWidth: .infinity,alignment: .trailing)
+                    HStack(spacing:4){
+                        Text("in_Date_".localized)
+                            .font(.semiBold(size: 10))
+                            .foregroundColor(.mainBlue)
+                        
+                        Text("\( date)")
+                            .font(.regular(size: 10))
+                            .foregroundColor(.mainBlue)
+                    }
+                    .frame(maxWidth: .infinity,alignment: .trailing)
+                    
                 }
             }
-            .padding(.vertical,3)
+            .frame(maxWidth: .infinity,alignment: .leading)
+//            .padding(.vertical,3)
 
         }
         .frame(height: 88)
         .padding(.horizontal,10)
-        .padding(.vertical,10)
+        .padding(.vertical,8)
         .background(Color.white)
         .cardStyle(cornerRadius: 6,shadowOpacity: 0.0696)
     }

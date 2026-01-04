@@ -294,8 +294,16 @@
 "profile_termsandconditions" = "Terms And Conditions";
 
 //MARK:   ---- my files ----
+"MyFiles Title" = "My Files";
+"new_fileType" = "File Type";
+"new_filetypeplaceholder" = "Select Type";
+"new_filelink" = "File Link";
+"new_filelinkplaceholder" = "Enter File Link";
 "new_cancel_" = "cancel";
 "new_confirm_" = "confirm";
+"please_enter_file_name" = "please enter file name";
+"please_select_file_type" = "please select file type";
+"please_select_image_file_or_link" = "please select image file or link";
 
 //MARK:   ---- Allergies ----
 "allergies_title" = "Allergies";
@@ -356,6 +364,11 @@
 //MARK:  -- loginsheet --
 "welcom_title_elnada" = "Welcome to my health with dew!";
 "welcom_subtitle_elnada" = "Consultations with nutrition experts to help you achieve your goals.";
+
+//MARK: --- cancel subscriprion ---
+"cancel_confirmation_title" = "Are you sure you want to unsubscribe from this package?";
+"cancel_reason_title" = "Reason to unsubscribe";
+"cancel_placeholder" = "Why are You unsubscribing";
 
 //MARK: --- reschedual --
 "ReSchedualling_" = "ReSchedualling";

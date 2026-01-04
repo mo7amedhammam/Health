@@ -55,17 +55,17 @@ struct InbodyView: View {
             .localizeView()
             .showHud(isShowing: $viewmodel.isLoading)
             .errorAlert(isPresented: Binding(
-                get: { viewmodel.errorMessage != nil },
+                get: { viewmodel.errorMessage != nil && !viewmodel.showAddSheet },
                 set: { if !$0 { viewmodel.errorMessage = nil } }
             ), message: viewmodel.errorMessage)
             .customSheet(isPresented: $viewmodel.showAddSheet,height: 470){
                 UploadInbodySheetView( isPresented: $viewmodel.showAddSheet)
                     .environmentObject(viewmodel)
             }
-            .onAppear(){
-                Task{
+            .task(){
+//                Task{
                     await viewmodel.refresh()
-                }
+//                }
             }
 
     }

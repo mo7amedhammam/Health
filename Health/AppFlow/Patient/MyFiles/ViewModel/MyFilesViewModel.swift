@@ -26,8 +26,8 @@ class MyFilesViewModel : ObservableObject {
     @Published var files: [MyFileM] = []
     
     @Published var isLoading: Bool? = false
-    @Published var errorMessage: String? = nil
-    
+    @Published var errorMessage: String? = nil{didSet{errorMessage=nil}}
+
     // Serialize loads to avoid overlap
     private var loadTask: Task<Void, Never>? = nil
     
@@ -44,9 +44,30 @@ extension MyFilesViewModel{
     func addNewFile() async {
         isLoading = true
         defer { isLoading = false }
-        guard let FileName = fileName ,let FileTypeId = fileType?.id else {
+        
+        // Validate required inputs
+        let trimmedName = (fileName ?? "").trimmingCharacters(in: .whitespacesAndNewlines)
+        if trimmedName.isEmpty {
+            self.errorMessage = "please_enter_file_name".localized
             return
         }
+
+        guard let FileTypeId = fileType?.id else {
+            self.errorMessage = "please_select_file_type".localized
+            return
+        }
+
+        // Require one of image, file URL, or link
+        let hasImage = (image != nil)
+        let hasFileURL = (fileURL != nil)
+        let hasLink = !(fileLink ?? "").trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+        if !(hasImage || hasFileURL || hasLink) {
+            self.errorMessage = "please_select_image_file_or_link".localized
+            return
+        }
+
+        let FileName = trimmedName
+        
         var parametersarr : [String : Any] =  ["FileName":FileName,"FileTypeId":FileTypeId]
         
         let target = MyFilesServices.AddFile(parameters: parametersarr)

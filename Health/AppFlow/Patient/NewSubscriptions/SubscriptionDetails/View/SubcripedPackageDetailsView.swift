@@ -310,8 +310,8 @@ struct SubcripedPackageDetailsView: View {
             get: { viewmodel.errorMessage != nil },
             set: { if !$0 { viewmodel.errorMessage = nil } }
         ), message: viewmodel.errorMessage)
-        .onAppear{
-            Task{
+        .task{
+//            Task{
                 if let CustomerPackageId = CustomerPackageId{
                     if package == nil{
                             async let package: () = viewmodel.getSubscripedPackageDetails(CustomerPackageId: CustomerPackageId)
@@ -326,17 +326,21 @@ struct SubcripedPackageDetailsView: View {
                     self.package = viewmodel.subscripedPackage
                 }
             }
-        }
+//        }
             .customSheet(isPresented: $isReschedualling){
                 ReSchedualView(doctorId: $doctorId, packageId: $packageId, SessionId: $SessoinId, isPresentingNewMeasurementSheet: $isReschedualling,reschedualcase: .constant(.reschedualSession))
             }
             .overlay{
                 if showCancel{
                     CancelSubscriptionView(isPresent: $showCancel, customerPackageId: idToCancel ?? 0,onCancelSuccess: {
-                        //                if let index = viewModel.subscripedPackages?.items?.firstIndex(where: { $0.customerPackageID == idToCancel }) {
-                        //                    viewModel.subscripedPackages?.items?[index].canCancel?.toggle()
-                        //                }
+//                                        if let index = package.subscripedPackages?.items?.firstIndex(where: { $0.customerPackageID == idToCancel }) {
+//                                            viewModel.subscripedPackages?.items?[index].canCancel?.toggle()
+//                                            viewModel.subscripedPackages?.items?[index].canRenew?.toggle()
+//                                        }
                         Task{
+                            package?.canCancel?.toggle()
+                            package?.canRenew?.toggle()
+                            package?.status = "Expired".localized
                             if let CustomerPackageId = CustomerPackageId{
                                 await viewmodel.getSubscripedPackageDetails(CustomerPackageId: CustomerPackageId)
                             }

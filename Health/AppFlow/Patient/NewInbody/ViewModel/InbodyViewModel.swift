@@ -20,7 +20,7 @@ class InbodyViewModel:ObservableObject {
     @Published var files: InbodyListM? = InbodyListM()
     
     // -- Add Record --
-    @Published var showAddSheet:Bool = false
+    @Published var showAddSheet:Bool = false{didSet{errorMessage=nil}}
     @Published var fileName:String = ""
     @Published var image:UIImage?
     @Published var fileURL:URL?
@@ -38,6 +38,7 @@ class InbodyViewModel:ObservableObject {
   
     @Published var isLoading:Bool? = false
     @Published var errorMessage: String? = nil
+//    @Published var CreationErrorMessage: String? = nil
     
     // Init with DI
     init(networkService: AsyncAwaitNetworkServiceProtocol = AsyncAwaitNetworkService.shared) {

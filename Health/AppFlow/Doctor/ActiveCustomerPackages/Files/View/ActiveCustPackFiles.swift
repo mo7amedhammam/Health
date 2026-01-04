@@ -79,7 +79,7 @@ struct ActiveCustPackFiles : View {
             .localizeView()
             .showHud(isShowing:  $myfilesvm.isLoading)
             .errorAlert(isPresented: Binding(
-                get: { myfilesvm.errorMessage != nil },
+                get: { myfilesvm.errorMessage != nil && !myfilesvm.showUploadSheet},
                 set: { if !$0 { myfilesvm.errorMessage = nil } }
             ), message: myfilesvm.errorMessage)
 
@@ -96,7 +96,11 @@ struct ActiveCustPackFiles : View {
 //                    .environmentObject(myfilesvm)
                     .environmentObject(lookupsvm)
 //                    .frame(height: 600)
-
+                    .errorAlert(isPresented: Binding(
+                        get: { myfilesvm.errorMessage != nil },
+                        set: { if !$0 { myfilesvm.errorMessage = nil } }
+                    ), message: myfilesvm.errorMessage)
+                
 //                { newFile in
 //                    files.append(newFile)
 //                }

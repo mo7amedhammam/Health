@@ -26,14 +26,14 @@ struct CancelSubscriptionView: View {
                     .aspectRatio(contentMode: .fill)
 
                 Text("cancel_confirmation_title".localized)
-                    .font(.semiBold(size: 12))
+                    .font(.semiBold(size: 16))
                     .foregroundStyle(Color(.main))
                     .padding()
                 
                 VStack(alignment: .leading){
                     HStack{
                         Text("cancel_reason_title".localized)
-                            .font(.semiBold(size: 16))
+                            .font(.semiBold(size: 20))
                             .foregroundStyle(Color(.main))
                             .frame(maxWidth:.infinity,alignment: .leading)
                         
@@ -47,13 +47,13 @@ struct CancelSubscriptionView: View {
                     if #available(iOS 16.0, *) {
                         TextField("cancel_placeholder".localized, text: $reason, axis: .vertical)
                             .padding(.vertical)
-                            .font(.medium(size: 12))
+                            .font(.medium(size: 16))
                         
                     } else {
                         // Fallback on earlier versions
                         TextField("cancel_placeholder".localized, text: $reason)
                             .padding(.vertical)
-                            .font(.medium(size: 12))
+                            .font(.medium(size: 16))
                     }
                 }
                 

@@ -156,8 +156,8 @@ struct SubcripedPackagesView: View {
             set: { if !$0 { viewModel.errorMessage = nil } }
         ), message: viewModel.errorMessage)
         .edgesIgnoringSafeArea([.top,.horizontal])
-        .onAppear {
-            Task{
+        .task{
+//            Task{
                 if (Helper.shared.CheckIfLoggedIn()) {
                     async let Profile:() = profileViewModel.getProfile()
                     async let Packages:() = viewModel.refresh()
@@ -171,7 +171,7 @@ struct SubcripedPackagesView: View {
                     viewModel.clear()
                     mustLogin = true
                 }
-            }
+//            }
         }
         
         //        NavigationLink( "", destination: destination, isActive: $isactive)
@@ -184,7 +184,11 @@ struct SubcripedPackagesView: View {
             CancelSubscriptionView(isPresent: $showCancel, customerPackageId: idToCancel ?? 0,onCancelSuccess: {
                 if let index = viewModel.subscripedPackages?.items?.firstIndex(where: { $0.customerPackageID == idToCancel }) {
                     viewModel.subscripedPackages?.items?[index].canCancel?.toggle()
+                    viewModel.subscripedPackages?.items?[index].canRenew?.toggle()
+//                    viewModel.subscripedPackages?.items?[index].status?.toggle()
                 }
+                Task{ await viewModel.refresh()}
+
             })
         }
         

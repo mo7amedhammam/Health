@@ -43,8 +43,8 @@ class MedicationReminderViewModel:ObservableObject {
     @Published var durationDays: String = ""
     
     @Published var isLoading:Bool? = false
-    @Published var errorMessage: String?
-
+    @Published var errorMessage: String?{didSet{errorMessage=nil}}
+    
     @Published var reminders: ModelNotification?
 //    = ModelNotification(items: [ ItemNoti(
 //        count: 3,
