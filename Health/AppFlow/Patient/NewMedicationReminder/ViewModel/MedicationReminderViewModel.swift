@@ -142,7 +142,33 @@ class MedicationReminderViewModel:ObservableObject {
     @MainActor
     func CreateNotification() async {
              
-        guard let count = Int(frequencyValue) , let days = Int(durationDays) , let startDate = startDate else {return}
+        // Validate required inputs
+        // Drug selection or name required
+        let trimmedDrugName = drugName.trimmingCharacters(in: .whitespacesAndNewlines)
+        if selectedDrug == nil && trimmedDrugName.isEmpty {
+            self.errorMessage = "please_enter_drug".localized
+            return
+        }
+        // Frequency value required and must be a positive integer
+        guard let count = Int(frequencyValue), count > 0 else {
+            self.errorMessage = "please_enter_frequency".localized
+            return
+        }
+        // Duration days required and must be a positive integer
+        guard let days = Int(durationDays), days > 0 else {
+            self.errorMessage = "please_enter_duration_days".localized
+            return
+        }
+        // Start date required
+        guard let startDate = startDate else {
+            self.errorMessage = "select_start_date".localized
+            return
+        }
+        // Start time required
+        guard let startTime = startTime else {
+            self.errorMessage = "select_start_time".localized
+            return
+        }
         
         var Parameters:[String: Any] =  [ "count" : count , "days" : days , "notification" : true ]
  
@@ -161,12 +187,10 @@ class MedicationReminderViewModel:ObservableObject {
         }
         
         var combinedStartDate = startDate
-        if let startTime = startTime {
-            let calendar = Calendar.current
-            let timeComponents = calendar.dateComponents([.hour, .minute], from: startTime)
-            
-            combinedStartDate = calendar.date(bySettingHour: timeComponents.hour ?? 0, minute: timeComponents.minute ?? 0, second: 0, of: startDate) ?? startDate
-        }
+        let calendar = Calendar.current
+        let timeComponents = calendar.dateComponents([.hour, .minute], from: startTime)
+        combinedStartDate = calendar.date(bySettingHour: timeComponents.hour ?? 0, minute: timeComponents.minute ?? 0, second: 0, of: startDate) ?? startDate
+        
 //        Parameters ["startDate"] = combinedStartDate
         Parameters["startDate"] = combinedStartDate.formatDate(format: "yyyy-MM-dd'T'HH:mm:ss")
         if let endDate = Calendar.current.date(byAdding: .day, value: days, to: startDate) {
@@ -277,3 +301,4 @@ extension MedicationReminderViewModel {
     }
     
 }
+

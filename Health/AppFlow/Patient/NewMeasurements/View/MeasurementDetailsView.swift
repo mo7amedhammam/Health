@@ -227,8 +227,6 @@ struct MeasurementDetailsView: View {
                         Spacer(minLength: 30)
 
                     }
-                    
-                    
                 } else {
                     
                     Spacer(minLength: 150)
@@ -466,7 +464,7 @@ struct CustomDatePickerField<Content: View>: View {
         }) {
             content()
         }
-        .customSheet(isPresented: $showingDatePickerSheet) {
+        .customSheet(isPresented: $showingDatePickerSheet){
             VStack {
                 HStack {
                     Spacer()
@@ -488,6 +486,10 @@ struct CustomDatePickerField<Content: View>: View {
                 .labelsHidden()
                 .padding()
             }
+        }
+        .task(id: showingDatePickerSheet){
+            guard showingDatePickerSheet else { return }
+            selectedDate = selectedDate ?? Date()
         }
     }
 }

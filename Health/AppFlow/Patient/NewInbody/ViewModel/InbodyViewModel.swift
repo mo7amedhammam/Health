@@ -56,14 +56,19 @@ extension InbodyViewModel{
         isLoading = true
         defer { isLoading = false }
         defer { fileURL?.stopAccessingSecurityScopedResource() }
-
-        guard formattedDate.count > 0 else {
-//            // Handle missings
-            self.errorMessage = "select_Date".localized
-//            //            throw NetworkError.unknown(code: 0, error: "check inputs")
-            
+        
+        // Validate required inputs: date and either image or file
+        // Date required
+        if formattedDate.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            self.errorMessage = "please_select_date".localized
             return
         }
+        // Either image or file required
+        if image == nil && fileURL == nil {
+            self.errorMessage = "please_select_image_or_file".localized
+            return
+        }
+        
         var parametersarr : [String : Any] =  ["Date" : formattedDate]
 
         if Comment.count > 0 {
@@ -86,6 +91,8 @@ extension InbodyViewModel{
             )
         }
         else if let fileURL = fileURL {
+            // Start security-scoped access for file URL if needed
+            _ = fileURL.startAccessingSecurityScopedResource()
             do {
                 let fileData = try Data(contentsOf: fileURL)
                 let fileName = fileURL.lastPathComponent
@@ -101,6 +108,8 @@ extension InbodyViewModel{
                 )
             } catch {
                 print("Failed to read file: \(error)")
+                self.errorMessage = error.localizedDescription
+                return
             }
         }
         
@@ -291,3 +300,4 @@ extension InbodyViewModel {
 //    }
 //    
 //}
+

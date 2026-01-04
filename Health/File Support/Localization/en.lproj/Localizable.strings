@@ -386,6 +386,12 @@
 "add_duration_title" = "number of days";
 "add_duration_placeholder" = "enter medication days";
 
+"please_enter_drug" = "please enter drug";
+"please_enter_frequency" = "please enter medication Times";
+"please_enter_duration_days" = "please enter duration days";
+"select_start_date" = "please select start date";
+"select_start_time" = "please select start time";
+
 //MARK: --- inbody ---
 "Inbody_Title" = "Inbody";
 "upload_New_Inbody" = "upload New Inbody";
@@ -403,11 +409,16 @@
 "Image" = "Image";
 "Image is Selected Successfully_" = "Image is Selected Successfully";
 
-"new_fileName" = "new fileName";
-"new_filenameplaceholder" = "new filenameplaceholder";
-"new_filecomments" = "new filecomments";
-"new_filecommentsplaceholder" = "new filecommentsplaceholder";
-
+"new_filedate" = "Date";
+"new_filedateplaceholder" = "Select Date";
+"new_fileName" = "File Name";
+"new_filenameplaceholder" = "Type File Name";
+"new_filecomments" = "Comments";
+"new_filecommentsplaceholder" = "Add you comment";
+"new_fileupload" = "upload File/Image";
+"new_fileuploadplaceholder" = "Select File/Image";
+"please_select_image_or_file" = "please select image or file";
+"please_select_date" = "please select date";
 
 //MARK: - --------------> DOCTOR <--------------- -
 //MARK: --- My Schedule ---

@@ -392,6 +392,12 @@
 "add_duration_title" = "لمدة";
 "add_duration_placeholder" = "ضع عدد أيام أخد الدواء";
 
+"please_enter_drug" = "يرجى إدخال الدواء";
+"please_enter_frequency" = "يرجى إدخال عدد مرت أخد الدواء";
+"please_enter_duration_days" = "يرجى إدخال عدد ايام أخد الدواء";
+"select_start_date" =  "يرجى إدخال تاريخ بداية التنبيه";
+"select_start_time" = "يرجى إدخال وقت بداية التنبيه";
+
 //MARK: --- inbody ---
 "Inbody_Title" = "إنبودي";
 "upload_New_Inbody" = "تحميل إنبودي جديد";
@@ -409,6 +415,16 @@
 "Image" = "صوره";
 "Image is Selected Successfully_" = "تم اختيار الصورة بنجاح";
 
+"new_filedate" = "التاريخ";
+"new_filedateplaceholder" = "اختر التاريخ";
+"new_fileName" = "اسم الملف";
+"new_filenameplaceholder" = "ادخل اسم الملف";
+"new_filecomments" = "ملاحظات ";
+"new_filecommentsplaceholder" = "أضف ملاحظاتك";
+"new_fileupload" = "رفع ملف / صورة";
+"new_fileuploadplaceholder" = "قم برفع الملف / الصورة من هنا";
+"please_select_image_or_file" = "يرجى اختيار صورة أو ملف";
+"please_select_date" = "يرجى تحديد التاريخ";
 
 //MARK: - --------------> DOCTOR <--------------- -
 //MARK: --- My Schedule ---

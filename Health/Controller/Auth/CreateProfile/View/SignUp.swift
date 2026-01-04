@@ -433,7 +433,7 @@ struct SignUpView: View {
     //    @State private var isPasswordValid: Bool = true
     
     private var isNameValid: Bool{
-        fullName.count == 0 || fullName.count > 3
+        fullName.count == 0 || fullName.count > 0
     }
     
     private var isCountryValid: Bool{
