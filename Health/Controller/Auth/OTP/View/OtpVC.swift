@@ -576,6 +576,8 @@ struct OTPView: View {
         self.destination = AnyView(destination)
         self.isactive = true
     }
+    @Environment(\.dismiss) private var dismiss
+    @State var backToLogin: Bool = false
 
     var body: some View {
         VStack(spacing: 10) {
@@ -621,6 +623,10 @@ struct OTPView: View {
             case .CreateAccount: accountCreated()
             case .forgetPassword: gotoResetPassword()
             }
+        }
+        .task(id: backToLogin) {
+            guard backToLogin else { return }
+            dismiss()
         }
         
         .localizeView()
@@ -770,7 +776,7 @@ extension OTPView {
 
     private func gotoResetPassword() {
         
-pushTo(destination: ForgetPasswordView(phoneNumber: phone))
+pushTo(destination: ForgetPasswordView(phoneNumber: phone,backToLogin: $backToLogin))
 //        guard let vc = initiateViewController(storyboardName: .main, viewControllerIdentifier: ForgetPasswordVC.self) else { return }
 //        vc.Phonenumber = phone
 //        pushUIKitVC(vc)

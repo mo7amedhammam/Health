@@ -141,12 +141,17 @@ struct ForgetPasswordView: View {
     @State private var isConfirmPasswordValid = true
 
     @StateObject var viewModel = ForgetPasswordVM()
-    
     var phoneNumber: String
+    
+    @Environment(\.dismiss) private var dismiss
+    @Binding var backToLogin: Bool
 
     var body: some View {
         VStack(spacing: 20) {
-            TitleBar(title: "forget_title", hasbackBtn: true)
+            TitleBar(title: "forget_title", hasbackBtn: true,onBack: {
+                backToLogin = true
+                dismiss()
+            })
                 .padding(.top)
             
             
@@ -243,5 +248,5 @@ struct ForgetPasswordView: View {
 }
 
 #Preview {
-    ForgetPasswordView( phoneNumber: "323")
+    ForgetPasswordView( phoneNumber: "323", backToLogin: .constant(false))
 }
