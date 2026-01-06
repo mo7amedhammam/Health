@@ -179,19 +179,21 @@ struct MeasurementDetailsView: View {
                         }
 
                         // List of Measurements
-                    if let ArrMeasurement = viewModel.ArrMeasurement?.measurements , let measurements = ArrMeasurement.items  {
+                    if let ArrMeasurement = viewModel.ArrMeasurement?.measurements , let measurements = ArrMeasurement.items {
+                        
+                        LazyVStack{
                         ForEach(measurements,id: \.self) { item in
-
+                            
                             VStack(alignment: .leading, spacing: 8) {
                                 HStack {
                                     Image(item.inNormalRang ?? false ? "inrangeicon" : "outofrangeicon")
-                                
+                                    
                                     Text(item.value ?? "")
                                         .font(.semiBold(size: 16))
                                         .foregroundColor(item.inNormalRang ?? false ? .green : .red)
-
+                                    
                                     Spacer()
-
+                                    
                                     Text(item.formatteddate ?? "")
                                         .font(item.inNormalRang ?? false ? .medium(size: 14) : .regular(size: 10))
                                         .foregroundColor(Color(.secondary))
@@ -207,7 +209,7 @@ struct MeasurementDetailsView: View {
                                         .foregroundColor(.mainBlue)
                                         .frame(maxWidth:.infinity, alignment: .center)
                                         .frame( height: 56)
-
+                                    
                                 } else {
                                     Text("no_comment".localized)
                                         .font(.regular(size: 15))
@@ -222,10 +224,16 @@ struct MeasurementDetailsView: View {
                             .background(Color(.white))
                             .cardStyle( cornerRadius: 6)
                             .padding(.horizontal)
+                            .onAppear {
+                                Task{
+                                    guard item == measurements.last else {return}
+                                    await viewModel.loadMoreIfNeeded()
+                                }
+                            }
                         }
                         .listStyle(.plain)
                         Spacer(minLength: 30)
-
+                    }
                     }
                 } else {
                     
@@ -250,14 +258,14 @@ struct MeasurementDetailsView: View {
         .edgesIgnoringSafeArea(.bottom)
         .localizeView()
 //        .withNavigation(router: router)
-        .onAppear{
-            Task{
+        .task{
+//            Task{
                 viewModel.currentStats = stat
                 async let normalRang: () = viewModel.fetchNormalRange()
                 async let details: () = viewModel.fetchMeasurementDetails()
 
                  _ = await (normalRang,details)
-            }
+//            }
         }
         .customSheet(isPresented: $viewModel.isPresentingNewMeasurementSheet,height: 444){
             NewMeasurementSheetView().environmentObject(viewModel)
@@ -265,7 +273,7 @@ struct MeasurementDetailsView: View {
         }
         .showHud(isShowing:  $viewModel.isLoading)
         .errorAlert(isPresented: Binding(
-            get: { viewModel.errorMessage != nil },
+            get: { viewModel.errorMessage != nil  && !viewModel.isPresentingNewMeasurementSheet },
             set: { if !$0 { viewModel.errorMessage = nil } }
         ), message: viewModel.errorMessage)
 
@@ -318,6 +326,11 @@ struct MeasurementSearchSection: View {
                             viewModel.dateTo = today
                             viewModel.dateFrom = calendar.date(byAdding: .year, value: -1, to: today)
                         }
+                        Task{
+                            viewModel.skipCount = 0
+                            await viewModel.fetchMeasurementDetails()
+                        }
+
                     }) {
                         Text(range.rawValue.localized)
                             .font(.bold(size: 14))
@@ -338,6 +351,11 @@ struct MeasurementSearchSection: View {
                 selectedRange = nil
                 viewModel.dateTo = nil
                 viewModel.dateFrom = nil
+                viewModel.skipCount = 0
+                Task{
+                    await viewModel.fetchMeasurementDetails()
+                }
+
             },label: {
             // All Measurements
             Text("all_messurements".localized)
@@ -367,7 +385,9 @@ struct MeasurementSearchSection: View {
 
             Button("search_".localized) {
                 // apply filter
+               guard selectedRange != nil else { return }
                 Task{
+                    viewModel.skipCount = 0
                     await viewModel.fetchMeasurementDetails()
                 }
             }
@@ -447,6 +467,10 @@ struct NewMeasurementSheetView: View {
     }
     .padding()
     .localizeView()
+    .errorAlert(isPresented: Binding(
+        get: { viewModel.errorMessage != nil },
+        set: { if !$0 { viewModel.errorMessage = nil } }
+    ), message: viewModel.errorMessage)
 }
 }
 

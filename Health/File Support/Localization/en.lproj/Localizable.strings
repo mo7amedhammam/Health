@@ -181,6 +181,8 @@
 "mes_comment_placeholder" = "add comment";
 "invalid_format" = "invalid format";
 "Try_again_with" = "try again with";
+"please_enter_measurement_value" = "please enter measurement value";
+"please_select_measurement_date" = "please select measurement date";
 
 //------------------ new ---
 "home_maincat" = "main Categories";

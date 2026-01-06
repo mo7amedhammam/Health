@@ -15,7 +15,7 @@ class MyMeasurementsDetaislViewModel: ObservableObject {
     private let networkService: AsyncAwaitNetworkServiceProtocol
     
     @Published var currentStats:MyMeasurementsStatsM?
-    @Published var isPresentingNewMeasurementSheet = false
+    @Published var isPresentingNewMeasurementSheet = false{didSet{errorMessage = nil}}
     
     // Published properties to bind with SwiftUI
     @Published var isLoading:Bool? = false
@@ -110,7 +110,13 @@ class MyMeasurementsDetaislViewModel: ObservableObject {
     
     @MainActor
     func createMeasurement() async {
-        guard let id = currentStats?.medicalMeasurementID , value.count > 0 ,let date = date?.formatDate(format: "yyyy-MM-dd")  else { return }
+        guard let id = currentStats?.medicalMeasurementID else { return }
+        guard value.count > 0  else {
+            self.errorMessage = "please_enter_measurement_value".localized
+            return }
+        guard let date = date?.formatDate(format: "yyyy-MM-dd") else {
+            self.errorMessage = "please_select_measurement_date".localized
+            return }
       
         // Validate value with regex
             if let regexPattern = currentStats?.regExpression {
@@ -145,8 +151,8 @@ class MyMeasurementsDetaislViewModel: ObservableObject {
             if let current = currentStats?.measurementsCount {
                 currentStats?.measurementsCount = current + 1
                 await fetchMeasurementDetails()
-                clearNewMeasurement()
             }
+            clearNewMeasurement()
             isPresentingNewMeasurementSheet = false
 //            self.ArrNormalRange = response
             

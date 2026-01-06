@@ -181,6 +181,8 @@
 "mes_comment_placeholder" = "أضف تعليق";
 "invalid_format" = "تنسيق غير صالح";
 "Try_again_with" = "حاول باستخدام";
+"please_enter_measurement_value" = "يرجى إدخال قيمة القياس";
+"please_select_measurement_date" = "يرجى تحديد تاريخ القياس";
 
 //------------------new ---
 "home_maincat" = "التصنيفات الرئيسية";
