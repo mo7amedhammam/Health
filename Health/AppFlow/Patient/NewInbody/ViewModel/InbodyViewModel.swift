@@ -150,7 +150,11 @@ extension InbodyViewModel{
                     target,
                     responseType: InbodyListM.self
                 )
-                self.files = response
+                if skipCount == 0 {
+                    self.files = response
+                }else{
+                    self.files?.items?.append(contentsOf: response?.items ?? [])
+                }
             } catch {
                 self.errorMessage = error.localizedDescription
             }

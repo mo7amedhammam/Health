@@ -267,6 +267,11 @@ struct MeasurementDetailsView: View {
                  _ = await (normalRang,details)
 //            }
         }
+        .onDisappear{
+            viewModel.dateTo = nil
+            viewModel.dateFrom = nil
+            viewModel.skipCount = 0
+        }
         .customSheet(isPresented: $viewModel.isPresentingNewMeasurementSheet,height: 444){
             NewMeasurementSheetView().environmentObject(viewModel)
                 .frame(height: 444)
@@ -346,7 +351,7 @@ struct MeasurementSearchSection: View {
                     }
                 }
             }
-
+            
             Button(action: {
                 selectedRange = nil
                 viewModel.dateTo = nil
@@ -375,17 +380,39 @@ struct MeasurementSearchSection: View {
                     .foregroundColor(.pink)
                 Divider().frame(height: 1).background(Color(.gray))
             }
-
+            
             // From and To Date Pickers
             HStack(spacing: 8) {
                 DatePickerField(selectedDate: $viewModel.dateFrom, title: "from_date".localized)
+                    .onChange(of: viewModel.dateFrom) { newValue in
+                        // When dateFrom changes, ensure dateTo is >= dateFrom
+                        guard let from = newValue, let to = viewModel.dateTo else { return }
+                        if to < from {
+                            viewModel.dateTo = from
+                        }
+                    }
 
                 DatePickerField(selectedDate: $viewModel.dateTo, title: "to_date".localized)
+                    .disabled(viewModel.dateFrom == nil)
+                    .onChange(of: viewModel.dateTo) { newValue in
+                        // When dateTo changes, ensure it's not earlier than dateFrom
+                        guard let to = newValue, let from = viewModel.dateFrom else { return }
+                        if to < from {
+                            viewModel.dateTo = from
+                        }
+                    }
             }
 
             Button("search_".localized) {
                 // apply filter
-               guard selectedRange != nil else { return }
+                guard selectedRange != nil else { return }
+
+                // Validate date range if both dates are provided
+                if let from = viewModel.dateFrom, let to = viewModel.dateTo, to < from {
+                    viewModel.errorMessage = "to_date_must_be_after_from_date".localized
+                    return
+                }
+
                 Task{
                     viewModel.skipCount = 0
                     await viewModel.fetchMeasurementDetails()
@@ -397,6 +424,7 @@ struct MeasurementSearchSection: View {
             .padding()
             .horizontalGradientBackground()
             .cardStyle(cornerRadius: 3,shadowOpacity: 0.077)
+
         }
         .padding()
         .background(Color.white)
@@ -438,6 +466,7 @@ struct NewMeasurementSheetView: View {
         .padding(.top)
 
         CustomDropListInputFieldUI(title: "mes_val_title", placeholder: "mes_val_placeholder",text: $viewModel.value, isDisabled: false, showDropdownIndicator:false, trailingView: AnyView(Image("newfienameIcon")))
+            .keyboardType(.numbersAndPunctuation)
         
         CustomDatePickerField(selectedDate: $viewModel.date) {
             HStack {
@@ -517,3 +546,4 @@ struct CustomDatePickerField<Content: View>: View {
         }
     }
 }
+

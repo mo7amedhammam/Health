@@ -434,7 +434,7 @@ struct DatePickerField: View {
                     
                     // Title (Arabic, so it appears on the right)
                     Text(title)
-                        .font(.medium(size: 10))
+                        .font(.medium(size: 12))
                         .foregroundColor(Color(.secondary))
 
                     if let selectedDate = selectedDate {

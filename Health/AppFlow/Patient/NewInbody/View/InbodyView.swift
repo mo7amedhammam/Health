@@ -107,7 +107,7 @@ struct newInbodyButton: View {
 }
 
 struct inbodiesList:View {
-    var files:[InbodyListItemM]? = [.init(),.init(),.init()]
+    var files:[InbodyListItemM]?
     var onSelect:((InbodyListItemM)->Void)?
     var loadMore: (() -> Void)?
 
@@ -116,67 +116,69 @@ struct inbodiesList:View {
         GeometryReader{ geometry in
             ScrollView{
                 if let files = files, files.count > 0{
-//                    VStack(spacing: 0) {
+                    LazyVStack{
+                    //                    VStack(spacing: 0) {
                     Spacer()
                     ForEach(files,id: \.self) { file in
                         Button(action: {
                             onSelect?(file)
                         },label:{
-                        VStack(spacing:12) {
-                            HStack(alignment: .top){
-                                
-                                Image(.inbodyIcon)
-                                
-                                VStack(alignment: .leading,spacing: 12){
-                                    Text(file.title ?? "")
-                                        .font(.semiBold(size: 16))
-                                        .foregroundStyle(Color(.main))
+                            VStack(spacing:12) {
+                                HStack(alignment: .top){
                                     
-                                    Text(file.formattedCreationDate ?? "")
-                                        .font(.medium(size: 14))
-                                        .foregroundStyle(Color(.secondary))
+                                    Image(.inbodyIcon)
+                                    
+                                    VStack(alignment: .leading,spacing: 12){
+                                        Text(file.title ?? "")
+                                            .font(.semiBold(size: 16))
+                                            .foregroundStyle(Color(.main))
+                                        
+                                        Text(file.formattedCreationDate ?? "")
+                                            .font(.medium(size: 14))
+                                            .foregroundStyle(Color(.secondary))
+                                    }
+                                    .frame(maxWidth:.infinity,alignment: .leading)
+                                }
+                                
+                                VStack (alignment: .leading,spacing:12){
+                                    HStack{
+                                        Image("payments_notes")
+                                        Text("inbody_notes".localized)
+                                            .font(.semiBold(size: 14))
+                                            .foregroundStyle(Color(.secondary))
+                                    }
+                                    
+                                    Text(file.comment ?? "" )
+                                        .font(.regular(size: 14))
+                                        .foregroundStyle(Color(.main))
+                                        .lineSpacing(10)
+                                        .lineLimit(2)
+                                        .multilineTextAlignment(.leading)
                                 }
                                 .frame(maxWidth:.infinity,alignment: .leading)
-                            }
-                            
-                            VStack (alignment: .leading,spacing:12){
-                                HStack{
-                                    Image("payments_notes")
-                                    Text("inbody_notes".localized)
-                                        .font(.semiBold(size: 14))
-                                        .foregroundStyle(Color(.secondary))
-                                }
                                 
-                                Text(file.comment ?? "" )
-                                    .font(.regular(size: 14))
-                                    .foregroundStyle(Color(.main))
-                                    .lineSpacing(10)
-                                    .lineLimit(2)
-                                    .multilineTextAlignment(.leading)
+                                //                            if file != files.last{
+                                //                                Color.gray.opacity(0.12)
+                                //                                    .frame(height:1)
+                                //                                    .padding(.horizontal)
+                                //                            }
+                                
                             }
-                            .frame(maxWidth:.infinity,alignment: .leading)
-                            
-//                            if file != files.last{
-//                                Color.gray.opacity(0.12)
-//                                    .frame(height:1)
-//                                    .padding(.horizontal)
-//                            }
-                            
-                        }
-                        .padding([.horizontal,.vertical])
-                    })
+                            .padding([.horizontal,.vertical])
+                        })
                         .onAppear {
                             if file == files.last {
                                 loadMore?()
                             }
                         }
-                            
-                        }
-//                    }
+                        
+                    }
+                    //                    }
                     .padding(.bottom,5)
                     .cardStyle(cornerRadius: 6,shadowOpacity: 0.12)
                     .padding(.horizontal)
                     
+                }
                 }else {
                     VStack{
                         

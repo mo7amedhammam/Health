@@ -63,7 +63,6 @@ class MyMeasurementsDetaislViewModel: ObservableObject {
                 target,
                 responseType: ModelMedicalMeasurements.self
             )
-            self.ArrMeasurement = response
             if skipCount == 0 {
                 self.ArrMeasurement = response
             }else{
