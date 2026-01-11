@@ -82,7 +82,6 @@ struct ProfileViewUI: View {
                         }
                         .disabled(true)            // Disables any interaction
                         
-                        
                         // Main Menu Section
                         Section {
                             VStack{

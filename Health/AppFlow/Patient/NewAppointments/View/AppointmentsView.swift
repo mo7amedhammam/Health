@@ -9,7 +9,7 @@ import SwiftUI
 
 struct AppointmentsView: View {
     @StateObject var router = NavigationRouter()
-    @StateObject var viewModel = AppointmentsViewModel.shared
+    @StateObject var viewModel = AppointmentsViewModel()
     @State var mustLogin: Bool = false
 
     @State var showFilter:Bool = false
@@ -96,14 +96,22 @@ struct AppointmentsView: View {
             }
             //            .frame(height: 232)
             //            .horizontalGradientBackground()
-            .onAppear{
-                Task{
+            .task{
+//                Task{
                     if Helper.shared.CheckIfLoggedIn(){
-                        await viewModel.refresh()
+//                        await viewModel.refresh()
                     }else{
                         viewModel.clear()
                         mustLogin = true
                     }
+//                }
+            }
+            .refreshable{
+                if Helper.shared.CheckIfLoggedIn(){
+//                        await viewModel.refresh()
+                }else{
+                    viewModel.clear()
+                    mustLogin = true
                 }
             }
             

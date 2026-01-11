@@ -24,7 +24,7 @@ import SwiftUI
 
 // MARK: - Main View
 struct TipsView: View {
-    @StateObject var viewModel = TipsViewModel.shared
+    @StateObject var viewModel = TipsViewModel()
     @StateObject var router = NavigationRouter()
 
     @State private var searchText = ""
@@ -59,10 +59,10 @@ struct TipsView: View {
             .background(Color(.bgPink))
 //            .navigationBarHidden(true)
         }
-        .task {
-//            viewModel.allTips = nil
-            await viewModel.refresh()
-        }
+//        .task {
+////            viewModel.allTips = nil
+//            await viewModel.refresh()
+//        }
         .refreshable {
             await viewModel.refresh()
         }
@@ -112,7 +112,8 @@ struct TipsView: View {
                             CategoryCardView(item: categories[index]){
 //                                MARK: -- action ---
                                 router.push( TipsCategoriesListView(category:categories[index])
-                                    .environmentObject(TipDetailsViewModel.shared) )
+//                                    .environmentObject(TipDetailsViewModel.shared)
+                                )
                             }
                                 .onAppear {
                                     // Load more when reaching near the end

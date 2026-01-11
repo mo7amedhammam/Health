@@ -9,7 +9,7 @@ import SwiftUI
 
 struct TipsCategoriesListView: View {
     @StateObject var router = NavigationRouter()
-    @EnvironmentObject var viewModel : TipDetailsViewModel
+    @StateObject var viewModel : TipDetailsViewModel = TipDetailsViewModel.shared
 
     let category:TipsAllItem?
     var body: some View {
@@ -29,13 +29,14 @@ struct TipsCategoriesListView: View {
             .background(Color(.bgPink))
 //            .navigationBarHidden(true)
         }
+        
+        .refreshable {
+            await viewModel.refresh()
+        }
         .task {
             viewModel.tipId = category?.id 
             
         await viewModel.refresh()
-        }
-        .refreshable {
-            await viewModel.refresh()
         }
         .localizeView()
         .withNavigation(router: router)
@@ -99,7 +100,8 @@ struct TipsCategoriesListView: View {
 }
 
 #Preview {
-    TipsCategoriesListView(category: TipsAllItem(title: "مرض السكري", order: 4, id: 4, image: "diabetes2", subjectsCount: 12)).environmentObject(TipDetailsViewModel.shared)
+    TipsCategoriesListView(category: TipsAllItem(title: "مرض السكري", order: 4, id: 4, image: "diabetes2", subjectsCount: 12))
+//        .environmentObject(TipDetailsViewModel.shared)
 }
 
 // MARK: - Recent Tip Card View

@@ -15,7 +15,6 @@ class SubcripedPackagesViewModel:ObservableObject {
     // -- Get List --
     var maxResultCount: Int?              = 5
     @Published var skipCount: Int?        = 0
-
     
     // Published properties
     @Published var subscripedPackages: SubcripedPackagesM?
@@ -28,6 +27,13 @@ class SubcripedPackagesViewModel:ObservableObject {
     // Init with DI
     init(networkService: AsyncAwaitNetworkServiceProtocol = AsyncAwaitNetworkService.shared) {
         self.networkService = networkService
+            Task{
+                if (Helper.shared.CheckIfLoggedIn()) {
+                    async let Packages:() = refresh()
+                     _ = await (Packages)
+                }
+            }
+
     }
 }
 

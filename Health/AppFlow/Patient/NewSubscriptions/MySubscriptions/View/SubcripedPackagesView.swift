@@ -11,7 +11,7 @@ struct SubcripedPackagesView: View {
     //    var mainCategory:HomeCategoryItemM
     @EnvironmentObject var profileViewModel: EditProfileViewModel
     @StateObject var router = NavigationRouter()
-    @StateObject private var viewModel = SubcripedPackagesViewModel.shared
+    @StateObject private var viewModel = SubcripedPackagesViewModel()
     var hasbackBtn : Bool? = true
     //    var onBack: (() -> Void)? // for uikit dismissal
     
@@ -20,12 +20,6 @@ struct SubcripedPackagesView: View {
     
     @State var destination = AnyView(EmptyView())
     @State var mustLogin: Bool = false
-    //    @State var isactive: Bool = false
-    //    func pushTo(destination: any View) {
-    //        self.destination = AnyView(destination)
-    //        self.isactive = true
-    //    }
-    
     init(hasbackBtn : Bool? = true) {
         self.hasbackBtn = hasbackBtn
         //        self.onBack = onBack
@@ -109,7 +103,9 @@ struct SubcripedPackagesView: View {
                     }
                 },loadMore: {
                     Task {
-                        await viewModel.loadMoreIfNeeded()
+                        if (Helper.shared.CheckIfLoggedIn()) {
+                            await viewModel.loadMoreIfNeeded()
+                        }
                     }
                 })
                 .refreshable {
@@ -150,22 +146,23 @@ struct SubcripedPackagesView: View {
         }
         .localizeView()
         .withNavigation(router: router)
-        .showHud(isShowing:  $viewModel.isLoading)
+        .showHud(isShowing: $viewModel.isLoading)
         .errorAlert(isPresented: Binding(
             get: { viewModel.errorMessage != nil },
             set: { if !$0 { viewModel.errorMessage = nil } }
         ), message: viewModel.errorMessage)
         .edgesIgnoringSafeArea([.top,.horizontal])
-        .task{
+        .task(){
 //            Task{
                 if (Helper.shared.CheckIfLoggedIn()) {
+
                     async let Profile:() = profileViewModel.getProfile()
-                    async let Packages:() = viewModel.refresh()
+//                    async let Packages:() = viewModel.refresh()
 //                    await viewModel.getSubscripedPackages()
-                     _ = await (Profile,Packages)
+                     _ = await (Profile)
                     
-                    print("Items count:", viewModel.subscripedPackages?.items?.count ?? -1)
-                       print("Items:", viewModel.subscripedPackages?.items ?? [])
+//                    print("Items count:", viewModel.subscripedPackages?.items?.count ?? -1)
+//                       print("Items:", viewModel.subscripedPackages?.items ?? [])
                 } else {
                     profileViewModel.cleanup()
                     viewModel.clear()

@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct MyMeasurementsView: View {
-    @StateObject var viewModel = MyMeasurementsViewModel.shared
+    @StateObject var viewModel = MyMeasurementsViewModel()
     @StateObject var router = NavigationRouter()
     @State var mustLogin: Bool = false
 
@@ -74,10 +74,10 @@ struct MyMeasurementsView: View {
         .customSheet(isPresented: $mustLogin ,height: 350){
             LoginSheetView()
         }
-        .onAppear{
+        .task{
             Task{
                 if Helper.shared.CheckIfLoggedIn(){
-                    await viewModel.fetchStats()
+//                    await viewModel.fetchStats()
                 }else{
                     viewModel.clear()
                     mustLogin = true

@@ -68,7 +68,7 @@ struct MedicationReminderView: View {
                         }
             }
         }
-        .task(){
+        .task{
 //            Task{
                 await viewModel.refresh()
 //            }

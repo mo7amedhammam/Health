@@ -23,7 +23,7 @@ class MedicationReminderViewModel:ObservableObject {
     @Published var ArrDrugs : [ModelGetDrugs]?
     @Published var selectedDrug : ModelGetDrugs?
     
-    @Published var showAddSheet:Bool = false
+    @Published var showAddSheet:Bool = false{didSet{errorMessage = nil}}
     @Published var drugName: String = ""
     @Published var startDate: Date? = Date(){
         didSet{
@@ -43,7 +43,7 @@ class MedicationReminderViewModel:ObservableObject {
     @Published var durationDays: String = ""
     
     @Published var isLoading:Bool? = false
-    @Published var errorMessage: String?{didSet{errorMessage=nil}}
+    @Published var errorMessage: String?
     
     @Published var reminders: ModelNotification?
 //    = ModelNotification(items: [ ItemNoti(
@@ -213,6 +213,7 @@ class MedicationReminderViewModel:ObservableObject {
             )
             showAddSheet = false
             removeInputs()
+            clear()
             await GetNotifications()
             
         } catch {

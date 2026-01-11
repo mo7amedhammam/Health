@@ -39,9 +39,9 @@ extension UpcomingSessionM{
         
         let name = switch Helper.shared.getSelectedUserType() {
         case .Customer,.none:
-            customerName
-        case .Doctor:
             doctorName
+        case .Doctor:
+            customerName
         }
         return name 
     }

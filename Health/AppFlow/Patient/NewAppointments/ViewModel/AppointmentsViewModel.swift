@@ -40,6 +40,12 @@ class AppointmentsViewModel : ObservableObject {
     // Init with DI
     init(networkService: AsyncAwaitNetworkServiceProtocol = AsyncAwaitNetworkService.shared) {
         self.networkService = networkService
+       
+        Task{
+            if Helper.shared.CheckIfLoggedIn(){
+                await refresh()
+            }
+        }
     }
 }
 

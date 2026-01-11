@@ -29,6 +29,7 @@ class TipsViewModel: ObservableObject {
     // Init with DI
     init(networkService: AsyncAwaitNetworkServiceProtocol = AsyncAwaitNetworkService.shared) {
         self.networkService = networkService
+        Task{ await refresh() }
     }
     
     // MARK: - Fetch Measurement Stats

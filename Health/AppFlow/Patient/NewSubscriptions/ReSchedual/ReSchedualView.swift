@@ -118,7 +118,7 @@ struct ReSchedualView: View {
                                         .font(.medium(size: 14))
                                 }
                                 .frame(height: 60)
-                                .frame(width: 66)
+                                .frame(width: 80)
                             })
                             .foregroundStyle(Color.white)
                             .background(viewModel.selectedDay == day ? Color(.secondary) : Color(.mainBlue))
