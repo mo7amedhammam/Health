@@ -128,7 +128,20 @@ struct AppointmentsView: View {
         ), message: viewModel.errorMessage)
 
         .customSheet(isPresented: $showFilter,height: 330){
-            FilterView()
+            FilterView(
+                fromDate: $viewModel.fromDate,
+                toDate: $viewModel.toDate,
+                sortDirection: $viewModel.sortDirection,
+                onApply: {
+                    viewModel.clear()
+                    Task { await viewModel.refresh() }
+                },
+                onCancel: {
+                    viewModel.clear()
+                    viewModel.resetFilter()
+                    Task { await viewModel.refresh() }
+                }
+            )
         }
         .customSheet(isPresented: $mustLogin ,height: 350){
             LoginSheetView()
@@ -521,13 +534,15 @@ enum SortOptions:String {
     case newestToOldest = "new_to_old"
 }
 struct FilterView: View {
-    @Environment(\.dismiss) var dismiss // To close the sheet
+    @Environment(\.dismiss) var dismiss
+    @Binding var fromDate: Date?
+    @Binding var toDate: Date?
+    @Binding var sortDirection: String?
+    var onApply: (() -> Void)? = nil
+    var onCancel: (() -> Void)? = nil
     
-    @State private var fromDate: Date? = Date() // Initialize with current date
-    @State private var toDate: Date? = Date()   // Initialize with current date
-    
-    @State private var sortBy: SortOptions? = nil
-//    @State private var sortByNewestToOldest: Bool = false
+    private var isOldToNewSelected: Bool { sortDirection == "asc" }
+    private var isNewToOldSelected: Bool { sortDirection == "desc" }
     
     var body: some View {
         VStack(spacing: 0) {
@@ -578,12 +593,12 @@ struct FilterView: View {
                 
                 // Radio Buttons
                 VStack(alignment: .trailing, spacing: 10) {
-                    RadioButton(option:.oldestToNewest, isSelected: .constant(sortBy == .oldestToNewest)){
-                        sortBy = .oldestToNewest
+                    RadioButton(option: .oldestToNewest, isSelected: .constant(isOldToNewSelected)) {
+                        sortDirection = "asc"
                     }
                     
-                    RadioButton(option:.newestToOldest, isSelected: .constant(sortBy == .newestToOldest)){
-                        sortBy = .newestToOldest
+                    RadioButton(option: .newestToOldest, isSelected: .constant(isNewToOldSelected)) {
+                        sortDirection = "desc"
                     }
                 }
                 .padding(.vertical, 10)
@@ -593,8 +608,8 @@ struct FilterView: View {
                 // MARK: - Action Buttons
                 HStack(spacing: 15) {
                     Button(action: {
-                        dismiss() // Dismiss the sheet on Cancel
-                        // Add cancel logic here if needed
+                        onCancel?()
+                        dismiss()
                     }) {
                         Text("cancel_".localized)
                             .font(.bold(size: 18))
@@ -610,17 +625,15 @@ struct FilterView: View {
                         print("Apply Filter:")
                         print("From: \(String(describing: fromDate))")
                         print("To: \(String(describing: toDate))")
-                        switch sortBy {
-                        case .oldestToNewest:
+                        switch sortDirection {
+                        case "old_to_new":
                             print("Sort: Oldest to Newest")
-
-                        case .newestToOldest:
+                        case "new_to_old":
                             print("Sort: Newest to Oldest")
-
-                        case nil:
+                        default:
                             print("Sort: none")
                         }
-                        
+                        onApply?()
                         dismiss() // Dismiss the sheet on Apply
                     }) {
                         Text("apply_".localized)
@@ -648,6 +661,7 @@ struct FilterView: View {
 // MARK: - Preview Provider
 struct FilterView_Previews: PreviewProvider {
     static var previews: some View {
-        FilterView()
+        FilterView(fromDate: .constant(Date()), toDate: .constant(Date()), sortDirection: .constant(nil), onApply: {}, onCancel: {})
     }
 }
+

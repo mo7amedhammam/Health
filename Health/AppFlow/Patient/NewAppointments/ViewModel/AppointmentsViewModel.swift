@@ -17,6 +17,16 @@ class AppointmentsViewModel : ObservableObject {
     var maxResultCount: Int?              = 5
     var skipCount: Int?                   = 0
    
+    @Published var fromDate: Date? {
+        didSet { /* Optionally trigger refresh or mark dirty */ }
+    }
+    @Published var toDate: Date? {
+        didSet { /* Optionally trigger refresh or mark dirty */ }
+    }
+    @Published var sortDirection: String? {
+        didSet { /* Optionally trigger refresh or mark dirty */ }
+    }
+    
     @Published var upcomingSession: UpcomingSessionM? = nil
 
     // Published properties
@@ -83,8 +93,17 @@ extension AppointmentsViewModel{
 //            //            throw NetworkError.unknown(code: 0, error: "check inputs")
             return
         }
-        let parametersarr : [String : Any] =  ["maxResultCount":maxResultCount,"skipCount":skipCount]
-        
+        var parametersarr : [String : Any] =  ["maxResultCount":maxResultCount,"skipCount":skipCount]
+        if let fromDate = fromDate {
+            parametersarr["fromDate"] = fromDate.formatted(.customDateFormat("yyyy-MM-dd",locale:.english))
+        }
+        if let toDate = toDate {
+            parametersarr["toDate"] = toDate.formatted(.customDateFormat("yyyy-MM-dd",locale:.english))
+        }
+        if let sortDirection = sortDirection {
+            parametersarr["sortDirection"] = sortDirection
+        }
+
         let target = HomeServices.CustomerSessionCalender(parameters: parametersarr)
         do {
             self.errorMessage = nil // Clear previous errors
@@ -148,5 +167,15 @@ extension AppointmentsViewModel {
     func clear() {
         skipCount = 0
         appointments = nil
+        
+        fromDate = nil
+        toDate = nil
+        sortDirection = nil
+    }
+    
+    func resetFilter() {
+        fromDate = nil
+        toDate = nil
+        sortDirection = nil
     }
 }
