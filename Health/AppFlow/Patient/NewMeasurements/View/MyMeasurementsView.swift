@@ -14,7 +14,9 @@ struct MyMeasurementsView: View {
     @State var mustLogin: Bool = false
 
     var measurements:[MyMeasurementsStatsM]? {
-        return viewModel.ArrStats
+//        return viewModel.ArrStats
+        return MyMeasurementsStatsM.mockList
+
     }
 //    @State var destination = AnyView(EmptyView())
 //    @State var isactive: Bool = false

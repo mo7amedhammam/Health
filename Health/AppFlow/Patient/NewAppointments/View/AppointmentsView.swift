@@ -541,8 +541,8 @@ struct FilterView: View {
     var onApply: (() -> Void)? = nil
     var onCancel: (() -> Void)? = nil
     
-    private var isOldToNewSelected: Bool { sortDirection == "asc" }
-    private var isNewToOldSelected: Bool { sortDirection == "desc" }
+    private var isOldToNewSelected: Bool { sortDirection == "old_to_new" }
+    private var isNewToOldSelected: Bool { sortDirection == "new_to_old" }
     
     var body: some View {
         VStack(spacing: 0) {
@@ -594,11 +594,11 @@ struct FilterView: View {
                 // Radio Buttons
                 VStack(alignment: .trailing, spacing: 10) {
                     RadioButton(option: .oldestToNewest, isSelected: .constant(isOldToNewSelected)) {
-                        sortDirection = "asc"
+                        sortDirection = "old_to_new"
                     }
                     
                     RadioButton(option: .newestToOldest, isSelected: .constant(isNewToOldSelected)) {
-                        sortDirection = "desc"
+                        sortDirection = "new_to_old"
                     }
                 }
                 .padding(.vertical, 10)
@@ -628,10 +628,15 @@ struct FilterView: View {
                         switch sortDirection {
                         case "old_to_new":
                             print("Sort: Oldest to Newest")
+                            sortDirection = "asc"
+
                         case "new_to_old":
                             print("Sort: Newest to Oldest")
+                            sortDirection = "desc"
+
                         default:
                             print("Sort: none")
+                            sortDirection = nil
                         }
                         onApply?()
                         dismiss() // Dismiss the sheet on Apply
