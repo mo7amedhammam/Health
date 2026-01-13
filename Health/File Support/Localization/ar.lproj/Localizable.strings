@@ -527,3 +527,9 @@
 "accept_" = "قبول";
 "reject_" = "رفض";
 "no_requests_found" = "لم يتم العثور على طلبات";
+
+//--- Account updated popup ----
+"updated_title" = "تم تحديث الحساب بنجاح";
+"updated_subtitle1" = "تم تحديث حسابك بنجاح";
+"updated_subtitle2" = "يمكنك تحديثه في أي وقت";
+"updated_btn" = "تم";

@@ -28,13 +28,12 @@ struct EditProfileView: View {
     //    @State private var isPasswordValid: Bool = true
     
     private var isNameValid: Bool{
-        fullName.count == 0 || fullName.count > 3
+        !fullName.isEmpty
     }
     
     private var isGenderValid: Bool{
         //        selectedGender != nil
         selectedGender == nil || selectedGender?.title?.count ?? 0 > 0
-        
     }
     
     init() {
@@ -248,6 +247,10 @@ struct EditProfileView: View {
             // Validate
             isPhoneValid = newValue.count == 0 || (phoneNumber.count == 11 && phoneNumber.starts(with: "01"))
         }
+        .onChange(of: viewModel.isUpdated){newval in
+            guard newval == true else { return }
+             accountUpdated()
+        }
         
         .showHud(isShowing:  $viewModel.isLoading)
         .errorAlert(isPresented: Binding(
@@ -271,6 +274,29 @@ struct EditProfileView: View {
 ////            print("🖼️ لم يتم تغيير الصورة")
 ////        }
 //    }
+    
+    private func accountUpdated() {
+        let successView = SuccessView(
+            image: Image("successicon"),
+            title: "updated_title".localized,
+            subtitle1: "updated_subtitle1".localized,
+            subtitle2: "updated_subtitle2".localized,
+            buttonTitle: "updated_btn".localized,
+            buttonAction: {
+                // Navigate to home or login
+                let newHome = switch Helper.shared.getSelectedUserType() {
+                case .Customer,.none:
+                    UIHostingController(rootView: NewTabView())
+                case .Doctor:
+                    UIHostingController(rootView: DocTabView())
+                }
+                Helper.shared.changeRootVC(newroot: newHome, transitionFrom: .fromLeft)
+            }
+        )
+        let newVC = UIHostingController(rootView: successView)
+        Helper.shared.changeRootVC(newroot: newVC, transitionFrom: .fromLeft)
+        
+    }
 }
 
 #Preview {

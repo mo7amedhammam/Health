@@ -347,7 +347,7 @@
 "signup_speciality_placeholder" = "select speciality";
 "Bio_title" = "Bio";
 "Bio_placeholder" = "Type Your Bio";
-"Please_enter_a_valid_name_(min_2_characters)" = "Please enter a valid name (min_2_characters)";
+"Please_enter_a_valid_name_(min_2_characters)" = "Please enter a valid name (min 2 characters)";
 "Please_enter_a_valid_mobile_number_(11_digits_starting_with_01)" = "Please enter a valid mobile number (11 digits starting with 01)";
 "Please_enter_a_valid_email" = "Please enter a valid email";
 "Please_select_gender" = "Please select gender";
@@ -527,3 +527,9 @@
 "accept_" = "accept";
 "reject_" = "reject";
 "no_requests_found" = "no requests found";
+
+//--- Account updated popup ----
+"updated_title" = "Account Updated successfully";
+"updated_subtitle1" = "your account has been successfully updated";
+"updated_subtitle2" = "you can update it anytime";
+"updated_btn" = "Done";

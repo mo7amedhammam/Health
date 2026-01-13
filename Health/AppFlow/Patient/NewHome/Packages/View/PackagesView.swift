@@ -380,21 +380,24 @@ struct PackagesListView: View {
                                         
                                         Spacer()
                                         
-                                        VStack(alignment: .trailing){
-                                            (Text(item.priceAfterDiscount ?? 0,format:.number.precision(.fractionLength(1))) + Text(" "+"EGP".localized))
-                                                .font(.semiBold(size: 16))
-                                                .foregroundStyle(Color.white)
-                                            
-                                            HStack{
-                                                (Text(item.priceBeforeDiscount ?? 0,format:.number.precision(.fractionLength(1))) + Text(" "+"EGP".localized))
-                                                    .strikethrough()
-                                                    .foregroundStyle(Color(.secondary))
-                                                    .font(.semiBold(size: 12))
+                                            VStack(alignment: .trailing){
+                                                (Text(item.priceAfterDiscount ?? 0,format:.number.precision(.fractionLength(1))) + Text(" "+"EGP".localized))
+                                                    .font(.semiBold(size: 16))
+                                                    .foregroundStyle(Color.white)
                                                 
-                                                DiscountLine(discount: item.discount)
+                                                if let discount = item.discount, discount > 0 {
+                                                HStack{
+                                                    (Text(item.priceBeforeDiscount ?? 0,format:.number.precision(.fractionLength(1))) + Text(" "+"EGP".localized))
+                                                        .strikethrough()
+                                                        .foregroundStyle(Color(.secondary))
+                                                        .font(.semiBold(size: 12))
+                                                    
+                                                    DiscountLine(discount: discount)
+                                                }
+                                                .padding(.top,2)
                                             }
-                                            .padding(.top,2)
                                         }
+                                        
                                     }
                                 }
                                 .padding(.top,5)

@@ -33,6 +33,7 @@ class EditProfileViewModel : ObservableObject {
     @Published var DocProfile : DocProfileM?
     
     // UI state
+    @Published var isUpdated:Bool? = false
     @Published var isLoading:Bool? = false
     @Published var errorMessage: String? = nil
     
@@ -107,7 +108,7 @@ class EditProfileViewModel : ObservableObject {
         
         // Name required: min 2 characters after trimming
         let trimmedName = Name.trimmingCharacters(in: .whitespacesAndNewlines)
-        let nameIsValid = trimmedName.count >= 2
+        let nameIsValid = trimmedName.isEmpty == false
         guard nameIsValid else {
             errorMessage = nameIsValid ? nil : "Please_enter_a_valid_name_(min_2_characters)".localized
             return false }
@@ -175,6 +176,7 @@ extension EditProfileViewModel{
         guard validateInputs() else { return }
         
         isLoading = true
+//        isUpdated = false
         defer { isLoading = false }
         
         guard let appCountryId = Country?.id,
@@ -226,6 +228,7 @@ extension EditProfileViewModel{
         
         do {
             self.errorMessage = nil
+            isUpdated = true
             switch Helper.shared.getSelectedUserType() {
             case .Customer,.none:
                 

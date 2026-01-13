@@ -44,7 +44,7 @@ extension ItemNoti{
             return endDate?.ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "dd / MM / yyyy") ?? nil
     }
     var formatedStartTime: String? {
-            return startDate?.ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "hh:mm") ?? nil
+            return startDate?.ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "hh:mm a") ?? nil
     }
 
 }
