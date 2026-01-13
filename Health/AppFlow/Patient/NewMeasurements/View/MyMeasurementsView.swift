@@ -14,8 +14,8 @@ struct MyMeasurementsView: View {
     @State var mustLogin: Bool = false
 
     var measurements:[MyMeasurementsStatsM]? {
-//        return viewModel.ArrStats
-        return MyMeasurementsStatsM.mockList
+        return viewModel.ArrStats
+//        return MyMeasurementsStatsM.mockList
 
     }
 //    @State var destination = AnyView(EmptyView())
@@ -43,22 +43,22 @@ struct MyMeasurementsView: View {
 //            .shadow(color: .gray.opacity(0.2), radius: 4, x: 0, y: 2)
 //            .padding(.horizontal)
 
-            ScrollView{
-                // Grid
-                LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 10) {
+            ScrollView {
+                let columns = [GridItem(.adaptive(minimum: 320), spacing: 16)]
+                LazyVGrid(columns: columns, spacing: 16) {
                     ForEach(measurements ?? [], id: \.medicalMeasurementID) { item in
                         Button(action: {
-//                            pushTo(destination: MeasurementDetailsView(stat: item) )
-                            router.push(MeasurementDetailsView(stat: item) )
-
-                        }, label: {
+                            router.push(MeasurementDetailsView(stat: item))
+                        }) {
                             MeasurementCard(item: item)
-                        })
+                        }
+                        .buttonStyle(.plain)
                     }
                 }
-                .padding()
-                Spacer().frame(height:80)
+                .padding(.horizontal)
+                .padding(.top, 4)
 
+                Spacer().frame(height: 80)
             }
             Spacer()
 
@@ -104,73 +104,71 @@ struct MeasurementCard: View {
     var item: MyMeasurementsStatsM
 
     var body: some View {
-        VStack(alignment: .trailing, spacing: 6) {
-            HStack() {
-                VStack(alignment: .leading,spacing: 5){
+        VStack(alignment: .leading, spacing: 10) {
+            HStack(alignment: .center, spacing: 12) {
+                VStack(alignment: .leading, spacing: 10) {
                     Text(item.title ?? "")
-                        .font(.bold(size: 16))
+                        .font(.bold(size: 20))
                         .foregroundColor(.mainBlue)
-                    
-                    (Text("\(item.measurementsCount ?? 0) ")
-                        .font(.bold(size: 10))
+                        .lineLimit(1)
 
+                    (Text("\(item.measurementsCount ?? 0) ")
+                        .font(.semiBold(size: 16))
                      + Text("available_measurements".localized))
-                        .font(.regular(size: 10))
-                        .foregroundColor(.mainBlue)
+                        .font(.regular(size: 16))
+                        .foregroundColor(.mainBlue.opacity(0.9))
+                        .lineLimit(1)
                 }
-                .frame(maxWidth: .infinity , alignment: .leading)
+                .frame(maxWidth: .infinity, alignment: .leading)
 
                 if let imageName = item.image {
-                    KFImageLoader(url:URL(string:Constants.imagesURL + (imageName.validateSlashs())),placeholder: Image("sehatylogobg"), isOpenable: false,shouldRefetch: false)
-//                            .resizable()
-//                        .clipShape(Circle())
+                    KFImageLoader(
+                        url: URL(string: Constants.imagesURL + (imageName.validateSlashs())),
+                        placeholder: Image("sehatylogobg"),
+                        isOpenable: false,
+                        shouldRefetch: false
+                    )
                     .scaledToFit()
-                    .frame(width: 36, height: 36)
+                    .frame(width: 60, height: 60)
                 }
+
+//                Image(systemName: "chevron.left")
+//                    .font(.system(size: 14, weight: .semibold))
+//                    .foregroundColor(.mainBlue.opacity(0.6))
             }
-            .frame(maxHeight: .infinity,alignment: .center)
 
             Divider()
+                .padding(.vertical, 2)
 
-            VStack (spacing:5){
-                HStack(spacing:4){
+            VStack(alignment: .leading, spacing: 6) {
+                HStack(spacing: 6) {
                     Text("Last_Measurement".localized)
-                        .font(.regular(size: 11))
+                        .font(.regular(size: 15))
                         .foregroundColor(.mainBlue)
-                    
+
                     Text(item.lastMeasurementValue ?? "--")
-                        .font(.bold(size: 11))
+                        .font(.bold(size: 15))
                         .foregroundColor(Color(.secondary))
-                                    }
-                .frame(maxWidth: .infinity,alignment: .leading)
+                }
 
-
-//                Spacer()
-//                Divider()
-
-                if let date = item.formatteddate{
-                    HStack(spacing:4){
+                if let date = item.formatteddate {
+                    HStack(spacing: 6) {
                         Text("in_Date_".localized)
-                            .font(.semiBold(size: 10))
+                            .font(.semiBold(size: 15))
                             .foregroundColor(.mainBlue)
-                        
-                        Text("\( date)")
-                            .font(.regular(size: 10))
+
+                        Text("\(date)")
+                            .font(.regular(size: 15))
                             .foregroundColor(.mainBlue)
                     }
-                    .frame(maxWidth: .infinity,alignment: .trailing)
-                    
+                    .frame(maxWidth: .infinity, alignment: .trailing)
                 }
             }
-            .frame(maxWidth: .infinity,alignment: .leading)
-//            .padding(.vertical,3)
-
         }
-        .frame(height: 88)
-        .padding(.horizontal,10)
-        .padding(.vertical,8)
-        .background(Color.white)
-        .cardStyle(cornerRadius: 6,shadowOpacity: 0.0696)
+        .padding(.horizontal, 14)
+        .padding(.vertical, 12)
+        .frame(maxWidth: .infinity, minHeight: 110)
+        .cardStyle(cornerRadius: 8,shadowOpacity: 0.14 )
     }
 }
 
@@ -205,3 +203,4 @@ struct MyMeasurementsView_Previews: PreviewProvider {
         // Add more mocks...
     ]
 }
+
