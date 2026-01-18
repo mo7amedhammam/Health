@@ -490,7 +490,7 @@ struct SignUpView: View {
             
             CustomHeaderUI(title: "Signup_title".localized, subtitle: "Signup_subtitle".localized)
                 .padding(.top,30)
-                .padding(.bottom,15)
+//                .padding(.bottom,15)
             
             ScrollView{
                 VStack(spacing: 30){
@@ -651,9 +651,12 @@ struct SignUpView: View {
                     .padding(.bottom, 10)
                     
                 }
-                .padding(.top)
+                .padding(.top,10)
+
+                Spacer()
+
             }
-            Spacer()
+//            Spacer()
             
             
             CustomButtonUI(title: "signup_signup_btn",isValid: isFormValid){

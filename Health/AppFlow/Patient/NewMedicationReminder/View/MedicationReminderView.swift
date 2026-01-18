@@ -189,7 +189,7 @@ struct AddReminderSheet: View {
             Group {
                 CustomDropListInputFieldUI(title: "add_medication_name_itle", placeholder: "add_medication_name_placeholder",text: $viewModel.drugName, isDisabled: false, showDropdownIndicator:false, trailingView: AnyView(Image("newfienameIcon")))
                 
-                CustomDatePickerField(selectedDate: $viewModel.startDate) {
+                CustomDatePickerField(selectedDate: $viewModel.startDate,minDate: Date()) {
                     HStack {
                         CustomDropListInputFieldUI(title: "add_medication_start_date_title", placeholder: "add_medication_start_date_placeholder",text: $viewModel.formattedDate, isDisabled: true, showDropdownIndicator:false, trailingView: AnyView(Image("dateicon 1")))
                     }
@@ -240,6 +240,10 @@ struct AddReminderSheet: View {
             .padding(.top)
         }
         .padding()
+        .onDisappear(perform: {
+            viewModel.removeInputs()
+        })
+
         .errorAlert(isPresented: Binding(
             get: { viewModel.errorMessage != nil },
             set: { if !$0 { viewModel.errorMessage = nil } }
@@ -247,3 +251,4 @@ struct AddReminderSheet: View {
 
     }
 }
+

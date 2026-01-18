@@ -47,6 +47,7 @@
 "login_signup_btn" = "إنشاء حساب";
 "Login_With_password_First" = "تسجيل الدخول باستخدام كلمة المرور أولاً";
 "login_type_mobile_first" = "أدخل الهاتف المحمول أولاً";
+"continue_anonymously" = "استمر كمجهول";
 
 /* Signup */
 "Signup_title" = "إنشاء حساب";

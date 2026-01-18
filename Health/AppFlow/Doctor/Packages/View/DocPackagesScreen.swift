@@ -84,7 +84,12 @@ struct DocPackagesScreen: View {
             DocPackagesFilterView(viewmodel: viewModel)
         }
         .task {
-            await viewModel.getActivePackages()
+            guard Helper.shared.CheckIfLoggedIn() else {
+                viewModel.ActivePackages = nil
+                return
+            }
+                await viewModel.getActivePackages()
+            
         }
 //        .onChange(of: viewModel.showSuccess){ newval in
 //            guard newval else { return }

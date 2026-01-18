@@ -144,11 +144,13 @@ extension Authintications : TargetType {
                 .ChangePassword(parameters: let parameters),
                 .GetMySchedulePrescriptions(parameters: let parameters),
                 .GetCustomerInbody(parameters: let parameters),
-                .CreateCustomerInboy(parameters: let parameters) ,
-                .SendFireBaseDeviceToken(let parameters) :
+                .CreateCustomerInboy(parameters: let parameters)
+//                .SendFireBaseDeviceToken(let parameters)
+            :
             return .parameterRequest(Parameters: parameters, Encoding: encoding)
 
-        case .GetMyScheduleDrugs(parameters: let parameters):
+        case .GetMyScheduleDrugs(parameters: let parameters),
+                .SendFireBaseDeviceToken(parameters: let parameters):
             return .BodyparameterRequest(Parameters: parameters, Encoding: encoding)
 
         case .GetDistricts,

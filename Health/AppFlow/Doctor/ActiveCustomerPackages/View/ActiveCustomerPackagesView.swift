@@ -233,8 +233,8 @@ struct ActiveCustomerPackagesView: View {
                 .padding(.horizontal)
 
                 CustomerMesurmentsSection(measurements: viewModel.customerMeasurements){item in
-//                    guard let item = item else { return }
-//                    router.push(MeasurementDetailsView(stat: item))
+                    guard let item = item else { return }
+                    router.push(MeasurementDetailsView(stat: item))
                 }
                 
                 Spacer().frame(height: 55)

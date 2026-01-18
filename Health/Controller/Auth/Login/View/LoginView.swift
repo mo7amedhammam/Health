@@ -48,6 +48,8 @@ struct LoginView: View {
                 signInButton
                 signupRowIfCustomer
                     .padding(.vertical)
+                continueAnonymouslyButton
+                    .padding(.bottom)
                 Spacer(minLength: 0)
             }
             .padding(.horizontal)
@@ -195,6 +197,16 @@ private extension LoginView {
             }
         }
     }
+    
+    var continueAnonymouslyButton: some View {
+        Button("continue_anonymously".localized) {
+            continueAnonymously()
+        }
+        .font(.medium(size: 18))
+        .foregroundColor(Color(.secondary))
+        .frame(maxWidth: .infinity, alignment: .center)
+        .padding(.top, 4)
+    }
 }
 
 // MARK: - Logic helpers
@@ -313,6 +325,24 @@ private extension LoginView {
         self.phoneNumber = phone
         self.password = password
         login()
+    }
+    
+    func continueAnonymously() {
+        // Mark user as guest/anonymous if your Helper supports it
+//        Helper.shared.setGuestMode(true)
+        if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] == "1" {
+            return
+        }
+        DispatchQueue.main.async {
+            switch selectedUser {
+            case .Customer:
+                let newHome = UIHostingController(rootView: NewTabView())
+                Helper.shared.changeRootVC(newroot: newHome, transitionFrom: .fromLeft)
+            case .Doctor:
+                let newHome = UIHostingController(rootView: DocTabView())
+                Helper.shared.changeRootVC(newroot: newHome, transitionFrom: .fromLeft)
+            }
+        }
     }
 }
 

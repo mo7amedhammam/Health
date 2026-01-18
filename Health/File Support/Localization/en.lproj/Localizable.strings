@@ -47,6 +47,7 @@
 "login_signup_btn" = "Create Account";
 "Login_With_password_First" = "Login_With_password_First";
 "login_type_mobile_first" = "enter mobile number first";
+"continue_anonymously" = "continue anonymously";
 
 /* Signup */
 "Signup_title" = "Create Account";

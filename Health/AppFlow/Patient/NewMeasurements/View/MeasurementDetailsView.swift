@@ -507,6 +507,8 @@ struct NewMeasurementSheetView: View {
 struct CustomDatePickerField<Content: View>: View {
     @Binding var selectedDate: Date?
     var showTime: Bool = false
+    var minDate: Date? = nil
+    var maxDate: Date? = nil
     let content: () -> Content
 
     @State private var showingDatePickerSheet = false
@@ -531,7 +533,16 @@ struct CustomDatePickerField<Content: View>: View {
                     "SelectـDate".localized,
                     selection: Binding(
                         get: { selectedDate ?? Date() },
-                        set: { selectedDate = $0 }
+                        set: { newValue in
+                            var value = newValue
+                            if let minDate {
+                                value = max(value, minDate)
+                            }
+                            if let maxDate {
+                                value = min(value, maxDate)
+                            }
+                            selectedDate = value
+                        }
                     ),
                     displayedComponents: showTime ? [.hourAndMinute] : [.date]
                 )
@@ -542,7 +553,15 @@ struct CustomDatePickerField<Content: View>: View {
         }
         .task(id: showingDatePickerSheet){
             guard showingDatePickerSheet else { return }
-            selectedDate = selectedDate ?? Date()
+            let base = selectedDate ?? Date()
+            var value = base
+            if let minDate {
+                value = max(value, minDate)
+            }
+            if let maxDate {
+                value = min(value, maxDate)
+            }
+            selectedDate = value
         }
     }
 }

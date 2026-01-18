@@ -171,6 +171,7 @@ extension AppointmentsViewModel {
         fromDate = nil
         toDate = nil
         sortDirection = nil
+        upcomingSession = nil
     }
     
     func resetFilter() {
