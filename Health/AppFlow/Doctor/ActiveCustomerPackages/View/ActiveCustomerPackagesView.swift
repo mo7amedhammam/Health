@@ -233,8 +233,8 @@ struct ActiveCustomerPackagesView: View {
                 .padding(.horizontal)
 
                 CustomerMesurmentsSection(measurements: viewModel.customerMeasurements){item in
-                    guard let item = item else { return }
-                    router.push(MeasurementDetailsView(stat: item))
+                    guard let item = item , let customerID = viewModel.subscripedPackage?.customerPackageID else { return }
+                    router.push(MeasurementDetailsView(stat: item,customerId: customerID))
                 }
                 
                 Spacer().frame(height: 55)

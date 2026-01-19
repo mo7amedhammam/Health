@@ -13,7 +13,7 @@ class MyMeasurementsDetaislViewModel: ObservableObject {
     static let shared = MyMeasurementsDetaislViewModel()
     
     private let networkService: AsyncAwaitNetworkServiceProtocol
-    
+    var customerId:Int? = nil
     @Published var currentStats:MyMeasurementsStatsM?
     @Published var isPresentingNewMeasurementSheet = false{didSet{errorMessage = nil}}
     
@@ -51,6 +51,9 @@ class MyMeasurementsDetaislViewModel: ObservableObject {
         if let formatteddate = dateTo?.formatDate(format: "yyyy-MM-dd") {
             parameters["dateTo"]   = formatteddate
         }
+        if let customerId = customerId{
+            parameters["customerId"] = customerId
+        }
         
         isLoading = true
         errorMessage = nil
@@ -82,7 +85,12 @@ class MyMeasurementsDetaislViewModel: ObservableObject {
             errorMessage = nil
             defer { isLoading = false }
     
-            let target = NewMeasurement.GetNormalRange(parameters: ["Id": id])
+            var parameters: [String: Any] = ["Id": id]
+            
+            if let customerId = customerId{
+                parameters["CustomerId"] = customerId
+            }
+            let target = NewMeasurement.GetNormalRange(parameters: parameters )
             do {
                 self.errorMessage = nil // Clear previous errors
                 let response = try await networkService.request(

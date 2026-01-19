@@ -199,7 +199,6 @@ struct NewHomeView: View {
                     }
                     .environment(\.layoutDirection, .leftToRight)
                     
-                    
                     if Helper.shared.CheckIfLoggedIn() && Helper.shared.getSelectedUserType() == .Customer{
                         // Last measurements wrapped with EquatableByValue
                         EquatableByValue(value: measurementsState) {
@@ -254,7 +253,6 @@ struct NewHomeView: View {
                         }
                         .frame(width: 200)
                         .padding(.leading,20)
-                        
                     }
                     .environment(\.layoutDirection, .leftToRight)
                     

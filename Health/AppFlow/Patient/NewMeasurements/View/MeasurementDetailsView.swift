@@ -14,7 +14,7 @@ struct MeasurementDetailsView: View {
 //    @StateObject var router = NavigationRouter()
 
     var stat: MyMeasurementsStatsM
-  
+    var customerId: Int?
     var body: some View {
         VStack(spacing: 16) {
             
@@ -260,6 +260,7 @@ struct MeasurementDetailsView: View {
 //        .withNavigation(router: router)
         .task{
 //            Task{
+            viewModel.customerId = customerId
                 viewModel.currentStats = stat
                 async let normalRang: () = viewModel.fetchNormalRange()
                 async let details: () = viewModel.fetchMeasurementDetails()
