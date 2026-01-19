@@ -286,33 +286,37 @@ extension ReSchedualViewModel{
         }
     }
     
-    @MainActor
-    func approuveCustomerRescheduleRequest() async { // approuve by doctor
-        isLoading = true
-        isReschedualed = false
-        defer { isLoading = false }
-        // Validate required selections; adjust keys as needed for your API
-        guard let sessionId = selectedShift?.id else {
-            self.errorMessage = "check inputs"
-            return
-        }
-
-        let parametersarr : [String : Any] =  ["Id":sessionId]
-        print("parametersarr",parametersarr)
-
-        let target = HomeServices.ApprouveCustomerReschedualRequest(parameters: parametersarr)
-        do {
-            self.errorMessage = nil // Clear previous errors
-            _ = try await networkService.request(
-                target,
-                responseType: [AvailableSchedualsM].self
-            )
-            isApprouved = true
-        } catch {
-            self.errorMessage = error.localizedDescription
-        }
-        
-    }
+//    @MainActor
+//    func approuveCustomerRescheduleRequest(Reject:Bool? = false) async { // approuve by doctor
+//        isLoading = true
+//        isApprouved = false
+//        defer { isLoading = false }
+//        // Validate required selections; adjust keys as needed for your API
+//        guard let sessionId = selectedShift?.id else {
+//            self.errorMessage = "check inputs"
+//            return
+//        }
+//
+//        var parametersarr : [String : Any] =  ["Id":sessionId]
+//        if Reject == true {
+//            parametersarr["Reject"] = true
+//        }else{
+//            parametersarr["Reject"] = false
+//        }
+//        print("parametersarr",parametersarr)        
+//        let target = HomeServices.ApprouveCustomerReschedualRequest(parameters: parametersarr)
+//        do {
+//            self.errorMessage = nil // Clear previous errors
+//            _ = try await networkService.request(
+//                target,
+//                responseType: [AvailableSchedualsM].self
+//            )
+//            isApprouved = true
+//        } catch {
+//            self.errorMessage = error.localizedDescription
+//        }
+//        
+//    }
     
     
     func prepareParamters()->[String : Any]? {

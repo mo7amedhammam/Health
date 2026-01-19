@@ -19,7 +19,11 @@ struct ReschedualeRequestsView: View {
                 ScrollView {
                     LazyVStack(spacing: 12) {
                         ForEach(items, id: \.self) { item in
-                            ReschedualRequestCard(upcomingSession: item)
+                            ReschedualRequestCard(upcomingSession: item,acceptAction: {
+                                Task{await viewModel.approuveCustomerRescheduleRequest(sessionId: item.id)}
+                            },rejectAction: {
+                                Task{await viewModel.approuveCustomerRescheduleRequest(sessionId: item.id,Reject: true)}
+                            })
                         }
                     }
                     .padding(.horizontal)

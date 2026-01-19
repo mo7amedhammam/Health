@@ -76,25 +76,57 @@ extension ReschedualeRequestViewModel{
         await loadTask?.value
     }
     
+//    @MainActor
+//    func AcceptRequest() async {
+//        showSuccess.toggle()
+//        isLoading = true
+//        defer { isLoading = false }
+//
+//        let parameters: [String: Any] = [:]
+//
+//        let target = DocSchedualesServices.CreateDocSchedule(parameters: parameters)
+//
+//        do {
+//            self.errorMessage = nil
+//            _ = try await networkService.request(target, responseType: AllergiesM.self)
+////            await getMyAllergies()
+//            showSuccess = true
+//        } catch {
+//            self.errorMessage = error.localizedDescription
+//        }
+//    }
     @MainActor
-    func AcceptRequest() async {
-        showSuccess.toggle()
+    func approuveCustomerRescheduleRequest(sessionId:Int?,Reject:Bool? = false) async { // approuve by doctor
         isLoading = true
+        showSuccess = false
         defer { isLoading = false }
+        // Validate required selections; adjust keys as needed for your API
+        guard let sessionId = sessionId else {
+            self.errorMessage = "check inputs"
+            return
+        }
 
-        let parameters: [String: Any] = [:]
-
-        let target = DocSchedualesServices.CreateDocSchedule(parameters: parameters)
-
+        var parametersarr : [String : Any] =  ["Id":sessionId]
+        if Reject == true {
+            parametersarr["Reject"] = true
+        }else{
+            parametersarr["Reject"] = false
+        }
+        print("parametersarr",parametersarr)
+        let target = HomeServices.ApprouveCustomerReschedualRequest(parameters: parametersarr)
         do {
-            self.errorMessage = nil
-            _ = try await networkService.request(target, responseType: AllergiesM.self)
-//            await getMyAllergies()
+            self.errorMessage = nil // Clear previous errors
+            _ = try await networkService.request(
+                target,
+                responseType: [AvailableSchedualsM].self
+            )
             showSuccess = true
         } catch {
             self.errorMessage = error.localizedDescription
         }
+        
     }
+    
     
     func refreshRequests() async {
 //            reset skip count in paginated
