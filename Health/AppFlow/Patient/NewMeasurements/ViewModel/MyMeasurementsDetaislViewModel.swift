@@ -145,6 +145,9 @@ class MyMeasurementsDetaislViewModel: ObservableObject {
             "medicalMeasurementId": id,
             "measurementDate": date
         ]
+        if let customerId = customerId{
+            parameters["customerId"] = customerId
+        }
         if comment.count > 0 {
             parameters["comment"] = comment
         }
