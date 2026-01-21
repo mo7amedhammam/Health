@@ -53,7 +53,7 @@ extension ActiveCusPackViewModel {
             //        let measTarget = DocActivePackagesServices.GetCustomerMeasurements(parameters: ["customerId": customerId])
             
             let sessionsTarget: TargetType1? = {
-                guard let max = maxResultCount, let skip = skipCount else { return nil }
+                guard let max = self.maxResultCount, let skip = self.skipCount else { return nil }
                 return DocActivePackagesServices.GetCustomerPackageList(
                     parameters: ["maxResultCount": max, "skipCount": skip, "customerPackageId": customerPackageId]
                 )
@@ -193,4 +193,23 @@ extension ActiveCusPackViewModel {
             self.errorMessage = error.localizedDescription
         }
     }
+   
+    @MainActor
+    func SendNotificationToCustomer(customerPackageId:Int?) async {
+        isLoading = true
+        defer { isLoading = false }
+        guard let customerPackageId = customerPackageId else {
+            return
+        }
+        let parametersarr : [String : Any] =  ["customerPackageId":customerPackageId]
+        let target = DocActivePackagesServices.SendNotificationToCustomer(Parameters: parametersarr)
+        do {
+            self.errorMessage = nil
+            _ = try await networkService.request(target, responseType: SubcripedSessionsListM.self)
+
+        } catch {
+            self.errorMessage = error.localizedDescription
+        }
+    }
+        
 }

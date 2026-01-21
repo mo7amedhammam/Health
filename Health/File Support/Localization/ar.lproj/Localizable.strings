@@ -443,7 +443,9 @@
 "add_available_scheduale" = "إضافة فترة";
 "edit_" = "تعديل";
 "delete_" = "تعديل";
-"select_available_time_slots" = "تحديد الفترات المتاحة";
+"select_available_dates" = "تحديد الفترات المتاحة";
+"select_available_dates_subtitle" = "قم بتحديد تاريخ الفترة المتاحة إليك";
+"select_available_time_slots" = "تحديد الوقت";
 "select_available_time_slots_subtitle" = "قم بتحديد الفترات المتاحة إليك خلال أيام الأسبوع";
 "remove_all_btn" = "مسح الكل";
 "confirm_title" = "هل أنت متأكد من تحديد المواعيد المتاحة إليك؟";

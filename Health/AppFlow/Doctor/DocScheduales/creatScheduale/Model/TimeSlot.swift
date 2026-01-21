@@ -34,3 +34,33 @@ struct TimeSlot: Hashable {
     let time: String
 }
     
+
+
+// MARK: - SchedualeDetailsM
+struct SchedualeDetailsM: Codable {
+    var id, doctorScheduleID: Int?
+    var dayList: [DayList]?
+    var fromStartDate, toEndDate: String?
+
+    enum CodingKeys: String, CodingKey {
+        case id
+        case doctorScheduleID = "doctorScheduleId"
+        case dayList, fromStartDate, toEndDate
+    }
+}
+
+// MARK: - DayList
+struct DayList: Codable {
+    var id: Int?
+    var name: String?
+    var isSelected: Bool?
+    var shiftList: [ShiftList]?
+}
+
+// MARK: - ShiftList
+struct ShiftList: Codable {
+    var id: Int?
+    var name: String?
+    var fromTime, toTime: String?
+    var isSelected: Bool?
+}

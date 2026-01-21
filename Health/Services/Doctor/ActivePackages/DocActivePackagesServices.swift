@@ -11,6 +11,7 @@ enum DocActivePackagesServices{
     case GetCustomerPackageList(parameters : [String:Any])
     case GetCustomerPackageById(parameters : [String:Any])
     case GetCustomerMeasurements(parameters : [String:Any])
+    case SendNotificationToCustomer(Parameters : [String:Any])
     
     case GetCustomerPackageSessionList(parameters : [String:Any])
     case FileType
@@ -39,6 +40,9 @@ extension DocActivePackagesServices : TargetType1 {
             return SubscriptionEndPoints.GetCustomerPackageById.rawValue
         case .GetCustomerMeasurements:
             return DocEndPoints.DocGetPatientMeasurements.rawValue
+        case .SendNotificationToCustomer:
+            return DocEndPoints.SendNotificationToCustomer.rawValue
+            
         case .GetCustomerPackageSessionList:
             return SubscriptionEndPoints.GetCustomerPackageSessionList.rawValue
         case .FileType:
@@ -78,7 +82,8 @@ extension DocActivePackagesServices : TargetType1 {
                 .GetCustomerPackageInstructionByCPId,
                 .GetCustomerPackageQuest,
                 .GetCustomerAllergy,
-                .GetCustomerMeasurements
+                .GetCustomerMeasurements,
+                .SendNotificationToCustomer
             :
             return .get
         }
@@ -96,7 +101,8 @@ extension DocActivePackagesServices : TargetType1 {
                 .GetCustomerPackageQuest(parameters: let parameter),
                 .CreatePackageQuestionnaireAnswer(parameters: let parameter),
                 .GetCustomerAllergy(parameters: let parameter),
-                .CreateCustomerPackageInstructionByCPId(parameters: let parameter)
+                .CreateCustomerPackageInstructionByCPId(parameters: let parameter),
+                .SendNotificationToCustomer(let parameter)
             :
             return  parameter
         case .CreatePackageQuestionnaireAnswersArray:

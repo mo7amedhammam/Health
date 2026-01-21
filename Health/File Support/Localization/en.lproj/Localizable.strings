@@ -440,10 +440,13 @@
 //MARK: --- My Schedule ---
 "doc_myscehdules" = "My Scehdules";
 "add_available_scheduale" = "add scheduale";
-"select_available_time_slots" = "available slots";
 "edit_" = "edit";
 "delete_" = "delete";
-"select_available_time_slots_subtitle" = "select availabal slots";
+"select_available_dates" = "available slots";
+"select_available_dates_subtitle" = "select availabal slots";
+
+"select_available_time_slots" = "available shifts";
+"select_available_time_slots_subtitle" = "select availabal time/week";
 "remove_all_btn" = "remove all";
 "confirm_title" = "are you sure you available in selected slots";
 "confirm_del_title" = "Are you sure this period's dates be deleted?";

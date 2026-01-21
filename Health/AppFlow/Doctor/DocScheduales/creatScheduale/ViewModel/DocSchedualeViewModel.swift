@@ -13,11 +13,13 @@ class DocSchedualeViewModel : ObservableObject {
     private let networkService: AsyncAwaitNetworkServiceProtocol
     private var loadTask: Task<Void,Never>? = nil
     
-    @Published var scheduales : [SchedualeM]? = SchedualeM.mockList
+    @Published var scheduales : [SchedualeM]? = nil
 
     @Published var selectedSlots: [String: Set<TimeSlot>] = [:]
 
     let days = ["السبت", "الأحد", "الإثنين", "الثلاثاء", "الأربعاء", "الخميس", "الجمعة"]
+    @Published var dateFrom: Date?
+    @Published var dateTo: Date?
 
     let slots: [TimeSlot] = [
         TimeSlot(title: "فترة صباحية", time: "9:00 am - 2:00 pm"),

@@ -75,6 +75,39 @@ struct DocScheduleView: View {
                     .frame(height: 232)
                     .horizontalGradientBackground()
                     
+                    
+                    
+                    SectionHeader(image: Image(.docSchedIc), title: "select_available_dates",subTitle: Text("select_available_dates_subtitle".localized)
+                        .foregroundStyle(Color(.secondary))
+                        .font(.medium(size: 10))
+                        .frame(maxWidth:.infinity,alignment: .leading), MoreBtnimage: nil
+                    )
+                    .padding()
+                    
+                    // From and To Date Pickers
+                    HStack(spacing: 8) {
+                        DatePickerField(selectedDate: $viewModel.dateFrom, title: "from_date".localized)
+                            .onChange(of: viewModel.dateFrom) { newValue in
+                                // When dateFrom changes, ensure dateTo is >= dateFrom
+                                guard let from = newValue, let to = viewModel.dateTo else { return }
+                                if to < from {
+                                    viewModel.dateTo = from
+                                }
+                            }
+
+                        DatePickerField(selectedDate: $viewModel.dateTo, title: "to_date".localized)
+                            .disabled(viewModel.dateFrom == nil)
+                            .onChange(of: viewModel.dateTo) { newValue in
+                                // When dateTo changes, ensure it's not earlier than dateFrom
+                                guard let to = newValue, let from = viewModel.dateFrom else { return }
+                                if to < from {
+                                    viewModel.dateTo = from
+                                }
+                            }
+                    }
+                    .padding([.horizontal, .bottom])
+
+                    
                     SectionHeader(image: Image(.docSchedIc), title: "select_available_time_slots",subTitle: Text("select_available_time_slots_subtitle".localized)
                         .foregroundStyle(Color(.secondary))
                         .font(.medium(size: 10))

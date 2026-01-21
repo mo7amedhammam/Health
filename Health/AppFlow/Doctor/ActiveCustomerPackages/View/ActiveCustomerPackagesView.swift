@@ -193,6 +193,7 @@ struct ActiveCustomerPackagesView: View {
                         imageUrl: viewModel.subscripedPackage?.customerImage ?? "",
                         onSendNotification: {
                             // implement if needed
+                            Task{await viewModel.SendNotificationToCustomer(customerPackageId: viewModel.subscripedPackage?.customerPackageID)}
                         }
                     )
                     .equatable()
