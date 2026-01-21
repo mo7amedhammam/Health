@@ -5,7 +5,9 @@
 //  Created by mohamed hammam on 27/06/2025.
 //
 
-import Alamofire
+import Foundation
+
+//import Alamofire
 enum MyWalletServices{
     case CustomerWalletBalance
     case CustomerOrderDetail

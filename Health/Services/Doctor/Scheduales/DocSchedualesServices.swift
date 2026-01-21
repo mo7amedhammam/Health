@@ -5,7 +5,9 @@
 //  Created by mohamed hammam on 01/12/2025.
 //
 
-import Alamofire
+import Foundation
+
+//import Alamofire
 
 enum DocSchedualesServices{
     case GetDocSchedule

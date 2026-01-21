@@ -5,7 +5,9 @@
 //  Created by mohamed hammam on 14/09/2025.
 //
 
-import Alamofire
+import Foundation
+
+//import Alamofire
 
 enum DocPackagesServices{
     case GetPackageDoctor(parameters : [String:Any])

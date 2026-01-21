@@ -5,7 +5,9 @@
 //  Created by mohamed hammam on 07/09/2025.
 //
 
-import Alamofire
+import Foundation
+
+//import Alamofirex
 
 enum DocPaymentsServices{
     case DocWalletBalance

@@ -5,8 +5,10 @@
 //  Created by mohamed hammam on 06/07/2025.
 //
 
+import Foundation
 
-import Alamofire
+
+//import Alamofire
 enum ProfileServices{
     case GetProfile
     case UpdateProfile(parameters : [String:Any])

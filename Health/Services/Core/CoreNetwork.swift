@@ -44,7 +44,7 @@ extension NetworkError: LocalizedError {
 
 // MARK: - HTTP Method
 
-enum HTTPMethod: String {
+public enum HTTPMethod: String {
     case connect = "CONNECT"
     case delete  = "DELETE"
     case get     = "GET"
@@ -85,6 +85,7 @@ extension TargetType1 {
     }
     // Default nil so existing services don’t need to implement it
     var arrayParameters: [Any]? { nil }
+    
 }
 
 // MARK: - Service Protocol

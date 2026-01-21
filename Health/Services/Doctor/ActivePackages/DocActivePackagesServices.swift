@@ -5,7 +5,9 @@
 //  Created by mohamed hammam on 17/09/2025.
 //
 
-import Alamofire
+import Foundation
+
+//import Alamofire
 
 enum DocActivePackagesServices{
     case GetCustomerPackageList(parameters : [String:Any])

@@ -108,6 +108,6 @@ enum SupportedLocale: String {
     }
 }
 
-extension String: Identifiable {
+extension String: @retroactive Identifiable {
     public var id: String { self }
 }

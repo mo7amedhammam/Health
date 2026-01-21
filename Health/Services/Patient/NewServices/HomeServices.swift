@@ -5,7 +5,9 @@
 //  Created by mohamed hammam on 13/05/2025.
 //
 
-import Alamofire
+import Foundation
+
+//import Alamofire
 
 
 enum HomeServices{

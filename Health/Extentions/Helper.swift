@@ -250,7 +250,7 @@ class Helper: NSObject {
 
     
     
-     func SetImage (EndPoint : String? , image : UIImageView , name : String , status : Int) {
+    @MainActor func SetImage (EndPoint : String? , image : UIImageView , name : String , status : Int) {
         // status == 0 system  else 1 named
         if !EndPoint!.isEmpty || EndPoint != nil {
             let url = URL(string: "" + "\(EndPoint ?? "")")

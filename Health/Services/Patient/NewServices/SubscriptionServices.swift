@@ -5,8 +5,10 @@
 //  Created by mohamed hammam on 27/05/2025.
 //
 
+import Foundation
 
-import Alamofire
+
+//import Alamofire
 
 
 enum SubscriptionServices{

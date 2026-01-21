@@ -9,7 +9,7 @@ import UIKit
 import IQKeyboardManagerSwift
 import Firebase
 import FirebaseMessaging
-import DropDown
+//import DropDown
 import AVFoundation
 import UserNotifications
 
@@ -25,8 +25,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate {
 //        Helper.shared.onBoardOpened(opened: false)
         detectCountry()
         LocalizationInit()
-        IQKeyboardManager.shared.enable = true
-        IQKeyboardManager.shared.shouldResignOnTouchOutside = true
+        IQKeyboardManager.shared.isEnabled = true
+        IQKeyboardManager.shared.resignOnTouchOutside = true
         FirebaseApp.configure()
         Messaging.messaging().delegate = self
         UNUserNotificationCenter.current().delegate = self
