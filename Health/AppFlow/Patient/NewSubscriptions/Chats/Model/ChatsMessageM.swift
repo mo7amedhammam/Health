@@ -7,9 +7,10 @@
 import Foundation
 
 // MARK: - ChatsMessageM
-struct ChatsMessageM: Codable, Identifiable {
-    var id: UUID { UUID() }
-
+struct ChatsMessageM: Codable, Identifiable,Equatable {
+//    var id: UUID { UUID().uuidString }
+    var id = UUID().uuidString // Add this
+    
     var customerPackageID: Int?
     var comment: String?
     var sendByCustomer, sendByDoctor: Bool?
@@ -26,6 +27,8 @@ struct ChatsMessageM: Codable, Identifiable {
         case creationDate
         case customerName,doctorName
         case customerImage,doctorImage
+        
+//        case messageText = "messageText"
     }
 
     var isFromMe: Bool {

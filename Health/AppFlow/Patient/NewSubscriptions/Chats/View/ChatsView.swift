@@ -693,55 +693,37 @@ struct MessagesListView: View {
 //    ]
     
     var body: some View {
-//        if let messages = messages, messages.count > 0 {
-//            List {
-//                VStack(spacing: 0) {
-//                    ForEach(messages) { message in
-//                        MessageBubbleView(message: message)
-//                    }
-//                }
-//                .padding(.top, 8)
-//                .listRowSpacing(0)
-//                .listRowSeparator(.hidden)
-//                .listRowBackground(Color.clear)
-//                
-//            }
-//            .listStyle(.plain)
-//        } else {
-        
         if let messages = messages, messages.count > 0 {
             ScrollViewReader { proxy in
                 List {
-                    ForEach(messages.indices, id: \.self) { index in
-                        MessageBubbleView(message: messages[index])
-                            .id(index) // ✅ Assign unique ID for scroll target
+                    ForEach(messages) { message in
+                        MessageBubbleView(message: message)
+                            .id(message.id) // Use stable unique id for each message
                     }
                     .listRowSeparator(.hidden)
                     .listRowBackground(Color.clear)
                 }
                 .listStyle(.plain)
-                .onChange(of: messages.count) { _ in
-                    // ✅ Scroll to last message when messages update
-                    withAnimation {
-                        proxy.scrollTo(messages.count - 1, anchor: .bottom)
+                .onChange(of: messages.last?.id) { _ in
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                        withAnimation {
+                            proxy.scrollTo(messages.last?.id, anchor: .bottom)
+                        }
                     }
                 }
                 .onAppear {
                     if !messages.isEmpty {
-                        proxy.scrollTo(messages.count - 1, anchor: .bottom)
+                        proxy.scrollTo(messages.last?.id, anchor: .bottom)
                     }
                 }
             }
-            
-            } else {
-//            ScrollView{
-                EmptyMessageBox()
-                    .frame(maxHeight:.infinity, alignment: .center)
-//            }
+        } else {
+            EmptyMessageBox()
+                .frame(maxHeight:.infinity, alignment: .center)
         }
-       
     }
 }
 //#Preview{
 //    MessagesListView()
 //}
+
