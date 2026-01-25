@@ -661,7 +661,6 @@
 
 //=-=-=-==============================================
 
-
 import Foundation
 import FirebaseFirestore
 import FirebaseCore
@@ -766,51 +765,86 @@ class ChatsViewModel: ObservableObject {
     
     // MARK: - Process First Firestore Snapshot (No Sounds)
     private func processFirstFirestoreSnapshot(_ firestoreMessages: [ChatsMessageItemM]) {
+        print("[ChatsViewModel] 🔵 Processing first Firestore snapshot")
+        
         // Get existing messages from API
         let existingMessages = ChatMessages?.MessagesList ?? []
         
-        // Combine all messages
-        let allMessages = existingMessages + firestoreMessages
+        print("[ChatsViewModel] Existing from API: \(existingMessages.count)")
+        print("[ChatsViewModel] From Firestore: \(firestoreMessages.count)")
         
-        // Deduplicate
-        let uniqueMessages = deduplicateMessages(allMessages)
+        // DON'T combine - just use API messages as source of truth
+        // Firestore is just for real-time updates, not initial load
+        let uniqueMessages = deduplicateMessages(existingMessages)
         
-        // Mark ALL messages as seen (this prevents sounds)
+        // Mark ALL messages as seen (from API and any potential Firestore messages)
         for msg in uniqueMessages {
             let key = createMessageKey(from: msg)
             seenMessageKeys.insert(key)
         }
         
-        // Update the message list
+        // Also mark Firestore messages as seen (even if not in final list)
+        for msg in firestoreMessages {
+            let key = createMessageKey(from: msg)
+            seenMessageKeys.insert(key)
+        }
+        
+        // Update the message list with deduplicated API messages only
         ChatMessages?.MessagesList = uniqueMessages
         
         // Mark first snapshot as processed
         hasProcessedFirstFirestoreSnapshot = true
         
-        print("[ChatsViewModel] First snapshot processed: \(uniqueMessages.count) total messages, all marked as seen")
+        print("[ChatsViewModel] ✅ First snapshot processed: \(uniqueMessages.count) unique messages displayed")
+        print("[ChatsViewModel] ✅ Total keys marked as seen: \(seenMessageKeys.count)")
     }
     
     // MARK: - Process Incoming Messages (With Sounds)
     private func processIncomingMessages(_ firestoreMessages: [ChatsMessageItemM]) {
+        print("[ChatsViewModel] 🟢 Processing incoming Firestore messages: \(firestoreMessages.count)")
+        
         let existingMessages = ChatMessages?.MessagesList ?? []
         
-        // Combine and deduplicate messages
-        let allMessages = existingMessages + firestoreMessages
-        let uniqueMessages = deduplicateMessages(allMessages)
+        print("[ChatsViewModel] Current messages in list: \(existingMessages.count)")
         
-        // Identify truly new messages (not seen before)
-        let newMessages = identifyNewMessages(uniqueMessages)
+        // DON'T combine all messages - instead, only add truly NEW messages from Firestore
+        // that aren't already in our list
         
-        // Update the message list
-        ChatMessages?.MessagesList = uniqueMessages
+        // Identify truly new messages from Firestore (not seen before)
+        var newMessagesToAdd: [ChatsMessageItemM] = []
         
-        print("[ChatsViewModel] Total messages: \(uniqueMessages.count), New: \(newMessages.count)")
+        for firestoreMsg in firestoreMessages {
+            let key = createMessageKey(from: firestoreMsg)
+            
+            // If we haven't seen this message before, it's new
+            if !seenMessageKeys.contains(key) {
+                newMessagesToAdd.append(firestoreMsg)
+                seenMessageKeys.insert(key)
+                print("[ChatsViewModel] 🆕 New message detected from Firestore: \(key)")
+            }
+        }
         
-        // Only play sound for new incoming messages if initial load is complete
-        if hasCompletedInitialLoad && hasProcessedFirstFirestoreSnapshot && !newMessages.isEmpty {
-            playIncomingSoundIfNeeded(for: newMessages)
+        print("[ChatsViewModel] New messages to add: \(newMessagesToAdd.count)")
+        
+        // Only update if there are new messages
+        if !newMessagesToAdd.isEmpty {
+            // Add new messages to existing list
+            var updatedMessages = existingMessages + newMessagesToAdd
+            
+            // Sort by creation date
+            updatedMessages.sort { ($0.creationDate ?? "") < ($1.creationDate ?? "") }
+            
+            // Update the list
+            ChatMessages?.MessagesList = updatedMessages
+            
+            print("[ChatsViewModel] ✅ Updated message list to \(updatedMessages.count) messages")
+            
+            // Play sound for incoming messages (not from me)
+            if hasCompletedInitialLoad && hasProcessedFirstFirestoreSnapshot {
+                playIncomingSoundIfNeeded(for: newMessagesToAdd)
+            }
         } else {
-            print("[ChatsViewModel] Skipping sound - initialLoad: \(hasCompletedInitialLoad), firstSnapshot: \(hasProcessedFirstFirestoreSnapshot), newCount: \(newMessages.count)")
+            print("[ChatsViewModel] No new messages to add")
         }
     }
     
@@ -819,14 +853,27 @@ class ChatsViewModel: ObservableObject {
     /// Deduplicates messages based on unique key and returns sorted array
     private func deduplicateMessages(_ messages: [ChatsMessageItemM]) -> [ChatsMessageItemM] {
         var seen = [String: ChatsMessageItemM]()
+        var duplicateCount = 0
         
-        for msg in messages {
+        for (index, msg) in messages.enumerated() {
             let key = createMessageKey(from: msg)
-            // Keep first occurrence (or you could keep last by removing the check)
+            
+            // Debug: Print duplicate detection
+            if seen[key] != nil {
+                duplicateCount += 1
+                print("[ChatsViewModel] ⚠️ Duplicate #\(duplicateCount) at index \(index)")
+                print("    Key: \(key)")
+                print("    Comment: \(msg.comment ?? "nil")")
+                print("    Date: \(msg.creationDate ?? "nil")")
+            }
+            
+            // Keep first occurrence
             if seen[key] == nil {
                 seen[key] = msg
             }
         }
+        
+        print("[ChatsViewModel] Deduplication: \(messages.count) messages → \(seen.count) unique (\(duplicateCount) duplicates removed)")
         
         // Sort by creation date
         return seen.values.sorted {
@@ -834,33 +881,19 @@ class ChatsViewModel: ObservableObject {
         }
     }
     
-    /// Identifies messages we haven't seen before
-    private func identifyNewMessages(_ messages: [ChatsMessageItemM]) -> [ChatsMessageItemM] {
-        var newMessages: [ChatsMessageItemM] = []
-        
-        for msg in messages {
-            let key = createMessageKey(from: msg)
-            if !seenMessageKeys.contains(key) {
-                newMessages.append(msg)
-                seenMessageKeys.insert(key)
-            }
-        }
-        
-        return newMessages
-    }
-    
     /// Creates a unique key for a message to prevent duplicates
     private func createMessageKey(from message: ChatsMessageItemM) -> String {
         // Use multiple fields to create a stable unique identifier
-        let components = [
-            message.creationDate ?? "",
-            message.comment ?? "",
-            message.voicePath ?? "",
-            "\(message.customerPackageID ?? 0)",
-            "\(message.sendByCustomer ?? false)",
-            "\(message.sendByDoctor ?? false)"
-        ]
-        return components.joined(separator: "|§|")
+        // Try using just the most stable fields first
+        let creationDate = message.creationDate ?? ""
+        let comment = message.comment ?? ""
+        let voicePath = message.voicePath ?? ""
+        let packageId = "\(message.customerPackageID ?? 0)"
+        
+        // Simple key based on content and timestamp
+        let key = [creationDate, comment, voicePath, packageId].joined(separator: "|§|")
+        
+        return key
     }
     
     /// Plays incoming sound only for messages not sent by current user
@@ -970,10 +1003,15 @@ extension ChatsViewModel {
                 // Filter out empty messages
                 let validMessages = response?.MessagesList?.compactMap { message in
                     (message.messageText.count > 0 || message.voicePath?.count ?? 0 > 0) ? message : nil
-                }
+                } ?? []
                 
-                // Deduplicate messages from API
-                let uniqueValidMessages = self.deduplicateMessages(validMessages ?? [])
+                print("[ChatsViewModel] API returned: \(response?.MessagesList?.count ?? 0) messages")
+                print("[ChatsViewModel] Valid messages (non-empty): \(validMessages.count)")
+                
+                // Deduplicate messages from API response
+                let uniqueValidMessages = self.deduplicateMessages(validMessages)
+                
+                print("[ChatsViewModel] After deduplication: \(uniqueValidMessages.count)")
                 
                 self.ChatMessages = ChatsMessageM(
                     name: response?.name,
@@ -987,7 +1025,7 @@ extension ChatsViewModel {
                     self.seenMessageKeys.insert(key)
                 }
                 
-                print("[ChatsViewModel] ✅ Loaded \(uniqueValidMessages.count) messages from API")
+                print("[ChatsViewModel] ✅ Loaded \(uniqueValidMessages.count) unique messages from API")
                 print("[ChatsViewModel] ✅ Marked \(self.seenMessageKeys.count) messages as seen")
                 
                 // Mark initial API load as complete
@@ -1037,6 +1075,8 @@ extension ChatsViewModel {
         do {
             self.errorMessage = nil
             
+            print("[ChatsViewModel] 📤 Sending message to API...")
+            
             let response = try await networkService.uploadMultipart(
                 target,
                 parts: parts,
@@ -1044,30 +1084,41 @@ extension ChatsViewModel {
             )
             
             if let newMessage = response {
-                // Add message to local list
-                if self.ChatMessages?.MessagesList == nil {
-                    self.ChatMessages?.MessagesList = []
-                }
+                print("[ChatsViewModel] ✅ API returned new message")
                 
-                // Check for duplicates before adding
+                // Create message key first
                 let key = createMessageKey(from: newMessage)
+                
+                // Check if message already exists in the list
                 let alreadyExists = self.ChatMessages?.MessagesList?.contains { msg in
                     createMessageKey(from: msg) == key
                 } ?? false
                 
                 if !alreadyExists {
+                    print("[ChatsViewModel] ➕ Adding new message to local list")
+                    
+                    // Initialize if needed
+                    if self.ChatMessages?.MessagesList == nil {
+                        self.ChatMessages?.MessagesList = []
+                    }
+                    
+                    // Add the message
                     self.ChatMessages?.MessagesList?.append(newMessage)
                     
                     // Sort messages by creation date
                     self.ChatMessages?.MessagesList?.sort {
                         ($0.creationDate ?? "") < ($1.creationDate ?? "")
                     }
+                } else {
+                    print("[ChatsViewModel] ⚠️ Message already exists in list, skipping add")
                 }
                 
-                // Mark this message as seen immediately (it's our own message)
+                // CRITICAL: Mark this message as seen IMMEDIATELY
+                // This prevents duplication when Firestore listener picks it up
                 seenMessageKeys.insert(key)
+                print("[ChatsViewModel] ✅ Marked message as seen (key: \(key))")
                 
-                // Send to Firestore
+                // Send to Firestore (this will trigger the listener, but won't add duplicate)
                 sendMessageToFirestore(newMessage)
                 
                 // Play SEND sound
