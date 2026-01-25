@@ -62,7 +62,7 @@ struct WaveformView: View {
 
 // MARK: - MessageBubbleView
 struct MessageBubbleView: View {
-    let message: ChatsMessageM
+    let message: ChatsMessageItemM
     
     var body: some View {
 //        let _ = print("🔍 message.comment = \(message.comment ?? "nil")")
@@ -284,12 +284,14 @@ struct ChatsView: View {
     @State private var isPlaying: Bool = false
     @State private var playbackTimer: Timer?
     var chatwithName:String?{
-        let message = viewModel.ChatMessages?.first
-        return message?.sendByCustomer ?? false ? message?.customerName : message?.doctorName
+//        let message = viewModel.ChatMessages?.first
+//        return message?.sendByCustomer ?? false ? message?.customerName : message?.doctorName
+        viewModel.ChatMessages?.name
     }
     var chatwithImage:String?{
-        let message = viewModel.ChatMessages?.first
-        return message?.sendByCustomer ?? false ? message?.customerImage : message?.doctorImage
+//        let message = viewModel.ChatMessages?.first
+//        return message?.sendByCustomer ?? false ? message?.customerImage : message?.doctorImage
+        viewModel.ChatMessages?.image
     }
     init(CustomerPackageId:Int) {
         self.CustomerPackageId = CustomerPackageId
@@ -334,7 +336,7 @@ struct ChatsView: View {
             //            .shadow(radius: 2)
             
             // Messages
-            MessagesListView(messages: viewModel.ChatMessages)
+            MessagesListView(messages: viewModel.ChatMessages?.MessagesList)
                 .refreshable {
                     await viewModel.refresh()
                 }
@@ -595,6 +597,8 @@ struct MessageInputField: View {
     var body: some View {
         if #available(iOS 16.0, *) {
             TextField("Write_a_message".localized, text: $comment, axis: .vertical)
+                .textInputAutocapitalization(.never)
+                .autocorrectionDisabled(true)
                 .font(.medium(size: 14))
                 .padding(.horizontal)
                 .frame(minHeight: 40)
@@ -604,6 +608,8 @@ struct MessageInputField: View {
                 }
         } else {
             MultilineTextField("Write_a_message".localized, text: $comment, onCommit: onSend)
+                .textInputAutocapitalization(.never)
+                .autocorrectionDisabled(true)
                 .frame(minHeight: 40)
                 .background(Color(.messageSenderBg).cornerRadius(7))
         }
@@ -635,7 +641,7 @@ struct EmptyMessageBox: View {
 }
 
 struct MessagesListView: View {
-    var messages: [ChatsMessageM]?
+    var messages: [ChatsMessageItemM]?
     
 //    var messages: [ChatsMessageM]? = [
 //        ChatsMessageM(
@@ -698,22 +704,33 @@ struct MessagesListView: View {
                 List {
                     ForEach(messages) { message in
                         MessageBubbleView(message: message)
-                            .id(message.id) // Use stable unique id for each message
+                            .id(message.id)
                     }
                     .listRowSeparator(.hidden)
                     .listRowBackground(Color.clear)
                 }
                 .listStyle(.plain)
-                .onChange(of: messages.last?.id) { _ in
+                .onChange(of: messages.count) { _ in
+                    guard let lastId = messages.last?.id else { return }
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                         withAnimation {
-                            proxy.scrollTo(messages.last?.id, anchor: .bottom)
+                            proxy.scrollTo(lastId, anchor: .bottom)
+                        }
+                    }
+                }
+                .onChange(of: messages.last?.id) { _ in
+                    guard let lastId = messages.last?.id else { return }
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                        withAnimation {
+                            proxy.scrollTo(lastId, anchor: .bottom)
                         }
                     }
                 }
                 .onAppear {
-                    if !messages.isEmpty {
-                        proxy.scrollTo(messages.last?.id, anchor: .bottom)
+                    if let lastId = messages.last?.id {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                            proxy.scrollTo(lastId, anchor: .bottom)
+                        }
                     }
                 }
             }

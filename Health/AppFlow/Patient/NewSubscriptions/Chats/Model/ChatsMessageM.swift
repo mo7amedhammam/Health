@@ -6,8 +6,22 @@
 //
 import Foundation
 
+struct ChatsMessageM : Codable{
+    var name,image : String?
+    var isActive:Bool?
+    var MessagesList : [ChatsMessageItemM]?
+    
+    enum CodingKeys: String, CodingKey {
+        case name = "name"
+        case image = "image"
+        case isActive = "isActive"
+        case MessagesList = "customerPackageMessageList"
+    }
+}
+
+
 // MARK: - ChatsMessageM
-struct ChatsMessageM: Codable, Identifiable,Equatable {
+struct ChatsMessageItemM: Codable, Identifiable,Equatable {
 //    var id: UUID { UUID().uuidString }
     var id = UUID().uuidString // Add this
     
