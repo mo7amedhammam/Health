@@ -7,6 +7,7 @@
 
 import SwiftUI
 import AVFoundation
+import UserNotifications
 
 // MARK: - Single Bar View
 struct WaveBarView: View {
@@ -235,6 +236,7 @@ struct VoiceMessagePlayerView: View {
 // MARK: - ChatsView
 struct ChatsView: View {
     @Environment(\.dismiss) var dismiss
+    @Environment(\.scenePhase) private var scenePhase
     @StateObject var viewModel = ChatsViewModel.shared
     var CustomerPackageId : Int
     
@@ -467,8 +469,17 @@ struct ChatsView: View {
             
         }
         .task {
+            requestNotificationAuthorization()
             viewModel.CustomerPackageId = CustomerPackageId
             await viewModel.refresh()
+        }
+        .onChange(of: scenePhase) { newPhase in
+            if newPhase == .active {
+                Task { await viewModel.refresh() }
+            }
+        }
+        .onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)) { _ in
+            Task { await viewModel.refresh() }
         }
         .edgesIgnoringSafeArea(.bottom)
         .background(Color(.bg))
@@ -479,6 +490,26 @@ struct ChatsView: View {
             get: { viewModel.errorMessage != nil },
             set: { if !$0 { viewModel.errorMessage = nil } }
         ), message: viewModel.errorMessage)
+    }
+    
+    private func requestNotificationAuthorization() {
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
+            if let error = error { print("[Notifications] Authorization error: \(error)") }
+            print("[Notifications] Authorization granted: \(granted)")
+        }
+    }
+    
+    private func scheduleLocalChatNotification(body: String) {
+        let content = UNMutableNotificationContent()
+        content.title = "New message"
+        content.body = body
+        content.sound = .default
+
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false)
+        let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
+        UNUserNotificationCenter.current().add(request) { error in
+            if let error = error { print("[Notifications] Scheduling error: \(error)") }
+        }
     }
     
     func startRecording() {
@@ -539,6 +570,8 @@ struct ChatsView: View {
         Task{
             await viewModel.createCustomerMessage()
         }
+        // Example: schedule a local notification (for testing)
+        // scheduleLocalChatNotification(body: trimmed)
         print("📩 Sent message: \(trimmed)")
 //        viewModel.inputText = ""
 //        viewModel.recordingURL = nil
