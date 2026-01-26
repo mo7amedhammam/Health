@@ -230,7 +230,7 @@
 "last_session_Date" = "Last Session Date";
 "Active_" = "Active";
 "remain_" = "remain";
-"sessions_ar" = "sessions_ar";
+"sessions_ar" = "sessions ar";
 "from_" = "from";
 "doc_" = "doc";
 "renew_subscription" = "Renew Subscription";
@@ -240,6 +240,10 @@
 "questions_" = "questions";
 "Files_" = "Files";
 "CustAlergy_" = "Alergy";
+"Online" = "Online";
+"Offline" =  "Offline";
+"Write_a_message" = "Write a message";
+"Message box isـempty" = "Message box is empty";
 
 //MARK: --- Package Files ---
 "Watch_" = "Watch";

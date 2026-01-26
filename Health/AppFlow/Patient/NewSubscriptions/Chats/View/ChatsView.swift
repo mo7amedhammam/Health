@@ -293,6 +293,11 @@ struct ChatsView: View {
 //        return message?.sendByCustomer ?? false ? message?.customerImage : message?.doctorImage
         viewModel.ChatMessages?.image
     }
+    var chatwithStatus:String?{
+//        let message = viewModel.ChatMessages?.first
+//        return message?.sendByCustomer ?? false ? message?.customerImage : message?.doctorImage
+        viewModel.ChatMessages?.isActive == true ? "Online" : "Offline"
+    }
     init(CustomerPackageId:Int) {
         self.CustomerPackageId = CustomerPackageId
     }
@@ -315,7 +320,7 @@ struct ChatsView: View {
                     Text(chatwithName ?? "")
                         .font(.bold(size: 20))
                         .foregroundColor(.mainBlue)
-                    Text("Online".localized)
+                    Text(chatwithStatus?.localized ?? "")
                         .font(.medium(size: 11))
                         .foregroundColor(Color(.secondary))
                 }
@@ -630,7 +635,7 @@ struct EmptyMessageBox: View {
                 .background(Color(.bgPurple).clipShape(Circle()))
                 .foregroundColor(Color(.btnDisabledTxt))
 
-            Text("Message box is empty".localized())
+            Text("Message box isـempty".localized())
                 .font(.semiBold(size:22))
                 .foregroundColor(Color(.btnDisabledTxt))
                 .padding()
@@ -640,63 +645,111 @@ struct EmptyMessageBox: View {
     }
 }
 
+//struct MessagesListView: View {
+//    var messages: [ChatsMessageItemM]?
+//    
+////    var messages: [ChatsMessageM]? = [
+////        ChatsMessageM(
+////            customerPackageID: 1,
+////            comment: "Hello doctor, I have a question about my treatment.",
+////            sendByCustomer: true,
+////            sendByDoctor: false,
+////            voicePath: nil,
+////            doctorID: 101,
+////            creationDate: "2025-09-17T10:15:00Z",
+////            customerName: "Mohamed",
+////            doctorName: "Dr. Ahmed",
+////            customerImage: nil,
+////            doctorImage: nil
+////        ),
+////        ChatsMessageM(
+////            customerPackageID: 1,
+////            comment: "Sure, please go ahead.",
+////            sendByCustomer: false,
+////            sendByDoctor: true,
+////            voicePath: nil,
+////            doctorID: 101,
+////            creationDate: "2025-09-17T10:16:00Z",
+////            customerName: "Mohamed",
+////            doctorName: "Dr. Ahmed",
+////            customerImage: nil,
+////            doctorImage: nil
+////        ),
+////        ChatsMessageM(
+////            customerPackageID: 1,
+////            comment: "Is it okay to take the medicine after eating?",
+////            sendByCustomer: true,
+////            sendByDoctor: false,
+////            voicePath: nil,
+////            doctorID: 101,
+////            creationDate: "2025-09-17T10:17:00Z",
+////            customerName: "Mohamed",
+////            doctorName: "Dr. Ahmed",
+////            customerImage: nil,
+////            doctorImage: nil
+////        ),
+////        ChatsMessageM(
+////            customerPackageID: 1,
+////            comment: "Yes, that’s fine. Just make sure to take it with water.",
+////            sendByCustomer: false,
+////            sendByDoctor: true,
+////            voicePath: nil,
+////            doctorID: 101,
+////            creationDate: "2025-09-17T10:18:00Z",
+////            customerName: "Mohamed",
+////            doctorName: "Dr. Ahmed",
+////            customerImage: nil,
+////            doctorImage: nil
+////        )
+////    ]
+//    
+//    var body: some View {
+//        if let messages = messages, messages.count > 0 {
+//            ScrollViewReader { proxy in
+//                List {
+//                    ForEach(messages) { message in
+//                        MessageBubbleView(message: message)
+//                            .id(message.id)
+//                    }
+//                    .listRowSeparator(.hidden)
+//                    .listRowBackground(Color.clear)
+//                }
+//                .listStyle(.plain)
+//                .onChange(of: messages.count) { _ in
+//                    guard let lastId = messages.last?.id else { return }
+//                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+//                        withAnimation {
+//                            proxy.scrollTo(lastId, anchor: .bottom)
+//                        }
+//                    }
+//                }
+//                .onChange(of: messages.last?.id) { _ in
+//                    guard let lastId = messages.last?.id else { return }
+//                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+//                        withAnimation {
+//                            proxy.scrollTo(lastId, anchor: .bottom)
+//                        }
+//                    }
+//                }
+//                .onAppear {
+//                    if let lastId = messages.last?.id {
+//                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+//                            proxy.scrollTo(lastId, anchor: .bottom)
+//                        }
+//                    }
+//                }
+//            }
+//        } else {
+//            EmptyMessageBox()
+//                .frame(maxHeight:.infinity, alignment: .center)
+//        }
+//    }
+//}
+//#Preview{
+//    MessagesListView()
+//}
 struct MessagesListView: View {
     var messages: [ChatsMessageItemM]?
-    
-//    var messages: [ChatsMessageM]? = [
-//        ChatsMessageM(
-//            customerPackageID: 1,
-//            comment: "Hello doctor, I have a question about my treatment.",
-//            sendByCustomer: true,
-//            sendByDoctor: false,
-//            voicePath: nil,
-//            doctorID: 101,
-//            creationDate: "2025-09-17T10:15:00Z",
-//            customerName: "Mohamed",
-//            doctorName: "Dr. Ahmed",
-//            customerImage: nil,
-//            doctorImage: nil
-//        ),
-//        ChatsMessageM(
-//            customerPackageID: 1,
-//            comment: "Sure, please go ahead.",
-//            sendByCustomer: false,
-//            sendByDoctor: true,
-//            voicePath: nil,
-//            doctorID: 101,
-//            creationDate: "2025-09-17T10:16:00Z",
-//            customerName: "Mohamed",
-//            doctorName: "Dr. Ahmed",
-//            customerImage: nil,
-//            doctorImage: nil
-//        ),
-//        ChatsMessageM(
-//            customerPackageID: 1,
-//            comment: "Is it okay to take the medicine after eating?",
-//            sendByCustomer: true,
-//            sendByDoctor: false,
-//            voicePath: nil,
-//            doctorID: 101,
-//            creationDate: "2025-09-17T10:17:00Z",
-//            customerName: "Mohamed",
-//            doctorName: "Dr. Ahmed",
-//            customerImage: nil,
-//            doctorImage: nil
-//        ),
-//        ChatsMessageM(
-//            customerPackageID: 1,
-//            comment: "Yes, that’s fine. Just make sure to take it with water.",
-//            sendByCustomer: false,
-//            sendByDoctor: true,
-//            voicePath: nil,
-//            doctorID: 101,
-//            creationDate: "2025-09-17T10:18:00Z",
-//            customerName: "Mohamed",
-//            doctorName: "Dr. Ahmed",
-//            customerImage: nil,
-//            doctorImage: nil
-//        )
-//    ]
     
     var body: some View {
         if let messages = messages, messages.count > 0 {
@@ -710,37 +763,163 @@ struct MessagesListView: View {
                     .listRowBackground(Color.clear)
                 }
                 .listStyle(.plain)
-                .onChange(of: messages.count) { _ in
-                    guard let lastId = messages.last?.id else { return }
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                        withAnimation {
-                            proxy.scrollTo(lastId, anchor: .bottom)
-                        }
-                    }
-                }
-                .onChange(of: messages.last?.id) { _ in
-                    guard let lastId = messages.last?.id else { return }
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                        withAnimation {
-                            proxy.scrollTo(lastId, anchor: .bottom)
-                        }
-                    }
-                }
                 .onAppear {
-                    if let lastId = messages.last?.id {
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                            proxy.scrollTo(lastId, anchor: .bottom)
+                    // Initial scroll to bottom when view appears
+                    scrollToBottom(proxy: proxy, messages: messages)
+                }
+                .onChange(of: messages.count) { newCount in
+                    // Scroll when message count changes (new message added)
+                    print("[MessagesListView] Message count changed to: \(newCount)")
+                    scrollToBottom(proxy: proxy, messages: messages, animated: true)
+                }
+            }
+        } else {
+            EmptyMessageBox()
+                .frame(maxHeight: .infinity, alignment: .center)
+        }
+    }
+    
+    // MARK: - Helper Function
+    private func scrollToBottom(proxy: ScrollViewProxy, messages: [ChatsMessageItemM], animated: Bool = false) {
+        guard let lastId = messages.last?.id else {
+            print("[MessagesListView] No last message ID found")
+            return
+        }
+        
+        // Small delay to ensure layout is complete
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) {
+            if animated {
+                withAnimation(.easeOut(duration: 0.3)) {
+                    proxy.scrollTo(lastId, anchor: .bottom)
+                }
+            } else {
+                proxy.scrollTo(lastId, anchor: .bottom)
+            }
+            print("[MessagesListView] Scrolled to message ID: \(lastId)")
+        }
+    }
+}
+
+// MARK: - Alternative Implementation Using GeometryReader (More Reliable)
+struct MessagesListViewAlternative: View {
+    var messages: [ChatsMessageItemM]?
+    @State private var shouldScrollToBottom = false
+    
+    var body: some View {
+        if let messages = messages, messages.count > 0 {
+            GeometryReader { geometry in
+                ScrollViewReader { proxy in
+                    ScrollView {
+                        LazyVStack(spacing: 0) {
+                            ForEach(messages) { message in
+                                MessageBubbleView(message: message)
+                                    .id(message.id)
+                                    .padding(.horizontal)
+                            }
+                            
+                            // Invisible anchor at bottom
+                            Color.clear
+                                .frame(height: 1)
+                                .id("bottom")
                         }
+                    }
+                    .onAppear {
+                        scrollToBottom(proxy: proxy)
+                    }
+                    .onChange(of: messages.count) { _ in
+                        scrollToBottom(proxy: proxy, animated: true)
                     }
                 }
             }
         } else {
             EmptyMessageBox()
-                .frame(maxHeight:.infinity, alignment: .center)
+                .frame(maxHeight: .infinity, alignment: .center)
+        }
+    }
+    
+    private func scrollToBottom(proxy: ScrollViewProxy, animated: Bool = false) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            if animated {
+                withAnimation(.easeOut(duration: 0.3)) {
+                    proxy.scrollTo("bottom", anchor: .bottom)
+                }
+            } else {
+                proxy.scrollTo("bottom", anchor: .bottom)
+            }
         }
     }
 }
-//#Preview{
-//    MessagesListView()
-//}
 
+// MARK: - Most Robust Implementation (Recommended)
+struct MessagesListViewRobust: View {
+    var messages: [ChatsMessageItemM]?
+    @State private var scrollProxy: ScrollViewProxy?
+    
+    var body: some View {
+        if let messages = messages, !messages.isEmpty {
+            ScrollViewReader { proxy in
+                List {
+                    ForEach(messages) { message in
+                        MessageBubbleView(message: message)
+                            .id(message.id)
+                            .onAppear {
+                                // Store proxy for later use
+                                if scrollProxy == nil {
+                                    scrollProxy = proxy
+                                }
+                            }
+                    }
+                    .listRowSeparator(.hidden)
+                    .listRowBackground(Color.clear)
+                    
+                    // Invisible bottom marker
+                    Color.clear
+                        .frame(height: 1)
+                        .id("bottomMarker")
+                        .listRowSeparator(.hidden)
+                        .listRowBackground(Color.clear)
+                }
+                .listStyle(.plain)
+                .onAppear {
+                    scrollToBottom(proxy: proxy, messages: messages)
+                }
+                .onChange(of: messages.count) { newCount in
+                    print("[MessagesListView] 📊 Message count: \(newCount)")
+                    scrollToBottom(proxy: proxy, messages: messages, animated: true)
+                }
+                .onChange(of: messages.last?.id) { newLastId in
+                    print("[MessagesListView] 🆕 New last message ID: \(newLastId ?? "nil")")
+                    scrollToBottom(proxy: proxy, messages: messages, animated: true)
+                }
+            }
+        } else {
+            EmptyMessageBox()
+                .frame(maxHeight: .infinity, alignment: .center)
+        }
+    }
+    
+    private func scrollToBottom(proxy: ScrollViewProxy, messages: [ChatsMessageItemM], animated: Bool = false) {
+        // Use bottom marker for more reliable scrolling
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+            if animated {
+                withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
+                    proxy.scrollTo("bottomMarker", anchor: .bottom)
+                }
+            } else {
+                proxy.scrollTo("bottomMarker", anchor: .bottom)
+            }
+            print("[MessagesListView] ✅ Scrolled to bottom")
+        }
+    }
+}
+
+// MARK: - Usage Example in ChatsView
+extension ChatsView {
+    var messagesListSection: some View {
+        // Replace your current MessagesListView with this:
+        MessagesListViewRobust(messages: viewModel.ChatMessages?.MessagesList)
+            .refreshable {
+                await viewModel.refresh()
+            }
+    }
+}

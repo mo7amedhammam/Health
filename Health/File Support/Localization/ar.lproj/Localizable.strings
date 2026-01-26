@@ -240,6 +240,10 @@
 "questions_" = "أسألة";
 "Files_" = "الملفات";
 "CustAlergy_" = "الحساسية";
+"Online" = "نشط";
+"Offline" =  "غير نشط";
+"Write_a_message" = "اكتب رساله";
+"Message box isـempty" = "لا توجد رسايل";
 
 //MARK: --- Package Files ---
 "Watch_" = "مشاهده";
