@@ -9,39 +9,319 @@ import SwiftUI
 import AVFoundation
 import UserNotifications
 
-// MARK: - Single Bar View
-struct WaveBarView: View {
-    var height: CGFloat
-
-    var body: some View {
-        RoundedRectangle(cornerRadius: 2)
-            .fill(Color.white)
-            .frame(width: 2, height: max(height, 2))
+// MARK: - Audio Manager (Centralized audio handling)
+class AudioManager: NSObject, ObservableObject, AVAudioPlayerDelegate {
+    @Published var isRecording = false
+    @Published var isPlaying = false
+    @Published var recordingTime: TimeInterval = 0
+    @Published var playbackTime: TimeInterval = 0
+    @Published var waveformLevel: CGFloat = 0
+    @Published var showPermissionAlert = false
+    
+    private var audioRecorder: AVAudioRecorder?
+    private var audioPlayer: AVAudioPlayer?
+    private var recordingTimer: Timer?
+    private var levelTimer: Timer?
+    private var playbackTimer: Timer?
+    private var isProcessing = false // Debounce flag
+    
+    var recordingURL: URL?
+    var playbackDuration: TimeInterval {
+        audioPlayer?.duration ?? 0
     }
-}
-
-class WaveformViewModel: ObservableObject {
-    @Published var levels: [CGFloat] = Array(repeating: 10, count: 15)
-    private var timer: Timer?
-
-    func start() {
-        stop()
-        timer = Timer.scheduledTimer(withTimeInterval: 0.15, repeats: true) { [weak self] _ in
-            self?.levels = (0..<30).map { _ in CGFloat.random(in: 6...28) }
+    
+    override init() {
+        super.init()
+        setupAudioSession()
+    }
+    
+    // MARK: - Audio Session Setup
+    private func setupAudioSession() {
+        do {
+            let session = AVAudioSession.sharedInstance()
+            try session.setCategory(.playAndRecord, mode: .default, options: [.defaultToSpeaker, .allowBluetooth])
+            try session.setActive(true)
+            print("✅ Audio session configured successfully")
+        } catch {
+            print("❌ Audio session setup failed: \(error.localizedDescription)")
         }
     }
-
-    func stop() {
-        timer?.invalidate()
-        timer = nil
-        levels = Array(repeating: 10, count: 15)
+    
+    // MARK: - Recording
+    func startRecording() {
+        guard !isProcessing else {
+            print("⚠️ Already processing, ignoring startRecording")
+            return
+        }
+        isProcessing = true
+        
+        // Stop any existing playback
+        stopPlayback()
+        
+        // Check current permission status first
+        let permissionStatus = AVAudioSession.sharedInstance().recordPermission
+        print("🎤 Current microphone permission: \(permissionStatus.rawValue)")
+        
+        switch permissionStatus {
+        case .granted:
+            print("✅ Permission already granted, starting recording...")
+            DispatchQueue.main.async {
+                self.performRecording()
+            }
+            
+        case .denied:
+            print("❌ Microphone permission was previously denied")
+            print("📱 User needs to enable it in Settings > Privacy > Microphone > Sehaty")
+            DispatchQueue.main.async {
+                self.isProcessing = false
+                self.showPermissionAlert = true
+            }
+            
+        case .undetermined:
+            print("❓ Permission not yet requested, requesting now...")
+            // Request permission
+            AVAudioSession.sharedInstance().requestRecordPermission { [weak self] granted in
+                DispatchQueue.main.async {
+                    if granted {
+                        print("✅ Permission granted! Starting recording...")
+                        self?.performRecording()
+                    } else {
+                        print("❌ User denied microphone permission")
+                        print("📱 They need to enable it in Settings > Privacy > Microphone > Sehaty")
+                        self?.isProcessing = false
+                        self?.showPermissionAlert = true
+                    }
+                }
+            }
+            
+        @unknown default:
+            print("⚠️ Unknown permission status")
+            isProcessing = false
+        }
+    }
+    
+    private func performRecording() {
+        let fileName = UUID().uuidString + ".m4a"
+        let path = FileManager.default.temporaryDirectory.appendingPathComponent(fileName)
+        recordingURL = path
+        
+        let settings: [String: Any] = [
+            AVFormatIDKey: Int(kAudioFormatMPEG4AAC),
+            AVSampleRateKey: 44100.0,
+            AVNumberOfChannelsKey: 1,
+            AVEncoderAudioQualityKey: AVAudioQuality.high.rawValue,
+            AVEncoderBitRateKey: 128000
+        ]
+        
+        do {
+            // Activate audio session
+            let session = AVAudioSession.sharedInstance()
+            try session.setCategory(.playAndRecord, mode: .default, options: [.defaultToSpeaker, .allowBluetooth])
+            try session.setActive(true)
+            
+            // Initialize recorder
+            audioRecorder = try AVAudioRecorder(url: path, settings: settings)
+            audioRecorder?.isMeteringEnabled = true
+            
+            // Prepare and start
+            guard audioRecorder?.prepareToRecord() == true else {
+                print("❌ Failed to prepare recorder")
+                isProcessing = false
+                return
+            }
+            
+            let success = audioRecorder?.record() ?? false
+            if success {
+                isRecording = true
+                recordingTime = 0
+                startRecordingTimer()
+                startLevelTimer()
+                print("🎙 Recording started: \(path.lastPathComponent)")
+                print("   Recorder state: \(audioRecorder?.isRecording ?? false)")
+            } else {
+                print("❌ Failed to start recording - recorder.record() returned false")
+            }
+            
+            // Reset processing flag after a small delay
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                self.isProcessing = false
+            }
+        } catch {
+            print("❌ Recording setup failed: \(error.localizedDescription)")
+            isProcessing = false
+        }
+    }
+    
+    func stopRecording() {
+        guard isRecording else {
+            print("⚠️ stopRecording called but isRecording = false")
+            return
+        }
+        
+        print("🛑 Stopping recording...")
+        print("   Current recording time: \(recordingTime)s")
+        print("   Recorder is recording: \(audioRecorder?.isRecording ?? false)")
+        
+        audioRecorder?.stop()
+        isRecording = false
+        
+        recordingTimer?.invalidate()
+        recordingTimer = nil
+        
+        levelTimer?.invalidate()
+        levelTimer = nil
+        waveformLevel = 0
+        
+        print("✅ Recording stopped: \(recordingURL?.lastPathComponent ?? "unknown")")
+        
+        // Verify file exists and is valid
+        if let url = recordingURL {
+            let fileExists = FileManager.default.fileExists(atPath: url.path)
+            let fileSize = (try? FileManager.default.attributesOfItem(atPath: url.path)[.size] as? Int64) ?? 0
+            print("📁 File exists: \(fileExists), Size: \(fileSize) bytes")
+            
+            // Try to read the file to ensure it's valid
+            if fileExists {
+                do {
+                    let testPlayer = try AVAudioPlayer(contentsOf: url)
+                    print("✅ Audio file is valid - Duration: \(testPlayer.duration)s, Channels: \(testPlayer.numberOfChannels)")
+                } catch {
+                    print("❌ Audio file validation failed: \(error.localizedDescription)")
+                }
+            }
+        }
+    }
+    
+    private func startRecordingTimer() {
+        recordingTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] _ in
+            self?.recordingTime += 1
+        }
+    }
+    
+    private func startLevelTimer() {
+        levelTimer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { [weak self] _ in
+            guard let recorder = self?.audioRecorder else { return }
+            recorder.updateMeters()
+            let level = recorder.averagePower(forChannel: 0)
+            // Normalize from -160 to 0 dB to 0.0 to 1.0
+            let normalizedLevel = max(0, (level + 60) / 60)
+            self?.waveformLevel = CGFloat(normalizedLevel)
+        }
+    }
+    
+    // MARK: - Playback
+    func startPlayback() {
+        guard let url = recordingURL else {
+            print("❌ No recording URL available")
+            return
+        }
+        
+        // Verify file exists before attempting playback
+        guard FileManager.default.fileExists(atPath: url.path) else {
+            print("❌ Recording file not found at: \(url.path)")
+            return
+        }
+        
+        do {
+            // Keep the same session category, just override the route to speaker
+            let session = AVAudioSession.sharedInstance()
+            try session.setCategory(.playAndRecord, mode: .default, options: [.defaultToSpeaker])
+            try session.overrideOutputAudioPort(.speaker)
+            try session.setActive(true)
+            
+            audioPlayer = try AVAudioPlayer(contentsOf: url)
+            audioPlayer?.delegate = self
+            audioPlayer?.volume = 1.0
+            audioPlayer?.prepareToPlay()
+            
+            print("📊 Audio file info:")
+            print("   - Duration: \(audioPlayer?.duration ?? 0)s")
+            print("   - Format: \(audioPlayer?.format.description ?? "unknown")")
+            print("   - Channels: \(audioPlayer?.numberOfChannels ?? 0)")
+            
+            let success = audioPlayer?.play() ?? false
+            if success {
+                isPlaying = true
+                playbackTime = 0
+                startPlaybackTimer()
+                print("▶️ Playback started (volume: \(audioPlayer?.volume ?? 0))")
+            } else {
+                print("❌ Failed to start playback")
+            }
+        } catch {
+            print("❌ Playback failed: \(error.localizedDescription)")
+        }
+    }
+    
+    func pausePlayback() {
+        audioPlayer?.pause()
+        isPlaying = false
+        playbackTimer?.invalidate()
+        playbackTimer = nil
+        print("⏸ Playback paused")
+    }
+    
+    func stopPlayback() {
+        audioPlayer?.stop()
+        audioPlayer = nil
+        isPlaying = false
+        playbackTime = 0
+        playbackTimer?.invalidate()
+        playbackTimer = nil
+    }
+    
+    private func startPlaybackTimer() {
+        playbackTimer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { [weak self] _ in
+            guard let self = self, let player = self.audioPlayer else { return }
+            self.playbackTime = player.currentTime
+            
+            if !player.isPlaying {
+                self.isPlaying = false
+                self.playbackTimer?.invalidate()
+                self.playbackTimer = nil
+            }
+        }
+    }
+    
+    // MARK: - AVAudioPlayerDelegate
+    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
+        isPlaying = false
+        playbackTime = 0
+        playbackTimer?.invalidate()
+        playbackTimer = nil
+        print("✅ Playback finished")
+    }
+    
+    // MARK: - Utilities
+    func deleteRecording() {
+        guard let url = recordingURL else { return }
+        
+        stopRecording()
+        stopPlayback()
+        
+        do {
+            try FileManager.default.removeItem(at: url)
+            recordingURL = nil
+            recordingTime = 0
+            playbackTime = 0
+            print("🗑 Recording deleted")
+        } catch {
+            print("❌ Delete failed: \(error.localizedDescription)")
+        }
+    }
+    
+    func formatTime(_ time: TimeInterval) -> String {
+        let minutes = Int(time) / 60
+        let seconds = Int(time) % 60
+        return String(format: "%02d:%02d", minutes, seconds)
     }
 }
 
+// MARK: - Waveform View
 struct WaveformView: View {
     @StateObject private var viewModel = WaveformViewModel()
     let isAnimating: Bool
-
+    
     var body: some View {
         HStack(spacing: 4) {
             ForEach(viewModel.levels.indices, id: \.self) { index in
@@ -51,583 +331,181 @@ struct WaveformView: View {
             }
         }
         .frame(height: 35)
-//        .onAppear {
-//            if isAnimating { viewModel.start() }
-//        }
         .onChange(of: isAnimating) { newValue in
             newValue ? viewModel.start() : viewModel.stop()
         }
     }
 }
 
+class WaveformViewModel: ObservableObject {
+    @Published var levels: [CGFloat] = Array(repeating: 10, count: 15)
+    private var timer: Timer?
+    
+    func start() {
+        stop()
+        timer = Timer.scheduledTimer(withTimeInterval: 0.15, repeats: true) { [weak self] _ in
+            self?.levels = (0..<15).map { _ in CGFloat.random(in: 6...28) }
+        }
+    }
+    
+    func stop() {
+        timer?.invalidate()
+        timer = nil
+        levels = Array(repeating: 10, count: 15)
+    }
+}
 
-// MARK: - MessageBubbleView
+// MARK: - Voice Message Player View
+struct VoiceMessagePlayerView: View {
+    let voiceURL: URL
+    let isFromCustomer: Bool
+    @StateObject private var player = VoicePlayerManager()
+    
+    var body: some View {
+        HStack(spacing: 8) {
+            Button(action: {
+                if player.isPlaying {
+                    player.pause()
+                } else {
+                    player.play(from: voiceURL)
+                }
+            }) {
+                ZStack {
+                    Circle()
+                        .fill(Color.white.opacity(0.2))
+                        .frame(width: 36, height: 36)
+                    if player.isLoading {
+                        ProgressView()
+                            .progressViewStyle(CircularProgressViewStyle(tint: .white))
+                    } else {
+                        Image(systemName: player.isPlaying ? "pause.fill" : "play.fill")
+                            .foregroundColor(.white)
+                    }
+                }
+            }
+            
+            WaveformView(isAnimating: player.isPlaying)
+                .padding(.vertical, 4)
+        }
+        .padding(12)
+        .frame(height: 50)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(isFromCustomer ? Color.mainBlue : Color(.messageSenderBg))
+        .cornerRadius(16)
+    }
+}
+
+// MARK: - Message Bubble View
 struct MessageBubbleView: View {
     let message: ChatsMessageItemM
     
     var body: some View {
-//        let _ = print("🔍 message.comment = \(message.comment ?? "nil")")
-//        let _ = print("✅ Final voicePath URL: \(Constants.baseURL + (message.voicePath ?? "").validateSlashs())")
         HStack {
             if message.isFromMe {
                 Spacer()
             }
             
-            HStack(alignment: .top) {
+            VStack(alignment: message.isFromMe ? .trailing : .leading, spacing: 4) {
+                Text(message.formattedDate)
+                    .font(.regular(size: 12))
+                    .foregroundColor(.gray)
+                    .frame(height: 10)
                 
-//                if !message.isFromCustomer {
-//                    Image(systemName: "person.circle.fill")
-//                        .foregroundColor(.white)
-//                        .frame(width: 34, height: 34)
-//                        .background(Color.mainBlue)
-//                        .clipShape(Circle())
-//                        .offset(y:14)
-//                }
-                VStack(alignment:(message.isFromMe) ? .trailing:.leading, spacing: 4) {
-                    Text(message.formattedDate)
-                        .font(.regular(size: 12))
-                        .foregroundColor(.gray)
-                        .frame(height: 10)
-                    
-                    if message.voicePath == nil {
-                        Text(message.messageText)
-                            .font(.regular(size: 14))
-                            .foregroundColor(message.isFromMe ? .white : .black)
-                            .padding(12)
-                            .background(message.isFromMe ? Color.mainBlue : Color(.messageSenderBg))
-                            .cornerRadius(16)
-                            .lineSpacing(8)
-                    } else if let voice = message.voicePath,
-                    let voiceURL = URL(string: Constants.baseURL + voice.validateSlashs()) {
-                        
-                     VoiceMessagePlayerView(voiceURL: voiceURL, isFromCustomer: message.isFromMe)
-                            .localizeView()
-                 }
-                    
+                if message.voicePath == nil {
+                    Text(message.messageText)
+                        .font(.regular(size: 14))
+                        .foregroundColor(message.isFromMe ? .white : .black)
+                        .padding(12)
+                        .background(message.isFromMe ? Color.mainBlue : Color(.messageSenderBg))
+                        .cornerRadius(16)
+                        .lineSpacing(8)
+                } else if let voice = message.voicePath,
+                          let voiceURL = URL(string: Constants.baseURL + voice.validateSlashs()) {
+                    VoiceMessagePlayerView(voiceURL: voiceURL, isFromCustomer: message.isFromMe)
+                        .localizeView()
                 }
-                .frame(maxWidth: 280, alignment: message.isFromMe ? .trailing : .leading)
             }
+            .frame(maxWidth: 280, alignment: message.isFromMe ? .trailing : .leading)
             
             if !message.isFromMe {
                 Spacer()
             }
         }
-        //        .padding(.horizontal)
         .padding(.top, 4)
-
     }
 }
 
-
-//struct VoiceMessagePlayerView: View {
-//    let voiceURL: URL
-//    let isFromCustomer: Bool
-//
-//    @StateObject private var player = VoicePlayerManager()
-//
-//    var body: some View {
-//        VStack(spacing: 8) {
-//            HStack(spacing: 12) {
-//                // 🔘 Play/Pause button
-//                Button(action: {
-//                    if player.isPlaying {
-//                        player.pause()
-//                    } else {
-//                        player.play(from: voiceURL)
-//                    }
-//                }) {
-//                    Image(systemName: player.isPlaying ? "pause.fill" : "play.fill")
-//                        .foregroundColor(.white)
-//                        .frame(width: 36, height: 36)
-//                        .background(Circle().fill(Color.mainBlue))
-//                }
-//
-//                // 📈 Simulated waveform (replace with real one later)
-//                ZStack(alignment: .leading) {
-//                    Capsule()
-//                        .fill(Color.white.opacity(0.3))
-//                        .frame(height: 4)
-//                    Capsule()
-//                        .fill(.white)
-//                        .frame(width: CGFloat(player.progress) * 180, height: 4)
-//                }
-//                .animation(.easeInOut(duration: 0.2), value: player.progress)
-//
-//                // 🕐 Time
-//                Text(player.formatTime(player.isPlaying ? player.currentTime : player.totalDuration))
-//                    .font(.caption)
-//                    .foregroundColor(.white)
-//            }
-//
-//            // 🎚 Slider (optional for precise seeking)
-//            Slider(value: Binding(get: {
-//                player.progress
-//            }, set: { newValue in
-//                let newTime = newValue * player.totalDuration
-//                player.seek(to: newTime)
-//            }))
-//            .accentColor(.white)
-//        }
-//        .padding()
-//        .background(isFromCustomer ? Color.mainBlue : Color(.messageSenderBg))
-//        .cornerRadius(16)
-//    }
-//}
-struct VoiceMessagePlayerView: View {
-    let voiceURL: URL
-    let isFromCustomer: Bool
-
-    @StateObject private var player = VoicePlayerManager()
-
+// MARK: - Messages List View
+struct MessagesListView: View {
+    var messages: [ChatsMessageItemM]?
+    
     var body: some View {
-        HStack(spacing: 8) {
-            HStack {
-                Button(action: {
-                    if player.isPlaying {
-                        player.pause()
-                    } else {
-                        player.play(from: voiceURL)
+        if let messages = messages, !messages.isEmpty {
+            ScrollViewReader { proxy in
+                List {
+                    ForEach(messages) { message in
+                        MessageBubbleView(message: message)
+                            .id(message.id)
                     }
-                }) {
-                    ZStack {
-                        Circle()
-                            .fill(Color.white.opacity(0.2))
-                            .frame(width: 36, height: 36)
-
-                        if player.isLoading {
-                            ProgressView()
-                                .progressViewStyle(CircularProgressViewStyle(tint: .white))
-                        } else {
-                            Image(systemName: player.isPlaying ? "pause.fill" : "play.fill")
-                                .foregroundColor(.white)
-                        }
-                    }
-                }
-
-//                Text(player.isPlaying ? "Playing...".localized : "Voice_message".localized)
-//                    .font(.regular(size: 14))
-//                    .foregroundColor(.white)
-            }
-
-//            if player.isPlaying {
-                WaveformView(isAnimating: player.isPlaying)
-//                     .frame(height: 40)
-                     .padding(.vertical, 4)
-//            }
-            
-//            // 🕐 Time
-//            Text(player.formatTime(player.isPlaying ? player.currentTime : player.totalDuration))
-//                .font(.caption)
-//                .foregroundColor(.white)
-            
-        }
-        .padding(12)
-        .frame(height: 50)
-        .frame(maxWidth: .infinity,alignment: .leading)
-        .background(isFromCustomer ? Color.mainBlue : Color(.messageSenderBg))
-        .cornerRadius(16)
-    }
-}
-#Preview{
-    VoiceMessagePlayerView(voiceURL: URL(string: "https://alnada-devsehatyapi.azurewebsites.net/Files/CustomerPackageMessage/302bf64e-dd4b-4f93-bcbd-85afd628b9bb.mp3")!, isFromCustomer: true)
-}
-
-
-// MARK: - ChatsView
-struct ChatsView: View {
-    @Environment(\.dismiss) var dismiss
-    @Environment(\.scenePhase) private var scenePhase
-    @StateObject var viewModel = ChatsViewModel.shared
-    var CustomerPackageId : Int
-    
-//    let messages: [ChatsMessageM] = [
-//        ChatsMessageM(
-//            customerPackageID: 1,
-//            comment: "Ask your question/ enquiry and you will get a reply here also, on your e-mail: ahmedsamer062@gmail.com",
-//            sendByCustomer: false,
-//            sendByDoctor: true,
-//            voicePath: nil,
-//            doctorID: 10,
-//            creationDate: "2025-06-09T21:14:00Z"
-//        ),
-//        ChatsMessageM(
-//            customerPackageID: 1,
-//            comment: "Hello, I want to ask about shipment #1203489595A",
-//            sendByCustomer: true,
-//            sendByDoctor: false,
-//            voicePath: nil,
-//            doctorID: 10,
-//            creationDate: "2025-06-09T21:14:00Z"
-//        ),
-//        ChatsMessageM(
-//            customerPackageID: 1,
-//            comment: "Yes of course, Ahmed... I will check that shipment for you right now. Oh! It’s a closed one... what about it?",
-//            sendByCustomer: false,
-//            sendByDoctor: true,
-//            voicePath: nil,
-//            doctorID: 10,
-//            creationDate: "2025-06-09T21:14:00Z"
-//        )
-//    ]
-    
-//    @State private var inputText: String = ""
-//    @State private var recordingURL: URL?
-    
-    @State private var isRecording: Bool = false
-    @State private var audioRecorder: AVAudioRecorder?
-    @State private var recordingTime: TimeInterval = 0
-    @State private var recordingTimer: Timer?
-    
-    @State private var waveformLevel: CGFloat = 0
-    @State private var levelTimer: Timer?
-    @State private var audioPlayer: AVAudioPlayer?
-    
-    @State private var playbackTime: TimeInterval = 0
-    @State private var isPlaying: Bool = false
-    @State private var playbackTimer: Timer?
-    var chatwithName:String?{
-//        let message = viewModel.ChatMessages?.first
-//        return message?.sendByCustomer ?? false ? message?.customerName : message?.doctorName
-        viewModel.ChatMessages?.name
-    }
-    var chatwithImage:String?{
-//        let message = viewModel.ChatMessages?.first
-//        return message?.sendByCustomer ?? false ? message?.customerImage : message?.doctorImage
-        viewModel.ChatMessages?.image
-    }
-    var chatwithStatus:String?{
-//        let message = viewModel.ChatMessages?.first
-//        return message?.sendByCustomer ?? false ? message?.customerImage : message?.doctorImage
-        viewModel.ChatMessages?.isActive == true ? "Online" : "Offline"
-    }
-    init(CustomerPackageId:Int) {
-        self.CustomerPackageId = CustomerPackageId
-    }
-    var body: some View {
-        VStack(spacing: 0) {
-            // Header placeholder
-            HStack {
-                Button(action:{
-                    dismiss()
-                }) {
-                    Image(.backLeft)
-                        .resizable()
-                        .flipsForRightToLeftLayoutDirection(true)
-                }
-                .frame(width: 31,height: 31)
-                
-                Spacer()
-                
-                VStack(alignment:.trailing,spacing: 5) {
-                    Text(chatwithName ?? "")
-                        .font(.bold(size: 20))
-                        .foregroundColor(.mainBlue)
-                    Text(chatwithStatus?.localized ?? "")
-                        .font(.medium(size: 11))
-                        .foregroundColor(Color(.secondary))
-                }
-                
-                if let imageUrl = chatwithImage {
-                    KFImageLoader(url:URL(string:Constants.imagesURL + (imageUrl.validateSlashs())),placeholder: Image("logo"), shouldRefetch: true)
-                        .frame(width: 49, height: 49)
-                        .clipShape(Circle())
-                }
-//                Image(systemName: "person.crop.circle.fill")
-//                    .resizable()
-//                    .frame(width: 49, height: 49)
-//                    .clipShape(Circle())
-                
-            }
-            .padding()
-            .background(Color.white)
-            //            .shadow(radius: 2)
-            
-            // Messages
-            MessagesListView(messages: viewModel.ChatMessages?.MessagesList)
-                .refreshable {
-                    await viewModel.refresh()
-                }
-            
-            // Input (non-functional)
-            VStack() {
-//                VoiceMessagePlayerView(voiceURL: URL(string: "https://alnada-devsehatyapi.azurewebsites.net/Files/CustomerPackageMessage/302bf64e-dd4b-4f93-bcbd-85afd628b9bb.mp3")!, isFromCustomer: true)
-
-                HStack {
-                    if let url = viewModel.recordingURL {
-                        HStack(spacing: 12) {
-                            // Recording duration + waveform
-                            if isRecording {
-                                HStack(spacing: 10) {
-                                    Text(formatTime(recordingTime))
-                                        .font(.medium(size: 12))
-                                        .foregroundColor(Color(.secondary))
-                                        .lineLimit(1)
-                                    
-                                    RoundedRectangle(cornerRadius: 4)
-                                        .fill(Color.mainBlue)
-                                        .frame( height: 1 + waveformLevel * 60)
-                                        .animation(.easeInOut(duration: 0.1), value: waveformLevel)
-                                }
-                            }
-                            
-                            // Playback controls
-                            if !isRecording {
-                                HStack(spacing: 0) {
-                                    Button(action: togglePlayback) {
-                                        Image(systemName: isPlaying ? "pause.fill" : "play.fill")
-                                            .foregroundColor(.mainBlue)
-                                            .font(.system(size: 20, weight: .bold))
-                                    }
-                                    
-                                    //                                    Spacer()
-                                    
-                                    HStack {
-                                        Text(formatTime(playbackTime))
-                                            .font(.medium(size: 12))
-                                            .foregroundColor(Color(.secondary))
-                                            .lineLimit(1)
-                                        
-                                        ZStack(alignment: .trailing) {
-                                            RoundedRectangle(cornerRadius: 2)
-                                                .fill(Color(.btnDisabledBg))
-                                                .frame(height: 4)
-                                                .frame(width: CGFloat(max(1, playbackTime / (audioPlayer?.duration ?? 1))) * 200)
-                                            
-                                            RoundedRectangle(cornerRadius: 2)
-                                                .fill(Color.mainBlue)
-                                                .frame(height: 4)
-                                                .frame(width: CGFloat(min(1, playbackTime / (audioPlayer?.duration ?? 1))) * 200)
-                                                .animation(.linear(duration: 0.5), value: playbackTime)
-                                        }
-                                    }
-                                    .frame(maxWidth:.infinity)
-                                }
-                            }
-                            
-                            // Delete button
-                            Button(action: {
-                                try? FileManager.default.removeItem(at: url)
-                                viewModel.recordingURL = nil
-                                stopRecording()
-                                audioPlayer?.stop()
-                                audioPlayer = nil
-                                print("🗑 Voice message deleted")
-                            }) {
-                                Image(systemName: "trash")
-                                    .resizable()
-                                    .frame(width: 25, height: 28)
-                                    .foregroundColor(.red)
-                            }
-                            .padding(.trailing,4)
-                        }
-                    }else{
-                        MessageInputField(comment: $viewModel.inputText, onSend: {
-                            sendMessage()
-                        })
-                    }
-                    if viewModel.inputText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-                        Button(action: {
-                            if isRecording {
-                                stopRecording()
-                            } else {
-                                if !(viewModel.recordingURL == nil) {
-                                    //send voice
-                                    Task{
-                                        await viewModel.createCustomerMessage()
-                                    }
-                                }else{
-                                    startRecording()
-                                }
-                            }
-                        }) {
-                            Image(systemName: isRecording ? "stop.fill" : (viewModel.recordingURL == nil) ? "mic.fill" : "paperplane.fill")
-                                .foregroundColor(.white)
-                                .frame(width: 40, height: 38)
-                                .horizontalGradientBackground()
-                                .cornerRadius(7)
-                        }
-                    } else {
-                        Button(action: {
-                            sendMessage()
-                        }) {
-                            Image(systemName: "paperplane.fill")
-                                .foregroundColor(.white)
-                                .frame(width: 40, height: 38)
-                                .horizontalGradientBackground()
-                                .cornerRadius(7)
-                        }
-                    }
+                    .listRowSeparator(.hidden)
+                    .listRowBackground(Color.clear)
                     
+                    Color.clear
+                        .frame(height: 1)
+                        .id("bottomMarker")
+                        .listRowSeparator(.hidden)
+                        .listRowBackground(Color.clear)
                 }
-                Spacer()
+                .listStyle(.plain)
+                .onAppear {
+                    scrollToBottom(proxy: proxy)
+                }
+                .onChange(of: messages.count) { _ in
+                    scrollToBottom(proxy: proxy, animated: true)
+                }
             }
-            .padding()
-            //            .padding(.top,0)
-            .background(Color.white)
-            .frame(height: 110 )
-            .cardStyle(cornerRadius: 16)
-            
-        }
-        .task {
-            requestNotificationAuthorization()
-            viewModel.CustomerPackageId = CustomerPackageId
-            await viewModel.refresh()
-        }
-        .onChange(of: scenePhase) { newPhase in
-            if newPhase == .active {
-                Task { await viewModel.refresh() }
-            }
-        }
-        .onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)) { _ in
-            Task { await viewModel.refresh() }
-        }
-        .edgesIgnoringSafeArea(.bottom)
-        .background(Color(.bg))
-//        .reversLocalizeView()
-        .localizeView()
-        .showHud(isShowing:  $viewModel.isLoading)
-        .errorAlert(isPresented: Binding(
-            get: { viewModel.errorMessage != nil },
-            set: { if !$0 { viewModel.errorMessage = nil } }
-        ), message: viewModel.errorMessage)
-    }
-    
-    private func requestNotificationAuthorization() {
-        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
-            if let error = error { print("[Notifications] Authorization error: \(error)") }
-            print("[Notifications] Authorization granted: \(granted)")
-        }
-    }
-    
-    private func scheduleLocalChatNotification(body: String) {
-        let content = UNMutableNotificationContent()
-        content.title = "New message"
-        content.body = body
-        content.sound = .default
-
-        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false)
-        let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
-        UNUserNotificationCenter.current().add(request) { error in
-            if let error = error { print("[Notifications] Scheduling error: \(error)") }
-        }
-    }
-    
-    func startRecording() {
-        let fileName = UUID().uuidString + ".m4a"
-        let path = FileManager.default.temporaryDirectory.appendingPathComponent(fileName)
-        viewModel.recordingURL = path
-        
-        let settings: [String: Any] = [
-            AVFormatIDKey: Int(kAudioFormatMPEG4AAC),
-            AVSampleRateKey: 12000,
-            AVNumberOfChannelsKey: 1,
-            AVEncoderAudioQualityKey: AVAudioQuality.high.rawValue
-        ]
-        
-        do {
-            let session = AVAudioSession.sharedInstance()
-            try session.setCategory(.playAndRecord, mode: .default, options: [.defaultToSpeaker])
-            try session.setActive(true, options: .notifyOthersOnDeactivation)
-            
-            audioRecorder = try AVAudioRecorder(url: path, settings: settings)
-            audioRecorder?.isMeteringEnabled = true
-            audioRecorder?.record()
-            isRecording = true
-            startLevelTimer()
-            recordingTime = 0
-            startRecordingTimer()
-            print("🎙 Started recording to: \(path.lastPathComponent)")
-        } catch {
-            print("❌ Failed to start recording: \(error.localizedDescription)")
-        }
-    }
-    
-    func startLevelTimer() {
-        levelTimer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { _ in
-            audioRecorder?.updateMeters()
-            let level = CGFloat(audioRecorder?.averagePower(forChannel: 0) ?? -60)
-            waveformLevel = max(0, (level + 60) / 60) // Normalized to 0–1
-        }
-    }
-    
-    func stopRecording() {
-        audioRecorder?.stop()
-        isRecording = false
-        
-        levelTimer?.invalidate()
-        recordingTimer?.invalidate()
-        guard let url = viewModel.recordingURL else { return }
-        print("✅ Voice recorded at: \(url.path)")
-        
-        // You can now upload or attach `url` as your voicePath
-        levelTimer?.invalidate()
-        waveformLevel = 0
-    }
-    
-    func sendMessage() {
-        let trimmed = viewModel.inputText.trimmingCharacters(in: .whitespacesAndNewlines)
-        guard !trimmed.isEmpty else { return }
-        Task{
-            await viewModel.createCustomerMessage()
-        }
-        // Example: schedule a local notification (for testing)
-        // scheduleLocalChatNotification(body: trimmed)
-        print("📩 Sent message: \(trimmed)")
-//        viewModel.inputText = ""
-//        viewModel.recordingURL = nil
-
-    }
-    func formatTime(_ time: TimeInterval) -> String {
-        let minutes = Int(time) / 60
-        let seconds = Int(time) % 60
-        return String(format: "%02d:%02d", minutes, seconds)
-    }
-    func startRecordingTimer() {
-        recordingTimer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
-            recordingTime += 1
-        }
-    }
-    func togglePlayback() {
-        guard let url = viewModel.recordingURL else { return }
-        
-        if isPlaying {
-            audioPlayer?.pause()
-            playbackTimer?.invalidate()
-            isPlaying = false
         } else {
-            do {
-                if audioPlayer == nil {
-                    audioPlayer = try AVAudioPlayer(contentsOf: url)
-                    //                    audioPlayer?.delegate = context.coordinator
-                }
-                audioPlayer?.play()
-                isPlaying = true
-                startPlaybackTimer()
-            } catch {
-                print("❌ Playback failed: \(error.localizedDescription)")
-            }
+            EmptyMessageBox()
+                .frame(maxHeight: .infinity, alignment: .center)
         }
     }
     
-    func startPlaybackTimer() {
-        playbackTimer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
-            if let player = audioPlayer {
-                playbackTime = player.currentTime
-                if !player.isPlaying {
-                    isPlaying = false
-                    playbackTimer?.invalidate()
-                    playbackTime = 0
+    private func scrollToBottom(proxy: ScrollViewProxy, animated: Bool = false) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+            if animated {
+                withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
+                    proxy.scrollTo("bottomMarker", anchor: .bottom)
                 }
+            } else {
+                proxy.scrollTo("bottomMarker", anchor: .bottom)
             }
         }
     }
 }
 
-#Preview {
-    ChatsView(CustomerPackageId: 0)
+// MARK: - Empty Message Box
+struct EmptyMessageBox: View {
+    var body: some View {
+        VStack {
+            Spacer()
+            Image("chats")
+                .renderingMode(.template)
+                .resizable()
+                .scaledToFit()
+                .padding(30)
+                .frame(width: 162, height: 162)
+                .background(Color(.bgPurple).clipShape(Circle()))
+                .foregroundColor(Color(.btnDisabledTxt))
+            Text("Message box is empty".localized())
+                .font(.semiBold(size: 22))
+                .foregroundColor(Color(.btnDisabledTxt))
+                .padding()
+            Spacer()
+        }
+    }
 }
 
-
+// MARK: - Message Input Field
 struct MessageInputField: View {
     @Binding var comment: String
     let onSend: () -> Void
@@ -654,305 +532,254 @@ struct MessageInputField: View {
     }
 }
 
-struct EmptyMessageBox: View {
+// MARK: - ChatsView
+struct ChatsView: View {
+    @Environment(\.dismiss) var dismiss
+    @Environment(\.scenePhase) private var scenePhase
+    @StateObject var viewModel = ChatsViewModel.shared
+    @StateObject private var audioManager = AudioManager()
+    
+    var CustomerPackageId: Int
+    
+    var chatwithName: String? {
+        viewModel.ChatMessages?.name
+    }
+    
+    var chatwithImage: String? {
+        viewModel.ChatMessages?.image
+    }
+    
+    var chatwithStatus: String? {
+        viewModel.ChatMessages?.isActive == true ? "Online" : "Offline"
+    }
+    
+    init(CustomerPackageId: Int) {
+        self.CustomerPackageId = CustomerPackageId
+    }
+    
     var body: some View {
-        VStack{
-            Spacer()
-//            Image("messagebox")
-            Image("chats")
-                .renderingMode(.template)
-                .resizable()
-                .scaledToFit()
-                .padding(30)
-                .frame(width: 162, height: 162)
-                .background(Color(.bgPurple).clipShape(Circle()))
-                .foregroundColor(Color(.btnDisabledTxt))
-
-            Text("Message box isـempty".localized())
-                .font(.semiBold(size:22))
-                .foregroundColor(Color(.btnDisabledTxt))
-                .padding()
-            Spacer()
+        VStack(spacing: 0) {
+            // MARK: - Header
+            HStack {
+                Button(action: {
+                    dismiss()
+                }) {
+                    Image(.backLeft)
+                        .resizable()
+                        .flipsForRightToLeftLayoutDirection(true)
+                }
+                .frame(width: 31, height: 31)
+                
+                Spacer()
+                
+                VStack(alignment: .trailing, spacing: 5) {
+                    Text(chatwithName ?? "")
+                        .font(.bold(size: 20))
+                        .foregroundColor(.mainBlue)
+                    Text(chatwithStatus?.localized ?? "")
+                        .font(.medium(size: 11))
+                        .foregroundColor(Color(.secondary))
+                }
+                
+                if let imageUrl = chatwithImage {
+                    KFImageLoader(
+                        url: URL(string: Constants.imagesURL + imageUrl.validateSlashs()),
+                        placeholder: Image("logo"),
+                        shouldRefetch: true
+                    )
+                    .frame(width: 49, height: 49)
+                    .clipShape(Circle())
+                }
+            }
+            .padding()
+            .background(Color.white)
             
-        }
-    }
-}
-
-//struct MessagesListView: View {
-//    var messages: [ChatsMessageItemM]?
-//    
-////    var messages: [ChatsMessageM]? = [
-////        ChatsMessageM(
-////            customerPackageID: 1,
-////            comment: "Hello doctor, I have a question about my treatment.",
-////            sendByCustomer: true,
-////            sendByDoctor: false,
-////            voicePath: nil,
-////            doctorID: 101,
-////            creationDate: "2025-09-17T10:15:00Z",
-////            customerName: "Mohamed",
-////            doctorName: "Dr. Ahmed",
-////            customerImage: nil,
-////            doctorImage: nil
-////        ),
-////        ChatsMessageM(
-////            customerPackageID: 1,
-////            comment: "Sure, please go ahead.",
-////            sendByCustomer: false,
-////            sendByDoctor: true,
-////            voicePath: nil,
-////            doctorID: 101,
-////            creationDate: "2025-09-17T10:16:00Z",
-////            customerName: "Mohamed",
-////            doctorName: "Dr. Ahmed",
-////            customerImage: nil,
-////            doctorImage: nil
-////        ),
-////        ChatsMessageM(
-////            customerPackageID: 1,
-////            comment: "Is it okay to take the medicine after eating?",
-////            sendByCustomer: true,
-////            sendByDoctor: false,
-////            voicePath: nil,
-////            doctorID: 101,
-////            creationDate: "2025-09-17T10:17:00Z",
-////            customerName: "Mohamed",
-////            doctorName: "Dr. Ahmed",
-////            customerImage: nil,
-////            doctorImage: nil
-////        ),
-////        ChatsMessageM(
-////            customerPackageID: 1,
-////            comment: "Yes, that’s fine. Just make sure to take it with water.",
-////            sendByCustomer: false,
-////            sendByDoctor: true,
-////            voicePath: nil,
-////            doctorID: 101,
-////            creationDate: "2025-09-17T10:18:00Z",
-////            customerName: "Mohamed",
-////            doctorName: "Dr. Ahmed",
-////            customerImage: nil,
-////            doctorImage: nil
-////        )
-////    ]
-//    
-//    var body: some View {
-//        if let messages = messages, messages.count > 0 {
-//            ScrollViewReader { proxy in
-//                List {
-//                    ForEach(messages) { message in
-//                        MessageBubbleView(message: message)
-//                            .id(message.id)
-//                    }
-//                    .listRowSeparator(.hidden)
-//                    .listRowBackground(Color.clear)
-//                }
-//                .listStyle(.plain)
-//                .onChange(of: messages.count) { _ in
-//                    guard let lastId = messages.last?.id else { return }
-//                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-//                        withAnimation {
-//                            proxy.scrollTo(lastId, anchor: .bottom)
-//                        }
-//                    }
-//                }
-//                .onChange(of: messages.last?.id) { _ in
-//                    guard let lastId = messages.last?.id else { return }
-//                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-//                        withAnimation {
-//                            proxy.scrollTo(lastId, anchor: .bottom)
-//                        }
-//                    }
-//                }
-//                .onAppear {
-//                    if let lastId = messages.last?.id {
-//                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-//                            proxy.scrollTo(lastId, anchor: .bottom)
-//                        }
-//                    }
-//                }
-//            }
-//        } else {
-//            EmptyMessageBox()
-//                .frame(maxHeight:.infinity, alignment: .center)
-//        }
-//    }
-//}
-//#Preview{
-//    MessagesListView()
-//}
-struct MessagesListView: View {
-    var messages: [ChatsMessageItemM]?
-    
-    var body: some View {
-        if let messages = messages, messages.count > 0 {
-            ScrollViewReader { proxy in
-                List {
-                    ForEach(messages) { message in
-                        MessageBubbleView(message: message)
-                            .id(message.id)
-                    }
-                    .listRowSeparator(.hidden)
-                    .listRowBackground(Color.clear)
+            // MARK: - Messages
+            MessagesListView(messages: viewModel.ChatMessages?.MessagesList)
+                .refreshable {
+                    await viewModel.refresh()
                 }
-                .listStyle(.plain)
-                .onAppear {
-                    // Initial scroll to bottom when view appears
-                    scrollToBottom(proxy: proxy, messages: messages)
-                }
-                .onChange(of: messages.count) { newCount in
-                    // Scroll when message count changes (new message added)
-                    print("[MessagesListView] Message count changed to: \(newCount)")
-                    scrollToBottom(proxy: proxy, messages: messages, animated: true)
-                }
-            }
-        } else {
-            EmptyMessageBox()
-                .frame(maxHeight: .infinity, alignment: .center)
-        }
-    }
-    
-    // MARK: - Helper Function
-    private func scrollToBottom(proxy: ScrollViewProxy, messages: [ChatsMessageItemM], animated: Bool = false) {
-        guard let lastId = messages.last?.id else {
-            print("[MessagesListView] No last message ID found")
-            return
-        }
-        
-        // Small delay to ensure layout is complete
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) {
-            if animated {
-                withAnimation(.easeOut(duration: 0.3)) {
-                    proxy.scrollTo(lastId, anchor: .bottom)
-                }
-            } else {
-                proxy.scrollTo(lastId, anchor: .bottom)
-            }
-            print("[MessagesListView] Scrolled to message ID: \(lastId)")
-        }
-    }
-}
-
-// MARK: - Alternative Implementation Using GeometryReader (More Reliable)
-struct MessagesListViewAlternative: View {
-    var messages: [ChatsMessageItemM]?
-    @State private var shouldScrollToBottom = false
-    
-    var body: some View {
-        if let messages = messages, messages.count > 0 {
-            GeometryReader { geometry in
-                ScrollViewReader { proxy in
-                    ScrollView {
-                        LazyVStack(spacing: 0) {
-                            ForEach(messages) { message in
-                                MessageBubbleView(message: message)
-                                    .id(message.id)
-                                    .padding(.horizontal)
-                            }
-                            
-                            // Invisible anchor at bottom
-                            Color.clear
-                                .frame(height: 1)
-                                .id("bottom")
-                        }
-                    }
-                    .onAppear {
-                        scrollToBottom(proxy: proxy)
-                    }
-                    .onChange(of: messages.count) { _ in
-                        scrollToBottom(proxy: proxy, animated: true)
-                    }
-                }
-            }
-        } else {
-            EmptyMessageBox()
-                .frame(maxHeight: .infinity, alignment: .center)
-        }
-    }
-    
-    private func scrollToBottom(proxy: ScrollViewProxy, animated: Bool = false) {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            if animated {
-                withAnimation(.easeOut(duration: 0.3)) {
-                    proxy.scrollTo("bottom", anchor: .bottom)
-                }
-            } else {
-                proxy.scrollTo("bottom", anchor: .bottom)
-            }
-        }
-    }
-}
-
-// MARK: - Most Robust Implementation (Recommended)
-struct MessagesListViewRobust: View {
-    var messages: [ChatsMessageItemM]?
-    @State private var scrollProxy: ScrollViewProxy?
-    
-    var body: some View {
-        if let messages = messages, !messages.isEmpty {
-            ScrollViewReader { proxy in
-                List {
-                    ForEach(messages) { message in
-                        MessageBubbleView(message: message)
-                            .id(message.id)
-                            .onAppear {
-                                // Store proxy for later use
-                                if scrollProxy == nil {
-                                    scrollProxy = proxy
+            
+            // MARK: - Input Area
+            VStack {
+                HStack {
+                    // Recording/Playback UI
+                    if let _ = audioManager.recordingURL {
+                        HStack(spacing: 12) {
+                            // Recording mode
+                            if audioManager.isRecording {
+                                HStack(spacing: 10) {
+                                    Text(audioManager.formatTime(audioManager.recordingTime))
+                                        .font(.medium(size: 12))
+                                        .foregroundColor(Color(.secondary))
+                                        .lineLimit(1)
+                                    
+                                    RoundedRectangle(cornerRadius: 4)
+                                        .fill(Color.mainBlue)
+                                        .frame(height: 1 + audioManager.waveformLevel * 60)
+                                        .animation(.easeInOut(duration: 0.1), value: audioManager.waveformLevel)
                                 }
                             }
+                            
+                            // Playback mode
+                            if !audioManager.isRecording {
+                                HStack(spacing: 0) {
+                                    Button(action: {
+                                        if audioManager.isPlaying {
+                                            audioManager.pausePlayback()
+                                        } else {
+                                            audioManager.startPlayback()
+                                        }
+                                    }) {
+                                        Image(systemName: audioManager.isPlaying ? "pause.fill" : "play.fill")
+                                            .foregroundColor(.mainBlue)
+                                            .font(.system(size: 20, weight: .bold))
+                                    }
+                                    
+                                    HStack {
+                                        Text(audioManager.formatTime(audioManager.playbackTime))
+                                            .font(.medium(size: 12))
+                                            .foregroundColor(Color(.secondary))
+                                            .lineLimit(1)
+                                        
+                                        ZStack(alignment: .leading) {
+                                            RoundedRectangle(cornerRadius: 2)
+                                                .fill(Color(.btnDisabledBg))
+                                                .frame(height: 4)
+                                            
+                                            RoundedRectangle(cornerRadius: 2)
+                                                .fill(Color.mainBlue)
+                                                .frame(width: CGFloat(min(1, audioManager.playbackTime / max(0.1, audioManager.playbackDuration))) * 200, height: 4)
+                                                .animation(.linear(duration: 0.1), value: audioManager.playbackTime)
+                                        }
+                                        .frame(width: 200)
+                                    }
+                                    .frame(maxWidth: .infinity)
+                                }
+                            }
+                            
+                            // Delete button
+                            Button(action: {
+                                audioManager.deleteRecording()
+                                viewModel.recordingURL = nil
+                            }) {
+                                Image(systemName: "trash")
+                                    .resizable()
+                                    .frame(width: 25, height: 28)
+                                    .foregroundColor(.red)
+                            }
+                            .padding(.trailing, 4)
+                        }
+                    } else {
+                        // Text input
+                        MessageInputField(comment: $viewModel.inputText, onSend: {
+                            sendMessage()
+                        })
                     }
-                    .listRowSeparator(.hidden)
-                    .listRowBackground(Color.clear)
                     
-                    // Invisible bottom marker
-                    Color.clear
-                        .frame(height: 1)
-                        .id("bottomMarker")
-                        .listRowSeparator(.hidden)
-                        .listRowBackground(Color.clear)
+                    // Action button
+                    if viewModel.inputText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+                        Button(action: {
+                            print("🔘 Button tapped - isRecording: \(audioManager.isRecording), recordingURL: \(audioManager.recordingURL != nil)")
+                            
+                            if audioManager.isRecording {
+                                // Stop recording
+                                print("🔴 Stopping recording...")
+                                audioManager.stopRecording()
+                                viewModel.recordingURL = audioManager.recordingURL
+                            } else {
+                                if audioManager.recordingURL != nil {
+                                    // Send voice message
+                                    print("📤 Sending voice message...")
+                                    Task {
+                                        await viewModel.createCustomerMessage()
+                                        audioManager.deleteRecording()
+                                    }
+                                } else {
+                                    // Start recording
+                                    print("🔴 Starting recording...")
+                                    audioManager.startRecording()
+                                }
+                            }
+                        }) {
+                            Image(systemName: audioManager.isRecording ? "stop.fill" : (audioManager.recordingURL == nil) ? "mic.fill" : "paperplane.fill")
+                                .foregroundColor(.white)
+                                .frame(width: 40, height: 38)
+                                .horizontalGradientBackground()
+                                .cornerRadius(7)
+                        }
+                    } else {
+                        Button(action: {
+                            sendMessage()
+                        }) {
+                            Image(systemName: "paperplane.fill")
+                                .foregroundColor(.white)
+                                .frame(width: 40, height: 38)
+                                .horizontalGradientBackground()
+                                .cornerRadius(7)
+                        }
+                    }
                 }
-                .listStyle(.plain)
-                .onAppear {
-                    scrollToBottom(proxy: proxy, messages: messages)
-                }
-                .onChange(of: messages.count) { newCount in
-                    print("[MessagesListView] 📊 Message count: \(newCount)")
-                    scrollToBottom(proxy: proxy, messages: messages, animated: true)
-                }
-                .onChange(of: messages.last?.id) { newLastId in
-                    print("[MessagesListView] 🆕 New last message ID: \(newLastId ?? "nil")")
-                    scrollToBottom(proxy: proxy, messages: messages, animated: true)
+                Spacer()
+            }
+            .padding()
+            .background(Color.white)
+            .frame(height: 110)
+            .cardStyle(cornerRadius: 16)
+        }
+        .task {
+            requestNotificationAuthorization()
+            viewModel.CustomerPackageId = CustomerPackageId
+            await viewModel.refresh()
+        }
+        .onChange(of: scenePhase) { newPhase in
+            if newPhase == .active {
+                Task { await viewModel.refresh() }
+            }
+        }
+        .edgesIgnoringSafeArea(.bottom)
+        .background(Color(.bg))
+        .localizeView()
+        .showHud(isShowing: $viewModel.isLoading)
+        .errorAlert(
+            isPresented: Binding(
+                get: { viewModel.errorMessage != nil },
+                set: { if !$0 { viewModel.errorMessage = nil } }
+            ),
+            message: viewModel.errorMessage
+        )
+        .alert("Microphone Permission Required", isPresented: $audioManager.showPermissionAlert) {
+            Button("Cancel", role: .cancel) { }
+            Button("Open Settings") {
+                if let settingsURL = URL(string: UIApplication.openSettingsURLString) {
+                    UIApplication.shared.open(settingsURL)
                 }
             }
-        } else {
-            EmptyMessageBox()
-                .frame(maxHeight: .infinity, alignment: .center)
+        } message: {
+            Text("Please enable microphone access in Settings to record voice messages.")
         }
     }
     
-    private func scrollToBottom(proxy: ScrollViewProxy, messages: [ChatsMessageItemM], animated: Bool = false) {
-        // Use bottom marker for more reliable scrolling
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-            if animated {
-                withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
-                    proxy.scrollTo("bottomMarker", anchor: .bottom)
-                }
-            } else {
-                proxy.scrollTo("bottomMarker", anchor: .bottom)
+    // MARK: - Helper Functions
+    private func requestNotificationAuthorization() {
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
+            if let error = error {
+                print("[Notifications] Authorization error: \(error)")
             }
-            print("[MessagesListView] ✅ Scrolled to bottom")
+            print("[Notifications] Authorization granted: \(granted)")
+        }
+    }
+    
+    private func sendMessage() {
+        let trimmed = viewModel.inputText.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !trimmed.isEmpty else { return }
+        
+        Task {
+            await viewModel.createCustomerMessage()
         }
     }
 }
 
-// MARK: - Usage Example in ChatsView
-extension ChatsView {
-    var messagesListSection: some View {
-        // Replace your current MessagesListView with this:
-        MessagesListViewRobust(messages: viewModel.ChatMessages?.MessagesList)
-            .refreshable {
-                await viewModel.refresh()
-            }
-    }
+#Preview {
+    ChatsView(CustomerPackageId: 0)
 }
