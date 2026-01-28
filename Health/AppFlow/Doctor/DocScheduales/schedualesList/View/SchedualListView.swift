@@ -16,7 +16,7 @@ struct SchedualListView: View{
     //    var onBack: (() -> Void)? // for uikit dismissal
     
 //    @State var showCancel: Bool = false
-//    @State var idToCancel: Int?
+    @State var idToDelete: Int?
     
 //    @State var destination = AnyView(EmptyView())
     @State var mustLogin: Bool = false
@@ -105,18 +105,19 @@ struct SchedualListView: View{
                             .cornerRadius(3)
                         }
                         VStack(alignment: .leading, spacing: 16) {
-//                            if let scheduales = viewModel.scheduales {
-                            ForEach( SchedualeM.mockList, id: \.self) { scheduale in
+                            if let Scheduales = viewModel.scheduales {
+                            ForEach( Scheduales, id: \.self) { scheduale in
                                     ScheduleCellView(model: scheduale,onEdit: {
                                         router.push(DocScheduleView(schedualeId: scheduale.id).environmentObject(profileViewModel))
 
                                     },onDelete: {
 //                                        viewModel.DeleteScheduale()
+                                        idToDelete = scheduale.id
                                     })
                                 }
-//                            }else{
+                            }else{
 //                                
-//                            }
+                            }
 
                         }
                         .padding()
@@ -188,7 +189,8 @@ struct SchedualListView: View{
                         cancelTitle: "cancel_",
                         onConfirm: {
                             print("Confirmed")
-                            Task{ await viewModel.DeleteScheduale()}
+                            guard let idToDelete = self.idToDelete else { return }
+                            Task{ await viewModel.DeleteScheduale(Id: idToDelete)}
                             showDialog = false
                         },
                         onCancel: {

@@ -422,44 +422,56 @@ struct AppointmentCardView_Previews: PreviewProvider {
 
 // MARK: - Date Picker Component
 struct DatePickerField: View {
+
     @Binding var selectedDate: Date?
-    let title: String // "من تاريخ" or "إلى تاريخ"
-    
+    let title: String
+
+    // Optional validation
+    let minDate: Date?
+    let maxDate: Date?
+
     // Formatter to display date as dd/MM/yyyy
     private static let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "dd/MM/yyyy"
-//        formatter.locale = Locale(identifier: "en_US_POSIX") // Use non-localized for consistency in format
         return formatter
     }()
-    
+
     @State private var showingDatePickerSheet = false
-    
+
+    // MARK: - Initializer (keeps backward compatibility)
+    init(
+        selectedDate: Binding<Date?>,
+        title: String,
+        minDate: Date? = nil,
+        maxDate: Date? = nil
+    ) {
+        self._selectedDate = selectedDate
+        self.title = title
+        self.minDate = minDate
+        self.maxDate = maxDate
+    }
+
     var body: some View {
-        Button(action: {
+        Button {
             showingDatePickerSheet = true
-        }) {
+        } label: {
             HStack(spacing: 0) {
-              
-                // Calendar Icon
+
                 Image(.newcal)
                     .resizable()
                     .scaledToFit()
                     .frame(width: 21, height: 21)
-                    .foregroundColor(.white)
                     .padding(15)
                     .background(Color.mainBlue)
-//                    .cornerRadius(8)
-                
-                VStack(alignment: .leading,spacing: 5){
-                    
-                    // Title (Arabic, so it appears on the right)
+
+                VStack(alignment: .leading, spacing: 5) {
+
                     Text(title)
                         .font(.medium(size: 12))
                         .foregroundColor(Color(.secondary))
 
-                    if let selectedDate = selectedDate {
-                        // Date Text
+                    if let selectedDate {
                         Text(Self.dateFormatter.string(from: selectedDate))
                             .font(.medium(size: 12))
                             .foregroundStyle(Color.mainBlue)
@@ -467,38 +479,85 @@ struct DatePickerField: View {
                 }
                 .padding(8)
             }
-            .frame(maxWidth: .infinity,alignment: .leading)
-//            .padding(.vertical, 8)
+            .frame(maxWidth: .infinity, alignment: .leading)
             .padding(.trailing, 12)
-            .cardStyle(cornerRadius: 3,shadowOpacity: 0.088)
+            .cardStyle(cornerRadius: 3, shadowOpacity: 0.088)
         }
-        .customSheet(isPresented: $showingDatePickerSheet){
-            VStack {
-                // Done button for the date picker sheet
-                HStack {
-                    Spacer()
-                    Button("Done_".localized) {
-                        showingDatePickerSheet = false
-                    }
-                    .padding()
+        .customSheet(isPresented: $showingDatePickerSheet) {
+            sheetContent
+        }
+    }
+
+    // MARK: - Sheet Content
+    private var sheetContent: some View {
+        VStack {
+
+            HStack {
+                Spacer()
+                Button("Done_".localized) {
+                    showingDatePickerSheet = false
                 }
-                DatePicker(
-                    "SelectـDate".localized,
-                    selection: Binding(
-                        get: { selectedDate ?? Date() },
-                        set: { newDate in
-                            print("newDate",newDate)
-                            selectedDate = newDate
-//                            updateSelectedDateStr(with: newDate)
-                        }
-                    ),
-                    displayedComponents: .date
-                )
-                .datePickerStyle(.wheel) // Or .wheel if preferred
-                .labelsHidden()
+                .padding()
             }
+
+            DatePicker(
+                "SelectـDate".localized,
+                selection: Binding(
+                    get: { selectedDate ?? Date() },
+                    set: { newValue in
+                        var value = newValue
+                        if let minDate {
+                            value = max(value, minDate)
+                        }
+                        if let maxDate {
+                            value = min(value, maxDate)
+                        }
+                        selectedDate = value
+                    }
+                ),
+                displayedComponents:.date
+            )
+            .datePickerStyle(.wheel)
+            .labelsHidden()
+
+            
+//            DatePicker(
+//                "SelectـDate".localized,
+//                selection: Binding(
+//                    get: {
+//                        clamp(selectedDate ?? Date())
+//                    },
+//                    set: { newDate in
+//                        selectedDate = clamp(newDate)
+//                    }
+//                ),
+////                in: dateRange,
+//                displayedComponents: .date
+//            )
+//            .datePickerStyle(.wheel)
+//            .labelsHidden()
         }
-        
+    }
+
+    // MARK: - Date Range
+    private var dateRange: ClosedRange<Date>? {
+        switch (minDate, maxDate) {
+        case let (min?, max?):
+            return min...max
+        case let (min?, nil):
+            return min...Date.distantFuture
+        case let (nil, max?):
+            return Date.distantPast...max
+        default:
+            return nil
+        }
+    }
+
+    // MARK: - Clamp Helper
+    private func clamp(_ date: Date) -> Date {
+        if let minDate, date < minDate { return minDate }
+        if let maxDate, date > maxDate { return maxDate }
+        return date
     }
 }
 

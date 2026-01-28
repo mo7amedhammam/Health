@@ -5,19 +5,24 @@
 //  Created by mohamed hammam on 13/08/2025.
 //
 
-struct SchedualeM: Codable,Hashable {
+import Foundation
+
+struct SchedualeM: Codable, Hashable {
     var id: Int?
     var fromStartDate, toEndDate: String?
 }
+
 extension SchedualeM {
-    var formattedstartdate :String? {
+    var formattedstartdate: String? {
         guard let date = fromStartDate else { return "" }
-        return date.ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo:"dd / MM / yyyy")
+        return date.ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "dd / MM / yyyy")
     }
-    var formattedenddate :String? {
+    
+    var formattedenddate: String? {
         guard let date = toEndDate else { return "" }
-        return date.ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo:"dd / MM / yyyy")
+        return date.ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "dd / MM / yyyy")
     }
+    
     static var mockList: [SchedualeM] {
         [
             SchedualeM(id: 1, fromStartDate: "2025-11-01T08:00:00", toEndDate: "2025-11-01T10:00:00"),
@@ -27,11 +32,6 @@ extension SchedualeM {
             SchedualeM(id: 5, fromStartDate: "2025-11-05T08:00:00", toEndDate: "2025-11-05T09:00:00")
         ]
     }
-}
-
-struct TimeSlot: Hashable {
-    let title: String
-    let time: String
 }
 
 // MARK: - SchedualeDetailsM
@@ -49,7 +49,8 @@ struct SchedualeDetailsM: Codable {
 
 // MARK: - DayList
 struct DayList: Codable {
-    var id: Int?
+    var id: Int?           // This is null in the API response
+    var dayId: Int?        // This is the actual day identifier (0-6)
     var name: String?
     var isSelected: Bool?
     var shiftList: [ShiftList]?
@@ -57,7 +58,8 @@ struct DayList: Codable {
 
 // MARK: - ShiftList
 struct ShiftList: Codable {
-    var id: Int?
+    var id: Int?           // This is null in the API response
+    var shiftId: Int?      // This is the actual shift identifier
     var name: String?
     var fromTime, toTime: String?
     var isSelected: Bool?
