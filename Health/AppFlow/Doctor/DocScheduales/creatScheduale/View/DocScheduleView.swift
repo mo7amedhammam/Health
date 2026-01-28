@@ -13,6 +13,7 @@ struct DocScheduleView: View {
 //    @StateObject var router = NavigationRouter.shared
     @StateObject private var viewModel = DocSchedualeViewModel.shared
     var hasbackBtn : Bool? = true
+    var schedualeId : Int?
     //    var onBack: (() -> Void)? // for uikit dismissal
     
 //    @State var showCancel: Bool = false
@@ -27,8 +28,9 @@ struct DocScheduleView: View {
     //    }
     @State private var showDialog = false
 
-    init(hasbackBtn : Bool? = true) {
+    init(hasbackBtn : Bool? = true, schedualeId:Int? = nil) {
         self.hasbackBtn = hasbackBtn
+        self.schedualeId = schedualeId
         //        self.onBack = onBack
     }
     
@@ -74,8 +76,6 @@ struct DocScheduleView: View {
                     }
                     .frame(height: 232)
                     .horizontalGradientBackground()
-                    
-                    
                     
                     SectionHeader(image: Image(.docSchedIc), title: "select_available_dates",subTitle: Text("select_available_dates_subtitle".localized)
                         .foregroundStyle(Color(.secondary))
@@ -181,10 +181,10 @@ struct DocScheduleView: View {
                 .onAppear {
                     Task{
                         if (Helper.shared.CheckIfLoggedIn()) {
-                            async let Profile:() = profileViewModel.getProfile()
-                            //                        async let Packages:() = viewModel.refresh()
+//                            async let Profile:() = profileViewModel.getProfile()
+                                                    async let details:() = viewModel.getMySchedualeDetails(Id: schedualeId)
                             //                    await viewModel.getSubscripedPackages()
-                            _ = await (Profile)
+                            _ = await (details)
                             
                             //                        print("Items count:", viewModel.subscripedPackages?.items?.count ?? -1)
                             //                           print("Items:", viewModel.subscripedPackages?.items ?? [])

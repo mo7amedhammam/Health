@@ -33,8 +33,6 @@ struct TimeSlot: Hashable {
     let title: String
     let time: String
 }
-    
-
 
 // MARK: - SchedualeDetailsM
 struct SchedualeDetailsM: Codable {

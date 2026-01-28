@@ -80,7 +80,7 @@ struct SchedualListView: View{
                     // MARK: Days and Slots
                     ScrollView {
                         Button(action: {
-                            router.push(DocScheduleView().environmentObject(profileViewModel))
+                            router.push(DocScheduleView(schedualeId: nil).environmentObject(profileViewModel))
                         }) {
                             HStack {
                                 Text("add_available_scheduale".localized)
@@ -108,9 +108,10 @@ struct SchedualListView: View{
 //                            if let scheduales = viewModel.scheduales {
                             ForEach( SchedualeM.mockList, id: \.self) { scheduale in
                                     ScheduleCellView(model: scheduale,onEdit: {
-                                        
+                                        router.push(DocScheduleView(schedualeId: scheduale.id).environmentObject(profileViewModel))
+
                                     },onDelete: {
-                                        
+//                                        viewModel.DeleteScheduale()
                                     })
                                 }
 //                            }else{

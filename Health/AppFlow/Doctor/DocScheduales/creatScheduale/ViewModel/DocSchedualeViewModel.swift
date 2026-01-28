@@ -14,7 +14,8 @@ class DocSchedualeViewModel : ObservableObject {
     private var loadTask: Task<Void,Never>? = nil
     
     @Published var scheduales : [SchedualeM]? = nil
-
+    @Published var schedualeDetails : SchedualeDetailsM?
+    
     @Published var selectedSlots: [String: Set<TimeSlot>] = [:]
 
     let days = ["السبت", "الأحد", "الإثنين", "الثلاثاء", "الأربعاء", "الخميس", "الجمعة"]
@@ -59,6 +60,29 @@ extension DocSchedualeViewModel{
                 responseType: [SchedualeM].self
             )
             self.scheduales = response
+        } catch {
+            self.errorMessage = error.localizedDescription
+        }
+    }
+    
+    @MainActor
+    func getMySchedualeDetails(Id:Int?) async {
+        isLoading = true
+        defer { isLoading = false }
+        
+        
+        var parameters : [String: Any] = [:]
+        if let Id = Id{
+            parameters = ["Id":Id]
+        }
+        let target = DocSchedualesServices.GetDocScheduleDetails(parameters: parameters)
+        do {
+            self.errorMessage = nil // Clear previous errors
+            let response = try await networkService.request(
+                target,
+                responseType: SchedualeDetailsM.self
+            )
+            self.schedualeDetails = response
         } catch {
             self.errorMessage = error.localizedDescription
         }
@@ -116,31 +140,31 @@ extension DocSchedualeViewModel{
             self.errorMessage = error.localizedDescription
         }
     }
-    
-    @MainActor
-    func getMySchedualeShift() async {
-        isLoading = true
-        defer { isLoading = false }
-//        guard let maxResultCount = maxResultCount,let skipCount = skipCount else {
-////            // Handle missings
-////            self.errorMessage = "check inputs"
-////            //            throw NetworkError.unknown(code: 0, error: "check inputs")
-//            return
+//    
+//    @MainActor
+//    func getMySchedualeShift() async {
+//        isLoading = true
+//        defer { isLoading = false }
+////        guard let maxResultCount = maxResultCount,let skipCount = skipCount else {
+//////            // Handle missings
+//////            self.errorMessage = "check inputs"
+//////            //            throw NetworkError.unknown(code: 0, error: "check inputs")
+////            return
+////        }
+////        let parametersarr : [String : Any] =  ["maxResultCount":maxResultCount,"skipCount":skipCount]
+//        
+//        let target = MyAllergiesServices.GetAllergies
+//        do {
+//            self.errorMessage = nil // Clear previous errors
+//            _ = try await networkService.request(
+//                target,
+//                responseType: AllergiesM.self
+//            )
+////            self.allergies = response
+//        } catch {
+//            self.errorMessage = error.localizedDescription
 //        }
-//        let parametersarr : [String : Any] =  ["maxResultCount":maxResultCount,"skipCount":skipCount]
-        
-        let target = MyAllergiesServices.GetAllergies
-        do {
-            self.errorMessage = nil // Clear previous errors
-            _ = try await networkService.request(
-                target,
-                responseType: AllergiesM.self
-            )
-//            self.allergies = response
-        } catch {
-            self.errorMessage = error.localizedDescription
-        }
-    }
+//    }
     
     func toggleSlot(day: String, slot: TimeSlot) {
         var daySlots = selectedSlots[day, default: []]
@@ -167,14 +191,15 @@ extension DocSchedualeViewModel{
         }
         await loadTask?.value
     }
-    func refreshShifts() async {
-        loadTask?.cancel()
-        loadTask = Task { [weak self] in
-            guard let self else { return }
-            if self.isLoading == true { return }
-            
-            await getMySchedualeShift()
-        }
-        await loadTask?.value
-    }
+    
+//    func refreshShifts() async {
+//        loadTask?.cancel()
+//        loadTask = Task { [weak self] in
+//            guard let self else { return }
+//            if self.isLoading == true { return }
+//            
+//            await getMySchedualeShift()
+//        }
+//        await loadTask?.value
+//    }
 }

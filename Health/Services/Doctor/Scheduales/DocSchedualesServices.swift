@@ -11,6 +11,7 @@ import Foundation
 
 enum DocSchedualesServices{
     case GetDocSchedule
+    case GetDocScheduleDetails(parameters : [String:Any])
     case CreateDocSchedule(parameters : [String:Any])
     case DeleteDocSchedule(parameters : [String:Any])
 }
@@ -25,13 +26,16 @@ extension DocSchedualesServices : TargetType1 {
             
         case .GetDocSchedule:
             return DocEndPoints.GetDoctorSchedule.rawValue
-
+            
+        case .GetDocScheduleDetails:
+            return DocEndPoints.GetDoctorScheduleDetails.rawValue
+            
         case .CreateDocSchedule:
             return DocEndPoints.CreateDoctorSchedule.rawValue
-
+            
         case .DeleteDocSchedule:
             return DocEndPoints.DeleteSchedule.rawValue
-
+            
         }
     }
     
@@ -43,9 +47,10 @@ extension DocSchedualesServices : TargetType1 {
             return .post
             
         case
-                .GetDocSchedule
-            ,.DeleteDocSchedule
-//            ,.DocRefundDetail
+                .GetDocSchedule,
+                .GetDocScheduleDetails,
+                .DeleteDocSchedule
+            //            ,.DocRefundDetail
             :
             return .get
         }
@@ -54,14 +59,15 @@ extension DocSchedualesServices : TargetType1 {
     var parameters: [String:Any]? {
         switch self {
         case
-                .CreateDocSchedule(parameters: let parameter)
-            ,.DeleteDocSchedule(parameters: let parameter)
+                .CreateDocSchedule(parameters: let parameter),
+                .DeleteDocSchedule(parameters: let parameter),
+                .GetDocScheduleDetails(parameters: let parameter)
             :
-//            return .parameterRequest(Parameters: parameters, Encoding: encoding)
+            //            return .parameterRequest(Parameters: parameters, Encoding: encoding)
             return  parameter
-
-//        case .GetMyScheduleDrugs(parameters: let parameters):
-//            return .BodyparameterRequest(Parameters: parameters, Encoding: encoding)
+            
+            //        case .GetMyScheduleDrugs(parameters: let parameters):
+            //            return .BodyparameterRequest(Parameters: parameters, Encoding: encoding)
             
         case
                 .GetDocSchedule

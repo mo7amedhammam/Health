@@ -25,6 +25,7 @@ enum DocEndPoints : String{
 
     //------------My Schedule----------
     case GetDoctorSchedule = "Doctor/GetDoctorSchedule"
+    case GetDoctorScheduleDetails = "Doctor/GetDoctorScheduleDetail"
     case CreateDoctorSchedule = "Doctor/CreateDoctorSchedule"
     case DeleteSchedule = "Doctor/DeleteSchedule"
     
