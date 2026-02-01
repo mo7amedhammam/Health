@@ -3871,7 +3871,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 3.0.5;
-				DEVELOPMENT_TEAM = 23H4SBD5QL;
+				DEVELOPMENT_TEAM = M7AX57X8LV;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Health/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "صحتي مع الندى";
@@ -3880,7 +3880,7 @@
 				INFOPLIST_KEY_NSDocumentsFolderUsageDescription = "We need access to your files to import and export pdf documents.";
 				INFOPLIST_KEY_NSFaceIDUsageDescription = "نستخدم Face ID لتسجيل الدخول";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "We need to access your location to display content relevant to your country.";
-				INFOPLIST_KEY_NSMicrophoneUsageDescription = "This app needs access to the microphone to record audio messages.";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "We need access to your microphone to record voice messages";
 				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "We need access to your photo library to save inbody report.";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "We need access to your photo library to select images for adding inbody report.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -3895,7 +3895,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 3.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.wecancity.Health;
+				PRODUCT_BUNDLE_IDENTIFIER = com.AlNadaPharmacies.Health;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -3917,7 +3917,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 3.0.5;
-				DEVELOPMENT_TEAM = 23H4SBD5QL;
+				DEVELOPMENT_TEAM = M7AX57X8LV;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Health/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "صحتي مع الندى";
@@ -3926,7 +3926,7 @@
 				INFOPLIST_KEY_NSDocumentsFolderUsageDescription = "We need access to your files to import and export pdf documents.";
 				INFOPLIST_KEY_NSFaceIDUsageDescription = "نستخدم Face ID لتسجيل الدخول";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "We need to access your location to display content relevant to your country.";
-				INFOPLIST_KEY_NSMicrophoneUsageDescription = "This app needs access to the microphone to record audio messages.";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "We need access to your microphone to record voice messages";
 				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "We need access to your photo library to save inbody report.";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "We need access to your photo library to select images for adding inbody report.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -3941,7 +3941,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 3.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.wecancity.Health;
+				PRODUCT_BUNDLE_IDENTIFIER = com.AlNadaPharmacies.Health;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";

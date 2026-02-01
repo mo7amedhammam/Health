@@ -108,9 +108,9 @@ struct NextSessionDoctorView: View {
 struct NextSessionCountdownOrJoinView: View {
     var session: UpcomingSessionM?{
         didSet{
-            guard session?.timeDifference() != nil else {
-                return
-            }
+//            guard session?.timeDifference() != nil else {
+//                return
+//            }
             startTimer()
         }
     }
@@ -150,9 +150,9 @@ struct NextSessionCountdownOrJoinView: View {
                 }
             } else {
                 CountdownTimerView(days: countdown.days, hours: countdown.hours, minutes: countdown.minutes)
-//                    .onAppear {
-//                        startTimer()
-//                    }
+                    .onAppear {
+                        startTimer()
+                    }
                     .onDisappear {
                         timer?.invalidate()
                     }

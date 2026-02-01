@@ -100,17 +100,19 @@ extension DocSchedualeViewModel{
             return
         }
         
-        // Build a single doctorScheduleDays entry that aggregates all selected shifts
-        var aggregatedShifts: [[String: Any]] = []
-        var firstDayId: Int? = nil
-        var firstDayIdFound = false
+        var dateDetailArray: [[String: Any]] = []
 
-        if let dayList = details.dayList {
-            for day in dayList where day.isSelected == true {
-                if !firstDayIdFound, let dId = day.dayId { firstDayId = dId; firstDayIdFound = true }
-                let daySelectedShifts: [[String: Any]] = (day.shiftList ?? [])
-                    .filter { $0.isSelected == true }
-                    .map { shift in
+        if let scheduleId = details.doctorScheduleId, scheduleId > 0 {
+            // Updating: send the same structure we received, but reflect current isSelected flags for shifts
+            if let dayList = details.dayList {
+                for day in dayList {
+                    var dayDict: [String: Any] = [:]
+                    if let id = day.id { dayDict["id"] = id }
+                    if let dayId = day.dayId { dayDict["dayId"] = dayId }
+                    if let name = day.name { dayDict["name"] = name }
+                    if let isSelected = day.isSelected { dayDict["isSelected"] = isSelected }
+
+                    let shiftObjects: [[String: Any]] = (day.shiftList ?? []).map { shift in
                         var shiftDict: [String: Any] = [:]
                         if let id = shift.id { shiftDict["id"] = id }
                         if let shiftId = shift.shiftId { shiftDict["shiftId"] = shiftId }
@@ -120,60 +122,89 @@ extension DocSchedualeViewModel{
                         if let isSelected = shift.isSelected { shiftDict["isSelected"] = isSelected }
                         return shiftDict
                     }
-                aggregatedShifts.append(contentsOf: daySelectedShifts)
+                    dayDict["doctorScheduleDayShifts"] = shiftObjects
+                    dateDetailArray.append(dayDict)
+                }
             }
+        } else {
+            // Creating: flatten all selected shifts into a single day entry as requested
+            var aggregatedShifts: [[String: Any]] = []
+            var firstDayId: Int? = nil
+            var firstDayIdFound = false
+
+            if let dayList = details.dayList {
+                for day in dayList where day.isSelected == true {
+                    if !firstDayIdFound, let dId = day.dayId { firstDayId = dId; firstDayIdFound = true }
+                    let daySelectedShifts: [[String: Any]] = (day.shiftList ?? [])
+                        .filter { $0.isSelected == true }
+                        .map { shift in
+                            var shiftDict: [String: Any] = [:]
+                            if let id = shift.id { shiftDict["id"] = id }
+                            if let shiftId = shift.shiftId { shiftDict["shiftId"] = shiftId }
+                            if let name = shift.name { shiftDict["name"] = name }
+                            if let fromTime = shift.fromTime { shiftDict["fromTime"] = fromTime }
+                            if let toTime = shift.toTime { shiftDict["toTime"] = toTime }
+                            if let isSelected = shift.isSelected { shiftDict["isSelected"] = isSelected }
+                            return shiftDict
+                        }
+                    aggregatedShifts.append(contentsOf: daySelectedShifts)
+                }
+            }
+
+            if aggregatedShifts.isEmpty {
+                self.errorMessage = "Please select at least one time shift"
+                return
+            }
+
+            var singleDayDict: [String: Any] = [
+                "doctorScheduleDayShifts": aggregatedShifts
+            ]
+            if let firstDayId { singleDayDict["dayId"] = firstDayId }
+            dateDetailArray.append(singleDayDict)
         }
 
-        // Check if we have any selected shifts
-        if aggregatedShifts.isEmpty {
+        // Ensure we have something to send
+        if dateDetailArray.isEmpty {
             self.errorMessage = "Please select at least one time shift"
             return
         }
+        
+        // Format dates properly to yyyy-MM-dd'T'HH:mm:ss in UTC with 00:00:00 times
+//        let dateFormatter = DateFormatter()
+//        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
+//        dateFormatter.timeZone = TimeZone(identifier: "UTC")
+//        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+//        
+//        var calendar = Calendar(identifier: .gregorian)
+//        calendar.timeZone = TimeZone(identifier: "UTC") ?? .current
+        
+        // Start date at 00:00:00
+//        var startComponents = calendar.dateComponents([.year, .month, .day], from: dateFrom)
+//        startComponents.hour = 0
+//        startComponents.minute = 0
+//        startComponents.second = 0
+//        let startOfDay = calendar.date(from: startComponents) ?? dateFrom
+//        let startDateStr = dateFormatter.string(from: startOfDay)
+//        
+//        // End date at 00:00:00 (as per requested example)
+//        var endComponents = calendar.dateComponents([.year, .month, .day], from: dateTo)
+//        endComponents.hour = 0
+//        endComponents.minute = 0
+//        endComponents.second = 0
+//        let endOfDay = calendar.date(from: endComponents) ?? dateTo
+//        let endDateStr = dateFormatter.string(from: endOfDay)
 
-        // Build a single day dictionary containing all shifts
-        var dateDetailArray: [[String: Any]] = []
-        var singleDayDict: [String: Any] = [
-            "doctorScheduleDayShifts": aggregatedShifts
-        ]
-        if let firstDayId { singleDayDict["dayId"] = firstDayId }
+        let startDateStr = "\(dateFrom)".ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "yyyy-MM-dd",outputLocal: .english)
+        let endDateStr = "\(dateTo)".ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "yyyy-MM-dd",outputLocal: .english)
 
-        dateDetailArray.append(singleDayDict)
-        
-        // Format dates properly to yyyy-MM-dd'T'HH:mm:ss format
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
-        dateFormatter.timeZone = TimeZone(identifier: "UTC")
-        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
-        
-        // Set time to start of day for startDate and end of day for endDate
-        var calendar = Calendar.current
-        calendar.timeZone = TimeZone(identifier: "UTC") ?? TimeZone.current
-        
-        // Start date at beginning of day (00:00:00)
-        let startOfDay = calendar.startOfDay(for: dateFrom)
-        let startDateStr = dateFormatter.string(from: startOfDay)
-        
-        // End date at end of day (23:59:59)
-        var endOfDayComponents = calendar.dateComponents([.year, .month, .day], from: dateTo)
-        endOfDayComponents.hour = 23
-        endOfDayComponents.minute = 59
-        endOfDayComponents.second = 59
-        let endOfDay = calendar.date(from: endOfDayComponents) ?? dateTo
-        let endDateStr = dateFormatter.string(from: endOfDay)
-        
         var parameters: [String: Any] = [
             "fromStartDate": startDateStr,
             "toEndDate": endDateStr,
             "doctorScheduleDays": dateDetailArray
         ]
         
-        // Add doctorId if needed (you might need to get this from profile or elsewhere)
-        // parameters["doctorId"] = profileViewModel.doctorId
-        
-        // Add id only if updating existing schedule (if doctorScheduleID > 0)
-        if let scheduleId = details.doctorScheduleId, scheduleId > 0 {
-            parameters["doctorScheduleId"] = scheduleId
-        }
+        if let topId = details.id { parameters["id"] = topId }
+        if let scheduleId = details.doctorScheduleId { parameters["doctorScheduleId"] = scheduleId }
         
         print("📤 Sending schedule parameters:", parameters)
 

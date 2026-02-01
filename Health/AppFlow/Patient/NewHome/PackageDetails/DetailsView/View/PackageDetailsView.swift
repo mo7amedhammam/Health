@@ -33,7 +33,7 @@ struct PackageDetailsView: View {
                             isLoading: viewModel.isLoading ?? false,
                             canLoadMore: viewModel.canLoadMore ?? false,
                             loadMore: {
-//                                guard viewModel.canLoadMore == true,viewModel.isLoading == false else { return }
+//                                guard viewModel.canLoadMore == true else { return }
                                 Task {await viewModel.loadMoreDoctorsIfNeeded()}
                             }
                         )
@@ -200,6 +200,33 @@ struct AvailableDoctorsListView: View {
     var isLoading: Bool
     var canLoadMore: Bool
     var loadMore: (() -> Void)?
+    
+    // Stable identifier for ForEach to help the compiler
+    private func stableID(for item: AvailabeDoctorsItemM) -> Int {
+        if let id = item.packageDoctorID { return id }
+        let doctor = item.id ?? -1
+        let specHash = item.speciality?.hashValue ?? 0
+        // Combine bits in a cheap, deterministic way
+        return (doctor &* 31) &+ specHash
+    }
+    
+    private var uniqueDoctors: [AvailabeDoctorsItemM] {
+        // Prefer unique by packageDoctorID; if nil, fall back to unique by doctorId + speciality concatenation
+        var seen = Set<Int>()
+        var result: [AvailabeDoctorsItemM] = []
+        for doc in doctors {
+            if let id = doc.packageDoctorID {
+                if !seen.contains(id) {
+                    seen.insert(id)
+                    result.append(doc)
+                }
+            } else {
+                // If no packageDoctorID, allow through (could also add a secondary de-dupe if needed)
+                result.append(doc)
+            }
+        }
+        return result
+    }
 
     init(doctors: [AvailabeDoctorsItemM], action: ((AvailabeDoctorsItemM) -> Void)? = nil,isLoading: Bool, canLoadMore: Bool, loadMore: (() -> Void)? = nil) {
         self.doctors = doctors
@@ -211,7 +238,9 @@ struct AvailableDoctorsListView: View {
     var body: some View {
         ScrollView {
         LazyVStack {
-                ForEach(doctors, id: \.self) { item in
+                let itemsWithIDs = uniqueDoctors.map { (stableID(for: $0), $0) }
+                ForEach(itemsWithIDs, id: \.0) { pair in
+                    let item = pair.1
                     Button(action: { action?(item) }) {
                         VStack {
                             KFImageLoader(
@@ -270,9 +299,9 @@ struct AvailableDoctorsListView: View {
                     .padding(10)
                     .cardStyle(cornerRadius: 3)
                     .onAppear {
-                        guard item == doctors.last else{ return }
-                            guard canLoadMore ,!isLoading else { return }
-                                loadMore?()
+                        guard pair.1 == doctors.last else { return }
+                        guard canLoadMore, !isLoading else { return }
+                        loadMore?()
                     }
                 }
                 .padding(.horizontal,10)
@@ -303,3 +332,4 @@ struct DiscountLine: View {
         .foregroundStyle(Color.white)
     }
 }
+

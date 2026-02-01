@@ -25,7 +25,7 @@ final class AvailableDoctorsViewModel:ObservableObject {
     @Published var availableDoctors: AvailabeDoctorsM?
     @Published var isLoading: Bool? = false
     @Published var errorMessage: String? = nil
-    @Published var canLoadMore: Bool? = false
+    @Published var canLoadMore: Bool? = true
 
     // Navigation state
     @Published var selectedDoctorPackageId: Int? = nil
@@ -49,7 +49,7 @@ final class AvailableDoctorsViewModel:ObservableObject {
     
     func getAvailableDoctors() async {
         guard let appCountryPackageId = package.appCountryPackageId else { return }
-        
+        guard canLoadMore == true else { return }
         isLoading = true
         defer { isLoading = false }
         
