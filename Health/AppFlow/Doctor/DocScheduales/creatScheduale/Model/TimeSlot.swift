@@ -36,14 +36,15 @@ extension SchedualeM {
 
 // MARK: - SchedualeDetailsM
 struct SchedualeDetailsM: Codable {
-    var id, doctorScheduleID: Int?
+    var id, doctorScheduleId: Int?
     var dayList: [DayList]?
     var fromStartDate, toEndDate: String?
 
     enum CodingKeys: String, CodingKey {
         case id
-        case doctorScheduleID = "doctorScheduleId"
-        case dayList, fromStartDate, toEndDate
+        case doctorScheduleId = "doctorScheduleId"
+        case dayList = "doctorScheduleDays"
+        case fromStartDate, toEndDate
     }
 }
 
@@ -53,7 +54,14 @@ struct DayList: Codable {
     var dayId: Int?        // This is the actual day identifier (0-6)
     var name: String?
     var isSelected: Bool?
-    var shiftList: [ShiftList]?
+    var shiftList : [ShiftList]?
+    
+    enum CodingKeys: String, CodingKey {
+        case id
+        case dayId
+        case name, isSelected
+        case shiftList = "doctorScheduleDayShifts"
+    }
 }
 
 // MARK: - ShiftList

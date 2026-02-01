@@ -308,7 +308,9 @@ struct NewHomeView: View {
             message: viewModel.errorMessage
         )
         .customSheet(isPresented: $isRescheduling) {
-            ReSchedualView(doctorId: $doctorId,packageId: $packageId , SessionId: $SessoinId, isPresentingNewMeasurementSheet: $isRescheduling ,reschedualcase:.constant(.reschedualSession))
+            ReSchedualView(doctorId: $doctorId,packageId: $packageId , SessionId: $SessoinId, isPresentingNewMeasurementSheet: $isRescheduling ,reschedualcase:.constant(.reschedualSession),onRescheduleSuccess: {
+                Task{ await viewModel.load() }
+            })
         }
         .task {
             await viewModel.load()

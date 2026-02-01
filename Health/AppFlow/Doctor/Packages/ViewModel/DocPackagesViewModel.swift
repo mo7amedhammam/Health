@@ -222,9 +222,9 @@ extension DocPackagesViewModel {
                 target,
                 responseType: FeaturedPackagesM.self
             )
-            showAddSheet = false
             removeSelections()
             self.showSuccess = true
+//            showAddSheet = false
         } catch {
             self.errorMessage = error.localizedDescription
         }

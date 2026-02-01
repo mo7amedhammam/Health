@@ -460,6 +460,7 @@ extension DocPackagesFilterView{
             subtitle2: "Package_success_subtitle2".localized,
             buttonTitle: "inbody_success_created_btn".localized,
             buttonAction: {
+                viewmodel.showAddSheet = false
                 viewmodel.showSuccess = false
             }
         )

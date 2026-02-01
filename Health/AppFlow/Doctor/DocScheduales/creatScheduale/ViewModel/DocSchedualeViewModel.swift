@@ -100,31 +100,44 @@ extension DocSchedualeViewModel{
             return
         }
         
-        // Build dateDetail array from dayList
-        var dateDetailArray: [[String: Any]] = []
-        
+        // Build a single doctorScheduleDays entry that aggregates all selected shifts
+        var aggregatedShifts: [[String: Any]] = []
+        var firstDayId: Int? = nil
+        var firstDayIdFound = false
+
         if let dayList = details.dayList {
             for day in dayList where day.isSelected == true {
-                guard let dayId = day.dayId else { continue }
-                
-                // Get selected shift IDs for this day
-                let selectedShiftIds = day.shiftList?.filter { $0.isSelected == true }.compactMap { $0.shiftId } ?? []
-                
-                if !selectedShiftIds.isEmpty {
-                    let dateDetail: [String: Any] = [
-                        "dayId": dayId,
-                        "timeShiftId": selectedShiftIds
-                    ]
-                    dateDetailArray.append(dateDetail)
-                }
+                if !firstDayIdFound, let dId = day.dayId { firstDayId = dId; firstDayIdFound = true }
+                let daySelectedShifts: [[String: Any]] = (day.shiftList ?? [])
+                    .filter { $0.isSelected == true }
+                    .map { shift in
+                        var shiftDict: [String: Any] = [:]
+                        if let id = shift.id { shiftDict["id"] = id }
+                        if let shiftId = shift.shiftId { shiftDict["shiftId"] = shiftId }
+                        if let name = shift.name { shiftDict["name"] = name }
+                        if let fromTime = shift.fromTime { shiftDict["fromTime"] = fromTime }
+                        if let toTime = shift.toTime { shiftDict["toTime"] = toTime }
+                        if let isSelected = shift.isSelected { shiftDict["isSelected"] = isSelected }
+                        return shiftDict
+                    }
+                aggregatedShifts.append(contentsOf: daySelectedShifts)
             }
         }
-        
+
         // Check if we have any selected shifts
-        if dateDetailArray.isEmpty {
+        if aggregatedShifts.isEmpty {
             self.errorMessage = "Please select at least one time shift"
             return
         }
+
+        // Build a single day dictionary containing all shifts
+        var dateDetailArray: [[String: Any]] = []
+        var singleDayDict: [String: Any] = [
+            "doctorScheduleDayShifts": aggregatedShifts
+        ]
+        if let firstDayId { singleDayDict["dayId"] = firstDayId }
+
+        dateDetailArray.append(singleDayDict)
         
         // Format dates properly to yyyy-MM-dd'T'HH:mm:ss format
         let dateFormatter = DateFormatter()
@@ -149,17 +162,17 @@ extension DocSchedualeViewModel{
         let endDateStr = dateFormatter.string(from: endOfDay)
         
         var parameters: [String: Any] = [
-            "startDate": startDateStr,
-            "endDate": endDateStr,
-            "dateDetail": dateDetailArray
+            "fromStartDate": startDateStr,
+            "toEndDate": endDateStr,
+            "doctorScheduleDays": dateDetailArray
         ]
         
         // Add doctorId if needed (you might need to get this from profile or elsewhere)
         // parameters["doctorId"] = profileViewModel.doctorId
         
         // Add id only if updating existing schedule (if doctorScheduleID > 0)
-        if let scheduleId = details.doctorScheduleID, scheduleId > 0 {
-            parameters["id"] = scheduleId
+        if let scheduleId = details.doctorScheduleId, scheduleId > 0 {
+            parameters["doctorScheduleId"] = scheduleId
         }
         
         print("📤 Sending schedule parameters:", parameters)
@@ -272,3 +285,4 @@ extension DocSchedualeViewModel{
 //        return formatter.date(from: self)
 //    }
 //}
+

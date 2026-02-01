@@ -40,10 +40,10 @@ extension CustomerAlergiesViewModel{
             
             isLoading = true
             defer { isLoading = false }
-            guard let customerPackageId = CustomerPackageId else {
+            guard let CustomerId = CustomerPackageId else {
                 return
             }
-            let parametersarr : [String : Any] =  ["CustomerPackageId":customerPackageId]
+            let parametersarr : [String : Any] =  ["CustomerId":CustomerId]
             
             let target = DocActivePackagesServices.GetCustomerAllergy(parameters: parametersarr)
             do {

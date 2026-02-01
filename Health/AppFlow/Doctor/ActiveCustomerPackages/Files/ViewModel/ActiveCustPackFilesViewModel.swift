@@ -433,9 +433,9 @@ final class ActiveCustomerPackFilesViewModel: ObservableObject {
         isLoading = true
         do {
             try await uploadUseCase.execute(request)
-            await refreshFiles(forcase: .Packages)
             clearForm()
             showUploadSheet = false
+            await refreshFiles(forcase: .Packages)
         } catch {
             showUploadSheet = false
             errorMessage = error.localizedDescription
