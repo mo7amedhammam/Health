@@ -205,7 +205,7 @@ struct ActiveCustomerPackagesView: View {
 //                    doctorId = viewModel.subscripedPackage?.docotrID
                     
 //                    customerPackageId = viewModel.subscripedPackage?.customerPackageID
-                    customerId = viewModel.subscripedPackage?.customerID
+                    doctorId = viewModel.subscripedPackage?.customerID
                     packageId = viewModel.upcomingSession?.packageID
                    reschedualcase = .nextSession
                     isReschedualling = true
@@ -263,7 +263,7 @@ struct ActiveCustomerPackagesView: View {
         
         .customSheet(isPresented: $isReschedualling){
             ReSchedualView(
-                doctorPackageId: customerPackageId,
+                doctorPackageId:.constant( customerPackageId ),
                 doctorId: $doctorId,
                 packageId:$packageId,
                 SessionId:$sessionId ,

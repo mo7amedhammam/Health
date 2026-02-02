@@ -14,6 +14,7 @@ struct NewHomeView: View {
     
     // UI-only state
     @State private var selectedPackage: FeaturedPackageItemM?
+    @State private var customerPackageId : Int?
     @State private var doctorId : Int?
     @State private var packageId : Int?
     @State private var SessoinId : Int?
@@ -148,6 +149,7 @@ struct NewHomeView: View {
                                 },
                                 rescheduleAction: {
                                     //                                doctorId = nil
+                                    customerPackageId = nextsession.customerPackageId
                                     SessoinId = nextsession.id
                                     packageId = nextsession.packageID
                                     doctorId = nextsession.doctorId
@@ -308,7 +310,7 @@ struct NewHomeView: View {
             message: viewModel.errorMessage
         )
         .customSheet(isPresented: $isRescheduling) {
-            ReSchedualView(doctorId: $doctorId,packageId: $packageId , SessionId: $SessoinId, isPresentingNewMeasurementSheet: $isRescheduling ,reschedualcase:.constant(.reschedualSession),onRescheduleSuccess: {
+            ReSchedualView(doctorPackageId: $customerPackageId,doctorId: $doctorId,packageId: $packageId , SessionId: $SessoinId, isPresentingNewMeasurementSheet: $isRescheduling ,reschedualcase:.constant(.reschedualSession),onRescheduleSuccess: {
                 Task{ await viewModel.load() }
             })
         }

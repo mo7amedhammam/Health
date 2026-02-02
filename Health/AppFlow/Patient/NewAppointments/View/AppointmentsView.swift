@@ -16,8 +16,10 @@ struct AppointmentsView: View {
     @State var showCancel: Bool = false
     @State var idToCancel:Int?
     
+    @State private var customrpackageId : Int?
     @State private var doctorId : Int?
     @State private var packageId : Int?
+    @State private var sessionId : Int?
     @State private var isRescheduling: Bool = false
 
     var body: some View {
@@ -43,8 +45,10 @@ struct AppointmentsView: View {
                         },
                                            rescheduleAction: {
                             //                                doctorId = nil
+                            customrpackageId = session.customerPackageId
                             packageId = session.packageID
                             doctorId = session.doctorId
+                            sessionId = session.id
                             isRescheduling = true })
                         .padding([.horizontal])
                     }
@@ -147,7 +151,7 @@ struct AppointmentsView: View {
             LoginSheetView()
         }
         .customSheet(isPresented: $isRescheduling) {
-            ReSchedualView(doctorId: $doctorId, packageId: $packageId, SessionId: .constant(nil), isPresentingNewMeasurementSheet: $isRescheduling ,reschedualcase: .constant(.reschedualSession))
+            ReSchedualView(doctorPackageId: $customrpackageId,doctorId: $doctorId, packageId: $packageId, SessionId:$sessionId, isPresentingNewMeasurementSheet: $isRescheduling ,reschedualcase: .constant(.reschedualSession))
         }
         if showCancel{
             CancelSubscriptionView(isPresent: $showCancel, customerPackageId: idToCancel ?? 0)

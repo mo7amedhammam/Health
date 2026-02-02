@@ -30,6 +30,8 @@ final class PackageMoreDetailsViewModel: ObservableObject {
     @Published var selectedSchedual: AvailableSchedualsM?
 
     @Published var ticketData: TicketM?
+    @Published var couponeCode                = ""
+    @Published var showSuccess:Bool = false
 
     @Published var isReschedualed: Bool? = false
 
@@ -294,22 +296,65 @@ print("params:///", params)
     }
 
     // MARK: - Booking
+    @MainActor
     func getBookingSession() async {
 //        guard let params = await prepareParamters() else { return }
-        guard let params = await prepareParamters() else { return }
+        guard let params = prepareParamters() else { return }
+        var parametersarr = params
+        
+        if couponeCode.count > 0{
+            parametersarr["coupon"] = couponeCode
+        }
         await MainActor.run { errorMessage = nil; startLoading() }
         defer { Task { await MainActor.run { self.stopLoading() } } }
 
-        let target = HomeServices.GetBookingSession(parameters: params)
-
+        let target = HomeServices.GetBookingSession(parameters: parametersarr)
         do {
             let response = try await networkService.request(target, responseType: TicketM.self)
-            await MainActor.run { self.ticketData = response }
+                await MainActor.run { self.ticketData = response }
+            couponeCode.removeAll()
         } catch {
             await MainActor.run { self.errorMessage = error.localizedDescription }
         }
 
     }
+    
+    @MainActor
+    func createCustomerPackage() async {
+        isLoading = true
+        defer { isLoading = false }
+        guard let params = prepareParamters() else { return }
+        var parametersarr = params
+
+        if let doctorName = ticketData?.doctorData?.doctorName {
+            parametersarr["doctorName"] = doctorName
+        }
+        if couponeCode.count > 0{
+            parametersarr["coupon"] = couponeCode
+        }
+        
+//        parametersarr["customerPackageId"] = ticketData?.packageData?.appCountryPackageId
+//        parametersarr["appCountryPackageId"] = ticketData?.packageData?.appCountryPackageId
+        parametersarr["totalAfterDiscount"] = ticketData?.coupon?.totalAfterDiscount
+        parametersarr["doctorPackageId"] = nil
+
+print(parametersarr)
+        let target = HomeServices.CreateCustomerPackage(parameters: parametersarr)
+        do {
+            self.errorMessage = nil // Clear previous errors
+            _ = try await networkService.request(
+                target,
+                responseType: TicketM.self
+            )
+            showSuccess = true
+//            self.ticketData = response
+        } catch {
+            self.errorMessage = error.localizedDescription
+        }
+    }
+    
+    
+
 
     
 //    @MainActor
@@ -367,7 +412,6 @@ print("params:///", params)
             else {
                 return nil
             }
-
             return [
                 "date": date,
                 "packageId": packageId,
@@ -377,7 +421,7 @@ print("params:///", params)
 //                "totalAfterDiscount": totalAfterDiscount,
                 "timeFrom": timeFrom,
                 "timeTo": timeTo,
-                "appCountryPackageId": appCountryPackageId
+                "appCountryPackageId": appCountryPackageId,
             ]
 //        }
     }

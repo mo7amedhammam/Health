@@ -233,6 +233,7 @@ extension DocSchedualeViewModel{
             self.errorMessage = nil
             _ = try await networkService.request(target, responseType: AllergiesM.self)
             DeleteSuccess = true
+            scheduales?.remove(at: scheduales?.firstIndex(where: { $0.id == Id }) ?? -1)
         } catch {
             self.errorMessage = error.localizedDescription
         }

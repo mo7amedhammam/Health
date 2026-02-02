@@ -113,6 +113,7 @@ struct SchedualListView: View{
                                     },onDelete: {
 //                                        viewModel.DeleteScheduale()
                                         idToDelete = scheduale.id
+                                        showDialog = true
                                     })
                                 }
                             }else{

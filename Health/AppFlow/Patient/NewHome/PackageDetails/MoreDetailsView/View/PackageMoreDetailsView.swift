@@ -302,7 +302,7 @@ struct PackageMoreDetailsView: View {
         }
         .onChange(of: viewModel.ticketData) { newval in
             guard newval != nil else { return }
-            pushTo(destination: TicketView(ticketData: newval, parameters: viewModel.prepareParamters()))
+            pushTo(destination: TicketView().environmentObject(viewModel))
         }
         .customSheet(isPresented: $mustLogin, height: 350) {
             LoginSheetView()

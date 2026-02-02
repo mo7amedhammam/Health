@@ -8,10 +8,12 @@
 import SwiftUI
 
 struct TicketView: View {
-    @StateObject var viewmodel = TicketViewModel()
+//    @StateObject var viewmodel = TicketViewModel()
+    @EnvironmentObject var viewmodel : PackageMoreDetailsViewModel
+
     //    var day:AvailableDayM?
-    var ticketData:TicketM?
-    var parameters:[String:Any]?
+//    var ticketData:TicketM?
+//    var parameters:[String:Any]?
     
     var body: some View {
         VStack {
@@ -232,6 +234,8 @@ struct TicketView: View {
                                     TextField("enter_Copon_number".localized, text: $viewmodel.couponeCode)
                                         .font(.regular(size: 16))
                                         .foregroundColor(.mainBlue)
+                                        .autocorrectionDisabled(true)
+                                        .textInputAutocapitalization(.never)
                                 }
                                 .padding(.vertical, 12)
                                 .padding(.horizontal)
@@ -243,7 +247,8 @@ struct TicketView: View {
                                 
                                 Button(action: {
                                     Task{
-                                        await viewmodel.createCustomerPackage(paramters: parameters)
+                                        guard viewmodel.couponeCode.count > 0 else { return }
+                                        await viewmodel.getBookingSession()
                                     }
                                 }){
                                     //
@@ -342,14 +347,14 @@ struct TicketView: View {
                 CustomButton(title: "Continue_".localized, backgroundView:
                                 AnyView(Color.clear.horizontalGradientBackground())) {
                     Task {
-                        await viewmodel.createCustomerPackage(paramters: parameters )
+                        await viewmodel.createCustomerPackage()
                     }
                 }
             }
         }
-        .task {
-            viewmodel.ticketData = ticketData
-        }
+//        .task {
+//            viewmodel.ticketData = ticketData
+//        }
         //        .reversLocalizeView()
         //        .localizeView(reverse: true)
         .localizeView()
@@ -366,7 +371,7 @@ struct TicketView: View {
 }
 
 #Preview {
-    TicketView( ticketData: .init())
+    TicketView( ).environmentObject(PackageMoreDetailsViewModel())
 }
 extension TicketView{
     private func PackageSchedualeBookedView()->any View {

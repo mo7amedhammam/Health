@@ -20,7 +20,7 @@ class ReSchedualViewModel:ObservableObject {
     @Published var doctorPackageId:Int?
     @Published var PackageId:Int?
     @Published var SessionId:Int?
-
+    
     @Published var newDate                = Date()
     
     // Published properties
@@ -37,7 +37,7 @@ class ReSchedualViewModel:ObservableObject {
     
     @Published var isReschedualed:Bool? = false
     @Published var isApprouved:Bool? = false
-
+    
     @Published var isLoading:Bool? = false
     @Published var errorMessage: String? = nil
     @Published var appcountryId: Int? = Helper.shared.AppCountryId()
@@ -59,7 +59,7 @@ extension ReSchedualViewModel{
         }
         let parametersarr : [String : Any] =  ["Id":doctorPackageId,"AppCountryId":appCountryId ]
         print("parametersarr",parametersarr)
-
+        
         let target = HomeServices.GetDoctorPackageById(parameters: parametersarr)
         do {
             self.errorMessage = nil // Clear previous errors
@@ -72,7 +72,7 @@ extension ReSchedualViewModel{
             self.errorMessage = error.localizedDescription
         }
     }
-
+    
     @MainActor
     func getAvailableDays() async {
         isLoading = true
@@ -89,7 +89,7 @@ extension ReSchedualViewModel{
         let dateString = selectedDayString ?? newDate.formatted(.customDateFormat("yyyy-MM-dd",locale:.english))
         
         var parametersarr : [String : Any] =  ["date": dateString, "appCountryId": appCountryId]
-          
+        
         if let doctorId = doctorId{
             parametersarr["doctorId"] = doctorId
         }else{
@@ -111,7 +111,7 @@ extension ReSchedualViewModel{
             self.errorMessage = error.localizedDescription
         }
     }
-
+    
     @MainActor
     func getAvailableShifts() async {
         isLoading = true
@@ -121,7 +121,7 @@ extension ReSchedualViewModel{
         }
         let parametersarr : [String : Any] =  ["AppCountryId":AppCountryId]
         print("parametersarr",parametersarr)
-
+        
         let target = HomeServices.GetTimeShiftScheduleList(parameters: parametersarr)
         do {
             self.errorMessage = nil // Clear previous errors
@@ -155,7 +155,7 @@ extension ReSchedualViewModel{
             "date": dateString,
             "shiftId": shiftId
         ]
-
+        
         if let doctorId = doctorId{
             parametersarr["doctorId"] = doctorId
         }else{
@@ -184,7 +184,7 @@ extension ReSchedualViewModel{
             self.errorMessage = error.localizedDescription
         }
     }
-
+    
     @MainActor
     func createCustomerPackage(paramters:[String:Any]?) async {
         isLoading = true
@@ -220,21 +220,63 @@ extension ReSchedualViewModel{
     
     @MainActor
     func rescheduleCustomerPackage() async { // request by customer or direct reschedual by doctor
+        //        {
+        //          "customerPackageId": 0,
+        //          "doctorId": 0,
+        //          "sessionId": 0,
+        //          "shiftId": 0,
+        //          "startDate": "2026-02-02T12:21:33.085Z",
+        //          "timeFrom": "string"
+        //        }
         isLoading = true
         isReschedualed = false
         defer { isLoading = false }
-        // Validate required selections; adjust keys as needed for your API
-        guard let newDate = selectedDay?.date?.ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "yyyy-MM-dd",outputLocal: .english),
-              let sessionId = SessionId,
-              let newTimeFrom = selectedSchedual?.timefrom,
-              let newTimeTo = selectedSchedual?.timeTo else {
-            self.errorMessage = "check inputs"
-            return
+        
+        var parametersarr : [String : Any] =  [:]
+        switch Helper.shared.getSelectedUserType() {
+        case .Customer,.none:
+            
+            // Validate required selections; adjust keys as needed for your API
+            guard let newDate = selectedDay?.date?.ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "yyyy-MM-dd",outputLocal: .english),
+                  let sessionId = SessionId,
+                  let newTimeFrom = selectedSchedual?.timefrom,
+                  let shiftId = selectedShift?.id else {
+                
+                self.errorMessage = "check inputs"
+                return
+            }
+            
+            parametersarr = ["sessionId":sessionId,"startDate":newDate,"timeFrom":newTimeFrom,"shiftId":shiftId]
+            if let doctorId = doctorId{
+                parametersarr["doctorId"] = doctorId
+            }else{
+                if let doctorId = packageDetails?.doctorData?.doctorID{
+                    parametersarr["doctorId"] = doctorId
+                }
+            }
+            
+            if let customerPackageId = doctorPackageId{
+                parametersarr["customerPackageId"] = customerPackageId
+            }else{
+                if let customerPackageId = packageDetails?.doctorData?.packageDoctorId {
+                    parametersarr["customerPackageId"] = customerPackageId
+                }
+            }
+        case .Doctor:
+            guard let newDate = selectedDay?.date?.ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "yyyy-MM-dd",outputLocal: .english),
+                  let sessionId = SessionId,
+                  let newTimeFrom = selectedSchedual?.timefrom,
+                  let newTimeTo = selectedSchedual?.timeTo else {
+                self.errorMessage = "check inputs"
+                return
+            }
+            
+            parametersarr = ["sessionId":sessionId,"newDate":newDate,"newTimeFrom":newTimeFrom,"newTimeTo":newTimeTo]
+            
         }
-
-        let parametersarr : [String : Any] =  ["sessionId":sessionId,"newDate":newDate,"newTimeFrom":newTimeFrom,"newTimeTo":newTimeTo]
+        
         print("parametersarr",parametersarr)
-
+        
         let target = HomeServices.rescheduleSession(parameters: parametersarr)
         do {
             self.errorMessage = nil // Clear previous errors
@@ -247,7 +289,7 @@ extension ReSchedualViewModel{
             self.errorMessage = error.localizedDescription
         }
     }
-
+    
     @MainActor
     func getReschedualRequests() async {
         isLoading = true
@@ -256,7 +298,7 @@ extension ReSchedualViewModel{
             return
         }
         var parametersarr : [String : Any] =  ["appCountryId":appCountryId,"date":"\(newDate.formatted(.customDateFormat("yyyy-MM-dd",locale: .english)))","shiftId":shiftId]
-
+        
         if let doctorId = doctorId{
             parametersarr["doctorId"] = doctorId
         }else{
@@ -272,7 +314,7 @@ extension ReSchedualViewModel{
             }
         }
         print("parametersarr",parametersarr)
-
+        
         let target = HomeServices.GetReschedualRequestList(parameters: parametersarr)
         do {
             self.errorMessage = nil // Clear previous errors
@@ -286,37 +328,37 @@ extension ReSchedualViewModel{
         }
     }
     
-//    @MainActor
-//    func approuveCustomerRescheduleRequest(Reject:Bool? = false) async { // approuve by doctor
-//        isLoading = true
-//        isApprouved = false
-//        defer { isLoading = false }
-//        // Validate required selections; adjust keys as needed for your API
-//        guard let sessionId = selectedShift?.id else {
-//            self.errorMessage = "check inputs"
-//            return
-//        }
-//
-//        var parametersarr : [String : Any] =  ["Id":sessionId]
-//        if Reject == true {
-//            parametersarr["Reject"] = true
-//        }else{
-//            parametersarr["Reject"] = false
-//        }
-//        print("parametersarr",parametersarr)        
-//        let target = HomeServices.ApprouveCustomerReschedualRequest(parameters: parametersarr)
-//        do {
-//            self.errorMessage = nil // Clear previous errors
-//            _ = try await networkService.request(
-//                target,
-//                responseType: [AvailableSchedualsM].self
-//            )
-//            isApprouved = true
-//        } catch {
-//            self.errorMessage = error.localizedDescription
-//        }
-//        
-//    }
+    //    @MainActor
+    //    func approuveCustomerRescheduleRequest(Reject:Bool? = false) async { // approuve by doctor
+    //        isLoading = true
+    //        isApprouved = false
+    //        defer { isLoading = false }
+    //        // Validate required selections; adjust keys as needed for your API
+    //        guard let sessionId = selectedShift?.id else {
+    //            self.errorMessage = "check inputs"
+    //            return
+    //        }
+    //
+    //        var parametersarr : [String : Any] =  ["Id":sessionId]
+    //        if Reject == true {
+    //            parametersarr["Reject"] = true
+    //        }else{
+    //            parametersarr["Reject"] = false
+    //        }
+    //        print("parametersarr",parametersarr)
+    //        let target = HomeServices.ApprouveCustomerReschedualRequest(parameters: parametersarr)
+    //        do {
+    //            self.errorMessage = nil // Clear previous errors
+    //            _ = try await networkService.request(
+    //                target,
+    //                responseType: [AvailableSchedualsM].self
+    //            )
+    //            isApprouved = true
+    //        } catch {
+    //            self.errorMessage = error.localizedDescription
+    //        }
+    //
+    //    }
     
     
     func prepareParamters()->[String : Any]? {
@@ -329,44 +371,44 @@ extension ReSchedualViewModel{
     
     
     
-//    @MainActor
+    //    @MainActor
     func prepareParamtersByDoctor() -> [String: Any]? {
-//        "doctorName": "string",
-//          "customerId": 0,
-//          "customerPackageId": 0,
-//          "packageId": 0,
-//          "date": "2025-11-25T12:53:21.063Z",
-//          "shiftId": 0,
-//          "timeFrom": "string",
-//          "timeTo": "string"
+        //        "doctorName": "string",
+        //          "customerId": 0,
+        //          "customerPackageId": 0,
+        //          "packageId": 0,
+        //          "date": "2025-11-25T12:53:21.063Z",
+        //          "shiftId": 0,
+        //          "timeFrom": "string",
+        //          "timeTo": "string"
         // Ensure we read state on main actor
-//        return MainActor.assumeIsolated { () -> [String: Any]? in
-        print(packageDetails)
-            guard
-//                let appCountryPackageId = packageDetails?.appCountryPackageId,
-                let packageId = PackageId,
-                let customerId = doctorId,
-                let shiftId = selectedShift?.id,
-                let customerPackageId = doctorPackageId,
-//                let totalAfterDiscount = packageDetails?.packageData?.priceAfterDiscount,
-                let timeFrom = selectedSchedual?.timefrom,
-                let timeTo = selectedSchedual?.timeTo,
-                let date = selectedDay?.date?.ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "yyyy-MM-dd",outputLocal: .english)
-            else {
-                return nil
-            }
-
-            return [
-                "packageId": packageId,
-                "customerId": customerId,
-                "customerPackageId": customerPackageId,
-                "shiftId": shiftId,
-                "date": date,
-                "timeFrom": timeFrom,
-                "timeTo": timeTo,
-                //                "totalAfterDiscount": totalAfterDiscount,
-                //                "appCountryPackageId": appCountryPackageId
-            ]
-//        }
+        //        return MainActor.assumeIsolated { () -> [String: Any]? in
+//        print(packageDetails)
+        guard
+            //                let appCountryPackageId = packageDetails?.appCountryPackageId,
+            let packageId = PackageId,
+            let customerId = doctorId,
+            let shiftId = selectedShift?.id,
+            let customerPackageId = doctorPackageId,
+            //                let totalAfterDiscount = packageDetails?.packageData?.priceAfterDiscount,
+            let timeFrom = selectedSchedual?.timefrom,
+            let timeTo = selectedSchedual?.timeTo,
+            let date = selectedDay?.date?.ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "yyyy-MM-dd",outputLocal: .english)
+        else {
+            return nil
+        }
+        
+        return [
+            "packageId": packageId,
+            "customerId": customerId,
+            "customerPackageId": customerPackageId,
+            "shiftId": shiftId,
+            "date": date,
+            "timeFrom": timeFrom,
+            "timeTo": timeTo,
+            //                "totalAfterDiscount": totalAfterDiscount,
+            //                "appCountryPackageId": appCountryPackageId
+        ]
+        //        }
     }
 }

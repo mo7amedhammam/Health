@@ -11,7 +11,7 @@ enum reschedualCases{
 import SwiftUI
 
 struct ReSchedualView: View {
-    var doctorPackageId : Int?
+    @Binding var doctorPackageId : Int?
     @Binding var doctorId : Int?
     @Binding var packageId : Int?
     @Binding var SessionId : Int?
@@ -200,6 +200,10 @@ struct ReSchedualView: View {
             await viewModel.getDoctorPackageDetails()
             await viewModel.getAvailableDays()
         }
+        .onChange(of: doctorPackageId) { newVal in
+            // reflect parent updates while sheet is up
+            viewModel.doctorPackageId = newVal
+        }
         .onChange(of: doctorId) { newVal in
             // reflect parent updates while sheet is up
             viewModel.doctorId = newVal
@@ -234,5 +238,5 @@ struct ReSchedualView: View {
 }
 
 #Preview {
-    ReSchedualView( doctorPackageId: 0, doctorId: .constant(0), packageId: .constant(0), SessionId: .constant(0), isPresentingNewMeasurementSheet: .constant(true),reschedualcase: .constant(.reschedualSession))
+    ReSchedualView( doctorPackageId: .constant(0), doctorId: .constant(0), packageId: .constant(0), SessionId: .constant(0), isPresentingNewMeasurementSheet: .constant(true),reschedualcase: .constant(.reschedualSession))
 }

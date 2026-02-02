@@ -270,6 +270,7 @@ struct SubcripedPackageDetailsView: View {
                     SubcripedNextSession(upcomingSession: upcomingSession,detailsAction: {
                         
                     },rescheduleAction: {
+//                        CustomerPackageId = upcomingSession.customerPackageId
                         SessoinId = upcomingSession.id
                         packageId = upcomingSession.packageID
                         doctorId = upcomingSession.doctorId
@@ -328,7 +329,7 @@ struct SubcripedPackageDetailsView: View {
             }
 //        }
             .customSheet(isPresented: $isReschedualling){
-                ReSchedualView(doctorId: $doctorId, packageId: $packageId, SessionId: $SessoinId, isPresentingNewMeasurementSheet: $isReschedualling,reschedualcase: .constant(.reschedualSession))
+                ReSchedualView(doctorPackageId: .constant(CustomerPackageId),doctorId: $doctorId, packageId: $packageId, SessionId: $SessoinId, isPresentingNewMeasurementSheet: $isReschedualling,reschedualcase: .constant(.reschedualSession))
             }
             .overlay{
                 if showCancel{
