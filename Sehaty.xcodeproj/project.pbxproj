@@ -3871,7 +3871,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 3.0.5;
-				DEVELOPMENT_TEAM = M7AX57X8LV;
+				DEVELOPMENT_TEAM = 23H4SBD5QL;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Health/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "صحتي مع الندى";
@@ -3895,7 +3895,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 3.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.AlNadaPharmacies.Health;
+				PRODUCT_BUNDLE_IDENTIFIER = com.wecancity.Health;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -3917,7 +3917,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 3.0.5;
-				DEVELOPMENT_TEAM = M7AX57X8LV;
+				DEVELOPMENT_TEAM = 23H4SBD5QL;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Health/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "صحتي مع الندى";
@@ -3941,7 +3941,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 3.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.AlNadaPharmacies.Health;
+				PRODUCT_BUNDLE_IDENTIFIER = com.wecancity.Health;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";

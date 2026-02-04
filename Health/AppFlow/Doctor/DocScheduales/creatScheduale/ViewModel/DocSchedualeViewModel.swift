@@ -194,8 +194,8 @@ extension DocSchedualeViewModel{
 //        let endOfDay = calendar.date(from: endComponents) ?? dateTo
 //        let endDateStr = dateFormatter.string(from: endOfDay)
 
-        let startDateStr = "\(dateFrom)".ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "yyyy-MM-dd",outputLocal: .english)
-        let endDateStr = "\(dateTo)".ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo: "yyyy-MM-dd",outputLocal: .english)
+        let startDateStr = "\(dateFrom)".ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss Z", FormatTo: "yyyy-MM-dd",outputLocal: .english)
+        let endDateStr = "\(dateTo)".ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss Z", FormatTo: "yyyy-MM-dd",outputLocal: .english)
 
         var parameters: [String: Any] = [
             "fromStartDate": startDateStr,

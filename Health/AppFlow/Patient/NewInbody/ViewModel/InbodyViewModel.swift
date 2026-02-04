@@ -184,9 +184,10 @@ extension InbodyViewModel {
     }
     
     func clear() {
-        files = nil
+//        files = nil
         skipCount = 0
         errorMessage = nil
+        isLoading = nil
         fileName = ""
         date = nil
         formattedDate = ""

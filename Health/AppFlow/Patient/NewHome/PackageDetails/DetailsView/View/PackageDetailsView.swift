@@ -271,11 +271,11 @@ struct AvailableDoctorsListView: View {
                                 }
                             }
 
-                            Text("job title" + " - " + "uiniverrsity name")
-                                .font(.semiBold(size: 14))
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                                .foregroundStyle(Color(.secondary))
-                                .padding(.bottom, 2)
+//                            Text("job title" + " - " + "uiniverrsity name")
+//                                .font(.semiBold(size: 14))
+//                                .frame(maxWidth: .infinity, alignment: .leading)
+//                                .foregroundStyle(Color(.secondary))
+//                                .padding(.bottom, 2)
 
                             HStack(spacing: 5) {
                                 Image(.newmoreicon)

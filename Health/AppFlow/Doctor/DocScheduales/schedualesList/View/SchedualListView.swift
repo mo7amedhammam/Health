@@ -211,6 +211,9 @@ struct SchedualListView: View{
 //            .fullScreenCover(isPresented: $viewModel.showSuccess, onDismiss: {}, content: {
 //               AnyView( DocSchedualeSelectedView() )
 //            })
+            .customSheet(isPresented: $mustLogin ,height: 350){
+                LoginSheetView()
+            }
             
         }
 }

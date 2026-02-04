@@ -12,7 +12,8 @@ struct DocPackagesScreen: View {
     @StateObject var router: NavigationRouter = NavigationRouter()
     @StateObject private var viewModel = DocPackagesViewModel.shared
     //    @StateObject private var lookupsVM = LookupsViewModel.shared
-    
+    @State var mustLogin: Bool = false
+
     @State private var packages: [String] = ["okkkkkk","done"] // Empty initially
 //    @State private var showFilter: Bool = false
     var hasbackBtn:Bool?
@@ -59,7 +60,12 @@ struct DocPackagesScreen: View {
                 )
                 .padding()
                 .refreshable {
-                    await viewModel.refresh()
+                    if Helper.shared.CheckIfLoggedIn(){
+                        await viewModel.refresh()
+                    }else{
+                        viewModel.clear()
+                        mustLogin = true
+                    }
                 }
             }
             
@@ -86,12 +92,16 @@ struct DocPackagesScreen: View {
         .task {
             guard Helper.shared.CheckIfLoggedIn() else {
                 viewModel.ActivePackages = nil
+                mustLogin = true
                 return
             }
                 await viewModel.getActivePackages()
             
         }
-//        .onChange(of: viewModel.showSuccess){ newval in
+        .customSheet(isPresented: $mustLogin ,height: 350){
+            LoginSheetView()
+        }
+        //        .onChange(of: viewModel.showSuccess){ newval in
 //            guard newval else { return }
 //            RequestSent()
 //        }

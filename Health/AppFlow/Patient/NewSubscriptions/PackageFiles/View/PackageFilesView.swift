@@ -9,7 +9,7 @@ import SwiftUI
 
 struct PackageFilesView: View {
     var CustomerPackageId : Int
-    @StateObject var viewmodel = PackageFilesViewModel.shared
+    @StateObject var viewmodel = PackageFilesViewModel()
     
     var body: some View {
         VStack(){

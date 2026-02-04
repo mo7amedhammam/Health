@@ -492,6 +492,7 @@ final class ActiveCustomerPackFilesViewModel: ObservableObject {
     }
 
     func clearForm() {
+        isLoading = nil
         fileName = ""
         fileType = nil
         fileLink = nil

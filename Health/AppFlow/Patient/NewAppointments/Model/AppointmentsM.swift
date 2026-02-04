@@ -41,10 +41,10 @@ struct AppointmentsItemM: Codable, Identifiable,Hashable {
         guard let doctorName = self.doctorName, let customerName = self.customerName else { return "" }
 
         let name = switch Helper.shared.getSelectedUserType() {
-        case .Customer,.none:
-            customerName
-        case .Doctor:
+        case .Customer:
             doctorName
+        case .Doctor,.none:
+            customerName
         }
         return name 
     }

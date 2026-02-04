@@ -279,7 +279,14 @@ struct SubcripedPackageDetailsView: View {
                     .padding(.horizontal)
                 }
                     
-                SubcripedSessionsList(sessions: viewmodel.subscripedSessions?.items)
+                SubcripedSessionsList(sessions: viewmodel.subscripedSessions?.items,reSchedualeAction: {
+                    if let upcomingSession = viewmodel.upcomingSession{
+                        SessoinId = upcomingSession.id
+                        packageId = upcomingSession.packageID
+                        doctorId = upcomingSession.doctorId
+                        isReschedualling = true
+                    }
+                })
                     .padding(.horizontal)
                 
                 //                    VStack(alignment:.leading){
@@ -568,6 +575,7 @@ struct SubcripedNextSession: View {
 struct SubcripedSessionsList: View {
     var sessions: [SubcripedSessionsListItemM]?
     var canJoin = true
+    var reSchedualeAction: (() -> Void)?
     var loadMore: (() -> Void)?
 
     var body: some View {
@@ -575,7 +583,7 @@ struct SubcripedSessionsList: View {
 //            SectionHeader(image: Image(.newnxtsessionicon),title: "subscription_nextSessions"){
 //                //                            go to last mes package
 //            }
-            List{
+//            List{
                 ForEach(sessions ?? [],id: \.self){session in
                 VStack(spacing: 20){
                     HStack(alignment:.top){
@@ -598,8 +606,9 @@ struct SubcripedSessionsList: View {
                                 ( Text("\(session.formattedTimeFrom ?? "")") + Text(" - ") + Text("\(session.formattedTimeTo ?? "")"))
                                     .font(.medium(size: 12))
                                     .foregroundStyle(Color(.main))
-                                    .frame(maxWidth: .infinity, alignment: .trailing)
                             }
+                            .frame(maxWidth: .infinity, alignment: .trailing)
+
                         }
                     }
                     
@@ -621,7 +630,7 @@ struct SubcripedSessionsList: View {
                         Spacer()
                         
                         Button(action: {
-
+                            reSchedualeAction?()
                         }){
                             HStack(alignment: .bottom){
                                 Image(.newreschedual)
@@ -650,10 +659,14 @@ struct SubcripedSessionsList: View {
                 }
                     
             }
-        }
+//        }
         }
         .padding(.vertical,5)
         .padding(.bottom,5)
         
     }
+}
+
+#Preview{
+    SubcripedSessionsList(sessions: [.init(date: "",timeFrom: "12:12:12")])
 }
