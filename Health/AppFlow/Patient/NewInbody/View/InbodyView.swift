@@ -62,11 +62,11 @@ struct InbodyView: View {
                 UploadInbodySheetView( isPresented: $viewmodel.showAddSheet)
                     .environmentObject(viewmodel)
             }
-            .task(){
-//                Task{
-                    await viewmodel.refresh()
-//                }
-            }
+//            .task(){
+////                Task{
+//                    await viewmodel.refresh()
+////                }
+//            }
 
     }
 }
@@ -250,7 +250,7 @@ struct UploadInbodySheetView: View {
               
                 Button(action: {
                     isPresented = false
-                    viewmodel.clear()
+                    viewmodel.removeInputs()
                 }) {
                     Image(systemName: "xmark.circle")
                         .resizable()
@@ -329,7 +329,7 @@ struct UploadInbodySheetView: View {
             HStack(spacing: 12) {
                 CustomButton(title: "new_cancel_",backgroundView : AnyView(Color(.secondary))){
                     isPresented = false
-                    viewmodel.clear()
+                    viewmodel.removeInputs()
                 }
                 
                 CustomButton(title: "new_confirm_",backgroundcolor: Color(.secondary)){

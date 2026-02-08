@@ -151,7 +151,7 @@ struct AppointmentsView: View {
             LoginSheetView()
         }
         .customSheet(isPresented: $isRescheduling) {
-            ReSchedualView(doctorPackageId: $customrpackageId,doctorId: $doctorId, packageId: $packageId, SessionId:$sessionId, isPresentingNewMeasurementSheet: $isRescheduling ,reschedualcase: .constant(.reschedualSession))
+            ReSchedualView(doctorPackageId: $customrpackageId,doctorId: $doctorId, customerId: .constant(nil), packageId: $packageId, SessionId:$sessionId, isPresentingNewMeasurementSheet: $isRescheduling ,reschedualcase: .constant(.reschedualSession))
         }
         if showCancel{
             CancelSubscriptionView(isPresent: $showCancel, customerPackageId: idToCancel ?? 0)

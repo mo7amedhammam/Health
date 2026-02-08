@@ -20,20 +20,20 @@ struct SubcripedPackageDetailsView: View {
         self.destination = AnyView(destination)
         self.isactive = true
     }
-    init(package: SubcripedPackageItemM?,CustomerPackageId:Int?) {
+    init(package: SubcripedPackageItemM?,CustomerPackageId:Int?,oncancel:(() -> Void)? = nil) {
         if let package = package{
             self.package = package
         }
         if let CustomerPackageId = CustomerPackageId{
             self.CustomerPackageId = CustomerPackageId
         }
-   
+        self.oncancel = oncancel
     }
     @State private var doctorId : Int? = nil
     @State private var packageId : Int? = nil
     @State private var SessoinId : Int? = nil
     @State var isReschedualling: Bool = false
-
+    
     enum SectionType: CaseIterable,Hashable {
         case chats, sessions, files
         
@@ -58,6 +58,7 @@ struct SubcripedPackageDetailsView: View {
  
     @State var showCancel: Bool = false
     @State var idToCancel: Int?
+    var oncancel: (() -> Void)?
 
     var body: some View {
         //        NavigationView(){
@@ -171,7 +172,6 @@ struct SubcripedPackageDetailsView: View {
             .frame(height: 238)
             
             ScrollView(showsIndicators: false){
-                
                 HStack{
                     ForEach(SectionType.allCases,id: \.self) { button in
                         Spacer()
@@ -326,7 +326,7 @@ struct SubcripedPackageDetailsView: View {
                             _ = await package
                     }
                     
-                    async let upcoming: () = viewmodel.getUpcomingSession()
+                    async let upcoming: () = viewmodel.getUpcomingSession(CustomerPackageId: CustomerPackageId)
                     async let packages: () = viewmodel.getSubscripedSessionsList(customerPackageId: CustomerPackageId)
                     
                     _ = await (upcoming,packages)
@@ -336,7 +336,7 @@ struct SubcripedPackageDetailsView: View {
             }
 //        }
             .customSheet(isPresented: $isReschedualling){
-                ReSchedualView(doctorPackageId: .constant(CustomerPackageId),doctorId: $doctorId, packageId: $packageId, SessionId: $SessoinId, isPresentingNewMeasurementSheet: $isReschedualling,reschedualcase: .constant(.reschedualSession))
+                ReSchedualView(doctorPackageId: .constant(CustomerPackageId),doctorId: $doctorId, customerId: .constant(nil), packageId: $packageId, SessionId: $SessoinId, isPresentingNewMeasurementSheet: $isReschedualling,reschedualcase: .constant(.reschedualSession))
             }
             .overlay{
                 if showCancel{
@@ -352,6 +352,7 @@ struct SubcripedPackageDetailsView: View {
                             if let CustomerPackageId = CustomerPackageId{
                                 await viewmodel.getSubscripedPackageDetails(CustomerPackageId: CustomerPackageId)
                             }
+                            oncancel?()
                         }
                     })
                 }

@@ -45,8 +45,9 @@ struct ActiveCustomerPackagesView: View {
         }
     }
 
-    init(package: SubcripedPackageItemM? = nil,doctorId:Int?=nil ,CustomerPackageId: Int) {
+    init(package: SubcripedPackageItemM? = nil,doctorId:Int?=nil,customerId:Int?=nil ,CustomerPackageId: Int) {
         self.doctorId = doctorId
+        self.customerId = customerId
         self.customerPackageId = CustomerPackageId
         _viewModel = StateObject(wrappedValue: ActiveCusPackViewModel())
         // If you want to seed initial UI instantly:
@@ -205,7 +206,9 @@ struct ActiveCustomerPackagesView: View {
 //                    doctorId = viewModel.subscripedPackage?.docotrID
                     
 //                    customerPackageId = viewModel.subscripedPackage?.customerPackageID
-                    doctorId = viewModel.subscripedPackage?.customerID
+                    doctorId = viewModel.subscripedPackage?.docotrID
+                    customerId = viewModel.subscripedPackage?.customerID
+
                     packageId = viewModel.upcomingSession?.packageID
                    reschedualcase = .nextSession
                     isReschedualling = true
@@ -218,6 +221,7 @@ struct ActiveCustomerPackagesView: View {
                         //                    guard let doctorId = viewModel.subscripedPackage?.docotrID,let packageId = customerPackageID else { return }
                         sessionId = viewModel.upcomingSession?.id
                         doctorId = viewModel.upcomingSession?.doctorId
+                        customerId = nil
                         packageId = viewModel.upcomingSession?.packageID
                         reschedualcase = .reschedualSession
                         isReschedualling = true
@@ -265,6 +269,7 @@ struct ActiveCustomerPackagesView: View {
             ReSchedualView(
                 doctorPackageId:.constant( customerPackageId ),
                 doctorId: $doctorId,
+                customerId: $customerId,
                 packageId:$packageId,
                 SessionId:$sessionId ,
                 isPresentingNewMeasurementSheet: $isReschedualling,

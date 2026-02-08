@@ -147,6 +147,7 @@
 		90EE956E2F210712005BC878 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 90EE956D2F210712005BC878 /* Kingfisher */; };
 		90EE95712F2107D8005BC878 /* IQKeyboardManagerSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 90EE95702F2107D8005BC878 /* IQKeyboardManagerSwift */; };
 		90EE95742F210BCA005BC878 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 90EE95732F210BCA005BC878 /* Alamofire */; };
+		90EE95762F388DDE005BC878 /* ReSchedualeRequestM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90EE95752F388DDD005BC878 /* ReSchedualeRequestM.swift */; };
 		90FDD2FE2DDBE14F00C3BABB /* CustomSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90FDD2FD2DDBE14F00C3BABB /* CustomSheet.swift */; };
 		90FDD3012DDDF7F900C3BABB /* MonthYearPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90FDD3002DDDF7F900C3BABB /* MonthYearPicker.swift */; };
 		90FDD3032DDDF80F00C3BABB /* CustomDateFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90FDD3022DDDF80F00C3BABB /* CustomDateFormat.swift */; };
@@ -498,6 +499,7 @@
 		90CE58842E7AEB9F00A3D271 /* ActiveCustPackFilesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveCustPackFilesViewModel.swift; sourceTree = "<group>"; };
 		90D628782DABE62F008D303E /* NewHomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewHomeView.swift; sourceTree = "<group>"; };
 		90D6287A2DAE86FE008D303E /* NewTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTabView.swift; sourceTree = "<group>"; };
+		90EE95752F388DDD005BC878 /* ReSchedualeRequestM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReSchedualeRequestM.swift; sourceTree = "<group>"; };
 		90FDD2FD2DDBE14F00C3BABB /* CustomSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSheet.swift; sourceTree = "<group>"; };
 		90FDD3002DDDF7F900C3BABB /* MonthYearPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthYearPicker.swift; sourceTree = "<group>"; };
 		90FDD3022DDDF80F00C3BABB /* CustomDateFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDateFormat.swift; sourceTree = "<group>"; };
@@ -899,6 +901,7 @@
 		901EDC9D2EFC6AEC00C1BBD5 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				90EE95752F388DDD005BC878 /* ReSchedualeRequestM.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -3506,6 +3509,7 @@
 				BB518CEA2A9A125900242FAD /* TipsCategories2CVCell.swift in Sources */,
 				BB14DAE72A7B036400389B96 /* ProfileVC.swift in Sources */,
 				90C7F39D2E64706600907BF8 /* CustomerMesurmentsSection.swift in Sources */,
+				90EE95762F388DDE005BC878 /* ReSchedualeRequestM.swift in Sources */,
 				BB1B2FF42A7E9B44001677FD /* INBodyVC.swift in Sources */,
 				90C7F3AC2E6DB16100907BF8 /* DocPaymentsModel.swift in Sources */,
 				901792A82EDDD3E00055EBD9 /* DocSchedualesServices.swift in Sources */,

@@ -77,12 +77,16 @@ extension SubcripedPackageDetailsViewModel{
         }
     }
     @MainActor
-    func getUpcomingSession() async {
+    func getUpcomingSession(CustomerPackageId:Int?) async {
 //        if Task.isCancelled { return }
 
 //        isLoading = true
 //        defer { isLoading = false }
-        let target = HomeServices.GetUpcomingSession(parameters: [:])
+        var parametersarr : [String : Any] = [:]
+        if let CustomerPackageId = CustomerPackageId {
+             parametersarr["CustomerPackageId"] = CustomerPackageId
+        }
+        let target = HomeServices.GetUpcomingSession(parameters: parametersarr)
         do {
             self.errorMessage = nil // Clear previous errors
             let response = try await networkService.request(

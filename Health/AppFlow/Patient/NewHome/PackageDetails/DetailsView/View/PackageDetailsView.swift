@@ -40,7 +40,6 @@ struct PackageDetailsView: View {
 //                    }
 //                }
 
-                Spacer().frame(height: 55)
             }
         }
         .edgesIgnoringSafeArea([.top, .horizontal])
@@ -305,10 +304,13 @@ struct AvailableDoctorsListView: View {
                     }
                 }
                 .padding(.horizontal,10)
+
             }
             .padding([.top], 10)
+            Spacer().frame(height: 55)
+
         }
-        .padding(.bottom, 5)
+//        .padding(.bottom, 5)
 
     }
 }

@@ -8,13 +8,13 @@
 import SwiftUI
 
 struct ReschedualRequestCard: View {
-    var upcomingSession: UpcomingSessionM?
+    var Request: ReSchedualeRequestM?
     var acceptAction: (() -> Void)?
     var rejectAction: (() -> Void)?
 
     var body: some View {
         VStack {
-            SectionHeader(image: Image(.reschedualeRequestIcn), title: "requests_",MoreBtnimage: nil) {}
+//            SectionHeader(image: Image(.reschedualeRequestIcn), title: "requests_",MoreBtnimage: nil) {}
             
             ZStack(alignment: .bottomTrailing) {
                 HStack {
@@ -23,10 +23,10 @@ struct ReschedualRequestCard: View {
                 }.padding(8)
                 
                 VStack(spacing: 20) {
-                    ReschedualRequestCardHeaderView(session: upcomingSession)
+                    ReschedualRequestCardHeaderView(Request: Request)
                     HStack{
-                        ReschedualRequestCardDoctorView(session: upcomingSession)
-                        ReschedualRequestCardCountdownOrJoinView(session: upcomingSession)
+                        ReschedualRequestCardDoctorView(Request: Request)
+                        ReschedualRequestCardCountdownOrJoinView(Request: Request)
                     }
                     ReschedualRequestCardActionsView(acceptAction:acceptAction,rejectAction: rejectAction)
                 }
@@ -42,11 +42,24 @@ struct ReschedualRequestCard: View {
 }
 
 #Preview {
-    ReschedualRequestCard(upcomingSession: UpcomingSessionM(id: 1, doctorName: "أحمد سامي",sessionDate: "2025-07-02T10:22:00", timeFrom: "08:12:00", packageName: "باقات كبار السن (أهالينا)", categoryName: "التغذية العلاجية", mainCategoryID: 3, categoryID: 2, sessionMethod: nil, packageID: 3, customerName:"customer name",mainCategoryName: "باقات الصحة العامة") )
+    ReschedualRequestCard(Request: ReSchedualeRequestM(
+        id: 48,
+        oldDate: "2026-02-07T00:00:00",
+        oldTimeFrom: "15:00:00",
+        package: "",
+        category: "",
+        doctor: "mahmoud",
+        customerPackageID: 87,
+        doctorID: 47,
+        sessionID: 170,
+        shiftID: 2,
+        startDate: "2026-02-15T00:00:00",
+        timeFrom: "17:00:00"
+      ) )
 }
 
 struct ReschedualRequestCardHeaderView: View {
-    var session: UpcomingSessionM?
+    var Request: ReSchedualeRequestM?
     
     var body: some View {
         HStack(alignment: .top) {
@@ -54,15 +67,15 @@ struct ReschedualRequestCardHeaderView: View {
                 //                Text("pack_name".localized)
                 //                    .font(.bold(size: 18))
                 //                    .foregroundColor(.white)
-                Text(session?.packageName ?? "")
+                Text(Request?.package ?? "")
                     .font(.bold(size: 18))
                     .foregroundColor(.white)
                 
-                Text(session?.mainCategoryName ?? "")
+                Text(Request?.mainCategory ?? "")
                     .font(.semiBold(size: 14))
                     .foregroundColor(.white)
                     .padding(.top,3)
-                Text(session?.categoryName ?? "")
+                Text(Request?.category ?? "")
                     .font(.semiBold(size: 14))
                     .foregroundColor(.white)
             }
@@ -76,10 +89,10 @@ struct ReschedualRequestCardHeaderView: View {
                         .foregroundColor(Color(.secondary))
                         .padding(3)
 
-                    Text(session?.formattedSessionDate ?? "")
+                    Text(Request?.formattedOldDate ?? "")
                         .font(.regular(size: 13))
                         .foregroundColor(.white)
-                    Text(session?.formattedSessionTime ?? "")
+                    Text(Request?.formattedOldTime ?? "")
                         .font(.regular(size: 13))
                         .foregroundColor(.white)
                 }
@@ -91,17 +104,17 @@ struct ReschedualRequestCardHeaderView: View {
     }
 }
 struct ReschedualRequestCardDoctorView: View {
-    var session: UpcomingSessionM?
+    var Request: ReSchedualeRequestM?
     
     var body: some View {
         HStack {
             VStack(alignment: .leading, spacing: 2) {
-                let nametitle = Helper.shared.getSelectedUserType() == .Doctor ? "Patient".localized : "Doctor".localized
+//                let nametitle = Helper.shared.getSelectedUserType() == .Doctor ? "Patient".localized : "Doctor".localized
 
-                    Text(nametitle)
+                    Text("Patient")
                         .font(.regular(size: 14))
                         .foregroundColor(.white)
-                Text(session?.displayName ?? "")
+                Text(Request?.customer ?? "")
                     .font(.semiBold(size: 18))
                     .foregroundColor(.white)
             }
@@ -111,7 +124,7 @@ struct ReschedualRequestCardDoctorView: View {
     }
 }
 struct ReschedualRequestCardCountdownOrJoinView: View {
-    var session: UpcomingSessionM?
+    var Request: ReSchedualeRequestM?
     
     @State private var countdown: (days: Int, hours: Int, minutes: Int) = (0, 0, 0)
     @State private var timer: Timer?
@@ -124,10 +137,10 @@ struct ReschedualRequestCardCountdownOrJoinView: View {
                     .foregroundColor(Color(.secondary))
                     .padding(3)
 
-                Text(session?.formattedSessionDate ?? "")
+                Text(Request?.formattedNewDate ?? "")
                     .font(.regular(size: 13))
                     .foregroundColor(.white)
-                Text(session?.formattedSessionTime ?? "")
+                Text(Request?.formattedNewTime ?? "")
                     .font(.regular(size: 13))
                     .foregroundColor(.white)
             }

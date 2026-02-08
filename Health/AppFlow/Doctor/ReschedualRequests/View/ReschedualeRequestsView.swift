@@ -16,10 +16,13 @@ struct ReschedualeRequestsView: View {
             Spacer()
             
             if let items = viewModel.Requests, !items.isEmpty {
+                SectionHeader(image: Image(.reschedualeRequestIcn), title: "requests_",MoreBtnimage: nil) {}
+                    .padding(.horizontal)
+
                 ScrollView {
                     LazyVStack(spacing: 12) {
                         ForEach(items, id: \.self) { item in
-                            ReschedualRequestCard(upcomingSession: item,acceptAction: {
+                            ReschedualRequestCard(Request: item,acceptAction: {
                                 Task{await viewModel.approuveCustomerRescheduleRequest(sessionId: item.id)}
                             },rejectAction: {
                                 Task{await viewModel.approuveCustomerRescheduleRequest(sessionId: item.id,Reject: true)}
@@ -41,7 +44,6 @@ struct ReschedualeRequestsView: View {
                         Text("no_requests_found".localized)
                             .font(.semiBold(size: 22))
                             .foregroundColor(Color(.btnDisabledTxt))
-                        
                     }
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                 }

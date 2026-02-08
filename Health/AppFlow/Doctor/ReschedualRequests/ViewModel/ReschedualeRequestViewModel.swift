@@ -17,7 +17,7 @@ class ReschedualeRequestViewModel: ObservableObject {
     @Published var skipCount: Int?        = 0
     
     // Published properties
-    @Published var Requests: [UpcomingSessionM]?
+    @Published var Requests: [ReSchedualeRequestM]?
     
 //    @Published var showAddSheet: Bool = false
 //    @Published var MainCategories: [CategoriyListItemM]?
@@ -60,13 +60,14 @@ extension ReschedualeRequestViewModel{
             
             isLoading = true
             defer { isLoading = false }
-            
-            let target = DocSchedualesServices.GetDocSchedule
+            //       "Rescheduled" : Bool
+            var parametersarr : [String : Any] =  [:]
+            let target = HomeServices.GetReschedualRequestList(parameters: parametersarr)
             do {
                 self.errorMessage = nil // Clear previous errors
                 let response = try await networkService.request(
                     target,
-                    responseType: [UpcomingSessionM].self
+                    responseType: [ReSchedualeRequestM].self
                 )
                 self.Requests = response
             } catch {
@@ -118,7 +119,7 @@ extension ReschedualeRequestViewModel{
             self.errorMessage = nil // Clear previous errors
             _ = try await networkService.request(
                 target,
-                responseType: [AvailableSchedualsM].self
+                responseType: [ReSchedualeRequestM].self
             )
             showSuccess = true
         } catch {

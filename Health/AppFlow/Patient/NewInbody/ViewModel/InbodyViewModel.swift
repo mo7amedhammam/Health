@@ -30,21 +30,22 @@ class InbodyViewModel:ObservableObject {
         }
     }
     @Published var formattedDate:String = ""
-
+    
     @Published var Comment:String=""
-
-//    var CustomerId : Int? = Helper.shared.getUser()?.id // required
+    
+    //    var CustomerId : Int? = Helper.shared.getUser()?.id // required
     @Published var addresponseModel: InbodyListItemM? = InbodyListItemM()
-  
+    
     @Published var isLoading:Bool? = false
     @Published var errorMessage: String? = nil
-//    @Published var CreationErrorMessage: String? = nil
+    //    @Published var CreationErrorMessage: String? = nil
     
     // Init with DI
     init(networkService: AsyncAwaitNetworkServiceProtocol = AsyncAwaitNetworkService.shared) {
         self.networkService = networkService
+        Task{await getInbodyList()}
     }
-
+    
 }
 
 
@@ -53,7 +54,7 @@ extension InbodyViewModel{
     
     @MainActor
     func addNewInbody() async {
-
+        
         isLoading = true
         defer { isLoading = false }
         defer { fileURL?.stopAccessingSecurityScopedResource() }
@@ -71,7 +72,7 @@ extension InbodyViewModel{
         }
         
         var parametersarr : [String : Any] =  ["Date" : formattedDate]
-
+        
         if Comment.count > 0 {
             parametersarr["Comment"] = Comment
         }
@@ -98,7 +99,7 @@ extension InbodyViewModel{
                 let fileData = try Data(contentsOf: fileURL)
                 let fileName = fileURL.lastPathComponent
                 let mimeType = "application/pdf"
-
+                
                 parts.append(
                     MultipartFormDataPart(
                         name: "TestFile",
@@ -118,8 +119,17 @@ extension InbodyViewModel{
         do {
             self.errorMessage = nil
             _ = try await networkService.uploadMultipart(target, parts: parts, responseType: InbodyListItemM.self)
-            clear()
-            await getInbodyList()
+            //            clear()
+            removeInputs()
+//            if skipCount == 0{
+                await getInbodyList()
+//            }else{
+//                if let item = response{
+//                    files?.items?.append(item)
+//                    files?.totalCount = (files?.totalCount ?? 0) + 1
+//                }
+//            }
+            
         } catch {
             self.errorMessage = error.localizedDescription
         }
@@ -133,7 +143,7 @@ extension InbodyViewModel{
         loadTask = Task { [weak self] in
             guard let self else { return }
             if self.isLoading == true { return }
-
+            
             isLoading = true
             defer { isLoading = false }
             guard let maxResultCount = maxResultCount, let skipCount = skipCount else {
@@ -170,7 +180,7 @@ extension InbodyViewModel {
         skipCount = 0
         await getInbodyList()
     }
-
+    
     @MainActor
     func loadMoreIfNeeded() async {
         guard !(isLoading ?? false),
@@ -178,15 +188,30 @@ extension InbodyViewModel {
               let totalCount = files?.totalCount,
               currentCount < totalCount,
               let maxResultCount = maxResultCount else { return }
-
+        
         skipCount = (skipCount ?? 0) + maxResultCount
         await getInbodyList()
     }
     
-    func clear() {
-//        files = nil
+//    func clear() {
+//        //        files = nil
+//        skipCount = 0
+//        errorMessage = nil
+//        isLoading = nil
+//        fileName = ""
+//        date = nil
+//        formattedDate = ""
+//        Comment = ""
+//        image = nil
+//        fileURL = nil
+//        showAddSheet = false
+//    }
+    
+    func removeInputs() {
+        files = nil
         skipCount = 0
         errorMessage = nil
+        
         isLoading = nil
         fileName = ""
         date = nil
@@ -199,7 +224,7 @@ extension InbodyViewModel {
 }
 //MARK: -- Functions --
 //extension InbodyViewModel{
-//    
+//
 //    func GetCustomerInbodyList(completion: @escaping (EventHandler?) -> Void) {
 //        guard let maxResultCount = maxResultCount, let skipCount = skipCount else {
 //            // Handle missing username or password
@@ -222,7 +247,7 @@ extension InbodyViewModel {
 //                    completion(.error(0, (response.message ?? "check validations")))
 //                    return
 //                }
-//                
+//
 //                if self?.skipCount == 0 {
 //                    self?.responseModel = response.data
 //                } else {
@@ -237,17 +262,17 @@ extension InbodyViewModel {
 //
 //        }
 //    }
-//    
-//  
-//    
+//
+//
+//
 //    func AddCustomerInbodyReport(fileType:FileType,progressHandler: @escaping (Double) -> Void,completion: @escaping (EventHandler?) -> Void) {
-//        
+//
 //        var backgroundTask: UIBackgroundTaskIdentifier = .invalid
 //          backgroundTask = UIApplication.shared.beginBackgroundTask {
 //              UIApplication.shared.endBackgroundTask(backgroundTask)
 //              backgroundTask = .invalid
 //          }
-//        
+//
 //        var  parametersarr: [String : Any] = [:]
 //        switch fileType {
 //        case .image:
@@ -271,7 +296,7 @@ extension InbodyViewModel {
 //        let target = Authintications.CreateCustomerInboy(parameters: parametersarr)
 //
 //        DispatchQueue.global(qos: .background).async {
-//            
+//
 //            // Make the API call using your APIManager or networking code
 //            BaseNetwork.uploadApi(target, BaseResponse<InbodyListItemM>.self, progressHandler: { progress in
 //                progressHandler(progress)
@@ -281,29 +306,29 @@ extension InbodyViewModel {
 //                case .success(let response):
 //                    // Handle the successful response
 //                    print("request successful: \(response)")
-//                    
+//
 //                    guard response.messageCode == 200 else {
 //                        completion(.error(0, (response.message ?? "check validations")))
 //                        return
 //                    }
 //                    self?.addresponseModel = response.data
-//                    
+//
 //                    completion(.success)
 //                case .failure(let error):
 //                    // Handle the error
 //                    print("Login failed: \(error.localizedDescription)")
 //                    completion(.error(0, "\(error.localizedDescription)"))
 //                }
-//                
+//
 //            }
-//            
+//
 //        }
-//        
-//        
-//        
-//        
-//        
+//
+//
+//
+//
+//
 //    }
-//    
+//
 //}
 

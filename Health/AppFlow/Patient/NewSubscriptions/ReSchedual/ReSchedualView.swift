@@ -13,6 +13,7 @@ import SwiftUI
 struct ReSchedualView: View {
     @Binding var doctorPackageId : Int?
     @Binding var doctorId : Int?
+    @Binding var customerId : Int?
     @Binding var packageId : Int?
     @Binding var SessionId : Int?
 
@@ -48,9 +49,7 @@ struct ReSchedualView: View {
                 }
             }  .padding([.horizontal])
                 .padding(.vertical,8)
-                
-            
-            
+                            
             ScrollView(.vertical,showsIndicators: false){
                 HStack{
                     Button(action: {
@@ -181,6 +180,15 @@ struct ReSchedualView: View {
                         Task{
                             switch reschedualcase {
                             case .nextSession:
+                                
+//                                switch reschedualcase {
+//                                case .nextSession:
+                                if let customerId = customerId{
+                                    viewModel.doctorId = customerId
+                                } else {return}
+//                                case .reschedualSession,.none:
+//                                    viewModel.doctorId = doctorId
+//                                }
                                 await viewModel.createCustomerPackage(paramters: [:] )
                             case .reschedualSession,.none:
                                 await viewModel.rescheduleCustomerPackage()
@@ -238,5 +246,5 @@ struct ReSchedualView: View {
 }
 
 #Preview {
-    ReSchedualView( doctorPackageId: .constant(0), doctorId: .constant(0), packageId: .constant(0), SessionId: .constant(0), isPresentingNewMeasurementSheet: .constant(true),reschedualcase: .constant(.reschedualSession))
+    ReSchedualView( doctorPackageId: .constant(0), doctorId: .constant(0), customerId:.constant(0), packageId: .constant(0), SessionId: .constant(0), isPresentingNewMeasurementSheet: .constant(true),reschedualcase: .constant(.reschedualSession))
 }

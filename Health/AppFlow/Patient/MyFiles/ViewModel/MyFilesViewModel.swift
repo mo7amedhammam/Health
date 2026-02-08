@@ -20,13 +20,13 @@ class MyFilesViewModel : ObservableObject {
 
     @Published var image: UIImage?
     @Published var fileURL: URL?
-    @Published var showUploadSheet:Bool = false
+    @Published var showUploadSheet:Bool = false{didSet{errorMessage=nil}}
 
     // Published properties
     @Published var files: [MyFileM] = []
     
     @Published var isLoading: Bool? = false
-    @Published var errorMessage: String? = nil{didSet{errorMessage=nil}}
+    @Published var errorMessage: String? = nil
 
     // Serialize loads to avoid overlap
     private var loadTask: Task<Void, Never>? = nil

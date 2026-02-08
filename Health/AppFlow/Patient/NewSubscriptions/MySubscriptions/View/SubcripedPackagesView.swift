@@ -88,7 +88,15 @@ struct SubcripedPackagesView: View {
             
 
                 SubcripedPackagesListView(packages: viewModel.subscripedPackages?.items,selectAction: {package in
-                    router.push(SubcripedPackageDetailsView(package: nil, CustomerPackageId: package.customerPackageID))
+                    router.push(SubcripedPackageDetailsView(package: nil, CustomerPackageId: package.customerPackageID,oncancel:{
+                        
+                        if let id = package.customerPackageID,
+                           let index = viewModel.subscripedPackages?.items?.firstIndex(where: { $0.customerPackageID == id }) {
+                            viewModel.subscripedPackages?.items?[index].canCancel?.toggle()
+                            viewModel.subscripedPackages?.items?[index].canRenew?.toggle()
+                            viewModel.subscripedPackages?.items?[index].status = "Expired".localized
+                        }
+                    }))
                 },buttonAction:{item in
                     
                     if item.canRenew ?? false{
@@ -354,3 +362,4 @@ struct SubscribedPackageEmptyView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 }
+
