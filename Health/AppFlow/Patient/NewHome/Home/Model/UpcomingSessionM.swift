@@ -72,18 +72,30 @@ extension UpcomingSessionM{
                              second: timeComponents.second ?? 0,
                              of: datePart)
     }
+//    func timeDifference() -> (days: Int, hours: Int, minutes: Int) {
+//        guard let sessionDate = sessionDate,
+//              let timeFrom = timeFrom,
+//              let date = "\(sessionDate) \(timeFrom)".toDate(format: "yyyy-MM-dd'T'HH:mm:ss HH:mm:ss") else {
+//            return (0, 0, 0)
+//        }
+//        
+//        let interval = Int(date.timeIntervalSinceNow)
+//        if interval <= 0 { return (0, 0, 0) }
+//        
+//        let days = interval / (60 * 60 * 24)
+//        let hours = (interval % (60 * 60 * 24)) / 3600
+//        let minutes = (interval % 3600) / 60
+//        
+//        return (days, hours, minutes)
+//    }
     func timeDifference() -> (days: Int, hours: Int, minutes: Int) {
-        guard let sessionDate = sessionDate,
-              let timeFrom = timeFrom,
-              let date = "\(sessionDate) \(timeFrom)".toDate(format: "yyyy-MM-dd'T'HH:mm:ss HH:mm:ss") else {
-            return (0, 0, 0)
-        }
+        guard let date = sessionDateTime else { return (0, 0, 0) }
         
         let interval = Int(date.timeIntervalSinceNow)
         if interval <= 0 { return (0, 0, 0) }
         
-        let days = interval / (60 * 60 * 24)
-        let hours = (interval % (60 * 60 * 24)) / 3600
+        let days    = interval / (60 * 60 * 24)
+        let hours   = (interval % (60 * 60 * 24)) / 3600
         let minutes = (interval % 3600) / 60
         
         return (days, hours, minutes)

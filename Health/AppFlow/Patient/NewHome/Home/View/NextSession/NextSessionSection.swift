@@ -105,15 +105,10 @@ struct NextSessionDoctorView: View {
         }
     }
 }
+
+
 struct NextSessionCountdownOrJoinView: View {
-    var session: UpcomingSessionM?{
-        didSet{
-//            guard session?.timeDifference() != nil else {
-//                return
-//            }
-            startTimer()
-        }
-    }
+    var session: UpcomingSessionM?
     
     @State private var countdown: (days: Int, hours: Int, minutes: Int) = (0, 0, 0)
     @State private var timer: Timer?
@@ -125,15 +120,12 @@ struct NextSessionCountdownOrJoinView: View {
             if let link = session?.sessionMethod {
                 Button {
                     if let url = URL(string: link) {
-                        //                         Check if the Teams app is installed
                         if UIApplication.shared.canOpenURL(url) {
                             UIApplication.shared.open(url)
                         } else {
-                            // Fallback: open in Safari
                             UIApplication.shared.open(url, options: [:])
                         }
                     }
-                    
                 } label: {
                     HStack {
                         Image(.newjoinicon)
@@ -149,31 +141,50 @@ struct NextSessionCountdownOrJoinView: View {
                     .cardStyle(cornerRadius: 3)
                 }
             } else {
-                CountdownTimerView(days: countdown.days, hours: countdown.hours, minutes: countdown.minutes)
-                    .onAppear {
-                        startTimer()
-                    }
-                    .onDisappear {
-                        timer?.invalidate()
-                    }
+                CountdownTimerView(
+                    days: countdown.days,
+                    hours: countdown.hours,
+                    minutes: countdown.minutes
+                )
+                .onAppear { startTimer() }
+                .onDisappear { stopTimer() }
             }
             
             Spacer()
         }
-    }
-    
-    private func startTimer() {
-        updateCountdown()
-        
-        timer = Timer.scheduledTimer(withTimeInterval: 60, repeats: true) { _ in
-            updateCountdown()
+        // ✅ Fires whenever the session changes (reschedule, reload, etc.)
+        .onChange(of: session) { newSession in
+            // Recalculate immediately with the new session value
+            countdown = newSession?.timeDifference() ?? (0, 0, 0)
+            // Restart timer so periodic ticks also use the new session
+            stopTimer()
+            startTimerWith(newSession)
+        }
+        // ✅ First load: session starts as nil then gets a value
+        .onAppear {
+            countdown = session?.timeDifference() ?? (0, 0, 0)
         }
     }
     
-    private func updateCountdown() {
+    // ✅ Accept session explicitly so the closure never captures a stale copy
+    private func startTimerWith(_ sessionSnapshot: UpcomingSessionM?) {
+        timer = Timer.scheduledTimer(withTimeInterval: 60, repeats: true) { _ in
+            countdown = sessionSnapshot?.timeDifference() ?? (0, 0, 0)
+        }
+    }
+    
+    private func startTimer() {
         countdown = session?.timeDifference() ?? (0, 0, 0)
+        startTimerWith(session)
+    }
+    
+    private func stopTimer() {
+        timer?.invalidate()
+        timer = nil
     }
 }
+
+
 struct NextSessionActionsView: View {
     var detailsAction: (() -> Void)?
     var rescheduleAction: (() -> Void)?
