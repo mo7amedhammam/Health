@@ -277,8 +277,8 @@ struct ActiveCustomerPackagesView: View {
                 onRescheduleSuccess: {
                     Task {
                         await viewModel.getUpcomingSession(CustomerPackageId: customerPackageId)
-                        await viewModel.getSubscripedPackageDetails(CustomerPackageId: customerPackageId)
-                        await viewModel.getSubscripedPackagesList(customerPackageId: customerPackageId)
+//                        await viewModel.getSubscripedPackageDetails(CustomerPackageId: customerPackageId)
+//                        await viewModel.getSubscripedPackagesList(customerPackageId: customerPackageId)
                     }
                 }
             )
