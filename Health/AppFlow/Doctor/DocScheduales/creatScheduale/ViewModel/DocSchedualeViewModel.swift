@@ -169,31 +169,6 @@ extension DocSchedualeViewModel{
             return
         }
         
-        // Format dates properly to yyyy-MM-dd'T'HH:mm:ss in UTC with 00:00:00 times
-//        let dateFormatter = DateFormatter()
-//        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
-//        dateFormatter.timeZone = TimeZone(identifier: "UTC")
-//        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
-//        
-//        var calendar = Calendar(identifier: .gregorian)
-//        calendar.timeZone = TimeZone(identifier: "UTC") ?? .current
-        
-        // Start date at 00:00:00
-//        var startComponents = calendar.dateComponents([.year, .month, .day], from: dateFrom)
-//        startComponents.hour = 0
-//        startComponents.minute = 0
-//        startComponents.second = 0
-//        let startOfDay = calendar.date(from: startComponents) ?? dateFrom
-//        let startDateStr = dateFormatter.string(from: startOfDay)
-//        
-//        // End date at 00:00:00 (as per requested example)
-//        var endComponents = calendar.dateComponents([.year, .month, .day], from: dateTo)
-//        endComponents.hour = 0
-//        endComponents.minute = 0
-//        endComponents.second = 0
-//        let endOfDay = calendar.date(from: endComponents) ?? dateTo
-//        let endDateStr = dateFormatter.string(from: endOfDay)
-
         let startDateStr = "\(dateFrom)".ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss Z", FormatTo: "yyyy-MM-dd",outputLocal: .english)
         let endDateStr = "\(dateTo)".ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss Z", FormatTo: "yyyy-MM-dd",outputLocal: .english)
 
@@ -203,8 +178,8 @@ extension DocSchedualeViewModel{
             "doctorScheduleDays": dateDetailArray
         ]
         
-        if let topId = details.id { parameters["id"] = topId }
-        if let scheduleId = details.doctorScheduleId { parameters["doctorScheduleId"] = scheduleId }
+        if let topId = details.id, topId > 0 { parameters["id"] = topId }
+        if let scheduleId = details.doctorScheduleId, scheduleId > 0 { parameters["doctorScheduleId"] = scheduleId }
         
         print("📤 Sending schedule parameters:", parameters)
 
