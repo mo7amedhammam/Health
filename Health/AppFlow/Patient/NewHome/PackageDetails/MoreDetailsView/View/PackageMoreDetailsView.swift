@@ -210,7 +210,7 @@ struct PackageMoreDetailsView: View {
                 // Days row
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack (spacing:2.5){
-                        ForEach(viewModel.availableDays) { day in
+                        ForEach(viewModel.availableDays,id: \.id) { day in
                             Button(action: {
                                 Task { await viewModel.select(day: day) }
                             }, label: {
@@ -371,7 +371,7 @@ struct SshedualsGrid: View {
 
 // MARK: - Identifiable helpers to stabilize ForEach
 extension AvailableDayM: Identifiable {
-    public var id: String { date ?? String(dayId ?? -1) }
+    public var id: UUID? { UUID() }
 }
 
 extension AvailableTimeShiftM: Identifiable {}
