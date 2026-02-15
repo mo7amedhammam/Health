@@ -8,7 +8,8 @@
 import SwiftUI
 
 struct DocScheduleView: View {
-    
+    @Environment(\.dismiss) private var dismiss
+
     @EnvironmentObject var profileViewModel: EditProfileViewModel
     @StateObject private var viewModel = DocSchedualeViewModel.shared
     var hasbackBtn : Bool? = true
@@ -201,8 +202,8 @@ struct DocScheduleView: View {
                 set: { if !$0 { viewModel.errorMessage = nil } }
             ), message: viewModel.errorMessage)
             .edgesIgnoringSafeArea([.top,.horizontal])
-            .onAppear {
-                Task{
+            .task{
+//                Task{
                     if (Helper.shared.CheckIfLoggedIn()) {
                         async let details:() = viewModel.getMySchedualeDetails(Id: schedualeId)
                         _ = await (details)
@@ -211,7 +212,7 @@ struct DocScheduleView: View {
                         viewModel.clear()
                         mustLogin = true
                     }
-                }
+//                }
             }
             
             // MARK: - Confirmation Dialog
@@ -284,7 +285,9 @@ extension DocScheduleView{
             subtitle2: "schedule_success_subtitle2".localized,
             buttonTitle: "schedule_success_btn".localized,
             buttonAction: {
+//                Task{await viewModel.getMyScheduales()}
                 viewModel.showSuccess = false
+                dismiss()
             }
         )
         return successView

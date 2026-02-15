@@ -127,15 +127,13 @@ extension DocSchedualeViewModel{
                 }
             }
         } else {
-            // Creating: flatten all selected shifts into a single day entry as requested
-            var aggregatedShifts: [[String: Any]] = []
-            var firstDayId: Int? = nil
-            var firstDayIdFound = false
-
+            // Creating: send one day entry per selected day with its selected shifts
+            var hasAnySelection = false
+            
             if let dayList = details.dayList {
                 for day in dayList where day.isSelected == true {
-                    if !firstDayIdFound, let dId = day.dayId { firstDayId = dId; firstDayIdFound = true }
-                    let daySelectedShifts: [[String: Any]] = (day.shiftList ?? [])
+                    // Filter only selected shifts for this specific day
+                    let selectedShifts: [[String: Any]] = (day.shiftList ?? [])
                         .filter { $0.isSelected == true }
                         .map { shift in
                             var shiftDict: [String: Any] = [:]
@@ -147,20 +145,28 @@ extension DocSchedualeViewModel{
                             if let isSelected = shift.isSelected { shiftDict["isSelected"] = isSelected }
                             return shiftDict
                         }
-                    aggregatedShifts.append(contentsOf: daySelectedShifts)
+                    
+                    // Skip this day if no shifts are selected
+                    if selectedShifts.isEmpty { continue }
+                    
+                    hasAnySelection = true
+                    
+                    // Create a separate day entry for each selected day
+                    var dayDict: [String: Any] = [
+                        "doctorScheduleDayShifts": selectedShifts
+                    ]
+                    if let dayId = day.dayId { dayDict["dayId"] = dayId }
+                    if let name = day.name { dayDict["name"] = name }
+                    if let isSelected = day.isSelected { dayDict["isSelected"] = isSelected }
+                    
+                    dateDetailArray.append(dayDict)
                 }
             }
 
-            if aggregatedShifts.isEmpty {
+            if !hasAnySelection {
                 self.errorMessage = "Please select at least one time shift"
                 return
             }
-
-            var singleDayDict: [String: Any] = [
-                "doctorScheduleDayShifts": aggregatedShifts
-            ]
-            if let firstDayId { singleDayDict["dayId"] = firstDayId }
-            dateDetailArray.append(singleDayDict)
         }
 
         // Ensure we have something to send
