@@ -59,9 +59,9 @@ extension DocPackagesViewModel {
         loadTask = Task { [weak self] in
             guard let self else { return }
             if self.isLoading == true { return }
-
-            isLoading = true
-            defer { isLoading = false }
+            self.isLoading = true
+            defer { self.isLoading = false }
+            
             guard let maxResultCount = maxResultCount, let skipCount = skipCount else {
                 return
             }
@@ -92,7 +92,8 @@ extension DocPackagesViewModel {
                     }
                 }
                 canLoadMore = (response?.items?.count ?? 0) < (response?.totalCount ?? 0)
-                
+                isLoading = false
+
             } catch {
                 self.errorMessage = error.localizedDescription
             }
