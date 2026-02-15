@@ -163,17 +163,17 @@ extension DocSchedualeViewModel{
                 }
             }
 
-            if !hasAnySelection {
-                self.errorMessage = "Please select at least one time shift"
-                return
-            }
+//            if !hasAnySelection {
+//                self.errorMessage = "Please select at least one time shift"
+//                return
+//            }
         }
 
         // Ensure we have something to send
-        if dateDetailArray.isEmpty {
-            self.errorMessage = "Please select at least one time shift"
-            return
-        }
+//        if dateDetailArray.isEmpty {
+//            self.errorMessage = "Please select at least one time shift"
+//            return
+//        }
         
         let startDateStr = "\(dateFrom)".ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss Z", FormatTo: "yyyy-MM-dd",outputLocal: .english)
         let endDateStr = "\(dateTo)".ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss Z", FormatTo: "yyyy-MM-dd",outputLocal: .english)
@@ -286,6 +286,34 @@ extension DocSchedualeViewModel{
             await getMyScheduales()
         }
         await loadTask?.value
+    }
+    
+    func validateSelections() -> Bool {
+        // Validate before showing confirmation dialog
+        // 1) Ensure dates are selected and in correct order
+        if dateFrom == nil || dateTo == nil {
+            errorMessage = "Please select date range"
+            return false
+        }
+        if let from = dateFrom, let to = dateTo, to < from {
+            errorMessage = "To date cannot be earlier than From date"
+            return false
+        }
+        // 2) Ensure at least one shift is selected
+        let hasAnySelectedShift: Bool = {
+            guard let dayList = schedualeDetails?.dayList else { return false }
+            for day in dayList {
+                if let shifts = day.shiftList, shifts.contains(where: { $0.isSelected == true }) {
+                    return true
+                }
+            }
+            return false
+        }()
+        if hasAnySelectedShift == false {
+            errorMessage = "Please select at least one time shift"
+            return false
+        }
+        return true
     }
 }
 

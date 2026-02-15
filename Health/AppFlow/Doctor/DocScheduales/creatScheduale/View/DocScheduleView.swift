@@ -181,6 +181,7 @@ struct DocScheduleView: View {
                     // MARK: - Footer Buttons
                     HStack(spacing: 4) {
                         CustomButton(title: "new_confirm_",backgroundcolor: Color(.mainBlue)){
+                            guard viewModel.validateSelections() else{return}
                             print("Creating/Updating schedule")
                             showDialog = true
                         }
