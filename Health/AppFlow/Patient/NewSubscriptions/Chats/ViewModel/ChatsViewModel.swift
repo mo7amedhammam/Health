@@ -840,9 +840,9 @@ class ChatsViewModel: ObservableObject {
             print("[ChatsViewModel] ✅ Updated message list to \(updatedMessages.count) messages")
             
             // Play sound for incoming messages (not from me)
-            if hasCompletedInitialLoad && hasProcessedFirstFirestoreSnapshot {
-                playIncomingSoundIfNeeded(for: newMessagesToAdd)
-            }
+//            if hasCompletedInitialLoad && hasProcessedFirstFirestoreSnapshot {
+//                playIncomingSoundIfNeeded(for: newMessagesToAdd)
+//            }
         } else {
             print("[ChatsViewModel] No new messages to add")
         }

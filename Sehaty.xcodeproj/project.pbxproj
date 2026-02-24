@@ -79,6 +79,7 @@
 		903528132E4CD9EF005DC7AF /* TimeSlot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 903528122E4CD9EF005DC7AF /* TimeSlot.swift */; };
 		903667062D82E0A40040AE29 /* LocalizationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 903667052D82E08E0040AE29 /* LocalizationManager.swift */; };
 		903667082D82E1410040AE29 /* AppKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 903667072D82E1370040AE29 /* AppKeys.swift */; };
+		903930BA2F47429900E89A91 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 903930B92F47429900E89A91 /* GoogleService-Info.plist */; };
 		904133962E76C27A005726E7 /* DocPackagesServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 904133952E76C272005726E7 /* DocPackagesServices.swift */; };
 		90466D2F2E85607400C3D1C8 /* CoreNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90466D2E2E85607400C3D1C8 /* CoreNetwork.swift */; };
 		9047483F2DCF63530016C3DC /* PackagesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9047483E2DCF63530016C3DC /* PackagesView.swift */; };
@@ -327,7 +328,6 @@
 		C85996752AA7553500533C87 /* HUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = C85996742AA7553500533C87 /* HUD.swift */; };
 		C85996772AA7556400533C87 /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = C85996762AA7556400533C87 /* Alert.swift */; };
 		C85F28532ABC7F500093ADFF /* EXUiDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = C85F28522ABC7F500093ADFF /* EXUiDevice.swift */; };
-		C888B8072B7D3E4B001A6FC0 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C888B8062B7D3E4B001A6FC0 /* GoogleService-Info.plist */; };
 		C88974052ABAF2AD00C2A948 /* TipsDetailsVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88974042ABAF2AD00C2A948 /* TipsDetailsVM.swift */; };
 		C88995822AA9EDFE002AD812 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88995812AA9EDFE002AD812 /* Strings.swift */; };
 		C88995882AA9F70C002AD812 /* ForgetPasswordM.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88995872AA9F70C002AD812 /* ForgetPasswordM.swift */; };
@@ -437,6 +437,7 @@
 		903528122E4CD9EF005DC7AF /* TimeSlot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeSlot.swift; sourceTree = "<group>"; };
 		903667052D82E08E0040AE29 /* LocalizationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationManager.swift; sourceTree = "<group>"; };
 		903667072D82E1370040AE29 /* AppKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppKeys.swift; sourceTree = "<group>"; };
+		903930B92F47429900E89A91 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		904133952E76C272005726E7 /* DocPackagesServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocPackagesServices.swift; sourceTree = "<group>"; };
 		90466D2E2E85607400C3D1C8 /* CoreNetwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreNetwork.swift; sourceTree = "<group>"; };
 		9047483E2DCF63530016C3DC /* PackagesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackagesView.swift; sourceTree = "<group>"; };
@@ -684,7 +685,6 @@
 		C85996742AA7553500533C87 /* HUD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HUD.swift; sourceTree = "<group>"; };
 		C85996762AA7556400533C87 /* Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
 		C85F28522ABC7F500093ADFF /* EXUiDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EXUiDevice.swift; sourceTree = "<group>"; };
-		C888B8062B7D3E4B001A6FC0 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C88974042ABAF2AD00C2A948 /* TipsDetailsVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TipsDetailsVM.swift; sourceTree = "<group>"; };
 		C88995812AA9EDFE002AD812 /* Strings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
 		C88995872AA9F70C002AD812 /* ForgetPasswordM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgetPasswordM.swift; sourceTree = "<group>"; };
@@ -2789,10 +2789,10 @@
 		BBC7B4592A72CC820079355E /* Health */ = {
 			isa = PBXGroup;
 			children = (
-				C888B8062B7D3E4B001A6FC0 /* GoogleService-Info.plist */,
 				BBC7B45A2A72CC820079355E /* AppDelegate.swift */,
 				BBC7B45C2A72CC820079355E /* SceneDelegate.swift */,
 				BBC7B4632A72CC840079355E /* Assets.xcassets */,
+				903930B92F47429900E89A91 /* GoogleService-Info.plist */,
 				BBC7B4682A72CC840079355E /* Info.plist */,
 				BBBDFFF62A730F9800F066DF /* Services */,
 				BBBDFFF52A730F9400F066DF /* Model */,
@@ -3341,6 +3341,7 @@
 				BBE3CC782A80000E004B0D9A /* MedicationScheduleTVCell.xib in Resources */,
 				BBBD002B2A73145200F066DF /* LamaSans-Medium.ttf in Resources */,
 				BBBD00302A73148600F066DF /* LamaSans-Regular.ttf in Resources */,
+				903930BA2F47429900E89A91 /* GoogleService-Info.plist in Resources */,
 				9088CFC92DA5AE570036EE0E /* CustomInputField.xib in Resources */,
 				9057A61C2DA430470090C34A /* Localizable.strings in Resources */,
 				BB14DAEC2A7B041C00389B96 /* ProfileTVCellHeader.xib in Resources */,
@@ -3375,7 +3376,6 @@
 				BBAE725F2AD3291F0089512D /* EmptyTVCell.xib in Resources */,
 				BB518CDB2A9A118B00242FAD /* TipsCategoriesTVCell0.xib in Resources */,
 				BBBD002C2A73145200F066DF /* LamaSans-Light.ttf in Resources */,
-				C888B8072B7D3E4B001A6FC0 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
