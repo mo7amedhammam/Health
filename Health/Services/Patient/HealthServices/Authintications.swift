@@ -279,11 +279,16 @@ extension NewAuthontications : TargetType1 {
 
             case .Doctor:
                 return DocEndPoints.DocGetMyProfile.rawValue
-
             }
             
         case .SendFireBaseDeviceToken :
+            switch Helper.shared.getSelectedUserType() {
+            case .Customer,.none:
             return EndPoints.SendFireBaseDeviceToken.rawValue
+            case .Doctor:
+                return DocEndPoints.SendFireBaseDeviceToken.rawValue
+            }
+            
         }
         
         

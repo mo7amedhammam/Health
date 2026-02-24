@@ -256,7 +256,14 @@ final class LoginViewModel: LoginViewModelProtocol, ObservableObject {
         getDeviceToken { [weak self] token in
             guard let self = self else { return }
 
-            let target = NewAuthontications.SendFireBaseDeviceToken(parameters: ["customerDeviceToken": token])
+            let parameters: [String: Any] = switch Helper.shared.getSelectedUserType() {
+            case .Customer,.none:
+                ["customerDeviceToken": token]
+            case .Doctor:
+                ["firebaseDeviceToken": token]
+            }
+            
+            let target = NewAuthontications.SendFireBaseDeviceToken(parameters: parameters)
 
             self.networkService.request(target, responseType: BaseResponse<MFirebase>.self) { result in
                 switch result {
