@@ -59,13 +59,8 @@ struct ChatsMessageItemM: Codable, Identifiable,Equatable {
         comment ?? ""
     }
 
-    var formattedDate: String {
-        guard let creationDate = creationDate,
-              let date = ISO8601DateFormatter().date(from: creationDate) else {
-            return ""
-        }
-        let formatter = DateFormatter()
-        formatter.dateFormat = "h:mm a"
-        return formatter.string(from: date)
+    var formattedDate: String? {
+        guard let date = creationDate else { return nil }
+        return date.ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo:"dd MMM yyyy - hh:mm a")
     }
 }

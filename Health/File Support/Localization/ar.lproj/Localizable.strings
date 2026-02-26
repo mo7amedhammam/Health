@@ -244,6 +244,9 @@
 "Offline" =  "غير نشط";
 "Write_a_message" = "اكتب رساله";
 "Message box isـempty" = "لا توجد رسايل";
+"Microphone_Permission_Required" = "يلزم الحصول على إذن استخدام الميكروفون";
+"Open_Settings" = "فتح الإعدادات";
+"Please enable microphone access in Settings to record voice messages._" = "يرجى تفعيل الوصول إلى الميكروفون في الإعدادات لتسجيل الرسائل الصوتية.";
 
 //MARK: --- Package Files ---
 "Watch_" = "مشاهده";

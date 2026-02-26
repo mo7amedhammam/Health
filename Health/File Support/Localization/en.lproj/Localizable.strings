@@ -244,6 +244,9 @@
 "Offline" =  "Offline";
 "Write_a_message" = "Write a message";
 "Message box isـempty" = "Message box is empty";
+"Microphone_Permission_Required" = "Microphone Permission Required";
+"Open_Settings" = "Open Settings";
+"Please enable microphone access in Settings to record voice messages._" = "Please enable microphone access in Settings to record voice messages.";
 
 //MARK: --- Package Files ---
 "Watch_" = "Watch";

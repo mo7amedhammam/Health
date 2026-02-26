@@ -39,7 +39,7 @@ class AudioManager: NSObject, ObservableObject, AVAudioPlayerDelegate {
     private func setupAudioSession() {
         do {
             let session = AVAudioSession.sharedInstance()
-            try session.setCategory(.playAndRecord, mode: .default, options: [.defaultToSpeaker, .allowBluetooth])
+            try session.setCategory(.playAndRecord, mode: .default, options: [.defaultToSpeaker, .allowBluetoothHFP])
             try session.setActive(true)
             print("✅ Audio session configured successfully")
         } catch {
@@ -116,7 +116,7 @@ class AudioManager: NSObject, ObservableObject, AVAudioPlayerDelegate {
         do {
             // Activate audio session
             let session = AVAudioSession.sharedInstance()
-            try session.setCategory(.playAndRecord, mode: .default, options: [.defaultToSpeaker, .allowBluetooth])
+            try session.setCategory(.playAndRecord, mode: .default, options: [.defaultToSpeaker, .allowBluetoothHFP])
             try session.setActive(true)
             
             // Initialize recorder
@@ -406,11 +406,7 @@ struct MessageBubbleView: View {
             }
             
             VStack(alignment: message.isFromMe ? .trailing : .leading, spacing: 4) {
-                Text(message.formattedDate)
-                    .font(.regular(size: 12))
-                    .foregroundColor(.gray)
-                    .frame(height: 10)
-                
+                // Bubble content
                 if message.voicePath == nil {
                     Text(message.messageText)
                         .font(.regular(size: 14))
@@ -424,6 +420,16 @@ struct MessageBubbleView: View {
                     VoiceMessagePlayerView(voiceURL: voiceURL, isFromCustomer: message.isFromMe)
                         .localizeView()
                 }
+                
+                // Timestamp below bubble
+                HStack(spacing: 4) {
+                    Spacer().frame(width: 0)
+                    Text(message.formattedDate ?? "2026-02-04T11:24:39.8172253")
+                        .font(.regular(size: 11))
+                        .foregroundColor(.gray)
+                }
+                .frame(maxWidth: .infinity, alignment: message.isFromMe ? .trailing : .leading)
+                .padding(.top, 2)
             }
             .frame(maxWidth: 280, alignment: message.isFromMe ? .trailing : .leading)
             
@@ -433,6 +439,9 @@ struct MessageBubbleView: View {
         }
         .padding(.top, 4)
     }
+}
+#Preview{
+    MessageBubbleView(message: .init(id: "",comment: "message,message, message message message,message me ssageme ssagem essag emessage", creationDate: "2026-02-04T11:24:39.8172253", doctorName: "name d",customerImage: "",doctorImage: ""))
 }
 
 // MARK: - Messages List View
@@ -748,15 +757,15 @@ struct ChatsView: View {
             ),
             message: viewModel.errorMessage
         )
-        .alert("Microphone Permission Required", isPresented: $audioManager.showPermissionAlert) {
-            Button("Cancel", role: .cancel) { }
-            Button("Open Settings") {
+        .alert("Microphone_Permission_Required".localized, isPresented: $audioManager.showPermissionAlert) {
+            Button("cancel_".localized, role: .cancel) { }
+            Button("Open_Settings".localized) {
                 if let settingsURL = URL(string: UIApplication.openSettingsURLString) {
                     UIApplication.shared.open(settingsURL)
                 }
             }
         } message: {
-            Text("Please enable microphone access in Settings to record voice messages.")
+            Text("Please enable microphone access in Settings to record voice messages._".localized)
         }
     }
     
@@ -783,3 +792,4 @@ struct ChatsView: View {
 #Preview {
     ChatsView(CustomerPackageId: 0)
 }
+

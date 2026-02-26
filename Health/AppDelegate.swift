@@ -389,20 +389,17 @@ extension AppDelegate: MessagingDelegate {
             _ center: UNUserNotificationCenter,
             didReceive response: UNNotificationResponse
         ) async {
-
-            let userInfo = response.notification.request.content.userInfo
-
-            guard
-                let type = userInfo["type"] as? String,
-                type == "chat",
-                let packageId = userInfo["customerPackageId"] as? String
-            else { return }
             
-            NotificationCenter.default.post(
-                name: .openChatFromNotification,
-                object: nil,
-                userInfo: ["packageId": packageId]
-            )
+            let userInfo = response.notification.request.content.userInfo
+            print("userInfo1 : \(userInfo)")
+            if let packageId = extractCustomerPackageId(from: userInfo) {
+                NotificationCenter.default.post(
+                    name: .openChatFromNotification,
+                    object: nil,
+                    userInfo: ["customerPackageId": String(packageId)]
+                )
+            }
+        
         }
         
         func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any],fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
@@ -411,11 +408,15 @@ extension AppDelegate: MessagingDelegate {
             }
             print("userInfo2 : \(userInfo)")
             // if app in background make sound
-//            var systemSoundID : SystemSoundID = 1007 // doesnt matter; edit path instead
-//            let url = URL(fileURLWithPath: "/System/Library/Audio/UISounds/sms-received1.caf")
-//            AudioServicesCreateSystemSoundID(url as CFURL, &systemSoundID)
-//            AudioServicesPlaySystemSound(systemSoundID)
 
+            if let packageId = extractCustomerPackageId(from: userInfo) {
+                NotificationCenter.default.post(
+                    name: .openChatFromNotification,
+                    object: nil,
+                    userInfo: ["customerPackageId": String(packageId)]
+                )
+            }
+            
             SoundPlayer.shared.play(.receive)
             completionHandler(.newData)
         }
@@ -427,6 +428,16 @@ extension AppDelegate: MessagingDelegate {
     //            print("userInfo1 : \(userInfo)")
     //
     //        }
+        
+        private func extractCustomerPackageId(from userInfo: [AnyHashable: Any]) -> Int? {
+            if let id = userInfo["customerPackageId"] as? Int {
+                return id
+            }
+            if let str = userInfo["customerPackageId"] as? String, let intVal = Int(str) {
+                return intVal
+            }
+            return nil
+        }
 
     }
 
