@@ -37,7 +37,8 @@ class ReschedualeRequestViewModel: ObservableObject {
 //    @Published var selectedCountries: [AppCountryByPackIdM] = []
     
     @Published var showSuccess: Bool = false
-
+    @Published var showRescheduale: Bool = false
+    
     @Published var isLoading: Bool? = false
     @Published var canLoadMore: Bool? = false
     @Published var errorMessage: String? = nil
@@ -61,7 +62,7 @@ extension ReschedualeRequestViewModel{
             isLoading = true
             defer { isLoading = false }
             //       "Rescheduled" : Bool
-            var parametersarr : [String : Any] =  [:]
+            let parametersarr : [String : Any] =  [:]
             let target = HomeServices.GetReschedualRequestList(parameters: parametersarr)
             do {
                 self.errorMessage = nil // Clear previous errors
@@ -121,7 +122,11 @@ extension ReschedualeRequestViewModel{
                 target,
                 responseType: [ReSchedualeRequestM].self
             )
-            showSuccess = true
+            if Reject == true {
+                showRescheduale = true
+            }else{
+                showSuccess = true
+            }
         } catch {
             self.errorMessage = error.localizedDescription
         }

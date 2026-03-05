@@ -292,7 +292,7 @@ struct ProfileRow: View {
 
 struct ProfileViewUI_Previews: PreviewProvider {
     static var previews: some View {
-        ProfileViewUI()
+        ProfileViewUI().environmentObject(EditProfileViewModel())
     }
 }
 
@@ -301,17 +301,25 @@ struct ProfileViewUI_Previews: PreviewProvider {
 extension ProfileViewUI{
     private func logoutAction() {
         if isLogedin {
-            Helper.shared.IsLoggedIn(value: false)
-            Helper.shared.logout()
-            // Change root view to NewTabView
-            let newHome = UIHostingController(rootView: NewTabView())
-            Helper.shared.changeRootVC(newroot: newHome, transitionFrom: .fromLeft)
             
+            viewModel.logout { result in
+                switch result {
+                    case .success:
+                    // Clear local flags regardless of result
+                    Helper.shared.IsLoggedIn(value: false)
+                    Helper.shared.logout()
+                    let newHome = UIHostingController(rootView: NewTabView())
+                    Helper.shared.changeRootVC(newroot: newHome, transitionFrom: .fromLeft)
+
+                    print("Logged out successfully")
+                case .failure(let error):
+                    print("Failed to logout: \(error)")
+                    viewModel.errorMessage = "\(error)"
+                }
+            }
         } else {
-            // Change root view to LoginView
             let newHome = UIHostingController(rootView: LoginView())
             Helper.shared.changeRootVC(newroot: newHome, transitionFrom: .fromLeft)
-            
         }
     }
 }

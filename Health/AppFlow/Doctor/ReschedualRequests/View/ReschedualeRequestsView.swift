@@ -9,7 +9,13 @@ import SwiftUI
 
 struct ReschedualeRequestsView: View {
     @StateObject var viewModel: ReschedualeRequestViewModel = ReschedualeRequestViewModel.shared
-    
+   
+    @State var customerPackageId: Int?
+    @State var doctorId: Int?
+    @State var customerId: Int?
+    @State var packageId: Int? = nil
+    @State var sessionId: Int? = nil
+
     var body: some View {
         VStack(spacing: 8) {
             TitleBar(title: "rescheduale_requests_",hasbackBtn: true)
@@ -25,7 +31,15 @@ struct ReschedualeRequestsView: View {
                             ReschedualRequestCard(Request: item,acceptAction: {
                                 Task{await viewModel.approuveCustomerRescheduleRequest(sessionId: item.id)}
                             },rejectAction: {
-                                Task{await viewModel.approuveCustomerRescheduleRequest(sessionId: item.id,Reject: true)}
+                                Task{
+                                    await viewModel.approuveCustomerRescheduleRequest(sessionId: item.id,Reject: true)
+                                    customerPackageId = item.customerPackageID
+                                    sessionId = item.sessionID
+                                    doctorId = item.doctorID
+                                    customerId = nil
+                                    packageId = item.id
+
+                                }
                             })
                         }
                     }
@@ -66,7 +80,24 @@ struct ReschedualeRequestsView: View {
             .refreshable {
                 await viewModel.refreshRequests()
             }
-        
+            .customSheet(isPresented: $viewModel.showRescheduale){
+                ReSchedualView(
+                    doctorPackageId:.constant( customerPackageId ),
+                    doctorId: $doctorId,
+                    customerId: $customerId,
+                    packageId:$packageId,
+                    SessionId:$sessionId ,
+                    isPresentingNewMeasurementSheet: $viewModel.showRescheduale,
+                    reschedualcase: .constant(.reschedualSession),
+                    onRescheduleSuccess: {
+//                        Task {
+////                            await viewModel.getUpcomingSession(CustomerPackageId: customerPackageId)
+//    //                        await viewModel.getSubscripedPackageDetails(CustomerPackageId: customerPackageId)
+//    //                        await viewModel.getSubscripedPackagesList(customerPackageId: customerPackageId)
+//                        }
+                    }
+                )
+            }
     }
 }
 

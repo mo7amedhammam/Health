@@ -282,6 +282,7 @@
                 sessionRole: connectingSceneSession.role
             )
         }
+        
     }
 
 
@@ -374,6 +375,7 @@ extension AppDelegate: MessagingDelegate {
             _ center: UNUserNotificationCenter,
             willPresent notification: UNNotification
         ) async -> UNNotificationPresentationOptions {
+            UIApplication.shared.applicationIconBadgeNumber = max(0, UIApplication.shared.applicationIconBadgeNumber) + 1
 //            SoundPlayer().play(.receive)
             let userInfo = notification.request.content.userInfo
                print("Foreground push received:", userInfo)
@@ -389,7 +391,7 @@ extension AppDelegate: MessagingDelegate {
             _ center: UNUserNotificationCenter,
             didReceive response: UNNotificationResponse
         ) async {
-            
+            UIApplication.shared.applicationIconBadgeNumber = max(0, UIApplication.shared.applicationIconBadgeNumber) + 1
             let userInfo = response.notification.request.content.userInfo
             print("userInfo1 : \(userInfo)")
             if let packageId = extractCustomerPackageId(from: userInfo) {
@@ -403,6 +405,8 @@ extension AppDelegate: MessagingDelegate {
         }
         
         func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any],fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+            UIApplication.shared.applicationIconBadgeNumber = max(0, UIApplication.shared.applicationIconBadgeNumber) + 1
+
             if let messageID = userInfo[gcmMessageIDKey] {
                 print("Message ID: \(messageID)")
             }
@@ -504,3 +508,4 @@ extension AppDelegate: MessagingDelegate {
         }
 
     }
+

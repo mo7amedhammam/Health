@@ -33,6 +33,11 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         observeChatDeepLink()
         observeAppRouter()
     }
+    
+    func sceneDidBecomeActive(_ scene: UIScene) {
+        // Fallback on earlier versions
+        UIApplication.shared.applicationIconBadgeNumber = 0
+    }
 }
 
 private extension SceneDelegate {
@@ -136,7 +141,7 @@ private extension SceneDelegate {
         guard let nav = topNavigationController() else { return }
 
         // If a ChatsView for the same package is already visible, do nothing
-        if let top = nav.topViewController as? UIHostingController<ChatsView> {
+        if nav.topViewController is UIHostingController<ChatsView> {
             // No generic equality available; rely on resetting router to prevent loops
             AppRouter.shared.reset()
             return

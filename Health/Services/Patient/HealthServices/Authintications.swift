@@ -195,6 +195,8 @@ enum NewAuthontications {
     // -- profile --
     case GetMyProfile
     case SendFireBaseDeviceToken(parameters : [String:Any])
+    case DeleteFireBaseDeviceToken(parameters : [String:Any])
+
     
 }
 
@@ -276,7 +278,6 @@ extension NewAuthontications : TargetType1 {
             switch Helper.shared.getSelectedUserType() {
             case .Customer,.none:
                 return ProfileEndPoints.GetProfile.rawValue
-
             case .Doctor:
                 return DocEndPoints.DocGetMyProfile.rawValue
             }
@@ -284,9 +285,17 @@ extension NewAuthontications : TargetType1 {
         case .SendFireBaseDeviceToken :
             switch Helper.shared.getSelectedUserType() {
             case .Customer,.none:
-            return EndPoints.SendFireBaseDeviceToken.rawValue
+                return EndPoints.SendFireBaseDeviceToken.rawValue
             case .Doctor:
                 return DocEndPoints.SendFireBaseDeviceToken.rawValue
+            }
+            
+        case .DeleteFireBaseDeviceToken :
+            switch Helper.shared.getSelectedUserType() {
+            case .Customer,.none:
+                return EndPoints.DeleteFirebasetoken.rawValue
+            case .Doctor:
+                return DocEndPoints.DeleteFirebasetoken.rawValue
             }
             
         }
@@ -311,7 +320,9 @@ extension NewAuthontications : TargetType1 {
         case .GetDistricts,
                 .GetGenders,
                 .GetMyScheduleDrugs,
-                .GetMyProfile:
+                .GetMyProfile,
+                .DeleteFireBaseDeviceToken
+            :
             return .get
         }
     }
@@ -328,7 +339,8 @@ extension NewAuthontications : TargetType1 {
                 .GetCustomerInbody(parameters: let parameter),
                 .CreateCustomerInboy(parameters: let parameter),
                 .SendFireBaseDeviceToken(let parameter),
-                .GetMyScheduleDrugs(parameters: let parameter):
+                .GetMyScheduleDrugs(parameters: let parameter),
+                .DeleteFireBaseDeviceToken(parameters: let parameter):
 //            return .parameterRequest(Parameters: parameters, Encoding: encoding)
             return  parameter
 

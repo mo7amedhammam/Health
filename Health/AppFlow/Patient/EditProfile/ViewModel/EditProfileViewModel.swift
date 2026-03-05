@@ -55,9 +55,13 @@ class EditProfileViewModel : ObservableObject {
         return validateInputs()
     }
     
+    private let deleteTokenUseCase: DeleteFirebaseTokenUseCaseProtocol
+
     // Init with DI
-    init(networkService: AsyncAwaitNetworkServiceProtocol = AsyncAwaitNetworkService.shared) {
+    init(networkService: AsyncAwaitNetworkServiceProtocol = AsyncAwaitNetworkService.shared,
+         deleteTokenUseCase: DeleteFirebaseTokenUseCaseProtocol = DeleteFirebaseTokenUseCase(networkService: NetworkService1.shared)) {
         self.networkService = networkService
+        self.deleteTokenUseCase = deleteTokenUseCase
     }
     
     func cleanup() {
@@ -322,5 +326,10 @@ extension EditProfileViewModel{
         //        genderError = nil
         //        countryError = nil
         //        specialityError = nil
+    }
+}
+extension EditProfileViewModel{
+    func logout(completion: @escaping (Result<Void, Error>) -> Void) {
+        deleteTokenUseCase.execute(completion: completion)
     }
 }

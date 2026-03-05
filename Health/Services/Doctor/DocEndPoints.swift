@@ -20,6 +20,7 @@ enum DocEndPoints : String{
     case DocChangePassword = "Doctor/ChangePassword"
     
     case SendFireBaseDeviceToken = "Doctor/DoctorDeviceToken"
+    case DeleteFirebasetoken = "Doctor/DeleteFirebasetoken"
 
     // -- pfofile --
     case DocGetMyProfile = "Doctor/GetById"

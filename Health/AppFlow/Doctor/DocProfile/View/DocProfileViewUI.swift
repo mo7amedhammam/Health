@@ -227,7 +227,8 @@ struct DocProfileViewUI: View {
 }
 struct DocProfileViewUI_Previews: PreviewProvider {
     static var previews: some View {
-        DocProfileViewUI().environmentObject(EditProfileViewModel.shared)
+        DocProfileViewUI()
+            .environmentObject(EditProfileViewModel.shared)
     }
 }
 
@@ -235,18 +236,27 @@ extension DocProfileViewUI{
     
     private func logoutAction() {
         if isLogedin {
-            Helper.shared.logout()
-            Helper.shared.setSelectedUserType(userType: .Customer)
-            // Change root view to NewTabView
-            let newHome = UIHostingController(rootView: DocTabView())
-            Helper.shared.changeRootVC(newroot: newHome, transitionFrom: .fromLeft)
-            
+
+            viewModel.logout { result in
+                switch result {
+                    case .success:
+                    // Clear local flags regardless of result
+                    Helper.shared.IsLoggedIn(value: false)
+                    Helper.shared.logout()
+                    let newHome = UIHostingController(rootView: NewTabView())
+                    Helper.shared.changeRootVC(newroot: newHome, transitionFrom: .fromLeft)
+
+                    print("Logged out successfully")
+                case .failure(let error):
+                    print("Failed to logout: \(error)")
+                    viewModel.errorMessage = "\(error)"
+                }
+            }
         } else {
-            // Change root view to LoginView
             Helper.shared.setSelectedUserType(userType: .Customer)
             let newHome = UIHostingController(rootView: LoginView())
             Helper.shared.changeRootVC(newroot: newHome, transitionFrom: .fromLeft)
-            
         }
     }
 }
+

@@ -184,18 +184,21 @@ struct SubcripedPackagesView: View {
         .customSheet(isPresented: $mustLogin ,height: 350){
             LoginSheetView()
         }
-        
-        if showCancel{
-            CancelSubscriptionView(isPresent: $showCancel, customerPackageId: idToCancel ?? 0,onCancelSuccess: {
-                if let index = viewModel.subscripedPackages?.items?.firstIndex(where: { $0.customerPackageID == idToCancel }) {
-                    viewModel.subscripedPackages?.items?[index].canCancel?.toggle()
-                    viewModel.subscripedPackages?.items?[index].canRenew?.toggle()
-//                    viewModel.subscripedPackages?.items?[index].status?.toggle()
+        .overlay(
+            Group {
+                if showCancel{
+                    CancelSubscriptionView(isPresent: $showCancel, customerPackageId: idToCancel ?? 0,onCancelSuccess: {
+                        if let index = viewModel.subscripedPackages?.items?.firstIndex(where: { $0.customerPackageID == idToCancel }) {
+                            viewModel.subscripedPackages?.items?[index].canCancel?.toggle()
+                            viewModel.subscripedPackages?.items?[index].canRenew?.toggle()
+                            //                    viewModel.subscripedPackages?.items?[index].status?.toggle()
+                        }
+                        Task{ await viewModel.refresh()}
+                        
+                    })
                 }
-                Task{ await viewModel.refresh()}
-
-            })
-        }
+            }
+            )
         
     }
 }
