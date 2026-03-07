@@ -251,7 +251,6 @@ struct EditProfileView: View {
             guard newval == true else { return }
              accountUpdated()
         }
-        
         .showHud(isShowing:  $viewModel.isLoading)
         .errorAlert(isPresented: Binding(
             get: { viewModel.errorMessage != nil },

@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import SwiftUI
 
 class EditProfileViewModel : ObservableObject {
     static let shared = EditProfileViewModel()
@@ -255,7 +256,6 @@ extension EditProfileViewModel{
         loadTask = Task { [weak self] in
             guard let self else { return }
             if self.isLoading == true { return }
-            
             isLoading = true
             defer { isLoading = false }
             
@@ -329,7 +329,27 @@ extension EditProfileViewModel{
     }
 }
 extension EditProfileViewModel{
-    func logout(completion: @escaping (Result<Void, Error>) -> Void) {
-        deleteTokenUseCase.execute(completion: completion)
+    
+    @MainActor
+    func logout() async {
+        if isLoading == true { return }
+
+        isLoading = true
+        defer { isLoading = false }
+
+        do {
+            try await deleteTokenUseCase.execute()
+
+            Helper.shared.IsLoggedIn(value: false)
+            Helper.shared.logout()
+            KeychainHelper.delete(KeychainKeys.userPhone)
+            KeychainHelper.delete(KeychainKeys.userPassword)
+
+            let newHome = UIHostingController(rootView: NewTabView())
+            Helper.shared.changeRootVC(newroot: newHome, transitionFrom: .fromLeft)
+
+        } catch {
+            errorMessage = error.localizedDescription
+        }
     }
 }

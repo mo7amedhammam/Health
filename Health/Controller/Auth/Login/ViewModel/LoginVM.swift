@@ -109,33 +109,36 @@ enum LoginError: Error {
 
 
 protocol DeleteFirebaseTokenUseCaseProtocol {
-    func execute(completion: @escaping (Result<Void, Error>) -> Void)
+    func execute() async throws
 }
 
 final class DeleteFirebaseTokenUseCase: DeleteFirebaseTokenUseCaseProtocol {
+    
     private let networkService: NetworkServiceProtocol
 
     init(networkService: NetworkServiceProtocol = NetworkService1.shared) {
         self.networkService = networkService
     }
 
-    func execute(completion: @escaping (Result<Void, Error>) -> Void) {
+    func execute() async throws {
+
         let parameters: [String: Any] = [:]
         let target = NewAuthontications.DeleteFireBaseDeviceToken(parameters: parameters)
 
-        networkService.request(target, responseType: BaseResponse<MFirebase>.self) { result in
-            switch result {
-            case .success(let response):
-                if response.messageCode == 200 {
-                    KeychainHelper.delete(KeychainKeys.userPhone)
-                    KeychainHelper.delete(KeychainKeys.userPassword)
-                    completion(.success(()))
-                } else {
-                    completion(.failure(LoginError.serverError(message: response.message ?? "Unknown error")))
+        let response: BaseResponse<MFirebase> = try await withCheckedThrowingContinuation { continuation in
+            self.networkService.request(target, responseType: BaseResponse<MFirebase>.self) { result in
+                switch result {
+                case .success(let response):
+                    continuation.resume(returning: response)
+                case .failure(let error):
+                    continuation.resume(throwing: error)
                 }
-            case .failure(let error):
-                completion(.failure(error))
             }
         }
+
+        guard response.messageCode == 200 else {
+            throw NetworkError.serverError(code: response.messageCode ?? 400, error: response.message ?? "Unknown error")
+        }
+
     }
 }

@@ -210,12 +210,17 @@ struct ProfileViewUI: View {
         }
         .localizeView()
         .withNavigation(router: router)
+        .showHud(isShowing:  $viewModel.isLoading)
         //        .environment(\.layoutDirection,localizationManager.currentLanguage == "ar" ? .rightToLeft : .leftToRight)
-        //        .localizeView()
         .background(Color(.bg))
         .task {
            await paymentsVM.getMyBallance()
         }
+        .errorAlert(isPresented: Binding(
+            get: { viewModel.errorMessage != nil },
+            set: { if !$0 { viewModel.errorMessage = nil } }
+        ), message: viewModel.errorMessage)
+        
         // Add this modifier to your main view
         //             .alert(isPresented: $showLogoutAlert) {
         //                 Alert(
@@ -301,22 +306,22 @@ struct ProfileViewUI_Previews: PreviewProvider {
 extension ProfileViewUI{
     private func logoutAction() {
         if isLogedin {
-            
-            viewModel.logout { result in
-                switch result {
-                    case .success:
-                    // Clear local flags regardless of result
-                    Helper.shared.IsLoggedIn(value: false)
-                    Helper.shared.logout()
-                    let newHome = UIHostingController(rootView: NewTabView())
-                    Helper.shared.changeRootVC(newroot: newHome, transitionFrom: .fromLeft)
-
-                    print("Logged out successfully")
-                case .failure(let error):
-                    print("Failed to logout: \(error)")
-                    viewModel.errorMessage = "\(error)"
-                }
-            }
+            Task{ await viewModel.logout()}
+//            viewModel.logout { result in
+//                switch result {
+//                    case .success:
+//                    // Clear local flags regardless of result
+//                    Helper.shared.IsLoggedIn(value: false)
+//                    Helper.shared.logout()
+//                    let newHome = UIHostingController(rootView: NewTabView())
+//                    Helper.shared.changeRootVC(newroot: newHome, transitionFrom: .fromLeft)
+//
+//                    print("Logged out successfully")
+//                case .failure(let error):
+//                    print("Failed to logout: \(error)")
+//                    viewModel.errorMessage = "\(error)"
+//                }
+//            }
         } else {
             let newHome = UIHostingController(rootView: LoginView())
             Helper.shared.changeRootVC(newroot: newHome, transitionFrom: .fromLeft)
