@@ -72,7 +72,7 @@ struct ActiveCustPackFiles : View {
 //                    .padding([.top,.horizontal])
 //                    .padding(.top,20)
 
-                filesList(files: myfilesvm.files)
+                filesList(files: myfilesvm.files ?? [])
 
                 Spacer()
             }

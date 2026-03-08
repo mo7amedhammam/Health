@@ -10,13 +10,20 @@ import SwiftUI
 struct PackageDetailsView: View {
     @StateObject private var viewModel: AvailableDoctorsViewModel
 
+    var inFlightWishlist: Set<Int> = []
+    var likeAction : ((Int) -> Void)?
+
     init(package: FeaturedPackageItemM) {
         _viewModel = StateObject(wrappedValue: AvailableDoctorsViewModel(package: package))
     }
 
     var body: some View {
         VStack(spacing: 0) {
-            headerSection(package: viewModel.package)
+            headerSection(package: viewModel.package,likeAction: {packageId in
+                Task {
+                        await viewModel.toggleWishlist(for: packageId)
+                }
+            })
 
             pricingBar(package: viewModel.package)
 
@@ -80,7 +87,7 @@ struct PackageDetailsView: View {
     // MARK: - Subviews
 
     @ViewBuilder
-    private func headerSection(package: FeaturedPackageItemM) -> some View {
+    private func headerSection(package: FeaturedPackageItemM,likeAction : ((Int) -> Void)?) -> some View {
         VStack {
             VStack {
                 TitleBar(title: "", hasbackBtn: true)
@@ -105,11 +112,18 @@ struct PackageDetailsView: View {
                     Spacer()
 
                     VStack(alignment: .trailing) {
-                        Button(action: {}) {
-                            Image(.newlikeicon)
+                        
+                        Button(action: {
+                            guard let packageid = package.appCountryPackageId else { return }
+                            likeAction?(packageid)
+                            
+                        }, label: {
+                            Image( package.isWishlist ?? false ? .newlikeicon : .newunlikeicon)
                                 .resizable()
                                 .frame(width: 20, height: 20)
-                        }
+                        })
+                        .disabled(inFlightWishlist.contains(package.appCountryPackageId ?? -1))
+
                         Spacer()
 
                         HStack(alignment: .center, spacing: 5) {
@@ -151,12 +165,12 @@ struct PackageDetailsView: View {
     private func pricingBar(package: FeaturedPackageItemM) -> some View {
         HStack(alignment: .bottom) {
             VStack(alignment: .leading) {
-                (Text(package.priceAfterDiscount ?? 0, format: .number.precision(.fractionLength(1))) + Text(" " + "EGP".localized))
+                (Text(package.priceAfterDiscount ?? 0, format: .number.precision(.fractionLength(1))) + Text(" " + (package.currency ?? "EGP".localized)))
                     .font(.semiBold(size: 16))
                     .foregroundStyle(Color.white)
 
                 HStack {
-                    (Text(package.priceBeforeDiscount ?? 0, format: .number.precision(.fractionLength(1))) + Text(" " + "EGP".localized))
+                    (Text(package.priceBeforeDiscount ?? 0, format: .number.precision(.fractionLength(1))) + Text(" " + (package.currency ?? "EGP".localized)))
                         .strikethrough()
                         .foregroundStyle(Color(.secondary))
                         .font(.medium(size: 12))

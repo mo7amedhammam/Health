@@ -7,7 +7,6 @@
 
 
 // MARK: - PackageFileM
-// MARK: - PackageFileM
 struct PackageFileM: Codable,Hashable {
     var items: [MyFileM]?
     var totalCount: Int?
@@ -59,3 +58,19 @@ extension MyFileM {
 //     "filePath": "string",
 //     "creationDate": "2025-06-29T11:32:03.479Z",
 //     "customerId": 0
+
+// MARK: - customer => PackageFileM
+struct customerMyFileM: Codable,Hashable {
+    var customerPackageID, doctorID: Int?
+    var notes, fileName: String?
+    var fileTypeID, id: Int?
+    var filePath: String?
+
+    enum CodingKeys: String, CodingKey {
+        case customerPackageID = "customerPackageId"
+        case doctorID = "doctorId"
+        case notes, fileName
+        case fileTypeID = "fileTypeId"
+        case id, filePath
+    }
+}

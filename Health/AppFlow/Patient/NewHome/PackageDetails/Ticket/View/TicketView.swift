@@ -31,6 +31,8 @@ struct TicketView: View {
                     //                            .cardStyle(backgroundColor: .clear,cornerRadius: 5,shadowOpacity:0.06)
                     
                     VStack{
+                        let packageData = viewmodel.ticketData?.packageData ?? nil
+
                         Image(.logo)
                             .resizable()
                             .frame(width: 108, height: 75, alignment: .center)
@@ -57,8 +59,6 @@ struct TicketView: View {
                             }
                             .foregroundStyle(Color(.main))
                             
-                            
-                            let packageData = viewmodel.ticketData?.packageData ?? nil
                             let bookedTiming = viewmodel.ticketData?.bookedTimming ?? nil
                             VStack(alignment:.leading,spacing: 10){
                                 
@@ -289,7 +289,7 @@ struct TicketView: View {
                                         .frame(maxWidth: .infinity,alignment:.leading)
                                     
                                     Text("\(coponData.totalBeforeDiscount ?? 0)")
-                                    Text("EGP_".localized)
+                                    Text(packageData?.currency ?? "EGP_".localized)
                                 }
                                 .font(.medium(size: 16))
                                 .foregroundStyle(Color(.main))
@@ -299,7 +299,7 @@ struct TicketView: View {
                                         .frame(maxWidth: .infinity,alignment:.leading)
                                     
                                     Text("\(coponData.discount ?? 0)")
-                                    Text("EGP_".localized)
+                                    Text(packageData?.currency ?? "EGP_".localized)
                                 }
                                 .font(.medium(size: 16))
                                 .foregroundStyle(Color(.secondary))
@@ -309,7 +309,7 @@ struct TicketView: View {
                                         .frame(maxWidth: .infinity,alignment:.leading)
                                     
                                     Text("\(coponData.totalAfterDiscount ?? 0)")
-                                    Text("EGP_".localized)
+                                    Text(packageData?.currency ?? "EGP_".localized)
                                 }
                                 .font(.semiBold(size: 16))
                                 .foregroundStyle(Color(.main))

@@ -1,48 +1,14 @@
 //
-//  PackageFilesView.swift
+//  filesList.swift
 //  Sehaty
 //
-//  Created by mohamed hammam on 31/05/2025.
+//  Created by mohamed hammam on 08/03/2026.
 //
 
 import SwiftUI
 
-struct PackageFilesView: View {
-    var CustomerPackageId : Int
-    @StateObject var viewmodel = PackageFilesViewModel()
-    
-    var body: some View {
-        VStack(){
-            TitleBar(title: "Package_files",hasbackBtn: true)
-            
-            Spacer()
-            
-            customerfilesList(files: viewmodel.customerMyFiles)
-            
-        }
-        .background(Color(.bg))
-        .task {
-            viewmodel.CustomerPackageId = CustomerPackageId
-            await viewmodel.getCustomerSubscripedPackageFiles()
-        }
-        //        .reversLocalizeView()
-        .localizeView()
-        .showHud(isShowing:  $viewmodel.isLoading)
-        .errorAlert(isPresented: Binding(
-            get: { viewmodel.errorMessage != nil },
-            set: { if !$0 { viewmodel.errorMessage = nil } }
-        ), message: viewmodel.errorMessage)
-        
-    }
-}
-
-#Preview {
-    PackageFilesView(CustomerPackageId: 0)
-}
-
-
-struct customerfilesList:View {
-    var files:[customerMyFileM]?
+struct filesList:View {
+    var files:[MyFileM]?
     //    = [.init(),.init(),.init()]
     
     var body: some View {
@@ -86,9 +52,9 @@ struct customerfilesList:View {
                                             .font(.semiBold(size: 16))
                                             .foregroundStyle(Color(.main))
                                         
-//                                        Text(file.formattedCreationDate ?? "")
-//                                            .font(.medium(size: 14))
-//                                            .foregroundStyle(Color(.secondary))
+                                        Text(file.formattedCreationDate ?? "")
+                                            .font(.medium(size: 14))
+                                            .foregroundStyle(Color(.secondary))
                                     }
                                     .frame(maxWidth:.infinity,alignment: .trailing)
                                 }
@@ -126,7 +92,8 @@ struct customerfilesList:View {
         }
     }
 }
-extension customerfilesList{
+
+extension filesList{
     func openFile(_ filePath: String) {
         let finalURL: URL?
 
@@ -156,4 +123,5 @@ extension customerfilesList{
         }
     }
 }
+
 

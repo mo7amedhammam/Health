@@ -115,6 +115,7 @@
 		9088CFC52DA561930036EE0E /* CustomHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9088CFC42DA561930036EE0E /* CustomHeader.xib */; };
 		9088CFC92DA5AE570036EE0E /* CustomInputField.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9088CFC82DA5AE570036EE0E /* CustomInputField.xib */; };
 		9088CFCB2DA5AE6C0036EE0E /* CustomInputField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9088CFCA2DA5AE6C0036EE0E /* CustomInputField.swift */; };
+		909381F62F5DE1F400DD9BCE /* filesList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 909381F52F5DE1F400DD9BCE /* filesList.swift */; };
 		90B67BDA2D9EC7B400C1FD31 /* OnBoardingPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90B67BD92D9EC7A900C1FD31 /* OnBoardingPage.swift */; };
 		90B67BDC2D9EC7D600C1FD31 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90B67BDB2D9EC7D600C1FD31 /* OnboardingView.swift */; };
 		90B67BE12D9ED2B600C1FD31 /* exColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90B67BE02D9ED2AD00C1FD31 /* exColors.swift */; };
@@ -474,6 +475,7 @@
 		9088CFC42DA561930036EE0E /* CustomHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomHeader.xib; sourceTree = "<group>"; };
 		9088CFC82DA5AE570036EE0E /* CustomInputField.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomInputField.xib; sourceTree = "<group>"; };
 		9088CFCA2DA5AE6C0036EE0E /* CustomInputField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomInputField.swift; sourceTree = "<group>"; };
+		909381F52F5DE1F400DD9BCE /* filesList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = filesList.swift; sourceTree = "<group>"; };
 		90B67BD92D9EC7A900C1FD31 /* OnBoardingPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingPage.swift; sourceTree = "<group>"; };
 		90B67BDB2D9EC7D600C1FD31 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		90B67BE02D9ED2AD00C1FD31 /* exColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = exColors.swift; sourceTree = "<group>"; };
@@ -1014,6 +1016,7 @@
 		902B87BA2E0AD764009D5234 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				909381F52F5DE1F400DD9BCE /* filesList.swift */,
 				902B87C02E0AD7DA009D5234 /* MyFilesView.swift */,
 			);
 			path = View;
@@ -3544,6 +3547,7 @@
 				902B87CC2E0C2DED009D5234 /* AllergiesMElement.swift in Sources */,
 				90842F3A2DA1748800B02D02 /* CustomButton.swift in Sources */,
 				BB518CEE2A9A129500242FAD /* TipsCategories3TVCell.swift in Sources */,
+				909381F62F5DE1F400DD9BCE /* filesList.swift in Sources */,
 				902B87D12E0C446C009D5234 /* AllergiesServices.swift in Sources */,
 				90FDD3152DDF686300C3BABB /* TicketM.swift in Sources */,
 				904748592DD6233E0016C3DC /* SubCategoriesM.swift in Sources */,

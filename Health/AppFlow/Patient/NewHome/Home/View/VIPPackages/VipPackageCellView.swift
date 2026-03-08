@@ -152,29 +152,20 @@ struct VipPackageCellView: View, Equatable {
                         .foregroundStyle(Color.white)
                         .frame(maxWidth: .infinity,alignment:.leading)
                         
-                        (Text(item.priceAfterDiscount ?? 0,format: .number.precision(.fractionLength(1))) + Text(" "+"EGP".localized))
+                        (Text(item.priceAfterDiscount ?? 0,format: .number.precision(.fractionLength(1))) + Text(" "+(item.currency ?? "EGP".localized)))
                             .font(.semiBold(size: 16))
                             .foregroundStyle(Color.white)
                             .frame(maxWidth: .infinity,alignment:.leading)
                         
-                        HStack{
-                            (Text(item.priceBeforeDiscount ?? 0,format: .number.precision(.fractionLength(1))) + Text(" "+"EGP".localized)).strikethrough().foregroundStyle(Color(.secondary))
-                                .font(.medium(size: 12))
-                            
-//                            HStack(spacing: 0){
-//                                Text("(".localized)
-//                                Text("Discount".localized )
-//                                Text( " \(item.discount ?? 0)")
-//                                Text("%".localized)
-//                                Text(")".localized)
-//                            }
-//                                .font(.semiBold(size: 12))
-//                                .foregroundStyle(Color.white)
-                            
-                            DiscountLine(discount: item.discount)
-
+                        if let discount = item.discount,discount > 0{
+                            HStack{
+                                (Text(item.priceBeforeDiscount ?? 0,format: .number.precision(.fractionLength(1))) + Text(" "+(item.currency ?? "EGP".localized))).strikethrough().foregroundStyle(Color(.secondary))
+                                    .font(.medium(size: 12))
+                                
+                                DiscountLine(discount: discount)
+                            }
+                            .frame(maxWidth: .infinity,alignment:.leading)
                         }
-                        .frame(maxWidth: .infinity,alignment:.leading)
                         
                     }
                     .padding(.top,5)

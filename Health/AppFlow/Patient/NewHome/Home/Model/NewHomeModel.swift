@@ -59,6 +59,7 @@ struct FeaturedPackageItemM: Codable,Hashable {
     var homeImage, imagePath: String?
     var doctorCount: Int?
     var appCountryPackageId: Int?
+    var currency:String?
     
     enum CodingKeys: String, CodingKey {
         case id, name
@@ -66,6 +67,7 @@ struct FeaturedPackageItemM: Codable,Hashable {
         case subCategoryID = "subCategoryId"
         case categoryName,mainCategoryName, sessionCount, isWishlist, priceBeforeDiscount, discount, priceAfterDiscount, homeImage, imagePath, doctorCount
         case appCountryPackageId
+        case currency
     }
 }
 

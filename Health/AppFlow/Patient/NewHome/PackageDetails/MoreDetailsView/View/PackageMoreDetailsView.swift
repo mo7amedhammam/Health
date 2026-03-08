@@ -135,12 +135,12 @@ struct PackageMoreDetailsView: View {
                                 Text(packageData?.priceAfterDiscount ?? 0, format: .number.precision(.fractionLength(2)))
                                     .font(.semiBold(size: 16))
 
-                                Text(" " + "EGP".localized)
+                                Text(" " + (packageData?.currency ?? "EGP".localized))
                                     .font(.medium(size: 12))
                             }
                             .foregroundStyle(Color.white)
 
-                            (Text(packageData?.priceBeforeDiscount ?? 0, format: .number.precision(.fractionLength(2))) + Text(" " + "EGP".localized))
+                            (Text(packageData?.priceBeforeDiscount ?? 0, format: .number.precision(.fractionLength(2))) + Text(" " + (packageData?.currency ?? "EGP".localized)))
                                 .strikethrough().foregroundStyle(Color(.secondary))
                                 .font(.medium(size: 12))
 

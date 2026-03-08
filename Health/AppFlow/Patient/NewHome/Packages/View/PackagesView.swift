@@ -381,13 +381,13 @@ struct PackagesListView: View {
                                         Spacer()
                                         
                                             VStack(alignment: .trailing){
-                                                (Text(item.priceAfterDiscount ?? 0,format:.number.precision(.fractionLength(1))) + Text(" "+"EGP".localized))
+                                                (Text(item.priceAfterDiscount ?? 0,format:.number.precision(.fractionLength(1))) + Text(" "+(item.currency ?? "EGP".localized)))
                                                     .font(.semiBold(size: 16))
                                                     .foregroundStyle(Color.white)
                                                 
                                                 if let discount = item.discount, discount > 0 {
                                                 HStack{
-                                                    (Text(item.priceBeforeDiscount ?? 0,format:.number.precision(.fractionLength(1))) + Text(" "+"EGP".localized))
+                                                    (Text(item.priceBeforeDiscount ?? 0,format:.number.precision(.fractionLength(1))) + Text(" "+(item.currency ?? "EGP".localized)))
                                                         .strikethrough()
                                                         .foregroundStyle(Color(.secondary))
                                                         .font(.semiBold(size: 12))

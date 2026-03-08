@@ -11,7 +11,7 @@ import Foundation
 @MainActor
 final class AvailableDoctorsViewModel:ObservableObject {
     // Input (immutable)
-    let package: FeaturedPackageItemM
+    @Published var package: FeaturedPackageItemM
     
     // Dependencies
     private let networkService: AsyncAwaitNetworkServiceProtocol
@@ -33,12 +33,17 @@ final class AvailableDoctorsViewModel:ObservableObject {
     // Load-once guard
     private var didLoad = false
     
+    private let wishlistManager: WishlistManaging
+    @Published var inFlightWishlist: Set<Int> = []
+
     init(
         package: FeaturedPackageItemM,
-        networkService: AsyncAwaitNetworkServiceProtocol = AsyncAwaitNetworkService.shared
+        networkService: AsyncAwaitNetworkServiceProtocol = AsyncAwaitNetworkService.shared,
+        wishlistManager: WishlistManaging = WishListManagerAdapter(),
     ) {
         self.package = package
         self.networkService = networkService
+        self.wishlistManager = wishlistManager
     }
     
 //    func loadOnce() async {
@@ -117,59 +122,24 @@ final class AvailableDoctorsViewModel:ObservableObject {
         await loadTask?.value
     }
 }
+extension AvailableDoctorsViewModel {
+    func toggleWishlist(for appCountryPackageId: Int) async {
+        // Prevent duplicate in-flight operations
+        guard !inFlightWishlist.contains(appCountryPackageId) else { return }
+        inFlightWishlist.insert(appCountryPackageId)
+        defer { inFlightWishlist.remove(appCountryPackageId) }
 
-//MARK: -- Functions --
-//extension AvailableDoctorsViewModel{
-//    
-//    @MainActor
-//    func getAvailableDoctors(appCountryPackageId:Int) async {
-//        isLoading = true
-//        defer { isLoading = false }
-//        guard let maxResultCount = maxResultCount, let skipCount = skipCount else {
-//            // Handle missings
-//            self.errorMessage = "check inputs"
-//            //            throw NetworkError.unknown(code: 0, error: "check inputs")
-//            return
-//        }
-//        let parametersarr : [String : Any] =  ["appCountryPackageId":appCountryPackageId,"maxResultCount" : maxResultCount ,"skipCount" : skipCount]
-//        
-//        let target = HomeServices.GetAvailableShiftDoctors(parameters: parametersarr)
-//        do {
-//            self.errorMessage = nil // Clear previous errors
-//            let response = try await networkService.request(
-//                target,
-//                responseType: AvailabeDoctorsM.self
-//            )
-//            self.availableDoctors = response
-//        } catch {
-//            self.errorMessage = error.localizedDescription
-//        }
-//    }
-//
-////    @MainActor
-////    func getPackages(categoryId:Int) async {
-////        isLoading = true
-////        defer { isLoading = false }
-////        guard let maxResultCount = maxResultCount, let skipCount = skipCount else {
-////            // Handle missings
-////            self.errorMessage = "check inputs"
-////            //            throw NetworkError.unknown(code: 0, error: "check inputs")
-////            return
-////        }
-////        let parametersarr : [String : Any] =  ["categoryId":categoryId,"maxResultCount" : maxResultCount ,"skipCount" : skipCount]
-////
-////        let target = HomeServices.GetPackageByCategoryId(parameters: parametersarr)
-////        do {
-////            self.errorMessage = nil // Clear previous errors
-////            let response = try await networkService.request(
-////                target,
-////                responseType: FeaturedPackagesM.self
-////            )
-////            self.packages = response
-////        } catch {
-////            self.errorMessage = error.localizedDescription
-////        }
-////    }
-//    
-//    
-//}
+        // Optimistic update
+        let old = package.isWishlist ?? false
+        package.isWishlist = !old
+
+        do {
+            try await wishlistManager.addOrRemovePackageToWishList(packageId: appCountryPackageId)
+        } catch {
+            // Rollback on failure
+            package.isWishlist = old
+            errorMessage = (error as? LocalizedError)?.errorDescription ?? error.localizedDescription
+        }
+    }
+}
+

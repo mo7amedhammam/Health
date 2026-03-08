@@ -582,12 +582,12 @@ struct DocPackagesListView: View {
                                             Spacer()
                                             
                                             VStack(alignment: .trailing){
-                                                (Text(item.priceAfterDiscount ?? 0,format:.number.precision(.fractionLength(1))) + Text(" "+"EGP".localized))
+                                                (Text(item.priceAfterDiscount ?? 0,format:.number.precision(.fractionLength(1))) + Text(" "+(item.currency ?? "EGP".localized)))
                                                     .font(.semiBold(size: 16))
                                                     .foregroundStyle(Color.white)
                                                 
                                                 HStack{
-                                                    (Text(item.price ?? 0,format:.number.precision(.fractionLength(1))) + Text(" "+"EGP".localized)).strikethrough().foregroundStyle(Color(.secondary))
+                                                    (Text(item.price ?? 0,format:.number.precision(.fractionLength(1))) + Text(" "+(item.currency ?? "EGP".localized))).strikethrough().foregroundStyle(Color(.secondary))
                                                         .font(.semiBold(size: 12))
                                                     
                                                     DiscountLine(discount: item.discount)

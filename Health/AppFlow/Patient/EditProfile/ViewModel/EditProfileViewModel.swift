@@ -339,14 +339,15 @@ extension EditProfileViewModel{
 
         do {
             try await deleteTokenUseCase.execute()
-
-            Helper.shared.IsLoggedIn(value: false)
-            Helper.shared.logout()
-            KeychainHelper.delete(KeychainKeys.userPhone)
-            KeychainHelper.delete(KeychainKeys.userPassword)
-
-            let newHome = UIHostingController(rootView: NewTabView())
-            Helper.shared.changeRootVC(newroot: newHome, transitionFrom: .fromLeft)
+//            Helper.shared.IsLoggedIn(value: false)
+//            Helper.shared.logout()
+//            KeychainHelper.delete(KeychainKeys.userPhone)
+//            KeychainHelper.delete(KeychainKeys.userPassword)
+//
+//            await MainActor.run {
+//                let newHome = UIHostingController(rootView: NewTabView())
+//                Helper.shared.changeRootVC(newroot: newHome, transitionFrom: .fromLeft)
+//            }
 
         } catch {
             errorMessage = error.localizedDescription

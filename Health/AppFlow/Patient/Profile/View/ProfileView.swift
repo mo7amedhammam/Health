@@ -306,23 +306,22 @@ struct ProfileViewUI_Previews: PreviewProvider {
 extension ProfileViewUI{
     private func logoutAction() {
         if isLogedin {
-            Task{ await viewModel.logout()}
-//            viewModel.logout { result in
-//                switch result {
-//                    case .success:
-//                    // Clear local flags regardless of result
-//                    Helper.shared.IsLoggedIn(value: false)
-//                    Helper.shared.logout()
-//                    let newHome = UIHostingController(rootView: NewTabView())
-//                    Helper.shared.changeRootVC(newroot: newHome, transitionFrom: .fromLeft)
-//
-//                    print("Logged out successfully")
-//                case .failure(let error):
-//                    print("Failed to logout: \(error)")
-//                    viewModel.errorMessage = "\(error)"
-//                }
-//            }
+            Task {
+                await viewModel.logout()
+
+                // Clear local flags after successful logout
+                Helper.shared.IsLoggedIn(value: false)
+                Helper.shared.logout()
+                KeychainHelper.delete(KeychainKeys.userPhone)
+                KeychainHelper.delete(KeychainKeys.userPassword)
+
+                await MainActor.run {
+                    let newHome = UIHostingController(rootView: NewTabView()) // or LoginView(), whichever you want
+                    Helper.shared.changeRootVC(newroot: newHome, transitionFrom: .fromLeft)
+                }
+            }
         } else {
+            Helper.shared.setSelectedUserType(userType: .Customer)
             let newHome = UIHostingController(rootView: LoginView())
             Helper.shared.changeRootVC(newroot: newHome, transitionFrom: .fromLeft)
         }

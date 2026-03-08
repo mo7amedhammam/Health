@@ -558,6 +558,24 @@ extension Helper{
             window.replaceRootViewController(nav, from ?? (isArabic ? .fromRight : .fromLeft))
         }
     }
+//    func changeRootVC(newroot: UIViewController, transitionFrom: CATransitionSubtype? = .fromRight) {
+//        DispatchQueue.main.async {
+//            guard let window = UIApplication.shared.connectedScenes
+//                .compactMap({ $0 as? UIWindowScene })
+//                .flatMap({ $0.windows })
+//                .first(where: { $0.isKeyWindow }) else { return }
+//
+//            let transition = CATransition()
+//            transition.type = .push
+//            if let transitionFrom = transitionFrom {
+//                transition.subtype = transitionFrom
+//            }
+//            transition.duration = 0.3
+//            window.layer.add(transition, forKey: kCATransition)
+//            window.rootViewController = newroot
+//            window.makeKeyAndVisible()
+//        }
+//    }
 
     // MARK: - Active window helper
     static func activeWindow() -> UIWindow? {
