@@ -312,8 +312,8 @@ extension ProfileViewUI{
                 // Clear local flags after successful logout
                 Helper.shared.IsLoggedIn(value: false)
                 Helper.shared.logout()
-                KeychainHelper.delete(KeychainKeys.userPhone)
-                KeychainHelper.delete(KeychainKeys.userPassword)
+//                KeychainHelper.delete(KeychainKeys.userPhone)
+//                KeychainHelper.delete(KeychainKeys.userPassword)
 
                 await MainActor.run {
                     let newHome = UIHostingController(rootView: NewTabView()) // or LoginView(), whichever you want
