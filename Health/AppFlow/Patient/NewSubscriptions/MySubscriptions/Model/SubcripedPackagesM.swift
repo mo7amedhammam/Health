@@ -15,7 +15,7 @@ struct SubcripedPackagesM: Codable {
 
 // MARK: - Item
 struct SubcripedPackageItemM: Codable,Hashable {
-    var customerPackageID,docotrID: Int?
+    var customerPackageID,doctorID: Int?
     var status, subscriptionDate, lastSessionDate, packageName: String?
     var categoryName, mainCategoryName, doctorName: String?
     var sessionCount, attendedSessionCount: Int?
@@ -28,7 +28,7 @@ struct SubcripedPackageItemM: Codable,Hashable {
     enum CodingKeys: String, CodingKey {
         case customerPackageID = "customerPackageId"
         case status, subscriptionDate, lastSessionDate, packageName, categoryName, mainCategoryName, doctorName
-        case docotrID = "doctorId"
+        case doctorID = "doctorId"
         case sessionCount, attendedSessionCount, packageImage
         case doctorSpeciality,doctorNationality,doctorImage
         case canCancel,canRenew

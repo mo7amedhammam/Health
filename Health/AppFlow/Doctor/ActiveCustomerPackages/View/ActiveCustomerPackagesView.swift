@@ -206,7 +206,7 @@ struct ActiveCustomerPackagesView: View {
 //                    doctorId = viewModel.subscripedPackage?.docotrID
                     
 //                    customerPackageId = viewModel.subscripedPackage?.customerPackageID
-                    doctorId = viewModel.subscripedPackage?.docotrID
+                    doctorId = viewModel.subscripedPackage?.doctorID
                     customerId = viewModel.subscripedPackage?.customerID
 
                     packageId = viewModel.upcomingSession?.packageID
