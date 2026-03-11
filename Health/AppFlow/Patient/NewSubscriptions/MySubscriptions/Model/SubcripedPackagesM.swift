@@ -28,7 +28,7 @@ struct SubcripedPackageItemM: Codable,Hashable {
     enum CodingKeys: String, CodingKey {
         case customerPackageID = "customerPackageId"
         case status, subscriptionDate, lastSessionDate, packageName, categoryName, mainCategoryName, doctorName
-        case docotrID = "docotrId"
+        case docotrID = "doctorId"
         case sessionCount, attendedSessionCount, packageImage
         case doctorSpeciality,doctorNationality,doctorImage
         case canCancel,canRenew

@@ -205,7 +205,9 @@ struct ReSchedualView: View {
             viewModel.doctorId = doctorId
             viewModel.PackageId = packageId
             viewModel.SessionId = SessionId
-            await viewModel.getDoctorPackageDetails()
+            if reschedualcase != .nextSession {
+                await viewModel.getDoctorPackageDetails()
+            }
             await viewModel.getAvailableDays()
         }
         .onChange(of: doctorPackageId) { newVal in
