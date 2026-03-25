@@ -13,20 +13,34 @@ struct MonthYearPicker: UIViewRepresentable {
     
     func makeUIView(context: Context) -> MonthYearWheelPicker {
         let picker = MonthYearWheelPicker()
+        // Enforce minimum to the start of the current month by default
+        let calendar = Calendar.current
+        let now = Date()
+        let startOfCurrentMonth = calendar.date(from: calendar.dateComponents([.year, .month], from: now)) ?? now
+        picker.minimumDate = startOfCurrentMonth
         picker.date = date
         picker.onDateSelected = { month, year in
             var components = Calendar.current.dateComponents([.year, .month], from: date)
             components.year = year
             components.month = month
             components.timeZone = TimeZone(secondsFromGMT: 0)  // Force UTC
-            date = Calendar.current.date(from: components) ?? date
+            let computed = Calendar.current.date(from: components) ?? date
+            let minDate = picker.minimumDate
+            if computed < minDate {
+                date = minDate
+            } else {
+                date = computed
+            }
             print("new date: \(date)")
         }
         return picker
     }
     
     func updateUIView(_ uiView: MonthYearWheelPicker, context: Context) {
-        uiView.date = date
+        var incoming = date
+        let minDate = uiView.minimumDate
+        if incoming < minDate { incoming = minDate }
+        uiView.date = incoming
     }
 }
 
@@ -226,6 +240,11 @@ open class MonthYearWheelPicker: UIPickerView {
             month += 1
         }
         self.months = months
+        
+        // Ensure default minimum is start of current month
+        let now = Date()
+        let startOfCurrentMonth = calendar.date(from: calendar.dateComponents([.year, .month], from: now)) ?? now
+        self._minimumDate = formattedDate(from: startOfCurrentMonth)
         
         updateAvailableYears(animated: false)
     }
