@@ -29,8 +29,7 @@ struct MyFileM: Codable,Hashable {
 extension MyFileM {
     var formattedCreationDate: String? {
         guard let date = self.creationDate else { return "" }
-
-        let formatedDate = convertDateToString(inputDateString: date , inputDateFormat: "yyyy-MM-dd'T'HH:mm:ss", outputDateFormat: "yyyy/MM/dd")
+        let formatedDate = convertDateToString(inputDateString: date , inputDateFormat: "dd/MM/yyyy HH:mm:ss", outputDateFormat: "yyyy/MM/dd")
         return formatedDate // fallback to original string if parsing fails
     }
 }

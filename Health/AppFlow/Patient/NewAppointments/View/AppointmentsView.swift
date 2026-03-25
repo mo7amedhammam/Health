@@ -137,7 +137,8 @@ struct AppointmentsView: View {
                 toDate: $viewModel.toDate,
                 sortDirection: $viewModel.sortDirection,
                 onApply: {
-                    viewModel.clear()
+//                    viewModel.clear()
+                    viewModel.skipCount = 0
                     Task { await viewModel.refresh() }
                 },
                 onCancel: {
@@ -575,8 +576,8 @@ struct RadioButton: View {
     
     var body: some View {
         Button(action: {
+            isSelected = true
             action?()
-//            isSelected.toggle()
         }) {
             HStack(){
                 // The radio button circle
@@ -605,9 +606,6 @@ struct FilterView: View {
     @Binding var sortDirection: String?
     var onApply: (() -> Void)? = nil
     var onCancel: (() -> Void)? = nil
-    
-    private var isOldToNewSelected: Bool { sortDirection == "old_to_new" }
-    private var isNewToOldSelected: Bool { sortDirection == "new_to_old" }
     
     var body: some View {
         VStack(spacing: 0) {
@@ -658,13 +656,43 @@ struct FilterView: View {
                 
                 // Radio Buttons
                 VStack(alignment: .trailing, spacing: 10) {
-                    RadioButton(option: .oldestToNewest, isSelected: .constant(isOldToNewSelected)) {
-                        sortDirection = "old_to_new"
-                    }
+                    RadioButton(
+                        option: .oldestToNewest,
+                        isSelected: Binding(
+                            get: {
+                                if let dir = sortDirection?.lowercased() {
+                                    return dir == "old_to_new" || dir == "asc"
+                                }
+                                return false
+                            },
+                            set: { isSelected in
+                                if isSelected {
+                                    // keep a single source of truth internally as asc/desc
+                                    sortDirection = "asc"
+                                }
+                            }
+                        ),
+                        action: nil
+                    )
                     
-                    RadioButton(option: .newestToOldest, isSelected: .constant(isNewToOldSelected)) {
-                        sortDirection = "new_to_old"
-                    }
+                    RadioButton(
+                        option: .newestToOldest,
+                        isSelected: Binding(
+                            get: {
+                                if let dir = sortDirection?.lowercased() {
+                                    return dir == "new_to_old" || dir == "desc"
+                                }
+                                return false
+                            },
+                            set: { isSelected in
+                                if isSelected {
+                                    // keep a single source of truth internally as asc/desc
+                                    sortDirection = "desc"
+                                }
+                            }
+                        ),
+                        action: nil
+                    )
                 }
                 .padding(.vertical, 10)
                 
@@ -690,16 +718,18 @@ struct FilterView: View {
                         print("Apply Filter:")
                         print("From: \(String(describing: fromDate))")
                         print("To: \(String(describing: toDate))")
-                        switch sortDirection {
-                        case "old_to_new":
-                            print("Sort: Oldest to Newest")
-                            sortDirection = "asc"
-
-                        case "new_to_old":
-                            print("Sort: Newest to Oldest")
-                            sortDirection = "desc"
-
-                        default:
+                        if let dir = sortDirection?.lowercased() {
+                            if dir == "old_to_new" || dir == "asc" {
+                                print("Sort: Oldest to Newest")
+                                sortDirection = "asc"
+                            } else if dir == "new_to_old" || dir == "desc" {
+                                print("Sort: Newest to Oldest")
+                                sortDirection = "desc"
+                            } else {
+                                print("Sort: none")
+                                sortDirection = nil
+                            }
+                        } else {
                             print("Sort: none")
                             sortDirection = nil
                         }
@@ -730,8 +760,16 @@ struct FilterView: View {
 
 // MARK: - Preview Provider
 struct FilterView_Previews: PreviewProvider {
+    @State static private var selectedSortDirection: String? = nil
+
     static var previews: some View {
-        FilterView(fromDate: .constant(Date()), toDate: .constant(Date()), sortDirection: .constant(nil), onApply: {}, onCancel: {})
+        FilterView(
+            fromDate: .constant(Date()),
+            toDate: .constant(Date()),
+            sortDirection: $selectedSortDirection,
+            onApply: {},
+            onCancel: {}
+        )
     }
 }
 

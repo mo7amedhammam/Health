@@ -304,7 +304,7 @@
 "profile_termsandconditions" = "الشروط والأحكام";
 
 //MARK:   ---- my files ----
-"MyFiles Title" = "ملفاتي";
+"MyFiles_Title" = "ملفاتي";
 "new_fileType" = "نوع الملف";
 "new_filetypeplaceholder" = "اختر النوع";
 "new_filelink" = "رابط الملف";
@@ -497,8 +497,8 @@
 "select_next_session" = "تحديد السيشن القادمة";
 "send_customer_notification" = "إرسال تنبيه للعميل";
 "Files_Title" = "الملفات";
-"Package_files" = "ملفات الباقة";
-"customer_files" = "ملفات العميل";
+"Package_Files" = "ملفات الباقة";
+"customer_Files" = "ملفات العميل";
 "Next_Session_selection" = "تحديد السيشن القادمة";
 "laquestions_" = "الأسألة";
 "yes_" = "نعم";

@@ -304,7 +304,7 @@
 "profile_termsandconditions" = "Terms And Conditions";
 
 //MARK:   ---- my files ----
-"MyFiles Title" = "My Files";
+"MyFiles_Title" = "My Files";
 "new_fileType" = "File Type";
 "new_filetypeplaceholder" = "Select Type";
 "new_filelink" = "File Link";
@@ -498,8 +498,8 @@
 "select_next_session" = "select next session";
 "send_customer_notification" = "send customer notification";
 "Files_Title" = "Files";
-"Package_files" = "Package Files";
-"customer_files" = "Customer Files";
+"Package_Files" = "Package Files";
+"customer_Files" = "Customer Files";
 "Next_Session_selection" = "Next Session selection";
 "laquestions_" = "questions";
 "yes_" = "Yes";
