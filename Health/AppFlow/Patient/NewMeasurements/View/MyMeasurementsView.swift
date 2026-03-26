@@ -48,7 +48,7 @@ struct MyMeasurementsView: View {
                 LazyVGrid(columns: columns, spacing: 16) {
                     ForEach(measurements ?? [], id: \.medicalMeasurementID) { item in
                         Button(action: {
-                            router.push(MeasurementDetailsView(stat: item))
+                            router.push(MeasurementDetailsView(stat: item).environmentObject(viewModel))
                         }) {
                             MeasurementCard(item: item)
                         }

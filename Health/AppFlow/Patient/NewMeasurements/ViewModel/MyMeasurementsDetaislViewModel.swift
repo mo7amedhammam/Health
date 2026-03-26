@@ -16,6 +16,7 @@ class MyMeasurementsDetaislViewModel: ObservableObject {
     var customerId:Int? = nil
     @Published var currentStats:MyMeasurementsStatsM?
     @Published var isPresentingNewMeasurementSheet = false{didSet{errorMessage = nil}}
+    @Published var isMeasurementAdded:Bool = false
     
     // Published properties to bind with SwiftUI
     @Published var isLoading:Bool? = false
@@ -164,6 +165,7 @@ class MyMeasurementsDetaislViewModel: ObservableObject {
             }
             clearNewMeasurement()
             isPresentingNewMeasurementSheet = false
+            isMeasurementAdded = true
 //            self.ArrNormalRange = response
             
         } catch {

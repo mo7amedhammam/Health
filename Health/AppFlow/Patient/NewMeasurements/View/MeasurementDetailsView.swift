@@ -11,6 +11,8 @@ import SwiftUI
 struct MeasurementDetailsView: View {
     @Environment(\.dismiss) var dismiss
     @StateObject var viewModel = MyMeasurementsDetaislViewModel.shared
+    @EnvironmentObject var measurementsviewModel : MyMeasurementsViewModel
+
 //    @StateObject var router = NavigationRouter()
 
     var stat: MyMeasurementsStatsM
@@ -269,6 +271,11 @@ struct MeasurementDetailsView: View {
                  _ = await (normalRang,details)
 //            }
         }
+        .onChange(of:viewModel.isMeasurementAdded){newval in
+        if newval{
+            Task{ await measurementsviewModel.fetchStats()}
+            }
+        }
         .onDisappear{
             viewModel.dateTo = nil
             viewModel.dateFrom = nil
@@ -300,7 +307,7 @@ struct MeasurementDetailsView: View {
         formatValue: nil,
         regExpression: nil,
         normalRangValue: nil
-    ) )
+    ) ).environmentObject(MyMeasurementsViewModel())
 }
 
 

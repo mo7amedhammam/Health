@@ -206,7 +206,7 @@ struct NewHomeView: View {
                         EquatableByValue(value: measurementsState) {
                             LastMesurmentsSection(measurements: viewModel.myMeasurements) { item in
                                 guard let item = item else { return }
-                                pushTo(destination:MeasurementDetailsView(stat: item))
+                                pushTo(destination:MeasurementDetailsView(stat: item).environmentObject(MyMeasurementsViewModel()))
                             }
                             .accessibilityIdentifier("home_measurements_section")
                         }
