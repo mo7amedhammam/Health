@@ -52,6 +52,7 @@ struct MeasurementDetailsView: View {
                 // New Measurement Button
                 Button(action: {
                     // handle new measurement creation
+                    viewModel.clearNewMeasurement()
                     viewModel.isPresentingNewMeasurementSheet = true
                 }) {
                     HStack {
@@ -274,7 +275,8 @@ struct MeasurementDetailsView: View {
             viewModel.skipCount = 0
         }
         .customSheet(isPresented: $viewModel.isPresentingNewMeasurementSheet,height: 444){
-            NewMeasurementSheetView().environmentObject(viewModel)
+            NewMeasurementSheetView()
+                .environmentObject(viewModel)
                 .frame(height: 444)
         }
         .showHud(isShowing:  $viewModel.isLoading)
@@ -469,7 +471,7 @@ struct NewMeasurementSheetView: View {
         CustomDropListInputFieldUI(title: "mes_val_title", placeholder: "mes_val_placeholder",text: $viewModel.value, isDisabled: false, showDropdownIndicator:false, trailingView: AnyView(Image("newfienameIcon")))
             .keyboardType(.numbersAndPunctuation)
         
-        CustomDatePickerField(selectedDate: $viewModel.date) {
+        CustomDatePickerField(selectedDate: $viewModel.date,maxDate: Date()) {
             HStack {
                 CustomDropListInputFieldUI(title: "mes_date_title", placeholder: "mes_date_placeholder",text: $viewModel.formatteddate, isDisabled: true, showDropdownIndicator:false, trailingView: AnyView(Image("dateicon 1")))
             }
