@@ -121,6 +121,7 @@
 		90B67BE12D9ED2B600C1FD31 /* exColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90B67BE02D9ED2AD00C1FD31 /* exColors.swift */; };
 		90B67BE52D9ED7D200C1FD31 /* fontsenum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90B67BE42D9ED7D200C1FD31 /* fontsenum.swift */; };
 		90B67BE72D9EE21B00C1FD31 /* customModifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90B67BE62D9EE20B00C1FD31 /* customModifiers.swift */; };
+		90BE85AE2F7AA62A00AB7E8B /* MeasurementsChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90BE85AD2F7AA62A00AB7E8B /* MeasurementsChartView.swift */; };
 		90C7F3952E6447B900907BF8 /* DocTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90C7F3942E6447B900907BF8 /* DocTabView.swift */; };
 		90C7F3992E645A0A00907BF8 /* DocProfileViewUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90C7F3982E645A0A00907BF8 /* DocProfileViewUI.swift */; };
 		90C7F39B2E64682200907BF8 /* ActiveCustomerPackagesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90C7F39A2E64682200907BF8 /* ActiveCustomerPackagesView.swift */; };
@@ -481,6 +482,7 @@
 		90B67BE02D9ED2AD00C1FD31 /* exColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = exColors.swift; sourceTree = "<group>"; };
 		90B67BE42D9ED7D200C1FD31 /* fontsenum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = fontsenum.swift; sourceTree = "<group>"; };
 		90B67BE62D9EE20B00C1FD31 /* customModifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = customModifiers.swift; sourceTree = "<group>"; };
+		90BE85AD2F7AA62A00AB7E8B /* MeasurementsChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasurementsChartView.swift; sourceTree = "<group>"; };
 		90C7F3942E6447B900907BF8 /* DocTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocTabView.swift; sourceTree = "<group>"; };
 		90C7F3982E645A0A00907BF8 /* DocProfileViewUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocProfileViewUI.swift; sourceTree = "<group>"; };
 		90C7F39A2E64682200907BF8 /* ActiveCustomerPackagesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveCustomerPackagesView.swift; sourceTree = "<group>"; };
@@ -1227,6 +1229,7 @@
 		902B88092E1D5798009D5234 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				90BE85AD2F7AA62A00AB7E8B /* MeasurementsChartView.swift */,
 				902B88102E1DA1E6009D5234 /* MeasurementDetailsView.swift */,
 				902B880C2E1D57B7009D5234 /* MyMeasurementsView.swift */,
 			);
@@ -3320,6 +3323,7 @@
 				90EE956C2F210712005BC878 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 				90EE956F2F2107D8005BC878 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */,
 				90EE95722F210BCA005BC878 /* XCRemoteSwiftPackageReference "Alamofire" */,
+				90BE85AF2F7AA76D00AB7E8B /* XCRemoteSwiftPackageReference "Charts" */,
 			);
 			productRefGroup = BBC7B4582A72CC820079355E /* Products */;
 			projectDirPath = "";
@@ -3463,6 +3467,7 @@
 				90C7F39F2E6D9F5700907BF8 /* DocPaymentsViewModel.swift in Sources */,
 				90FDD3172DDF698400C3BABB /* TicketViewModel.swift in Sources */,
 				BBD2B03A2AAA84D500C0A807 /* ModelMyMeasurementsStats.swift in Sources */,
+				90BE85AE2F7AA62A00AB7E8B /* MeasurementsChartView.swift in Sources */,
 				9047485B2DD8B22A0016C3DC /* AvailableDoctorsModel.swift in Sources */,
 				C824CED62AD418AA0051E491 /* AlmostFinishedPrescriptionM.swift in Sources */,
 				C8346E5A2AA5EEA800C3C3EE /* LoginM.swift in Sources */,
@@ -4080,6 +4085,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		90BE85AF2F7AA76D00AB7E8B /* XCRemoteSwiftPackageReference "Charts" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/danielgindi/Charts";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.1.0;
+			};
+		};
 		90EE95632F2105E9005BC878 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";

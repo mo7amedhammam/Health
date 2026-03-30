@@ -112,6 +112,7 @@ struct MeasurementDetailsView: View {
                     .padding()
                     
                     if let normalRang = viewModel.ArrNormalRange {
+                        
                         HStack {
                             Image("newlastmesicon")
                                 .resizable()
