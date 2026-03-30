@@ -9,16 +9,28 @@ import SwiftUI
 
 struct MeasurementsBarChart: View {
 
-    let items: [Double]
-    let inNormalRange: [Bool] // same count as items
+    let items: [Item]
 
-    private var maxValue: Double {
-        items.max() ?? 1
+    private var values: [Double] {
+        items.compactMap { Double($0.value ?? "") }
     }
 
-    private let barWidth: CGFloat = 40
+    private var maxValue: Double {
+        values.max() ?? 1
+    }
+
+    private var minNormalValue: Double {
+        (items.compactMap { $0.inNormalRang == true ? Double($0.value ?? "") : nil }.min() ?? 0) - 30
+    }
+
+    private var maxNormalValue: Double {
+        (items.compactMap { $0.inNormalRang == true ? Double($0.value ?? "") : nil }.max() ?? maxValue)
+        + 30
+    }
+
+    private let barWidth: CGFloat = 30
     private let barSpacing: CGFloat = 16
-    private let chartHeight: CGFloat = 200
+    private let chartHeight: CGFloat = 300
 
     var body: some View {
         VStack(spacing: 0) {
@@ -42,7 +54,9 @@ struct MeasurementsBarChart: View {
                 // Scrollable bars
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(alignment: .bottom, spacing: barSpacing) {
-                        ForEach(Array(items.enumerated()), id: \.offset) { index, value in
+                        ForEach(Array(items.enumerated()), id: \.offset) { index, item in
+                            let value = Double(item.value ?? "") ?? 0
+                            let isNormal = item.inNormalRang ?? false
                             VStack(spacing: 4) {
                                 // Value label
                                 Text("\(Int(value))")
@@ -51,27 +65,55 @@ struct MeasurementsBarChart: View {
                                     .fixedSize()
 
                                 // Bar
-                                RoundedRectangle(cornerRadius: 6)
-                                    .fill(inNormalRange[index]
-                                          ? Color(hex: "#3266AD")
-                                          : Color(hex: "#D4537E"))
+                                RoundedRectangle(cornerRadius: 4)
+                                    .fill(isNormal
+                                          ? Color(.main)
+                                          : Color(.secondary))
                                     .frame(
                                         width: barWidth,
                                         height: max(4, (value / (maxValue * 1.25)) * chartHeight)
                                     )
 
                                 // X label
-                                Text("قياس \(index + 1)")
-                                    .font(.system(size: 11))
+                                Text(item.formattedchartdate ?? "—")
+                                    .font(.system(size: 10))
                                     .foregroundColor(.secondary)
                                     .fixedSize()
                                     .frame(width: barWidth)
+                                    .rotationEffect(.degrees(-45))
+                                    .frame(height: 40)
                             }
                         }
                     }
                     .padding(.horizontal, 12)
                     .frame(height: chartHeight + 50) // bars + labels
                 }
+                .overlay(
+                    GeometryReader { geo in
+                        let height = chartHeight
+                        let minY = height - CGFloat(minNormalValue / (maxValue * 1.25)) * height
+                        let maxY = height - CGFloat(maxNormalValue / (maxValue * 1.25)) * height
+
+                        ZStack(alignment: .topLeading) {
+                            Rectangle()
+                                .fill(Color.green.opacity(0.1))
+                                .frame(height: maxY - minY)
+                                .offset(y: minY)
+
+                            Path { path in
+                                path.move(to: CGPoint(x: 0, y: minY))
+                                path.addLine(to: CGPoint(x: geo.size.width, y: minY))
+                            }
+                            .stroke(Color.green, style: StrokeStyle(lineWidth: 1, dash: [4]))
+
+                            Path { path in
+                                path.move(to: CGPoint(x: 0, y: maxY))
+                                path.addLine(to: CGPoint(x: geo.size.width, y: maxY))
+                            }
+                            .stroke(Color.green, style: StrokeStyle(lineWidth: 1, dash: [4]))
+                        }
+                    }
+                )
             }
 
             // Bottom divider line
@@ -103,10 +145,12 @@ extension Color {
 
 // MARK: - Preview
 #Preview {
-    let values = [100, 180, 200, 222, 300, 400, 500].compactMap { Double($0) }
-    let normalRange = [true, false, true, false, true, true, false].map { $0 }
-    
-    MeasurementsBarChart(items: values, inNormalRange: normalRange)
+    let mockItems: [Item] = [
+        Item(inNormalRang: true, id: 1, date: "2026-03-28T00:00:00", medicalMeasurementTitle: nil, medicalMeasurementImage: nil, createdBy: nil, createdByName: nil, customerID: nil, medicalMeasurementID: nil, value: "100", comment: nil),
+        Item(inNormalRang: false, id: 2, date: "2026-03-29T00:00:00", medicalMeasurementTitle: nil, medicalMeasurementImage: nil, createdBy: nil, createdByName: nil, customerID: nil, medicalMeasurementID: nil, value: "200", comment: nil)
+    ]
+
+    MeasurementsBarChart(items: mockItems)
 }
 
 // MARK: - Usage

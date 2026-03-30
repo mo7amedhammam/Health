@@ -73,6 +73,10 @@ extension Item {
         guard let date = self.date else { return nil }
         return date.ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo:"dd/MM/yyyy - hh:mm a")
     }
+    var formattedchartdate :String? {
+        guard let date = self.date else { return nil }
+        return date.ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo:"dd/MM\nhh:mm a")
+    }
 }
 
 //............................................
