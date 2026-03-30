@@ -46,16 +46,15 @@ extension HomeServices : TargetType1 {
     var timeoutInterval: TimeInterval? {
         return nil
     }
+    
+    private var isDoctor: Bool {
+        Helper.shared.getSelectedUserType() == .Doctor
+    }
+    
     var path: String {
         switch self {
         case .GetUpcomingSession:
-            switch Helper.shared.getSelectedUserType() {
-            case .Customer,.none:
-                return newEndPoints.GetCustomerUpcomingSession.rawValue
-
-            case .Doctor:
-                return DocEndPoints.DocGetDoctorUpComingSession.rawValue
-            }
+            return isDoctor ? DocEndPoints.DocGetDoctorUpComingSession.rawValue : newEndPoints.GetCustomerUpcomingSession.rawValue
     
         case .GetAllHomeCategory:
             return newEndPoints.GetAllHomeCategory.rawValue
@@ -100,19 +99,9 @@ extension HomeServices : TargetType1 {
         case .GetBookingSession:
             return newEndPoints.GetBookingSession.rawValue
         case .CreateCustomerPackage:
-            switch Helper.shared.getSelectedUserType() {
-            case .Customer,.none:
-                return newEndPoints.CreateCustomerPackage.rawValue
-            case .Doctor:
-                return DocEndPoints.DocCreateCustomerPackageByDoctor.rawValue
-            }
+            return isDoctor ? DocEndPoints.DocCreateCustomerPackageByDoctor.rawValue : newEndPoints.CreateCustomerPackage.rawValue
         case .rescheduleSession:
-            switch Helper.shared.getSelectedUserType() {
-            case .Customer,.none:
-                return newEndPoints.CreateReschedualRequest.rawValue
-            case .Doctor:
-                return DocEndPoints.ReschedualSession.rawValue
-            }
+            return isDoctor ? DocEndPoints.ReschedualSession.rawValue : newEndPoints.CreateReschedualRequest.rawValue
             
         case .GetReschedualRequestList:
             return DocEndPoints.GetCustomerReschedualRequestList.rawValue
@@ -120,13 +109,7 @@ extension HomeServices : TargetType1 {
             return DocEndPoints.ApprouveCustomerReschedualRequest.rawValue
             
         case .CustomerSessionCalender:
-            switch Helper.shared.getSelectedUserType() {
-            case .Customer,.none:
-                return AppointmentEndPoints.CustomerSessionCalender.rawValue
-
-            case .Doctor:
-                return DocEndPoints.DocDoctorSessionCalender.rawValue
-            }
+            return isDoctor ? DocEndPoints.DocDoctorSessionCalender.rawValue : AppointmentEndPoints.CustomerSessionCalender.rawValue
         }
     }
     

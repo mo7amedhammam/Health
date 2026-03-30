@@ -22,7 +22,7 @@ struct MyFilesView: View {
     @StateObject var myfilesvm = MyFilesViewModel.shared
 
     @State private var files: [MyFileModel] = []
-    @StateObject var lookupsvm = LookupsViewModel.shared
+    @StateObject var lookupsvm = LookupsViewModel()
 
     var body: some View {
         VStack(spacing: 0) {

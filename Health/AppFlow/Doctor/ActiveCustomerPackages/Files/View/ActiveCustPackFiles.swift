@@ -17,7 +17,7 @@ struct ActiveCustPackFiles : View {
 //    @State private var showUploadSheet = false
 //    @StateObject var myfilesvm = ActiveCustomerPackFilesViewModel.shared
     @State private var files: [MyFileModel] = []
-    @StateObject var lookupsvm = LookupsViewModel.shared
+    @StateObject var lookupsvm = LookupsViewModel()
     @State var filesCase: filesCases = .Packages
     
     @StateObject var myfilesvm: ActiveCustomerPackFilesViewModel
@@ -236,8 +236,8 @@ struct ReusableUploadFileSheetView: View {
                     )
                 }
 
-                // If type = Link → show text input
-                if fileType?.id == 0 || fileType == nil {
+                // If type = Link(id=4) → show text input
+                if fileType?.id == 4 || fileType == nil {
                     CustomDropListInputFieldUI(
                         title: "new_filelink",
                         placeholder: "new_filelinkplaceholder",
@@ -249,27 +249,47 @@ struct ReusableUploadFileSheetView: View {
 
                 } else {
                     // Upload button
-                    CustomDropListInputFieldUI(
-                        title: "new_fileupload",
-                        placeholder: "new_fileuploadplaceholder",
-                        text: $pickedFileName,
-                        isDisabled: true,
-                        showDropdownIndicator: false,
-                        trailingView: AnyView(
-                            Image("uploadIcon")
-                                .renderingMode(.template)
-                                .foregroundStyle(Color(.secondary))
-                                .frame(width: 14, height: 14)
+//                    CustomDropListInputFieldUI(
+//                        title: "new_fileupload",
+//                        placeholder: "new_fileuploadplaceholder",
+//                        text: $pickedFileName,
+//                        isDisabled: true,
+//                        showDropdownIndicator: false,
+//                        trailingView: AnyView(
+//                            Image("uploadIcon")
+//                                .renderingMode(.template)
+//                                .foregroundStyle(Color(.secondary))
+//                                .frame(width: 14, height: 14)
+//                        )
+//                    )
+//                    .onTapGesture {
+//                        switch fileType?.id {
+//                        case 2:
+//                            showImagePicker = true
+//                        default:
+//                            showPdfPicker = true
+//                        }
+//                    }
+                    
+                    
+                    Button(action: {
+                        handleTap()
+                    }) {
+                        CustomDropListInputFieldUI(
+                            title: "new_fileupload",
+                            placeholder: "new_fileuploadplaceholder",
+                            text: $pickedFileName,
+                            isDisabled: true,
+                            showDropdownIndicator: false,
+                            trailingView: AnyView(
+                                Image("uploadIcon")
+                                    .renderingMode(.template)
+                                    .foregroundStyle(Color(.secondary))
+                                    .frame(width: 14, height: 14)
+                            )
                         )
-                    )
-                    .onTapGesture {
-                        switch fileType?.id {
-                        case 2:
-                            showImagePicker = true
-                        default:
-                            showPdfPicker = true
-                        }
                     }
+//                    .buttonStyle(.plain)
                 }
             }
 
@@ -338,5 +358,13 @@ struct ReusableUploadFileSheetView: View {
         image = nil
         fileURL = nil
         pickedFileName = ""
+    }
+    private func handleTap() {
+        switch fileType?.id {
+        case 2:
+            showImagePicker = true
+        default:
+            showPdfPicker = true
+        }
     }
 }

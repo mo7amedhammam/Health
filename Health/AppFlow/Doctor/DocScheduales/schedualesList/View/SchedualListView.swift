@@ -220,7 +220,7 @@ struct SchedualListView: View{
 
 #Preview {
     SchedualListView()
-        .environmentObject(EditProfileViewModel.shared)
+        .environmentObject(EditProfileViewModel())
 }
 
 struct ScheduleCellView: View {

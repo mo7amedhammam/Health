@@ -233,7 +233,7 @@ struct DocProfileViewUI: View {
 struct DocProfileViewUI_Previews: PreviewProvider {
     static var previews: some View {
         DocProfileViewUI()
-            .environmentObject(EditProfileViewModel.shared)
+            .environmentObject(EditProfileViewModel())
     }
 }
 

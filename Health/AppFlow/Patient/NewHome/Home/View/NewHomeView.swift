@@ -335,7 +335,7 @@ struct NewHomeView: View {
 
 #Preview {
     NewTabView()
-        .environmentObject(EditProfileViewModel.shared)
+        .environmentObject(EditProfileViewModel())
         .environmentObject(NavigationRouter.shared)
 }
 

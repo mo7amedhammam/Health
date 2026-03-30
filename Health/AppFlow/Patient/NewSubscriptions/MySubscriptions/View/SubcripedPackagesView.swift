@@ -204,7 +204,7 @@ struct SubcripedPackagesView: View {
 }
 
 #Preview {
-    SubcripedPackagesView().environmentObject(EditProfileViewModel.shared)
+    SubcripedPackagesView().environmentObject(EditProfileViewModel())
 }
 
 struct SubcripedPackagesListView: View {

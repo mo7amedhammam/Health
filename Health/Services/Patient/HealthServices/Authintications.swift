@@ -37,6 +37,8 @@ enum Authintications {
 
 extension Authintications : TargetType {
     
+    private var isDoctor: Bool { Helper.shared.getSelectedUserType() == .Doctor }
+    
     var path: String {
         switch self {
         case .Register:
@@ -45,13 +47,7 @@ extension Authintications : TargetType {
             return EndPoints.Login.rawValue
 
         case .SendOtp:
-            switch Helper.shared.getSelectedUserType() {
-            case .Customer,.none:
-                return EndPoints.sendOTP.rawValue
-            case .Doctor:
-                return DocEndPoints.DocsendOTP.rawValue
-
-            }
+            return isDoctor ? DocEndPoints.DocsendOTP.rawValue : EndPoints.sendOTP.rawValue
 
         case .VerifyOtp(let otpfor,_):
             switch otpfor {
@@ -59,13 +55,7 @@ extension Authintications : TargetType {
                 return EndPoints.VerifyUser.rawValue
 
             case .forgetPassword:
-                switch Helper.shared.getSelectedUserType() {
-                case .Customer,.none:
-                    return EndPoints.VerifyOTP.rawValue
-                case .Doctor:
-                    return DocEndPoints.DocVerifyOTP.rawValue
-
-                }
+                return isDoctor ? DocEndPoints.DocVerifyOTP.rawValue : EndPoints.VerifyOTP.rawValue
         }
             
 
@@ -75,20 +65,10 @@ extension Authintications : TargetType {
             return EndPoints.GetAllGenders.rawValue
 
         case .ResetPassword:
-            switch Helper.shared.getSelectedUserType() {
-            case .Customer,.none:
-                return EndPoints.ResetPassword.rawValue
-            case .Doctor:
-                return DocEndPoints.DocResetPassword.rawValue
-            }
+            return isDoctor ? DocEndPoints.DocResetPassword.rawValue : EndPoints.ResetPassword.rawValue
 
         case .ChangePassword:
-            switch Helper.shared.getSelectedUserType() {
-            case .Customer,.none:
-                return EndPoints.ChangePassword.rawValue
-            case .Doctor:
-                return DocEndPoints.DocChangePassword.rawValue
-            }
+            return isDoctor ? DocEndPoints.DocChangePassword.rawValue : EndPoints.ChangePassword.rawValue
 
             // -- schedual --
         case .GetMySchedulePrescriptions:
@@ -190,7 +170,7 @@ enum NewAuthontications {
     
     // -- inbody --
     case GetCustomerInbody(parameters:[String:Any])
-    case CreateCustomerInboy(parameters:[String:Any])
+    case CreateCustomerInbody(parameters:[String:Any])
     
     // -- profile --
     case GetMyProfile
@@ -201,6 +181,8 @@ enum NewAuthontications {
 }
 
 extension NewAuthontications : TargetType1 {
+    private var isDoctor: Bool { Helper.shared.getSelectedUserType() == .Doctor }
+    
     var timeoutInterval: TimeInterval? {
         return nil
     }
@@ -209,34 +191,13 @@ extension NewAuthontications : TargetType1 {
         case .Register:
             return EndPoints.Register.rawValue
         case .Login:
-            switch Helper.shared.getSelectedUserType() {
-            case .Customer,.none:
-                return EndPoints.Login.rawValue
-
-            case .Doctor:
-                return DocEndPoints.DocLogin.rawValue
-
-            }
+            return isDoctor ? DocEndPoints.DocLogin.rawValue : EndPoints.Login.rawValue
             
         case .SendOtp:
-            switch Helper.shared.getSelectedUserType() {
-            case .Customer,.none:
-                return EndPoints.sendOTP.rawValue
-
-            case .Doctor:
-                return DocEndPoints.DocsendOTP.rawValue
-
-            }
+            return isDoctor ? DocEndPoints.DocsendOTP.rawValue : EndPoints.sendOTP.rawValue
             
         case .VerifyOtp:
-            switch Helper.shared.getSelectedUserType() {
-            case .Customer,.none:
-                return EndPoints.VerifyOTP.rawValue
-
-            case .Doctor:
-                return DocEndPoints.DocVerifyOTP.rawValue
-
-            }
+            return isDoctor ? DocEndPoints.DocVerifyOTP.rawValue : EndPoints.VerifyOTP.rawValue
             
         case .GetDistricts:
             return EndPoints.GetAllDistricts.rawValue
@@ -244,13 +205,7 @@ extension NewAuthontications : TargetType1 {
             return EndPoints.GetAllGenders.rawValue
             
         case .ResetPassword:
-            switch Helper.shared.getSelectedUserType() {
-            case .Customer,.none:
-                return EndPoints.ResetPassword.rawValue
-
-            case .Doctor:
-                return DocEndPoints.DocResetPassword.rawValue
-            }
+            return isDoctor ? DocEndPoints.DocResetPassword.rawValue : EndPoints.ResetPassword.rawValue
             
         case .ChangePassword:
             switch Helper.shared.getSelectedUserType() {
@@ -272,31 +227,16 @@ extension NewAuthontications : TargetType1 {
             // -- inbody --
         case .GetCustomerInbody:
             return EndPoints.GetCustomerInBody.rawValue
-        case .CreateCustomerInboy:
+        case .CreateCustomerInbody:
             return EndPoints.CreateCustomerInBody.rawValue
         case .GetMyProfile:
-            switch Helper.shared.getSelectedUserType() {
-            case .Customer,.none:
-                return ProfileEndPoints.GetProfile.rawValue
-            case .Doctor:
-                return DocEndPoints.DocGetMyProfile.rawValue
-            }
+            return isDoctor ? DocEndPoints.DocGetMyProfile.rawValue : ProfileEndPoints.GetProfile.rawValue
             
         case .SendFireBaseDeviceToken :
-            switch Helper.shared.getSelectedUserType() {
-            case .Customer,.none:
-                return EndPoints.SendFireBaseDeviceToken.rawValue
-            case .Doctor:
-                return DocEndPoints.SendFireBaseDeviceToken.rawValue
-            }
+            return isDoctor ? DocEndPoints.SendFireBaseDeviceToken.rawValue : EndPoints.SendFireBaseDeviceToken.rawValue
             
         case .DeleteFireBaseDeviceToken :
-            switch Helper.shared.getSelectedUserType() {
-            case .Customer,.none:
-                return EndPoints.DeleteFirebasetoken.rawValue
-            case .Doctor:
-                return DocEndPoints.DeleteFirebasetoken.rawValue
-            }
+            return isDoctor ? DocEndPoints.DeleteFirebasetoken.rawValue : EndPoints.DeleteFirebasetoken.rawValue
             
         }
         
@@ -313,7 +253,7 @@ extension NewAuthontications : TargetType1 {
                 .ChangePassword,
                 .GetMySchedulePrescriptions,
                 .GetCustomerInbody,
-                .CreateCustomerInboy ,
+                .CreateCustomerInbody ,
                 .SendFireBaseDeviceToken :
             return .post
             
@@ -337,7 +277,7 @@ extension NewAuthontications : TargetType1 {
                 .ChangePassword(parameters: let parameter),
                 .GetMySchedulePrescriptions(parameters: let parameter),
                 .GetCustomerInbody(parameters: let parameter),
-                .CreateCustomerInboy(parameters: let parameter),
+                .CreateCustomerInbody(parameters: let parameter),
                 .SendFireBaseDeviceToken(let parameter),
                 .GetMyScheduleDrugs(parameters: let parameter),
                 .DeleteFireBaseDeviceToken(parameters: let parameter):
@@ -355,3 +295,4 @@ extension NewAuthontications : TargetType1 {
     }
     
 }
+

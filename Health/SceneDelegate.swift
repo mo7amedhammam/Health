@@ -79,12 +79,12 @@ private extension SceneDelegate {
         if Helper.shared.getSelectedUserType() == .Doctor {
             rootView = AnyView(
                 DocTabView()
-                    .environmentObject(EditProfileViewModel.shared)
+                    .environmentObject(EditProfileViewModel())
             )
         } else {
             rootView = AnyView(
                 NewTabView()
-                    .environmentObject(EditProfileViewModel.shared)
+                    .environmentObject(EditProfileViewModel())
             )
         }
 

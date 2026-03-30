@@ -20,7 +20,7 @@ struct LoginView: View {
     
     @StateObject private var loginViewModel: LoginViewModel
     @StateObject private var otpViewModel: OtpVM
-    @StateObject private var lookupsVM = LookupsViewModel.shared
+    @StateObject private var lookupsVM = LookupsViewModel()
 
     @State private var destination = AnyView(EmptyView())
     @State private var isactive: Bool = false

@@ -11,7 +11,7 @@ import UniformTypeIdentifiers
 struct InbodyView: View {
     @StateObject var router:NavigationRouter = NavigationRouter.shared
     @State private var showUploadSheet = false
-    @StateObject var viewmodel = InbodyViewModel.shared
+    @StateObject var viewmodel = InbodyViewModel()
 
 //    @State private var files: [MyFileModel] = []
 //    @StateObject var lookupsvm = LookupsViewModel.shared
@@ -33,6 +33,7 @@ struct InbodyView: View {
                 newInbodyButton {
                     Task{
                         viewmodel.showAddSheet = true
+                        viewmodel.ClearNewInputs()
 //                        await lookupsvm.getFileTypes()
                     }
                 }
@@ -64,6 +65,7 @@ struct InbodyView: View {
             }
 //            .task(){
 ////                Task{
+//                guard viewmodel.skipCount == 0 || viewmodel.skipCount == nil else { return }
 //                    await viewmodel.refresh()
 ////                }
 //            }
@@ -303,6 +305,9 @@ struct UploadInbodySheetView: View {
 //                    CustomDropListInputFieldUI(title: "new_filelink", placeholder: "new_filelinkplaceholder",text: $fileLink, isDisabled: false, showDropdownIndicator:false, trailingView: AnyView(Image("newfilelinkicon")))
 //
 //                }else{
+                Button(action: {
+                    showFileTypeDialog = true
+                }) {
                     CustomDropListInputFieldUI(title: "new_fileupload", placeholder: "new_fileuploadplaceholder",text: $pickedFileName, isDisabled: true, showDropdownIndicator:false, trailingView:
                                                 AnyView( Image("uploadIcon")
                                                     .renderingMode(.template)
@@ -310,19 +315,20 @@ struct UploadInbodySheetView: View {
                                                     .foregroundStyle(Color(.secondary))
                                                     .frame(width: 14,height: 14)
                                                 ))
-                    .onTapGesture {
-                        showFileTypeDialog = true
-//                        switch fileType?.id {
-//                        case 0:
-//                            break
-////                        case 1:
+                }
+//                    .onTapGesture {
+//                        showFileTypeDialog = true
+////                        switch fileType?.id {
+////                        case 0:
+////                            break
+//////                        case 1:
+//////                            showPdfPicker = true
+////                        case 2:
+////                            showImagePicker = true
+////                        default:
 ////                            showPdfPicker = true
-//                        case 2:
-//                            showImagePicker = true
-//                        default:
-//                            showPdfPicker = true
-//                        }
-                    }
+////                        }
+//                    }
 //                }
             }
 

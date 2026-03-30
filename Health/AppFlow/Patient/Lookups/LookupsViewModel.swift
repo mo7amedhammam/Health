@@ -8,7 +8,7 @@
 import Foundation
 
 class LookupsViewModel : ObservableObject {
-    static let shared = LookupsViewModel()
+//    static let shared = LookupsViewModel()
     // Injected service
     private let networkService: AsyncAwaitNetworkServiceProtocol
     

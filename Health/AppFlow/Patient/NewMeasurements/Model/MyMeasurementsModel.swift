@@ -71,7 +71,7 @@ struct Item: Codable,Hashable,Identifiable {
 extension Item {
     var formatteddate :String? {
         guard let date = self.date else { return nil }
-        return date.ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo:"dd/MM/yyyy hh:mm a")
+        return date.ChangeDateFormat(FormatFrom: "yyyy-MM-dd'T'HH:mm:ss", FormatTo:"dd/MM/yyyy - hh:mm a")
     }
 }
 

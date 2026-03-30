@@ -274,7 +274,7 @@ struct ShiftCardView: View {
 }
 
 #Preview {
-    DocScheduleView().environmentObject(EditProfileViewModel.shared)
+    DocScheduleView().environmentObject(EditProfileViewModel())
 }
 
 extension DocScheduleView{

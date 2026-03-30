@@ -9,7 +9,7 @@ import SwiftUI
 struct DocEditProfileView: View {
     @EnvironmentObject private var viewModel: EditProfileViewModel
     //    @StateObject private var otpViewModel: OtpVM
-    @StateObject private var lookupsVM = LookupsViewModel.shared
+    @StateObject private var lookupsVM = LookupsViewModel()
    
     @State private var bio: String = ""
     @State private var fullName: String = ""
@@ -384,5 +384,5 @@ struct DocEditProfileView: View {
 }
 
 #Preview {
-    DocEditProfileView().environmentObject(EditProfileViewModel.shared)
+    DocEditProfileView().environmentObject(EditProfileViewModel())
 }

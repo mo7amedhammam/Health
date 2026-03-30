@@ -122,7 +122,7 @@ class MyMeasurementsDetaislViewModel: ObservableObject {
         guard value.count > 0  else {
             self.errorMessage = "please_enter_measurement_value".localized
             return }
-        guard let date = date?.formatDate(format: "yyyy-MM-dd") else {
+        guard let date = date?.formatDate(format: "yyyy-MM-dd'T'HH:mm:ss") else {
             self.errorMessage = "please_select_measurement_date".localized
             return }
       
@@ -137,7 +137,7 @@ class MyMeasurementsDetaislViewModel: ObservableObject {
                     return
                 }
             }
-        
+        isMeasurementAdded = false
         isLoading = true
         errorMessage = nil
         defer { isLoading = false }

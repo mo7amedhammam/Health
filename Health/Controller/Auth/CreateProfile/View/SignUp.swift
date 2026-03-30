@@ -469,7 +469,7 @@ struct SignUpView: View {
     
     @StateObject private var viewModel: SignUpVM
     //    @StateObject private var otpViewModel: OtpVM
-    @StateObject private var lookupsVM = LookupsViewModel.shared
+    @StateObject private var lookupsVM = LookupsViewModel()
     
     @State var destination = AnyView(EmptyView())
     @State var isactive: Bool = false

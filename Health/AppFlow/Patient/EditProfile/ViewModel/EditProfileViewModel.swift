@@ -10,7 +10,7 @@ import UIKit
 import SwiftUI
 
 class EditProfileViewModel : ObservableObject {
-    static let shared = EditProfileViewModel()
+//    static let shared = EditProfileViewModel()
     // Injected service
     private let networkService: AsyncAwaitNetworkServiceProtocol
     private var loadTask: Task<Void,Never>? = nil

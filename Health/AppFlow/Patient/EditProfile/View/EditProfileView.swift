@@ -9,7 +9,7 @@ import SwiftUI
 struct EditProfileView: View {
     @StateObject private var viewModel: EditProfileViewModel
     //    @StateObject private var otpViewModel: OtpVM
-    @StateObject private var lookupsVM = LookupsViewModel.shared
+    @StateObject private var lookupsVM = LookupsViewModel()
 
     @State private var fullName: String = ""
     @State private var phoneNumber: String = ""
@@ -37,7 +37,7 @@ struct EditProfileView: View {
     }
     
     init() {
-        _viewModel = StateObject(wrappedValue: EditProfileViewModel.shared)
+        _viewModel = StateObject(wrappedValue: EditProfileViewModel())
         //        _otpViewModel = StateObject(wrappedValue: OtpVM())
     }
     

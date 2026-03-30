@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 class InbodyViewModel:ObservableObject {
-    static let shared = InbodyViewModel()
+//    static let shared = InbodyViewModel()
     private let networkService: AsyncAwaitNetworkServiceProtocol
     private var loadTask: Task<Void,Never>? = nil
     
@@ -44,6 +44,9 @@ class InbodyViewModel:ObservableObject {
     init(networkService: AsyncAwaitNetworkServiceProtocol = AsyncAwaitNetworkService.shared) {
         self.networkService = networkService
         Task{await getInbodyList()}
+    }
+    deinit {
+        loadTask?.cancel()
     }
     
 }
@@ -115,7 +118,7 @@ extension InbodyViewModel{
             }
         }
         
-        let target = NewAuthontications.CreateCustomerInboy(parameters: parametersarr)
+        let target = NewAuthontications.CreateCustomerInbody(parameters: parametersarr)
         do {
             self.errorMessage = nil
             _ = try await networkService.uploadMultipart(target, parts: parts, responseType: InbodyListItemM.self)
@@ -220,6 +223,15 @@ extension InbodyViewModel {
         image = nil
         fileURL = nil
         showAddSheet = false
+    }
+    
+    func ClearNewInputs() {
+        fileName = ""
+        date = nil
+        formattedDate = ""
+        Comment = ""
+        image = nil
+        fileURL = nil
     }
 }
 //MARK: -- Functions --

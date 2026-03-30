@@ -10,7 +10,7 @@ import SwiftUI
 struct SelectLanguageView : View {
     @Environment(\.dismiss) var dismiss
     @StateObject var localizationManager = LocalizationManager.shared
-    @StateObject private var lookupsVM = LookupsViewModel.shared
+    @StateObject private var lookupsVM = LookupsViewModel()
     @State private var selectedCountry:AppCountryM?
 //    = .init(id: 1, name: "Egypt", flag: "🇪🇬")
     @State private var selectedLanguage:LanguageM?
@@ -119,8 +119,8 @@ struct SelectLanguageView : View {
                     Helper.shared.changeRootVC(newroot: rootVC, transitionFrom: .fromRight)
                 }else{
                     let rootVC = Helper.shared.getSelectedUserType() == .Doctor ?
-                    UIHostingController(rootView: DocTabView(selectedTab: 0).environmentObject(EditProfileViewModel.shared)) :
-                    UIHostingController(rootView: NewTabView(selectedTab: 0).environmentObject(EditProfileViewModel.shared))
+                    UIHostingController(rootView: DocTabView(selectedTab: 0).environmentObject(EditProfileViewModel())) :
+                    UIHostingController(rootView: NewTabView(selectedTab: 0).environmentObject(EditProfileViewModel()))
                                     
 //                    let rootVC = UIHostingController(rootView: NewTabView(selectedTab: 0))
 
