@@ -28,7 +28,7 @@ struct MeasurementsBarChart: View {
         + 30
     }
 
-    private let barWidth: CGFloat = 30
+    private let barWidth: CGFloat = 40
     private let barSpacing: CGFloat = 16
     private let chartHeight: CGFloat = 300
 
@@ -45,11 +45,14 @@ struct MeasurementsBarChart: View {
                             .font(.system(size: 10))
                             .foregroundColor(.secondary)
                             .frame(height: chartHeight / CGFloat(yAxisValues().count - 1),
-                                   alignment: .top)
+                                   alignment: .bottom)
                     }
                 }
                 .frame(width: 36)
-                .padding(.bottom, 24) // align with x-axis labels height
+
+                Rectangle()
+                    .fill(Color(.main))
+                    .frame(width: 2, height: chartHeight)
 
                 // Scrollable bars
                 ScrollView(.horizontal, showsIndicators: false) {
@@ -73,20 +76,11 @@ struct MeasurementsBarChart: View {
                                         width: barWidth,
                                         height: max(4, (value / (maxValue * 1.25)) * chartHeight)
                                     )
-
-                                // X label
-                                Text(item.formattedchartdate ?? "—")
-                                    .font(.system(size: 10))
-                                    .foregroundColor(.secondary)
-                                    .fixedSize()
-                                    .frame(width: barWidth)
-                                    .rotationEffect(.degrees(-45))
-                                    .frame(height: 40)
                             }
                         }
                     }
                     .padding(.horizontal, 12)
-                    .frame(height: chartHeight + 50) // bars + labels
+                    .frame(height: chartHeight)
                 }
                 .overlay(
                     GeometryReader { geo in
@@ -116,11 +110,28 @@ struct MeasurementsBarChart: View {
                 )
             }
 
-            // Bottom divider line
+            // X-axis line
             Rectangle()
-                .fill(Color.gray.opacity(0.2))
-                .frame(height: 1)
-                .padding(.leading, 36)
+                .fill(Color(.main))
+                .frame(height: 2)
+                .padding(.leading, 38)
+
+            // Dates under X-axis
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(alignment: .top, spacing: barSpacing) {
+                    ForEach(Array(items.enumerated()), id: \.offset) { index, item in
+                        Text(item.formattedchartdate ?? "—")
+                            .font(.system(size: 10))
+                            .foregroundColor(.secondary)
+                            .fixedSize()
+                            .frame(width: barWidth)
+                            .rotationEffect(.degrees(-45))
+                            .frame(height: 40)
+                    }
+                }
+                .padding(.leading, 50) // align with bars start after Y-axis
+                .padding(.top, 4)
+            }
         }
     }
 
@@ -160,5 +171,3 @@ extension Color {
 // let normalRange = response.data.measurements.items.map { $0.inNormalRang }
 //
 // MeasurementsBarChart(items: values, inNormalRange: normalRange)
-
-
