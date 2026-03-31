@@ -112,6 +112,10 @@ struct MeasurementDetailsView: View {
                     .padding()
                     
                     if let normalRang = viewModel.ArrNormalRange {
+                      
+                        if let items = viewModel.ArrMeasurement?.measurements?.items{
+                            MeasurementsBarChart(items: items)
+                        }
                         
                         HStack {
                             Image("newlastmesicon")

@@ -28,9 +28,9 @@ struct MeasurementsBarChart: View {
         + 30
     }
 
-    private let barWidth: CGFloat = 40
+    private let barWidth: CGFloat = 35
     private let barSpacing: CGFloat = 16
-    private let chartHeight: CGFloat = 300
+    private let chartHeight: CGFloat = 220
 
     var body: some View {
         VStack(spacing: 0) {
@@ -38,7 +38,7 @@ struct MeasurementsBarChart: View {
             // Y-axis + scrollable bars
             HStack(alignment: .bottom, spacing: 0) {
 
-                // Y-axis labels
+                // Y-axis labels ( numbers )
                 VStack(alignment: .trailing, spacing: 0) {
                     ForEach(yAxisValues().reversed(), id: \.self) { val in
                         Text("\(Int(val))")
@@ -61,12 +61,15 @@ struct MeasurementsBarChart: View {
                             let value = Double(item.value ?? "") ?? 0
                             let isNormal = item.inNormalRang ?? false
                             VStack(spacing: 4) {
+
+                                Spacer()
+                                
                                 // Value label
                                 Text("\(Int(value))")
                                     .font(.system(size: 11, weight: .medium))
                                     .foregroundColor(.secondary)
                                     .fixedSize()
-
+                                
                                 // Bar
                                 RoundedRectangle(cornerRadius: 4)
                                     .fill(isNormal
@@ -76,7 +79,9 @@ struct MeasurementsBarChart: View {
                                         width: barWidth,
                                         height: max(4, (value / (maxValue * 1.25)) * chartHeight)
                                     )
+
                             }
+                            .frame(height: chartHeight)
                         }
                     }
                     .padding(.horizontal, 12)
@@ -85,24 +90,42 @@ struct MeasurementsBarChart: View {
                 .overlay(
                     GeometryReader { geo in
                         let height = chartHeight
-                        let minY = height - CGFloat(minNormalValue / (maxValue * 1.25)) * height
-                        let maxY = height - CGFloat(maxNormalValue / (maxValue * 1.25)) * height
+
+                        // Safe denominators and values
+                        let top = max(maxValue * 1.25, 1)
+                        let safeMinNormal = minNormalValue.isFinite ? minNormalValue : 0
+                        let safeMaxNormal = maxNormalValue.isFinite ? maxNormalValue : 0
+
+                        // Compute raw Y positions
+                        let rawMinY = height - CGFloat(safeMinNormal / top) * height
+                        let rawMaxY = height - CGFloat(safeMaxNormal / top) * height
+
+                        // Clamp to [0, height]
+                        let clampedMinY = rawMinY.isFinite ? min(max(rawMinY, 0), height) : 0
+                        let clampedMaxY = rawMaxY.isFinite ? min(max(rawMaxY, 0), height) : 0
+
+                        // Ensure min <= max
+                        let lowerY = min(clampedMinY, clampedMaxY)
+                        let upperY = max(clampedMinY, clampedMaxY)
+
+                        // Final height (non-negative)
+                        let bandHeight = max(0, upperY - lowerY)
 
                         ZStack(alignment: .topLeading) {
                             Rectangle()
                                 .fill(Color.green.opacity(0.1))
-                                .frame(height: maxY - minY)
-                                .offset(y: minY)
+                                .frame(height: bandHeight)
+                                .offset(y: lowerY)
 
                             Path { path in
-                                path.move(to: CGPoint(x: 0, y: minY))
-                                path.addLine(to: CGPoint(x: geo.size.width, y: minY))
+                                path.move(to: CGPoint(x: 0, y: lowerY))
+                                path.addLine(to: CGPoint(x: geo.size.width, y: lowerY))
                             }
                             .stroke(Color.green, style: StrokeStyle(lineWidth: 1, dash: [4]))
 
                             Path { path in
-                                path.move(to: CGPoint(x: 0, y: maxY))
-                                path.addLine(to: CGPoint(x: geo.size.width, y: maxY))
+                                path.move(to: CGPoint(x: 0, y: upperY))
+                                path.addLine(to: CGPoint(x: geo.size.width, y: upperY))
                             }
                             .stroke(Color.green, style: StrokeStyle(lineWidth: 1, dash: [4]))
                         }
@@ -130,9 +153,11 @@ struct MeasurementsBarChart: View {
                     }
                 }
                 .padding(.leading, 50) // align with bars start after Y-axis
-                .padding(.top, 4)
+                .padding(.vertical, 4)
             }
+            
         }
+        .cardStyle()
     }
 
     private func yAxisValues() -> [Double] {
@@ -142,17 +167,17 @@ struct MeasurementsBarChart: View {
     }
 }
 
-extension Color {
-    init(hex: String) {
-        let hex = hex.trimmingCharacters(in: CharacterSet.alphanumerics.inverted)
-        var int: UInt64 = 0
-        Scanner(string: hex).scanHexInt64(&int)
-        let r = Double((int >> 16) & 0xFF) / 255
-        let g = Double((int >> 8) & 0xFF) / 255
-        let b = Double(int & 0xFF) / 255
-        self.init(red: r, green: g, blue: b)
-    }
-}
+//extension Color {
+//    init(hex: String) {
+//        let hex = hex.trimmingCharacters(in: CharacterSet.alphanumerics.inverted)
+//        var int: UInt64 = 0
+//        Scanner(string: hex).scanHexInt64(&int)
+//        let r = Double((int >> 16) & 0xFF) / 255
+//        let g = Double((int >> 8) & 0xFF) / 255
+//        let b = Double(int & 0xFF) / 255
+//        self.init(red: r, green: g, blue: b)
+//    }
+//}
 
 // MARK: - Preview
 #Preview {
@@ -171,3 +196,4 @@ extension Color {
 // let normalRange = response.data.measurements.items.map { $0.inNormalRang }
 //
 // MeasurementsBarChart(items: values, inNormalRange: normalRange)
+
