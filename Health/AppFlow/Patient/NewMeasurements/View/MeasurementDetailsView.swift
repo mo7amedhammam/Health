@@ -114,7 +114,7 @@ struct MeasurementDetailsView: View {
                     if let normalRang = viewModel.ArrNormalRange {
                       
                         if let items = viewModel.ArrMeasurement?.measurements?.items{
-                            MeasurementsBarChart(items: items)
+                            MeasurementsBarChart(items: items, normalRange: normalRang)
                         }
                         
                         HStack {
@@ -580,4 +580,3 @@ struct CustomDatePickerField<Content: View>: View {
         }
     }
 }
-
