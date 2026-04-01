@@ -64,10 +64,10 @@ extension InbodyViewModel{
         
         // Validate required inputs: date and either image or file
         // Date required
-        if formattedDate.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+        guard let date = date?.formatDate(format: "yyyy-MM-dd'T'HH:mm:ss") else {
             self.errorMessage = "please_select_date".localized
-            return
-        }
+            return }
+        
         // Either image or file required
         if image == nil && fileURL == nil {
             self.errorMessage = "please_select_image_or_file".localized

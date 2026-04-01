@@ -173,7 +173,8 @@ struct AddReminderSheet: View {
                 
                 Button(action: {
                     viewModel.showAddSheet = false
-                    viewModel.clear()
+//                    viewModel.clear()
+                    viewModel.removeInputs()
                 }) {
                     Image(systemName: "xmark.circle")
                         .resizable()
@@ -228,6 +229,7 @@ struct AddReminderSheet: View {
             HStack(spacing: 20) {
                 CustomButton(title: "cancel_",backgroundcolor: Color(.secondary),backgroundView:nil){
                     viewModel.showAddSheet = false
+                    viewModel.removeInputs()
                 }
 
                 CustomButton(title: "confirm_",backgroundcolor: Color(.mainBlue),backgroundView:nil){

@@ -252,7 +252,7 @@ struct UploadInbodySheetView: View {
               
                 Button(action: {
                     isPresented = false
-                    viewmodel.removeInputs()
+                    viewmodel.ClearNewInputs()
                 }) {
                     Image(systemName: "xmark.circle")
                         .resizable()
@@ -335,7 +335,7 @@ struct UploadInbodySheetView: View {
             HStack(spacing: 12) {
                 CustomButton(title: "new_cancel_",backgroundView : AnyView(Color(.secondary))){
                     isPresented = false
-                    viewmodel.removeInputs()
+                    viewmodel.ClearNewInputs()
                 }
                 
                 CustomButton(title: "new_confirm_",backgroundcolor: Color(.secondary)){
