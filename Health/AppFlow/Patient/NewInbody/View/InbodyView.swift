@@ -357,9 +357,11 @@ struct UploadInbodySheetView: View {
         .confirmationDialog("", isPresented: $showFileTypeDialog) {
             Button("Image".localized) {
                 imagePickerSource = .photoLibrary
+                viewmodel.removeSelectedFile()
                 showImagePicker = true
             }
             Button("PDF".localized) {
+                viewmodel.removeSelectedFile()
                 showPdfPicker = true
             }
             Button("cancel_".localized, role: .cancel) {}
@@ -367,7 +369,11 @@ struct UploadInbodySheetView: View {
         .sheet(isPresented: $showImagePicker) {
             ImagePickerView(selectedImage: $image, sourceType: imagePickerSource)
         }.onChange(of: image){newval in
-            pickedFileName = "Image is Selected Successfully_".localized
+            if newval == nil {
+                pickedFileName = ""
+            }else{
+                pickedFileName = "Image is Selected Successfully_".localized
+            }
             viewmodel.image = newval
         }
         .fileImporter(

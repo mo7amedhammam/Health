@@ -70,7 +70,10 @@ class MyMeasurementsDetaislViewModel: ObservableObject {
             if skipCount == 0 {
                 self.ArrMeasurement = response
             }else{
-                self.ArrMeasurement?.measurements?.items?.append(contentsOf: response?.measurements?.items ?? [])
+                let existingItems = self.ArrMeasurement?.measurements?.items ?? []
+                let newItems = response?.measurements?.items ?? []
+                self.ArrMeasurement?.measurements?.items = mergedMeasurements(existing: existingItems, new: newItems)
+                self.ArrMeasurement?.measurements?.totalCount = response?.measurements?.totalCount ?? self.ArrMeasurement?.measurements?.totalCount
             }
         } catch {
             self.errorMessage = error.localizedDescription
@@ -161,6 +164,7 @@ class MyMeasurementsDetaislViewModel: ObservableObject {
             )
             if let current = currentStats?.measurementsCount {
                 currentStats?.measurementsCount = current + 1
+                skipCount = 0
                 await fetchMeasurementDetails()
             }
             clearNewMeasurement()
@@ -178,6 +182,32 @@ class MyMeasurementsDetaislViewModel: ObservableObject {
         date = nil
         formatteddate = ""
         comment = ""
+    }
+
+    private func mergedMeasurements(existing: [Item], new: [Item]) -> [Item] {
+        var seen = Set<String>()
+        var merged: [Item] = []
+
+        for item in existing + new {
+            let key = measurementKey(for: item)
+            guard seen.insert(key).inserted else { continue }
+            merged.append(item)
+        }
+
+        return merged
+    }
+
+    private func measurementKey(for item: Item) -> String {
+        if let id = item.id {
+            return "id:\(id)"
+        }
+
+        return [
+            item.date ?? "",
+            item.value ?? "",
+            "\(item.customerID ?? -1)",
+            "\(item.medicalMeasurementID ?? -1)"
+        ].joined(separator: "|")
     }
 }
 

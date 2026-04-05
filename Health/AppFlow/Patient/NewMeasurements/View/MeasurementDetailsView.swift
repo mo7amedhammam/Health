@@ -190,7 +190,7 @@ struct MeasurementDetailsView: View {
                     if let ArrMeasurement = viewModel.ArrMeasurement?.measurements , let measurements = ArrMeasurement.items {
                         
                         LazyVStack{
-                        ForEach(measurements,id: \.self) { item in
+                        ForEach(Array(measurements.enumerated()), id: \.offset) { index, item in
                             
                             VStack(alignment: .leading, spacing: 8) {
                                 HStack {
@@ -234,7 +234,7 @@ struct MeasurementDetailsView: View {
                             .padding(.horizontal)
                             .onAppear {
                                 Task{
-                                    guard item == measurements.last else {return}
+                                    guard index == measurements.count - 1 else { return }
                                     await viewModel.loadMoreIfNeeded()
                                 }
                             }
@@ -419,8 +419,10 @@ struct MeasurementSearchSection: View {
             }
 
             Button("search_".localized) {
-                // apply filter
-                guard selectedRange != nil else { return }
+                let hasPresetRange = selectedRange != nil
+                let hasCustomRange = viewModel.dateFrom != nil || viewModel.dateTo != nil
+
+                guard hasPresetRange || hasCustomRange else { return }
 
                 // Validate date range if both dates are provided
                 if let from = viewModel.dateFrom, let to = viewModel.dateTo, to < from {

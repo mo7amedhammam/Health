@@ -84,84 +84,89 @@ extension NewHomeViewModel {
 
     // Unified loader to minimize UI invalidations
     func load() async {
-        // Cancel any in-flight unified load to prevent overlap
-        loadTask?.cancel()
-        loadTask = Task { [weak self] in
-            guard let self else { return }
-            // Guard isLoading is not necessary if we serialize, but keep it for UI flags
-            if self.isLoading == true { return }
-            self.isLoading = true
-            self.isError = false
-            self.errorMessage = nil
+        if isLoading == true { return }
 
-            let appCountryId = self.env.appCountryId()
-            let max = self.maxResultCount
-            let categoriesSkip = 0
-            let featuredSkip = 0
+        isLoading = true
+        isError = false
+        errorMessage = nil
 
-            do {
-                async let upc: UpcomingSessionM? = self.env.isLoggedIn()
-                ? self.networkService.request(HomeServices.GetUpcomingSession(parameters: [:]), responseType: UpcomingSessionM.self)
-                    : nil
+        let appCountryId = env.appCountryId()
+        let max = maxResultCount
+        let categoriesSkip = 0
+        let featuredSkip = 0
+        let isDoctor = Helper.shared.getSelectedUserType() == .Doctor
 
-                async let categories: HomeCategoryM? = self.networkService.request(
-                    HomeServices.GetAllHomeCategory(parameters: [
-                        "maxResultCount": max,
-                        "skipCount": categoriesSkip,
-                        "appCountryId": appCountryId
-                    ]),
-                    responseType: HomeCategoryM.self
+        defer {
+            isLoading = false
+            HomeCategoriesSkipCount = 0
+            FeaturedPackagesSkipCount = 0
+        }
+
+        do {
+            if env.isLoggedIn() {
+                upcomingSession = try await networkService.request(
+                    HomeServices.GetUpcomingSession(parameters: [:]),
+                    responseType: UpcomingSessionM.self
                 )
-
-                if Helper.shared.getSelectedUserType() != .Doctor{
-                    async let measurements: [MyMeasurementsStatsM]? = self.networkService.request(
-                        HomeServices.GetMyMeasurementsStats,
-                        responseType: [MyMeasurementsStatsM].self
-                    )
-                    self.myMeasurements = try await measurements
-                }
-
-                async let featured: FeaturedPackagesM? = self.networkService.request(
-                    HomeServices.FeaturedPackageList(parameters: [
-                        "maxResultCount": max,
-                        "skipCount": featuredSkip,
-                        "appCountryId": appCountryId
-                    ]),
-                    responseType: FeaturedPackagesM.self
-                )
-
-                if Helper.shared.getSelectedUserType() != .Doctor{
-                    async let mostViewed: [FeaturedPackageItemM]? = self.networkService.request(
-                        HomeServices.MostViewedPackage(parameters: [
-                            "top": max,
-                            "AppCountryId": appCountryId
-                        ]),
-                        responseType: [FeaturedPackageItemM].self
-                    )
-                    self.mostViewedPackages = try await mostViewed
-                }
-                
-                // Single commit
-                self.upcomingSession = try await upc
-                self.homeCategories = try await categories
-                if Helper.shared.getSelectedUserType() != .Doctor{
-                    self.featuredPackages = try await featured
-                }
-                // Optionally also prefetch most booked
-                self.mostBookedPackages = nil
-            } catch is CancellationError {
-                // Ignore cancellations; keep current state
-            } catch {
-                self.isError = true
-                self.errorMessage = error.localizedDescription
+            } else {
+                upcomingSession = nil
             }
 
-            self.isLoading = false
-            // reset pagination for a new load
-            self.HomeCategoriesSkipCount = 0
-            self.FeaturedPackagesSkipCount = 0
+            try Task.checkCancellation()
+
+            homeCategories = try await networkService.request(
+                HomeServices.GetAllHomeCategory(parameters: [
+                    "maxResultCount": max,
+                    "skipCount": categoriesSkip,
+                    "appCountryId": appCountryId
+                ]),
+                responseType: HomeCategoryM.self
+            )
+
+            guard isDoctor == false else {
+                featuredPackages = nil
+                myMeasurements = nil
+                mostViewedPackages = nil
+                mostBookedPackages = nil
+                return
+            }
+
+            try Task.checkCancellation()
+
+            myMeasurements = try await networkService.request(
+                HomeServices.GetMyMeasurementsStats,
+                responseType: [MyMeasurementsStatsM].self
+            )
+
+            try Task.checkCancellation()
+
+            featuredPackages = try await networkService.request(
+                HomeServices.FeaturedPackageList(parameters: [
+                    "maxResultCount": max,
+                    "skipCount": featuredSkip,
+                    "appCountryId": appCountryId
+                ]),
+                responseType: FeaturedPackagesM.self
+            )
+
+            try Task.checkCancellation()
+
+            mostViewedPackages = try await networkService.request(
+                HomeServices.MostViewedPackage(parameters: [
+                    "top": max,
+                    "AppCountryId": appCountryId
+                ]),
+                responseType: [FeaturedPackageItemM].self
+            )
+
+            mostBookedPackages = nil
+        } catch is CancellationError {
+            // Ignore cancellations; keep the last stable UI state.
+        } catch {
+            guard isCancellationError(error) == false else { return }
+            isError = true
+            errorMessage = error.localizedDescription
         }
-        await loadTask?.value
     }
 
     enum MostCases {
@@ -193,6 +198,7 @@ extension NewHomeViewModel {
                 self.mostViewedPackages = response
             }
         } catch {
+            guard isCancellationError(error) == false else { return }
             isError = true
 //            errorMessage = (error as? LocalizedError)?.errorDescription ?? error.localizedDescription
             self.errorMessage = error.localizedDescription
@@ -220,6 +226,7 @@ extension NewHomeViewModel {
         do {
             try await wishlistManager.addOrRemovePackageToWishList(packageId: packageId)
         } catch {
+            guard isCancellationError(error) == false else { return }
             // Rollback local state
             featuredPackages?.items = oldFeatured
             mostViewedPackages = oldMostViewed
@@ -240,7 +247,10 @@ extension NewHomeViewModel {
             errorMessage = nil
             let response = try await networkService.request(target, responseType: UpcomingSessionM.self)
             self.upcomingSession = response
+        } catch is CancellationError {
+            // Ignore cancellations triggered by a newer refresh.
         } catch {
+            guard isCancellationError(error) == false else { return }
             isError = true
 //            errorMessage = (error as? LocalizedError)?.errorDescription ?? error.localizedDescription
             self.errorMessage = error.localizedDescription
@@ -271,7 +281,10 @@ extension NewHomeViewModel {
             current.totalCount = response?.totalCount ?? current.totalCount
             self.homeCategories = current
         }
+    } catch is CancellationError {
+        // Ignore cancellations triggered by a newer refresh.
     } catch {
+        guard isCancellationError(error) == false else { return }
         isError = true
 //        errorMessage = (error as? LocalizedError)?.errorDescription ?? error.localizedDescription
         self.errorMessage = error.localizedDescription
@@ -287,7 +300,10 @@ extension NewHomeViewModel {
             errorMessage = nil
             let response = try await networkService.request(target, responseType: [MyMeasurementsStatsM].self)
             self.myMeasurements = response
+        } catch is CancellationError {
+            // Ignore cancellations triggered by a newer refresh.
         } catch {
+            guard isCancellationError(error) == false else { return }
             isError = true
 //            errorMessage = (error as? LocalizedError)?.errorDescription ?? error.localizedDescription
             self.errorMessage = error.localizedDescription
@@ -317,7 +333,10 @@ extension NewHomeViewModel {
                 current.totalCount = response?.totalCount ?? current.totalCount
                 self.featuredPackages = current
             }
+        } catch is CancellationError {
+            // Ignore cancellations triggered by a newer refresh.
         } catch {
+            guard isCancellationError(error) == false else { return }
             isError = true
 //            errorMessage = (error as? LocalizedError)?.errorDescription ?? error.localizedDescription
             self.errorMessage = error.localizedDescription
@@ -329,6 +348,22 @@ extension NewHomeViewModel {
 // MARK: - Private helpers
 
 private extension NewHomeViewModel {
+    func isCancellationError(_ error: Error) -> Bool {
+        if error is CancellationError {
+            return true
+        }
+
+        if let urlError = error as? URLError, urlError.code == .cancelled {
+            return true
+        }
+
+        if case let NetworkError.unknown(code, _) = error, code == URLError.cancelled.rawValue {
+            return true
+        }
+
+        return false
+    }
+
     func toggleWishlistLocally(packageId: Int) {
         // Featured
         if var items = featuredPackages?.items,
@@ -371,17 +406,10 @@ extension NewHomeViewModel {
 //        await loadTask?.value
     }
     func refreshMoreCategories() async {
-        
-        loadTask?.cancel()
-        loadTask = Task { [weak self] in
-            guard let self else { return }
-            // Guard isLoading is not necessary if we serialize, but keep it for UI flags
-            if self.isLoading == true { return }
-        
-            HomeCategoriesSkipCount = 0
-            await getHomeCategories()
-        }
-        await loadTask?.value
+        if isLoading == true { return }
+
+        HomeCategoriesSkipCount = 0
+        await getHomeCategories()
     }
 
     func loadMoreFeaturedPackagesIfNeeded() async {
@@ -394,4 +422,3 @@ extension NewHomeViewModel {
         await getFeaturedPackages()
     }
 }
-

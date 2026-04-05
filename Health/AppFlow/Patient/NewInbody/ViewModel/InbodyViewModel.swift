@@ -74,7 +74,7 @@ extension InbodyViewModel{
             return
         }
         
-        var parametersarr : [String : Any] =  ["Date" : formattedDate]
+        var parametersarr : [String : Any] =  ["Date" : date]
         
         if Comment.count > 0 {
             parametersarr["Comment"] = Comment
@@ -230,6 +230,10 @@ extension InbodyViewModel {
         date = nil
         formattedDate = ""
         Comment = ""
+        image = nil
+        fileURL = nil
+    }
+    func removeSelectedFile() {
         image = nil
         fileURL = nil
     }
