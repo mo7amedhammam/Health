@@ -194,6 +194,7 @@ struct UploadFileSheetView: View {
                         Menu {
                             ForEach(lookupsvm.fileTypes ?? [],id: \.id) { type in
                                 Button(action: {
+                                    removeSelectedFile()
                                     fileType = type
                                 }, label: {
                                     Text(type.type ?? "")
@@ -216,14 +217,7 @@ struct UploadFileSheetView: View {
                     CustomDropListInputFieldUI(title: "new_filelink", placeholder: "new_filelinkplaceholder",text: $fileLink, isDisabled: false, showDropdownIndicator:false, trailingView: AnyView(Image("newfilelinkicon")))
 
                 }else{
-                    CustomDropListInputFieldUI(title: "new_fileupload", placeholder: "new_fileuploadplaceholder",text: $pickedFileName, isDisabled: true, showDropdownIndicator:false, trailingView:
-                                                AnyView( Image("uploadIcon")
-                                                    .renderingMode(.template)
-                                                    .resizable()
-                                                    .foregroundStyle(Color(.secondary))
-                                                    .frame(width: 14,height: 14)
-                                                ))
-                    .onTapGesture {
+                    Button(action: {
                         switch fileType?.id {
                         case 0:
                             break
@@ -234,7 +228,27 @@ struct UploadFileSheetView: View {
                         default:
                             showPdfPicker = true
                         }
+                    }) {
+                        CustomDropListInputFieldUI(title: "new_fileupload", placeholder: "new_fileuploadplaceholder",text: $pickedFileName, isDisabled: true, showDropdownIndicator:false, trailingView:
+                                                    AnyView( Image("uploadIcon")
+                                                        .renderingMode(.template)
+                                                        .resizable()
+                                                        .foregroundStyle(Color(.secondary))
+                                                        .frame(width: 14,height: 14)
+                                                    ))
                     }
+//                    .onTapGesture {
+//                        switch fileType?.id {
+//                        case 0:
+//                            break
+////                        case 1:
+////                            showPdfPicker = true
+//                        case 2:
+//                            showImagePicker = true
+//                        default:
+//                            showPdfPicker = true
+//                        }
+//                    }
                 }
             }
 
@@ -267,7 +281,11 @@ struct UploadFileSheetView: View {
         .sheet(isPresented: $showImagePicker) {
             ImagePickerView(selectedImage: $image, sourceType: imagePickerSource)
         }.onChange(of: image){newval in
-            pickedFileName = "Image is Selected Successfully_".localized
+            if newval == nil {
+                pickedFileName = ""
+            }else{
+                pickedFileName = "Image is Selected Successfully_".localized
+            }
         }
         .fileImporter(
             isPresented: $showPdfPicker,
@@ -282,10 +300,21 @@ struct UploadFileSheetView: View {
                     fileURL = file
                 }
             } catch {
+                pickedFileName = ""
                 print("Error picking file: \(error.localizedDescription)")
             }
         }
  
+    }
+    
+    func removeSelectedFile() {
+        image = nil
+        fileURL = nil
+        fileName = ""
+        pickedFileName = ""
+        fileURL = nil
+        fileLink = ""
+        myfilesvm.removeSelectedFile()
     }
 }
 

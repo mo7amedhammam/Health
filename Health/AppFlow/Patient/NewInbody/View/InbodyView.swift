@@ -401,6 +401,7 @@ struct UploadInbodySheetView: View {
 
                 }
             } catch {
+                pickedFileName = ""
                 print("Error picking file: \(error.localizedDescription)")
             }
         }

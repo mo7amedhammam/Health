@@ -43,7 +43,7 @@ struct SubcripedPackagesView: View {
                     //                        .frame(width: 50, height: 50)
                     //                    }
                     if let imageURL = profileViewModel.imageURL{
-                        KFImageLoader(url:URL(string:Constants.imagesURL + (imageURL.validateSlashs())),placeholder: Image(.onboarding1), isOpenable:true, shouldRefetch: false)
+                        KFImageLoader(url:URL(string:Constants.imagesURL + (imageURL.validateSlashs())),placeholder: Image(.user), isOpenable:true, shouldRefetch: false)
                             .clipShape(Circle())
                             .background(Circle()
                                 .stroke(.white, lineWidth: 5).padding(-2))

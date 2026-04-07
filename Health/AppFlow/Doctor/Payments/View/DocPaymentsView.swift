@@ -26,7 +26,7 @@ struct DocPaymentsView: View {
     var body: some View {
         VStack(spacing: 15) {
             // Header
-            TitleBar(title: "doc_notifications", hasbackBtn: hasbackBtn ?? true)
+            TitleBar(title: "payments_title", hasbackBtn: hasbackBtn ?? true)
             
             ScrollView(showsIndicators: false) {
                 VStack(alignment: .leading) {

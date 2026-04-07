@@ -314,6 +314,8 @@
 "please_enter_file_name" = "please enter file name";
 "please_select_file_type" = "please select file type";
 "please_select_image_file_or_link" = "please select image file or link";
+"please_enter_file_url" = "please enter file url";
+"please_enter_valid_url" = "please enter valid url";
 
 //MARK:   ---- Allergies ----
 "allergies_title" = "Allergies";

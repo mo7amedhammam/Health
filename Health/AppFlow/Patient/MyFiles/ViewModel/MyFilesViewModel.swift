@@ -57,12 +57,32 @@ extension MyFilesViewModel{
             return
         }
 
-        // Require one of image, file URL, or link
-        let hasImage = (image != nil)
-        let hasFileURL = (fileURL != nil)
-        let hasLink = !(fileLink ?? "").trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+        let isLinkType = FileTypeId == 4 // URL = 4 
+        let trimmedLink = (fileLink ?? "").trimmingCharacters(in: .whitespacesAndNewlines)
+
+        if isLinkType {
+            image = nil
+            fileURL = nil
+
+            guard trimmedLink.isEmpty == false else {
+                self.errorMessage = "please_enter_file_url".localized
+                return
+            }
+
+            guard isValidURL(trimmedLink) else {
+                self.errorMessage = "please_enter_valid_url".localized
+                return
+            }
+        }
+
+        // Require one of image, file URL, or link based on the selected type
+        let hasImage = isLinkType == false && image != nil
+        let hasFileURL = isLinkType == false && fileURL != nil
+        let hasLink = isLinkType && trimmedLink.isEmpty == false
         if !(hasImage || hasFileURL || hasLink) {
-            self.errorMessage = "please_select_image_file_or_link".localized
+            self.errorMessage = isLinkType
+            ? "please_enter_file_url".localized
+            : "please_select_image_file_or_link".localized
             return
         }
 
@@ -77,8 +97,8 @@ extension MyFilesViewModel{
             parametersarr["FilePath"] = data
         }else if let fileURL = fileURL {
             parametersarr["FilePath"] = fileURL
-        }else if let filelink = fileLink {
-            parametersarr["Url"] = filelink
+        }else if isLinkType {
+            parametersarr["Url"] = trimmedLink
         }
         
         var parts: [MultipartFormDataPart] = parametersarr.map { key, value in
@@ -151,6 +171,18 @@ extension MyFilesViewModel{
 }
 
 extension MyFilesViewModel {
+    private func isValidURL(_ value: String) -> Bool {
+        guard let components = URLComponents(string: value),
+              let scheme = components.scheme?.lowercased(),
+              ["http", "https"].contains(scheme),
+              let host = components.host,
+              host.isEmpty == false else {
+            return false
+        }
+
+        return true
+    }
+
     func clearNewFiles() {
         fileName = nil
         fileType = nil
@@ -159,10 +191,13 @@ extension MyFilesViewModel {
         fileURL = nil
         showUploadSheet = false
     }
-
+    func removeSelectedFile() {
+        image = nil
+        fileURL = nil
+        fileName = nil
+    }
     @MainActor
     func refresh() async {
         await getMyFilesList()
     }
 }
-

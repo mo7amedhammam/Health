@@ -311,9 +311,11 @@
 "new_filelinkplaceholder" = "أدخل رابط الملف";
 "new_cancel_" = "إلغاء";
 "new_confirm_" = "تأكيد";
-"please_enter_file_name" = "please enter file name";
-"please_select_file_type" = "please select file type";
-"please_select_image_file_or_link" = "please select image file or link";
+"please_enter_file_name" = "يرجى إدخال اسم الملف";
+"please_select_file_type" = "يرجى تحديد نوع الملف";
+"please_select_image_file_or_link" = "يرجى تحديد ملف الصورة أو الرابط";
+"please_enter_file_url" = "يرجى إدخال عنوان url للملف";
+"please_enter_valid_url" = "يرجى إدخال عنوان URL صالح";
 
 //MARK:   ---- Allergies ----
 "allergies_title" = "الحساسية";

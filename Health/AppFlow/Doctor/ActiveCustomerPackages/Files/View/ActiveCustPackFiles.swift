@@ -222,6 +222,7 @@ struct ReusableUploadFileSheetView: View {
                 Menu {
                     ForEach(lookupsvm.fileTypes ?? [], id: \.id) { type in
                         Button(type.type ?? "") {
+                            clearTypeSpecificInputs()
                             fileType = type
                         }
                     }
@@ -354,7 +355,13 @@ struct ReusableUploadFileSheetView: View {
     private func resetState() {
         fileName = ""
         fileType = nil
+        clearTypeSpecificInputs()
+    }
+
+    private func clearTypeSpecificInputs() {
         fileLink = ""
+        showImagePicker = false
+        showPdfPicker = false
         image = nil
         fileURL = nil
         pickedFileName = ""
