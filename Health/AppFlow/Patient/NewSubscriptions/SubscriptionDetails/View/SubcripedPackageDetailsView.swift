@@ -118,7 +118,7 @@ struct SubcripedPackageDetailsView: View {
 
                                 if package?.canRenew ?? false{
                                     // renew subscription
-                                    guard let doctorID = package?.doctorID else { return }
+                                    guard let doctorID = package?.customerPackageID else { return } //was doctorId .. changed to customerPackageID
                                     router.push(PackageMoreDetailsView( doctorPackageId: doctorID,currentcase:.renew) )
                                     
                                 }else if package?.canCancel ?? false{
